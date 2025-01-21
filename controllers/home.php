@@ -1,5 +1,11 @@
 <?php
+require_once '../includes/Database.php';
+require_once '../includes/PoliticalPartyAPI.php';
+require_once '../includes/NewsAPI.php';
+
 $db = new Database();
+$politicalAPI = new PoliticalPartyAPI();
+$newsAPI = new NewsAPI();
 
 // Haal de laatste 6 blogs op
 $db->query("SELECT blogs.*, users.username as author_name 
@@ -8,6 +14,12 @@ $db->query("SELECT blogs.*, users.username as author_name
            ORDER BY published_at DESC 
            LIMIT 6");
 $latest_blogs = $db->resultSet();
+
+// Haal politieke partij informatie op
+$political_parties = $politicalAPI->getActiveParties();
+
+// Haal het laatste nieuws op
+$latest_news = $newsAPI->getLatestPoliticalNews();
 
 require_once '../views/templates/header.php';
 ?>
@@ -42,93 +54,152 @@ require_once '../views/templates/header.php';
     <!-- Statistieken Section -->
     <section class="container mx-auto px-4 -mt-10 relative z-10">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+            <div class="bg-white p-6 rounded-xl shadow-lg text-center transform hover:scale-105 transition-transform">
                 <div class="text-4xl font-bold text-primary mb-2">1.2K+</div>
                 <div class="text-gray-600">Actieve leden</div>
             </div>
-            <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+            <div class="bg-white p-6 rounded-xl shadow-lg text-center transform hover:scale-105 transition-transform">
                 <div class="text-4xl font-bold text-primary mb-2">500+</div>
                 <div class="text-gray-600">Politieke blogs</div>
             </div>
-            <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+            <div class="bg-white p-6 rounded-xl shadow-lg text-center transform hover:scale-105 transition-transform">
                 <div class="text-4xl font-bold text-primary mb-2">2.5K+</div>
                 <div class="text-gray-600">Forum discussies</div>
             </div>
         </div>
     </section>
 
-    <!-- Laatste Blogs Section -->
-    <section class="container mx-auto px-4 py-16">
-        <div class="text-center mb-12">
-            <h2 class="text-4xl font-bold text-gray-900 mb-4">Laatste Blogs</h2>
-            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-                Ontdek de meest recente inzichten en analyses over de Nederlandse politiek
-            </p>
-        </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <?php foreach($latest_blogs as $blog): ?>
-                <article class="bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
-                    <?php if($blog->image_path): ?>
-                        <div class="relative h-48 overflow-hidden">
-                            <img src="<?php echo URLROOT; ?>/public/images/<?php echo $blog->image_path; ?>" 
-                                 alt="<?php echo $blog->title; ?>"
-                                 class="w-full h-full object-cover transform transition-transform duration-500 hover:scale-110">
-                        </div>
-                    <?php endif; ?>
-                    <div class="p-6">
-                        <div class="flex items-center mb-4">
-                            <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white font-bold">
-                                <?php echo substr($blog->author_name, 0, 1); ?>
-                            </div>
-                            <div class="ml-3">
-                                <p class="text-sm font-medium text-gray-900"><?php echo $blog->author_name; ?></p>
-                                <p class="text-xs text-gray-500">
-                                    <?php echo date('d M Y', strtotime($blog->published_at)); ?>
+    <!-- Laatste Nieuws & Blogs Grid -->
+    <section class="py-16 bg-gradient-to-b from-gray-50 to-white">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Laatste Nieuws -->
+                <div>
+                    <div class="text-center mb-8">
+                        <h2 class="text-3xl font-bold text-gray-900 mb-3">Laatste Politiek Nieuws</h2>
+                        <p class="text-gray-600">Blijf op de hoogte van de laatste ontwikkelingen</p>
+                    </div>
+                    <div class="space-y-6">
+                        <?php foreach($latest_news as $news): ?>
+                            <article class="bg-white rounded-xl shadow-lg p-6 transform transition-all duration-300 hover:-translate-y-1">
+                                <div class="flex items-center mb-3">
+                                    <span class="text-sm text-gray-500"><?php echo $news['source']; ?></span>
+                                    <span class="mx-2 text-gray-300">•</span>
+                                    <span class="text-sm text-gray-500"><?php echo date('d M Y', strtotime($news['publishedAt'])); ?></span>
+                                </div>
+                                <h3 class="text-xl font-bold text-gray-900 mb-2 line-clamp-2 hover:text-primary transition-colors">
+                                    <?php echo $news['title']; ?>
+                                </h3>
+                                <p class="text-gray-600 mb-3 line-clamp-2">
+                                    <?php echo $news['description']; ?>
                                 </p>
-                            </div>
+                                <a href="<?php echo $news['url']; ?>" target="_blank" rel="noopener noreferrer"
+                                   class="inline-flex items-center text-primary hover:text-secondary font-semibold">
+                                    Lees meer
+                                    <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                    </svg>
+                                </a>
+                            </article>
+                        <?php endforeach; ?>
+                        <div class="text-center mt-6">
+                            <a href="<?php echo URLROOT; ?>/nieuws" 
+                               class="inline-flex items-center px-6 py-3 border-2 border-primary text-primary font-semibold rounded-lg hover:bg-primary hover:text-white transition-all">
+                                Bekijk al het nieuws
+                            </a>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-3 line-clamp-2 hover:text-primary transition-colors">
-                            <?php echo $blog->title; ?>
-                        </h3>
-                        <p class="text-gray-600 mb-4 line-clamp-3">
-                            <?php echo substr($blog->summary, 0, 150) . '...'; ?>
-                        </p>
-                        <div class="flex justify-between items-center pt-4 border-t border-gray-100">
-                            <div class="flex items-center text-sm text-gray-500">
-                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                </svg>
-                                5 min leestijd
+                    </div>
+                </div>
+
+                <!-- Laatste Blogs -->
+                <div>
+                    <div class="text-center mb-8">
+                        <h2 class="text-3xl font-bold text-gray-900 mb-3">Laatste Blogs</h2>
+                        <p class="text-gray-600">Lees de meest recente politieke analyses</p>
+                    </div>
+                    <div class="space-y-6">
+                        <?php foreach(array_slice($latest_blogs, 0, 3) as $blog): ?>
+                            <article class="bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:-translate-y-1">
+                                <div class="p-6">
+                                    <div class="flex items-center mb-3">
+                                        <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white font-bold text-sm">
+                                            <?php echo substr($blog->author_name, 0, 1); ?>
+                                        </div>
+                                        <div class="ml-3">
+                                            <p class="text-sm font-medium text-gray-900"><?php echo $blog->author_name; ?></p>
+                                            <p class="text-xs text-gray-500"><?php echo date('d M Y', strtotime($blog->published_at)); ?></p>
+                                        </div>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-gray-900 mb-2 line-clamp-2 hover:text-primary transition-colors">
+                                        <?php echo $blog->title; ?>
+                                    </h3>
+                                    <p class="text-gray-600 mb-3 line-clamp-2">
+                                        <?php echo substr($blog->summary, 0, 150) . '...'; ?>
+                                    </p>
+                                    <a href="<?php echo URLROOT; ?>/blogs/view/<?php echo $blog->slug; ?>" 
+                                       class="inline-flex items-center text-primary font-semibold hover:text-secondary transition-colors">
+                                        Lees meer
+                                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </article>
+                        <?php endforeach; ?>
+                        <div class="text-center mt-6">
+                            <a href="<?php echo URLROOT; ?>/blogs" 
+                               class="inline-flex items-center px-6 py-3 border-2 border-primary text-primary font-semibold rounded-lg hover:bg-primary hover:text-white transition-all">
+                                Bekijk alle blogs
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Politieke Partijen Grid -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-900 mb-3">Politieke Partijen</h2>
+                <p class="text-gray-600">De grootste partijen in de Tweede Kamer</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <?php foreach($political_parties as $party): ?>
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:-translate-y-1">
+                        <div class="h-2" style="background-color: <?php echo $party['color']; ?>"></div>
+                        <div class="p-4">
+                            <div class="flex justify-between items-start mb-3">
+                                <div>
+                                    <h3 class="text-xl font-bold text-gray-900"><?php echo $party['name']; ?></h3>
+                                    <p class="text-sm text-gray-500"><?php echo $party['fullName']; ?></p>
+                                </div>
+                                <div class="bg-primary text-white text-lg font-bold px-3 py-1 rounded-full">
+                                    <?php echo $party['seats']; ?>
+                                </div>
                             </div>
-                            <a href="<?php echo URLROOT; ?>/blogs/view/<?php echo $blog->slug; ?>" 
-                               class="inline-flex items-center text-primary font-semibold hover:text-secondary transition-colors">
-                                Lees meer
+                            <p class="text-gray-600 text-sm mb-3">
+                                <span class="font-semibold">Partijleider:</span> <?php echo $party['leader']; ?>
+                            </p>
+                            <a href="<?php echo URLROOT; ?>/partij/<?php echo strtolower($party['name']); ?>" 
+                               class="inline-flex items-center text-primary hover:text-secondary font-semibold text-sm">
+                                Meer informatie
                                 <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                 </svg>
                             </a>
                         </div>
                     </div>
-                </article>
-            <?php endforeach; ?>
-        </div>
-        
-        <div class="text-center mt-12">
-            <a href="<?php echo URLROOT; ?>/blogs" 
-               class="inline-flex items-center px-6 py-3 border-2 border-primary text-primary font-semibold rounded-lg hover:bg-primary hover:text-white transition-all">
-                Bekijk alle blogs
-                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                </svg>
-            </a>
+                <?php endforeach; ?>
+            </div>
         </div>
     </section>
 
     <!-- Call-to-Action Section -->
-    <section class="bg-gradient-to-br from-primary/10 to-secondary/10 py-16">
+    <section class="py-16 bg-gradient-to-br from-primary/10 to-secondary/10">
         <div class="container mx-auto px-4">
-            <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
+            <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 hover:shadow-2xl">
                 <div class="flex flex-col md:flex-row">
                     <div class="md:w-1/2 p-8 md:p-12">
                         <h2 class="text-3xl font-bold text-gray-900 mb-4">
