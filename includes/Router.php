@@ -23,6 +23,21 @@ class Router {
             return ['controller' => $this->routes[$uri], 'params' => []];
         }
         
+        // Check voor profiel routes
+        if ($uri_parts[0] === 'profile') {
+            if (count($uri_parts) === 1) {
+                return [
+                    'controller' => 'controllers/profile/index.php',
+                    'params' => []
+                ];
+            } elseif (count($uri_parts) === 2 && $uri_parts[1] === 'edit') {
+                return [
+                    'controller' => 'controllers/profile/edit.php',
+                    'params' => []
+                ];
+            }
+        }
+        
         // Check voor blog view route
         if (count($uri_parts) === 3 && $uri_parts[0] === 'blogs' && $uri_parts[1] === 'view') {
             return [
