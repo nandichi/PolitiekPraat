@@ -18,7 +18,7 @@
         }
     </script>
 </head>
-<body class="bg-gray-50">
+<body class="bg-gray-50 flex flex-col min-h-screen">
     <nav class="bg-primary text-white shadow-lg">
         <div class="container mx-auto px-4">
             <div class="flex justify-between items-center h-16">
@@ -65,3 +65,6 @@
             </div>
         </div>
     </nav> 
+    <div class="flex-grow">
+</body>
+</html> 

@@ -17,7 +17,9 @@ $router->add('register', 'controllers/auth/register.php');
 $router->add('logout', 'controllers/auth/logout.php');
 
 // Route dispatcher
-$controller = $router->dispatch($_SERVER['REQUEST_URI']);
+$route = $router->dispatch($_SERVER['REQUEST_URI']);
+$controller = $route['controller'];
+$params = $route['params'];
 
 // Controller laden
 if (file_exists("../{$controller}")) {
