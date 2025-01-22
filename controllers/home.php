@@ -28,19 +28,19 @@ require_once '../views/templates/header.php';
 
 <main class="bg-gray-50">
     <!-- Hero Section -->
-    <section class="relative bg-gradient-to-r from-primary to-secondary overflow-hidden">
+    <section class="relative bg-gradient-to-r from-primary to-secondary overflow-hidden gradient-animate">
         <div class="absolute inset-0 bg-pattern opacity-10"></div>
         <div class="container mx-auto px-4 py-24 relative">
             <div class="max-w-4xl mx-auto text-center">
-                <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight animate-fade-in">
+                <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight" data-aos="fade-down" data-aos-delay="100">
                     Welkom bij PolitiekPraat
                 </h1>
-                <p class="text-xl md:text-2xl text-white/90 mb-10 leading-relaxed">
+                <p class="text-xl md:text-2xl text-white/90 mb-10 leading-relaxed" data-aos="fade-up" data-aos-delay="200">
                     Het platform waar jouw stem telt. Ontdek, discussieer en draag bij aan het politieke debat in Nederland.
                 </p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <div class="flex flex-col sm:flex-row gap-4 justify-center" data-aos="zoom-in" data-aos-delay="300">
                     <a href="<?php echo URLROOT; ?>/blogs" 
-                       class="inline-block bg-white text-primary px-8 py-4 rounded-lg font-semibold hover:bg-opacity-90 transition-all transform hover:scale-105 shadow-lg">
+                       class="inline-block bg-white text-primary px-8 py-4 rounded-lg font-semibold hover:bg-opacity-90 transition-all transform hover:scale-105 shadow-lg animate-pulse-slow">
                         Ontdek onze blogs
                     </a>
                     <a href="<?php echo URLROOT; ?>/forum" 
@@ -56,16 +56,16 @@ require_once '../views/templates/header.php';
     <!-- Statistieken Section -->
     <section class="container mx-auto px-4 -mt-10 relative z-10">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="bg-white p-6 rounded-xl shadow-lg text-center transform hover:scale-105 transition-transform">
-                <div class="text-4xl font-bold text-primary mb-2">1.2K+</div>
+            <div class="bg-white p-6 rounded-xl shadow-lg text-center transform hover:scale-105 transition-transform" data-aos="fade-up" data-aos-delay="100">
+                <div class="text-4xl font-bold text-primary mb-2 animate-float">1.2K+</div>
                 <div class="text-gray-600">Actieve leden</div>
             </div>
-            <div class="bg-white p-6 rounded-xl shadow-lg text-center transform hover:scale-105 transition-transform">
-                <div class="text-4xl font-bold text-primary mb-2">500+</div>
+            <div class="bg-white p-6 rounded-xl shadow-lg text-center transform hover:scale-105 transition-transform" data-aos="fade-up" data-aos-delay="200">
+                <div class="text-4xl font-bold text-primary mb-2 animate-float">500+</div>
                 <div class="text-gray-600">Politieke blogs</div>
             </div>
-            <div class="bg-white p-6 rounded-xl shadow-lg text-center transform hover:scale-105 transition-transform">
-                <div class="text-4xl font-bold text-primary mb-2">2.5K+</div>
+            <div class="bg-white p-6 rounded-xl shadow-lg text-center transform hover:scale-105 transition-transform" data-aos="fade-up" data-aos-delay="300">
+                <div class="text-4xl font-bold text-primary mb-2 animate-float">2.5K+</div>
                 <div class="text-gray-600">Forum discussies</div>
             </div>
         </div>
@@ -76,14 +76,13 @@ require_once '../views/templates/header.php';
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
                 <!-- Laatste Nieuws -->
-                <div class="h-full">
+                <div class="h-full" data-aos="fade-right">
                     <div class="text-center mb-8">
                         <h2 class="text-3xl font-bold text-gray-900 mb-3">Laatste Politiek Nieuws</h2>
                         <p class="text-gray-600">Blijf op de hoogte van de laatste ontwikkelingen</p>
                     </div>
                     <div class="space-y-6 h-full">
-                        <?php foreach($latest_news as $news): 
-                            // Haal de domeinnaam uit de bron URL voor de favicon
+                        <?php foreach($latest_news as $index => $news): 
                             $source_domains = [
                                 'NOS' => 'nos.nl',
                                 'NU.nl' => 'nu.nl',
@@ -96,7 +95,9 @@ require_once '../views/templates/header.php';
                             $domain = isset($source_domains[$news['source']]) ? $source_domains[$news['source']] : parse_url($news['url'], PHP_URL_HOST);
                             $favicon_url = "https://www.google.com/s2/favicons?domain=" . $domain . "&sz=32";
                         ?>
-                            <article class="bg-white rounded-xl shadow-lg p-6 transform transition-all duration-300 hover:-translate-y-1 flex flex-col h-[220px]">
+                            <article class="bg-white rounded-xl shadow-lg p-6 transform transition-all duration-300 hover:-translate-y-1 flex flex-col h-[220px]" 
+                                     data-aos="fade-up" 
+                                     data-aos-delay="<?php echo $index * 100; ?>">
                                 <div class="flex items-center mb-3">
                                     <div class="flex items-center flex-1">
                                         <img src="<?php echo $favicon_url; ?>" 
@@ -132,15 +133,17 @@ require_once '../views/templates/header.php';
                 </div>
 
                 <!-- Laatste Blogs -->
-                <div class="h-full">
+                <div class="h-full" data-aos="fade-left">
                     <div class="text-center mb-8">
                         <h2 class="text-3xl font-bold text-gray-900 mb-3">Laatste Blogs</h2>
                         <p class="text-gray-600">Lees de meest recente politieke analyses</p>
                     </div>
                     <div class="space-y-6 h-full">
-                        <?php foreach($latest_blogs as $blog): ?>
-                            <article class="bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:-translate-y-1 h-[220px]">
-                                <div class="p-6 flex flex-col h-full">
+                        <?php foreach($latest_blogs as $index => $blog): ?>
+                            <article class="bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:-translate-y-1"
+                                     data-aos="fade-up"
+                                     data-aos-delay="<?php echo $index * 100; ?>">
+                                <div class="p-6 flex flex-col">
                                     <div class="flex items-center mb-2">
                                         <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white font-bold text-sm">
                                             <?php echo substr($blog->author_name, 0, 1); ?>
@@ -150,14 +153,14 @@ require_once '../views/templates/header.php';
                                             <p class="text-xs text-gray-500"><?php echo date('d M Y', strtotime($blog->published_at)); ?></p>
                                         </div>
                                     </div>
-                                    <h3 class="text-xl font-bold text-gray-900 mb-2 line-clamp-1 hover:text-primary transition-colors">
+                                    <h3 class="text-xl font-bold text-gray-900 mb-3 line-clamp-2 hover:text-primary transition-colors">
                                         <?php echo $blog->title; ?>
                                     </h3>
-                                    <p class="text-gray-600 line-clamp-2 flex-grow">
+                                    <p class="text-gray-600 line-clamp-3 mb-4">
                                         <?php echo $blog->summary; ?>
                                     </p>
                                     <a href="<?php echo URLROOT; ?>/blogs/view/<?php echo $blog->slug; ?>" 
-                                       class="inline-flex items-center text-primary font-semibold hover:text-secondary transition-colors mt-2">
+                                       class="inline-flex items-center text-primary font-semibold hover:text-secondary transition-colors mt-auto">
                                         Lees meer
                                         <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -181,15 +184,17 @@ require_once '../views/templates/header.php';
     <!-- Actuele Thema's Grid -->
     <section class="py-16 bg-gray-50">
         <div class="container mx-auto px-4">
-            <div class="text-center mb-8">
+            <div class="text-center mb-8" data-aos="fade-up">
                 <h2 class="text-3xl font-bold text-gray-900 mb-3">Actuele Thema's</h2>
                 <p class="text-gray-600">De belangrijkste politieke onderwerpen van dit moment</p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <?php foreach($actuele_themas as $thema): ?>
-                    <div class="bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:-translate-y-1">
+                <?php foreach($actuele_themas as $index => $thema): ?>
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:-translate-y-1"
+                         data-aos="zoom-in"
+                         data-aos-delay="<?php echo $index * 100; ?>">
                         <div class="p-6">
-                            <div class="text-4xl mb-4"><?php echo $thema['icon']; ?></div>
+                            <div class="text-4xl mb-4 animate-float"><?php echo $thema['icon']; ?></div>
                             <h3 class="text-xl font-bold text-gray-900 mb-2"><?php echo $thema['title']; ?></h3>
                             <p class="text-gray-600"><?php echo $thema['description']; ?></p>
                             <a href="<?php echo URLROOT; ?>/themas/<?php echo strtolower(str_replace(' ', '-', $thema['title'])); ?>" 
@@ -209,18 +214,20 @@ require_once '../views/templates/header.php';
     <!-- Politieke Debatten -->
     <section class="py-16 bg-white">
         <div class="container mx-auto px-4">
-            <div class="text-center mb-8">
+            <div class="text-center mb-8" data-aos="fade-up">
                 <h2 class="text-3xl font-bold text-gray-900 mb-3">Politieke Debatten</h2>
                 <p class="text-gray-600">Volg de belangrijkste debatten in de Tweede Kamer</p>
             </div>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <?php foreach($debatten as $debat): 
+                <?php foreach($debatten as $index => $debat): 
                     $is_upcoming = $debat['status'] === 'Aankomend';
                 ?>
-                    <div class="bg-gray-50 rounded-xl shadow-lg overflow-hidden">
+                    <div class="bg-gray-50 rounded-xl shadow-lg overflow-hidden"
+                         data-aos="fade-up"
+                         data-aos-delay="<?php echo $index * 150; ?>">
                         <div class="p-6">
                             <div class="flex justify-between items-center mb-4">
-                                <span class="<?php echo $is_upcoming ? 'bg-primary' : 'bg-gray-500'; ?> text-white px-3 py-1 rounded-full text-sm">
+                                <span class="<?php echo $is_upcoming ? 'bg-primary animate-pulse-slow' : 'bg-gray-500'; ?> text-white px-3 py-1 rounded-full text-sm">
                                     <?php echo $debat['status']; ?>
                                 </span>
                                 <span class="text-gray-500"><?php echo date('d M Y', strtotime($debat['datum'])); ?></span>
@@ -230,7 +237,7 @@ require_once '../views/templates/header.php';
                             <a href="<?php echo URLROOT; ?>/debatten/<?php echo strtolower(str_replace(' ', '-', $debat['titel'])); ?>"
                                class="inline-flex items-center text-primary hover:text-secondary font-semibold">
                                 Meer details
-                                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-4 h-4 ml-1 transform transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                 </svg>
                             </a>

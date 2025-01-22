@@ -158,7 +158,7 @@
                 </div>
                 <div>
                                     <span class="block font-medium">Telefoon</span>
-                                    <span class="text-sm text-white/60">020-1234567</span>
+                                    <span class="text-sm text-white/60">06-38102938</span>
                                 </div>
                             </li>
                     </ul>
