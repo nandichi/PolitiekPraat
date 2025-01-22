@@ -7,13 +7,18 @@ RUN docker-php-ext-install pdo pdo_mysql
 # Activeer Apache modules
 RUN a2enmod rewrite
 
-# Kopieer de Apache configuratie
-COPY docker/apache.conf /etc/apache2/sites-available/000-default.conf
+# Configureer Apache
+RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf \
+    && sed -i 's!/var/www/!/var/www/html/public!g' /etc/apache2/apache2.conf \
+    && sed -i 's!AllowOverride None!AllowOverride All!g' /etc/apache2/apache2.conf
 
-# Maak de map voor de website
+# Maak de benodigde mappen
 RUN mkdir -p /var/www/html/public
 
-# Kopieer alle bestanden naar de servermap
+# Kopieer eerst alleen de public bestanden
+COPY public /var/www/html/public/
+
+# Kopieer daarna de rest van de bestanden
 COPY . /var/www/html/
 
 # Stel de juiste bestandsrechten in
