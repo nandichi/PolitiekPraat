@@ -1,0 +1,9 @@
+RewriteEngine On
+RewriteBase /
+
+# Als het bestand of de map niet bestaat
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Stuur alles door naar index.php
+RewriteRule ^(.*)$ index.php [QSA,L] 
