@@ -16,7 +16,7 @@ PolitiekPraat is een interactief platform waar gebruikers kunnen discussiëren o
 - PHP 7.4 of hoger
 - MySQL 5.7 of hoger
 - Composer
-- Web server (Apache/Nginx)
+- Web server 
 
 ## 🛠️ Installatie
 
@@ -77,13 +77,9 @@ Dit project is gelicentieerd onder de MIT License.
 
 ## 👥 Team
 
-- [Jouw Naam] - Initiële ontwikkelaar
-- [Team Lid] - Frontend ontwikkelaar
-- [Team Lid] - Backend ontwikkelaar
+- [Naoufal Andichi] - Initiële ontwikkelaar
 
 ## 📞 Contact
 
 Voor vragen of suggesties, neem contact op via:
-- Email: [email]
-- Website: [website]
-- Twitter: [@handle] 
+- Email: [naoufal.exe@gmail.com]
