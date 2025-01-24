@@ -1,0 +1,19 @@
+# Basis instellingen
+DirectoryIndex index.php
+Options -Indexes
+
+# Rewrite engine aanzetten
+RewriteEngine On
+RewriteBase /
+
+# Als het geen bestaand bestand of map is
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Stuur alles naar index.php
+RewriteRule ^(.*)$ index.php [QSA,L]
+
+# Bestandsrechten
+<Files ~ "\.(php|css|js|jpg|jpeg|png|gif|ico)$">
+    Require all granted
+</Files> 
