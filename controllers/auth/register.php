@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
-require_once '../views/templates/header.php';
+require_once BASE_PATH . '/views/templates/header.php';
 ?>
 
 <main class="container mx-auto px-4 py-20">
@@ -135,4 +135,4 @@ require_once '../views/templates/header.php';
     </div>
 </main>
 
-<?php require_once '../views/templates/footer.php'; ?> 
+<?php require_once BASE_PATH . '/views/templates/footer.php'; ?> 

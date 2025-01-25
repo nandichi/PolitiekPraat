@@ -1,7 +1,7 @@
 <?php
-require_once '../includes/Database.php';
-require_once '../includes/NewsAPI.php';
-require_once '../includes/OpenDataAPI.php';
+require_once 'includes/Database.php';
+require_once 'includes/NewsAPI.php';
+require_once 'includes/OpenDataAPI.php';
 
 $db = new Database();
 $newsAPI = new NewsAPI();
@@ -23,7 +23,7 @@ $actuele_themas = $openDataAPI->getActueleThemas();
 $debatten = $openDataAPI->getPolitiekeDebatten();
 $agenda_items = $openDataAPI->getPolitiekeAgenda();
 
-require_once '../views/templates/header.php';
+require_once 'views/templates/header.php';
 ?>
 
 <main class="bg-gray-50">
@@ -439,4 +439,4 @@ require_once '../views/templates/header.php';
     </section>
 </main>
 
-<?php require_once '../views/templates/footer.php'; ?> 
+<?php require_once 'views/templates/footer.php'; ?> 

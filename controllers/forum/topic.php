@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['user_id'])) {
     }
 }
 
-require_once '../views/templates/header.php';
+require_once BASE_PATH . '/views/templates/header.php';
 ?>
 
 <main class="container mx-auto px-4 py-12">
@@ -162,4 +162,4 @@ require_once '../views/templates/header.php';
     </article>
 </main>
 
-<?php require_once '../views/templates/footer.php'; ?> 
+<?php require_once BASE_PATH . '/views/templates/footer.php'; ?> 

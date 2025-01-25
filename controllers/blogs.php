@@ -5,10 +5,10 @@ $db = new Database();
 $db->query("SELECT blogs.*, users.username as author_name 
            FROM blogs 
            JOIN users ON blogs.author_id = users.id 
-           ORDER BY published_at DESC");
+           ORDER BY created_at DESC");
 $blogs = $db->resultSet();
 
-require_once '../views/templates/header.php';
+require_once BASE_PATH . '/views/templates/header.php';
 ?>
 
 <main class="container mx-auto px-4 py-12">
@@ -67,4 +67,4 @@ require_once '../views/templates/header.php';
     <?php endif; ?>
 </main>
 
-<?php require_once '../views/templates/footer.php'; ?> 
+<?php require_once BASE_PATH . '/views/templates/footer.php'; ?> 

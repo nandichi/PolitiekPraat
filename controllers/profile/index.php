@@ -21,4 +21,4 @@ if (isset($_SESSION['success_message'])) {
     unset($_SESSION['success_message']); // Verwijder het bericht na gebruik
 }
 
-require_once __DIR__ . '/../../views/profile/index.php'; 
+require_once BASE_PATH . '/views/profile/index.php'; 

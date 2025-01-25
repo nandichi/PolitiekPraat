@@ -199,7 +199,7 @@
 
                 <!-- Desktop Navigation -->
                 <div class="hidden lg:flex items-center space-x-8">
-                    <a href="<?php echo URLROOT; ?>" 
+                    <a href="<?php echo URLROOT; ?>/" 
                        class="menu-item text-white/90 hover:text-white transition-colors duration-300 font-medium py-2">
                         Home
                     </a>
@@ -300,7 +300,7 @@
             <div class="lg:hidden hidden glass-effect absolute top-full left-0 right-0 z-20 border-t border-white/10" 
                  id="mobile-menu">
                 <div class="container mx-auto px-4 py-4 space-y-3">
-                    <a href="<?php echo URLROOT; ?>" class="block text-white/90 hover:text-white py-2 transition-colors duration-300">
+                    <a href="<?php echo URLROOT; ?>/" class="block text-white/90 hover:text-white py-2 transition-colors duration-300">
                         Home
                     </a>
                     <a href="<?php echo URLROOT; ?>/blogs" class="block text-white/90 hover:text-white py-2 transition-colors duration-300">

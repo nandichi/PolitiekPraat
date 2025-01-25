@@ -11,7 +11,7 @@ $db->query("SELECT forum_topics.*,
            ORDER BY last_activity DESC");
 $topics = $db->resultSet();
 
-require_once '../views/templates/header.php';
+require_once BASE_PATH . '/views/templates/header.php';
 ?>
 
 <main class="container mx-auto px-4 py-12">
@@ -73,4 +73,4 @@ require_once '../views/templates/header.php';
     <?php endif; ?>
 </main>
 
-<?php require_once '../views/templates/footer.php'; ?> 
+<?php require_once BASE_PATH . '/views/templates/footer.php'; ?> 

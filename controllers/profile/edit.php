@@ -60,4 +60,4 @@ $stmt = $pdo->prepare("SELECT username, email FROM users WHERE id = ?");
 $stmt->execute([$user_id]);
 $user = $stmt->fetch();
 
-require_once __DIR__ . '/../../views/profile/edit.php'; 
+require_once BASE_PATH . '/views/profile/edit.php'; 

@@ -8,7 +8,15 @@ class Router {
     }
     
     public function dispatch($uri) {
-        $uri = parse_url($uri, PHP_URL_PATH);
+        // Verwijder query parameters
+        $uri = strtok($uri, '?');
+        
+        // Verwijder de base URL als die aanwezig is
+        $baseUrl = parse_url(URLROOT, PHP_URL_PATH);
+        if ($baseUrl && strpos($uri, $baseUrl) === 0) {
+            $uri = substr($uri, strlen($baseUrl));
+        }
+        
         $uri = trim($uri, '/');
         
         if (empty($uri)) {
@@ -91,6 +99,7 @@ class Router {
             return ['controller' => $this->routes[$uri_parts[0]], 'params' => []];
         }
         
+        // Als geen route gevonden, gebruik 404
         return ['controller' => 'controllers/404.php', 'params' => []];
     }
 } 
