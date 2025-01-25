@@ -2,12 +2,25 @@
 require_once 'includes/Database.php';
 require_once 'includes/NewsAPI.php';
 require_once 'includes/OpenDataAPI.php';
+require_once 'includes/PoliticalDataAPI.php';
+require_once 'includes/PollAPI.php';
 
 $db = new Database();
 $newsAPI = new NewsAPI();
 $openDataAPI = new OpenDataAPI();
+$politicalDataAPI = new PoliticalDataAPI();
+$pollAPI = new PollAPI();
 
-// Haal de laatste 5 blogs op (was 6)
+// Haal actuele politieke data op
+$kamerStats = $politicalDataAPI->getKamerStatistieken();
+$coalitieStatus = $politicalDataAPI->getCoalitieStatus();
+$partijData = $politicalDataAPI->getPartijInformatie();
+
+// Haal peilingen data op
+$latestPolls = $pollAPI->getLatestPolls();
+$historicalPolls = $pollAPI->getHistoricalPolls(3);
+
+// Haal de laatste 5 blogs op
 $db->query("SELECT blogs.*, users.username as author_name 
            FROM blogs 
            JOIN users ON blogs.author_id = users.id 
@@ -15,7 +28,7 @@ $db->query("SELECT blogs.*, users.username as author_name
            LIMIT 5");
 $latest_blogs = $db->resultSet();
 
-// Haal het laatste nieuws op en limiteer tot 5 items
+// Haal het laatste nieuws op
 $latest_news = array_slice($newsAPI->getLatestPoliticalNews(), 0, 5);
 
 // Haal actuele data op
@@ -28,46 +41,226 @@ require_once 'views/templates/header.php';
 
 <main class="bg-gray-50">
     <!-- Hero Section -->
-    <section class="relative bg-gradient-to-r from-primary to-secondary overflow-hidden gradient-animate">
-        <div class="absolute inset-0 bg-pattern opacity-10"></div>
-        <div class="container mx-auto px-4 py-24 relative">
-            <div class="max-w-4xl mx-auto text-center">
-                <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight" data-aos="fade-down" data-aos-delay="100">
-                    Welkom bij PolitiekPraat
-                </h1>
-                <p class="text-xl md:text-2xl text-white/90 mb-10 leading-relaxed" data-aos="fade-up" data-aos-delay="200">
-                    Het platform waar jouw stem telt. Ontdek, discussieer en draag bij aan het politieke debat in Nederland.
-                </p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center" data-aos="zoom-in" data-aos-delay="300">
-                    <a href="<?php echo URLROOT; ?>/blogs" 
-                       class="inline-block bg-white text-primary px-8 py-4 rounded-lg font-semibold hover:bg-opacity-90 transition-all transform hover:scale-105 shadow-lg animate-pulse-slow">
-                        Ontdek onze blogs
-                    </a>
-                    <a href="<?php echo URLROOT; ?>/forum" 
-                       class="inline-block bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-primary transition-all">
-                        Ga naar het forum
-                    </a>
+    <section class="relative bg-gradient-to-br from-gray-900 to-primary overflow-hidden">
+        <!-- Animated background pattern -->
+        <div class="absolute inset-0">
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"30\" height=\"30\" viewBox=\"0 0 30 30\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cpath d=\"M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z\" fill=\"rgba(255,255,255,0.05)\"%3E%3C/path%3E%3C/svg%3E')] opacity-20"></div>
+        </div>
+        
+        <div class="container mx-auto px-4 py-20 relative">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <!-- Left Column: Main Content -->
+                    <div class="text-white space-y-8" data-aos="fade-right">
+                        <h1 class="text-5xl md:text-7xl font-bold leading-tight">
+                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-blue-200">
+                                Politiek voor iedereen
+                            </span>
+                        </h1>
+                        <p class="text-xl md:text-2xl text-gray-300 leading-relaxed">
+                            Ontdek, discussieer en draag bij aan het politieke debat in Nederland. 
+                            Jouw stem telt in de democratische dialoog.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <a href="<?php echo URLROOT; ?>/blogs" 
+                               class="inline-flex items-center justify-center bg-white text-primary px-8 py-4 rounded-lg font-semibold hover:bg-opacity-90 transition-all transform hover:scale-105 shadow-lg group">
+                                <span>Ontdek onze blogs</span>
+                                <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                                </svg>
+                            </a>
+                            <a href="<?php echo URLROOT; ?>/forum" 
+                               class="inline-flex items-center justify-center bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-primary transition-all group">
+                                <span>Ga naar het forum</span>
+                                <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Live Peilingen -->
+                    <div class="relative max-w-2xl mx-auto lg:max-w-none" data-aos="fade-left">
+                        <!-- Glassmorphism Background -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-slate-800/90 via-slate-900/90 to-slate-800/90 rounded-xl backdrop-blur-md"></div>
+                        
+                        <!-- Main Content -->
+                        <div class="relative bg-white/5 p-4 sm:p-6 rounded-xl border border-white/10">
+                            <!-- Dashboard Header -->
+                            <div class="flex items-center justify-between mb-6">
+                                <div class="flex items-center">
+                                    <div class="p-2 bg-blue-500/10 rounded-lg mr-3 ring-1 ring-blue-500/20">
+                                        <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-lg font-semibold text-white tracking-tight">Live Peilingen</h3>
+                                        <p class="text-xs text-blue-300/80">
+                                            Laatste update: <?php echo date('d M Y', strtotime($latestPolls['last_updated'])); ?>
+                                        </p>
+                                    </div>
+                                </div>
+                                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-500/10 text-green-400 ring-1 ring-green-500/20">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-green-400 mr-1.5 animate-pulse"></span>
+                                    Live
+                                </span>
+                            </div>
+
+                            <!-- Latest Polls Grid -->
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
+                                <!-- Zetelverdeling Card -->
+                                <div class="bg-gradient-to-br from-white/[0.04] to-white/[0.02] rounded-lg p-4 border border-white/10 hover:border-blue-500/20 transition-colors shadow-lg shadow-black/10">
+                                    <div class="flex items-center justify-between mb-4">
+                                        <h4 class="text-sm font-medium text-white flex items-center">
+                                            <svg class="w-4 h-4 mr-2 text-blue-400/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                            </svg>
+                                            Laatste Peiling
+                                        </h4>
+                                        <span class="text-xs text-blue-300/80 font-medium px-2 py-0.5 rounded-full bg-blue-500/5 ring-1 ring-blue-500/20">
+                                            <?php echo $latestPolls['polls'][0]['bureau']; ?>
+                                        </span>
+                                    </div>
+                                    
+                                    <!-- Partijen Grid -->
+                                    <div class="space-y-2.5">
+                                        <?php foreach($latestPolls['polls'][0]['parties'] as $party => $data): ?>
+                                            <div class="group">
+                                                <div class="flex items-center justify-between mb-1">
+                                                    <div class="flex items-center">
+                                                        <span class="text-sm text-white/90 font-medium"><?php echo strtoupper($party); ?></span>
+                                                        <?php if(isset($latestPolls['trends'][$party])): ?>
+                                                            <?php if($latestPolls['trends'][$party]['trend'] === 'up'): ?>
+                                                                <div class="ml-1.5 px-1.5 py-0.5 rounded bg-green-500/10">
+                                                                    <svg class="w-3 h-3 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                                                                    </svg>
+                                                                </div>
+                                                            <?php elseif($latestPolls['trends'][$party]['trend'] === 'down'): ?>
+                                                                <div class="ml-1.5 px-1.5 py-0.5 rounded bg-red-500/10">
+                                                                    <svg class="w-3 h-3 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0v-8m0 8l-8-8-4 4-6-6"/>
+                                                                    </svg>
+                                                                </div>
+                                                            <?php endif; ?>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                    <div class="flex items-center space-x-2">
+                                                        <span class="text-xs text-blue-300/80"><?php echo $data['percentage']; ?>%</span>
+                                                        <span class="text-sm text-white font-bold bg-white/5 px-1.5 py-0.5 rounded">
+                                                            <?php echo $data['seats']; ?>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="w-full bg-white/5 rounded-full h-1.5 overflow-hidden ring-1 ring-white/10">
+                                                    <div class="bg-gradient-to-r from-blue-500 to-blue-400 h-full rounded-full transition-all transform origin-left scale-x-100 group-hover:scale-x-105" 
+                                                         style="width: <?php echo ($data['seats'] / 150) * 100; ?>%">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+
+                                <!-- Trend Analysis -->
+                                <div class="bg-gradient-to-br from-white/[0.04] to-white/[0.02] rounded-lg p-4 border border-white/10 hover:border-purple-500/20 transition-colors shadow-lg shadow-black/10">
+                                    <div class="flex items-center justify-between mb-4">
+                                        <h4 class="text-sm font-medium text-white flex items-center">
+                                            <svg class="w-4 h-4 mr-2 text-purple-400/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                                            </svg>
+                                            Trend Analyse
+                                        </h4>
+                                        <span class="text-xs text-purple-300/80 font-medium px-2 py-0.5 rounded-full bg-purple-500/5 ring-1 ring-purple-500/20">
+                                            3 mnd
+                                        </span>
+                                    </div>
+                                    
+                                    <!-- Trend Cards -->
+                                    <div class="grid grid-cols-2 gap-2">
+                                        <?php foreach($latestPolls['trends'] as $party => $trend): ?>
+                                            <div class="bg-white/5 p-2 rounded-lg border border-white/10 hover:bg-white/[0.02] transition-colors">
+                                                <div class="flex items-center justify-between mb-1">
+                                                    <span class="text-xs text-white/90 font-medium"><?php echo strtoupper($party); ?></span>
+                                                    <div class="flex items-center">
+                                                        <?php if($trend['trend'] === 'up'): ?>
+                                                            <div class="flex items-center space-x-1 px-1.5 py-0.5 rounded bg-green-500/10">
+                                                                <span class="text-xs text-green-400 font-medium">+<?php echo $trend['change']; ?></span>
+                                                                <svg class="w-3 h-3 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                                                                </svg>
+                                                            </div>
+                                                        <?php elseif($trend['trend'] === 'down'): ?>
+                                                            <div class="flex items-center space-x-1 px-1.5 py-0.5 rounded bg-red-500/10">
+                                                                <span class="text-xs text-red-400 font-medium"><?php echo $trend['change']; ?></span>
+                                                                <svg class="w-3 h-3 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0v-8m0 8l-8-8-4 4-6-6"/>
+                                                                </svg>
+                                                            </div>
+                                                        <?php else: ?>
+                                                            <div class="flex items-center space-x-1 px-1.5 py-0.5 rounded bg-yellow-500/10">
+                                                                <span class="text-xs text-yellow-400 font-medium">0</span>
+                                                                <svg class="w-3 h-3 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/>
+                                                                </svg>
+                                                            </div>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                </div>
+                                                <div class="text-[10px] font-medium px-1.5 py-0.5 rounded-full bg-white/5 text-center text-white/60">
+                                                    <?php 
+                                                    $trendText = $trend['trend'] === 'up' ? 'Stijgend' : ($trend['trend'] === 'down' ? 'Dalend' : 'Stabiel');
+                                                    echo $trendText . ' trend';
+                                                    ?>
+                                                </div>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Poll Bureaus -->
+                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                                <?php foreach($latestPolls['polls'] as $poll): ?>
+                                    <div class="bg-gradient-to-br from-white/[0.04] to-white/[0.02] rounded-lg p-3 border border-white/10 hover:border-indigo-500/20 transition-all duration-300 shadow-lg shadow-black/10">
+                                        <div class="flex items-center justify-between mb-2">
+                                            <span class="text-sm text-white font-medium"><?php echo $poll['bureau']; ?></span>
+                                            <span class="text-[10px] text-indigo-300/80 font-medium px-1.5 py-0.5 rounded-full bg-indigo-500/5 ring-1 ring-indigo-500/20">
+                                                <?php echo date('d M', strtotime($poll['date'])); ?>
+                                            </span>
+                                        </div>
+                                        <div class="space-y-1.5">
+                                            <?php 
+                                            $topParties = array_slice($poll['parties'], 0, 3);
+                                            foreach($topParties as $party => $data): 
+                                            ?>
+                                                <div class="flex items-center justify-between">
+                                                    <span class="text-xs text-white/80"><?php echo strtoupper($party); ?></span>
+                                                    <span class="text-xs text-white font-medium bg-white/5 px-1.5 py-0.5 rounded">
+                                                        <?php echo $data['seats']; ?>
+                                                    </span>
+                                                </div>
+                                            <?php endforeach; ?>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+
+                            <!-- Decorative Elements -->
+                            <div class="absolute -top-4 -right-4 w-24 h-24 bg-blue-500/20 rounded-full blur-2xl"></div>
+                            <div class="absolute -bottom-4 -left-4 w-32 h-32 bg-purple-500/20 rounded-full blur-2xl"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-gray-50 to-transparent"></div>
-    </section>
 
-    <!-- Statistieken Section -->
-    <section class="container mx-auto px-4 -mt-10 relative z-10">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="bg-white p-6 rounded-xl shadow-lg text-center transform hover:scale-105 transition-transform" data-aos="fade-up" data-aos-delay="100">
-                <div class="text-4xl font-bold text-primary mb-2 animate-float">1.2K+</div>
-                <div class="text-gray-600">Actieve leden</div>
-            </div>
-            <div class="bg-white p-6 rounded-xl shadow-lg text-center transform hover:scale-105 transition-transform" data-aos="fade-up" data-aos-delay="200">
-                <div class="text-4xl font-bold text-primary mb-2 animate-float">500+</div>
-                <div class="text-gray-600">Politieke blogs</div>
-            </div>
-            <div class="bg-white p-6 rounded-xl shadow-lg text-center transform hover:scale-105 transition-transform" data-aos="fade-up" data-aos-delay="300">
-                <div class="text-4xl font-bold text-primary mb-2 animate-float">2.5K+</div>
-                <div class="text-gray-600">Forum discussies</div>
-            </div>
+        <!-- Wave Separator -->
+        <div class="absolute bottom-0 left-0 right-0">
+            <svg class="w-full h-auto" viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 120L60 110C120 100 240 80 360 70C480 60 600 60 720 65C840 70 960 80 1080 85C1200 90 1320 90 1380 90L1440 90V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0V120Z" fill="rgb(249 250 251)"/>
+            </svg>
         </div>
     </section>
 
@@ -264,24 +457,24 @@ require_once 'views/templates/header.php';
                             <div class="space-y-6">
                                 <div class="flex items-center justify-between">
                                     <span class="text-gray-600">Kamervragen deze week</span>
-                                    <span class="text-primary font-bold">127</span>
+                                    <span class="text-primary font-bold"><?php echo $kamerStats['kamervragen_deze_week']; ?></span>
                                 </div>
                                 <div class="w-full bg-gray-100 h-2 rounded-full">
-                                    <div class="bg-primary h-2 rounded-full" style="width: 75%"></div>
+                                    <div class="bg-primary h-2 rounded-full" style="width: <?php echo $kamerStats['kamervragen_percentage']; ?>%"></div>
                                 </div>
                                 <div class="flex items-center justify-between">
                                     <span class="text-gray-600">Moties ingediend</span>
-                                    <span class="text-primary font-bold">45</span>
+                                    <span class="text-primary font-bold"><?php echo $kamerStats['moties_ingediend']; ?></span>
                                 </div>
                                 <div class="w-full bg-gray-100 h-2 rounded-full">
-                                    <div class="bg-primary h-2 rounded-full" style="width: 60%"></div>
+                                    <div class="bg-primary h-2 rounded-full" style="width: <?php echo $kamerStats['moties_percentage']; ?>%"></div>
                                 </div>
                                 <div class="flex items-center justify-between">
                                     <span class="text-gray-600">Wetsvoorstellen behandeld</span>
-                                    <span class="text-primary font-bold">12</span>
+                                    <span class="text-primary font-bold"><?php echo $kamerStats['wetsvoorstellen_behandeld']; ?></span>
                                 </div>
                                 <div class="w-full bg-gray-100 h-2 rounded-full">
-                                    <div class="bg-primary h-2 rounded-full" style="width: 40%"></div>
+                                    <div class="bg-primary h-2 rounded-full" style="width: <?php echo $kamerStats['wetsvoorstellen_percentage']; ?>%"></div>
                                 </div>
                             </div>
                         </div>
