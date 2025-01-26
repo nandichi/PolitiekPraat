@@ -1,119 +1,118 @@
 # PolitiekPraat 
 
-PolitiekPraat is hét toonaangevende platform voor open en constructieve discussie over Nederlandse politiek. Ons doel is om politiek toegankelijk te maken voor iedereen en een brug te slaan tussen burgers en de politieke wereld.
+PolitiekPraat is een website waar iedereen kan meepraten over Nederlandse politiek. We maken politiek makkelijk te begrijpen en brengen burgers en politiek dichter bij elkaar.
 
-## 🎯 Missie & Visie
+## 🎯 Waar staan wij voor?
 
-Wij geloven dat een gezonde democratie gebouwd is op geïnformeerde burgers en open dialoog. PolitiekPraat streeft ernaar om:
-- Politieke informatie toegankelijk en begrijpelijk te maken voor iedereen
-- Een respectvolle en constructieve dialoog te faciliteren
-- Burgerparticipatie in het politieke proces te stimuleren
-- Transparantie in de politieke besluitvorming te bevorderen
+Wij vinden dat iedereen moet kunnen meepraten over politiek. Daarom willen we:
+- Politiek uitleggen in normale mensentaal
+- Een plek maken waar mensen fijn met elkaar kunnen praten
+- Mensen helpen om mee te doen met politieke beslissingen
+- Laten zien hoe politieke keuzes worden gemaakt
 
-## 🚀 Kernfunctionaliteiten
+## 🚀 Wat kun je allemaal doen?
 
-### 📰 Nieuws & Actualiteiten
-- Real-time politiek nieuws van diverse Nederlandse nieuwsbronnen
-- Diepgaande analyses van actuele politieke ontwikkelingen
-- Overzichtelijke tijdlijn van belangrijke politieke gebeurtenissen
+### 📰 Nieuws
+- Het laatste politieke nieuws, meteen als het gebeurt
+- Uitleg over wat er in de politiek gebeurt
+- Een overzicht van belangrijke politieke momenten
 
-### 💭 Thematische Discussies
-- Gestructureerde debatten over actuele politieke thema's
-- Expert-bijdragen en analyses
-- Fact-checking en bronvermelding
-- Moderatie voor respectvolle en constructieve discussies
+### 💭 Meepraten over thema's
+- Praten over onderwerpen die nu spelen
+- Uitleg van mensen die er veel vanaf weten
+- Controleren of informatie klopt
+- Zorgen dat iedereen netjes met elkaar omgaat
 
-### ✍️ Blog Platform
-- Platform voor politieke opinies en analyses
-- Mogelijkheid voor gebruikers om eigen politieke blogs te publiceren
-- Interactie tussen schrijvers en lezers
+### ✍️ Blogs schrijven
+- Je eigen mening delen over politiek
+- Zelf stukjes schrijven over politieke onderwerpen
+- Reageren op elkaars verhalen
 
-### 📊 Politieke Data & Statistieken
-- Visualisaties van politieke data
-- Stemgedrag en aanwezigheid van politici
-- Actuele peilingen en historische verkiezingsresultaten
+### 📊 Cijfers en feiten
+- Handige plaatjes die politiek uitleggen
+- Zien wat politici doen en beslissen
+- Actuele peilingen en uitslagen
 
-### 📅 Politieke Agenda
-- Overzicht van aankomende politieke gebeurtenissen
-- Debatagenda van de Tweede Kamer
-- Belangrijke politieke mijlpalen en deadlines
+### 📅 Politieke agenda
+- Zien wat er binnenkort gebeurt
+- Wanneer er belangrijke debatten zijn
+- Belangrijke data en deadlines
 
-## 🛠️ Technische Specificaties
+## 🛠️ Technische informatie
 
-### Vereisten
-- PHP 7.4 of hoger
-- MySQL 5.7 of hoger
+### Wat heb je nodig?
+- PHP 7.4 of nieuwer
+- MySQL 5.7 of nieuwer
 - Composer
-- Webserver 
+- Een webserver
 
-### Installatie
+### Hoe zet je het op?
 
-1. Clone de repository:
+1. Kopieer de code:
 ```bash
 git clone https://github.com/jouw-username/PolitiekPraat.git
 cd PolitiekPraat
 ```
 
-2. Installeer dependencies:
+2. Installeer de benodigde onderdelen:
 ```bash
 composer install
 ```
 
-3. Configureer de database:
-- Maak een nieuwe MySQL database aan
+3. Stel de database in:
+- Maak een nieuwe database
 - Kopieer `includes/config.example.php` naar `includes/config.php`
-- Vul de database gegevens in
+- Vul je database gegevens in
 
-4. Importeer de database structuur:
+4. Zet de database klaar:
 ```bash
 mysql -u gebruiker -p database_naam < database/setup.sql
 ```
 
-## 🔧 Project Structuur
+## 🔧 Hoe zit de website in elkaar?
 
 ```
 PolitiekPraat/
-├── controllers/      # Route controllers en business logic
-├── includes/         # Core functionaliteit, APIs en configuratie
-├── views/           # Frontend templates en UI componenten
-├── public/          # Publieke assets (CSS, JS, images)
-├── scripts/         # Helper scripts en tools
-└── database/        # Database migraties en seeds
+├── controllers/      # Besturing van de website
+├── includes/         # Belangrijke onderdelen en instellingen
+├── views/           # Wat je op het scherm ziet
+├── public/          # Plaatjes, styling en scripts
+├── scripts/         # Handige hulpprogramma's
+└── database/        # Database bestanden
 ```
 
-## 🔒 Beveiliging & Privacy
+## 🔒 Veiligheid & Privacy
 
-- Sterke gebruikersauthenticatie
-- GDPR/AVG-compliant gegevensverwerking
-- XSS en CSRF bescherming
-- SQL injectie preventie
-- Regelmatige security audits
+- Veilig inloggen
+- Netjes omgaan met je gegevens (volgens de wet)
+- Bescherming tegen hackers
+- Regelmatige controles op veiligheid
 
-## 🤝 Bijdragen
+## 🤝 Meehelpen
 
-We verwelkomen bijdragen van de community! Als je wilt bijdragen:
+Wil je meehelpen om de website beter te maken? Graag! Zo doe je dat:
 
-1. Fork de repository
-2. Creëer een feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit je changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push naar de branch (`git push origin feature/AmazingFeature`)
-5. Open een Pull Request
+1. Maak een kopie van het project
+2. Maak een nieuwe tak voor je verbetering (`git checkout -b verbetering/NieuweFeature`)
+3. Sla je werk op (`git commit -m 'Nieuwe feature toegevoegd'`)
+4. Stuur je werk door (`git push origin verbetering/NieuweFeature`)
+5. Vraag of we je verbetering willen toevoegen
 
 ## 📝 Licentie
 
-Dit project is gelicentieerd onder de MIT License.
+Je mag deze code gebruiken volgens de MIT License.
 
 ## 👥 Team
 
-- [Naoufal Andichi] - ontwikkelaar
+- [Naoufal Andichi] - maker van de website
 
 ## 📞 Contact
 
-Voor vragen, suggesties of feedback:
+Heb je vragen of ideeën? Je kunt ons bereiken via:
 - Email: [naoufal.exe@gmail.com]
 - Website: [www.politiekpraat.nl]
 - Twitter: [@naoufalexe]
 
 ---
 
-*PolitiekPraat - Samen bouwen aan democratie* 🇳🇱
+*PolitiekPraat - Samen praten over politiek* 🇳🇱
