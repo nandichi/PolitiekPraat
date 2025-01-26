@@ -1,4 +1,4 @@
-# PolitiekPraat ��️
+# PolitiekPraat 
 
 PolitiekPraat is hét toonaangevende platform voor open en constructieve discussie over Nederlandse politiek. Ons doel is om politiek toegankelijk te maken voor iedereen en een brug te slaan tussen burgers en de politieke wereld.
 
