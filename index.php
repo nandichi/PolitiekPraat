@@ -42,6 +42,7 @@ $router->add('register', 'controllers/auth/register.php');
 $router->add('logout', 'controllers/auth/logout.php');
 $router->add('themas', 'controllers/themas.php');
 $router->add('thema/([^/]+)', 'controllers/thema.php');
+$router->add('over-mij', 'controllers/over-mij.php');
 $router->add('nieuws', 'controllers/nieuws.php');
 $router->add('profile', 'controllers/profile/index.php');
 $router->add('profile/edit', 'controllers/profile/edit.php');

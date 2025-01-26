@@ -240,13 +240,13 @@
         <div class="container mx-auto px-4">
             <div class="flex justify-between items-center">
                 <div class="flex items-center space-x-4 text-sm">
-                    <span class="flex items-center">
+                    <a href="<?php echo URLROOT; ?>/nieuws" class="flex items-center hover:text-white/90 transition-colors duration-300">
                         <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                   d="M13 10V3L4 14h7v7l9-11h-7z"/>
                         </svg>
                         Laatste nieuws
-                    </span>
+                    </a>
                     <span class="hidden md:inline-block">|</span>
                     <span class="hidden md:flex items-center animate-pulse-slow">
                         <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -483,6 +483,13 @@
                             <span class="absolute inset-x-0 -bottom-0.5 h-0.5 bg-secondary transform scale-x-0 group-hover:scale-x-100 
                                        transition-transform duration-300 origin-left"></span>
                         </a>
+
+                        <a href="<?php echo URLROOT; ?>/over-mij" 
+                           class="relative text-white/90 hover:text-white transition-all duration-300 font-medium py-2 group">
+                            <span class="relative z-10">Over ons</span>
+                            <span class="absolute inset-x-0 -bottom-0.5 h-0.5 bg-secondary transform scale-x-0 group-hover:scale-x-100 
+                                       transition-transform duration-300 origin-left"></span>
+                        </a>
                     </div>
 
                     <!-- Desktop Auth Buttons -->
@@ -702,6 +709,15 @@
                                               d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                                     </svg>
                                     <span class="font-medium">Contact</span>
+                                </a>
+
+                                <a href="<?php echo URLROOT; ?>/over-mij" 
+                                   class="flex items-center text-white/90 hover:text-white py-2 transition-colors duration-300">
+                                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                              d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                    </svg>
+                                    <span class="font-medium">Over mij</span>
                                 </a>
                             </nav>
 
