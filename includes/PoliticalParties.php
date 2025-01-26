@@ -109,6 +109,78 @@ class PoliticalParties {
         ]
     ];
 
+    private $linksePartijen = [
+        'GroenLinks-PvdA' => [
+            'klimaatbeleid' => 'Voorstander van ambitieus klimaatbeleid met focus op duurzame energie en CO2-reductie. Pleit voor eerlijke verdeling van de kosten van de energietransitie.',
+            'woningmarkt' => 'Meer sociale huurwoningen, regulering van de vrije huursector en aanpak van woningspeculatie. Focus op betaalbaar wonen voor iedereen.',
+            'economie' => 'Sterkere rol voor de overheid in de economie, hogere belastingen voor grote bedrijven en vermogens, en investeren in publieke voorzieningen.',
+            'zorg' => 'Afschaffen marktwerking in de zorg, lagere eigen bijdragen en meer waardering voor zorgpersoneel. Focus op preventie en toegankelijkheid.',
+            'onderwijs' => 'Meer investeren in onderwijs, kleinere klassen, hogere salarissen voor leraren en afschaffen leenstelsel. Focus op kansengelijkheid.',
+            'arbeidsmarkt' => 'Hoger minimumloon, vaste contracten stimuleren, en betere bescherming voor flexwerkers. Focus op werknemersrechten.',
+            'immigratie' => 'Humaan asielbeleid, betere opvang en integratie van vluchtelingen. Focus op inclusieve samenleving en gelijke kansen.',
+            'veiligheid' => 'Preventie en aanpak van oorzaken van criminaliteit. Investeren in wijkagenten en sociale veiligheid.',
+            'duurzaamheid' => 'Ambitieuze doelen voor circulaire economie, natuurbehoud en duurzame landbouw. Focus op klimaatrechtvaardigheid.'
+        ],
+        'SP' => [
+            'klimaatbeleid' => 'Klimaatmaatregelen moeten eerlijk verdeeld worden, grote vervuilers moeten meer betalen. Focus op betaalbaarheid voor gewone mensen.',
+            'woningmarkt' => 'Massaal bouwen van betaalbare woningen, huurprijzen bevriezen en speculanten aanpakken. Wonen is een recht, geen verdienmodel.',
+            'economie' => 'Economie moet dienend zijn aan mensen, niet andersom. Herverdeling van welvaart en nationalisering van vitale sectoren.',
+            'zorg' => 'Nationaal Zorgfonds zonder eigen risico, zorg in publieke handen en betere arbeidsvoorwaarden in de zorg.',
+            'onderwijs' => 'Gratis onderwijs op alle niveaus, kleinere klassen en meer zeggenschap voor docenten en studenten.',
+            'arbeidsmarkt' => 'Vast werk moet de norm zijn, minimumloon naar 15 euro en aanpak van doorgeslagen flexibilisering.',
+            'immigratie' => 'Eerlijk asielbeleid met aandacht voor draagvlak in de samenleving. Focus op goede integratie en arbeidsparticipatie.',
+            'veiligheid' => 'Meer wijkagenten, aanpak van georganiseerde misdaad en versterking van lokale veiligheid.',
+            'duurzaamheid' => 'Duurzaamheid moet betaalbaar zijn voor iedereen. Grote vervuilers aanpakken en investeren in groene alternatieven.'
+        ],
+        'PvdD' => [
+            'klimaatbeleid' => 'Radicale systeemverandering nodig voor klimaat en biodiversiteit. Focus op plantaardige economie en natuurherstel.',
+            'woningmarkt' => 'Duurzaam en natuurinclusief bouwen, focus op renovatie en transformatie van bestaande gebouwen.',
+            'economie' => 'Transitie naar circulaire economie, krimp van vervuilende industrie en stimuleren van duurzame alternatieven.',
+            'zorg' => 'Preventieve gezondheidszorg, meer aandacht voor leefstijl en milieufactoren in gezondheid.',
+            'onderwijs' => 'Meer aandacht voor duurzaamheid en dierenwelzijn in onderwijs, kleinschalig onderwijs stimuleren.',
+            'arbeidsmarkt' => 'Korter werken met behoud van loon, basisinkomen onderzoeken en duurzame banen stimuleren.',
+            'immigratie' => 'Humaan vluchtelingenbeleid en aandacht voor klimaatvluchtelingen. Focus op mondiale rechtvaardigheid.',
+            'veiligheid' => 'Preventie van milieucriminaliteit en dierenmishandeling. Versterking van handhaving natuurwetgeving.',
+            'duurzaamheid' => 'Radicale omslag naar plantaardige economie, natuurherstel en dierenwelzijn centraal stellen.'
+        ]
+    ];
+
+    private $rechtsePartijen = [
+        'VVD' => [
+            'klimaatbeleid' => 'Klimaatdoelen halen door innovatie en kernenergie. Focus op haalbaarheid en betaalbaarheid, geen overhaaste maatregelen.',
+            'woningmarkt' => 'Sneller en meer bouwen door vermindering regeldruk. Stimuleren eigen woningbezit en ruimte voor commerciële verhuur.',
+            'economie' => 'Lage belastingen, minder regels voor ondernemers en gezonde overheidsfinanciën. Focus op economische groei.',
+            'zorg' => 'Efficiëntere zorg door marktwerking, eigen verantwoordelijkheid en innovatie. Kritisch op stijgende zorgkosten.',
+            'onderwijs' => 'Focus op kwaliteit en excellentie, meer maatwerk in onderwijs en aansluiting op arbeidsmarkt.',
+            'arbeidsmarkt' => 'Flexibiliteit op arbeidsmarkt behouden, lagere lasten op arbeid en stimuleren van ondernemerschap.',
+            'immigratie' => 'Streng maar rechtvaardig immigratiebeleid. Focus op arbeidsmigratie die bijdraagt aan de economie.',
+            'veiligheid' => 'Harde aanpak van criminaliteit, meer bevoegdheden voor politie en justitie, investeren in cybersecurity.',
+            'duurzaamheid' => 'Duurzaamheid door innovatie en ondernemerschap. Balans tussen economie en milieu.'
+        ],
+        'PVV' => [
+            'klimaatbeleid' => 'Kritisch op klimaatmaatregelen, geen verdere investeringen in energietransitie. Behoud van fossiele energie.',
+            'woningmarkt' => 'Voorrang voor Nederlanders bij woningtoewijzing, geen voorrang voor statushouders.',
+            'economie' => 'Lagere belastingen, minder geld naar EU en ontwikkelingshulp. Focus op koopkracht gewone Nederlanders.',
+            'zorg' => 'Lagere eigen bijdragen, meer handen aan het bed en behoud van kleinere ziekenhuizen.',
+            'onderwijs' => 'Behoud van speciaal onderwijs, focus op kernvakken en Nederlandse cultuur en geschiedenis.',
+            'arbeidsmarkt' => 'Bescherming Nederlandse werknemers, aanpak arbeidsmigratie en behoud pensioenstelsel.',
+            'immigratie' => 'Stop immigratie uit islamitische landen, streng asielbeleid en focus op remigratie.',
+            'veiligheid' => 'Zero tolerance beleid, hogere straffen en meer politie op straat.',
+            'duurzaamheid' => 'Kritisch op klimaatmaatregelen en windmolens. Behoud van traditionele industrie.'
+        ],
+        'BBB' => [
+            'klimaatbeleid' => 'Realistische klimaataanpak met oog voor belangen boeren en platteland. Kritisch op te snelle transitie.',
+            'woningmarkt' => 'Meer woningbouw in landelijk gebied, behoud van karakter platteland en leefbaarheid dorpen.',
+            'economie' => 'Bescherming van boeren en mkb, kritisch op doorgeslagen regelgeving en klimaatmaatregelen.',
+            'zorg' => 'Behoud van regionale ziekenhuizen, meer waardering voor zorgpersoneel en menselijke maat in de zorg.',
+            'onderwijs' => 'Behoud van scholen in krimpgebieden, meer praktijkgericht onderwijs en waardering vakmanschap.',
+            'arbeidsmarkt' => 'Minder regels voor ondernemers, bescherming familiebedrijven en ondersteuning regionale economie.',
+            'immigratie' => 'Beperking immigratie, focus op arbeidsmigratie die nodig is voor de arbeidsmarkt.',
+            'veiligheid' => 'Meer blauw op straat in landelijk gebied, aanpak ondermijning en drugscriminaliteit.',
+            'duurzaamheid' => 'Duurzaamheid met oog voor belangen boeren en platteland. Kritisch op rigoureuze natuurmaatregelen.'
+        ]
+    ];
+
     public function getParties() {
         return $this->parties;
     }
@@ -119,5 +191,25 @@ class PoliticalParties {
             $logos[$slug] = 'data:image/svg+xml;base64,' . base64_encode($party['logo']);
         }
         return $logos;
+    }
+
+    public function getLinkseStandpunten($thema) {
+        $standpunten = [];
+        foreach ($this->linksePartijen as $partij => $themas) {
+            if (isset($themas[$thema])) {
+                $standpunten[$partij] = $themas[$thema];
+            }
+        }
+        return $standpunten;
+    }
+
+    public function getRechtseStandpunten($thema) {
+        $standpunten = [];
+        foreach ($this->rechtsePartijen as $partij => $themas) {
+            if (isset($themas[$thema])) {
+                $standpunten[$partij] = $themas[$thema];
+            }
+        }
+        return $standpunten;
     }
 } 

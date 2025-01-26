@@ -1,7 +1,9 @@
 <?php
+require_once 'config.php';
 
 class OpenDataAPI {
-    private $cache_duration = 3600; // 1 uur cache
+    private $cache_dir = 'cache/';
+    private $cache_time = 3600; // 1 uur
 
     public function __construct() {
         if (!file_exists('../cache')) {
@@ -10,12 +12,14 @@ class OpenDataAPI {
     }
 
     private function fetchWithCache($url, $cache_key) {
-        $cache_file = "../cache/{$cache_key}.json";
+        $cache_file = $this->cache_dir . $cache_key . '.json';
         
-        if (file_exists($cache_file) && (time() - filemtime($cache_file) < $this->cache_duration)) {
+        // Check if cache exists and is still valid
+        if (file_exists($cache_file) && (time() - filemtime($cache_file) < $this->cache_time)) {
             return json_decode(file_get_contents($cache_file), true);
         }
-
+        
+        // Fetch new data
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -23,12 +27,16 @@ class OpenDataAPI {
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         $response = curl_exec($ch);
         curl_close($ch);
-
+        
         if ($response) {
+            // Save to cache
+            if (!is_dir($this->cache_dir)) {
+                mkdir($this->cache_dir, 0777, true);
+            }
             file_put_contents($cache_file, $response);
             return json_decode($response, true);
         }
-
+        
         return null;
     }
 
@@ -151,7 +159,64 @@ class OpenDataAPI {
         return $agenda;
     }
 
-    private function getThemaIcon($onderwerp) {
+    public function getGerelateerdePolitiekeDebatten($thema_slug) {
+        // Simuleer API call voor gerelateerde debatten
+        return [
+            [
+                'type' => 'Plenair debat',
+                'titel' => 'Hoofdlijnen ' . ucfirst($thema_slug),
+                'datum' => date('Y-m-d', strtotime('+2 weeks')),
+                'beschrijving' => 'Plenair debat over de hoofdlijnen van het ' . $thema_slug . ' beleid.',
+                'slug' => 'hoofdlijnen-' . $thema_slug
+            ],
+            [
+                'type' => 'Commissiedebat',
+                'titel' => 'Technische briefing ' . ucfirst($thema_slug),
+                'datum' => date('Y-m-d', strtotime('+1 week')),
+                'beschrijving' => 'Technische briefing over recente ontwikkelingen in het ' . $thema_slug . '.',
+                'slug' => 'technische-briefing-' . $thema_slug
+            ],
+            [
+                'type' => 'Rondetafelgesprek',
+                'titel' => 'Expertmeeting ' . ucfirst($thema_slug),
+                'datum' => date('Y-m-d', strtotime('+3 weeks')),
+                'beschrijving' => 'Rondetafelgesprek met experts over de toekomst van ' . $thema_slug . '.',
+                'slug' => 'expertmeeting-' . $thema_slug
+            ]
+        ];
+    }
+
+    public function getThemaNews($thema_slug) {
+        // Simuleer API call voor thema-gerelateerd nieuws
+        return [
+            [
+                'title' => 'Nieuwe ontwikkelingen in ' . ucfirst($thema_slug),
+                'description' => 'Een analyse van de laatste ontwikkelingen op het gebied van ' . $thema_slug . '.',
+                'source' => 'NOS',
+                'publishedAt' => date('Y-m-d', strtotime('-1 day')),
+                'url' => '#',
+                'image' => 'https://via.placeholder.com/800x400'
+            ],
+            [
+                'title' => 'Experts bezorgd over ' . ucfirst($thema_slug),
+                'description' => 'Verschillende experts uiten hun zorgen over de huidige staat van ' . $thema_slug . ' in Nederland.',
+                'source' => 'NU.nl',
+                'publishedAt' => date('Y-m-d', strtotime('-2 days')),
+                'url' => '#',
+                'image' => 'https://via.placeholder.com/800x400'
+            ],
+            [
+                'title' => 'Kamer debatteert over ' . ucfirst($thema_slug),
+                'description' => 'Vandaag vindt er een belangrijk debat plaats in de Tweede Kamer over ' . $thema_slug . '.',
+                'source' => 'RTL Nieuws',
+                'publishedAt' => date('Y-m-d'),
+                'url' => '#',
+                'image' => 'https://via.placeholder.com/800x400'
+            ]
+        ];
+    }
+
+    private function getThemaIcon($thema) {
         $icons = [
             'klimaat' => '🌍',
             'wonen' => '🏠',
@@ -159,18 +224,15 @@ class OpenDataAPI {
             'zorg' => '🏥',
             'onderwijs' => '📚',
             'arbeid' => '💼',
-            'veiligheid' => '🛡️',
-            'migratie' => '🌐',
-            'landbouw' => '🌾',
-            'verkeer' => '🚗'
+            'default' => '📋'
         ];
 
         foreach ($icons as $keyword => $icon) {
-            if (stripos($onderwerp, $keyword) !== false) {
+            if (stripos($thema, $keyword) !== false) {
                 return $icon;
             }
         }
 
-        return '📋'; // Default icon
+        return $icons['default'];
     }
 } 

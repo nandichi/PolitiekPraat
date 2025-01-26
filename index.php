@@ -21,9 +21,7 @@ if (isset($_GET['debug'])) {
 
 // Definieer het basis pad voor de applicatie
 $scriptDir = dirname($_SERVER['SCRIPT_FILENAME']);
-// Vervang private_html door public_html in het pad
-$basePath = str_replace('private_html', 'public_html', $scriptDir);
-define('BASE_PATH', $basePath);
+define('BASE_PATH', $scriptDir);
 
 // Voeg het base path toe aan de include path
 set_include_path(get_include_path() . PATH_SEPARATOR . BASE_PATH);
@@ -39,6 +37,8 @@ $router->add('contact', 'controllers/contact.php');
 $router->add('login', 'controllers/auth/login.php');
 $router->add('register', 'controllers/auth/register.php');
 $router->add('logout', 'controllers/auth/logout.php');
+$router->add('themas', 'controllers/themas.php');
+$router->add('thema/([^/]+)', 'controllers/thema.php');
 
 // Route dispatcher
 $route = $router->dispatch($_SERVER['REQUEST_URI']);

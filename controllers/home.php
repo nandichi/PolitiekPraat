@@ -578,7 +578,7 @@ require_once 'views/templates/header.php';
                                 </div>
 
                                 <!-- Action Link -->
-                                <a href="<?php echo URLROOT; ?>/themas/<?php echo strtolower(str_replace(' ', '-', $thema['title'])); ?>" 
+                                <a href="<?php echo URLROOT; ?>/thema/<?php echo strtolower(str_replace(' ', '-', $thema['title'])); ?>" 
                                    class="inline-flex items-center mt-6 text-primary font-semibold group-hover:text-secondary transition-colors">
                                     <span class="relative">
                                         Ontdek meer

@@ -6,12 +6,19 @@ Options -Indexes
 RewriteEngine On
 RewriteBase /
 
-# Als het geen bestaand bestand of map is
+# Voorkom directe toegang tot includes directory
+RewriteRule ^includes/ - [F,L]
+
+# Voorkom directe toegang tot views directory
+RewriteRule ^views/ - [F,L]
+
+# Route voor thema pagina's
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^thema/([^/]+)/?$ controllers/thema.php?slug=$1 [L,QSA]
 
-# Stuur alles naar index.php
-RewriteRule ^(.*)$ index.php [QSA,L]
+# Stuur alle overige verzoeken naar index.php
+RewriteRule ^(.*)$ index.php [L,QSA]
 
 # Bestandsrechten
 <Files ~ "\.(php|css|js|jpg|jpeg|png|gif|ico)$">
