@@ -610,137 +610,6 @@ require_once 'views/templates/header.php';
         </div>
     </section>
 
-    <!-- Politieke Debatten -->
-    <section class="py-16 relative overflow-hidden">
-        <!-- Decoratieve elementen -->
-        <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white via-gray-50 to-white"></div>
-        <div class="absolute -top-40 -left-40 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
-        <div class="absolute -bottom-40 -right-40 w-96 h-96 bg-secondary/5 rounded-full blur-3xl"></div>
-
-        <div class="container mx-auto px-4 relative">
-            <div class="text-center mb-16 relative" data-aos="fade-up">
-                <span class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-9xl text-gray-100 font-bold opacity-50 select-none">DEBATTEN</span>
-                <h2 class="text-4xl font-bold text-gray-900 mb-4 relative">
-                    <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Politieke Debatten</span>
-                </h2>
-                <div class="w-24 h-1 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full mb-4"></div>
-                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Volg en discussieer mee over de belangrijkste debatten in de Tweede Kamer</p>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <?php foreach($debatten as $index => $debat): 
-                    $is_upcoming = $debat['status'] === 'Aankomend';
-                ?>
-                    <div class="group relative" data-aos="fade-up" data-aos-delay="<?php echo $index * 150; ?>">
-                        <!-- Card Background with Gradient Border -->
-                        <div class="absolute inset-0 bg-gradient-to-br from-primary to-secondary rounded-2xl opacity-50 blur group-hover:opacity-100 transition-opacity duration-500"></div>
-                        
-                        <!-- Main Card -->
-                        <div class="relative bg-white rounded-2xl shadow-lg transform transition-all duration-500 group-hover:-translate-y-2 group-hover:shadow-2xl overflow-hidden">
-                            <!-- Decorative Pattern -->
-                            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"30\" height=\"30\" viewBox=\"0 0 30 30\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cpath d=\"M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z\" fill=\"rgba(0,0,0,0.07)\"%3E%3C/path%3E%3C/svg%3E')] opacity-10"></div>
-
-                            <!-- Content -->
-                            <div class="p-6 relative">
-                                <!-- Header -->
-                                <div class="flex justify-between items-center mb-6">
-                                    <div class="flex items-center space-x-3">
-                                        <div class="relative">
-                                            <div class="w-12 h-12 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-xl flex items-center justify-center transform transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6">
-                                                <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
-                                                </svg>
-                                            </div>
-                                            <?php if($is_upcoming): ?>
-                                                <div class="absolute -top-1 -right-1 w-4 h-4 bg-green-500 border-2 border-white rounded-full animate-pulse"></div>
-                                            <?php endif; ?>
-                                        </div>
-                                        <div>
-                                            <span class="<?php echo $is_upcoming ? 'bg-green-500' : 'bg-gray-500'; ?> text-white px-3 py-1 rounded-full text-xs font-medium inline-flex items-center">
-                                                <?php if($is_upcoming): ?>
-                                                    <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                                    </svg>
-                                                <?php endif; ?>
-                                                <?php echo $debat['status']; ?>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center text-sm text-gray-500">
-                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                        </svg>
-                                        <?php echo date('d M Y', strtotime($debat['datum'])); ?>
-                                    </div>
-                                </div>
-
-                                <!-- Title & Description -->
-                                <div class="space-y-4">
-                                    <h3 class="text-xl font-bold text-gray-900 group-hover:text-primary transition-colors">
-                                        <?php echo $debat['titel']; ?>
-                                    </h3>
-                                    <p class="text-gray-600 line-clamp-3">
-                                        <?php echo $debat['beschrijving']; ?>
-                                    </p>
-                                </div>
-
-                                <!-- Stats & Tags -->
-                                <div class="flex flex-wrap gap-2 mt-6">
-                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary">
-                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                        </svg>
-                                        <?php echo rand(50, 150); ?> deelnemers
-                                    </span>
-                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-secondary/10 text-secondary">
-                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path>
-                                        </svg>
-                                        <?php echo rand(20, 80); ?> reacties
-                                    </span>
-                                </div>
-
-                                <!-- Action Link -->
-                                <div class="mt-6 flex items-center justify-between">
-                                    <a href="<?php echo URLROOT; ?>/debatten/<?php echo strtolower(str_replace(' ', '-', $debat['titel'])); ?>"
-                                       class="inline-flex items-center text-primary font-semibold group-hover:text-secondary transition-colors">
-                                        <span class="relative">
-                                            Meer details
-                                            <div class="absolute bottom-0 left-0 w-full h-0.5 bg-secondary transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
-                                        </span>
-                                        <svg class="w-5 h-5 ml-2 transform transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                                        </svg>
-                                    </a>
-
-                                    <?php if($is_upcoming): ?>
-                                        <button class="px-4 py-2 bg-primary/10 text-primary rounded-lg text-sm font-medium hover:bg-primary/20 transition-colors">
-                                            Herinner mij
-                                        </button>
-                                    <?php endif; ?>
-                                </div>
-                            </div>
-
-                            <!-- Decorative Corner -->
-                            <div class="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-primary/5 to-secondary/5 transform rotate-45 translate-x-10 -translate-y-10 group-hover:translate-x-8 group-hover:-translate-y-8 transition-transform duration-500"></div>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-
-            <!-- CTA Button -->
-            <div class="text-center mt-16" data-aos="fade-up">
-                <a href="<?php echo URLROOT; ?>/debatten" 
-                   class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-xl hover:opacity-90 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl group">
-                    <span>Bekijk alle debatten</span>
-                    <svg class="w-5 h-5 ml-2 transform transition-transform group-hover:translate-x-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                    </svg>
-                </a>
-            </div>
-        </div>
-    </section>
-
     <!-- Call-to-Action Section -->
     <section class="py-16 bg-gradient-to-br from-primary/10 to-secondary/10">
         <div class="container mx-auto px-4">
@@ -755,11 +624,11 @@ require_once 'views/templates/header.php';
                             Start discussies, schrijf blogs en draag bij aan het politieke debat.
                         </p>
                         <div class="space-y-4">
-                            <a href="<?php echo URLROOT; ?>/auth/register" 
+                            <a href="<?php echo URLROOT; ?>/register" 
                                class="block text-center bg-primary text-white px-6 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-all">
                                 Registreer nu
                             </a>
-                            <a href="<?php echo URLROOT; ?>/auth/login" 
+                            <a href="<?php echo URLROOT; ?>/login" 
                                class="block text-center text-primary hover:text-secondary transition-colors">
                                 Al een account? Log in
                             </a>
