@@ -7,7 +7,7 @@ define('DB_NAME', 'politiek_db');
 
 // URL Root
 // define('URLROOT', 'https://politiekpraat.nl'); 
-define('URLROOT', 'http://localhost/'); 
+define('URLROOT', 'http://localhost:8080'); 
 
 
 // Site naam

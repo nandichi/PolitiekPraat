@@ -105,36 +105,73 @@
         }
 
         /* Custom Animations */
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-            100% { transform: translateY(0px); }
+        @keyframes bounce-x {
+            0%, 100% {
+                transform: translateX(0);
+            }
+            50% {
+                transform: translateX(5px);
+            }
         }
 
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes pulse-slow {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        .animate-bounce-x {
+            animation: bounce-x 1s infinite;
         }
 
         .animate-float {
-            animation: float 6s ease-in-out infinite;
+            animation: float 3s ease-in-out infinite;
         }
 
         .animate-pulse-slow {
-            animation: pulse 4s ease-in-out infinite;
+            animation: pulse-slow 2s ease-in-out infinite;
         }
 
-        /* Gradient Animations */
-        .gradient-animate {
-            background-size: 200% 200%;
-            animation: gradient 15s ease infinite;
+        /* Blog card hover effects */
+        .blog-card-hover {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .blog-card-hover:hover {
+            transform: translateY(-8px) scale(1.01);
+        }
+
+        /* Gradient text animation */
+        .gradient-text {
+            background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 50%, var(--primary-color) 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient 3s linear infinite;
         }
 
         @keyframes gradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
         }
     </style>
 </head>
