@@ -7,7 +7,7 @@ if (!defined('URLROOT')) {
 
 <main class="bg-gradient-to-br from-primary/5 via-white to-secondary/5">
     <!-- Hero Section met moderne geometrische patronen -->
-    <div class="relative overflow-hidden">
+    <div class="relative overflow-hidden min-h-screen">
         <!-- Geometrisch patroon overlay -->
         <div class="absolute inset-0 z-0 opacity-10">
             <div class="absolute inset-0" style="background-image: radial-gradient(circle at 1px 1px, #2563eb 1px, transparent 0); background-size: 40px 40px;"></div>
@@ -17,54 +17,70 @@ if (!defined('URLROOT')) {
         <div class="absolute top-0 right-0 w-1/3 h-64 bg-gradient-to-bl from-primary/10 to-transparent transform -rotate-12"></div>
         <div class="absolute bottom-0 left-0 w-1/3 h-64 bg-gradient-to-tr from-secondary/10 to-transparent transform rotate-12"></div>
 
-        <div class="container mx-auto px-4 py-16 relative z-10">
-            <div class="max-w-4xl mx-auto text-center mb-16">
-                <h1 class="text-5xl md:text-6xl font-bold text-gray-900 mb-6 tracking-tight">
+        <div class="container mx-auto px-4 py-8 md:py-16 relative z-10">
+            <div class="max-w-4xl mx-auto text-center mb-8 md:mb-16">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 md:mb-6 tracking-tight">
                     Over PolitiekPraat
                 </h1>
-                <p class="text-xl text-gray-600 leading-relaxed">
+                <p class="text-lg md:text-xl text-gray-600 leading-relaxed px-4">
                     Een platform waar technologie en democratie samenkomen
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-stretch">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-stretch">
                 <!-- Persoonlijke Sectie -->
-                <div class="bg-white/50 backdrop-blur-sm rounded-2xl p-8 border border-primary/10 shadow-lg h-full transform transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 hover:border-primary/30 group">
-                    <div class="flex items-start space-x-6">
-                        <div class="flex-shrink-0">
-                            <div class="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center text-white shadow-lg transform transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
-                                <svg class="w-8 h-8 transform transition-transform duration-300 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="bg-white/50 backdrop-blur-sm rounded-2xl p-4 sm:p-6 md:p-8 border border-primary/10 shadow-lg h-full transform transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 hover:border-primary/30 group overflow-hidden">
+                    <!-- Mobile Header -->
+                    <div class="md:hidden mb-6 flex items-center justify-center">
+                        <div class="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center text-white shadow-lg">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="flex flex-col md:flex-row md:items-start md:space-x-6 space-y-4 md:space-y-0">
+                        <!-- Desktop Icon -->
+                        <div class="flex-shrink-0 mx-auto md:mx-0 hidden md:block">
+                            <div class="w-12 sm:w-16 h-12 sm:h-16 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center text-white shadow-lg transform transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
+                                <svg class="w-6 sm:w-8 h-6 sm:h-8 transform transition-transform duration-300 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                                 </svg>
                             </div>
                         </div>
-                        <div class="flex-grow">
-                            <h3 class="text-2xl font-bold text-gray-900 mb-4">Over de Oprichter</h3>
-                            <div class="prose prose-lg">
-                                <p class="text-gray-700 leading-relaxed mb-4">
-                                    Hoi! Ik ben Naoufal Andichi, 20 jaar oud en zit in mijn laatste jaar van de opleiding Software Development op het MBO niveau 4. 
-                                    Na mijn diploma ga ik Rechten studeren aan de HAN. Ik vind het leuk om met computers te werken, maar ik wil ook graag 
-                                    meer leren over hoe onze samenleving in elkaar zit. Daarom kies ik voor deze bijzondere combinatie.
+                        <div class="flex-grow text-center md:text-left">
+                            <h3 class="text-xl sm:text-2xl font-bold text-gray-900 mb-4">Over de Oprichter</h3>
+                            <div class="prose prose-sm sm:prose-base lg:prose-lg max-w-none">
+                                <p class="text-gray-700 leading-relaxed mb-4 break-words">
+                                    Hoi! Ik ben Naoufal Andichi, 20 jaar oud. Momenteel zit ik in mijn laatste jaar 
+                                    Software Development op het MBO niveau 4. Na mijn diploma ga ik Rechten studeren 
+                                    aan de HAN.
                                 </p>
-                                <p class="text-gray-700 leading-relaxed mb-4">
-                                    Politiek heeft mij altijd al geboeid. Als kind keek ik al naar het Jeugdjournaal en stelde ik veel vragen over 
-                                    wat er in Nederland gebeurde. Nu volg ik het nieuws elke dag en praat ik graag met anderen over wat er speelt in 
-                                    ons land. Als lid van D66 geloof ik dat iedereen een eerlijke kans verdient en dat wij door goed onderwijs en 
-                                    nieuwe ideeën Nederland beter kunnen maken.
+                                <p class="text-gray-700 leading-relaxed mb-4 break-words">
+                                    Ik vind het leuk om met computers te werken, maar ik wil ook graag meer leren 
+                                    over hoe onze samenleving in elkaar zit. Daarom kies ik voor deze bijzondere 
+                                    combinatie.
                                 </p>
-                                <p class="text-gray-700 leading-relaxed mb-4">
-                                    Op sociale media zie ik vaak dat mensen boos worden als ze het over politiek hebben. Dat vind ik jammer, 
-                                    want zo leren we niet van elkaar. Daarom heb ik PolitiekPraat gemaakt: een plek waar je rustig kunt praten 
-                                    over politiek, zonder dat het uit de hand loopt. Hier mag je het oneens zijn met elkaar, als je maar respect 
-                                    houdt voor elkaars mening.
+                                <p class="text-gray-700 leading-relaxed mb-4 break-words">
+                                    Politiek heeft mij altijd al geboeid. Als kind keek ik al naar het Jeugdjournaal 
+                                    en stelde ik veel vragen. Nu volg ik het nieuws elke dag en praat ik graag met 
+                                    anderen over wat er speelt in ons land.
                                 </p>
-                                <p class="text-gray-700 leading-relaxed">
-                                    Met mijn kennis van computers en mijn interesse in politiek wil ik ervoor zorgen dat PolitiekPraat een fijne 
-                                    plek wordt voor iedereen. Een plek waar je vragen kunt stellen, je mening kunt delen en kunt leren van anderen. 
-                                    Want ik geloof dat we door naar elkaar te luisteren allemaal wijzer worden.
+                                <p class="text-gray-700 leading-relaxed mb-4 break-words">
+                                    Als lid van D66 geloof ik dat iedereen een eerlijke kans verdient en dat wij 
+                                    door goed onderwijs en nieuwe ideeën Nederland beter kunnen maken.
+                                </p>
+                                <p class="text-gray-700 leading-relaxed mb-4 break-words">
+                                    Op sociale media zie ik vaak dat mensen boos worden als ze het over politiek 
+                                    hebben. Dat vind ik jammer, want zo leren wij niet van elkaar. Daarom heb ik 
+                                    PolitiekPraat gemaakt: een plek waar je rustig kunt praten over politiek.
+                                </p>
+                                <p class="text-gray-700 leading-relaxed break-words">
+                                    Met mijn kennis van computers en interesse in politiek wil ik PolitiekPraat een 
+                                    fijne plek maken voor iedereen. Een plek waar je vragen kunt stellen en kunt 
+                                    leren van anderen.
                                 </p>
                             </div>
-                            <div class="mt-6 flex items-center space-x-4">
+                            <div class="mt-6 flex items-center justify-center md:justify-start space-x-4 flex-wrap gap-y-2">
                                 <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary/10 text-primary">
                                     <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -77,7 +93,7 @@ if (!defined('URLROOT')) {
                                     </svg>
                                     Developer
                                 </span>
-                                <a href="https://www.linkedin.com/in/naoufal-andichi" target="_blank" rel="noopener noreferrer" 
+                                <a href="https://www.linkedin.com/in/naoufalandichi/" target="_blank" rel="noopener noreferrer" 
                                    class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-700 hover:bg-blue-200 transition-colors duration-300">
                                     <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24">
                                         <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
@@ -90,18 +106,27 @@ if (!defined('URLROOT')) {
                 </div>
 
                 <!-- Missie & Visie -->
-                <div class="bg-white/50 backdrop-blur-sm rounded-2xl p-8 border border-primary/10 shadow-lg h-full transform transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 hover:border-primary/30 group">
-                    <div class="flex items-start space-x-6">
-                        <div class="flex-shrink-0">
-                            <div class="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center text-white shadow-lg transform transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
-                                <svg class="w-8 h-8 transform transition-transform duration-300 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="bg-white/50 backdrop-blur-sm rounded-2xl p-4 sm:p-6 md:p-8 border border-primary/10 shadow-lg h-full transform transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 hover:border-primary/30 group overflow-hidden">
+                    <!-- Mobile Header -->
+                    <div class="md:hidden mb-6 flex items-center justify-center">
+                        <div class="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center text-white shadow-lg">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2v16z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="flex flex-col md:flex-row md:items-start md:space-x-6 space-y-4 md:space-y-0">
+                        <!-- Desktop Icon -->
+                        <div class="flex-shrink-0 mx-auto md:mx-0 hidden md:block">
+                            <div class="w-12 sm:w-16 h-12 sm:h-16 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center text-white shadow-lg transform transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
+                                <svg class="w-6 sm:w-8 h-6 sm:h-8 transform transition-transform duration-300 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2v16z"/>
                                 </svg>
                             </div>
                         </div>
-                        <div class="flex-grow">
-                            <h2 class="text-2xl font-bold text-gray-900 mb-4">Onze Missie</h2>
-                            <div class="prose prose-lg">
+                        <div class="flex-grow text-center md:text-left">
+                            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-4">Onze Missie</h2>
+                            <div class="prose prose-sm sm:prose-base lg:prose-lg max-w-none">
                                 <p class="text-gray-700 leading-relaxed mb-6">
                                     Stel je voor: een website waar je gewoon jezelf kunt zijn en kunt praten over politiek zonder gedoe. 
                                     Dat is precies wat PolitiekPraat wil zijn! Het maakt niet uit of je links of rechts bent, of je al 

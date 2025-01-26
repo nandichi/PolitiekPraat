@@ -35,7 +35,7 @@
                         },
                         float: {
                             '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-5px)' },
+                            '50%': { transform: 'translateY(-10px)' },
                         }
                     }
                 }
@@ -57,25 +57,30 @@
             background: linear-gradient(135deg, #1a365d 0%, #234876 50%, #2d5a94 100%);
         }
 
-        .menu-item {
+        /* Navigatie link hover effect */
+        .nav-link {
             position: relative;
-            overflow: hidden;
         }
 
-        .menu-item::after {
+        .nav-link span {
+            position: relative;
+        }
+
+        .nav-link span::after {
             content: '';
             position: absolute;
-            bottom: -2px;
+            bottom: -8px;
             left: 0;
             width: 100%;
             height: 2px;
-            background: #c41e3a;
-            transform: translateX(-101%);
+            background-color: #c41e3a;
+            transform: scaleX(0);
             transition: transform 0.3s ease;
+            transform-origin: left;
         }
 
-        .menu-item:hover::after {
-            transform: translateX(0);
+        .nav-link:hover span::after {
+            transform: scaleX(1);
         }
 
         .glow-effect {
@@ -177,6 +182,31 @@
             100% {
                 background-position: 0% 50%;
             }
+        }
+
+        /* Aanmeld knop styling */
+        .signup-btn {
+            position: relative;
+            background: #fff;
+            color: #1a365d;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(26, 54, 93, 0.1);
+        }
+
+        .signup-btn:hover {
+            transform: translateY(-2px);
+            background: #c41e3a;
+            color: white;
+            box-shadow: 0 6px 20px rgba(196, 30, 58, 0.2);
+        }
+
+        .signup-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Verwijder oude animaties */
+        .particle {
+            display: none;
         }
     </style>
 </head>
@@ -313,16 +343,16 @@
                     </a>
 
                     <!-- Desktop Navigation -->
-                    <div class="hidden lg:flex items-center space-x-8">
+                    <div class="hidden lg:flex items-center space-x-4">
                         <a href="<?php echo URLROOT; ?>/" 
-                           class="menu-item text-white/90 hover:text-white transition-colors duration-300 font-medium py-2">
-                            Home
+                           class="nav-link text-white/90 hover:text-white transition-colors duration-300 font-medium py-2">
+                            <span>Home</span>
                         </a>
 
                         <!-- Nieuws & Blogs Dropdown -->
                         <div class="relative group">
-                            <button class="menu-item text-white/90 hover:text-white transition-colors duration-300 font-medium py-2 flex items-center">
-                                Media
+                            <button class="nav-link text-white/90 hover:text-white transition-colors duration-300 font-medium py-2 flex items-center">
+                                <span>Media</span>
                                 <svg class="w-4 h-4 ml-1 transform transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                                 </svg>
@@ -351,15 +381,9 @@
 
                         <!-- Forum Dropdown -->
                         <div class="relative group">
-                            <button class="flex items-center space-x-1 text-white/90 hover:text-white transition-all duration-300 
-                                         font-medium py-2 group">
-                                <span class="relative">
-                                    Forum
-                                    <span class="absolute inset-x-0 -bottom-0.5 h-0.5 bg-secondary transform scale-x-0 
-                                               group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
-                                </span>
-                                <svg class="w-4 h-4 transform transition-transform duration-300 group-hover:rotate-180" 
-                                     fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <button class="nav-link text-white/90 hover:text-white transition-colors duration-300 font-medium py-2 flex items-center">
+                                <span>Forum</span>
+                                <svg class="w-4 h-4 ml-1 transform transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                                 </svg>
                             </button>
@@ -405,15 +429,9 @@
 
                         <!-- Thema's Dropdown -->
                         <div class="relative group">
-                            <button class="flex items-center space-x-1 text-white/90 hover:text-white transition-all duration-300 
-                                         font-medium py-2 group">
-                                <span class="relative">
-                                    Thema's
-                                    <span class="absolute inset-x-0 -bottom-0.5 h-0.5 bg-secondary transform scale-x-0 
-                                               group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
-                                </span>
-                                <svg class="w-4 h-4 transform transition-transform duration-300 group-hover:rotate-180" 
-                                     fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <button class="nav-link text-white/90 hover:text-white transition-colors duration-300 font-medium py-2 flex items-center">
+                                <span>Thema's</span>
+                                <svg class="w-4 h-4 ml-1 transform transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                                 </svg>
                             </button>
@@ -478,17 +496,13 @@
                         </div>
 
                         <a href="<?php echo URLROOT; ?>/contact" 
-                           class="relative text-white/90 hover:text-white transition-all duration-300 font-medium py-2 group">
-                            <span class="relative z-10">Contact</span>
-                            <span class="absolute inset-x-0 -bottom-0.5 h-0.5 bg-secondary transform scale-x-0 group-hover:scale-x-100 
-                                       transition-transform duration-300 origin-left"></span>
+                           class="nav-link text-white/90 hover:text-white transition-colors duration-300 font-medium py-2">
+                            <span>Contact</span>
                         </a>
 
                         <a href="<?php echo URLROOT; ?>/over-mij" 
-                           class="relative text-white/90 hover:text-white transition-all duration-300 font-medium py-2 group">
-                            <span class="relative z-10">Over ons</span>
-                            <span class="absolute inset-x-0 -bottom-0.5 h-0.5 bg-secondary transform scale-x-0 group-hover:scale-x-100 
-                                       transition-transform duration-300 origin-left"></span>
+                           class="nav-link text-white/90 hover:text-white transition-colors duration-300 font-medium py-2">
+                            <span>Over ons</span>
                         </a>
                     </div>
 
@@ -551,13 +565,12 @@
                             </div>
                         <?php else: ?>
                             <a href="<?php echo URLROOT; ?>/login" 
-                               class="menu-item text-white/90 hover:text-white transition-colors duration-300 font-medium py-2">
-                                Inloggen
+                               class="nav-link text-white/90 hover:text-white transition-colors duration-300 font-medium py-2">
+                                <span>Inloggen</span>
                             </a>
                             <a href="<?php echo URLROOT; ?>/register" 
-                               class="glow-effect scale-hover bg-white text-primary px-6 py-2.5 rounded-lg font-semibold 
-                                      transition-all duration-300 hover:text-secondary">
-                                Word lid
+                               class="signup-btn px-8 py-3 rounded-xl font-semibold">
+                                Aanmelden
                             </a>
                         <?php endif; ?>
                     </div>
@@ -715,9 +728,9 @@
                                    class="flex items-center text-white/90 hover:text-white py-2 transition-colors duration-300">
                                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                              d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                                     </svg>
-                                    <span class="font-medium">Over mij</span>
+                                    <span class="font-medium">Over ons</span>
                                 </a>
                             </nav>
 
@@ -787,7 +800,7 @@
                                        class="flex items-center justify-center px-6 py-3 bg-white text-primary font-semibold 
                                               rounded-xl shadow-lg hover:bg-white/95 transition-all duration-300 
                                               transform hover:scale-[1.02]">
-                                        Word lid
+                                        Aanmelden
                                     </a>
                                 </div>
                             <?php endif; ?>
