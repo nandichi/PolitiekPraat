@@ -3,15 +3,15 @@
 class NewsAPI {
     private $rss_feeds = [
         'De Volkskrant' => [
-            'politiek' => 'https://www.volkskrant.nl/voorpagina/rss.xml',
+            'politiek' => 'https://www.volkskrant.nl/nieuws-achtergrond/politiek/rss.xml',
             'algemeen' => 'https://www.volkskrant.nl/voorpagina/rss.xml'
         ],
         'Trouw' => [
-            'politiek' => 'https://www.trouw.nl/rss.xml',
+            'politiek' => 'https://www.trouw.nl/politiek/rss.xml',
             'algemeen' => 'https://www.trouw.nl/rss.xml'
         ],
         'NRC' => [
-            'politiek' => 'https://www.nrc.nl/rss/',
+            'politiek' => 'https://www.nrc.nl/sectie/politiek/rss/',
             'algemeen' => 'https://www.nrc.nl/rss/'
         ],
         'WNL' => [
@@ -19,21 +19,29 @@ class NewsAPI {
             'algemeen' => 'https://wnl.tv/feed/'
         ],
         'Telegraaf' => [
-            'politiek' => 'https://www.telegraaf.nl/rss',
+            'politiek' => 'https://www.telegraaf.nl/nieuws/politiek/rss',
             'algemeen' => 'https://www.telegraaf.nl/rss'
         ],
         'AD' => [
-            'politiek' => 'https://www.ad.nl/rss.xml',
+            'politiek' => 'https://www.ad.nl/politiek/rss.xml',
             'algemeen' => 'https://www.ad.nl/rss.xml'
         ],
         'NU.nl' => [
-            'politiek' => 'https://www.nu.nl/rss',
+            'politiek' => 'https://www.nu.nl/rss/Politiek',
             'algemeen' => 'https://www.nu.nl/rss',
-            'economie' => 'https://www.nu.nl/rss',
-            'klimaat' => 'https://www.nu.nl/rss',
-            'tech' => 'https://www.nu.nl/rss',
-            'gezondheid' => 'https://www.nu.nl/rss'
+            'economie' => 'https://www.nu.nl/rss/Economie',
+            'klimaat' => 'https://www.nu.nl/rss/Klimaat',
+            'tech' => 'https://www.nu.nl/rss/Tech',
+            'gezondheid' => 'https://www.nu.nl/rss/Gezondheid'
         ]
+    ];
+
+    private $political_keywords = [
+        'politiek', 'kabinet', 'minister', 'tweede kamer', 'eerste kamer', 
+        'partij', 'verkiezing', 'coalitie', 'oppositie', 'regering',
+        'kamerlid', 'motie', 'debat', 'formatie', 'formateur', 'informateur',
+        'pvda', 'vvd', 'cda', 'd66', 'groenlinks', 'sp', 'pvv', 'forum',
+        'christenunie', 'sgp', 'denk', 'volt', 'bij1', 'nsc', 'bbb'
     ];
 
     public function getLatestPoliticalNews() {
@@ -104,19 +112,34 @@ class NewsAPI {
             $news = [];
             $count = 0;
             
-            // Parse de RSS items
             foreach ($rss->channel->item as $item) {
-                if ($count >= 3) break; // Limit to 3 items per source
-                
+                // Check if the article is political
+                $title = strtolower((string)$item->title);
+                $description = strtolower((string)$item->description);
+                $isPolitical = false;
+
+                foreach ($this->political_keywords as $keyword) {
+                    if (strpos($title, $keyword) !== false || strpos($description, $keyword) !== false) {
+                        $isPolitical = true;
+                        break;
+                    }
+                }
+
+                // Skip if not political for political feeds
+                if (strpos($feed_url, 'politiek') !== false && !$isPolitical) {
+                    continue;
+                }
+
+                if ($count >= 3) break;
+
                 // Extract image if available
                 $image = null;
-                $description = (string)$item->description;
-                if (preg_match('/<img[^>]+src="([^">]+)"/', $description, $matches)) {
+                if (preg_match('/<img[^>]+src="([^">]+)"/', (string)$item->description, $matches)) {
                     $image = $matches[1];
                 }
                 
                 // Clean description
-                $clean_description = strip_tags($description);
+                $clean_description = strip_tags((string)$item->description);
                 if (strlen($clean_description) > 200) {
                     $clean_description = substr($clean_description, 0, 197) . '...';
                 }
@@ -127,7 +150,8 @@ class NewsAPI {
                     'url' => (string)$item->link,
                     'publishedAt' => date('Y-m-d H:i:s', strtotime((string)$item->pubDate)),
                     'source' => $this->getSourceFromFeedUrl($feed_url),
-                    'image' => $image
+                    'image' => $image,
+                    'isPolitical' => $isPolitical
                 ];
                 
                 $count++;
@@ -148,7 +172,9 @@ class NewsAPI {
                     'description' => 'Na maanden van onderhandelingen is het kabinet gevallen over het migratiebeleid. Premier Rutte kondigde zijn vertrek aan.',
                     'url' => 'https://www.volkskrant.nl/politiek',
                     'publishedAt' => date('Y-m-d H:i:s'),
-                    'source' => 'De Volkskrant'
+                    'source' => 'De Volkskrant',
+                    'isPolitical' => true,
+                    'image' => null
                 ]
             ],
             'Trouw' => [
@@ -157,7 +183,9 @@ class NewsAPI {
                     'description' => 'Nieuwe maatregelen voor CO2-reductie leiden tot verhitte discussies in de Tweede Kamer.',
                     'url' => 'https://www.trouw.nl/politiek',
                     'publishedAt' => date('Y-m-d H:i:s'),
-                    'source' => 'Trouw'
+                    'source' => 'Trouw',
+                    'isPolitical' => true,
+                    'image' => null
                 ]
             ],
             'WNL' => [
@@ -166,7 +194,9 @@ class NewsAPI {
                     'description' => 'Politici discussiëren over nieuwe aanpak van ondermijnende criminaliteit en straatgeweld.',
                     'url' => 'https://wnl.tv/politiek',
                     'publishedAt' => date('Y-m-d H:i:s'),
-                    'source' => 'WNL'
+                    'source' => 'WNL',
+                    'isPolitical' => true,
+                    'image' => null
                 ]
             ],
             'NRC' => [
@@ -175,7 +205,9 @@ class NewsAPI {
                     'description' => 'Na de val van het kabinet worden er nieuwe verkiezingen uitgeschreven. Partijen bereiden zich voor op campagne.',
                     'url' => 'https://www.nrc.nl/politiek',
                     'publishedAt' => date('Y-m-d H:i:s'),
-                    'source' => 'NRC'
+                    'source' => 'NRC',
+                    'isPolitical' => true,
+                    'image' => null
                 ]
             ],
             'Telegraaf' => [
@@ -184,7 +216,9 @@ class NewsAPI {
                     'description' => 'Oppositie uit felle kritiek op nieuwe belastingmaatregelen van het demissionaire kabinet.',
                     'url' => 'https://www.telegraaf.nl/politiek',
                     'publishedAt' => date('Y-m-d H:i:s'),
-                    'source' => 'Telegraaf'
+                    'source' => 'Telegraaf',
+                    'isPolitical' => true,
+                    'image' => null
                 ]
             ]
         ];
@@ -194,7 +228,9 @@ class NewsAPI {
             'description' => 'Dit is een tijdelijk artikel terwijl we proberen verbinding te maken met de nieuwsbron.',
             'url' => '#',
             'publishedAt' => date('Y-m-d H:i:s'),
-            'source' => $source
+            'source' => $source,
+            'isPolitical' => true,
+            'image' => null
         ]];
     }
 
