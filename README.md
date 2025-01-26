@@ -1,10 +1,10 @@
 # PolitiekPraat 
 
-PolitiekPraat is een website waar iedereen kan meepraten over Nederlandse politiek. We maken politiek makkelijk te begrijpen en brengen burgers en politiek dichter bij elkaar.
+PolitiekPraat is een website waar iedereen kan meepraten over Nederlandse politiek. Wij maken politiek makkelijk te begrijpen en brengen burgers en politiek dichter bij elkaar.
 
 ## 🎯 Waar staan wij voor?
 
-Wij vinden dat iedereen moet kunnen meepraten over politiek. Daarom willen we:
+Wij vinden dat iedereen moet kunnen meepraten over politiek. Daarom willen wij:
 - Politiek uitleggen in normale mensentaal
 - Een plek maken waar mensen fijn met elkaar kunnen praten
 - Mensen helpen om mee te doen met politieke beslissingen
@@ -96,7 +96,7 @@ Wil je meehelpen om de website beter te maken? Graag! Zo doe je dat:
 2. Maak een nieuwe tak voor je verbetering (`git checkout -b verbetering/NieuweFeature`)
 3. Sla je werk op (`git commit -m 'Nieuwe feature toegevoegd'`)
 4. Stuur je werk door (`git push origin verbetering/NieuweFeature`)
-5. Vraag of we je verbetering willen toevoegen
+5. Vraag of wij je verbetering willen toevoegen
 
 ## 📝 Licentie
 
