@@ -1,67 +1,73 @@
 <?php
 
 class NewsAPI {
-    private $feeds = [
-        [
-            'name' => 'NOS',
-            'url' => 'https://feeds.nos.nl/nosnieuwspolitiek',
-            'type' => 'rss'
-        ],
-        [
-            'name' => 'NU.nl',
-            'url' => 'https://www.nu.nl/rss/Politiek',
-            'type' => 'rss'
-        ]
+    private $rss_feeds = [
+        'algemeen' => 'https://www.nu.nl/rss/Algemeen',
+        'politiek' => 'https://www.nu.nl/rss/Politiek',
+        'economie' => 'https://www.nu.nl/rss/Economie',
+        'klimaat' => 'https://www.nu.nl/rss/Klimaat',
+        'tech' => 'https://www.nu.nl/rss/Tech',
+        'gezondheid' => 'https://www.nu.nl/rss/Gezondheid'
     ];
-    
-    /**
-     * Haalt het laatste politieke nieuws op via RSS feeds
-     * @return array Array met nieuws artikelen
-     */
-    public function getLatestPoliticalNews() {
-        $news = [];
-        
-        foreach ($this->feeds as $feed) {
-            try {
-                $rss = simplexml_load_file($feed['url']);
-                
-                if ($rss === false) {
-                    continue;
-                }
-                
-                foreach ($rss->channel->item as $item) {
-                    // Strip HTML tags en kort de beschrijving in
-                    $description = strip_tags((string)$item->description);
-                    if (strlen($description) > 150) {
-                        $description = substr($description, 0, 147) . '...';
-                    }
 
-                    $news[] = [
-                        'title' => (string)$item->title,
-                        'description' => $description,
-                        'source' => $feed['name'],
-                        'publishedAt' => date('Y-m-d', strtotime((string)$item->pubDate)),
-                        'url' => (string)$item->link
-                    ];
-                    
-                    // Maximaal 5 artikelen per bron
-                    if (count($news) >= 5) {
-                        break;
-                    }
-                }
-            } catch (Exception $e) {
-                // Log de error maar ga door met de volgende feed
-                error_log("Error loading RSS feed {$feed['name']}: " . $e->getMessage());
-                continue;
-            }
+    public function getLatestPoliticalNews() {
+        return $this->getNewsFromFeed($this->rss_feeds['politiek']);
+    }
+
+    public function getThemaNews($thema) {
+        // Map thema to RSS feed
+        $feed_url = $this->mapThemaToFeed($thema);
+        return $this->getNewsFromFeed($feed_url);
+    }
+
+    private function getNewsFromFeed($feed_url) {
+        // Fetch RSS feed
+        $rss = simplexml_load_file($feed_url);
+        if (!$rss) {
+            return [];
         }
+
+        $news = [];
+        $count = 0;
         
-        // Sorteer op datum (nieuwste eerst)
-        usort($news, function($a, $b) {
-            return strtotime($b['publishedAt']) - strtotime($a['publishedAt']);
-        });
-        
-        // Return maximaal 6 artikelen in totaal
-        return array_slice($news, 0, 6);
+        foreach ($rss->channel->item as $item) {
+            if ($count >= 6) break; // Limit to 6 items
+            
+            // Extract image if available
+            $image = null;
+            $description = (string)$item->description;
+            if (preg_match('/<img[^>]+src="([^">]+)"/', $description, $matches)) {
+                $image = $matches[1];
+            }
+            
+            // Clean description
+            $clean_description = strip_tags($description);
+            
+            $news[] = [
+                'title' => (string)$item->title,
+                'description' => $clean_description,
+                'url' => (string)$item->link,
+                'publishedAt' => date('Y-m-d H:i:s', strtotime((string)$item->pubDate)),
+                'source' => 'NU.nl',
+                'image' => $image
+            ];
+            
+            $count++;
+        }
+
+        return $news;
+    }
+
+    private function mapThemaToFeed($thema) {
+        $mapping = [
+            'klimaatbeleid' => 'klimaat',
+            'economie' => 'economie',
+            'zorg' => 'gezondheid',
+            'tech' => 'tech'
+        ];
+
+        return isset($mapping[$thema]) ? 
+            $this->rss_feeds[$mapping[$thema]] : 
+            $this->rss_feeds['politiek']; // Default to politiek feed
     }
 } 

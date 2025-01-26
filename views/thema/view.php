@@ -86,55 +86,13 @@
         </div>
     </section>
 
-    <!-- Gerelateerde Debatten -->
-    <section class="py-16 bg-gray-100">
-        <div class="container mx-auto px-4">
-            <div class="max-w-7xl mx-auto">
-                <div class="text-center mb-16">
-                    <h2 class="text-4xl font-bold text-gray-900 mb-4">
-                        <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                            Gerelateerde Debatten
-                        </span>
-                    </h2>
-                    <div class="w-24 h-1 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full mb-4"></div>
-                    <p class="text-xl text-gray-600">Volg de laatste politieke debatten over dit thema</p>
-                </div>
-
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <?php foreach($gerelateerdeDebatten as $debat): ?>
-                        <div class="bg-white rounded-2xl shadow-lg overflow-hidden transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
-                            <div class="p-6">
-                                <div class="flex items-center justify-between mb-4">
-                                    <span class="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium">
-                                        <?php echo $debat['type']; ?>
-                                    </span>
-                                    <span class="text-sm text-gray-500">
-                                        <?php echo date('d M Y', strtotime($debat['datum'])); ?>
-                                    </span>
-                                </div>
-                                <h3 class="text-xl font-bold text-gray-900 mb-2"><?php echo $debat['titel']; ?></h3>
-                                <p class="text-gray-600 mb-4"><?php echo $debat['beschrijving']; ?></p>
-                                <a href="<?php echo URLROOT; ?>/debatten/<?php echo $debat['slug']; ?>" 
-                                   class="inline-flex items-center text-primary font-medium hover:text-secondary transition-colors">
-                                    Lees meer
-                                    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Laatste Nieuws -->
-    <section class="py-16">
+    <section class="py-16 bg-gradient-to-br from-gray-50 to-white">
         <div class="container mx-auto px-4">
             <div class="max-w-7xl mx-auto">
-                <div class="text-center mb-16">
-                    <h2 class="text-4xl font-bold text-gray-900 mb-4">
+                <div class="text-center mb-16 relative">
+                    <span class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-9xl text-gray-100 font-bold opacity-50 select-none">NIEUWS</span>
+                    <h2 class="text-4xl font-bold text-gray-900 mb-4 relative">
                         <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
                             Laatste Nieuws
                         </span>
@@ -144,37 +102,87 @@
                 </div>
 
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <?php foreach($themaNews as $news): ?>
-                        <article class="bg-white rounded-2xl shadow-lg overflow-hidden transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+                    <?php foreach($themaNews as $index => $news): ?>
+                        <article class="group bg-white rounded-2xl shadow-lg overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
+                                data-aos="fade-up"
+                                data-aos-delay="<?php echo $index * 100; ?>">
                             <?php if(isset($news['image'])): ?>
-                                <img src="<?php echo $news['image']; ?>" 
-                                     alt="<?php echo htmlspecialchars($news['title']); ?>"
-                                     class="w-full h-48 object-cover">
+                                <div class="relative h-48 overflow-hidden">
+                                    <img src="<?php echo $news['image']; ?>" 
+                                         alt="<?php echo htmlspecialchars($news['title']); ?>"
+                                         class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                </div>
                             <?php endif; ?>
+                            
                             <div class="p-6">
                                 <div class="flex items-center justify-between mb-4">
-                                    <span class="text-sm font-medium text-primary">
-                                        <?php echo $news['source']; ?>
-                                    </span>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
+                                            <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2.5 2.5 0 00-2.5-2.5H15"></path>
+                                            </svg>
+                                        </div>
+                                        <span class="text-sm font-medium text-primary">
+                                            <?php echo $news['source']; ?>
+                                        </span>
+                                    </div>
                                     <span class="text-sm text-gray-500">
                                         <?php echo date('d M Y', strtotime($news['publishedAt'])); ?>
                                     </span>
                                 </div>
-                                <h3 class="text-xl font-bold text-gray-900 mb-2"><?php echo $news['title']; ?></h3>
-                                <p class="text-gray-600 mb-4"><?php echo $news['description']; ?></p>
-                                <a href="<?php echo $news['url']; ?>" 
-                                   target="_blank"
-                                   rel="noopener noreferrer"
-                                   class="inline-flex items-center text-primary font-medium hover:text-secondary transition-colors">
-                                    Lees artikel
-                                    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
-                                    </svg>
-                                </a>
+
+                                <h3 class="text-xl font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-primary transition-colors">
+                                    <?php echo $news['title']; ?>
+                                </h3>
+                                
+                                <p class="text-gray-600 mb-4 line-clamp-3">
+                                    <?php echo $news['description']; ?>
+                                </p>
+
+                                <div class="flex items-center justify-between">
+                                    <a href="<?php echo $news['url']; ?>" 
+                                       target="_blank"
+                                       rel="noopener noreferrer"
+                                       class="inline-flex items-center text-primary font-medium group-hover:text-secondary transition-colors">
+                                        <span class="relative">
+                                            Lees artikel
+                                            <div class="absolute bottom-0 left-0 w-full h-0.5 bg-secondary transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
+                                        </span>
+                                        <svg class="w-5 h-5 ml-2 transform transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                                        </svg>
+                                    </a>
+
+                                    <div class="flex items-center space-x-4">
+                                        <button class="text-gray-500 hover:text-primary transition-colors">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path>
+                                            </svg>
+                                        </button>
+                                        <button class="text-gray-500 hover:text-primary transition-colors">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </article>
                     <?php endforeach; ?>
                 </div>
+
+                <?php if(empty($themaNews)): ?>
+                    <div class="text-center py-12">
+                        <div class="inline-block p-4 rounded-full bg-gray-100 mb-4">
+                            <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-medium text-gray-900 mb-2">Geen nieuws gevonden</h3>
+                        <p class="text-gray-600">Er zijn momenteel geen nieuwsartikelen beschikbaar over dit thema.</p>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
     </section>

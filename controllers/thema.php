@@ -1,17 +1,17 @@
 <?php
 require_once 'includes/Database.php';
-require_once 'includes/OpenDataAPI.php';
+require_once 'includes/NewsAPI.php';
 require_once 'includes/PoliticalParties.php';
 require_once 'includes/config.php';
 
 class ThemaController {
     private $db;
-    private $openDataAPI;
+    private $newsAPI;
     private $politicalParties;
 
     public function __construct() {
         $this->db = new Database();
-        $this->openDataAPI = new OpenDataAPI();
+        $this->newsAPI = new NewsAPI();
         $this->politicalParties = new PoliticalParties();
     }
 
@@ -27,12 +27,9 @@ class ThemaController {
         // Haal standpunten op van politieke partijen
         $linksePartijen = $this->politicalParties->getLinkseStandpunten($thema_slug);
         $rechtsePartijen = $this->politicalParties->getRechtseStandpunten($thema_slug);
-        
-        // Haal gerelateerde debatten op
-        $gerelateerdeDebatten = $this->openDataAPI->getGerelateerdePolitiekeDebatten($thema_slug);
 
         // Haal nieuws op over dit thema
-        $themaNews = $this->openDataAPI->getThemaNews($thema_slug);
+        $themaNews = $this->newsAPI->getThemaNews($thema_slug);
 
         require_once 'views/thema/view.php';
     }
