@@ -1,5 +1,5 @@
 <?php
-if (!isset($params['slug'])) {
+if (!isset($_GET['slug'])) {
     header('Location: ' . URLROOT . '/blogs');
     exit;
 }
@@ -11,7 +11,7 @@ $db->query("SELECT blogs.*, users.username as author_name
            FROM blogs 
            JOIN users ON blogs.author_id = users.id 
            WHERE blogs.slug = :slug");
-$db->bind(':slug', $params['slug']);
+$db->bind(':slug', $_GET['slug']);
 $blog = $db->single();
 
 if (!$blog) {

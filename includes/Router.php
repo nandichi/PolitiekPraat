@@ -30,8 +30,8 @@ class Router {
                 // Verwijder de volledige match
                 array_shift($matches);
                 
-                // Voor thema routes, zet de slug in $_GET
-                if (strpos($controller, 'thema.php') !== false && !empty($matches)) {
+                // Voor thema en blog routes, zet de slug in $_GET
+                if ((strpos($controller, 'thema.php') !== false || strpos($controller, 'blogs/view.php') !== false) && !empty($matches)) {
                     $_GET['slug'] = $matches[0];
                 }
 

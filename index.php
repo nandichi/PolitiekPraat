@@ -32,6 +32,7 @@ $router = new Router();
 $router->add('', 'controllers/home.php');
 $router->add('home', 'controllers/home.php');
 $router->add('blogs', 'controllers/blogs.php');
+$router->add('blogs/view/([^/]+)', 'controllers/blogs/view.php');
 $router->add('forum', 'controllers/forum.php');
 $router->add('contact', 'controllers/contact.php');
 $router->add('login', 'controllers/auth/login.php');
