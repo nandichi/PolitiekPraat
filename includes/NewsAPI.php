@@ -26,6 +26,10 @@ class NewsAPI {
             'politiek' => 'https://www.ad.nl/politiek/rss.xml',
             'algemeen' => 'https://www.ad.nl/rss.xml'
         ],
+        'Reformatorisch Dagblad' => [
+            'politiek' => 'https://rd.nl/rss',
+            'algemeen' => 'https://rd.nl/rss'
+        ],
         'NU.nl' => [
             'politiek' => 'https://www.nu.nl/rss/Politiek',
             'algemeen' => 'https://www.nu.nl/rss',
@@ -217,6 +221,35 @@ class NewsAPI {
                     'url' => 'https://www.telegraaf.nl/politiek',
                     'publishedAt' => date('Y-m-d H:i:s'),
                     'source' => 'Telegraaf',
+                    'isPolitical' => true,
+                    'image' => null
+                ]
+            ],
+            'Reformatorisch Dagblad' => [
+                [
+                    'title' => 'Kabinet moet meer oog hebben voor christelijke waarden',
+                    'description' => 'ChristenUnie en SGP pleiten voor sterkere bescherming van godsdienstvrijheid en christelijk onderwijs in Nederland. De partijen maken zich zorgen over toenemende secularisatie.',
+                    'url' => 'https://rd.nl/artikel/1001-kabinet-christelijke-waarden',
+                    'publishedAt' => date('Y-m-d H:i:s'),
+                    'source' => 'Reformatorisch Dagblad',
+                    'isPolitical' => true,
+                    'image' => null
+                ],
+                [
+                    'title' => 'Zorgen over positie kleine christelijke scholen',
+                    'description' => 'Onderwijsvrijheid staat onder druk door nieuwe wetgeving. Reformatorische scholen vrezen voor hun identiteit en voortbestaan.',
+                    'url' => 'https://rd.nl/artikel/1002-zorgen-christelijke-scholen',
+                    'publishedAt' => date('Y-m-d H:i:s'),
+                    'source' => 'Reformatorisch Dagblad',
+                    'isPolitical' => true,
+                    'image' => null
+                ],
+                [
+                    'title' => 'Analyse: coalitievorming vanuit christelijk perspectief',
+                    'description' => 'De formatie vraagt om wijsheid en het zoeken naar breed draagvlak. Een beschouwing over de rol van christelijke partijen in het formatieproces.',
+                    'url' => 'https://rd.nl/artikel/1003-coalitievorming-analyse',
+                    'publishedAt' => date('Y-m-d H:i:s'),
+                    'source' => 'Reformatorisch Dagblad',
                     'isPolitical' => true,
                     'image' => null
                 ]

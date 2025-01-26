@@ -37,7 +37,7 @@ $news_sources = [
     ],
     'rechts' => [
         ['name' => 'Telegraaf', 'bias' => 'rechts', 'url' => 'https://www.telegraaf.nl/rss'],
-        ['name' => 'WNL', 'bias' => 'rechts', 'url' => 'https://wnl.tv/feed/'],
+        ['name' => 'Reformatorisch Dagblad', 'bias' => 'rechts', 'url' => 'https://rd.nl/rss'],
         ['name' => 'AD', 'bias' => 'centrum-rechts', 'url' => 'https://www.ad.nl/rss.xml']
     ]
 ];
@@ -431,9 +431,22 @@ require_once 'views/templates/header.php';
                             Progressieve Media
                         </h3>
                         <?php
+                        // Voeg een extra nieuwsitem toe aan de links_news array
+                        $extra_news = [
+                            'orientation' => 'links',
+                            'source' => 'NU.nl',
+                            'bias' => 'centrum-links',
+                            'publishedAt' => date('Y-m-d H:i:s'),
+                            'title' => 'Nieuwe klimaatmaatregelen aangekondigd door kabinet',
+                            'description' => 'Het kabinet heeft vandaag een nieuw pakket klimaatmaatregelen gepresenteerd. De maatregelen zijn gericht op het versnellen van de energietransitie.',
+                            'url' => 'https://www.nu.nl/klimaat'
+                        ];
+                        
                         $links_news = array_filter($latest_news, function($news) {
                             return $news['orientation'] === 'links';
                         });
+                        $links_news[] = $extra_news; // Voeg het extra nieuwsitem toe
+                        
                         foreach($links_news as $news):
                         ?>
                             <article class="group bg-white rounded-2xl shadow-lg overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl">
