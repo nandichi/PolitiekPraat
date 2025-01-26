@@ -121,7 +121,7 @@ require_once 'views/templates/header.php';
                                     <div>
                                         <h3 class="text-lg font-semibold text-white tracking-tight">Live Peilingen</h3>
                                         <p class="text-xs text-blue-300/80">
-                                            Laatste update: <?php echo date('d M Y', strtotime($latestPolls['last_updated'])); ?>
+                                            Laatste update: 12 feb 2024
                                         </p>
                                     </div>
                                 </div>
@@ -143,13 +143,23 @@ require_once 'views/templates/header.php';
                                             Laatste Peiling
                                         </h4>
                                         <span class="text-xs text-blue-300/80 font-medium px-2 py-0.5 rounded-full bg-blue-500/5 ring-1 ring-blue-500/20">
-                                            <?php echo $latestPolls['polls'][0]['bureau']; ?>
+                                            I&O Research
                                         </span>
                                     </div>
                                     
-                                    <!-- Partijen Grid -->
-                                    <div class="space-y-2.5">
-                                        <?php foreach($latestPolls['polls'][0]['parties'] as $party => $data): ?>
+                                    <!-- Partijen Accordion -->
+                                    <div class="space-y-4">
+                                        <!-- Grote Partijen (Altijd zichtbaar) -->
+                                        <?php 
+                                        $topParties = [
+                                            'pvv' => ['seats' => 39, 'percentage' => 26.0],
+                                            'gl-pvda' => ['seats' => 25, 'percentage' => 16.7],
+                                            'vvd' => ['seats' => 23, 'percentage' => 15.3],
+                                            'd66' => ['seats' => 12, 'percentage' => 8.0]
+                                        ];
+                                        
+                                        foreach($topParties as $party => $data): 
+                                        ?>
                                             <div class="group">
                                                 <div class="flex items-center justify-between mb-1">
                                                     <div class="flex items-center">
@@ -184,6 +194,80 @@ require_once 'views/templates/header.php';
                                                 </div>
                                             </div>
                                         <?php endforeach; ?>
+
+                                        <!-- Overige Partijen (Uitklapbaar) -->
+                                        <div x-data="{ open: false }" class="mt-4">
+                                            <button @click="open = !open" 
+                                                    class="w-full flex items-center justify-between p-2 bg-white/5 rounded-lg hover:bg-white/10 transition-colors">
+                                                <span class="text-sm text-white/90 font-medium">Toon overige partijen</span>
+                                                <svg class="w-4 h-4 text-white/70 transform transition-transform" 
+                                                     :class="{ 'rotate-180': open }"
+                                                     fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                                </svg>
+                                            </button>
+                                            
+                                            <div x-show="open" 
+                                                 x-transition:enter="transition ease-out duration-200"
+                                                 x-transition:enter-start="opacity-0 transform -translate-y-2"
+                                                 x-transition:enter-end="opacity-100 transform translate-y-0"
+                                                 x-transition:leave="transition ease-in duration-150"
+                                                 x-transition:leave-start="opacity-100 transform translate-y-0"
+                                                 x-transition:leave-end="opacity-0 transform -translate-y-2"
+                                                 class="mt-2 space-y-2">
+                                                <?php 
+                                                $otherParties = [
+                                                    'bbb' => ['seats' => 6, 'percentage' => 4.0],
+                                                    'cda' => ['seats' => 13, 'percentage' => 8.7],
+                                                    'sp' => ['seats' => 7, 'percentage' => 4.7],
+                                                    'denk' => ['seats' => 3, 'percentage' => 2.0],
+                                                    'pvdd' => ['seats' => 6, 'percentage' => 4.0],
+                                                    'fvd' => ['seats' => 3, 'percentage' => 2.0],
+                                                    'sgp' => ['seats' => 3, 'percentage' => 2.0],
+                                                    'cu' => ['seats' => 4, 'percentage' => 2.7],
+                                                    'volt' => ['seats' => 3, 'percentage' => 2.0],
+                                                    'ja21' => ['seats' => 1, 'percentage' => 0.7],
+                                                    'nsc' => ['seats' => 2, 'percentage' => 1.3]
+                                                ];
+                                                
+                                                foreach($otherParties as $party => $data): 
+                                                ?>
+                                                    <div class="group">
+                                                        <div class="flex items-center justify-between mb-1">
+                                                            <div class="flex items-center">
+                                                                <span class="text-sm text-white/90 font-medium"><?php echo strtoupper($party); ?></span>
+                                                                <?php if(isset($latestPolls['trends'][$party])): ?>
+                                                                    <?php if($latestPolls['trends'][$party]['trend'] === 'up'): ?>
+                                                                        <div class="ml-1.5 px-1.5 py-0.5 rounded bg-green-500/10">
+                                                                            <svg class="w-3 h-3 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                                                                            </svg>
+                                                                        </div>
+                                                                    <?php elseif($latestPolls['trends'][$party]['trend'] === 'down'): ?>
+                                                                        <div class="ml-1.5 px-1.5 py-0.5 rounded bg-red-500/10">
+                                                                            <svg class="w-3 h-3 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0v-8m0 8l-8-8-4 4-6-6"/>
+                                                                            </svg>
+                                                                        </div>
+                                                                    <?php endif; ?>
+                                                                <?php endif; ?>
+                                                            </div>
+                                                            <div class="flex items-center space-x-2">
+                                                                <span class="text-xs text-blue-300/80"><?php echo $data['percentage']; ?>%</span>
+                                                                <span class="text-sm text-white font-bold bg-white/5 px-1.5 py-0.5 rounded">
+                                                                    <?php echo $data['seats']; ?>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="w-full bg-white/5 rounded-full h-1.5 overflow-hidden ring-1 ring-white/10">
+                                                            <div class="bg-gradient-to-r from-blue-500 to-blue-400 h-full rounded-full transition-all transform origin-left scale-x-100 group-hover:scale-x-105" 
+                                                                 style="width: <?php echo ($data['seats'] / 150) * 100; ?>%">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                <?php endforeach; ?>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 

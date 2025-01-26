@@ -21,40 +21,49 @@ class PollAPI {
         if (!$data) {
             // Fallback data met recente peilingen
             return [
-                'last_updated' => date('Y-m-d'),
+                'last_updated' => '2024-02-12',
                 'polls' => [
                     [
                         'bureau' => 'I&O Research',
-                        'date' => date('Y-m-d', strtotime('-2 days')),
+                        'date' => '2024-02-12',
                         'parties' => [
-                            'pvv' => ['seats' => rand(35, 39), 'percentage' => rand(220, 240) / 10],
-                            'gl-pvda' => ['seats' => rand(23, 27), 'percentage' => rand(150, 170) / 10],
-                            'vvd' => ['seats' => rand(22, 26), 'percentage' => rand(140, 160) / 10],
-                            'nsc' => ['seats' => rand(18, 22), 'percentage' => rand(120, 140) / 10],
-                            'd66' => ['seats' => rand(8, 10), 'percentage' => rand(50, 70) / 10],
-                            'bbb' => ['seats' => rand(6, 8), 'percentage' => rand(40, 60) / 10],
+                            'pvv' => ['seats' => 49, 'percentage' => 32.7],
+                            'gl-pvda' => ['seats' => 25, 'percentage' => 16.7],
+                            'vvd' => ['seats' => 17, 'percentage' => 11.3],
+                            'nsc' => ['seats' => 9, 'percentage' => 6.0],
+                            'd66' => ['seats' => 9, 'percentage' => 6.0],
+                            'bbb' => ['seats' => 7, 'percentage' => 4.7],
+                            'cda' => ['seats' => 7, 'percentage' => 4.7],
+                            'sp' => ['seats' => 5, 'percentage' => 3.3],
+                            'pvdd' => ['seats' => 5, 'percentage' => 3.3]
                         ]
                     ],
                     [
                         'bureau' => 'Ipsos',
-                        'date' => date('Y-m-d', strtotime('-4 days')),
+                        'date' => '2024-02-10',
                         'parties' => [
-                            'pvv' => ['seats' => rand(35, 39), 'percentage' => rand(220, 240) / 10],
-                            'gl-pvda' => ['seats' => rand(23, 27), 'percentage' => rand(150, 170) / 10],
-                            'vvd' => ['seats' => rand(22, 26), 'percentage' => rand(140, 160) / 10],
-                            'nsc' => ['seats' => rand(18, 22), 'percentage' => rand(120, 140) / 10],
-                            'd66' => ['seats' => rand(8, 10), 'percentage' => rand(50, 70) / 10],
-                            'bbb' => ['seats' => rand(6, 8), 'percentage' => rand(40, 60) / 10],
+                            'pvv' => ['seats' => 43, 'percentage' => 28.7],
+                            'gl-pvda' => ['seats' => 23, 'percentage' => 15.3],
+                            'vvd' => ['seats' => 16, 'percentage' => 10.7],
+                            'nsc' => ['seats' => 20, 'percentage' => 13.3],
+                            'd66' => ['seats' => 10, 'percentage' => 6.7],
+                            'bbb' => ['seats' => 8, 'percentage' => 5.3],
+                            'cda' => ['seats' => 5, 'percentage' => 3.3],
+                            'sp' => ['seats' => 5, 'percentage' => 3.3],
+                            'pvdd' => ['seats' => 5, 'percentage' => 3.3]
                         ]
                     ]
                 ],
                 'trends' => [
-                    'pvv' => ['trend' => 'up', 'change' => rand(1, 3)],
+                    'pvv' => ['trend' => 'up', 'change' => 6],
                     'gl-pvda' => ['trend' => 'stable', 'change' => 0],
-                    'vvd' => ['trend' => 'down', 'change' => -rand(1, 2)],
-                    'nsc' => ['trend' => 'up', 'change' => rand(1, 2)],
-                    'd66' => ['trend' => 'stable', 'change' => 0],
-                    'bbb' => ['trend' => 'down', 'change' => -rand(1, 2)]
+                    'vvd' => ['trend' => 'down', 'change' => -1],
+                    'nsc' => ['trend' => 'down', 'change' => -11],
+                    'd66' => ['trend' => 'down', 'change' => -1],
+                    'bbb' => ['trend' => 'down', 'change' => -1],
+                    'cda' => ['trend' => 'up', 'change' => 2],
+                    'sp' => ['trend' => 'stable', 'change' => 0],
+                    'pvdd' => ['trend' => 'up', 'change' => 1]
                 ]
             ];
         }
