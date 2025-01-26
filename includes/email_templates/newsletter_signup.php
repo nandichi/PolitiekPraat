@@ -1,5 +1,7 @@
 <?php
 function getNewsletterSignupTemplate($email) {
+    $date = date('d-m-Y H:i:s');
+    
     return <<<HTML
 <!DOCTYPE html>
 <html>
@@ -184,7 +186,7 @@ function getNewsletterSignupTemplate($email) {
                 
                 <div class="field-group">
                     <div class="field-label">Datum Aanmelding</div>
-                    <div class="field-value"><?php echo date('d-m-Y H:i:s'); ?></div>
+                    <div class="field-value">{$date}</div>
                 </div>
             </div>
         </div>

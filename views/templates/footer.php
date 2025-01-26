@@ -162,7 +162,7 @@
                                 </div>
                                 <div>
                                     <span class="block font-medium">Telefoon</span>
-                                    <span class="text-sm text-white/60">06-38102938</span>
+                                    <span class="text-sm text-white/60">+31 6 38107271</span>
                                 </div>
                             </li>
                         </ul>

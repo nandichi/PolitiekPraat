@@ -1,24 +1,52 @@
-# PolitiekPraat 🗳️
+# PolitiekPraat ��️
 
-PolitiekPraat is een interactief platform waar gebruikers kunnen discussiëren over Nederlandse politiek, blogs kunnen schrijven en op de hoogte kunnen blijven van het laatste politieke nieuws.
+PolitiekPraat is hét toonaangevende platform voor open en constructieve discussie over Nederlandse politiek. Ons doel is om politiek toegankelijk te maken voor iedereen en een brug te slaan tussen burgers en de politieke wereld.
 
-## 🚀 Functionaliteiten
+## 🎯 Missie & Visie
 
-- **Nieuws Feed**: Actueel politiek nieuws van verschillende Nederlandse nieuwsbronnen
-- **Blog Platform**: Gebruikers kunnen politieke blogs schrijven en delen
-- **Forum**: Interactieve discussies over politieke onderwerpen
-- **Politieke Agenda**: Overzicht van belangrijke politieke gebeurtenissen
-- **Actuele Thema's**: Inzicht in trending politieke onderwerpen
-- **Statistieken**: Real-time inzichten in politieke activiteiten
+Wij geloven dat een gezonde democratie gebouwd is op geïnformeerde burgers en open dialoog. PolitiekPraat streeft ernaar om:
+- Politieke informatie toegankelijk en begrijpelijk te maken voor iedereen
+- Een respectvolle en constructieve dialoog te faciliteren
+- Burgerparticipatie in het politieke proces te stimuleren
+- Transparantie in de politieke besluitvorming te bevorderen
 
-## 📋 Vereisten
+## 🚀 Kernfunctionaliteiten
 
+### 📰 Nieuws & Actualiteiten
+- Real-time politiek nieuws van diverse Nederlandse nieuwsbronnen
+- Diepgaande analyses van actuele politieke ontwikkelingen
+- Overzichtelijke tijdlijn van belangrijke politieke gebeurtenissen
+
+### 💭 Thematische Discussies
+- Gestructureerde debatten over actuele politieke thema's
+- Expert-bijdragen en analyses
+- Fact-checking en bronvermelding
+- Moderatie voor respectvolle en constructieve discussies
+
+### ✍️ Blog Platform
+- Platform voor politieke opinies en analyses
+- Mogelijkheid voor gebruikers om eigen politieke blogs te publiceren
+- Interactie tussen schrijvers en lezers
+
+### 📊 Politieke Data & Statistieken
+- Visualisaties van politieke data
+- Stemgedrag en aanwezigheid van politici
+- Actuele peilingen en historische verkiezingsresultaten
+
+### 📅 Politieke Agenda
+- Overzicht van aankomende politieke gebeurtenissen
+- Debatagenda van de Tweede Kamer
+- Belangrijke politieke mijlpalen en deadlines
+
+## 🛠️ Technische Specificaties
+
+### Vereisten
 - PHP 7.4 of hoger
 - MySQL 5.7 of hoger
 - Composer
-- Web server 
+- Webserver 
 
-## 🛠️ Installatie
+### Installatie
 
 1. Clone de repository:
 ```bash
@@ -41,35 +69,35 @@ composer install
 mysql -u gebruiker -p database_naam < database/setup.sql
 ```
 
-## 🔧 Configuratie
-
-De volgende API's moeten worden geconfigureerd in `includes/config.php`:
-- NewsAPI
-- OpenDataAPI
-- PoliticalPartyAPI
-
-## 🏗️ Project Structuur
+## 🔧 Project Structuur
 
 ```
 PolitiekPraat/
-├── controllers/      # Route controllers
-├── includes/         # Core functionaliteit en APIs
-├── views/           # Frontend templates
-├── public/          # Publieke bestanden
-├── scripts/         # Helper scripts
-└── database/        # Database migraties
+├── controllers/      # Route controllers en business logic
+├── includes/         # Core functionaliteit, APIs en configuratie
+├── views/           # Frontend templates en UI componenten
+├── public/          # Publieke assets (CSS, JS, images)
+├── scripts/         # Helper scripts en tools
+└── database/        # Database migraties en seeds
 ```
 
-## 🔒 Beveiliging
+## 🔒 Beveiliging & Privacy
 
-- Gebruikersauthenticatie
-- XSS bescherming
-- CSRF beveiliging
+- Sterke gebruikersauthenticatie
+- GDPR/AVG-compliant gegevensverwerking
+- XSS en CSRF bescherming
 - SQL injectie preventie
+- Regelmatige security audits
 
 ## 🤝 Bijdragen
 
-Bijdragen zijn welkom! Voor grote veranderingen, open eerst een issue om te bespreken wat je wilt veranderen.
+We verwelkomen bijdragen van de community! Als je wilt bijdragen:
+
+1. Fork de repository
+2. Creëer een feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit je changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push naar de branch (`git push origin feature/AmazingFeature`)
+5. Open een Pull Request
 
 ## 📝 Licentie
 
@@ -77,9 +105,15 @@ Dit project is gelicentieerd onder de MIT License.
 
 ## 👥 Team
 
-- [Naoufal Andichi] - Initiële ontwikkelaar
+- [Naoufal Andichi] - ontwikkelaar
 
 ## 📞 Contact
 
-Voor vragen of suggesties, neem contact op via:
+Voor vragen, suggesties of feedback:
 - Email: [naoufal.exe@gmail.com]
+- Website: [www.politiekpraat.nl]
+- Twitter: [@naoufalexe]
+
+---
+
+*PolitiekPraat - Samen bouwen aan democratie* 🇳🇱
