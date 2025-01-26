@@ -1,0 +1,11 @@
+# IDE en systeem bestanden
+.DS_Store
+.idea/
+.vscode/
+
+# Composer
+/vendor/
+composer.lock
+
+# Gevoelige configuratie bestanden
+/includes/mail_config.php 

@@ -18,3 +18,6 @@ define('APPVERSION', '1.0.0');
 
 // Start sessie
 session_start(); 
+
+
+

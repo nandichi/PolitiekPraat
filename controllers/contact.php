@@ -1,6 +1,14 @@
 <?php
+require 'vendor/autoload.php';
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
 $error = '';
 $success = '';
+
+// Laad mail configuratie
+$mail_config = require_once BASE_PATH . '/includes/mail_config.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_SPECIAL_CHARS);
@@ -14,9 +22,50 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = 'Ongeldig e-mailadres';
     } else {
-        // Hier kun je de e-mail versturen
-        // Voor nu simuleren we dit met een succesbericht
-        $success = 'Je bericht is verzonden! We nemen zo snel mogelijk contact met je op.';
+        // E-mail versturen met PHPMailer
+        $mail = new PHPMailer(true);
+
+        try {
+            // Server settings
+            $mail->isSMTP();
+            $mail->Host = $mail_config['smtp_host'];
+            $mail->SMTPAuth = true;
+            $mail->Username = $mail_config['smtp_username'];
+            $mail->Password = $mail_config['smtp_password'];
+            $mail->SMTPSecure = $mail_config['smtp_secure'];
+            $mail->Port = $mail_config['smtp_port'];
+
+            // Recipients
+            $mail->setFrom($mail_config['from_email'], $mail_config['from_name']);
+            foreach ($mail_config['to_emails'] as $to_email) {
+                $mail->addAddress($to_email);
+            }
+            $mail->addReplyTo($email, $name);
+
+            // Content
+            $mail->isHTML(true);
+            $mail->Subject = "Contact Formulier: " . $subject;
+            $mail->Body = "
+                <h2>Nieuw contactformulier bericht</h2>
+                <p><strong>Naam:</strong> {$name}</p>
+                <p><strong>E-mail:</strong> {$email}</p>
+                <p><strong>Onderwerp:</strong> {$subject}</p>
+                <p><strong>Bericht:</strong></p>
+                <p>{$message}</p>
+            ";
+            $mail->AltBody = "
+                Nieuw contactformulier bericht\n
+                Naam: {$name}\n
+                E-mail: {$email}\n
+                Onderwerp: {$subject}\n
+                Bericht:\n{$message}
+            ";
+
+            $mail->send();
+            $success = 'Je bericht is verzonden! We nemen zo snel mogelijk contact met je op.';
+        } catch (Exception $e) {
+            $error = "Er is een fout opgetreden bij het verzenden van je bericht. Probeer het later opnieuw. Foutmelding: {$mail->ErrorInfo}";
+        }
     }
 }
 
