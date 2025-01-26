@@ -241,21 +241,115 @@
                        class="menu-item text-white/90 hover:text-white transition-colors duration-300 font-medium py-2">
                         Home
                     </a>
-                    <a href="<?php echo URLROOT; ?>/blogs" 
-                       class="menu-item text-white/90 hover:text-white transition-colors duration-300 font-medium py-2">
-                        Blogs
-                    </a>
-                    <a href="<?php echo URLROOT; ?>/forum" 
-                       class="menu-item text-white/90 hover:text-white transition-colors duration-300 font-medium py-2">
-                        Forum
-                    </a>
+
+                    <!-- Nieuws & Blogs Dropdown -->
+                    <div class="relative group">
+                        <button class="menu-item text-white/90 hover:text-white transition-colors duration-300 font-medium py-2 flex items-center">
+                            Media
+                            <svg class="w-4 h-4 ml-1 transform transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div class="absolute left-0 mt-2 w-48 bg-white rounded-xl shadow-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+                            <a href="<?php echo URLROOT; ?>/nieuws" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors duration-300">
+                                <svg class="w-5 h-5 mr-3 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v12a2 2 0 01-2 2z"/>
+                                </svg>
+                                <div>
+                                    <span class="font-medium">Nieuws</span>
+                                    <span class="block text-xs text-gray-500">Laatste ontwikkelingen</span>
+                                </div>
+                            </a>
+                            <a href="<?php echo URLROOT; ?>/blogs" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors duration-300">
+                                <svg class="w-5 h-5 mr-3 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                </svg>
+                                <div>
+                                    <span class="font-medium">Blogs</span>
+                                    <span class="block text-xs text-gray-500">Politieke inzichten</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Forum Dropdown -->
+                    <div class="relative group">
+                        <button class="menu-item text-white/90 hover:text-white transition-colors duration-300 font-medium py-2 flex items-center">
+                            Forum
+                            <svg class="w-4 h-4 ml-1 transform transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div class="absolute left-0 mt-2 w-48 bg-white rounded-xl shadow-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+                            <a href="<?php echo URLROOT; ?>/forum" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors duration-300">
+                                <svg class="w-5 h-5 mr-3 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/>
+                                </svg>
+                                <div>
+                                    <span class="font-medium">Alle discussies</span>
+                                    <span class="block text-xs text-gray-500">Bekijk het forum</span>
+                                </div>
+                            </a>
+                            <?php if(isset($_SESSION['user_id'])): ?>
+                            <a href="<?php echo URLROOT; ?>/forum/create" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors duration-300">
+                                <svg class="w-5 h-5 mr-3 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                                </svg>
+                                <div>
+                                    <span class="font-medium">Start discussie</span>
+                                    <span class="block text-xs text-gray-500">Nieuw onderwerp</span>
+                                </div>
+                            </a>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+
+                    <!-- Thema's Dropdown -->
+                    <div class="relative group">
+                        <button class="menu-item text-white/90 hover:text-white transition-colors duration-300 font-medium py-2 flex items-center">
+                            Thema's
+                            <svg class="w-4 h-4 ml-1 transform transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div class="absolute left-0 mt-2 w-48 bg-white rounded-xl shadow-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+                            <a href="<?php echo URLROOT; ?>/thema/economie" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors duration-300">
+                                <span class="w-5 h-5 mr-3 flex items-center justify-center text-lg">💶</span>
+                                <div>
+                                    <span class="font-medium">Economie</span>
+                                    <span class="block text-xs text-gray-500">Financiële zaken</span>
+                                </div>
+                            </a>
+                            <a href="<?php echo URLROOT; ?>/thema/zorg" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors duration-300">
+                                <span class="w-5 h-5 mr-3 flex items-center justify-center text-lg">🏥</span>
+                                <div>
+                                    <span class="font-medium">Zorg</span>
+                                    <span class="block text-xs text-gray-500">Gezondheidszorg</span>
+                                </div>
+                            </a>
+                            <a href="<?php echo URLROOT; ?>/thema/onderwijs" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors duration-300">
+                                <span class="w-5 h-5 mr-3 flex items-center justify-center text-lg">📚</span>
+                                <div>
+                                    <span class="font-medium">Onderwijs</span>
+                                    <span class="block text-xs text-gray-500">Educatie</span>
+                                </div>
+                            </a>
+                            <div class="border-t border-gray-100 my-2"></div>
+                            <a href="<?php echo URLROOT; ?>/themas" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors duration-300">
+                                <svg class="w-5 h-5 mr-3 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/>
+                                </svg>
+                                <div>
+                                    <span class="font-medium">Alle thema's</span>
+                                    <span class="block text-xs text-gray-500">Bekijk overzicht</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
                     <a href="<?php echo URLROOT; ?>/contact" 
                        class="menu-item text-white/90 hover:text-white transition-colors duration-300 font-medium py-2">
                         Contact
-                    </a>
-                    <a href="<?php echo URLROOT; ?>/nieuws" 
-                       class="menu-item text-white/90 hover:text-white transition-colors duration-300 font-medium py-2">
-                        Nieuws
                     </a>
                 </div>
 
@@ -345,15 +439,76 @@
                     <a href="<?php echo URLROOT; ?>/" class="block text-white/90 hover:text-white py-2 transition-colors duration-300">
                         Home
                     </a>
-                    <a href="<?php echo URLROOT; ?>/blogs" class="block text-white/90 hover:text-white py-2 transition-colors duration-300">
-                        Blogs
-                    </a>
-                    <a href="<?php echo URLROOT; ?>/forum" class="block text-white/90 hover:text-white py-2 transition-colors duration-300">
-                        Forum
-                    </a>
+
+                    <!-- Media Section -->
+                    <div class="space-y-2">
+                        <button class="w-full flex items-center justify-between text-white/90 hover:text-white py-2 transition-colors duration-300" 
+                                onclick="toggleMobileSubmenu('media-submenu')">
+                            <span>Media</span>
+                            <svg class="w-4 h-4 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" id="media-submenu-icon">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div class="hidden pl-4 space-y-2 border-l border-white/10" id="media-submenu">
+                            <a href="<?php echo URLROOT; ?>/nieuws" class="block text-white/80 hover:text-white py-2 transition-colors duration-300">
+                                Nieuws
+                            </a>
+                            <a href="<?php echo URLROOT; ?>/blogs" class="block text-white/80 hover:text-white py-2 transition-colors duration-300">
+                                Blogs
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Forum Section -->
+                    <div class="space-y-2">
+                        <button class="w-full flex items-center justify-between text-white/90 hover:text-white py-2 transition-colors duration-300" 
+                                onclick="toggleMobileSubmenu('forum-submenu')">
+                            <span>Forum</span>
+                            <svg class="w-4 h-4 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" id="forum-submenu-icon">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div class="hidden pl-4 space-y-2 border-l border-white/10" id="forum-submenu">
+                            <a href="<?php echo URLROOT; ?>/forum" class="block text-white/80 hover:text-white py-2 transition-colors duration-300">
+                                Alle discussies
+                            </a>
+                            <?php if(isset($_SESSION['user_id'])): ?>
+                            <a href="<?php echo URLROOT; ?>/forum/create" class="block text-white/80 hover:text-white py-2 transition-colors duration-300">
+                                Start discussie
+                            </a>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+
+                    <!-- Thema's Section -->
+                    <div class="space-y-2">
+                        <button class="w-full flex items-center justify-between text-white/90 hover:text-white py-2 transition-colors duration-300" 
+                                onclick="toggleMobileSubmenu('themas-submenu')">
+                            <span>Thema's</span>
+                            <svg class="w-4 h-4 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" id="themas-submenu-icon">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div class="hidden pl-4 space-y-2 border-l border-white/10" id="themas-submenu">
+                            <a href="<?php echo URLROOT; ?>/thema/economie" class="block text-white/80 hover:text-white py-2 transition-colors duration-300">
+                                Economie
+                            </a>
+                            <a href="<?php echo URLROOT; ?>/thema/zorg" class="block text-white/80 hover:text-white py-2 transition-colors duration-300">
+                                Zorg
+                            </a>
+                            <a href="<?php echo URLROOT; ?>/thema/onderwijs" class="block text-white/80 hover:text-white py-2 transition-colors duration-300">
+                                Onderwijs
+                            </a>
+                            <a href="<?php echo URLROOT; ?>/themas" class="block text-white/80 hover:text-white py-2 transition-colors duration-300">
+                                Alle thema's
+                            </a>
+                        </div>
+                    </div>
+
                     <a href="<?php echo URLROOT; ?>/contact" class="block text-white/90 hover:text-white py-2 transition-colors duration-300">
                         Contact
                     </a>
+
                     <?php if(isset($_SESSION['user_id'])): ?>
                         <div class="border-t border-white/10 pt-3">
                             <div class="flex items-center space-x-3 mb-3">
@@ -413,6 +568,15 @@
                 mobileMenuButton.classList.remove('bg-white/10');
             }
         });
+
+        // Mobile submenu toggle functionality
+        function toggleMobileSubmenu(submenuId) {
+            const submenu = document.getElementById(submenuId);
+            const icon = document.getElementById(submenuId + '-icon');
+            
+            submenu.classList.toggle('hidden');
+            icon.classList.toggle('rotate-180');
+        }
     </script>
 
     <div class="flex-grow">
