@@ -397,68 +397,124 @@ HTML;
 require_once BASE_PATH . '/views/templates/header.php';
 ?>
 
-<main class="container mx-auto px-4 py-12">
-    <div class="max-w-2xl mx-auto">
-        <h1 class="text-4xl font-bold mb-8 text-center">Contact</h1>
-        
-        <div class="bg-white rounded-lg shadow-md p-8">
-            <?php if ($error): ?>
-                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-                    <?php echo $error; ?>
-                </div>
-            <?php endif; ?>
+<main class="relative">
+    <!-- Thematische achtergrond -->
+    <div class="absolute inset-0 bg-gradient-to-br from-gray-50 to-gray-100">
+        <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=\'100\' height=\'100\' viewBox=\'0 0 100 100\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z\' fill=\'%231e40af\' fill-opacity=\'0.02\' fill-rule=\'evenodd\'/%3E%3C/svg%3E'); background-size: 80px 80px;">
+        </div>
+    </div>
 
-            <?php if ($success): ?>
-                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-                    <?php echo $success; ?>
+    <div class="container mx-auto px-4 py-12 relative">
+        <div class="max-w-4xl mx-auto">
+            <div class="mb-16 text-center">
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Contact</h1>
+                <div class="max-w-2xl mx-auto mt-12 space-y-6">
+                    <p class="text-xl text-gray-700">
+                        Heb je een vraag of wil je iets met ons delen? We horen graag van je! ðŸ‘‹
+                    </p>
+                    <p class="text-lg text-gray-600">
+                        Misschien heb je een tof idee voor de website, zie je iets wat beter kan, of wil je gewoon je mening delen over de Nederlandse politiek - we staan open voor alles! ðŸ’¡
+                    </p>
+                    <p class="text-base text-gray-500">
+                        â±ï¸ Je hoort meestal binnen 2 werkdagen van ons terug
+                    </p>
                 </div>
-            <?php endif; ?>
+            </div>
+            
+            <div class="bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl p-8 md:p-12 relative overflow-hidden">
+                <!-- Decoratieve elementen -->
+                <div class="absolute top-0 left-0 w-32 h-32 bg-primary opacity-5 rounded-br-full"></div>
+                <div class="absolute bottom-0 right-0 w-32 h-32 bg-primary opacity-5 rounded-tl-full"></div>
+                
+                <?php if ($error): ?>
+                    <div class="bg-red-50 border-l-4 border-red-500 text-red-700 p-4 rounded-lg mb-6 shadow-sm transform hover:scale-102 transition-transform duration-300">
+                        <div class="flex items-center">
+                            <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <?php echo $error; ?>
+                        </div>
+                    </div>
+                <?php endif; ?>
 
-            <form method="POST" action="<?php echo URLROOT; ?>/contact">
-                <div class="mb-4">
-                    <label for="name" class="block text-gray-700 font-bold mb-2">Naam</label>
-                    <input type="text" 
-                           name="name" 
-                           id="name" 
-                           class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-primary"
-                           value="<?php echo isset($name) ? htmlspecialchars($name) : ''; ?>"
-                           required>
-                </div>
+                <?php if ($success): ?>
+                    <div class="bg-green-50 border-l-4 border-green-500 text-green-700 p-4 rounded-lg mb-6 shadow-sm transform hover:scale-102 transition-transform duration-300">
+                        <div class="flex items-center">
+                            <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <?php echo $success; ?>
+                        </div>
+                    </div>
+                <?php endif; ?>
 
-                <div class="mb-4">
-                    <label for="email" class="block text-gray-700 font-bold mb-2">E-mailadres</label>
-                    <input type="email" 
-                           name="email" 
-                           id="email" 
-                           class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-primary"
-                           value="<?php echo isset($email) ? htmlspecialchars($email) : ''; ?>"
-                           required>
-                </div>
+                <form method="POST" action="<?php echo URLROOT; ?>/contact" class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="relative group">
+                            <label for="name" class="block text-sm font-medium text-gray-700 mb-1 transition-all duration-200 group-focus-within:text-primary">Naam</label>
+                            <div class="relative">
+                                <input type="text" 
+                                       name="name" 
+                                       id="name" 
+                                       class="block w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 transition-all duration-200 bg-gray-50 focus:bg-white"
+                                       value="<?php echo isset($name) ? htmlspecialchars($name) : ''; ?>"
+                                       required>
+                                <div class="absolute bottom-0 left-0 h-0.5 bg-primary transform scale-x-0 group-focus-within:scale-x-100 transition-transform duration-300 origin-left"></div>
+                            </div>
+                        </div>
 
-                <div class="mb-4">
-                    <label for="subject" class="block text-gray-700 font-bold mb-2">Onderwerp</label>
-                    <input type="text" 
-                           name="subject" 
-                           id="subject" 
-                           class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-primary"
-                           value="<?php echo isset($subject) ? htmlspecialchars($subject) : ''; ?>"
-                           required>
-                </div>
+                        <div class="relative group">
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-1 transition-all duration-200 group-focus-within:text-primary">E-mailadres</label>
+                            <div class="relative">
+                                <input type="email" 
+                                       name="email" 
+                                       id="email" 
+                                       class="block w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 transition-all duration-200 bg-gray-50 focus:bg-white"
+                                       value="<?php echo isset($email) ? htmlspecialchars($email) : ''; ?>"
+                                       required>
+                                <div class="absolute bottom-0 left-0 h-0.5 bg-primary transform scale-x-0 group-focus-within:scale-x-100 transition-transform duration-300 origin-left"></div>
+                            </div>
+                        </div>
+                    </div>
 
-                <div class="mb-6">
-                    <label for="message" class="block text-gray-700 font-bold mb-2">Bericht</label>
-                    <textarea name="message" 
-                              id="message" 
-                              rows="6"
-                              class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-primary"
-                              required><?php echo isset($message) ? htmlspecialchars($message) : ''; ?></textarea>
-                </div>
+                    <div class="relative group">
+                        <label for="subject" class="block text-sm font-medium text-gray-700 mb-1 transition-all duration-200 group-focus-within:text-primary">Onderwerp</label>
+                        <div class="relative">
+                            <input type="text" 
+                                   name="subject" 
+                                   id="subject" 
+                                   class="block w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 transition-all duration-200 bg-gray-50 focus:bg-white"
+                                   value="<?php echo isset($subject) ? htmlspecialchars($subject) : ''; ?>"
+                                   required>
+                            <div class="absolute bottom-0 left-0 h-0.5 bg-primary transform scale-x-0 group-focus-within:scale-x-100 transition-transform duration-300 origin-left"></div>
+                        </div>
+                    </div>
 
-                <button type="submit" 
-                        class="w-full bg-primary text-white font-bold py-3 px-4 rounded-lg hover:bg-opacity-90 transition">
-                    Verstuur Bericht
-                </button>
-            </form>
+                    <div class="relative group">
+                        <label for="message" class="block text-sm font-medium text-gray-700 mb-1 transition-all duration-200 group-focus-within:text-primary">Bericht</label>
+                        <div class="relative">
+                            <textarea name="message" 
+                                      id="message" 
+                                      rows="6"
+                                      class="block w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 transition-all duration-200 bg-gray-50 focus:bg-white resize-none"
+                                      required><?php echo isset($message) ? htmlspecialchars($message) : ''; ?></textarea>
+                            <div class="absolute bottom-0 left-0 h-0.5 bg-primary transform scale-x-0 group-focus-within:scale-x-100 transition-transform duration-300 origin-left"></div>
+                        </div>
+                    </div>
+
+                    <div class="relative">
+                        <button type="submit" 
+                                class="w-full bg-primary text-white font-semibold py-4 px-6 rounded-lg hover:bg-opacity-90 transform hover:-translate-y-0.5 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 active:scale-95 shadow-lg hover:shadow-xl">
+                            <div class="flex items-center justify-center space-x-2">
+                                <span>Verstuur Bericht</span>
+                                <svg class="w-5 h-5 transition-transform duration-200 transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                                </svg>
+                            </div>
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </main>
