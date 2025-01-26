@@ -45,6 +45,7 @@ $router->add('thema/([^/]+)', 'controllers/thema.php');
 $router->add('nieuws', 'controllers/nieuws.php');
 $router->add('profile', 'controllers/profile/index.php');
 $router->add('profile/edit', 'controllers/profile/edit.php');
+$router->add('newsletter/subscribe', 'controllers/newsletter.php');
 
 // Get the requested URL
 $request = $_SERVER['REQUEST_URI'];

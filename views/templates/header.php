@@ -214,17 +214,22 @@
                         </h3>
                         <div class="mt-2">
                             <p class="text-sm text-gray-500">
-                                Deze website bevindt zich momenteel in de beta fase. Wij werken hard aan nieuwe functionaliteiten en verbeteringen. Jouw feedback is zeer waardevol voor ons!
+                                Deze website bevindt zich momenteel in de beta fase. Wij werken hard aan nieuwe functionaliteiten en verbeteringen. Jouw feedback is zeer waardevol voor ons! Heb je suggesties of kom je problemen tegen? Laat het ons weten via de contactpagina.
                             </p>
                         </div>
                     </div>
                 </div>
-                <div class="mt-5 sm:mt-6">
+                <div class="mt-5 sm:mt-6 flex gap-3">
                     <button type="button"
                             @click="localStorage.setItem('betaNoticeShown', 'true'); showBetaNotice = false"
-                            class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-primary text-base font-medium text-white hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary sm:text-sm transition duration-150 ease-in-out">
+                            class="flex-1 rounded-md border border-transparent shadow-sm px-4 py-2 bg-primary text-base font-medium text-white hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary sm:text-sm transition duration-150 ease-in-out inline-flex items-center justify-center">
                         Doorgaan
                     </button>
+                    <a href="<?php echo URLROOT; ?>/contact"
+                       @click="localStorage.setItem('betaNoticeShown', 'true'); showBetaNotice = false"
+                       class="flex-1 rounded-md border border-primary shadow-sm px-4 py-2 bg-white text-base font-medium text-primary hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary sm:text-sm transition duration-150 ease-in-out inline-flex items-center justify-center">
+                        Feedback
+                    </a>
                 </div>
             </div>
         </div>
@@ -248,11 +253,11 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                   d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"/>
                         </svg>
-                        Nieuwe discussies toegevoegd
+                        Nieuwe blogs toegevoegd
                     </span>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <a href="#" class="text-sm hover:text-white/90 transition-colors">Bekijk meer</a>
+                    <a href="<?php echo URLROOT; ?>/blogs" class="text-sm hover:text-white/90 transition-colors">Bekijk meer</a>
                 </div>
             </div>
         </div>
