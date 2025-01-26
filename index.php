@@ -41,6 +41,8 @@ $router->add('logout', 'controllers/auth/logout.php');
 $router->add('themas', 'controllers/themas.php');
 $router->add('thema/([^/]+)', 'controllers/thema.php');
 $router->add('nieuws', 'controllers/nieuws.php');
+$router->add('profile', 'controllers/profile/index.php');
+$router->add('profile/edit', 'controllers/profile/edit.php');
 
 // Get the requested URL
 $request = $_SERVER['REQUEST_URI'];
