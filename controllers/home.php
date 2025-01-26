@@ -29,7 +29,31 @@ $db->query("SELECT blogs.*, users.username as author_name
 $latest_blogs = $db->resultSet();
 
 // Haal het laatste nieuws op
-$latest_news = array_slice($newsAPI->getLatestPoliticalNews(), 0, 5);
+$news_sources = [
+    'links' => [
+        ['name' => 'De Volkskrant', 'bias' => 'links', 'url' => 'https://www.volkskrant.nl/voorpagina/rss.xml'],
+        ['name' => 'Trouw', 'bias' => 'centrum-links', 'url' => 'https://www.trouw.nl/rss.xml'],
+        ['name' => 'NRC', 'bias' => 'centrum-links', 'url' => 'https://www.nrc.nl/rss/']
+    ],
+    'rechts' => [
+        ['name' => 'Telegraaf', 'bias' => 'rechts', 'url' => 'https://www.telegraaf.nl/rss'],
+        ['name' => 'WNL', 'bias' => 'rechts', 'url' => 'https://wnl.tv/feed/'],
+        ['name' => 'AD', 'bias' => 'centrum-rechts', 'url' => 'https://www.ad.nl/rss.xml']
+    ]
+];
+
+// Haal nieuws op van verschillende bronnen
+$latest_news = [];
+foreach ($news_sources as $orientation => $sources) {
+    foreach ($sources as $source) {
+        $news = $newsAPI->getLatestPoliticalNewsBySource($source['name']);
+        if (!empty($news)) {
+            $news[0]['orientation'] = $orientation;
+            $news[0]['bias'] = $source['bias'];
+            $latest_news[] = $news[0];
+        }
+    }
+}
 
 // Haal actuele data op
 $actuele_themas = $openDataAPI->getActueleThemas();
@@ -396,110 +420,127 @@ require_once 'views/templates/header.php';
                     <p class="text-xl text-gray-600 max-w-2xl mx-auto">Blijf op de hoogte van de laatste ontwikkelingen in de Nederlandse politiek</p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative">
-                    <?php foreach($latest_news as $index => $news): 
-                        $source_domains = [
-                            'NOS' => 'nos.nl',
-                            'NU.nl' => 'nu.nl',
-                            'RTL Nieuws' => 'rtlnieuws.nl',
-                            'AD' => 'ad.nl',
-                            'Volkskrant' => 'volkskrant.nl',
-                            'NRC' => 'nrc.nl',
-                            'Trouw' => 'trouw.nl'
-                        ];
-                        $domain = isset($source_domains[$news['source']]) ? $source_domains[$news['source']] : parse_url($news['url'], PHP_URL_HOST);
-                        $favicon_url = "https://www.google.com/s2/favicons?domain=" . $domain . "&sz=32";
-                    ?>
-                        <article class="group bg-white rounded-2xl shadow-lg overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl" 
-                                data-aos="fade-up" 
-                                data-aos-delay="<?php echo $index * 100; ?>">
-                            <!-- Gradient Overlay -->
-                            <div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-                            <div class="relative p-6">
-                                <!-- News Source & Date -->
-                                <div class="flex items-center justify-between mb-4">
-                                    <div class="flex items-center space-x-3">
-                                        <div class="relative">
-                                            <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden group-hover:scale-110 transition-transform duration-300">
-                                                <img src="<?php echo $favicon_url; ?>" 
-                                                     alt="<?php echo htmlspecialchars($news['source']); ?> logo"
-                                                     class="w-6 h-6 object-contain">
+                <!-- Laatste Nieuws Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 relative">
+                    <!-- Links georiënteerde bronnen -->
+                    <div class="space-y-8">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-6 flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                            </svg>
+                            Progressieve Media
+                        </h3>
+                        <?php
+                        $links_news = array_filter($latest_news, function($news) {
+                            return $news['orientation'] === 'links';
+                        });
+                        foreach($links_news as $news):
+                        ?>
+                            <article class="group bg-white rounded-2xl shadow-lg overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl">
+                                <div class="relative p-6">
+                                    <!-- News Source & Date -->
+                                    <div class="flex items-center justify-between mb-4">
+                                        <div class="flex items-center space-x-3">
+                                            <div class="relative">
+                                                <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center overflow-hidden group-hover:scale-110 transition-transform duration-300">
+                                                    <span class="text-blue-600 font-semibold"><?php echo substr($news['source'], 0, 2); ?></span>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <p class="text-sm font-semibold text-gray-900"><?php echo $news['source']; ?></p>
+                                                <span class="text-xs px-2 py-1 bg-blue-100 text-blue-600 rounded-full"><?php echo $news['bias']; ?></span>
                                             </div>
                                         </div>
-                                        <div>
-                                            <p class="text-sm font-semibold text-gray-900"><?php echo $news['source']; ?></p>
-                                            <div class="flex items-center text-xs text-gray-500">
-                                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                                </svg>
-                                                <?php echo date('d M Y', strtotime($news['publishedAt'])); ?>
-                                            </div>
+                                        <div class="text-xs text-gray-500">
+                                            <?php echo date('d M Y', strtotime($news['publishedAt'])); ?>
                                         </div>
                                     </div>
-                                    <div class="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                                        <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path>
-                                        </svg>
+                                    <!-- Rest van de artikel content -->
+                                    <div class="space-y-3">
+                                        <h3 class="text-xl font-bold text-gray-900 group-hover:text-primary transition-colors line-clamp-2">
+                                            <?php echo $news['title']; ?>
+                                        </h3>
+                                        <p class="text-gray-600 line-clamp-2">
+                                            <?php echo $news['description']; ?>
+                                        </p>
+                                    </div>
+                                    
+                                    <!-- Article Footer -->
+                                    <div class="mt-6 flex items-center justify-between">
+                                        <a href="<?php echo $news['url']; ?>" 
+                                           target="_blank" 
+                                           rel="noopener noreferrer"
+                                           class="inline-flex items-center text-blue-600 font-semibold group-hover:text-blue-700 transition-colors">
+                                            <span>Lees artikel</span>
+                                            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                                            </svg>
+                                        </a>
                                     </div>
                                 </div>
+                            </article>
+                        <?php endforeach; ?>
+                    </div>
 
-                                <!-- News Content -->
-                                <div class="space-y-3">
-                                    <h3 class="text-xl font-bold text-gray-900 group-hover:text-primary transition-colors line-clamp-2">
-                                        <?php echo $news['title']; ?>
-                                    </h3>
-                                    <p class="text-gray-600 line-clamp-2">
-                                        <?php echo $news['description']; ?>
-                                    </p>
-                                </div>
-
-                                <!-- Categories -->
-                                <div class="flex flex-wrap gap-2 mt-4">
-                                    <?php 
-                                    $categories = ['Politiek', 'Nieuws', 'Actueel'];
-                                    foreach($categories as $category): 
-                                    ?>
-                                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800 group-hover:bg-primary/10 group-hover:text-primary transition-all">
-                                            #<?php echo $category; ?>
-                                        </span>
-                                    <?php endforeach; ?>
-                                </div>
-
-                                <!-- Footer -->
-                                <div class="mt-6 flex items-center justify-between">
-                                    <a href="<?php echo $news['url']; ?>" 
-                                       target="_blank" 
-                                       rel="noopener noreferrer"
-                                       class="inline-flex items-center text-primary font-semibold group-hover:text-secondary transition-colors">
-                                        <span class="relative">
-                                            Lees artikel
-                                            <div class="absolute bottom-0 left-0 w-full h-0.5 bg-secondary transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
-                                        </span>
-                                        <svg class="w-5 h-5 ml-2 transform transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
-                                        </svg>
-                                    </a>
-
-                                    <!-- Engagement Stats -->
-                                    <div class="flex items-center space-x-4 text-gray-500">
-                                        <span class="inline-flex items-center text-sm">
-                                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                    <!-- Rechts georiënteerde bronnen -->
+                    <div class="space-y-8">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-6 flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                            </svg>
+                            Conservatieve Media
+                        </h3>
+                        <?php
+                        $rechts_news = array_filter($latest_news, function($news) {
+                            return $news['orientation'] === 'rechts';
+                        });
+                        foreach($rechts_news as $news):
+                        ?>
+                            <article class="group bg-white rounded-2xl shadow-lg overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl">
+                                <div class="relative p-6">
+                                    <!-- News Source & Date -->
+                                    <div class="flex items-center justify-between mb-4">
+                                        <div class="flex items-center space-x-3">
+                                            <div class="relative">
+                                                <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center overflow-hidden group-hover:scale-110 transition-transform duration-300">
+                                                    <span class="text-red-600 font-semibold"><?php echo substr($news['source'], 0, 2); ?></span>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <p class="text-sm font-semibold text-gray-900"><?php echo $news['source']; ?></p>
+                                                <span class="text-xs px-2 py-1 bg-red-100 text-red-600 rounded-full"><?php echo $news['bias']; ?></span>
+                                            </div>
+                                        </div>
+                                        <div class="text-xs text-gray-500">
+                                            <?php echo date('d M Y', strtotime($news['publishedAt'])); ?>
+                                        </div>
+                                    </div>
+                                    <!-- Rest van de artikel content -->
+                                    <div class="space-y-3">
+                                        <h3 class="text-xl font-bold text-gray-900 group-hover:text-primary transition-colors line-clamp-2">
+                                            <?php echo $news['title']; ?>
+                                        </h3>
+                                        <p class="text-gray-600 line-clamp-2">
+                                            <?php echo $news['description']; ?>
+                                        </p>
+                                    </div>
+                                    
+                                    <!-- Article Footer -->
+                                    <div class="mt-6 flex items-center justify-between">
+                                        <a href="<?php echo $news['url']; ?>" 
+                                           target="_blank" 
+                                           rel="noopener noreferrer"
+                                           class="inline-flex items-center text-red-600 font-semibold group-hover:text-red-700 transition-colors">
+                                            <span>Lees artikel</span>
+                                            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
                                             </svg>
-                                            243
-                                        </span>
-                                        <span class="inline-flex items-center text-sm">
-                                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path>
-                                            </svg>
-                                            56
-                                        </span>
+                                        </a>
                                     </div>
                                 </div>
-                            </div>
-                        </article>
-                    <?php endforeach; ?>
+                            </article>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
 
                 <!-- CTA Button -->

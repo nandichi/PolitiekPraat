@@ -40,9 +40,22 @@ $router->add('register', 'controllers/auth/register.php');
 $router->add('logout', 'controllers/auth/logout.php');
 $router->add('themas', 'controllers/themas.php');
 $router->add('thema/([^/]+)', 'controllers/thema.php');
+$router->add('nieuws', 'controllers/nieuws.php');
+
+// Get the requested URL
+$request = $_SERVER['REQUEST_URI'];
+
+// Remove query string
+$request = strtok($request, '?');
+
+// Remove trailing slash
+$request = rtrim($request, '/');
+
+// Remove leading slash
+$request = ltrim($request, '/');
 
 // Route dispatcher
-$route = $router->dispatch($_SERVER['REQUEST_URI']);
+$route = $router->dispatch($request);
 $controller = BASE_PATH . '/' . $route['controller'];
 $params = $route['params'];
 
@@ -53,8 +66,10 @@ if (isset($_GET['debug'])) {
     echo "Controller Path: " . $controller . "\n";
     echo "Full Path: " . realpath($controller) . "\n";
     echo "File Exists: " . (file_exists($controller) ? 'Yes' : 'No') . "\n";
-    echo "File Permissions: " . substr(sprintf('%o', fileperms($controller)), -4) . "\n";
-    echo "File Owner: " . posix_getpwuid(fileowner($controller))['name'] . "\n";
+    if (file_exists($controller)) {
+        echo "File Permissions: " . substr(sprintf('%o', fileperms($controller)), -4) . "\n";
+        echo "File Owner: " . posix_getpwuid(fileowner($controller))['name'] . "\n";
+    }
     echo "Current PHP User: " . get_current_user() . "\n";
     echo "</pre>";
 }

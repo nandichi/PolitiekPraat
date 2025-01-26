@@ -253,6 +253,10 @@
                        class="menu-item text-white/90 hover:text-white transition-colors duration-300 font-medium py-2">
                         Contact
                     </a>
+                    <a href="<?php echo URLROOT; ?>/nieuws" 
+                       class="menu-item text-white/90 hover:text-white transition-colors duration-300 font-medium py-2">
+                        Nieuws
+                    </a>
                 </div>
 
                 <!-- Desktop Auth Buttons -->

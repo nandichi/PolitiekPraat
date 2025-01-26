@@ -4,23 +4,8 @@ Options -Indexes
 
 # Rewrite engine aanzetten
 RewriteEngine On
-RewriteBase /
 
-# Voorkom directe toegang tot includes directory
-RewriteRule ^includes/ - [F,L]
-
-# Voorkom directe toegang tot views directory
-RewriteRule ^views/ - [F,L]
-
-# Route voor thema pagina's
+# Stuur alles naar index.php
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^thema/([^/]+)/?$ controllers/thema.php?slug=$1 [L,QSA]
-
-# Stuur alle overige verzoeken naar index.php
-RewriteRule ^(.*)$ index.php [L,QSA]
-
-# Bestandsrechten
-<Files ~ "\.(php|css|js|jpg|jpeg|png|gif|ico)$">
-    Require all granted
-</Files> 
+RewriteRule ^(.*)$ index.php [L,QSA] 
