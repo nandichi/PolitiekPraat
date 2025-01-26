@@ -3,10 +3,15 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+// Composer autoloader
+require_once 'vendor/autoload.php';
+
 require_once 'includes/config.php';
 require_once 'includes/Database.php';
 require_once 'includes/functions.php';
 require_once 'includes/Router.php';
+require_once 'includes/BlogController.php';
+require_once 'controllers/blogs.php';  // Add BlogsController
 
 // Debug informatie (tijdelijk)
 if (isset($_GET['debug'])) {
@@ -26,14 +31,28 @@ define('BASE_PATH', $scriptDir);
 // Voeg het base path toe aan de include path
 set_include_path(get_include_path() . PATH_SEPARATOR . BASE_PATH);
 
+// Start de sessie als die nog niet is gestart
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 $router = new Router();
 
 // Routes toevoegen met relatieve paden
 $router->add('', 'controllers/home.php');
 $router->add('home', 'controllers/home.php');
-$router->add('blogs', 'controllers/blogs.php');
-$router->add('blogs/create', 'controllers/blogs/create.php');
-$router->add('blogs/view/([^/]+)', 'controllers/blogs/view.php');
+$router->add('blogs', function() {
+    $controller = new BlogsController();
+    $controller->index();
+});
+$router->add('blogs/create', function() {
+    $controller = new BlogsController();
+    $controller->create();
+});
+$router->add('blogs/view/([^/]+)', function($slug) {
+    $controller = new BlogsController();
+    $controller->view($slug);
+});
 $router->add('forum', 'controllers/forum.php');
 $router->add('forum/create', 'controllers/forum/create.php');
 $router->add('contact', 'controllers/contact.php');
@@ -61,9 +80,21 @@ $request = rtrim($request, '/');
 $request = ltrim($request, '/');
 
 // Route dispatcher
-$route = $router->dispatch($request);
-$controller = BASE_PATH . '/' . $route['controller'];
-$params = $route['params'];
+try {
+    $route = $router->dispatch($request);
+    if (is_callable($route['controller'])) {
+        call_user_func_array($route['controller'], $route['params']);
+    } else {
+        $controller = BASE_PATH . '/' . $route['controller'];
+        if (file_exists($controller)) {
+            require_once $controller;
+        } else {
+            require_once BASE_PATH . "/controllers/404.php";
+        }
+    }
+} catch (Exception $e) {
+    require_once BASE_PATH . "/controllers/404.php";
+}
 
 if (isset($_GET['debug'])) {
     echo "<pre>";
@@ -77,19 +108,5 @@ if (isset($_GET['debug'])) {
         echo "File Owner: " . posix_getpwuid(fileowner($controller))['name'] . "\n";
     }
     echo "Current PHP User: " . get_current_user() . "\n";
-    echo "</pre>";
-}
-
-// Controller laden
-try {
-    if (file_exists($controller)) {
-        require_once $controller;
-    } else {
-        require_once BASE_PATH . "/controllers/404.php";
-    }
-} catch (Exception $e) {
-    echo "<pre>";
-    echo "Error loading controller: " . $e->getMessage() . "\n";
-    echo "Stack trace: " . $e->getTraceAsString() . "\n";
     echo "</pre>";
 } 

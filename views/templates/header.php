@@ -8,6 +8,7 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script>
         tailwind.config = {
@@ -37,7 +38,46 @@
                             '0%, 100%': { transform: 'translateY(0)' },
                             '50%': { transform: 'translateY(-10px)' },
                         }
-                    }
+                    },
+                    typography: {
+                        DEFAULT: {
+                            css: {
+                                color: '#374151',
+                                maxWidth: 'none',
+                                h1: {
+                                    color: '#1a365d',
+                                },
+                                h2: {
+                                    color: '#1a365d',
+                                },
+                                h3: {
+                                    color: '#1a365d',
+                                },
+                                strong: {
+                                    color: '#1a365d',
+                                },
+                                a: {
+                                    color: '#c41e3a',
+                                    '&:hover': {
+                                        color: '#1a365d',
+                                    },
+                                },
+                                code: {
+                                    color: '#1a365d',
+                                    backgroundColor: '#f3f4f6',
+                                    padding: '0.2em 0.4em',
+                                    borderRadius: '0.25rem',
+                                },
+                                pre: {
+                                    backgroundColor: '#f3f4f6',
+                                    code: {
+                                        backgroundColor: 'transparent',
+                                        padding: '0',
+                                    },
+                                },
+                            },
+                        },
+                    },
                 }
             }
         }

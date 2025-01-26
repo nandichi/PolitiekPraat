@@ -3,46 +3,58 @@
 class Router {
     private $routes = [];
     
-    public function add($pattern, $controller) {
-        $this->routes[$pattern] = $controller;
+    public function add($route, $controller) {
+        $this->routes[$route] = [
+            'pattern' => $this->convertToRegex($route),
+            'controller' => $controller
+        ];
     }
     
-    public function dispatch($uri) {
+    private function convertToRegex($route) {
+        return '#^' . str_replace('/', '\/', $route) . '$#';
+    }
+    
+    public function dispatch($url) {
         // Verwijder query parameters
-        $uri = parse_url($uri, PHP_URL_PATH);
+        $url = parse_url($url, PHP_URL_PATH);
         
         // Verwijder leading/trailing slashes
-        $uri = trim($uri, '/');
+        $url = trim($url, '/');
         
-        // Als de URI leeg is, gebruik de default route
-        if (empty($uri)) {
-            return ['controller' => $this->routes[''], 'params' => []];
+        // Als de URL leeg is, gebruik de default route
+        if (empty($url)) {
+            return [
+                'controller' => $this->routes['']['controller'],
+                'params' => []
+            ];
         }
 
         // Loop door alle routes
-        foreach ($this->routes as $pattern => $controller) {
-            // Converteer route pattern naar regex
-            $pattern = str_replace('/', '\/', $pattern);
-            $pattern = '/^' . $pattern . '$/';
-
+        foreach ($this->routes as $route) {
             // Check of de URI matched met het pattern
-            if (preg_match($pattern, $uri, $matches)) {
+            if (preg_match($route['pattern'], $url, $matches)) {
                 // Verwijder de volledige match
                 array_shift($matches);
                 
-                // Voor thema en blog routes, zet de slug in $_GET
-                if ((strpos($controller, 'thema.php') !== false || strpos($controller, 'blogs/view.php') !== false) && !empty($matches)) {
+                // Voor thema en blog routes, zet de slug in $_GET als het geen callable is
+                if (is_string($route['controller']) && 
+                    (strpos($route['controller'], 'thema.php') !== false || 
+                     strpos($route['controller'], 'blogs/view.php') !== false) && 
+                    !empty($matches)) {
                     $_GET['slug'] = $matches[0];
                 }
 
                 return [
-                    'controller' => $controller,
+                    'controller' => $route['controller'],
                     'params' => $matches
                 ];
             }
         }
 
         // Als geen route matched, return 404
-        return ['controller' => 'controllers/404.php', 'params' => []];
+        return [
+            'controller' => 'controllers/404.php',
+            'params' => []
+        ];
     }
 } 

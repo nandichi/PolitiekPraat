@@ -1,70 +1,73 @@
 <?php
-$db = new Database();
-
-// Haal alle blogs op
-$db->query("SELECT blogs.*, users.username as author_name 
-           FROM blogs 
-           JOIN users ON blogs.author_id = users.id 
-           ORDER BY created_at DESC");
-$blogs = $db->resultSet();
-
-require_once BASE_PATH . '/views/templates/header.php';
-?>
-
-<main class="container mx-auto px-4 py-12">
-    <div class="flex justify-between items-center mb-8">
-        <h1 class="text-3xl font-bold">Blogs</h1>
-        <?php if(isset($_SESSION['user_id'])): ?>
-            <a href="<?php echo URLROOT; ?>/blogs/create" 
-               class="bg-secondary text-white px-6 py-2 rounded-lg hover:bg-opacity-90 transition">
-                Nieuwe Blog
-            </a>
-        <?php endif; ?>
-    </div>
-
-    <?php if(empty($blogs)): ?>
-        <div class="text-center py-12">
-            <p class="text-gray-600 text-xl">Er zijn nog geen blogs geplaatst.</p>
-            <?php if(isset($_SESSION['user_id'])): ?>
-                <p class="mt-4">
-                    <a href="<?php echo URLROOT; ?>/blogs/create" class="text-primary hover:underline">
-                        Wees de eerste die een blog schrijft!
-                    </a>
-                </p>
-            <?php endif; ?>
-        </div>
-    <?php else: ?>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <?php foreach($blogs as $blog): ?>
-                <article class="bg-white rounded-lg shadow-md overflow-hidden">
-                    <?php if($blog->image_path): ?>
-                        <img src="<?php echo URLROOT; ?>/public/images/<?php echo $blog->image_path; ?>" 
-                             alt="<?php echo $blog->title; ?>"
-                             class="w-full h-48 object-cover">
-                    <?php endif; ?>
-                    <div class="p-6">
-                        <h2 class="text-xl font-bold mb-2">
-                            <?php echo $blog->title; ?>
-                        </h2>
-                        <p class="text-gray-600 mb-4">
-                            <?php echo substr($blog->summary, 0, 150) . '...'; ?>
-                        </p>
-                        <div class="flex justify-between items-center">
-                            <div class="text-sm text-gray-500">
-                                <span>Door <?php echo $blog->author_name; ?></span>
-                                <br>
-                                <span><?php echo date('d-m-Y', strtotime($blog->published_at)); ?></span>
-                            </div>
-                            <a href="<?php echo URLROOT; ?>/blogs/view/<?php echo $blog->slug; ?>" 
-                               class="text-secondary hover:underline">
-                                Lees meer
-                            </a>
-                        </div>
-                    </div>
-                </article>
-            <?php endforeach; ?>
-        </div>
-    <?php endif; ?>
-</main>
-
-<?php require_once BASE_PATH . '/views/templates/footer.php'; ?> 
+class BlogsController {
+    private $blogModel;
+    
+    public function __construct() {
+        $this->blogModel = new BlogController();
+    }
+    
+    public function index() {
+        $blogs = $this->blogModel->getAll();
+        require_once BASE_PATH . '/views/blogs/index.php';
+    }
+    
+    public function create() {
+        // Check if user is logged in
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: ' . URLROOT . '/auth/login');
+            exit;
+        }
+        
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Handle file upload
+            $image_path = '';
+            if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+                $upload_dir = 'uploads/blogs/';
+                if (!file_exists($upload_dir)) {
+                    mkdir($upload_dir, 0777, true);
+                }
+                
+                $file_extension = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
+                $allowed = ['jpg', 'jpeg', 'png', 'gif'];
+                
+                if (in_array($file_extension, $allowed)) {
+                    $new_filename = uniqid() . '.' . $file_extension;
+                    $target_path = $upload_dir . $new_filename;
+                    
+                    if (move_uploaded_file($_FILES['image']['tmp_name'], $target_path)) {
+                        $image_path = $target_path;
+                    }
+                }
+            }
+            
+            $data = [
+                'title' => trim($_POST['title']),
+                'content' => trim($_POST['content']),
+                'image_path' => $image_path
+            ];
+            
+            if ($this->blogModel->create($data)) {
+                header('Location: ' . URLROOT . '/blogs');
+                exit;
+            } else {
+                // Als er iets misgaat, toon dan het formulier opnieuw met een foutmelding
+                $error = 'Er is iets misgegaan bij het opslaan van je blog. Probeer het opnieuw.';
+                require_once BASE_PATH . '/views/blogs/create.php';
+                return;
+            }
+        }
+        
+        require_once BASE_PATH . '/views/blogs/create.php';
+    }
+    
+    public function view($slug) {
+        $blog = $this->blogModel->getBySlug($slug);
+        
+        if (!$blog) {
+            header('Location: ' . URLROOT . '/404');
+            exit;
+        }
+        
+        require_once BASE_PATH . '/views/blogs/view.php';
+    }
+} 
