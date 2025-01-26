@@ -93,7 +93,7 @@ PolitiekPraat/
 Wil je meehelpen om de website beter te maken? Graag! Zo doe je dat:
 
 1. Maak een kopie van het project
-2. Maak een nieuwe tak voor je verbetering (`git checkout -b verbetering/NieuweFeature`)
+2. Maak een nieuwe branche voor je verbetering (`git checkout -b verbetering/NieuweFeature`)
 3. Sla je werk op (`git commit -m 'Nieuwe feature toegevoegd'`)
 4. Stuur je werk door (`git push origin verbetering/NieuweFeature`)
 5. Vraag of wij je verbetering willen toevoegen
@@ -112,7 +112,7 @@ Heb je vragen of ideeën? Je kunt ons bereiken via:
 - Email: [naoufal.exe@gmail.com]
 - Website: [www.politiekpraat.nl]
 - Twitter: [@naoufalexe]
-
+- LinkedIn: [https://www.linkedin.com/in/naoufalandichi/]
 ---
 
 *PolitiekPraat - Samen praten over politiek* 🇳🇱
