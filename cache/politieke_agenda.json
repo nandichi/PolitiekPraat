@@ -13,9 +13,9 @@
 <link rel="shortlink" href="https://opendata.tweedekamer.nl/node/16" />
 
     <title>Pagina niet gevonden | Open Data Portaal</title>
-    <link rel="stylesheet" media="all" href="/sites/default/files/css/css_1jH-gQJHrRQuRZ5bYSVwTRIDRUbi4eQPIcc7fQf7XTI.css?delta=0&amp;language=nl&amp;theme=odp&amp;include=eJwFwcEJACAIAMCFDGeyEgksQ_3Y9N1FRfLGTsEwzBmP-SZdj8HmRVHrpC2ydB35kwcRiw" />
-<link rel="stylesheet" media="all" href="/sites/default/files/css/css_CHkFFLgw5b_MEY7lbmOf-rve1-f5tg1WvCjc3I-t38o.css?delta=1&amp;language=nl&amp;theme=odp&amp;include=eJwFwcEJACAIAMCFDGeyEgksQ_3Y9N1FRfLGTsEwzBmP-SZdj8HmRVHrpC2ydB35kwcRiw" />
-<link rel="stylesheet" media="print" href="/sites/default/files/css/css_fGK7HDOMs9SAexO9PdEcj1jqHGcUxKNNU2mt4cItGPg.css?delta=2&amp;language=nl&amp;theme=odp&amp;include=eJwFwcEJACAIAMCFDGeyEgksQ_3Y9N1FRfLGTsEwzBmP-SZdj8HmRVHrpC2ydB35kwcRiw" />
+    <link rel="stylesheet" media="all" href="/sites/default/files/css/css_mutIz5-4UFewMGjub0LZha_gzUoGQC7R80x4tPMmKXM.css?delta=0&amp;language=nl&amp;theme=odp&amp;include=eJwtyFEOgCAIANALYZwJkzkXigPa0tPXR5_vnWqMQ62TtM3AT0gbFxa7J8nxE7RMrKKZJHmsryr48uCOmZxfmTYamg" />
+<link rel="stylesheet" media="all" href="/sites/default/files/css/css_BamkJnisoKvFFlCh1fHf-LmmDGyffDVbSGDwvvZ-AWQ.css?delta=1&amp;language=nl&amp;theme=odp&amp;include=eJwtyFEOgCAIANALYZwJkzkXigPa0tPXR5_vnWqMQ62TtM3AT0gbFxa7J8nxE7RMrKKZJHmsryr48uCOmZxfmTYamg" />
+<link rel="stylesheet" media="print" href="/sites/default/files/css/css_hY0CzOz4mIoJzbrSufGSEqNavFsvJpqxhM8RulVlQOo.css?delta=2&amp;language=nl&amp;theme=odp&amp;include=eJwtyFEOgCAIANALYZwJkzkXigPa0tPXR5_vnWqMQ62TtM3AT0gbFxa7J8nxE7RMrKKZJHmsryr48uCOmZxfmTYamg" />
 
     
   </head>
@@ -31,7 +31,7 @@ tags.async=!0,tags.src="https://pwk.tweedekamer.nl/"+id+".js"+qPString,scripts.p
 !function(a,n,i){a[n]=a[n]||{};for(var c=0;c<i.length;c++)!function(i){a[n][i]=a[n][i]||{},a[n][i].api=a[n][i].api||function(){var a=[].slice.call(arguments,0);"string"==typeof a[0]&&window[dataLayerName].push({event:n+"."+i+":"+a[0],parameters:[].slice.call(arguments,1)})}}(i[c])}(window,"ppms",["tm","cm"]);
 })(window, document, 'dataLayer', '126f06b1-ea26-4a59-ab78-7eb0baff2aeb');
 // ]]>
-</script><noscript><iframe src="https://pwk.tweedekamer.nl/126f06b1-ea26-4a59-ab78-7eb0baff2aeb/noscript.html" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+</script><noscript><iframe src="https://pwk.tweedekamer.nl/126f06b1-ea26-4a59-ab78-7eb0baff2aeb/noscript.html" title="Piwik PRO embed snippet" height="0" width="0" style="display:none;visibility:hidden" aria-hidden="true"></iframe></noscript>
       <div class="dialog-off-canvas-main-canvas" data-off-canvas-main-canvas>
     
 
@@ -274,8 +274,8 @@ tags.async=!0,tags.src="https://pwk.tweedekamer.nl/"+id+".js"+qPString,scripts.p
   </div>
 
     
-    <script type="application/json" data-drupal-selector="drupal-settings-json">{"path":{"baseUrl":"\/","pathPrefix":"","currentPath":"","currentPathIsAdmin":false,"isFront":false,"currentLanguage":"nl"},"pluralDelimiter":"\u0003","suppressDeprecationErrors":true,"user":{"uid":0,"permissionsHash":"a706f1effd73640018ee8a47138684f5c80df4188ad15a912b98eedcad7eabef"}}</script>
-<script src="/sites/default/files/js/js_2eSbL6GIsvVXwD3NdmJh8d4dMFcBz0i8rc6kdnq8k5A.js?scope=footer&amp;delta=0&amp;language=nl&amp;theme=odp&amp;include=eJzLTynQT8_JT0rM0S0uqczJzEsHAEIzBxs"></script>
+    <script type="application/json" data-drupal-selector="drupal-settings-json">{"path":{"baseUrl":"\/","pathPrefix":"","currentPath":"","currentPathIsAdmin":false,"isFront":false,"currentLanguage":"nl"},"pluralDelimiter":"\u0003","suppressDeprecationErrors":true,"data":{"extlink":{"extTarget":false,"extTargetAppendNewWindowLabel":"(opent in een nieuw venster)","extTargetNoOverride":false,"extNofollow":false,"extTitleNoOverride":true,"extNoreferrer":true,"extFollowNoOverride":false,"extClass":"ext","extLabel":"(externe link)","extImgClass":false,"extSubdomains":true,"extExclude":"","extInclude":"","extCssExclude":".breadcrumb","extCssInclude":"","extCssExplicit":"","extAlert":false,"extAlertText":"Deze link leidt naar een externe website. We zijn niet verantwoordelijk voor hun inhoud.","extHideIcons":true,"mailtoClass":"0","telClass":"0","mailtoLabel":"(link stuurt e-mail)","telLabel":"(link is een telefoonnummer)","extUseFontAwesome":false,"extIconPlacement":"append","extPreventOrphan":true,"extFaLinkClasses":"fa fa-external-link","extFaMailtoClasses":"fa fa-envelope-o","extAdditionalLinkClasses":"","extAdditionalMailtoClasses":"","extAdditionalTelClasses":"","extFaTelClasses":"fa fa-phone","whitelistedDomains":[],"extExcludeNoreferrer":""}},"user":{"uid":0,"permissionsHash":"a706f1effd73640018ee8a47138684f5c80df4188ad15a912b98eedcad7eabef"}}</script>
+<script src="/sites/default/files/js/js_AJffFiRLDFVxl6icJeICWV7H0sb68-gpE66nqax9X9o.js?scope=footer&amp;delta=0&amp;language=nl&amp;theme=odp&amp;include=eJxLrSjJyczL1k8pKi1IzNFLhXB18lMK9NNz8pMSc3SLSyqBQukAVM4QKg"></script>
 
   </body>
 </html>

@@ -121,7 +121,7 @@ require_once 'views/templates/header.php';
                                     <div>
                                         <h3 class="text-lg font-semibold text-white tracking-tight">Live Peilingen</h3>
                                         <p class="text-xs text-blue-300/80">
-                                            Laatste update: 26 jan 2025
+                                            Laatste update: 30 jan 2025
                                         </p>
                                     </div>
                                 </div>
