@@ -20,12 +20,12 @@ $partijData = $politicalDataAPI->getPartijInformatie();
 $latestPolls = $pollAPI->getLatestPolls();
 $historicalPolls = $pollAPI->getHistoricalPolls(3);
 
-// Haal de laatste 5 blogs op
+// Haal de laatste 6 blogs op
 $db->query("SELECT blogs.*, users.username as author_name 
            FROM blogs 
            JOIN users ON blogs.author_id = users.id 
            ORDER BY published_at DESC 
-           LIMIT 5");
+           LIMIT 6");
 $latest_blogs = $db->resultSet();
 
 // Haal het laatste nieuws op
@@ -121,7 +121,7 @@ require_once 'views/templates/header.php';
                                     <div>
                                         <h3 class="text-lg font-semibold text-white tracking-tight">Live Peilingen</h3>
                                         <p class="text-xs text-blue-300/80">
-                                            Laatste update: 30 jan 2025
+                                            Laatste update: 2 feb 2025
                                         </p>
                                     </div>
                                 </div>
