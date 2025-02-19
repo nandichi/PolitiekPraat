@@ -7,7 +7,7 @@ define('DB_NAME', 'politiek_db');
 
 // URL Root
 // define('URLROOT', 'https://politiekpraat.nl'); 
-define('URLROOT', 'http://localhost:8080'); 
+define('URLROOT', 'http://localhost:8000'); 
 
 
 // Site naam
@@ -17,7 +17,4 @@ define('SITENAME', 'PolitiekPraat');
 define('APPVERSION', '1.0.0');
 
 // Start sessie
-session_start(); 
-
-
-
+session_start();

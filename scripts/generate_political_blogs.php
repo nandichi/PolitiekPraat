@@ -90,7 +90,7 @@ Wat betekent dit voor jou?
 Iedereen verdient de kans om zijn dromen waar te maken. Daar maken wij ons hard voor.",
     ],
     [
-        'title' => 'Digitale Toekomst: Kansen Pakken, Risico's Aanpakken',
+        'title' => 'Digitale Toekomst: Kansen Pakken, Risico\'s Aanpakken',
         'content' => "De wereld wordt steeds digitaler. D66 ziet de kansen van technologie, maar we moeten wel zorgen dat het veilig en eerlijk blijft.
 
 Waar hebben we mee te maken?

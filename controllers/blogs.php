@@ -70,4 +70,29 @@ class BlogsController {
         
         require_once BASE_PATH . '/views/blogs/view.php';
     }
+    
+    public function handleLike($slug) {
+        header('Content-Type: application/json');
+        
+        // Lees de JSON body
+        $json = file_get_contents('php://input');
+        $data = json_decode($json);
+        $action = $data->action ?? 'like';
+        
+        // Valideer de action
+        if (!in_array($action, ['like', 'unlike'])) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'message' => 'Ongeldige actie']);
+            return;
+        }
+        
+        $result = $this->blogModel->updateLikes($slug, $action);
+        
+        if ($result !== false) {
+            echo json_encode(['success' => true, 'likes' => $result]);
+        } else {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'message' => 'Kon like niet verwerken']);
+        }
+    }
 } 

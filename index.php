@@ -53,6 +53,10 @@ $router->add('blogs/view/([^/]+)', function($slug) {
     $controller = new BlogsController();
     $controller->view($slug);
 });
+$router->add('blogs/like/([^/]+)', function($slug) {
+    $controller = new BlogsController();
+    $controller->handleLike($slug);
+});
 $router->add('forum', 'controllers/forum.php');
 $router->add('forum/create', 'controllers/forum/create.php');
 $router->add('contact', 'controllers/contact.php');

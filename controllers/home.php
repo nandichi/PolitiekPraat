@@ -42,18 +42,64 @@ $news_sources = [
     ]
 ];
 
-// Haal nieuws op van verschillende bronnen
-$latest_news = [];
-foreach ($news_sources as $orientation => $sources) {
-    foreach ($sources as $source) {
-        $news = $newsAPI->getLatestPoliticalNewsBySource($source['name']);
-        if (!empty($news)) {
-            $news[0]['orientation'] = $orientation;
-            $news[0]['bias'] = $source['bias'];
-            $latest_news[] = $news[0];
-        }
-    }
-}
+// Voorbeeldnieuws (vervangt de API-call voor demonstratiedoeleinden)
+$latest_news = [
+    [
+        'orientation' => 'links',
+        'source' => 'De Volkskrant',
+        'bias' => 'links',
+        'publishedAt' => date('Y-m-d H:i:s'), // Vandaag 08:30
+        'title' => 'De Europese ‘Patriotten’ van Orbán, Le Pen en Wilders stralen vooral op de familiefoto’s veel gebundelde kracht uit',
+        'description' => 'De ‘Patriotten voor Europa’ komen dit weekeinde bij elkaar in Madrid. Onder anderen Geert Wilders en Marine Le Pen zullen spreken op dit partijcongres voor radicaal-rechts. De nieuwe Europese familie werd vorig jaar opgericht om Europa ‘van binnenuit te slopen’, al komt daar nog maar weinig van terecht.',
+        'url' => 'https://www.volkskrant.nl/buitenland/de-europese-patriotten-van-orban-le-pen-en-wilders-stralen-vooral-op-de-familiefoto-s-veel-gebundelde-kracht-uit~bf074d80/'
+    ],
+    [
+        'orientation' => 'links',
+        'source' => 'NRC',
+        'bias' => 'centrum-links',
+        'publishedAt' => date('Y-m-d H:i:s', strtotime('-2 hours')), // 2 uur geleden
+        'title' => 'Tweede Kamer moet de 1,3 miljard om btw-verhoging op boeken, sport, cultuur en media te voorkomen zelf vinden van het kabinet',
+        'description' => 'Staatssecretaris Van Oostenbruggen (Fiscaliteit) presenteert drie alternatieven om de voorgenomen btw-verhoging terug te draaien. De Tweede Kamer is nu aan zet.',
+        'url' => 'https://www.nrc.nl/nieuws/2025/02/07/tweede-kamer-moet-de-13-miljard-om-btw-verhoging-op-boeken-sport-cultuur-en-media-te-voorkomen-zelf-vinden-van-het-kabinet-a4882409'
+    ],
+    [
+        'orientation' => 'links',
+        'source' => 'Trouw',
+        'bias' => 'centrum-links',
+        'publishedAt' => date('Y-m-d H:i:s', strtotime('-4 hours')), // 4 uur geleden
+        'title' => 'Kan een nieuwe linkse partij de gematigde kiezer terugwinnen?',
+        'description' => 'De PvdA en GroenLinks hebben een nieuwe linkse partij nodig, zeggen politicollega’s. Maar deze partij moet ook de gematigde kiezer terugwinnen, zeggen andere politicollega’s.',
+        'url' => 'https://www.trouw.nl/politiek/kan-een-nieuwe-linkse-partij-de-gematigde-kiezer-terugwinnen~bb43f70b/'
+    ],
+    [
+        'orientation' => 'rechts',
+        'source' => 'Telegraaf',
+        'bias' => 'rechts',
+        'publishedAt' => date('Y-m-d H:i:s', strtotime('-6 hours')), // 6 uur geleden
+        'title' => 'Trump pakt Biden toegang tot gevoelige informatie af: ’Joe, je bent ontslagen’ ',
+        'description' => 'De Amerikaanse president heeft zijn voormalige vicepresident, Biden, toegang tot gevoelige informatie afgewezen. "Joe, je bent ontslagen", schreef Trump op Twitter.',
+        'url' => 'https://www.telegraaf.nl/nieuws/16012582/live-trump-pakt-biden-toegang-tot-gevoelige-informatie-af-joe-je-bent-ontslagen'
+    ],
+    [
+        'orientation' => 'rechts',
+        'source' => 'AD',
+        'bias' => 'centrum-rechts',
+        'publishedAt' => date('Y-m-d H:i:s', strtotime('-8 hours')), // 8 uur geleden
+        'title' => 'Trump valt ICC aan met sancties: ‘Risico bestaat dat Strafhof straks niet meer kan functioneren’
+',
+        'description' => 'Een aanval op de internationale rechtsorde. Dat zeggen vooraanstaande juristen en politici over het besluit van de Amerikaanse president Trump om sancties in te stellen tegen medewerkers van het Internationaal Strafhof (ICC) in Den Haag. Wat zijn de gevolgen van Trumps besluit? ,Straffeloosheid ligt op de loer.’’',
+        'url' => 'https://www.ad.nl/wonen'
+    ],
+    [
+        'orientation' => 'rechts',
+        'source' => 'Reformatorisch Dagblad',
+        'bias' => 'rechts',
+        'publishedAt' => date('Y-m-d H:i:s', strtotime('-10 hours')), // 10 uur geleden
+        'title' => 'Premier Schoof en Faber (Asiel) niet eenduidig over uit te brengen advies Raad van State',
+        'description' => 'https://www.rd.nl/artikel/1095099-premier-schoof-en-faber-asiel-niet-eenduidig-over-uit-te-brengen-advies-raad-van-state',
+        'url' => 'https://www.rd.nl/artikel/1095099-premier-schoof-en-faber-asiel-niet-eenduidig-over-uit-te-brengen-advies-raad-van-state'
+    ]
+];
 
 // Haal actuele data op
 $actuele_themas = $openDataAPI->getActueleThemas();
@@ -121,7 +167,7 @@ require_once 'views/templates/header.php';
                                     <div>
                                         <h3 class="text-lg font-semibold text-white tracking-tight">Live Peilingen</h3>
                                         <p class="text-xs text-blue-300/80">
-                                            Laatste update: 2 feb 2025
+                                            Laatste update: <?php echo date('d M Y'); ?>
                                         </p>
                                     </div>
                                 </div>
@@ -411,7 +457,7 @@ require_once 'views/templates/header.php';
                                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                         </svg>
-                                        <?php echo date('d M Y', strtotime($blog->published_at)); ?>
+                                        <?php echo getRelativeTime($blog->published_at); ?>
                                     </span>
                                 </div>
 
@@ -475,22 +521,9 @@ require_once 'views/templates/header.php';
                             Progressieve Media
                         </h3>
                         <?php
-                        // Voeg een extra nieuwsitem toe aan de links_news array
-                        $extra_news = [
-                            'orientation' => 'links',
-                            'source' => 'NU.nl',
-                            'bias' => 'centrum-links',
-                            'publishedAt' => date('Y-m-d H:i:s'),
-                            'title' => 'Nieuwe klimaatmaatregelen aangekondigd door kabinet',
-                            'description' => 'Het kabinet heeft vandaag een nieuw pakket klimaatmaatregelen gepresenteerd. De maatregelen zijn gericht op het versnellen van de energietransitie.',
-                            'url' => 'https://www.nu.nl/klimaat'
-                        ];
-                        
                         $links_news = array_filter($latest_news, function($news) {
                             return $news['orientation'] === 'links';
                         });
-                        $links_news[] = $extra_news; // Voeg het extra nieuwsitem toe
-                        
                         foreach($links_news as $news):
                         ?>
                             <article class="group bg-white rounded-2xl shadow-lg overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl">
@@ -509,7 +542,7 @@ require_once 'views/templates/header.php';
                                             </div>
                                         </div>
                                         <div class="text-xs text-gray-500">
-                                            <?php echo date('d M Y', strtotime($news['publishedAt'])); ?>
+                                            <?php echo getRelativeTime($news['publishedAt']); ?>
                                         </div>
                                     </div>
                                     <!-- Rest van de artikel content -->
@@ -569,7 +602,7 @@ require_once 'views/templates/header.php';
                                             </div>
                                         </div>
                                         <div class="text-xs text-gray-500">
-                                            <?php echo date('d M Y', strtotime($news['publishedAt'])); ?>
+                                            <?php echo getRelativeTime($news['publishedAt']); ?>
                                         </div>
                                     </div>
                                     <!-- Rest van de artikel content -->
@@ -767,4 +800,23 @@ require_once 'views/templates/header.php';
     </section>
 </main>
 
-<?php require_once 'views/templates/footer.php'; ?> 
+<?php require_once 'views/templates/footer.php'; ?>
+
+<?php
+// Helper functie voor relatieve tijd (voeg deze toe bovenaan het bestand na de requires)
+function getRelativeTime($date) {
+    $timestamp = strtotime($date);
+    $difference = time() - $timestamp;
+    
+    if ($difference < 60) {
+        return 'zojuist';
+    } elseif ($difference < 3600) {
+        $minutes = floor($difference / 60);
+        return $minutes . ' ' . ($minutes == 1 ? 'minuut' : 'minuten') . ' geleden';
+    } elseif ($difference < 86400) {
+        $hours = floor($difference / 3600);
+        return $hours . ' ' . ($hours == 1 ? 'uur' : 'uur') . ' geleden';
+    } else {
+        return date('d M Y', $timestamp);
+    }
+} 

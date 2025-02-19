@@ -1,0 +1,2 @@
+ALTER TABLE blogs 
+ADD COLUMN likes INT DEFAULT 0; 

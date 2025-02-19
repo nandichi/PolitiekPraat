@@ -100,6 +100,31 @@ class BlogController {
         return $this->db->execute();
     }
 
+    public function updateLikes($slug, $action) {
+        // Haal het huidige aantal likes op
+        $this->db->query("SELECT likes FROM blogs WHERE slug = :slug");
+        $this->db->bind(':slug', $slug);
+        $blog = $this->db->single();
+        
+        if (!$blog) {
+            return false;
+        }
+        
+        // Update het aantal likes
+        $newLikes = $action === 'like' ? $blog->likes + 1 : $blog->likes - 1;
+        $newLikes = max(0, $newLikes); // Voorkom negatieve likes
+        
+        $this->db->query("UPDATE blogs SET likes = :likes WHERE slug = :slug");
+        $this->db->bind(':likes', $newLikes);
+        $this->db->bind(':slug', $slug);
+        
+        if ($this->db->execute()) {
+            return $newLikes;
+        }
+        
+        return false;
+    }
+
     private function generateSlug($title) {
         // Convert to lowercase
         $slug = strtolower($title);
