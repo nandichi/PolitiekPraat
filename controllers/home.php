@@ -49,7 +49,7 @@ $latest_news = [
         'source' => 'De Volkskrant',
         'bias' => 'links',
         'publishedAt' => date('Y-m-d H:i:s'), // Vandaag 08:30
-        'title' => 'De Europese ‘Patriotten’ van Orbán, Le Pen en Wilders stralen vooral op de familiefoto’s veel gebundelde kracht uit',
+        'title' => 'De Europese ‘Patriotten’ van Orbán, Le Pen en Wilders stralen vooral op de familiefoto’s veel gebundelde kracht uit"',
         'description' => 'De ‘Patriotten voor Europa’ komen dit weekeinde bij elkaar in Madrid. Onder anderen Geert Wilders en Marine Le Pen zullen spreken op dit partijcongres voor radicaal-rechts. De nieuwe Europese familie werd vorig jaar opgericht om Europa ‘van binnenuit te slopen’, al komt daar nog maar weinig van terecht.',
         'url' => 'https://www.volkskrant.nl/buitenland/de-europese-patriotten-van-orban-le-pen-en-wilders-stralen-vooral-op-de-familiefoto-s-veel-gebundelde-kracht-uit~bf074d80/'
     ],
@@ -76,7 +76,7 @@ $latest_news = [
         'source' => 'Telegraaf',
         'bias' => 'rechts',
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-6 hours')), // 6 uur geleden
-        'title' => 'Trump pakt Biden toegang tot gevoelige informatie af: ’Joe, je bent ontslagen’ ',
+        'title' => 'Trump pakt Biden toegang tot gevoelige informatie af: "Joe, je bent ontslagen"',
         'description' => 'De Amerikaanse president heeft zijn voormalige vicepresident, Biden, toegang tot gevoelige informatie afgewezen. "Joe, je bent ontslagen", schreef Trump op Twitter.',
         'url' => 'https://www.telegraaf.nl/nieuws/16012582/live-trump-pakt-biden-toegang-tot-gevoelige-informatie-af-joe-je-bent-ontslagen'
     ],
@@ -85,9 +85,8 @@ $latest_news = [
         'source' => 'AD',
         'bias' => 'centrum-rechts',
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-8 hours')), // 8 uur geleden
-        'title' => 'Trump valt ICC aan met sancties: ‘Risico bestaat dat Strafhof straks niet meer kan functioneren’
-',
-        'description' => 'Een aanval op de internationale rechtsorde. Dat zeggen vooraanstaande juristen en politici over het besluit van de Amerikaanse president Trump om sancties in te stellen tegen medewerkers van het Internationaal Strafhof (ICC) in Den Haag. Wat zijn de gevolgen van Trumps besluit? ,Straffeloosheid ligt op de loer.’’',
+        'title' => 'Trump valt ICC aan met sancties: "Risico bestaat dat Strafhof straks niet meer kan functioneren"',
+        'description' => 'Een aanval op de internationale rechtsorde. Dat zeggen vooraanstaande juristen en politici over het besluit van de Amerikaanse president Trump om sancties in te stellen tegen medewerkers van het Internationaal Strafhof (ICC) in Den Haag. Wat zijn de gevolgen van Trumps besluit? ,Straffeloosheid ligt op de loer. ',
         'url' => 'https://www.ad.nl/wonen'
     ],
     [
@@ -415,6 +414,88 @@ require_once 'views/templates/header.php';
             <svg class="w-full h-auto" viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M0 120L60 110C120 100 240 80 360 70C480 60 600 60 720 65C840 70 960 80 1080 85C1200 90 1320 90 1380 90L1440 90V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0V120Z" fill="rgb(249 250 251)"/>
             </svg>
+        </div>
+    </section>
+
+    <!-- Nieuwe Stemwijzer Highlight Section -->
+    <section class="py-16 bg-gray-50">
+        <!-- Decoratieve achtergrond elementen -->
+        <div class="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-primary/5 to-transparent"></div>
+        <div class="absolute -top-40 -right-40 w-96 h-96 bg-secondary/10 rounded-full blur-3xl"></div>
+        
+        <div class="container mx-auto px-4 relative">
+            <!-- NEW badge -->
+            <div class="flex justify-center mb-8">
+                <div class="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-primary/20 to-secondary/20 text-primary border border-primary/20 shadow-lg shadow-primary/10 transform hover:scale-105 transition-all duration-300 group">
+                    <div class="flex space-x-2 items-center">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                        </span>
+                        <span class="text-sm font-bold tracking-wider group-hover:text-secondary transition-colors duration-300">NIEUW</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl overflow-hidden transform hover:scale-[1.02] transition-all duration-300">
+                <div class="relative p-8 md:p-12">
+                    <!-- Decoratieve pattern -->
+                    <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"30\" height=\"30\" viewBox=\"0 0 30 30\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cpath d=\"M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z\" fill=\"rgba(0,0,0,0.07)\"%3E%3C/path%3E%3C/svg%3E')] opacity-5"></div>
+
+                    <div class="relative flex flex-col md:flex-row items-center gap-8">
+                        <!-- Linker kolom met tekst -->
+                        <div class="md:w-2/3 space-y-6">
+                            <h2 class="text-3xl md:text-4xl font-bold text-gray-900">
+                                <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                                    Ontdek de Stemwijzer 2025
+                                </span>
+                            </h2>
+                            <p class="text-lg text-gray-600 leading-relaxed">
+                                Vind de partij die het beste bij jouw standpunten past met onze gloednieuwe stemwijzer. 
+                                Beantwoord 25 belangrijke stellingen en krijg direct inzicht in jouw politieke voorkeuren.
+                            </p>
+                            <div class="flex flex-wrap gap-4">
+                                <div class="flex items-center text-gray-600">
+                                    <svg class="w-5 h-5 text-primary mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    <span>Slechts 5-10 minuten</span>
+                                </div>
+                                <div class="flex items-center text-gray-600">
+                                    <svg class="w-5 h-5 text-primary mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                                    </svg>
+                                    <span>100% anoniem</span>
+                                </div>
+                                <div class="flex items-center text-gray-600">
+                                    <svg class="w-5 h-5 text-primary mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                                    </svg>
+                                    <span>Direct resultaat</span>
+                                </div>
+                            </div>
+                            <a href="<?php echo URLROOT; ?>/stemwijzer" 
+                               class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-xl 
+                                      hover:opacity-90 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl group">
+                                <span>Start de Stemwijzer</span>
+                                <svg class="w-5 h-5 ml-2 transform transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                                </svg>
+                            </a>
+                        </div>
+
+                        <!-- Rechter kolom met illustratie -->
+                        <div class="md:w-1/3 flex justify-center">
+                            <div class="w-48 h-48 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full flex items-center justify-center">
+                                <svg class="w-24 h-24 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" 
+                                          d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 

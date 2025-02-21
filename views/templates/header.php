@@ -400,58 +400,39 @@
                     <!-- Desktop Navigation -->
                     <div class="hidden lg:flex items-center space-x-6">
                         <a href="<?php echo URLROOT; ?>/" 
-                           class="relative px-4 py-2 text-white/90 font-medium group">
-                            <span class="relative z-10 transition-colors duration-300 group-hover:text-white">Home</span>
-                            <div class="absolute inset-x-0 -bottom-1 h-px w-full bg-gradient-to-r from-transparent via-secondary to-transparent 
-                                        scale-x-0 transition-transform duration-500 group-hover:scale-x-100"></div>
-                            <div class="absolute -inset-1 rounded-lg opacity-0 transition-all duration-300 
-                                        bg-gradient-to-r from-secondary/20 to-primary/20 blur-lg -z-10
-                                        group-hover:opacity-100"></div>
+                           class="nav-link px-4 py-2 text-white/90 font-medium group">
+                            <span class="relative">Home</span>
                         </a>
 
                         <a href="<?php echo URLROOT; ?>/blogs" 
-                           class="relative px-4 py-2 text-white/90 font-medium group">
-                            <span class="relative z-10 transition-colors duration-300 group-hover:text-white">Blogs</span>
-                            <div class="absolute inset-x-0 -bottom-1 h-px w-full bg-gradient-to-r from-transparent via-secondary to-transparent 
-                                        scale-x-0 transition-transform duration-500 group-hover:scale-x-100"></div>
-                            <div class="absolute -inset-1 rounded-lg opacity-0 transition-all duration-300 
-                                        bg-gradient-to-r from-secondary/20 to-primary/20 blur-lg -z-10
-                                        group-hover:opacity-100"></div>
+                           class="nav-link px-4 py-2 text-white/90 font-medium group">
+                            <span class="relative">Blogs</span>
                         </a>
 
                         <a href="<?php echo URLROOT; ?>/nieuws" 
-                           class="relative px-4 py-2 text-white/90 font-medium group">
-                            <span class="relative z-10 transition-colors duration-300 group-hover:text-white">Nieuws</span>
-                            <div class="absolute inset-x-0 -bottom-1 h-px w-full bg-gradient-to-r from-transparent via-secondary to-transparent 
-                                        scale-x-0 transition-transform duration-500 group-hover:scale-x-100"></div>
-                            <div class="absolute -inset-1 rounded-lg opacity-0 transition-all duration-300 
-                                        bg-gradient-to-r from-secondary/20 to-primary/20 blur-lg -z-10
-                                        group-hover:opacity-100"></div>
+                           class="nav-link px-4 py-2 text-white/90 font-medium group">
+                            <span class="relative">Nieuws</span>
                         </a>
 
                         <a href="<?php echo URLROOT; ?>/stemwijzer" 
-                           class="relative px-4 py-2 text-white/90 font-medium group">
-                            <span class="relative z-10 transition-colors duration-300 group-hover:text-white">Stemwijzer</span>
-                            <div class="absolute inset-x-0 -bottom-1 h-px w-full bg-gradient-to-r from-transparent via-secondary to-transparent 
-                                        scale-x-0 transition-transform duration-500 group-hover:scale-x-100"></div>
-                            <div class="absolute -inset-1 rounded-lg opacity-0 transition-all duration-300 
-                                        bg-gradient-to-r from-secondary/20 to-primary/20 blur-lg -z-10
-                                        group-hover:opacity-100"></div>
+                           class="flex items-center nav-link px-4 py-2 text-white/90 font-medium group">
+                            <span class="relative">Stemwijzer</span>
+                            <div class="ml-2 inline-flex items-center px-2 py-0.5 text-[10px] font-medium 
+                                     bg-gradient-to-r from-secondary/20 to-secondary/40
+                                     border border-secondary/50 text-white rounded-full
+                                     shadow-[0_0_10px_rgba(196,30,58,0.3)]">
+                                Nieuw
+                            </div>
                         </a>
 
                         <!-- Forum Dropdown Button -->
                         <div class="relative group">
-                            <button class="flex items-center px-4 py-2 text-white/90 font-medium relative">
-                                <span class="relative z-10 transition-colors duration-300 group-hover:text-white">Forum</span>
+                            <button class="nav-link px-4 py-2 text-white/90 font-medium flex items-center">
+                                <span class="relative">Forum</span>
                                 <svg class="w-4 h-4 ml-1.5 transform transition-transform duration-500 group-hover:rotate-180" 
                                      fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                                 </svg>
-                                <div class="absolute inset-x-0 -bottom-1 h-px w-full bg-gradient-to-r from-transparent via-secondary to-transparent 
-                                            scale-x-0 transition-transform duration-500 group-hover:scale-x-100"></div>
-                                <div class="absolute -inset-1 rounded-lg opacity-0 transition-all duration-300 
-                                            bg-gradient-to-r from-secondary/20 to-primary/20 blur-lg -z-10
-                                            group-hover:opacity-100"></div>
                             </button>
 
                             <div class="absolute left-0 mt-1 w-56 opacity-0 invisible translate-y-2
@@ -494,25 +475,54 @@
                             </div>
                         </div>
 
-                        <a href="<?php echo URLROOT; ?>/contact" 
-                           class="relative px-4 py-2 text-white/90 font-medium group">
-                            <span class="relative z-10 transition-colors duration-300 group-hover:text-white">Contact</span>
-                            <div class="absolute inset-x-0 -bottom-1 h-px w-full bg-gradient-to-r from-transparent via-secondary to-transparent 
-                                        scale-x-0 transition-transform duration-500 group-hover:scale-x-100"></div>
-                            <div class="absolute -inset-1 rounded-lg opacity-0 transition-all duration-300 
-                                        bg-gradient-to-r from-secondary/20 to-primary/20 blur-lg -z-10
-                                        group-hover:opacity-100"></div>
-                        </a>
+                        <!-- Contact Dropdown -->
+                        <div class="relative group">
+                            <button class="nav-link text-white/90 hover:text-white transition-colors duration-300 font-medium py-2 flex items-center">
+                                <span>Contact</span>
+                                <svg class="w-4 h-4 ml-1.5 transform transition-transform duration-300 group-hover:rotate-180" 
+                                     fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                </svg>
+                            </button>
 
-                        <a href="<?php echo URLROOT; ?>/over-mij" 
-                           class="relative px-4 py-2 text-white/90 font-medium group">
-                            <span class="relative z-10 transition-colors duration-300 group-hover:text-white">Over ons</span>
-                            <div class="absolute inset-x-0 -bottom-1 h-px w-full bg-gradient-to-r from-transparent via-secondary to-transparent 
-                                        scale-x-0 transition-transform duration-500 group-hover:scale-x-100"></div>
-                            <div class="absolute -inset-1 rounded-lg opacity-0 transition-all duration-300 
-                                        bg-gradient-to-r from-secondary/20 to-primary/20 blur-lg -z-10
-                                        group-hover:opacity-100"></div>
-                        </a>
+                            <div class="absolute left-0 mt-1 w-48 opacity-0 invisible translate-y-2
+                                        transition-all duration-300 ease-out group-hover:opacity-100 
+                                        group-hover:visible group-hover:translate-y-0">
+                                <div class="p-2 bg-white rounded-xl shadow-xl ring-1 ring-black/5">
+                                    <a href="<?php echo URLROOT; ?>/contact" 
+                                       class="flex items-center px-3 py-2 rounded-lg transition-colors duration-200
+                                              hover:bg-gray-50 group/item">
+                                        <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-primary/5
+                                                   transition-transform duration-200 group-hover/item:scale-110">
+                                            <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                            </svg>
+                                        </div>
+                                        <div class="ml-3">
+                                            <p class="text-sm font-medium text-gray-800">Contact</p>
+                                            <p class="text-xs text-gray-500">Neem contact op</p>
+                                        </div>
+                                    </a>
+
+                                    <a href="<?php echo URLROOT; ?>/over-mij" 
+                                       class="flex items-center px-3 py-2 mt-1 rounded-lg transition-colors duration-200
+                                              hover:bg-gray-50 group/item">
+                                        <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-secondary/5
+                                                   transition-transform duration-200 group-hover/item:scale-110">
+                                            <svg class="w-5 h-5 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                            </svg>
+                                        </div>
+                                        <div class="ml-3">
+                                            <p class="text-sm font-medium text-gray-800">Over ons</p>
+                                            <p class="text-xs text-gray-500">Leer ons kennen</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Desktop Auth Buttons -->
@@ -761,30 +771,46 @@
 
                                 <a href="<?php echo URLROOT; ?>/stemwijzer" 
                                    class="flex items-center text-white/90 hover:text-white py-2 transition-colors duration-300">
-                                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                              d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-                                    </svg>
-                                    <span class="font-medium">Stemwijzer</span>
+                                    <span class="font-medium flex items-center">
+                                        Stemwijzer
+                                        <span class="ml-2 inline-flex items-center px-2 py-0.5 text-[10px] font-medium 
+                                                     bg-gradient-to-r from-secondary/20 to-secondary/40
+                                                     border border-secondary/50 text-white rounded-full
+                                                     shadow-[0_0_10px_rgba(196,30,58,0.3)]">
+                                            Nieuw
+                                        </span>
+                                    </span>
                                 </a>
 
-                                <a href="<?php echo URLROOT; ?>/contact" 
-                                   class="flex items-center text-white/90 hover:text-white py-2 transition-colors duration-300">
-                                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                              d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                                    </svg>
-                                    <span class="font-medium">Contact</span>
-                                </a>
-
-                                <a href="<?php echo URLROOT; ?>/over-mij" 
-                                   class="flex items-center text-white/90 hover:text-white py-2 transition-colors duration-300">
-                                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                                    </svg>
-                                    <span class="font-medium">Over ons</span>
-                                </a>
+                                <!-- Contact Dropdown -->
+                                <div class="space-y-3">
+                                    <button class="w-full flex items-center justify-between text-white/90 hover:text-white 
+                                                 transition-colors duration-300" 
+                                            onclick="toggleMobileSubmenu('contact-submenu')">
+                                        <div class="flex items-center">
+                                            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                            </svg>
+                                            <span class="font-medium">Contact</span>
+                                        </div>
+                                        <svg class="w-4 h-4 transform transition-transform duration-300" 
+                                             id="contact-submenu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                  d="M19 9l-7 7-7-7"/>
+                                        </svg>
+                                    </button>
+                                    <div class="hidden pl-8 space-y-3 border-l border-white/10" id="contact-submenu">
+                                        <a href="<?php echo URLROOT; ?>/contact" 
+                                           class="flex items-center text-white/80 hover:text-white transition-colors duration-300">
+                                            <span class="font-medium">Contact opnemen</span>
+                                        </a>
+                                        <a href="<?php echo URLROOT; ?>/over-mij" 
+                                           class="flex items-center text-white/80 hover:text-white transition-colors duration-300">
+                                            <span class="font-medium">Over ons</span>
+                                        </a>
+                                    </div>
+                                </div>
                             </nav>
 
                             <!-- Auth Section -->

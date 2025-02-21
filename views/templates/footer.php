@@ -3,44 +3,6 @@
         <!-- Decorative Top Border -->
         <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-secondary to-accent"></div>
         
-        <!-- Newsletter Section with Particles Background -->
-        <div class="relative bg-gradient-to-br from-primary to-primary/95 text-white overflow-hidden">
-            <div class="absolute inset-0">
-                <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:20px_20px]"></div>
-            </div>
-            
-            <div class="relative container mx-auto px-4 py-16">
-                <div class="max-w-4xl mx-auto text-center">
-                    <h3 class="text-3xl md:text-4xl font-bold mb-6 animate-fade-in">
-                        Blijf op de hoogte van het laatste nieuws
-                    </h3>
-                    <p class="text-lg text-white/80 mb-8 max-w-2xl mx-auto">
-                        Ontvang wekelijks de beste politieke inzichten, analyses en community updates direct in je inbox.
-                    </p>
-                    <form id="newsletterForm" class="flex flex-col sm:flex-row gap-4 justify-center max-w-lg mx-auto">
-                        <div class="relative flex-grow">
-                            <input type="email" 
-                                   name="email"
-                                   placeholder="Je e-mailadres" 
-                                   class="w-full bg-white/10 text-white placeholder-white/60 px-6 py-3 rounded-xl
-                                          focus:outline-none focus:ring-2 focus:ring-secondary border border-white/20
-                                          transition-all duration-300">
-                            <div class="absolute inset-0 bg-gradient-to-r from-secondary/20 to-accent/20 rounded-xl
-                                      opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
-                        </div>
-                        <button type="submit" 
-                                class="bg-secondary text-white px-8 py-3 rounded-xl font-semibold
-                                       hover:bg-accent transition-all duration-300 transform hover:scale-105
-                                       focus:outline-none focus:ring-2 focus:ring-white/50 shadow-lg">
-                            Aanmelden
-                        </button>
-                    </form>
-                    <div id="newsletterMessage" class="mt-6 text-center hidden">
-                        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <!-- Main Footer Content -->
         <div class="bg-primary/95 text-white">

@@ -410,13 +410,13 @@ require_once BASE_PATH . '/views/templates/header.php';
                 <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Contact</h1>
                 <div class="max-w-2xl mx-auto mt-12 space-y-6">
                     <p class="text-xl text-gray-700">
-                        Heb je een vraag of wil je iets met ons delen? We horen graag van je! ðŸ‘‹
+                        Heb je een vraag of wil je iets met ons delen? We horen graag van je!
                     </p>
                     <p class="text-lg text-gray-600">
-                        Misschien heb je een tof idee voor de website, zie je iets wat beter kan, of wil je gewoon je mening delen over de Nederlandse politiek - we staan open voor alles! ðŸ’¡
+                        Misschien heb je een tof idee voor de website, zie je iets wat beter kan, of wil je gewoon je mening delen over de Nederlandse politiek - we staan open voor alles!
                     </p>
                     <p class="text-base text-gray-500">
-                        â±ï¸ Je hoort meestal binnen 2 werkdagen van ons terug
+                        Je hoort meestal binnen 2 werkdagen van ons terug
                     </p>
                 </div>
             </div>
