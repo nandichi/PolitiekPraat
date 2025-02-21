@@ -429,6 +429,16 @@
                                         group-hover:opacity-100"></div>
                         </a>
 
+                        <a href="<?php echo URLROOT; ?>/stemwijzer" 
+                           class="relative px-4 py-2 text-white/90 font-medium group">
+                            <span class="relative z-10 transition-colors duration-300 group-hover:text-white">Stemwijzer</span>
+                            <div class="absolute inset-x-0 -bottom-1 h-px w-full bg-gradient-to-r from-transparent via-secondary to-transparent 
+                                        scale-x-0 transition-transform duration-500 group-hover:scale-x-100"></div>
+                            <div class="absolute -inset-1 rounded-lg opacity-0 transition-all duration-300 
+                                        bg-gradient-to-r from-secondary/20 to-primary/20 blur-lg -z-10
+                                        group-hover:opacity-100"></div>
+                        </a>
+
                         <!-- Forum Dropdown Button -->
                         <div class="relative group">
                             <button class="flex items-center px-4 py-2 text-white/90 font-medium relative">
@@ -748,6 +758,15 @@
                                         </a>
                                     </div>
                                 </div>
+
+                                <a href="<?php echo URLROOT; ?>/stemwijzer" 
+                                   class="flex items-center text-white/90 hover:text-white py-2 transition-colors duration-300">
+                                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                              d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                                    </svg>
+                                    <span class="font-medium">Stemwijzer</span>
+                                </a>
 
                                 <a href="<?php echo URLROOT; ?>/contact" 
                                    class="flex items-center text-white/90 hover:text-white py-2 transition-colors duration-300">

@@ -70,6 +70,7 @@ $router->add('nieuws', 'controllers/nieuws.php');
 $router->add('profile', 'controllers/profile/index.php');
 $router->add('profile/edit', 'controllers/profile/edit.php');
 $router->add('newsletter/subscribe', 'controllers/newsletter.php');
+$router->add('stemwijzer', 'controllers/stemwijzer.php');
 
 // Get the requested URL
 $request = $_SERVER['REQUEST_URI'];
