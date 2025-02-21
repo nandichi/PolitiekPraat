@@ -150,7 +150,7 @@ require_once 'views/templates/header.php';
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                 </svg>
                             </div>
-                            <span class="text-sm text-gray-600">Slechts 15 belangrijke stellingen</span>
+                            <span class="text-sm text-gray-600">Slechts 25 belangrijke stellingen</span>
                         </div>
                     </div>
                 </div>
