@@ -332,34 +332,6 @@ $metaDescription = $metaDescriptions[$currentPage] ?? $metaDescriptions['home'];
         </div>
     </div>
 
-    <!-- Announcement Bar -->
-    <div class="bg-secondary text-white py-2 relative overflow-hidden">
-        <div class="container mx-auto px-4">
-            <div class="flex justify-between items-center">
-                <div class="flex items-center space-x-4 text-sm">
-                    <a href="<?php echo URLROOT; ?>/nieuws" class="flex items-center hover:text-white/90 transition-colors duration-300">
-                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                  d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                        </svg>
-                        Laatste nieuws
-                    </a>
-                    <span class="hidden md:inline-block">|</span>
-                    <span class="hidden md:flex items-center animate-pulse-slow">
-                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                  d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"/>
-                        </svg>
-                        Nieuwe blogs toegevoegd
-                    </span>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <a href="<?php echo URLROOT; ?>/blogs" class="text-sm hover:text-white/90 transition-colors">Bekijk meer</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Main Navigation -->
     <nav class="relative z-50">
         <!-- Gradient background -->

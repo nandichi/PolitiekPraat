@@ -21,70 +21,106 @@ require_once 'views/templates/header.php';
         <div class="max-w-3xl mx-auto" x-data="stemwijzer()">
             <!-- Progress Bar -->
             <div class="mb-8 bg-white rounded-xl p-6 shadow-lg">
-                <div class="flex items-center justify-between mb-3">
-                    <div class="flex items-center space-x-2">
-                        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-primary/80 
-                                    flex items-center justify-center text-white font-medium shadow-md">
-                            <span x-text="currentStep + 1"></span>
+                <!-- Header met vraagnummer en tijd -->
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="relative">
+                            <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-primary/10 to-primary/5 
+                                       flex items-center justify-center">
+                                <span class="text-lg font-semibold text-primary" x-text="currentStep + 1"></span>
+                                <div class="absolute inset-0 rounded-lg border-2 border-primary/20 
+                                           animate-pulse-subtle"></div>
+                            </div>
                         </div>
-                        <span class="text-sm font-medium text-gray-700">
-                            van <span x-text="totalSteps"></span> stellingen
-                        </span>
+                        <div class="flex flex-col">
+                            <span class="text-sm font-medium text-gray-900">Vraag</span>
+                            <span class="text-xs text-gray-500">
+                                van <span x-text="totalSteps"></span> stellingen
+                            </span>
+                        </div>
                     </div>
-                    <div class="flex items-center space-x-1 text-sm text-gray-500">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                    
+                    <div class="flex items-center space-x-2 text-sm text-gray-500">
+                        <svg class="w-4 h-4 text-primary/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" 
                                   d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
-                        <span>Nog ongeveer <span x-text="Math.ceil((totalSteps - currentStep) * 0.5)"></span> minuten</span>
+                        <span class="text-xs">
+                            Nog <span x-text="Math.ceil((totalSteps - currentStep) * 0.5)"></span> min
+                        </span>
                     </div>
                 </div>
-
+                
                 <!-- Progress track -->
-                <div class="relative h-3 bg-gray-100 rounded-full overflow-hidden">
-                    <!-- Background pattern -->
-                    <div class="absolute inset-0 bg-opacity-10"
-                         style="background-image: repeating-linear-gradient(
-                            45deg,
-                            transparent,
-                            transparent 10px,
-                            rgba(0,0,0,0.05) 10px,
-                            rgba(0,0,0,0.05) 20px
-                         );">
-                    </div>
-
-                    <!-- Progress fill -->
-                    <div class="h-full bg-gradient-to-r from-primary via-primary/90 to-secondary 
-                                transition-all duration-300 ease-out relative"
-                         :style="'width: ' + (currentStep / totalSteps * 100) + '%'">
-                        <!-- Animated shine effect -->
-                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent
-                                    -translate-x-full animate-[shine_2s_ease-in-out_infinite]">
+                <div class="relative">
+                    <!-- Achtergrond -->
+                    <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
+                        <!-- Voortgangsbalk -->
+                        <div class="h-full bg-gradient-to-r from-primary/80 via-primary to-primary/90
+                                    transition-all duration-500 ease-out relative"
+                             :style="'width: ' + (currentStep / totalSteps * 100) + '%'">
+                            <!-- Glow effect -->
+                            <div class="absolute inset-0 flex">
+                                <div class="w-1/2 bg-gradient-to-r from-transparent to-white/20"></div>
+                                <div class="w-1/2 bg-gradient-to-l from-transparent to-white/20"></div>
+                            </div>
+                            
+                            <!-- Pulse effect aan het einde -->
+                            <div class="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 
+                                       bg-white rounded-full shadow-glow
+                                       animate-pulse-slow"></div>
                         </div>
                     </div>
 
-                    <!-- Progress markers -->
-                    <div class="absolute inset-0 flex items-center justify-between px-2">
+                    <!-- Stap markers -->
+                    <div class="absolute top-1/2 -translate-y-1/2 w-full flex justify-between px-[1px]">
                         <template x-for="index in totalSteps" :key="index">
-                            <div class="w-1 h-1 rounded-full bg-white/50"
-                                 :class="{ 'bg-white': currentStep >= index - 1 }">
+                            <div class="relative group">
+                                <div class="w-1 h-1 rounded-full transition-all duration-300"
+                                     :class="currentStep >= index - 1 ? 'bg-primary' : 'bg-gray-300'">
+                                </div>
+                                <!-- Tooltip -->
+                                <div class="absolute bottom-full mb-2 -translate-x-1/2 left-1/2
+                                           opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <div class="px-2 py-1 text-xs text-white bg-gray-900 rounded-md whitespace-nowrap">
+                                        Vraag <span x-text="index"></span>
+                                    </div>
+                                </div>
                             </div>
                         </template>
                     </div>
                 </div>
 
                 <!-- Labels -->
-                <div class="flex justify-between mt-2 text-xs text-gray-500">
-                    <span>Start</span>
-                    <span>Halverwege</span>
-                    <span>Einde</span>
+                <div class="flex justify-between mt-3 text-xs">
+                    <span class="text-gray-400 font-medium">Start</span>
+                    <span class="text-gray-400 font-medium">Halverwege</span>
+                    <span class="text-gray-400 font-medium">Einde</span>
                 </div>
             </div>
 
+            <!-- Voeg deze custom animaties toe aan je bestaande style sectie -->
             <style>
-            @keyframes shine {
-                0% { transform: translateX(-100%); }
-                50%, 100% { transform: translateX(100%); }
+            @keyframes pulse-subtle {
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0.7; }
+            }
+
+            @keyframes pulse-slow {
+                0%, 100% { transform: translateY(-50%) scale(1); opacity: 1; }
+                50% { transform: translateY(-50%) scale(1.3); opacity: 0.6; }
+            }
+
+            .shadow-glow {
+                box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.7);
+            }
+
+            .animate-pulse-subtle {
+                animation: pulse-subtle 2s ease-in-out infinite;
+            }
+
+            .animate-pulse-slow {
+                animation: pulse-slow 2s ease-in-out infinite;
             }
             </style>
 
@@ -391,16 +427,72 @@ require_once 'views/templates/header.php';
             <!-- Results Screen -->
             <div x-show="screen === 'results'" class="bg-white rounded-2xl shadow-lg p-4 sm:p-8">
                 <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-4">Jouw Resultaten</h2>
-                <p class="text-sm sm:text-base text-gray-600 mb-6">
-                    Op basis van je antwoorden zijn dit de partijen die het beste bij je passen:
-                </p>
+                
+                <!-- Politiek kompas -->
+                <div class="mb-12">
+                    <h3 class="text-lg font-semibold mb-6">Jouw politieke positie</h3>
+                    <div class="relative w-full h-[400px] bg-gradient-to-br from-gray-50 to-white rounded-2xl p-8 shadow-lg overflow-hidden">
+                        <!-- Grid lijnen -->
+                        <div class="absolute inset-0 grid grid-cols-4 grid-rows-4">
+                            <template x-for="i in 4">
+                                <div class="border-r border-gray-200"></div>
+                            </template>
+                            <template x-for="i in 4">
+                                <div class="border-b border-gray-200"></div>
+                            </template>
+                        </div>
+                        
+                        <!-- Labels -->
+                        <div class="absolute inset-0 p-4">
+                            <div class="relative w-full h-full">
+                                <!-- Progressief/Conservatief as -->
+                                <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1 
+                                            bg-gradient-to-b from-primary/20 to-transparent text-center py-2 px-4 rounded-t-lg">
+                                    <span class="text-sm font-medium text-primary-dark">Progressief</span>
+                                </div>
+                                <div class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1 
+                                            bg-gradient-to-t from-secondary/20 to-transparent text-center py-2 px-4 rounded-b-lg">
+                                    <span class="text-sm font-medium text-secondary-dark">Conservatief</span>
+                                </div>
+                                
+                                <!-- Links/Rechts as -->
+                                <div class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1 
+                                            bg-gradient-to-r from-blue-500/20 to-transparent text-center py-2 px-4 rounded-l-lg 
+                                            transform -rotate-90 origin-right">
+                                    <span class="text-sm font-medium text-blue-700">Links</span>
+                                </div>
+                                <div class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1 
+                                            bg-gradient-to-l from-red-500/20 to-transparent text-center py-2 px-4 rounded-r-lg 
+                                            transform rotate-90 origin-left">
+                                    <span class="text-sm font-medium text-red-700">Rechts</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Positie marker -->
+                        <div class="absolute transition-all duration-500 ease-out"
+                             :style="'left: ' + politicalPosition.x + '%; top: ' + politicalPosition.y + '%'">
+                            <div class="relative -translate-x-1/2 -translate-y-1/2">
+                                <!-- Pulse effect -->
+                                <div class="absolute inset-0 animate-ping rounded-full bg-primary/30"></div>
+                                <!-- Marker -->
+                                <div class="relative w-6 h-6 bg-gradient-to-br from-primary to-primary-dark 
+                                            rounded-full shadow-lg shadow-primary/30 border-2 border-white
+                                            flex items-center justify-center">
+                                    <div class="w-2 h-2 bg-white rounded-full"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                <div class="space-y-4">
+                <!-- Gedetailleerde resultaten -->
+                <div class="space-y-6">
                     <template x-for="(result, index) in results" :key="index">
-                        <div class="bg-gray-50 rounded-xl p-4">
-                            <div class="flex items-center justify-between flex-wrap gap-4">
+                        <div class="bg-gray-50 rounded-xl p-6">
+                            <div class="flex items-center justify-between flex-wrap gap-4 mb-4">
                                 <div class="flex items-center space-x-4">
-                                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-gradient-to-br from-primary to-secondary 
+                                    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-primary to-secondary 
                                                 flex items-center justify-center text-white font-bold text-lg"
                                          x-text="result.party.substring(0, 2)"></div>
                                     <div>
@@ -410,20 +502,51 @@ require_once 'views/templates/header.php';
                                         </p>
                                     </div>
                                 </div>
-                                <div class="w-full sm:w-24 h-2 bg-gray-200 rounded-full">
-                                    <div class="h-2 bg-gradient-to-r from-primary to-secondary rounded-full"
+                                <div class="w-full sm:w-48 h-2 bg-gray-200 rounded-full overflow-hidden">
+                                    <div class="h-2 bg-gradient-to-r from-primary to-secondary transition-all duration-1000"
                                          :style="'width: ' + result.match + '%'"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Belangrijkste overeenkomsten -->
+                            <div class="mt-4">
+                                <h4 class="text-sm font-medium text-gray-700 mb-2">Belangrijkste overeenkomsten:</h4>
+                                <div class="space-y-2">
+                                    <template x-for="match in result.topMatches" :key="match.question">
+                                        <div class="text-sm text-gray-600 flex items-center space-x-2">
+                                            <svg class="w-4 h-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                            </svg>
+                                            <span x-text="match.question"></span>
+                                        </div>
+                                    </template>
                                 </div>
                             </div>
                         </div>
                     </template>
                 </div>
 
-                <button @click="restartQuiz()"
-                        class="w-full mt-8 bg-gradient-to-r from-primary to-secondary text-white font-semibold py-3 px-6 
-                               rounded-xl hover:opacity-90 transition-all transform hover:scale-105">
-                    Opnieuw beginnen
-                </button>
+                <!-- Deel resultaten -->
+                <div class="mt-8 flex flex-col sm:flex-row gap-4">
+                    <button @click="shareResults()"
+                            class="flex-1 bg-primary text-white font-semibold py-3 px-6 rounded-xl 
+                                   hover:bg-primary-dark transition-colors flex items-center justify-center space-x-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                  d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"/>
+                        </svg>
+                        <span>Deel resultaten</span>
+                    </button>
+                    <button @click="saveResults()"
+                            class="flex-1 bg-secondary text-white font-semibold py-3 px-6 rounded-xl 
+                                   hover:bg-secondary-dark transition-colors flex items-center justify-center space-x-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                  d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/>
+                        </svg>
+                        <span>Bewaar resultaten</span>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -659,7 +782,7 @@ function stemwijzer() {
                     'VVD': "VVD is tegen een verhoging omdat dit banen kan schaden.",
                     'NSC': "NSC pleit voor een stapsgewijze benadering, afhankelijk van de economie.",
                     'BBB': "BBB vindt dat het minimumloon in balans moet zijn met economische realiteit.",
-                    'GL-PvdA': "GL-PvdA steunt een verhoging voor een eerlijk loon en sociale rechtvaardigheid.",
+                    'GL-PvdA': "GL-PvdA steunt een verhoging voor een eerlijker loon en sociale rechtvaardigheid.",
                     'D66': "D66 is voor een verhoging als de economische omstandigheden dat toelaten.",
                     'SP': "SP vindt dat een hoger minimumloon de koopkracht en gelijkheid versterkt.",
                     'PvdD': "PvdD steunt een verhoging om een eerlijk inkomen voor iedereen te garanderen.",
@@ -1415,6 +1538,7 @@ function stemwijzer() {
         ],
         answers: [],
         results: [],
+        politicalPosition: { x: 50, y: 50 },
         currentQuestion() {
             return this.questions[this.currentStep];
         },
@@ -1449,42 +1573,160 @@ function stemwijzer() {
             this.questions.forEach((question, index) => {
                 Object.entries(question.positions).forEach(([party, position]) => {
                     if (!partyPositions[party]) {
-                        partyPositions[party] = [];
+                        partyPositions[party] = { matches: [] };
                     }
-                    partyPositions[party][index] = position;
+                    
+                    if (this.answers[index] !== 'skip') {
+                        let match = 0;
+                        
+                        if (this.answers[index] === position) {
+                            match = 1;
+                        } else if (this.answers[index] === 'neutraal' || position === 'neutraal') {
+                            match = 0.5;
+                        }
+                        
+                        partyPositions[party].matches.push({
+                            question: question.title,
+                            match: match
+                        });
+                    }
                 });
             });
 
-            this.results = Object.entries(partyPositions).map(([party, positions]) => {
-                let matches = 0;
-                let totalAnswered = 0;
+            // Bereken gewogen gemiddelde en top matches
+            this.results = Object.entries(partyPositions).map(([party, data]) => {
+                const matchPercentage = data.matches.reduce((acc, curr) => {
+                    return acc + curr.match;
+                }, 0) / data.matches.length * 100;
 
-                positions.forEach((pos, index) => {
-                    if (this.answers[index] !== 'skip') {
-                        totalAnswered++;
-                        if (this.answers[index] === pos) {
-                            matches++;
-                        } else if (this.answers[index] === 'neutraal' || pos === 'neutraal') {
-                            matches += 0.5;
-                        }
-                    }
-                });
+                // Sorteer matches op basis van match score
+                const topMatches = data.matches
+                    .filter(m => m.match > 0.7)
+                    .sort((a, b) => b.match - a.match)
+                    .slice(0, 3);
 
                 return {
                     party,
-                    match: (matches / totalAnswered) * 100
+                    match: matchPercentage,
+                    topMatches: topMatches
                 };
             });
 
             // Sorteer resultaten op match percentage
             this.results.sort((a, b) => b.match - a.match);
+
+            // Bereken politieke positie
+            this.calculatePoliticalPosition();
+            
             this.screen = 'results';
         },
-        restartQuiz() {
-            this.screen = 'start';
-            this.currentStep = 0;
-            this.answers = [];
-            this.results = [];
+        calculatePoliticalPosition() {
+            let xScore = 0; // Links (-1) vs Rechts (1)
+            let yScore = 0; // Progressief (-1) vs Conservatief (1)
+            let xCount = 0;
+            let yCount = 0;
+
+            // Definieer thema's voor beide assen
+            const economicThemes = ['belasting', 'markt', 'minimumloon', 'winstbelasting', 'woningmarkt', 'zorgverzekering'];
+            const socialThemes = ['asielbeleid', 'klimaat', 'drugs', 'monarchie', 'kernwapens', 'europese'];
+
+            this.answers.forEach((answer, index) => {
+                const title = this.questions[index].title.toLowerCase();
+                
+                // Skip overgeslagen vragen
+                if (answer === 'skip') return;
+
+                // Economische as (Links-Rechts)
+                if (economicThemes.some(theme => title.includes(theme))) {
+                    xCount++;
+                    switch (answer) {
+                        case 'eens':
+                            // Voor economische thema's: 'eens' is meestal rechts
+                            xScore += 1;
+                            break;
+                        case 'oneens':
+                            xScore -= 1;
+                            break;
+                        case 'neutraal':
+                            xScore += 0;
+                            break;
+                    }
+                }
+
+                // Sociale as (Progressief-Conservatief)
+                if (socialThemes.some(theme => title.includes(theme))) {
+                    yCount++;
+                    switch (answer) {
+                        case 'eens':
+                            // Voor sociale thema's: 'eens' is meestal progressief
+                            yScore -= 1;
+                            break;
+                        case 'oneens':
+                            yScore += 1;
+                            break;
+                        case 'neutraal':
+                            yScore += 0;
+                            break;
+                    }
+                }
+            });
+
+            // Bereken gemiddelde scores en converteer naar percentages
+            // We gebruiken een schaal van 10-90% om te voorkomen dat de stip helemaal aan de rand komt
+            const xPercentage = xCount > 0 
+                ? 50 + ((xScore / xCount) * 40) // 40% spreiding van het midden (links of rechts)
+                : 50;
+            
+            const yPercentage = yCount > 0 
+                ? 50 + ((yScore / yCount) * 40) // 40% spreiding van het midden (progressief of conservatief)
+                : 50;
+
+            this.politicalPosition = {
+                x: Math.min(90, Math.max(10, xPercentage)), // Begrens tussen 10% en 90%
+                y: Math.min(90, Math.max(10, yPercentage))  // Begrens tussen 10% en 90%
+            };
+
+            console.log('Political Position:', {
+                x: xScore,
+                y: yScore,
+                xCount,
+                yCount,
+                position: this.politicalPosition
+            });
+        },
+        shareResults() {
+            const text = `Mijn Stemwijzer resultaten:\n${
+                this.results.slice(0, 3)
+                    .map(r => `${r.party}: ${Math.round(r.match)}%`)
+                    .join('\n')
+            }`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Mijn Stemwijzer Resultaten',
+                    text: text,
+                    url: window.location.href
+                });
+            } else {
+                // Fallback: kopieer naar klembord
+                navigator.clipboard.writeText(text)
+                    .then(() => alert('Resultaten gekopieerd naar klembord!'));
+            }
+        },
+        saveResults() {
+            const results = {
+                timestamp: new Date().toISOString(),
+                matches: this.results,
+                answers: this.answers,
+                position: this.politicalPosition
+            };
+
+            // Sla op in localStorage
+            const savedResults = JSON.parse(localStorage.getItem('stemwijzerResults') || '[]');
+            savedResults.push(results);
+            localStorage.setItem('stemwijzerResults', JSON.stringify(savedResults));
+
+            alert('Je resultaten zijn opgeslagen! Je kunt ze later terugvinden.');
         }
     }
 }
