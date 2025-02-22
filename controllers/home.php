@@ -524,7 +524,7 @@ require_once 'views/templates/header.php';
                             if ($published_time > $twelve_hours_ago): 
                             ?>
                                 <!-- Nieuw Badge voor recent geplaatste blogs -->
-                                <div class="absolute top-4 right-4 z-10">
+                                <div class="absolute top-4 right-4 z-20">
                                     <div class="inline-flex items-center px-3 py-1 rounded-full bg-gradient-to-r from-primary to-secondary text-white text-sm font-semibold shadow-lg">
                                         <span class="relative flex h-2 w-2 mr-2">
                                             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
@@ -534,53 +534,56 @@ require_once 'views/templates/header.php';
                                     </div>
                                 </div>
                                 <!-- Extra highlight effect voor nieuwe blogs -->
-                                <div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5"></div>
+                                <div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5 pointer-events-none"></div>
                             <?php endif; ?>
 
-                            <?php if ($blog->image_path): ?>
-                                <div class="relative h-48 overflow-hidden">
-                                    <img src="<?php echo URLROOT . '/' . $blog->image_path; ?>" 
-                                         alt="<?php echo htmlspecialchars($blog->title); ?>"
-                                         class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                                </div>
-                            <?php endif; ?>
+                            <a href="<?php echo URLROOT . '/blogs/view/' . $blog->slug; ?>" class="block relative">
+                                <?php if ($blog->image_path): ?>
+                                    <div class="relative h-48 overflow-hidden">
+                                        <img src="<?php echo URLROOT . '/' . $blog->image_path; ?>" 
+                                             alt="<?php echo htmlspecialchars($blog->title); ?>"
+                                             class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+                                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                    </div>
+                                <?php endif; ?>
 
-                            <div class="p-6">
-                                <div class="flex items-center text-sm text-gray-500 mb-4">
-                                    <span class="flex items-center">
-                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                                        </svg>
-                                        <?php echo htmlspecialchars($blog->author_name); ?>
-                                    </span>
-                                    <span class="mx-3">•</span>
-                                    <span class="flex items-center">
-                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                        </svg>
-                                        <?php echo getRelativeTime($blog->published_at); ?>
-                                    </span>
-                                </div>
+                                <div class="p-6">
+                                    <div class="flex items-center text-sm text-gray-500 mb-4">
+                                        <span class="flex items-center">
+                                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <circle cx="12" cy="7" r="4" stroke-width="2"/>
+                                                <path stroke-width="2" d="M5 21v-2a7 7 0 0114 0v2"/>
+                                            </svg>
+                                            <?php echo htmlspecialchars($blog->author_name); ?>
+                                        </span>
+                                        <span class="mx-3">-</span>
+                                        <span class="flex items-center">
+                                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                            </svg>
+                                            <?php echo getRelativeTime($blog->published_at); ?>
+                                        </span>
+                                    </div>
 
-                                <h2 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary transition-colors">
-                                    <a href="<?php echo URLROOT . '/blogs/view/' . $blog->slug; ?>">
-                                        <?php echo htmlspecialchars($blog->title); ?>
+                                    <h2 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary transition-colors">
+                                        <a href="<?php echo URLROOT . '/blogs/view/' . $blog->slug; ?>">
+                                            <?php echo htmlspecialchars($blog->title); ?>
+                                        </a>
+                                    </h2>
+
+                                    <p class="text-gray-600 mb-4 line-clamp-3">
+                                        <?php echo htmlspecialchars($blog->summary); ?>
+                                    </p>
+
+                                    <a href="<?php echo URLROOT . '/blogs/view/' . $blog->slug; ?>" 
+                                       class="inline-flex items-center text-primary font-medium group-hover:text-secondary transition-colors">
+                                        <span>Lees meer</span>
+                                        <svg class="w-5 h-5 ml-2 transform transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                        </svg>
                                     </a>
-                                </h2>
-
-                                <p class="text-gray-600 mb-4 line-clamp-3">
-                                    <?php echo htmlspecialchars($blog->summary); ?>
-                                </p>
-
-                                <a href="<?php echo URLROOT . '/blogs/view/' . $blog->slug; ?>" 
-                                   class="inline-flex items-center text-primary font-medium group-hover:text-secondary transition-colors">
-                                    <span>Lees meer</span>
-                                    <svg class="w-5 h-5 ml-2 transform transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                                    </svg>
-                                </a>
-                            </div>
+                                </div>
+                            </a>
                         </article>
                     <?php endforeach; ?>
                 </div>
@@ -804,7 +807,7 @@ require_once 'views/templates/header.php';
                                     <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-secondary/10 text-secondary">
                                         <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7 1.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
                                         </svg>
                                         <?php echo rand(100, 999); ?> volgers
                                     </span>
