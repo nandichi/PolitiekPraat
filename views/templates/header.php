@@ -1,8 +1,42 @@
+<?php
+// Dynamic meta descriptions based on current page
+$metaDescriptions = [
+    'home' => 'Ontdek het laatste politieke nieuws, blogs en analyses op Politiekpraat. Blijf op de hoogte van de Nederlandse politiek en neem deel aan het debat.',
+    'blogs' => 'Lees en deel politieke blogs over actuele thema\'s. Van ervaren schrijvers tot nieuwe stemmen in het politieke debat.',
+    'nieuws' => 'Het laatste politieke nieuws uit betrouwbare bronnen, zowel progressief als conservatief. Blijf geïnformeerd over de Nederlandse politiek.',
+    'stemwijzer' => 'Doe de stemwijzer 2025 en ontdek welke partij het beste bij jouw standpunten past. Objectief en onafhankelijk advies.',
+    'forum' => 'Discussieer mee over politieke onderwerpen in ons forum. Deel je mening en ga in gesprek met anderen over de Nederlandse politiek.',
+    'contact' => 'Neem contact op met PolitiekPlatform. We staan klaar om je vragen te beantwoorden en feedback te ontvangen.'
+];
+
+// Get current page from URL
+$currentPage = basename($_SERVER['PHP_SELF'], '.php');
+$metaDescription = $metaDescriptions[$currentPage] ?? $metaDescriptions['home'];
+?>
+
 <!DOCTYPE html>
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="<?php echo htmlspecialchars($metaDescription); ?>">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="<?php echo URLROOT . $_SERVER['REQUEST_URI']; ?>">
+    <meta property="og:title" content="<?php echo isset($data['title']) ? htmlspecialchars($data['title']) : 'PolitiekPlatform - Politiek voor iedereen'; ?>">
+    <meta property="og:description" content="<?php echo htmlspecialchars($metaDescription); ?>">
+    <meta property="og:image" content="<?php echo URLROOT; ?>/public/img/og-image.jpg">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<?php echo isset($data['title']) ? htmlspecialchars($data['title']) : 'PolitiekPlatform - Politiek voor iedereen'; ?>">
+    <meta name="twitter:description" content="<?php echo htmlspecialchars($metaDescription); ?>">
+    <meta name="twitter:image" content="<?php echo URLROOT; ?>/public/img/twitter-card.jpg">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="<?php echo URLROOT . $_SERVER['REQUEST_URI']; ?>">
+
     <meta name="google-site-verification" content="e72Qn95mvwZrvfw5CvXBKfeIv0vSqmo88Fw-oTJ5sgw" />
     <title><?php echo SITENAME; ?></title>
     <link rel="icon" type="image/png" href="<?php echo URLROOT; ?>/images/favicon.png">
