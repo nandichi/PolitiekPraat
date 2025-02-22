@@ -39,7 +39,8 @@ $metaDescription = $metaDescriptions[$currentPage] ?? $metaDescriptions['home'];
 
     <meta name="google-site-verification" content="e72Qn95mvwZrvfw5CvXBKfeIv0vSqmo88Fw-oTJ5sgw" />
     <title><?php echo SITENAME; ?></title>
-    <link rel="icon" type="image/png" href="<?php echo URLROOT; ?>/images/favicon.png">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMS41IiBkPSJNMyAyMWgxOE0zIDIxVjhsOS02IDkgNnYxM003IDIxVjExbTQgMTBWMTFtNiAxMFYxMW0tOC00aDQiIHN0cm9rZT0iIzFhMzY1ZCIvPjwvc3ZnPg==">
+    <link rel="icon" type="image/png" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMS41IiBkPSJNMyAyMWgxOE0zIDIxVjhsOS02IDkgNnYxM003IDIxVjExbTQgMTBWMTFtNiAxMFYxMW0tOC00aDQiIHN0cm9rZT0iIzFhMzY1ZCIvPjwvc3ZnPg==">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -347,7 +348,7 @@ $metaDescription = $metaDescriptions[$currentPage] ?? $metaDescriptions['home'];
                     <!-- Logo -->
                     <a href="<?php echo URLROOT; ?>" class="flex items-center space-x-4 group">
                         <div class="relative">
-                            <!-- Logo background with enhanced gradient -->
+                            <!-- Logo background met verbeterde gradient -->
                             <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-white/20 via-white/10 to-white/5 
                                         flex items-center justify-center overflow-hidden
                                         border border-white/20 backdrop-blur-lg shadow-lg
@@ -359,12 +360,14 @@ $metaDescription = $metaDescriptions[$currentPage] ?? $metaDescriptions['home'];
                                 <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent
                                             translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
                                 
-                                <!-- Logo icon with enhanced animation -->
+                                <!-- Nieuw politiek logo icon -->
                                 <svg class="w-8 h-8 text-white relative z-10 transform transition-all duration-500 ease-out
                                             group-hover:scale-110 group-hover:text-secondary/90" 
                                      fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" 
-                                          d="M19 21v-6a2 2 0 00-2-2h-2v3h-3v-3h-2a2 2 0 00-2 2v6M3 21V5a2 2 0 012-2h14a2 2 0 012 2v16M9 7h.01M9 11h.01M15 7h.01M15 11h.01M12 7v5"/>
+                                    <path stroke-linecap="round" 
+                                          stroke-linejoin="round" 
+                                          stroke-width="1.5"
+                                          d="M3 21h18M3 21V8l9-6 9 6v13M7 21V11m4 10V11m6 10V11m-8-4h4"/>
                                 </svg>
                             </div>
                             
@@ -380,10 +383,9 @@ $metaDescription = $metaDescriptions[$currentPage] ?? $metaDescriptions['home'];
                                 
                                 <svg class="w-4 h-4 text-white relative z-10 transform transition-transform duration-500
                                             group-hover:scale-110 group-hover:rotate-[-12deg]" 
-                                     fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" 
-                                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13a1 1 0 102 0V9.414l1.293 1.293a1 1 0 001.414-1.414z" 
-                                          clip-rule="evenodd"/>
+                                     fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/>
                                 </svg>
                             </div>
                         </div>
@@ -393,7 +395,6 @@ $metaDescription = $metaDescriptions[$currentPage] ?? $metaDescriptions['home'];
                             <span class="text-2xl font-bold tracking-tight text-white relative
                                          transition-all duration-500 ease-out group-hover:text-secondary/90">
                                 <?php echo SITENAME; ?>
-                                <!-- Enhanced underline effect -->
                                 <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-secondary via-secondary/80 to-secondary/60
                                              transition-all duration-500 ease-out group-hover:w-full"></span>
                             </span>

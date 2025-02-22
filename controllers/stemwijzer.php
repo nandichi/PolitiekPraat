@@ -41,13 +41,6 @@ require_once 'views/templates/header.php';
                     </div>
                     
                     <div class="flex items-center space-x-2 text-sm text-gray-500">
-                        <svg class="w-4 h-4 text-primary/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" 
-                                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                        <span class="text-xs">
-                            Nog <span x-text="Math.ceil((totalSteps - currentStep) * 0.5)"></span> min
-                        </span>
                     </div>
                 </div>
                 
@@ -140,8 +133,6 @@ require_once 'views/templates/header.php';
                     <div>
                         <h2 class="text-2xl font-bold text-gray-900">Welkom bij de Stemwijzer</h2>
                         <div class="flex items-center mt-1">
-                            <span class="text-sm text-gray-500">Verkiezingen 2024</span>
-                            <span class="mx-2 text-gray-300">•</span>
                             <span class="text-sm text-gray-500">±10 minuten</span>
                         </div>
                     </div>
