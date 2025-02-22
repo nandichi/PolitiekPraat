@@ -457,7 +457,7 @@ require_once 'views/templates/header.php';
                             <div class="flex flex-wrap gap-4">
                                 <div class="flex items-center text-gray-600">
                                     <svg class="w-5 h-5 text-primary mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                                     </svg>
                                     <span>Slechts 5-10 minuten</span>
                                 </div>
@@ -514,8 +514,29 @@ require_once 'views/templates/header.php';
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <?php foreach($latest_blogs as $blog): ?>
-                        <article class="bg-white rounded-2xl shadow-lg overflow-hidden group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                    <?php foreach($latest_blogs as $index => $blog): ?>
+                        <article class="bg-white rounded-2xl shadow-lg overflow-hidden group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 relative">
+                            <?php 
+                            // Check of de blog minder dan 12 uur oud is
+                            $published_time = strtotime($blog->published_at);
+                            $twelve_hours_ago = time() - (12 * 3600); // 12 uur in seconden
+                            
+                            if ($published_time > $twelve_hours_ago): 
+                            ?>
+                                <!-- Nieuw Badge voor recent geplaatste blogs -->
+                                <div class="absolute top-4 right-4 z-10">
+                                    <div class="inline-flex items-center px-3 py-1 rounded-full bg-gradient-to-r from-primary to-secondary text-white text-sm font-semibold shadow-lg">
+                                        <span class="relative flex h-2 w-2 mr-2">
+                                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                                            <span class="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+                                        </span>
+                                        NIEUW
+                                    </div>
+                                </div>
+                                <!-- Extra highlight effect voor nieuwe blogs -->
+                                <div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5"></div>
+                            <?php endif; ?>
+
                             <?php if ($blog->image_path): ?>
                                 <div class="relative h-48 overflow-hidden">
                                     <img src="<?php echo URLROOT . '/' . $blog->image_path; ?>" 
