@@ -480,12 +480,17 @@ require_once 'views/templates/header.php';
                 <!-- Gedetailleerde resultaten -->
                 <div class="space-y-6">
                     <template x-for="(result, index) in results" :key="index">
-                        <div class="bg-gray-50 rounded-xl p-6">
+                        <div class="bg-white rounded-xl p-6 mb-4 shadow-sm hover:shadow-md transition-shadow">
                             <div class="flex items-center justify-between flex-wrap gap-4 mb-4">
                                 <div class="flex items-center space-x-4">
-                                    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-primary to-secondary 
-                                                flex items-center justify-center text-white font-bold text-lg"
-                                         x-text="result.party.substring(0, 2)"></div>
+                                    <!-- Logo container -->
+                                    <div class="w-16 h-16 rounded-lg bg-gray-50 flex items-center justify-center overflow-hidden">
+                                        <img :src="partyLogos[result.party] || 'https://via.placeholder.com/48?text=' + result.party"
+                                             :alt="result.party + ' logo'"
+                                             class="w-12 h-12 object-contain"
+                                             @error="$event.target.src = 'https://via.placeholder.com/48?text=' + result.party"
+                                        >
+                                    </div>
                                     <div>
                                         <h3 class="font-semibold text-gray-900" x-text="result.party"></h3>
                                         <p class="text-sm text-gray-600">
@@ -550,6 +555,22 @@ function stemwijzer() {
         currentStep: 0,
         totalSteps: 25,
         showExplanation: false,
+        partyLogos: {
+            'PVV': 'https://i.ibb.co/DfR8pS2Y/403880390-713625330344634-198487231923339026-n.jpg',
+            'VVD': 'https://logo.clearbit.com/vvd.nl',
+            'NSC': 'https://i.ibb.co/YT2fJZb4/nsc.png',
+            'BBB': 'https://i.ibb.co/qMjw7jDV/bbb.png',
+            'GL-PvdA': 'https://i.ibb.co/67hkc5Hv/gl-pvda.png',
+            'D66': 'https://logo.clearbit.com/d66.nl',
+            'SP': 'https://logo.clearbit.com/sp.nl',
+            'PvdD': 'https://logo.clearbit.com/partijvoordedieren.nl',
+            'CDA': 'https://logo.clearbit.com/cda.nl',
+            'JA21': 'https://logo.clearbit.com/ja21.nl',
+            'SGP': 'https://logo.clearbit.com/sgp.nl',
+            'FvD': 'https://logo.clearbit.com/fvd.nl',
+            'DENK': 'https://logo.clearbit.com/bewegingdenk.nl',
+            'Volt': 'https://logo.clearbit.com/voltnederland.org'
+        },
         questions: [
             {
                 title: "Asielbeleid",
