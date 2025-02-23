@@ -107,8 +107,121 @@
                 </div>
             </div>
         </div>
+
+        <!-- Gerelateerde Blogs Carousel -->
+        <div class="max-w-4xl mx-auto mt-16 mb-8">
+            <div class="flex items-center justify-between mb-12 px-4">
+                <div class="flex flex-col">
+                    <span class="text-sm font-medium text-primary mb-2">Blijf op de hoogte</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 relative">
+                        Ontdek meer interessante blogs
+                        <span class="absolute -bottom-3 left-0 w-20 h-1 bg-primary rounded-full"></span>
+                    </h2>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button class="swiper-button-prev-custom p-2.5 rounded-full bg-white shadow-md hover:shadow-lg transition-all duration-300 text-primary hover:text-primary-dark">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                        </svg>
+                    </button>
+                    <button class="swiper-button-next-custom p-2.5 rounded-full bg-white shadow-md hover:shadow-lg transition-all duration-300 text-primary hover:text-primary-dark">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Swiper Container -->
+            <div class="swiper blogsSwiper">
+                <div class="swiper-wrapper">
+                    <?php 
+                    // Haal andere blogs op (maximaal 10)
+                    $otherBlogs = (new BlogController())->getAll(10);
+                    foreach ($otherBlogs as $relatedBlog): 
+                        if ($relatedBlog->slug !== $blog->slug): // Skip huidige blog
+                    ?>
+                        <div class="swiper-slide px-2 pb-8">
+                            <a href="<?php echo URLROOT . '/blogs/view/' . $relatedBlog->slug; ?>" 
+                               class="group block bg-white rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.12)] transition-all duration-300 overflow-hidden">
+                                <?php if ($relatedBlog->image_path): ?>
+                                <div class="relative aspect-[16/9] overflow-hidden">
+                                    <img src="<?php echo URLROOT . '/' . $relatedBlog->image_path; ?>" 
+                                         alt="<?php echo htmlspecialchars($relatedBlog->title); ?>"
+                                         class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                </div>
+                                <?php endif; ?>
+                                <div class="p-6">
+                                    <div class="flex items-center text-sm text-gray-500 mb-3">
+                                        <span class="flex items-center">
+                                            <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                            </svg>
+                                            <?php echo date('d M Y', strtotime($relatedBlog->published_at)); ?>
+                                        </span>
+                                    </div>
+                                    <h3 class="font-semibold text-lg text-gray-900 mb-3 line-clamp-2 group-hover:text-primary transition-colors duration-300">
+                                        <?php echo htmlspecialchars($relatedBlog->title); ?>
+                                    </h3>
+                                    <p class="text-gray-600 text-sm line-clamp-2 mb-4">
+                                        <?php echo $relatedBlog->summary; ?>
+                                    </p>
+                                    <div class="flex items-center text-primary font-medium text-sm">
+                                        <span>Lees meer</span>
+                                        <svg class="w-4 h-4 ml-1.5 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    <?php 
+                        endif;
+                    endforeach; 
+                    ?>
+                </div>
+            </div>
+        </div>
     </article>
 </main>
+
+<!-- Swiper JS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<!-- Swiper Initialisatie -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    new Swiper('.blogsSwiper', {
+        slidesPerView: 1.2,
+        centeredSlides: true,
+        spaceBetween: 16,
+        loop: true,
+        navigation: {
+            nextEl: '.swiper-button-next-custom',
+            prevEl: '.swiper-button-prev-custom',
+        },
+        breakpoints: {
+            640: {
+                slidesPerView: 2,
+                centeredSlides: false,
+                spaceBetween: 20,
+            },
+            1024: {
+                slidesPerView: 3,
+                centeredSlides: false,
+                spaceBetween: 24,
+            },
+        },
+        autoplay: {
+            delay: 5000,
+            disableOnInteraction: false,
+        },
+    });
+});
+</script>
 
 <!-- Share Script -->
 <script>
@@ -252,6 +365,89 @@ button, a {
 /* Verbeterde focus states voor toegankelijkheid */
 button:focus, a:focus {
     @apply outline-none ring-2 ring-offset-2 ring-primary/50;
+}
+
+/* Swiper styling */
+.blogsSwiper {
+    @apply pb-8;
+    margin: 0 -1rem;
+}
+
+@media (min-width: 640px) {
+    .blogsSwiper {
+        margin: 0;
+    }
+}
+
+.swiper-slide {
+    height: auto !important;
+    @apply transition-all duration-300;
+}
+
+.swiper-slide:not(.swiper-slide-active) {
+    @apply opacity-60;
+}
+
+@media (min-width: 640px) {
+    .swiper-slide:not(.swiper-slide-active) {
+        @apply opacity-100;
+    }
+}
+
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Verbeterde hover effecten voor kaarten */
+.group:hover .group-hover\:scale-105 {
+    transform: scale(1.05);
+}
+
+.group:hover .group-hover\:translate-x-1 {
+    transform: translateX(0.25rem);
+}
+
+/* Verbeterde schaduw effecten */
+.shadow-sm {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.hover\:shadow-xl:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* Verbeterde navigatie knoppen */
+.swiper-button-prev-custom,
+.swiper-button-next-custom {
+    @apply transition-all duration-300 ease-out shadow-[0_2px_8px_rgba(0,0,0,0.08)];
+}
+
+.swiper-button-prev-custom:hover,
+.swiper-button-next-custom:hover {
+    @apply transform scale-110 bg-primary text-white shadow-[0_4px_12px_rgba(0,0,0,0.12)];
+}
+
+.swiper-button-prev-custom:active,
+.swiper-button-next-custom:active {
+    @apply transform scale-95;
+}
+
+/* Sectie titel styling */
+h2.relative span.absolute {
+    @apply transition-all duration-300;
+}
+
+h2.relative:hover span.absolute {
+    @apply w-32;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    h2.relative:hover span.absolute {
+        @apply w-20;
+    }
 }
 </style>
 
