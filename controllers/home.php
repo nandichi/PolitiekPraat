@@ -138,13 +138,6 @@ require_once 'views/templates/header.php';
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
                                 </svg>
                             </a>
-                            <a href="<?php echo URLROOT; ?>/forum" 
-                               class="inline-flex items-center justify-center bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-primary transition-all group">
-                                <span>Ga naar het forum</span>
-                                <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"></path>
-                                </svg>
-                            </a>
                         </div>
                     </div>
 
@@ -605,7 +598,7 @@ require_once 'views/templates/header.php';
         <div class="container mx-auto px-4">
             <!-- Laatste Blogs -->
             <div class="mb-20">
-                <div class="text-center mb-16 relative">
+                <div class="text-center mb-16 relative" data-aos="fade-up" data-aos-once="true">
                     <span class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-9xl text-gray-100 font-bold opacity-50 select-none">BLOGS</span>
                     <h2 class="text-4xl font-bold text-gray-900 mb-4 relative">
                         <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Laatste Blogs</span>
@@ -616,7 +609,12 @@ require_once 'views/templates/header.php';
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <?php foreach($latest_blogs as $index => $blog): ?>
-                        <article class="bg-white rounded-2xl shadow-lg overflow-hidden group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 relative">
+                        <article class="bg-white rounded-2xl shadow-lg overflow-hidden group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 relative" 
+                                data-aos="fade-up" 
+                                data-aos-delay="<?php echo $index * 100; ?>"
+                                data-aos-duration="800"
+                                data-aos-easing="ease-out-cubic"
+                                data-aos-once="true">
                             <?php 
                             // Check of de blog minder dan 12 uur oud is
                             $published_time = strtotime($blog->published_at);
@@ -690,7 +688,7 @@ require_once 'views/templates/header.php';
                 </div>
 
                 <!-- CTA Button -->
-                <div class="text-center mt-16">
+                <div class="text-center mt-16" data-aos="zoom-in" data-aos-delay="300" data-aos-once="true">
                     <a href="<?php echo URLROOT; ?>/blogs" 
                        class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-xl hover:opacity-90 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl">
                         <span>Bekijk alle blogs</span>
@@ -702,12 +700,12 @@ require_once 'views/templates/header.php';
             </div>
 
             <!-- Laatste Nieuws -->
-            <div class="relative pt-16" data-aos="fade-up">
+            <div class="relative pt-16" data-aos="fade-up" data-aos-once="true">
                 <!-- Decoratieve elementen -->
                 <div class="absolute -top-10 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
                 <div class="absolute bottom-0 left-0 w-96 h-96 bg-secondary/5 rounded-full blur-3xl"></div>
 
-                <div class="text-center mb-16 relative">
+                <div class="text-center mb-16 relative" data-aos="fade-up" data-aos-once="true">
                     <span class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-9xl text-gray-100 font-bold opacity-50 select-none">NIEUWS</span>
                     <h2 class="text-4xl font-bold text-gray-900 mb-4 relative">
                         <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Laatste Politiek Nieuws</span>
@@ -718,8 +716,8 @@ require_once 'views/templates/header.php';
 
                 <!-- Laatste Nieuws Grid -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 relative">
-                    <!-- Links georiÃ«nteerde bronnen -->
-                    <div class="space-y-8">
+                    <!-- Links georiënteerde bronnen -->
+                    <div class="space-y-8" data-aos="fade-right" data-aos-duration="1000" data-aos-once="true">
                         <h3 class="text-xl font-semibold text-gray-900 mb-6 flex items-center">
                             <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
@@ -730,9 +728,13 @@ require_once 'views/templates/header.php';
                         $links_news = array_filter($latest_news, function($news) {
                             return $news['orientation'] === 'links';
                         });
-                        foreach($links_news as $news):
+                        foreach($links_news as $index => $news):
                         ?>
-                            <article class="group bg-white rounded-2xl shadow-lg overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl">
+                            <article class="group bg-white rounded-2xl shadow-lg overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
+                                     data-aos="fade-up" 
+                                     data-aos-delay="<?php echo $index * 100; ?>"
+                                     data-aos-duration="800"
+                                     data-aos-once="true">
                                 <div class="relative p-6">
                                     <!-- News Source & Date -->
                                     <div class="flex items-center justify-between mb-4">
@@ -778,8 +780,8 @@ require_once 'views/templates/header.php';
                         <?php endforeach; ?>
                     </div>
 
-                    <!-- Rechts georiÃ«nteerde bronnen -->
-                    <div class="space-y-8">
+                    <!-- Rechts georiënteerde bronnen -->
+                    <div class="space-y-8" data-aos="fade-left" data-aos-duration="1000" data-aos-once="true">
                         <h3 class="text-xl font-semibold text-gray-900 mb-6 flex items-center">
                             <svg class="w-5 h-5 mr-2 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
@@ -790,9 +792,13 @@ require_once 'views/templates/header.php';
                         $rechts_news = array_filter($latest_news, function($news) {
                             return $news['orientation'] === 'rechts';
                         });
-                        foreach($rechts_news as $news):
+                        foreach($rechts_news as $index => $news):
                         ?>
-                            <article class="group bg-white rounded-2xl shadow-lg overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl">
+                            <article class="group bg-white rounded-2xl shadow-lg overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
+                                     data-aos="fade-up" 
+                                     data-aos-delay="<?php echo $index * 100; ?>"
+                                     data-aos-duration="800"
+                                     data-aos-once="true">
                                 <div class="relative p-6">
                                     <!-- News Source & Date -->
                                     <div class="flex items-center justify-between mb-4">
