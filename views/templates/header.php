@@ -278,7 +278,7 @@ $metaDescription = $metaDescriptions[$currentPage] ?? $metaDescriptions['home'];
         }
     </style>
 </head>
-<body class="bg-gray-50 flex flex-col min-h-screen">
+<body class="bg-gray-50 flex flex-col min-h-screen overflow-x-hidden">
     <div class="flex-grow">
         <!-- Beta Notification Popup - Geoptimaliseerd -->
         <div x-data="{ showBetaNotice: localStorage.getItem('betaNoticeShown') === null }"

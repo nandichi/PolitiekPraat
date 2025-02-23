@@ -108,7 +108,7 @@ $agenda_items = $openDataAPI->getPolitiekeAgenda();
 require_once 'views/templates/header.php';
 ?>
 
-<main class="bg-gray-50">
+<main class="bg-gray-50 overflow-x-hidden">
     <!-- Hero Section -->
     <section class="relative bg-gradient-to-br from-gray-900 to-primary overflow-hidden">
         <!-- Animated background pattern -->
