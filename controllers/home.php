@@ -46,57 +46,57 @@ $news_sources = [
 $latest_news = [
     [
         'orientation' => 'links',
-        'source' => 'De Volkskrant',
+        'source' => 'Socialisme.nu',
         'bias' => 'links',
         'publishedAt' => date('Y-m-d H:i:s'), // Vandaag 08:30
-        'title' => 'De Europese ‘Patriotten’ van Orbán, Le Pen en Wilders stralen vooral op de familiefoto’s veel gebundelde kracht uit"',
-        'description' => 'De ‘Patriotten voor Europa’ komen dit weekeinde bij elkaar in Madrid. Onder anderen Geert Wilders en Marine Le Pen zullen spreken op dit partijcongres voor radicaal-rechts. De nieuwe Europese familie werd vorig jaar opgericht om Europa ‘van binnenuit te slopen’, al komt daar nog maar weinig van terecht.',
-        'url' => 'https://www.volkskrant.nl/buitenland/de-europese-patriotten-van-orban-le-pen-en-wilders-stralen-vooral-op-de-familiefoto-s-veel-gebundelde-kracht-uit~bf074d80/'
+        'title' => 'Hoe de PVV Henk en Ingrid wil kaalplukken',
+        'description' => 'De PVV presenteert zich als de partij van "gewone mensen" zoals Henk en Ingrid. Maar uit analyse van het verkiezingsprogramma blijkt dat de partij juist deze groep het hardst raakt met bezuinigingen op sociale voorzieningen.',
+        'url' => 'https://socialisme.nu/hoe-de-pvv-henk-en-ingrid-wil-kaalplukken/'
     ],
     [
         'orientation' => 'links',
         'source' => 'NRC',
         'bias' => 'centrum-links',
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-2 hours')), // 2 uur geleden
-        'title' => 'Tweede Kamer moet de 1,3 miljard om btw-verhoging op boeken, sport, cultuur en media te voorkomen zelf vinden van het kabinet',
-        'description' => 'Staatssecretaris Van Oostenbruggen (Fiscaliteit) presenteert drie alternatieven om de voorgenomen btw-verhoging terug te draaien. De Tweede Kamer is nu aan zet.',
-        'url' => 'https://www.nrc.nl/nieuws/2025/02/07/tweede-kamer-moet-de-13-miljard-om-btw-verhoging-op-boeken-sport-cultuur-en-media-te-voorkomen-zelf-vinden-van-het-kabinet-a4882409'
+        'title' => 'Duitsland Blog 23 februari: Laatste ontwikkelingen in de Duitse politiek',
+        'description' => 'Volg de laatste ontwikkelingen in de Duitse politiek, met updates over de coalitievorming, verkiezingen en belangrijke debatten.',
+        'url' => 'https://www.nrc.nl/nieuws/2025/02/23/duitslandblog-23-februari-a4884064'
     ],
     [
         'orientation' => 'links',
         'source' => 'Trouw',
         'bias' => 'centrum-links',
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-4 hours')), // 4 uur geleden
-        'title' => 'Kan een nieuwe linkse partij de gematigde kiezer terugwinnen?',
-        'description' => 'De PvdA en GroenLinks hebben een nieuwe linkse partij nodig, zeggen politicollega’s. Maar deze partij moet ook de gematigde kiezer terugwinnen, zeggen andere politicollega’s.',
-        'url' => 'https://www.trouw.nl/politiek/kan-een-nieuwe-linkse-partij-de-gematigde-kiezer-terugwinnen~bb43f70b/'
+        'title' => 'Hoe de bromance tussen Trump en Poetin de wereld verandert (en heeft de NAVO haar langste tijd gehad?)',
+        'description' => 'De relatie tussen Donald Trump en Vladimir Poetin lijkt steeds hechter te worden. Wat betekent dit voor de internationale verhoudingen en de toekomst van de NAVO?',
+        'url' => 'https://www.trouw.nl/buitenland/hoe-de-bromance-tussen-trump-en-poetin-de-wereld-verandert-en-heeft-de-navo-haar-langste-tijd-gehad~bc9c11ae/'
     ],
     [
         'orientation' => 'rechts',
-        'source' => 'Telegraaf',
+        'source' => 'FVD',
         'bias' => 'rechts',
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-6 hours')), // 6 uur geleden
-        'title' => 'Trump pakt Biden toegang tot gevoelige informatie af: "Joe, je bent ontslagen"',
-        'description' => 'De Amerikaanse president heeft zijn voormalige vicepresident, Biden, toegang tot gevoelige informatie afgewezen. "Joe, je bent ontslagen", schreef Trump op Twitter.',
-        'url' => 'https://www.telegraaf.nl/nieuws/16012582/live-trump-pakt-biden-toegang-tot-gevoelige-informatie-af-joe-je-bent-ontslagen'
+        'title' => 'Vredesplan Trump-Poetin: Wat doet de EU? Ralf Dekker in Tweede Kamerdebat over Oekraïne-conflict',
+        'description' => 'Tijdens het Tweede Kamerdebat over het Oekraïne-conflict besprak Ralf Dekker het vredesplan van Trump en Poetin en de rol van de EU hierin. FVD pleit voor een diplomatieke oplossing.',
+        'url' => 'https://fvd.nl/nieuws/vredesplan-trump-poetin-wat-doet-de-eu-ralf-dekker-in-tweede-kamerdebat-over-oekraine-conflict'
     ],
     [
         'orientation' => 'rechts',
-        'source' => 'AD',
-        'bias' => 'centrum-rechts',
-        'publishedAt' => date('Y-m-d H:i:s', strtotime('-8 hours')), // 8 uur geleden
-        'title' => 'Trump valt ICC aan met sancties: "Risico bestaat dat Strafhof straks niet meer kan functioneren"',
-        'description' => 'Een aanval op de internationale rechtsorde. Dat zeggen vooraanstaande juristen en politici over het besluit van de Amerikaanse president Trump om sancties in te stellen tegen medewerkers van het Internationaal Strafhof (ICC) in Den Haag. Wat zijn de gevolgen van Trumps besluit? ,Straffeloosheid ligt op de loer. ',
-        'url' => 'https://www.ad.nl/wonen'
-    ],
-    [
-        'orientation' => 'rechts',
-        'source' => 'Reformatorisch Dagblad',
+        'source' => 'De Dagelijkse Standaard',
         'bias' => 'rechts',
+        'publishedAt' => date('Y-m-d H:i:s', strtotime('-8 hours')), // 8 uur geleden
+        'title' => 'Peilingen: Vertrouwen in kabinet keldert, PVV nog altijd aan kop als grootste partij',
+        'description' => 'Uit recente peilingen blijkt dat het vertrouwen in het kabinet verder is gedaald. De PVV van Geert Wilders blijft de grootste partij in de peilingen, terwijl andere partijen terrein verliezen.',
+        'url' => 'https://www.dagelijksestandaard.nl/politiek/peilingen-vertrouwen-in-kabinet-keldert-pvv-nog-altijd-aan-kop-als-grootste-partij'
+    ],
+    [
+        'orientation' => 'rechts',
+        'source' => 'BNR',
+        'bias' => 'centrum-rechts',
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-10 hours')), // 10 uur geleden
-        'title' => 'Premier Schoof en Faber (Asiel) niet eenduidig over uit te brengen advies Raad van State',
-        'description' => 'https://www.rd.nl/artikel/1095099-premier-schoof-en-faber-asiel-niet-eenduidig-over-uit-te-brengen-advies-raad-van-state',
-        'url' => 'https://www.rd.nl/artikel/1095099-premier-schoof-en-faber-asiel-niet-eenduidig-over-uit-te-brengen-advies-raad-van-state'
+        'title' => 'Timmermans gaat tijdens debat proberen de coalitie uit elkaar te spelen',
+        'description' => 'GroenLinks-PvdA-leider Frans Timmermans gaat tijdens het debat over de regeringsverklaring proberen de coalitie uit elkaar te spelen. Dat zegt politiek commentator Laurens Boven.',
+        'url' => 'https://www.bnr.nl/nieuws/nieuws-politiek/10567499/timmermans-gaat-tijdens-debat-proberen-de-coalitie-uit-elkaar-te-spelen'
     ]
 ];
 
@@ -197,9 +197,9 @@ require_once 'views/templates/header.php';
                                         <!-- Grote Partijen (Altijd zichtbaar) -->
                                         <?php 
                                         $topParties = [
-                                            'pvv' => ['seats' => 39, 'percentage' => 26.0],
-                                            'gl-pvda' => ['seats' => 25, 'percentage' => 16.7],
-                                            'vvd' => ['seats' => 23, 'percentage' => 15.3],
+                                            'pvv' => ['seats' => 32, 'percentage' => 21.3],
+                                            'gl-pvda' => ['seats' => 24, 'percentage' => 16.0],
+                                            'vvd' => ['seats' => 21, 'percentage' => 14.0],
                                             'd66' => ['seats' => 12, 'percentage' => 8.0]
                                         ];
                                         
@@ -262,17 +262,17 @@ require_once 'views/templates/header.php';
                                                  class="mt-2 space-y-2">
                                                 <?php 
                                                 $otherParties = [
-                                                    'bbb' => ['seats' => 6, 'percentage' => 4.0],
-                                                    'cda' => ['seats' => 13, 'percentage' => 8.7],
-                                                    'sp' => ['seats' => 7, 'percentage' => 4.7],
-                                                    'denk' => ['seats' => 3, 'percentage' => 2.0],
-                                                    'pvdd' => ['seats' => 6, 'percentage' => 4.0],
-                                                    'fvd' => ['seats' => 3, 'percentage' => 2.0],
-                                                    'sgp' => ['seats' => 3, 'percentage' => 2.0],
+                                                    'bbb' => ['seats' => 4, 'percentage' => 2.7],
+                                                    'cda' => ['seats' => 17, 'percentage' => 11.3],
+                                                    'sp' => ['seats' => 8, 'percentage' => 5.3],
+                                                    'denk' => ['seats' => 4, 'percentage' => 2.7],
+                                                    'pvdd' => ['seats' => 5, 'percentage' => 3.3],
+                                                    'fvd' => ['seats' => 5, 'percentage' => 3.3],
+                                                    'sgp' => ['seats' => 4, 'percentage' => 2.7],
                                                     'cu' => ['seats' => 4, 'percentage' => 2.7],
-                                                    'volt' => ['seats' => 3, 'percentage' => 2.0],
-                                                    'ja21' => ['seats' => 1, 'percentage' => 0.7],
-                                                    'nsc' => ['seats' => 2, 'percentage' => 1.3]
+                                                    'volt' => ['seats' => 4, 'percentage' => 2.7],
+                                                    'ja21' => ['seats' => 3, 'percentage' => 2.0],
+                                                    'nsc' => ['seats' => 3, 'percentage' => 2.0]
                                                 ];
                                                 
                                                 foreach($otherParties as $party => $data): 
@@ -331,41 +331,52 @@ require_once 'views/templates/header.php';
                                     </div>
                                     
                                     <!-- Trend Cards -->
-                                    <div class="grid grid-cols-2 gap-2">
-                                        <?php foreach($latestPolls['trends'] as $party => $trend): ?>
-                                            <div class="bg-white/5 p-2 rounded-lg border border-white/10 hover:bg-white/[0.02] transition-colors">
-                                                <div class="flex items-center justify-between mb-1">
-                                                    <span class="text-xs text-white/90 font-medium"><?php echo strtoupper($party); ?></span>
-                                                    <div class="flex items-center">
-                                                        <?php if($trend['trend'] === 'up'): ?>
-                                                            <div class="flex items-center space-x-1 px-1.5 py-0.5 rounded bg-green-500/10">
-                                                                <span class="text-xs text-green-400 font-medium">+<?php echo $trend['change']; ?></span>
-                                                                <svg class="w-3 h-3 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
-                                                                </svg>
-                                                            </div>
-                                                        <?php elseif($trend['trend'] === 'down'): ?>
-                                                            <div class="flex items-center space-x-1 px-1.5 py-0.5 rounded bg-red-500/10">
-                                                                <span class="text-xs text-red-400 font-medium"><?php echo $trend['change']; ?></span>
-                                                                <svg class="w-3 h-3 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0v-8m0 8l-8-8-4 4-6-6"/>
-                                                                </svg>
-                                                            </div>
-                                                        <?php else: ?>
-                                                            <div class="flex items-center space-x-1 px-1.5 py-0.5 rounded bg-yellow-500/10">
-                                                                <span class="text-xs text-yellow-400 font-medium">0</span>
-                                                                <svg class="w-3 h-3 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/>
-                                                                </svg>
-                                                            </div>
-                                                        <?php endif; ?>
-                                                    </div>
-                                                </div>
-                                                <div class="text-[10px] font-medium px-1.5 py-0.5 rounded-full bg-white/5 text-center text-white/60">
-                                                    <?php 
-                                                    $trendText = $trend['trend'] === 'up' ? 'Stijgend' : ($trend['trend'] === 'down' ? 'Dalend' : 'Stabiel');
-                                                    echo $trendText . ' trend';
-                                                    ?>
+                                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-1.5 max-h-[280px] overflow-y-auto scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent pr-1">
+                                        <?php 
+                                        $latestPolls['trends'] = [
+                                            'pvv' => ['trend' => 'down', 'change' => '-6'],
+                                            'gl-pvda' => ['trend' => 'down', 'change' => '-2'],
+                                            'vvd' => ['trend' => 'up', 'change' => '+1'],
+                                            'bbb' => ['trend' => 'down', 'change' => '-3'],
+                                            'cda' => ['trend' => 'up', 'change' => '+6'],
+                                            'sp' => ['trend' => 'up', 'change' => '+2'],
+                                            'nsc' => ['trend' => 'down', 'change' => '-4'],
+                                            'd66' => ['trend' => 'up', 'change' => '+1'],
+                                            'pvdd' => ['trend' => 'up', 'change' => '+1'],
+                                            'fvd' => ['trend' => 'up', 'change' => '+2'],
+                                            'denk' => ['trend' => 'none', 'change' => '0'],
+                                            'volt' => ['trend' => 'none', 'change' => '0'],
+                                            'sgp' => ['trend' => 'none', 'change' => '0'],
+                                            'cu' => ['trend' => 'none', 'change' => '0'],
+                                            'ja21' => ['trend' => 'up', 'change' => '+2']
+                                        ];
+                                        foreach($latestPolls['trends'] as $party => $trend): 
+                                        ?>
+                                            <div class="bg-white/5 p-1.5 rounded-lg border border-white/10 hover:bg-white/[0.02] transition-colors">
+                                                <div class="flex items-center justify-between">
+                                                    <span class="text-[11px] text-white/90 font-medium"><?php echo strtoupper($party); ?></span>
+                                                    <?php if($trend['trend'] === 'up'): ?>
+                                                        <div class="flex items-center space-x-0.5 px-1 py-0.5 rounded bg-green-500/10">
+                                                            <span class="text-[10px] text-green-400 font-medium"><?php echo $trend['change']; ?></span>
+                                                            <svg class="w-2.5 h-2.5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                                                            </svg>
+                                                        </div>
+                                                    <?php elseif($trend['trend'] === 'down'): ?>
+                                                        <div class="flex items-center space-x-0.5 px-1 py-0.5 rounded bg-red-500/10">
+                                                            <span class="text-[10px] text-red-400 font-medium"><?php echo $trend['change']; ?></span>
+                                                            <svg class="w-2.5 h-2.5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0v-8m0 8l-8-8-4 4-6-6"/>
+                                                            </svg>
+                                                        </div>
+                                                    <?php else: ?>
+                                                        <div class="flex items-center space-x-0.5 px-1 py-0.5 rounded bg-yellow-500/10">
+                                                            <span class="text-[10px] text-yellow-400 font-medium"><?php echo $trend['change']; ?></span>
+                                                            <svg class="w-2.5 h-2.5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/>
+                                                            </svg>
+                                                        </div>
+                                                    <?php endif; ?>
                                                 </div>
                                             </div>
                                         <?php endforeach; ?>
@@ -418,10 +429,13 @@ require_once 'views/templates/header.php';
     </section>
 
     <!-- Nieuwe Stemwijzer Highlight Section -->
-    <section class="py-16 bg-gray-50">
-        <!-- Decoratieve achtergrond elementen -->
-        <div class="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-primary/5 to-transparent"></div>
-        <div class="absolute -top-40 -right-40 w-96 h-96 bg-secondary/10 rounded-full blur-3xl"></div>
+    <section class="py-16 bg-gradient-to-br from-gray-50 to-white relative overflow-hidden">
+        <!-- Decoratieve elementen -->
+        <div class="absolute inset-0">
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"30\" height=\"30\" viewBox=\"0 0 30 30\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cpath d=\"M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z\" fill=\"rgba(0,0,0,0.03)\"%3E%3C/path%3E%3C/svg%3E')] opacity-50"></div>
+        </div>
+        <div class="absolute -top-40 -right-40 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
+        <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-secondary/5 rounded-full blur-3xl"></div>
         
         <div class="container mx-auto px-4 relative">
             <!-- NEW badge -->
@@ -432,66 +446,153 @@ require_once 'views/templates/header.php';
                             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
                             <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
                         </span>
-                        <span class="text-sm font-bold tracking-wider group-hover:text-secondary transition-colors duration-300">NIEUW</span>
+                        <span class="text-sm font-bold tracking-wider group-hover:text-secondary transition-colors duration-300">NIEUW!</span>
                     </div>
                 </div>
             </div>
 
-            <div class="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl overflow-hidden transform hover:scale-[1.02] transition-all duration-300">
-                <div class="relative p-8 md:p-12">
-                    <!-- Decoratieve pattern -->
-                    <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"30\" height=\"30\" viewBox=\"0 0 30 30\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cpath d=\"M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z\" fill=\"rgba(0,0,0,0.07)\"%3E%3C/path%3E%3C/svg%3E')] opacity-5"></div>
-
-                    <div class="relative flex flex-col md:flex-row items-center gap-8">
-                        <!-- Linker kolom met tekst -->
-                        <div class="md:w-2/3 space-y-6">
-                            <h2 class="text-3xl md:text-4xl font-bold text-gray-900">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <!-- Linker kolom: Content -->
+                    <div class="space-y-8" data-aos="fade-right">
+                        <div class="space-y-6">
+                            <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
                                 <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
                                     Ontdek de Stemwijzer 2025
                                 </span>
                             </h2>
-                            <p class="text-lg text-gray-600 leading-relaxed">
+                            <p class="text-xl text-gray-600 leading-relaxed">
                                 Vind de partij die het beste bij jouw standpunten past met onze gloednieuwe stemwijzer. 
                                 Beantwoord 25 belangrijke stellingen en krijg direct inzicht in jouw politieke voorkeuren.
                             </p>
-                            <div class="flex flex-wrap gap-4">
-                                <div class="flex items-center text-gray-600">
-                                    <svg class="w-5 h-5 text-primary mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                                    </svg>
-                                    <span>Slechts 10-15 minuten</span>
-                                </div>
-                                <div class="flex items-center text-gray-600">
-                                    <svg class="w-5 h-5 text-primary mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
-                                    </svg>
-                                    <span>100% anoniem</span>
-                                </div>
-                                <div class="flex items-center text-gray-600">
-                                    <svg class="w-5 h-5 text-primary mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
-                                    </svg>
-                                    <span>Direct resultaat</span>
-                                </div>
-                            </div>
-                            <a href="<?php echo URLROOT; ?>/stemwijzer" 
-                               class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-xl 
-                                      hover:opacity-90 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl group">
-                                <span>Start de Stemwijzer</span>
-                                <svg class="w-5 h-5 ml-2 transform transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-                                </svg>
-                            </a>
                         </div>
 
-                        <!-- Rechter kolom met illustratie -->
-                        <div class="md:w-1/3 flex justify-center">
-                            <div class="w-48 h-48 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full flex items-center justify-center">
-                                <svg class="w-24 h-24 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" 
-                                          d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
-                                </svg>
+                        <!-- Features Grid -->
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="flex items-start space-x-3">
+                                <div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0 transform transition-transform group-hover:scale-110">
+                                    <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-sm font-semibold text-gray-900">Snel & Eenvoudig</h3>
+                                    <p class="text-sm text-gray-500">Slechts 10-15 minuten</p>
+                                </div>
                             </div>
+                            <div class="flex items-start space-x-3">
+                                <div class="w-10 h-10 rounded-xl bg-secondary/10 flex items-center justify-center flex-shrink-0 transform transition-transform group-hover:scale-110">
+                                    <svg class="w-5 h-5 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-sm font-semibold text-gray-900">100% Anoniem</h3>
+                                    <p class="text-sm text-gray-500">Privacy gewaarborgd</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <div class="w-10 h-10 rounded-xl bg-green-100 flex items-center justify-center flex-shrink-0 transform transition-transform group-hover:scale-110">
+                                    <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-sm font-semibold text-gray-900">Direct Resultaat</h3>
+                                    <p class="text-sm text-gray-500">Meteen inzicht</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <div class="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center flex-shrink-0 transform transition-transform group-hover:scale-110">
+                                    <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-sm font-semibold text-gray-900">Actueel</h3>
+                                    <p class="text-sm text-gray-500">Laatste standpunten</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CTA Button -->
+                        <div class="pt-4">
+                            <a href="<?php echo URLROOT; ?>/stemwijzer" 
+                               class="group relative inline-flex items-center justify-center px-8 py-4 overflow-hidden bg-gradient-to-r from-primary to-secondary rounded-xl transition-all duration-500 hover:scale-105 hover:shadow-xl shadow-lg">
+                                <div class="absolute inset-0 w-0 bg-gradient-to-r from-secondary to-primary transition-all duration-500 ease-out group-hover:w-full"></div>
+                                <div class="relative flex items-center justify-center text-white font-semibold">
+                                    <span class="mr-3">Start de Stemwijzer</span>
+                                    <svg class="w-5 h-5 transform transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                                    </svg>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Rechter kolom: Interactieve Illustratie -->
+                    <div class="relative lg:pl-12" data-aos="fade-left">
+                        <div class="relative">
+                            <!-- Decoratieve achtergrond -->
+                            <div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5 rounded-3xl transform rotate-3"></div>
+                            
+                            <!-- Main content card -->
+                            <div class="relative bg-white rounded-2xl shadow-xl p-8 transform -rotate-3 hover:rotate-0 transition-all duration-500">
+                                <!-- Card header -->
+                                <div class="flex items-center justify-between mb-6">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
+                                            <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-lg font-semibold text-gray-900">Stemwijzer 2025</h3>
+                                            <p class="text-sm text-gray-500">25 belangrijke stellingen</p>
+                                        </div>
+                                    </div>
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-green-500 mr-1.5 animate-pulse"></span>
+                                        Live
+                                    </span>
+                                </div>
+
+                                <!-- Example question -->
+                                <div class="space-y-6">
+                                    <div class="p-4 bg-gray-50 rounded-xl">
+                                        <p class="text-sm font-medium text-gray-900 mb-2">Voorbeeldstelling:</p>
+                                        <p class="text-sm text-gray-600">"Nederland moet meer investeren in duurzame energie."</p>
+                                    </div>
+
+                                    <!-- Answer options -->
+                                    <div class="grid grid-cols-1 gap-3">
+                                        <button class="w-full px-4 py-3 text-sm font-medium text-left text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-primary/5 hover:border-primary/20 hover:text-primary transition-all duration-200">
+                                            Eens
+                                        </button>
+                                        <button class="w-full px-4 py-3 text-sm font-medium text-left text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-primary/5 hover:border-primary/20 hover:text-primary transition-all duration-200">
+                                            Neutraal
+                                        </button>
+                                        <button class="w-full px-4 py-3 text-sm font-medium text-left text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-primary/5 hover:border-primary/20 hover:text-primary transition-all duration-200">
+                                            Oneens
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Progress indicator -->
+                                <div class="mt-6">
+                                    <div class="flex items-center justify-between text-xs text-gray-500 mb-2">
+                                        <span>Voortgang</span>
+                                        <span>0/25 vragen</span>
+                                    </div>
+                                    <div class="w-full h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                                        <div class="w-0 h-full bg-gradient-to-r from-primary to-secondary rounded-full"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Decorative elements -->
+                            <div class="absolute -top-6 -right-6 w-24 h-24 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full blur-2xl"></div>
+                            <div class="absolute -bottom-6 -left-6 w-32 h-32 bg-gradient-to-tr from-secondary/20 to-primary/20 rounded-full blur-2xl"></div>
                         </div>
                     </div>
                 </div>
@@ -617,7 +718,7 @@ require_once 'views/templates/header.php';
 
                 <!-- Laatste Nieuws Grid -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 relative">
-                    <!-- Links georiënteerde bronnen -->
+                    <!-- Links georiÃ«nteerde bronnen -->
                     <div class="space-y-8">
                         <h3 class="text-xl font-semibold text-gray-900 mb-6 flex items-center">
                             <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -677,7 +778,7 @@ require_once 'views/templates/header.php';
                         <?php endforeach; ?>
                     </div>
 
-                    <!-- Rechts georiënteerde bronnen -->
+                    <!-- Rechts georiÃ«nteerde bronnen -->
                     <div class="space-y-8">
                         <h3 class="text-xl font-semibold text-gray-900 mb-6 flex items-center">
                             <svg class="w-5 h-5 mr-2 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
