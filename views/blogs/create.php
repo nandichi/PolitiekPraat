@@ -52,32 +52,84 @@
                         <label class="block text-sm font-medium text-gray-700 mb-2">
                             Header afbeelding
                         </label>
-                        <div class="relative group">
-                            <div class="flex justify-center px-6 pt-5 pb-6 border-2 border-gray-200 border-dashed rounded-xl transition-all duration-300 group-hover:border-primary/50">
-                                <div class="space-y-1 text-center">
-                                    <svg class="mx-auto h-12 w-12 text-gray-400 group-hover:text-primary transition-colors duration-300" 
-                                         stroke="currentColor" 
-                                         fill="none" 
-                                         viewBox="0 0 48 48" 
-                                         aria-hidden="true">
-                                        <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" 
-                                              stroke-width="2" 
-                                              stroke-linecap="round" 
-                                              stroke-linejoin="round" />
-                                    </svg>
-                                    <div class="flex text-sm text-gray-600">
-                                        <label for="image" class="relative cursor-pointer rounded-md font-medium text-primary hover:text-secondary focus-within:outline-none">
-                                            <span>Upload een afbeelding</span>
+                        <div class="relative">
+                            <!-- Hoofdcontainer voor upload -->
+                            <div class="group/upload relative overflow-hidden">
+                                <!-- Upload zone -->
+                                <div class="relative flex flex-col items-center gap-6 p-8 bg-white rounded-2xl border-2 border-dashed border-gray-200 transition-all duration-500 ease-out hover:border-primary">
+                                    <!-- Achtergrond effect -->
+                                    <div class="absolute inset-0 bg-gradient-to-br from-primary/[0.02] to-secondary/[0.02] opacity-0 group-hover/upload:opacity-100 transition-opacity duration-500"></div>
+                                    
+                                    <!-- Geanimeerde cirkels -->
+                                    <div class="absolute -left-4 -top-4 w-32 h-32 bg-primary/5 rounded-full mix-blend-multiply filter blur-xl opacity-0 group-hover/upload:opacity-70 transition-all duration-700 group-hover/upload:translate-x-4 group-hover/upload:translate-y-4"></div>
+                                    <div class="absolute -right-4 -bottom-4 w-32 h-32 bg-secondary/5 rounded-full mix-blend-multiply filter blur-xl opacity-0 group-hover/upload:opacity-70 transition-all duration-700 group-hover/upload:translate-x-4 group-hover/upload:translate-y-4"></div>
+
+                                    <!-- Upload icoon container -->
+                                    <div class="relative z-10 group/icon">
+                                        <div class="p-4 bg-gray-50 rounded-xl border border-gray-100 transition-all duration-300 group-hover/upload:bg-white group-hover/upload:shadow-lg group-hover/upload:scale-110">
+                                            <svg class="w-12 h-12 text-gray-400 transition-colors duration-300 group-hover/upload:text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                                <path class="transition-all duration-500" d="M4 16l4-4a2 2 0 012.8 0L16 17m-2-2l1.6-1.6a2 2 0 012.8 0L20 15m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+
+                                    <!-- Upload tekst en knop -->
+                                    <div class="relative z-10 text-center space-y-4">
+                                        <label for="image" class="group/button inline-flex items-center px-6 py-3 bg-white border-2 border-primary/20 text-primary font-medium rounded-xl cursor-pointer transition-all duration-300 hover:border-primary hover:bg-primary hover:text-white">
+                                            <svg class="w-5 h-5 mr-2 transition-transform duration-300 group-hover/button:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                                            </svg>
+                                            <span>Afbeelding kiezen</span>
                                             <input id="image" name="image" type="file" class="sr-only" accept="image/*">
                                         </label>
-                                        <p class="pl-1">of sleep deze hierheen</p>
+                                        
+                                        <div class="flex flex-col items-center space-y-2">
+                                            <p class="text-sm text-gray-500">
+                                                Sleep je afbeelding hierheen of gebruik de knop hierboven
+                                            </p>
+                                            <span class="inline-flex items-center px-3 py-1 space-x-1 bg-gray-50 rounded-full text-xs text-gray-500">
+                                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                                </svg>
+                                                <span>PNG, JPG of GIF (max. 5MB)</span>
+                                            </span>
+                                        </div>
                                     </div>
-                                    <p class="text-xs text-gray-500">PNG, JPG, GIF tot 5MB</p>
                                 </div>
-                            </div>
-                            <!-- Preview container -->
-                            <div id="imagePreview" class="mt-4 hidden">
-                                <img src="" alt="Preview" class="max-h-48 rounded-lg mx-auto">
+
+                                <!-- Preview container -->
+                                <div id="imagePreview" class="hidden mt-6">
+                                    <div class="relative bg-gray-50 rounded-2xl p-4">
+                                        <!-- Preview header -->
+                                        <div class="flex items-center justify-between mb-3">
+                                            <div class="flex items-center space-x-2">
+                                                <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4-4a2 2 0 012.8 0L16 17m-2-2l1.6-1.6a2 2 0 012.8 0L20 15m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                                </svg>
+                                                <h3 class="font-medium text-gray-900">Header afbeelding preview</h3>
+                                            </div>
+                                            <button type="button" 
+                                                    onclick="removeImage()" 
+                                                    class="group inline-flex items-center px-3 py-1 space-x-1 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors duration-300">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                                </svg>
+                                                <span class="text-sm font-medium">Verwijderen</span>
+                                            </button>
+                                        </div>
+
+                                        <!-- Preview image container -->
+                                        <div class="relative rounded-xl overflow-hidden bg-white shadow-inner">
+                                            <div class="aspect-[16/9] overflow-hidden">
+                                                <img src="" alt="Preview" class="w-full h-full object-cover transition-transform duration-700 hover:scale-105">
+                                            </div>
+                                            <!-- Image info -->
+                                            <div class="absolute bottom-0 inset-x-0 p-4 bg-gradient-to-t from-black/60 to-transparent">
+                                                <p class="text-white text-sm" id="imageInfo">Afbeelding info laden...</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -269,6 +321,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const previewDiv = document.getElementById('preview');
     const imageInput = document.getElementById('image');
     const imagePreview = document.getElementById('imagePreview');
+    const imageInfoText = document.getElementById('imageInfo');
 
     // Configureer marked met aangepaste renderer
     const renderer = {
@@ -281,27 +334,36 @@ document.addEventListener('DOMContentLoaded', function() {
             return `<h${level} class="${sizes[level]}">${text}</h${level}>`;
         },
         paragraph(text) {
-            return `<p class="mb-6">${text}</p>`;
+            return `<p class="mb-6 text-gray-700 leading-relaxed">${text}</p>`;
         },
         list(body, ordered) {
             const type = ordered ? 'ol' : 'ul';
             const className = ordered ? 'list-decimal' : 'list-disc';
-            return `<${type} class="${className} ml-4 mb-4 space-y-2">${body}</${type}>`;
+            return `<${type} class="${className} ml-4 mb-6 space-y-2 text-gray-700">${body}</${type}>`;
         },
         listitem(text) {
             return `<li class="ml-4">${text}</li>`;
         },
         link(href, title, text) {
-            return `<a href="${href}" class="text-primary hover:underline" target="_blank">${text}</a>`;
+            return `<a href="${href}" class="text-primary hover:underline" target="_blank" rel="noopener noreferrer">${text}</a>`;
         },
         image(href, title, text) {
-            return `<img src="${href}" alt="${text}" title="${title || ''}" class="max-w-full rounded-lg my-4">`;
+            return `<img src="${href}" alt="${text}" title="${title || ''}" class="max-w-full rounded-lg my-6 shadow-lg">`;
         },
         strong(text) {
-            return `<strong class="font-bold">${text}</strong>`;
+            return `<strong class="font-bold text-gray-900">${text}</strong>`;
         },
         em(text) {
-            return `<em class="italic">${text}</em>`;
+            return `<em class="italic text-gray-800">${text}</em>`;
+        },
+        blockquote(text) {
+            return `<blockquote class="border-l-4 border-primary/30 pl-4 py-2 mb-6 text-gray-700 italic">${text}</blockquote>`;
+        },
+        code(text, language) {
+            return `<pre class="bg-gray-50 rounded-lg p-4 mb-6 overflow-x-auto"><code class="text-sm font-mono text-gray-800">${text}</code></pre>`;
+        },
+        hr() {
+            return '<hr class="my-8 border-t-2 border-gray-100">';
         }
     };
 
@@ -313,7 +375,8 @@ document.addEventListener('DOMContentLoaded', function() {
         headerIds: false
     });
 
-    // Update preview functie
+    // Update preview functie met debounce
+    let previewTimeout = null;
     function updatePreview() {
         const content = contentTextarea.value;
         if (content.trim() === '') {
@@ -326,44 +389,92 @@ document.addEventListener('DOMContentLoaded', function() {
             const html = marked.parse(content);
             // Sanitize de HTML
             const cleanHtml = DOMPurify.sanitize(html);
-            // Update de preview
-            previewDiv.innerHTML = `<div class="prose prose-lg">${cleanHtml}</div>`;
+            // Update de preview met fade effect
+            previewDiv.style.opacity = '0';
+            setTimeout(() => {
+                previewDiv.innerHTML = `<div class="prose prose-lg">${cleanHtml}</div>`;
+                previewDiv.style.opacity = '1';
+            }, 150);
         } catch (error) {
             console.error('Markdown parsing error:', error);
             previewDiv.innerHTML = '<em class="text-red-500">Er is een fout opgetreden bij het verwerken van de markdown.</em>';
         }
     }
 
-    // Event listeners voor real-time preview
-    let timeout = null;
+    // Event listener voor real-time preview met debounce
     contentTextarea.addEventListener('input', function() {
-        clearTimeout(timeout);
-        timeout = setTimeout(updatePreview, 150);
+        clearTimeout(previewTimeout);
+        previewTimeout = setTimeout(updatePreview, 150);
     });
 
     // Trigger initial preview
     updatePreview();
 
-    // Afbeelding preview
+    // Functie om bestandsgrootte te formatteren
+    function formatFileSize(bytes) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
+
+    // Functie om afbeelding te verwijderen
+    window.removeImage = function() {
+        imageInput.value = ''; // Reset input
+        imagePreview.classList.add('hidden'); // Verberg preview
+        
+        // Animatie voor het verwijderen
+        imagePreview.style.opacity = '0';
+        imagePreview.style.transform = 'translateY(-10px)';
+        
+        setTimeout(() => {
+            imagePreview.style.opacity = '';
+            imagePreview.style.transform = '';
+        }, 300);
+    }
+
+    // Update afbeelding preview met extra informatie
+    function updateImagePreview(file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            // Toon de preview container met animatie
+            imagePreview.classList.remove('hidden');
+            imagePreview.style.opacity = '0';
+            imagePreview.style.transform = 'translateY(10px)';
+            
+            // Update de afbeelding
+            const img = imagePreview.querySelector('img');
+            img.src = e.target.result;
+            
+            // Update bestandsinformatie
+            const fileInfo = `${file.name} (${formatFileSize(file.size)})`;
+            imageInfoText.textContent = fileInfo;
+            
+            // Animeer het verschijnen
+            setTimeout(() => {
+                imagePreview.style.opacity = '1';
+                imagePreview.style.transform = 'translateY(0)';
+            }, 50);
+        }
+        reader.readAsDataURL(file);
+    }
+
+    // Event listeners voor afbeelding upload
     imageInput.addEventListener('change', function(e) {
         if (e.target.files && e.target.files[0]) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                imagePreview.classList.remove('hidden');
-                imagePreview.querySelector('img').src = e.target.result;
-            }
-            reader.readAsDataURL(e.target.files[0]);
+            updateImagePreview(e.target.files[0]);
         }
     });
 
     // Drag and drop functionaliteit
-    const dropZone = imageInput.closest('div');
+    const dropZone = document.querySelector('.group/upload');
     
     ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
         dropZone.addEventListener(eventName, preventDefaults, false);
     });
 
-    function preventDefaults (e) {
+    function preventDefaults(e) {
         e.preventDefault();
         e.stopPropagation();
     }
@@ -389,15 +500,10 @@ document.addEventListener('DOMContentLoaded', function() {
     function handleDrop(e) {
         const dt = e.dataTransfer;
         const files = dt.files;
-        imageInput.files = files;
-        
-        if (files[0]) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                imagePreview.classList.remove('hidden');
-                imagePreview.querySelector('img').src = e.target.result;
-            }
-            reader.readAsDataURL(files[0]);
+
+        if (files && files[0]) {
+            imageInput.files = files; // Update de input files
+            updateImagePreview(files[0]);
         }
     }
 });
