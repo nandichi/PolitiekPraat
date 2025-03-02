@@ -11,6 +11,21 @@ class BlogController {
         $this->parsedown->setBreaksEnabled(true);
     }
 
+    // Functie om leestijd te berekenen
+    private function calculateReadingTime($content) {
+        // Verwijder HTML tags
+        $content = strip_tags($content);
+        
+        // Tel woorden (gescheiden door spaties)
+        $wordCount = str_word_count($content);
+        
+        // Gemiddelde leessnelheid: 200 woorden per minuut
+        $readingTime = ceil($wordCount / 200);
+        
+        // Minimum leestijd van 1 minuut
+        return max(1, $readingTime);
+    }
+
     public function getAll($limit = null) {
         $sql = "SELECT blogs.*, users.username as author_name 
                 FROM blogs 
@@ -32,6 +47,8 @@ class BlogController {
             $blog->content = $this->parsedown->text($blog->content);
             // Maak een samenvatting van de originele content
             $blog->summary = substr(strip_tags($this->parsedown->text($originalContent)), 0, 200) . '...';
+            // Bereken leestijd
+            $blog->reading_time = $this->calculateReadingTime($originalContent);
         }
         
         return $blogs;
@@ -48,6 +65,8 @@ class BlogController {
         if ($blog) {
             // Converteer Markdown naar HTML
             $blog->content = $this->parsedown->text($blog->content);
+            // Bereken leestijd
+            $blog->reading_time = $this->calculateReadingTime($blog->content);
         }
         
         return $blog;
