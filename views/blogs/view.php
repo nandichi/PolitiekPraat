@@ -51,6 +51,42 @@
 
             <!-- Content sectie aanpassen -->
             <div class="p-4 sm:p-6 md:p-8">
+                <?php if ($blog->video_path || $blog->video_url): ?>
+                    <div class="mb-8">
+                        <?php if ($blog->video_path): ?>
+                            <!-- Lokaal geüploade video -->
+                            <div class="relative aspect-video rounded-xl overflow-hidden bg-black">
+                                <video controls class="w-full h-full">
+                                    <source src="<?php echo URLROOT . '/' . $blog->video_path; ?>" type="video/mp4">
+                                    Je browser ondersteunt geen video weergave.
+                                </video>
+                            </div>
+                        <?php elseif ($blog->video_url): ?>
+                            <!-- Embedded video (YouTube/Vimeo) -->
+                            <div class="relative aspect-video rounded-xl overflow-hidden bg-black">
+                                <?php
+                                // YouTube URL omzetten naar embed URL
+                                if (preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/', $blog->video_url, $matches)) {
+                                    $videoId = $matches[1];
+                                    $embedUrl = "https://www.youtube.com/embed/{$videoId}";
+                                }
+                                // Vimeo URL omzetten naar embed URL
+                                elseif (preg_match('/(?:vimeo\.com\/)([0-9]+)/', $blog->video_url, $matches)) {
+                                    $videoId = $matches[1];
+                                    $embedUrl = "https://player.vimeo.com/video/{$videoId}";
+                                }
+                                ?>
+                                <iframe src="<?php echo $embedUrl; ?>"
+                                        class="absolute top-0 left-0 w-full h-full"
+                                        frameborder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowfullscreen>
+                                </iframe>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                <?php endif; ?>
+
                 <div class="prose prose-sm sm:prose lg:prose-lg max-w-none">
                     <?php echo $blog->content; ?>
                 </div>

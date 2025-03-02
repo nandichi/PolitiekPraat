@@ -17,6 +17,8 @@ CREATE TABLE blogs (
     summary TEXT,
     content LONGTEXT,
     image_path VARCHAR(255),
+    video_path VARCHAR(255),
+    video_url VARCHAR(255),
     author_id INT,
     views INT DEFAULT 0,
     published_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

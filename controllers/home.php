@@ -116,23 +116,67 @@ require_once 'views/templates/header.php';
             <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"30\" height=\"30\" viewBox=\"0 0 30 30\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cpath d=\"M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z\" fill=\"rgba(255,255,255,0.05)\"%3E%3C/path%3E%3C/svg%3E')] opacity-20"></div>
         </div>
         
-        <div class="container mx-auto px-4 py-20 relative">
+        <div class="container mx-auto px-4 py-12 md:py-16 lg:py-20 relative">
             <div class="max-w-7xl mx-auto">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
                     <!-- Left Column: Main Content -->
-                    <div class="text-white space-y-8" data-aos="fade-right">
-                        <h1 class="text-5xl md:text-7xl font-bold leading-tight">
+                    <div class="text-white space-y-6 md:space-y-8" data-aos="fade-right">
+                        <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
                             <span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-blue-200">
                                 Politiek voor iedereen
                             </span>
                         </h1>
-                        <p class="text-xl md:text-2xl text-gray-300 leading-relaxed">
-                            Ontdek, discussieer en draag bij aan het politieke debat in Nederland. 
-                            Jouw stem telt in de democratische dialoog.
-                        </p>
-                        <div class="flex flex-col sm:flex-row gap-4">
+                        <div class="h-16 sm:h-20 md:h-24 flex items-center">
+                            <p class="text-lg sm:text-xl md:text-2xl text-gray-300 leading-relaxed"
+                               x-data="{
+                                   texts: [
+                                       'Ontdek hoe de Nederlandse politiek werkt en wat dit voor jou betekent.',
+                                       'Praat mee over actuele onderwerpen die Nederland bezighouden.',
+                                       'Deel jouw mening en lees wat anderen ervan vinden.',
+                                       'Blijf op de hoogte van de laatste politieke ontwikkelingen.',
+                                       'Leer meer over verkiezingen en hoe jouw stem verschil maakt.'
+                                   ],
+                                   currentText: '',
+                                   currentIndex: 0,
+                                   isDeleting: false,
+                                   typeSpeed: 50,
+                                   deleteSpeed: 30,
+                                   pauseSpeed: 2000
+                               }"
+                               x-init="$nextTick(() => {
+                                   function type() {
+                                       const current = texts[currentIndex];
+                                       
+                                       if (!isDeleting) {
+                                           currentText = current.substring(0, currentText.length + 1);
+                                           
+                                           if (currentText === current) {
+                                               isDeleting = true;
+                                               setTimeout(type, pauseSpeed);
+                                               return;
+                                           }
+                                           
+                                           setTimeout(type, typeSpeed);
+                                       } else {
+                                           currentText = current.substring(0, currentText.length - 1);
+                                           
+                                           if (currentText === '') {
+                                               isDeleting = false;
+                                               currentIndex = (currentIndex + 1) % texts.length;
+                                           }
+                                           
+                                           setTimeout(type, deleteSpeed);
+                                       }
+                                   }
+                                   
+                                   type();
+                               })"
+                               x-text="currentText">
+                            </p>
+                        </div>
+                        <div class="flex flex-col sm:flex-row gap-4 pt-2">
                             <a href="<?php echo URLROOT; ?>/blogs" 
-                               class="inline-flex items-center justify-center bg-white text-primary px-8 py-4 rounded-lg font-semibold hover:bg-opacity-90 transition-all transform hover:scale-105 shadow-lg group">
+                               class="inline-flex items-center justify-center bg-white text-primary px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold hover:bg-opacity-90 transition-all transform hover:scale-105 shadow-lg group">
                                 <span>Ontdek onze blogs</span>
                                 <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>

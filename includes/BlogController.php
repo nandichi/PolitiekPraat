@@ -59,14 +59,16 @@ class BlogController {
         // Genereer een samenvatting van de content
         $summary = substr(strip_tags($this->parsedown->text($content)), 0, 200) . '...';
         
-        $this->db->query("INSERT INTO blogs (title, slug, content, summary, image_path, author_id, published_at) 
-                         VALUES (:title, :slug, :content, :summary, :image_path, :author_id, NOW())");
+        $this->db->query("INSERT INTO blogs (title, slug, content, summary, image_path, video_path, video_url, author_id, published_at) 
+                         VALUES (:title, :slug, :content, :summary, :image_path, :video_path, :video_url, :author_id, NOW())");
         
         $this->db->bind(':title', $data['title']);
         $this->db->bind(':slug', $this->generateSlug($data['title']));
-        $this->db->bind(':content', $content); // Sla de originele Markdown op
+        $this->db->bind(':content', $content);
         $this->db->bind(':summary', $summary);
         $this->db->bind(':image_path', $data['image_path']);
+        $this->db->bind(':video_path', $data['video_path'] ?? null);
+        $this->db->bind(':video_url', $data['video_url'] ?? null);
         $this->db->bind(':author_id', $_SESSION['user_id']);
 
         return $this->db->execute();
@@ -80,13 +82,16 @@ class BlogController {
         
         $this->db->query("UPDATE blogs 
                          SET title = :title, content = :content, 
-                             summary = :summary, image_path = :image_path 
+                             summary = :summary, image_path = :image_path,
+                             video_path = :video_path, video_url = :video_url 
                          WHERE id = :id AND author_id = :author_id");
         
         $this->db->bind(':title', $data['title']);
         $this->db->bind(':content', $content);
         $this->db->bind(':summary', $summary);
         $this->db->bind(':image_path', $data['image_path']);
+        $this->db->bind(':video_path', $data['video_path'] ?? null);
+        $this->db->bind(':video_url', $data['video_url'] ?? null);
         $this->db->bind(':id', $data['id']);
         $this->db->bind(':author_id', $_SESSION['user_id']);
 

@@ -19,18 +19,22 @@ class BlogsController {
         }
         
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Handle file upload
+            // Handle file uploads
             $image_path = '';
+            $video_path = '';
+            $video_url = '';
+
+            // Handle image upload
             if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-                $upload_dir = 'uploads/blogs/';
+                $upload_dir = 'uploads/blogs/images/';
                 if (!file_exists($upload_dir)) {
                     mkdir($upload_dir, 0777, true);
                 }
                 
                 $file_extension = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
-                $allowed = ['jpg', 'jpeg', 'png', 'gif'];
+                $allowed_images = ['jpg', 'jpeg', 'png', 'gif'];
                 
-                if (in_array($file_extension, $allowed)) {
+                if (in_array($file_extension, $allowed_images)) {
                     $new_filename = uniqid() . '.' . $file_extension;
                     $target_path = $upload_dir . $new_filename;
                     
@@ -39,11 +43,48 @@ class BlogsController {
                     }
                 }
             }
+
+            // Handle video upload
+            if (isset($_FILES['video']) && $_FILES['video']['error'] === UPLOAD_ERR_OK) {
+                $upload_dir = 'uploads/blogs/videos/';
+                if (!file_exists($upload_dir)) {
+                    mkdir($upload_dir, 0777, true);
+                }
+                
+                $file_extension = strtolower(pathinfo($_FILES['video']['name'], PATHINFO_EXTENSION));
+                $allowed_videos = ['mp4', 'webm', 'ogg'];
+                
+                if (in_array($file_extension, $allowed_videos)) {
+                    // Check file size (max 100MB)
+                    if ($_FILES['video']['size'] <= 100 * 1024 * 1024) {
+                        $new_filename = uniqid() . '.' . $file_extension;
+                        $target_path = $upload_dir . $new_filename;
+                        
+                        if (move_uploaded_file($_FILES['video']['tmp_name'], $target_path)) {
+                            $video_path = $target_path;
+                        }
+                    }
+                }
+            }
+
+            // Handle video URL
+            if (!empty($_POST['video_url'])) {
+                $video_url = trim($_POST['video_url']);
+                // Valideer YouTube en Vimeo URLs
+                if (preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/', $video_url) ||
+                    preg_match('/(?:vimeo\.com\/)([0-9]+)/', $video_url)) {
+                    // URL is geldig, we slaan hem op zoals hij is
+                } else {
+                    $video_url = ''; // Reset als URL ongeldig is
+                }
+            }
             
             $data = [
                 'title' => trim($_POST['title']),
                 'content' => trim($_POST['content']),
-                'image_path' => $image_path
+                'image_path' => $image_path,
+                'video_path' => $video_path,
+                'video_url' => $video_url
             ];
             
             if ($this->blogModel->create($data)) {

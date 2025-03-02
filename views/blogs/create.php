@@ -134,6 +134,117 @@
                         </div>
                     </div>
 
+                    <!-- Video Upload Sectie -->
+                    <div class="mb-8" data-aos="fade-up" data-aos-delay="250">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Video toevoegen
+                        </label>
+                        <div class="space-y-4">
+                            <!-- Video URL input -->
+                            <div>
+                                <label for="video_url" class="block text-sm text-gray-600 mb-2">Video URL (YouTube, Vimeo)</label>
+                                <div class="relative group">
+                                    <input type="url" 
+                                           name="video_url" 
+                                           id="video_url" 
+                                           class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all duration-300"
+                                           placeholder="https://www.youtube.com/watch?v=...">
+                                    <div class="absolute inset-0 bg-primary/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+                                </div>
+                                <p class="mt-1 text-sm text-gray-500">Plak hier een YouTube of Vimeo video URL</p>
+                            </div>
+
+                            <div class="relative">
+                                <div class="absolute inset-0 flex items-center">
+                                    <div class="w-full border-t border-gray-200"></div>
+                                </div>
+                                <div class="relative flex justify-center text-sm">
+                                    <span class="px-2 bg-white text-gray-500">OF</span>
+                                </div>
+                            </div>
+
+                            <!-- Video bestand upload -->
+                            <div>
+                                <label for="video" class="block text-sm text-gray-600 mb-2">Video bestand uploaden</label>
+                                <div class="relative group/upload">
+                                    <div class="relative flex flex-col items-center gap-6 p-8 bg-white rounded-2xl border-2 border-dashed border-gray-200 transition-all duration-500 ease-out hover:border-primary">
+                                        <!-- Achtergrond effect -->
+                                        <div class="absolute inset-0 bg-gradient-to-br from-primary/[0.02] to-secondary/[0.02] opacity-0 group-hover/upload:opacity-100 transition-opacity duration-500"></div>
+                                        
+                                        <!-- Upload icoon -->
+                                        <div class="relative z-10 group/icon">
+                                            <div class="p-4 bg-gray-50 rounded-xl border border-gray-100 transition-all duration-300 group-hover/upload:bg-white group-hover/upload:shadow-lg group-hover/upload:scale-110">
+                                                <svg class="w-12 h-12 text-gray-400 transition-colors duration-300 group-hover/upload:text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                                    <path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                </svg>
+                                            </div>
+                                        </div>
+
+                                        <!-- Upload tekst en knop -->
+                                        <div class="relative z-10 text-center space-y-4">
+                                            <label for="video" class="group/button inline-flex items-center px-6 py-3 bg-white border-2 border-primary/20 text-primary font-medium rounded-xl cursor-pointer transition-all duration-300 hover:border-primary hover:bg-primary hover:text-white">
+                                                <svg class="w-5 h-5 mr-2 transition-transform duration-300 group-hover/button:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                                                </svg>
+                                                <span>Video kiezen</span>
+                                                <input id="video" name="video" type="file" class="sr-only" accept="video/*">
+                                            </label>
+                                            
+                                            <div class="flex flex-col items-center space-y-2">
+                                                <p class="text-sm text-gray-500">
+                                                    Sleep je video hierheen of gebruik de knop hierboven
+                                                </p>
+                                                <span class="inline-flex items-center px-3 py-1 space-x-1 bg-gray-50 rounded-full text-xs text-gray-500">
+                                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                                    </svg>
+                                                    <span>MP4, WebM of OGG (max. 100MB)</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Video Preview -->
+                                    <div id="videoPreview" class="hidden mt-6">
+                                        <div class="relative bg-gray-50 rounded-2xl p-4">
+                                            <!-- Preview header -->
+                                            <div class="flex items-center justify-between mb-3">
+                                                <div class="flex items-center space-x-2">
+                                                    <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                                                    </svg>
+                                                    <h3 class="font-medium text-gray-900">Video preview</h3>
+                                                </div>
+                                                <button type="button" 
+                                                        onclick="removeVideo()" 
+                                                        class="group inline-flex items-center px-3 py-1 space-x-1 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors duration-300">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                                    </svg>
+                                                    <span class="text-sm font-medium">Verwijderen</span>
+                                                </button>
+                                            </div>
+
+                                            <!-- Video player container -->
+                                            <div class="relative rounded-xl overflow-hidden bg-black">
+                                                <div class="aspect-video">
+                                                    <video id="videoPlayer" controls class="w-full h-full">
+                                                        <source src="" type="video/mp4">
+                                                        Je browser ondersteunt geen video weergave.
+                                                    </video>
+                                                </div>
+                                                <!-- Video info -->
+                                                <div class="absolute bottom-0 inset-x-0 p-4 bg-gradient-to-t from-black/60 to-transparent">
+                                                    <p class="text-white text-sm" id="videoInfo">Video info laden...</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Content Editor Sectie -->
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8" data-aos="fade-up" data-aos-delay="300">
                         <!-- Editor -->
@@ -504,6 +615,176 @@ document.addEventListener('DOMContentLoaded', function() {
         if (files && files[0]) {
             imageInput.files = files; // Update de input files
             updateImagePreview(files[0]);
+        }
+    }
+
+    // Video functionaliteit
+    const videoInput = document.getElementById('video');
+    const videoPreview = document.getElementById('videoPreview');
+    const videoPlayer = document.getElementById('videoPlayer');
+    const videoInfoText = document.getElementById('videoInfo');
+    const videoUrlInput = document.getElementById('video_url');
+
+    // Video URL validatie en preview
+    videoUrlInput.addEventListener('input', function() {
+        const url = this.value;
+        if (url) {
+            // YouTube URL validatie en omzetting
+            const youtubeMatch = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
+            if (youtubeMatch) {
+                const videoId = youtubeMatch[1];
+                const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+                showVideoUrlPreview(embedUrl, 'youtube');
+                return;
+            }
+
+            // Vimeo URL validatie en omzetting
+            const vimeoMatch = url.match(/(?:vimeo\.com\/)([0-9]+)/);
+            if (vimeoMatch) {
+                const videoId = vimeoMatch[1];
+                const embedUrl = `https://player.vimeo.com/video/${videoId}`;
+                showVideoUrlPreview(embedUrl, 'vimeo');
+                return;
+            }
+
+            // Ongeldige URL
+            alert('Voer een geldige YouTube of Vimeo URL in');
+            this.value = '';
+        }
+    });
+
+    function showVideoUrlPreview(embedUrl, platform) {
+        videoPreview.classList.remove('hidden');
+        const iframe = document.createElement('iframe');
+        iframe.src = embedUrl;
+        iframe.className = 'w-full aspect-video';
+        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+        iframe.allowFullscreen = true;
+
+        const videoContainer = videoPreview.querySelector('.aspect-video');
+        videoContainer.innerHTML = '';
+        videoContainer.appendChild(iframe);
+
+        videoInfoText.textContent = `${platform.charAt(0).toUpperCase() + platform.slice(1)} video`;
+    }
+
+    // Video bestand upload en preview
+    function formatFileSize(bytes) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024 * 1024; // We werken met MB voor video's
+        const sizes = ['MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
+
+    function updateVideoPreview(file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            videoPreview.classList.remove('hidden');
+            videoPreview.style.opacity = '0';
+            videoPreview.style.transform = 'translateY(10px)';
+            
+            // Update video player
+            videoPlayer.src = e.target.result;
+            
+            // Update bestandsinformatie
+            const fileInfo = `${file.name} (${formatFileSize(file.size)})`;
+            videoInfoText.textContent = fileInfo;
+            
+            // Animeer het verschijnen
+            setTimeout(() => {
+                videoPreview.style.opacity = '1';
+                videoPreview.style.transform = 'translateY(0)';
+            }, 50);
+        }
+        reader.readAsDataURL(file);
+    }
+
+    // Video verwijderen functie
+    window.removeVideo = function() {
+        videoInput.value = ''; // Reset input
+        videoUrlInput.value = ''; // Reset URL input
+        videoPreview.classList.add('hidden'); // Verberg preview
+        
+        // Animatie voor het verwijderen
+        videoPreview.style.opacity = '0';
+        videoPreview.style.transform = 'translateY(-10px)';
+        
+        setTimeout(() => {
+            videoPreview.style.opacity = '';
+            videoPreview.style.transform = '';
+            videoPlayer.src = ''; // Reset video player
+        }, 300);
+    }
+
+    // Event listeners voor video bestand upload
+    videoInput.addEventListener('change', function(e) {
+        if (e.target.files && e.target.files[0]) {
+            const file = e.target.files[0];
+            // Check bestandsgrootte (max 100MB)
+            if (file.size > 100 * 1024 * 1024) {
+                alert('Video mag niet groter zijn dan 100MB');
+                this.value = '';
+                return;
+            }
+            updateVideoPreview(file);
+            // Reset URL input als er een bestand is gekozen
+            videoUrlInput.value = '';
+        }
+    });
+
+    // Voorkom dat beide video opties tegelijk worden gebruikt
+    videoUrlInput.addEventListener('input', function() {
+        if (this.value) {
+            videoInput.value = ''; // Reset bestand input
+            if (!videoPreview.classList.contains('hidden')) {
+                removeVideo();
+            }
+        }
+    });
+
+    // Drag and drop voor video's
+    const videoDropZone = document.querySelector('.group/upload');
+    
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        videoDropZone.addEventListener(eventName, preventDefaults, false);
+    });
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+        videoDropZone.addEventListener(eventName, highlightVideo, false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+        videoDropZone.addEventListener(eventName, unhighlightVideo, false);
+    });
+
+    function highlightVideo(e) {
+        videoDropZone.classList.add('border-primary');
+    }
+
+    function unhighlightVideo(e) {
+        videoDropZone.classList.remove('border-primary');
+    }
+
+    videoDropZone.addEventListener('drop', handleVideoDrop, false);
+
+    function handleVideoDrop(e) {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+
+        if (files && files[0]) {
+            const file = files[0];
+            if (!file.type.startsWith('video/')) {
+                alert('Upload alleen videobestanden');
+                return;
+            }
+            if (file.size > 100 * 1024 * 1024) {
+                alert('Video mag niet groter zijn dan 100MB');
+                return;
+            }
+            videoInput.files = files;
+            updateVideoPreview(file);
+            videoUrlInput.value = ''; // Reset URL input
         }
     }
 });
