@@ -1,4 +1,17 @@
-<?php require_once 'views/templates/header.php'; ?>
+<?php 
+// Voeg dynamische meta tags toe voor deze specifieke blog
+$pageTitle = htmlspecialchars($blog->title) . ' | PolitiekPraat';
+$pageDescription = htmlspecialchars($blog->summary);
+$pageImage = $blog->image_path ? URLROOT . '/' . $blog->image_path : URLROOT . '/public/img/og-image.jpg';
+
+// Voeg deze variabelen toe aan $data voor de header
+$data = [
+    'title' => $pageTitle,
+    'description' => $pageDescription,
+    'image' => $pageImage
+];
+
+require_once 'views/templates/header.php'; ?>
 
 <main class="bg-gray-50 min-h-screen py-6 sm:py-12">
     <article class="container mx-auto px-4">
@@ -278,7 +291,7 @@ document.addEventListener('DOMContentLoaded', function() {
 async function shareBlog() {
     const title = '<?php echo htmlspecialchars($blog->title); ?>';
     const url = window.location.href;
-    const text = 'Lees deze interessante blog op PolitiekPraat: ';
+    const text = 'Lees deze interessante blog op PolitiekPraat: <?php echo htmlspecialchars($blog->summary); ?>';
 
     if (navigator.share) {
         try {

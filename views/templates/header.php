@@ -12,6 +12,11 @@ $metaDescriptions = [
 // Get current page from URL
 $currentPage = basename($_SERVER['PHP_SELF'], '.php');
 $metaDescription = $metaDescriptions[$currentPage] ?? $metaDescriptions['home'];
+
+// Controleer of we specifieke meta data hebben voor deze pagina (bijv. voor blogs)
+$metaTitle = isset($data['title']) ? $data['title'] : (SITENAME . ' - Politiek voor iedereen');
+$metaDescription = isset($data['description']) ? $data['description'] : $metaDescription;
+$metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og-image.jpg');
 ?>
 
 <!DOCTYPE html>
@@ -19,26 +24,29 @@ $metaDescription = $metaDescriptions[$currentPage] ?? $metaDescriptions['home'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <meta name="description" content="<?php echo htmlspecialchars($metaDescription); ?>">
     
     <!-- Open Graph / Social Media Meta Tags -->
-    <meta property="og:type" content="website">
+    <meta property="og:type" content="<?php echo isset($data['title']) ? 'article' : 'website'; ?>">
     <meta property="og:url" content="<?php echo URLROOT . $_SERVER['REQUEST_URI']; ?>">
-    <meta property="og:title" content="<?php echo isset($data['title']) ? htmlspecialchars($data['title']) : 'PolitiekPlatform - Politiek voor iedereen'; ?>">
+    <meta property="og:title" content="<?php echo htmlspecialchars($metaTitle); ?>">
     <meta property="og:description" content="<?php echo htmlspecialchars($metaDescription); ?>">
-    <meta property="og:image" content="<?php echo URLROOT; ?>/public/img/og-image.jpg">
+    <meta property="og:image" content="<?php echo htmlspecialchars($metaImage); ?>">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="<?php echo isset($data['title']) ? htmlspecialchars($data['title']) : 'PolitiekPlatform - Politiek voor iedereen'; ?>">
+    <meta name="twitter:title" content="<?php echo htmlspecialchars($metaTitle); ?>">
     <meta name="twitter:description" content="<?php echo htmlspecialchars($metaDescription); ?>">
-    <meta name="twitter:image" content="<?php echo URLROOT; ?>/public/img/twitter-card.jpg">
+    <meta name="twitter:image" content="<?php echo htmlspecialchars($metaImage); ?>">
 
     <!-- Canonical URL -->
     <link rel="canonical" href="<?php echo URLROOT . $_SERVER['REQUEST_URI']; ?>">
 
     <meta name="google-site-verification" content="e72Qn95mvwZrvfw5CvXBKfeIv0vSqmo88Fw-oTJ5sgw" />
-    <title><?php echo SITENAME; ?></title>
+    <title><?php echo $metaTitle; ?></title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMS41IiBkPSJNMyAyMWgxOE0zIDIxVjhsOS02IDkgNnYxM003IDIxVjExbTQgMTBWMTFtNiAxMFYxMW0tOC00aDQiIHN0cm9rZT0iIzFhMzY1ZCIvPjwvc3ZnPg==">
     <link rel="icon" type="image/png" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMS41IiBkPSJNMyAyMWgxOE0zIDIxVjhsOS02IDkgNnYxM003IDIxVjExbTQgMTBWMTFtNiAxMFYxMW0tOC00aDQiIHN0cm9rZT0iIzFhMzY1ZCIvPjwvc3ZnPg==">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
