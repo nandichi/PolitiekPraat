@@ -4,8 +4,21 @@ Options -Indexes
 
 # Rewrite engine aanzetten
 RewriteEngine On
+RewriteBase /
 
-# Stuur alles naar index.php
+# Allow direct access to files
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^ - [L]
+
+# Allow direct access to directories
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Rewrite requests to index.php unless they're for a file or directory
+RewriteRule ^nieuws$ controllers/nieuws.php [L]
+RewriteRule ^nieuws/$ controllers/nieuws.php [L]
+
+# Handle other routes
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.php [L,QSA] 
+RewriteRule ^(.*)$ index.php?url=$1 [QSA,L] 
