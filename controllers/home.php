@@ -422,7 +422,7 @@ require_once 'views/templates/header.php';
                                                 </div>
                                                 
                                                 <!-- Seats & Percentage View -->
-                                                <div x-show="activeView === 'seats' || activeView === 'percentage'" class="relative h-2 bg-white/5 rounded-full overflow-hidden">
+                                                <div x-show="activeView === 'seats' || activewView === 'percentage'" class="relative h-2 bg-white/5 rounded-full overflow-hidden">
                                                     <div x-show="activeView === 'seats'" 
                                                          class="h-full bg-gradient-to-r <?php echo $data['color']; ?> transition-all duration-1000 ease-out rounded-full" 
                                                                  style="width: <?php echo ($data['seats'] / 150) * 100; ?>%">
@@ -512,8 +512,124 @@ require_once 'views/templates/header.php';
         <!-- Wave Separator -->
         <div class="absolute bottom-0 left-0 right-0">
             <svg class="w-full h-auto" viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M0 120L60 110C120 100 240 80 360 70C480 60 600 60 720 65C840 70 960 80 1080 85C1200 90 1320 90 1380 90L1440 90V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0V120Z" fill="rgb(249 250 251)"/>
+                <path d="M0 120L60 110C120 100 240 80 360 70C480 60 600 60 720 65C840 70 960 80 1080 85C1200 90 1320 90 1380 90L1440 90V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0V120Z" fill="white"/>
             </svg>
+        </div>
+    </section>
+
+    <!-- Uitgelichte Nieuwste Blog Section -->
+    <section class="py-16 bg-white relative overflow-hidden">
+        <!-- Decorative elements -->
+        <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-gray-50 via-white to-gray-50"></div>
+        <div class="absolute top-40 right-20 w-80 h-80 bg-primary/5 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-10 left-20 w-72 h-72 bg-secondary/5 rounded-full blur-3xl"></div>
+
+        <div class="container mx-auto px-4 relative">
+            <!-- Section Header with "NIEUWSTE BLOG" text -->
+            <div class="text-center mb-12 relative" data-aos="fade-up">
+                <span class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-9xl text-gray-100 font-bold opacity-50 select-none">SPOTLIGHT</span>
+                <h2 class="text-4xl font-bold text-gray-900 mb-4 relative">
+                    <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Net gepubliceerd</span>
+                </h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full mb-4"></div>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Ontdek onze nieuwste politieke analyse</p>
+            </div>
+
+            <?php 
+            // Haal de allernieuwste blog op (eerste item uit de $latest_blogs array)
+            if (!empty($latest_blogs) && isset($latest_blogs[0])): 
+                $newest_blog = $latest_blogs[0];
+                // Check of de blog minder dan 24 uur oud is
+                $published_time = strtotime($newest_blog->published_at);
+                $twenty_four_hours_ago = time() - (24 * 3600);
+                $is_very_new = $published_time > $twenty_four_hours_ago;
+            ?>
+            <div class="max-w-7xl mx-auto" data-aos="zoom-in">
+                <div class="bg-white rounded-3xl shadow-xl overflow-hidden group relative transform transition duration-500 hover:shadow-2xl">
+                    <!-- Gradient border effect on hover -->
+                    <div class="absolute inset-0 bg-gradient-to-r from-primary to-secondary opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl -m-0.5 z-0"></div>
+                    
+                    <div class="relative z-10 flex flex-col lg:flex-row">
+                        <!-- Image Column -->
+                        <div class="lg:w-1/2 relative overflow-hidden">
+                            <?php if ($newest_blog->image_path): ?>
+                                <div class="relative h-64 lg:h-full">
+                                    <img src="<?php echo URLROOT . '/' . $newest_blog->image_path; ?>" 
+                                         alt="<?php echo htmlspecialchars($newest_blog->title); ?>"
+                                         class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
+                                    
+                                    <!-- Stronger gradient overlay to ensure text readability -->
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/30"></div>
+                                    
+                                    <?php if ($is_very_new): ?>
+                                        <!-- "NIEUW" badge -->
+                                        <div class="absolute top-4 left-4 z-20">
+                                            <div class="inline-flex items-center px-3 py-1 rounded-full bg-white text-primary text-sm font-semibold shadow-lg">
+                                                <span class="relative flex h-2 w-2 mr-2">
+                                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                                                    <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                                                </span>
+                                                NIEUW
+                                            </div>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+                            <?php else: ?>
+                                <div class="h-64 lg:h-full bg-gray-100 flex items-center justify-center">
+                                    <svg class="w-32 h-32 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2v16z"></path>
+                                    </svg>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                        
+                        <!-- Content Column -->
+                        <div class="lg:w-1/2 p-6 lg:p-10 flex flex-col justify-between bg-white">
+                            <div>
+                                <!-- Author info and publish date -->
+                                <div class="flex items-center text-sm text-gray-600 mb-6">
+                                    <span class="flex items-center">
+                                        <svg class="w-5 h-5 mr-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <circle cx="12" cy="7" r="4" stroke-width="2"/>
+                                            <path stroke-width="2" d="M5 21v-2a7 7 0 0114 0v2"/>
+                                        </svg>
+                                        <?php echo htmlspecialchars($newest_blog->author_name); ?>
+                                    </span>
+                                    <span class="mx-3">•</span>
+                                    <span class="flex items-center">
+                                        <svg class="w-5 h-5 mr-2 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                        <?php echo getRelativeTime($newest_blog->published_at); ?>
+                                    </span>
+                                </div>
+                                
+                                <!-- Blog title with solid color and no hover effect on text -->
+                                <h2 class="text-3xl font-bold text-gray-900 mb-4 leading-tight">
+                                    <?php echo htmlspecialchars($newest_blog->title); ?>
+                                </h2>
+                                
+                                <!-- Blog summary with better contrast -->
+                                <p class="text-gray-700 mb-6 text-lg leading-relaxed">
+                                    <?php echo htmlspecialchars($newest_blog->summary); ?>
+                                </p>
+                            </div>
+                            
+                            <!-- Action button -->
+                            <div>
+                                <a href="<?php echo URLROOT . '/blogs/view/' . $newest_blog->slug; ?>" 
+                                   class="inline-flex items-center px-6 py-3 bg-primary text-white font-semibold rounded-xl hover:bg-primary/90 transition-all transform group-hover:scale-105 shadow-md">
+                                    <span>Lees het volledige artikel</span>
+                                    <svg class="w-5 h-5 ml-2 transform transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?php endif; ?>
         </div>
     </section>
 
@@ -527,18 +643,6 @@ require_once 'views/templates/header.php';
         <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-secondary/5 rounded-full blur-3xl"></div>
         
         <div class="container mx-auto px-4 relative">
-            <!-- NEW badge -->
-            <div class="flex justify-center mb-8">
-                <div class="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-primary/20 to-secondary/20 text-primary border border-primary/20 shadow-lg shadow-primary/10 transform hover:scale-105 transition-all duration-300 group">
-                    <div class="flex space-x-2 items-center">
-                        <span class="relative flex h-2 w-2">
-                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                            <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-                        </span>
-                        <span class="text-sm font-bold tracking-wider group-hover:text-secondary transition-colors duration-300">NIEUW!</span>
-                    </div>
-                </div>
-            </div>
 
             <div class="max-w-7xl mx-auto">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
