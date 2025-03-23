@@ -1,14 +1,23 @@
 <?php
+// Detect environment
+$is_production = ($_SERVER['HTTP_HOST'] ?? 'localhost') === 'politiekpraat.nl';
+
 // Database configuratie
-define('DB_HOST', 'localhost');  // Database server
-define('DB_USER', 'root');  // Database gebruikersnaam
-define('DB_PASS', 'Naoufal2004!');  // Database wachtwoord
-define('DB_NAME', 'politiek_db');
-
-// URL Root
-// define('URLROOT', 'https://politiekpraat.nl'); 
-define('URLROOT', 'http://localhost:8000'); 
-
+if ($is_production) {
+    // Production database settings
+    define('DB_HOST', 'localhost');
+    define('DB_USER', 'naoufal_politiekpraat_user');
+    define('DB_PASS', 'Naoufal2004!');
+    define('DB_NAME', 'naoufal_politiekpraat_db');
+    define('URLROOT', 'https://politiekpraat.nl');
+} else {
+    // Local development settings
+    define('DB_HOST', 'localhost');
+    define('DB_USER', 'root');
+    define('DB_PASS', 'Naoufal2004!');
+    define('DB_NAME', 'politiek_db');
+    define('URLROOT', 'http://localhost:8000');
+}
 
 // Site naam
 define('SITENAME', 'PolitiekPraat');
