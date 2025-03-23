@@ -159,38 +159,58 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
             display: none !important; 
         }
 
-        /* Base effects */
+        /* Mobile menu animation classes */
+        .mobile-menu-enter {
+            transform: translateX(100%);
+        }
+        .mobile-menu-enter-active {
+            transform: translateX(0);
+            transition: transform 0.3s ease-out;
+        }
+        .mobile-menu-exit {
+            transform: translateX(0);
+        }
+        .mobile-menu-exit-active {
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in;
+        }
+
+        /* Base effects - refined */
         .glass-effect {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
         
         .glass-card {
             background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
         }
         
         .glass-dark {
-            background: rgba(0, 0, 0, 0.25);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
             border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
         }
         
+        /* Modern navigation background */
         .nav-gradient {
-            background: linear-gradient(135deg, #1a365d 0%, #234876 50%, #2d5a94 100%);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(135deg, #1a365d 0%, #1e4178 50%, #254b8f 100%);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
         }
         
+        /* Enhanced fancy gradient background */
         .fancy-gradient {
-            background: linear-gradient(135deg, #1a365d 0%, #234876 40%, #2d5a94 60%, #c41e3a 100%);
-            background-size: 200% 200%;
-            animation: gradient-shift 15s ease infinite;
+            background: linear-gradient(135deg, #1a365d 0%, #1e4178 35%, #2a5495 65%, #c41e3a 100%);
+            background-size: 250% 250%;
+            animation: gradient-shift 18s ease infinite;
         }
         
         .shimmer-effect {
@@ -207,15 +227,15 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
             left: 0;
             background: linear-gradient(to right, 
                 rgba(255, 255, 255, 0) 0%, 
-                rgba(255, 255, 255, 0.2) 50%, 
+                rgba(255, 255, 255, 0.25) 50%, 
                 rgba(255, 255, 255, 0) 100%);
-            animation: shimmer 2s infinite;
+            animation: shimmer 2.5s infinite;
         }
         
-        /* Navigation elements */
+        /* Navigation elements - enhanced */
         .nav-link {
             position: relative;
-            transition: all 0.3s ease;
+            transition: all 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
 
         .nav-link span {
@@ -226,13 +246,13 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
         .nav-link span::after {
             content: '';
             position: absolute;
-            bottom: -6px;
+            bottom: -4px;
             left: 0;
             width: 100%;
             height: 2px;
             background: linear-gradient(90deg, #c41e3a, #ff4d6d);
             transform: scaleX(0);
-            transition: transform 0.4s cubic-bezier(0.45, 0.05, 0.55, 0.95);
+            transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
             transform-origin: right;
         }
 
@@ -240,11 +260,11 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
             content: '';
             position: absolute;
             inset: -4px;
-            border-radius: 8px;
-            background: linear-gradient(135deg, rgba(196, 30, 58, 0), rgba(196, 30, 58, 0.2));
+            border-radius: 10px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.15));
             opacity: 0;
             z-index: 0;
-            transition: opacity 0.4s ease;
+            transition: opacity 0.5s ease;
         }
 
         .nav-link:hover::before {
@@ -268,19 +288,20 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(255, 255, 255, 0.1);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
             transform: translateX(-100%) skewX(-15deg);
-            transition: transform 0.5s ease;
+            transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
         }
         
         .magic-link:hover::before {
             transform: translateX(100%) skewX(-15deg);
         }
 
-        /* Effects */
+        /* Effects - modern and subtle */
         .glow-effect {
             position: relative;
             overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .glow-effect::before {
@@ -290,13 +311,18 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
             left: -2px;
             right: -2px;
             bottom: -2px;
-            background: linear-gradient(45deg, #c41e3a, #00796b, #1a365d);
-            background-size: 200% 200%;
-            animation: gradient-shift 3s ease infinite;
-            border-radius: 0.5rem;
+            background: linear-gradient(45deg, #c41e3a, #3d5a80, #1a365d);
+            background-size: 300% 300%;
+            animation: gradient-shift 5s ease infinite;
+            border-radius: 0.6rem;
             z-index: -1;
             opacity: 0;
-            transition: opacity 0.4s ease;
+            transition: opacity 0.5s ease;
+        }
+
+        .glow-effect:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
 
         .glow-effect:hover::before {
@@ -304,36 +330,39 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
         }
         
         .active-glow {
-            box-shadow: 0 0 15px rgba(196, 30, 58, 0.5);
-            animation: pulse-glow 2s infinite;
+            box-shadow: 0 0 15px rgba(196, 30, 58, 0.4);
+            animation: pulse-glow 2.5s infinite;
         }
         
         @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 0 15px rgba(196, 30, 58, 0.5); }
-            50% { box-shadow: 0 0 25px rgba(196, 30, 58, 0.8); }
+            0%, 100% { box-shadow: 0 0 15px rgba(196, 30, 58, 0.4); }
+            50% { box-shadow: 0 0 25px rgba(196, 30, 58, 0.7); }
         }
 
         .scale-hover {
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
-                        box-shadow 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1), 
+                        box-shadow 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            will-change: transform, box-shadow;
         }
 
         .scale-hover:hover {
-            transform: scale(1.05) translateY(-2px);
+            transform: scale(1.03) translateY(-3px);
             box-shadow: 0 15px 30px rgba(0,0,0,0.15);
         }
         
         .hover-lift {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1), 
+                       box-shadow 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            will-change: transform, box-shadow;
         }
         
         .hover-lift:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
         }
         
         .hover-expand {
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
         }
         
         .hover-expand:hover {
@@ -341,7 +370,7 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
             padding-right: 1.5rem !important;
         }
 
-        /* Keyframe Animations */
+        /* Keyframe Animations - refined */
         @keyframes gradient-shift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
@@ -360,7 +389,7 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
 
         @keyframes pulse-slow {
             0%, 100% { opacity: 1; }
-            50% { opacity: 0.6; }
+            50% { opacity: 0.7; }
         }
         
         @keyframes shimmer {
@@ -397,41 +426,60 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                 rgba(255, 255, 255, 0.3) 50%, 
                 rgba(255, 255, 255, 0) 100%);
             transform: translateX(-100%);
-            animation: shimmer 2.5s infinite;
+            animation: shimmer 3s infinite;
         }
 
-        .blog-card-hover {
-            transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+        /* Enhanced dropdown styling */
+        .dropdown-content {
+            transform-origin: top center;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px) scale(0.97);
+            pointer-events: none;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .group:hover .dropdown-content,
+        .dropdown-content.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
         }
 
-        .blog-card-hover:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        /* Modern header - significantly improved */
+        .header-container {
+            background: rgba(26, 54, 93, 0.98);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+            position: relative;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .gradient-text {
-            background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 50%, var(--primary-color) 100%);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: gradient 4s ease infinite;
+        .header-logo-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 10px;
+            transition: all 0.3s ease;
         }
 
-        @keyframes gradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        .header-logo-container:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
         }
 
-        /* Interactive elements */
+        /* Enhanced Sign up button */
         .signup-btn {
             position: relative;
-            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(250, 250, 250, 1) 100%);
             color: #1a365d;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
             box-shadow: 0 6px 20px rgba(26, 54, 93, 0.15);
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
             overflow: hidden;
+            transform: translateY(0);
         }
 
         .signup-btn::after {
@@ -461,25 +509,9 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
 
         .signup-btn:active {
             transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(196, 30, 58, 0.2);
         }
-        
-        .dropdown-content {
-            transform-origin: top center;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            opacity: 0;
-            visibility: hidden;
-            transform: scale(0.95) translateY(-10px);
-            pointer-events: none;
-        }
-        
-        .group:hover .dropdown-content,
-        .dropdown-content.active {
-            opacity: 1;
-            visibility: visible;
-            transform: scale(1) translateY(0);
-            pointer-events: auto;
-        }
-        
+
         /* Decorative elements */
         .particle {
             position: absolute;
@@ -559,791 +591,642 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
         </div>
     </div>
 
-    <!-- Main Navigation -->
-    <nav class="relative z-50 sticky top-0">
-        <!-- Decorative particles -->
-        <div aria-hidden="true" class="absolute inset-0 overflow-hidden pointer-events-none">
-            <div class="particle w-2 h-2 left-[10%] top-[20%] animate-float" style="animation-delay: 0s;"></div>
-            <div class="particle w-1.5 h-1.5 left-[30%] top-[60%] animate-float" style="animation-delay: 0.5s;"></div>
-            <div class="particle w-1 h-1 left-[70%] top-[30%] animate-float" style="animation-delay: 1s;"></div>
-            <div class="particle w-2 h-2 left-[85%] top-[70%] animate-float" style="animation-delay: 1.5s;"></div>
-            <div class="particle w-1 h-1 left-[20%] top-[35%] animate-float" style="animation-delay: 2s;"></div>
-            <div class="particle w-1.5 h-1.5 left-[60%] top-[15%] animate-float" style="animation-delay: 2.5s;"></div>
-        </div>
-    
+    <!-- Main Navigation - Modernized -->
+    <nav class="relative z-50 sticky top-0 header-container">
+        <!-- Subtle top reflection line -->
+        <div aria-hidden="true" class="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
+        
         <!-- Animated gradient background -->
         <div class="absolute inset-0 fancy-gradient opacity-95"></div>
         
         <!-- Glassmorphism overlay -->
-        <div class="absolute inset-0 backdrop-blur-md bg-white/5"></div>
+        <div class="absolute inset-0 backdrop-blur-md bg-primary/10"></div>
         
-        <!-- Decorative top border -->
-        <div class="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-white/50 to-transparent"></div>
-
         <!-- Navigation content -->
-        <div class="relative">
-            <div class="container mx-auto px-4">
-                <div class="flex justify-between items-center h-20">
-                    <!-- Logo -->
-                    <a href="<?php echo URLROOT; ?>" class="flex items-center space-x-4 group">
-                        <div class="relative">
-                            <!-- Enhanced logo background with 3D effect -->
-                            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-white/30 via-white/20 to-transparent 
-                                        flex items-center justify-center overflow-hidden
-                                        border border-white/30 backdrop-blur-lg shadow-lg
-                                        transform transition-all duration-500 ease-out
-                                        group-hover:scale-110 group-hover:rotate-6 group-hover:border-secondary/60
-                                        group-hover:shadow-secondary/20 group-hover:from-white/40">
-                                
-                                <!-- 3D shadow effect -->
-                                <div class="absolute inset-0 bg-gradient-to-br from-black/10 to-transparent opacity-30 
-                                            transform rotate-12 scale-90 translate-x-1 translate-y-1 group-hover:opacity-0 
-                                            transition-all duration-500"></div>
-                                
-                                <!-- Animated highlight sweep -->
-                                <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent
-                                            translate-x-[-100%] group-hover:translate-x-[150%] transition-transform duration-1000"></div>
-                                
-                                <!-- Logo icon with enhanced animations -->
-                                <svg class="w-8 h-8 text-white relative z-10 transform transition-all duration-500 ease-out
-                                            group-hover:scale-110 group-hover:text-secondary" 
-                                     fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" 
-                                          stroke-linejoin="round" 
-                                          stroke-width="1.5"
-                                          d="M3 21h18M3 21V8l9-6 9 6v13M7 21V11m4 10V11m6 10V11m-8-4h4"/>
-                                </svg>
-                                
-                                <!-- Sparkle effect elements -->
-                                <div class="absolute top-1 right-2 w-1 h-1 bg-white rounded-full opacity-0 
-                                            group-hover:opacity-80 transition-opacity duration-300 delay-150"></div>
-                                <div class="absolute bottom-2 left-2 w-1.5 h-1.5 bg-white rounded-full opacity-0 
-                                            group-hover:opacity-80 transition-opacity duration-300 delay-300"></div>
-                            </div>
-                            
-                            <!-- Enhanced floating badge with glow effect -->
-                            <div class="absolute -top-2 -right-2 w-7 h-7 bg-gradient-to-br from-secondary to-secondary/70
-                                        rounded-full flex items-center justify-center overflow-hidden
-                                        shadow-lg shadow-secondary/30 border border-white/20
-                                        transform transition-all duration-500 ease-out
-                                        group-hover:scale-125 group-hover:rotate-12 group-hover:shadow-secondary/50
-                                        group-hover:border-white/30">
-                                <!-- Animated pulsing glow -->
-                                <div class="absolute inset-0 bg-secondary/60 animate-pulse-slow rounded-full 
-                                            opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                                
-                                <!-- Animated shine effect -->
-                                <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent
-                                            translate-x-[-100%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
-                                
-                                <svg class="w-4 h-4 text-white relative z-10 transform transition-transform duration-500
-                                            group-hover:scale-110 group-hover:rotate-[-12deg]" 
-                                     fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                          d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/>
-                                </svg>
-                            </div>
-                        </div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="flex justify-between items-center h-16 md:h-20">
+                <!-- Logo - Modern & Elegant -->
+                <a href="<?php echo URLROOT; ?>" class="flex items-center space-x-3 group relative z-10">
+                    <div class="flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-xl bg-white/10 
+                                border border-white/20 backdrop-blur-sm shadow-lg transition-all duration-500 
+                                group-hover:bg-white/15 group-hover:border-secondary/30 group-hover:scale-105 
+                                group-hover:shadow-secondary/10 group-hover:shadow-lg">
+                        <!-- Logo icon -->
+                        <svg class="w-6 h-6 md:w-7 md:h-7 text-white transition-all duration-500 group-hover:text-secondary" 
+                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                  d="M3 21h18M3 21V8l9-6 9 6v13M7 21V11m4 10V11m6 10V11m-8-4h4"/>
+                        </svg>
                         
-                        <!-- Enhanced text section with animated underline and glow -->
-                        <div class="flex flex-col">
-                            <span class="text-2xl font-bold tracking-tight text-white relative
-                                         transition-all duration-500 ease-out group-hover:text-white
-                                         drop-shadow-md">
-                                <?php echo SITENAME; ?>
-                                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-secondary via-secondary/80 to-secondary/60
-                                             transition-all duration-500 ease-out group-hover:w-full"></span>
-                            </span>
-                            <span class="text-sm text-white/80 font-medium tracking-wide
-                                         transition-all duration-500 ease-out group-hover:text-white">
-                                <span class="inline-block transform transition-transform group-hover:translate-x-1 duration-500">Samen</span> 
-                                <span class="inline-block transform transition-transform group-hover:translate-x-0.5 duration-500 delay-75">bouwen</span> 
-                                <span class="inline-block transform transition-transform group-hover:translate-x-0 duration-500 delay-150">aan</span> 
-                                <span class="inline-block transform transition-transform group-hover:translate-x-0.5 duration-500 delay-200">democratie</span>
-                            </span>
-                        </div>
+                        <!-- Subtle glow effect -->
+                        <div class="absolute inset-0 rounded-xl bg-white/5 opacity-0 blur-sm group-hover:opacity-100 
+                                    transition-opacity duration-500"></div>
+                    </div>
+                    
+                    <!-- Text with animated underline -->
+                    <div class="flex flex-col">
+                        <span class="text-lg md:text-xl font-bold text-white tracking-tight relative overflow-hidden">
+                            <?php echo SITENAME; ?>
+                            <span class="absolute bottom-0 left-0 h-[2px] w-0 bg-secondary 
+                                      group-hover:w-full transition-all duration-500"></span>
+                        </span>
+                        <span class="text-xs md:text-sm text-white/80 font-medium">Samen bouwen aan democratie</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation Links - Enhanced -->
+                <div class="hidden md:flex items-center space-x-1 lg:space-x-2">
+                    <a href="<?php echo URLROOT; ?>/" 
+                       class="nav-link px-2.5 lg:px-3 py-2 text-white/95 font-medium rounded-lg">
+                        <span class="relative">Home</span>
                     </a>
 
-                    <!-- Desktop Navigation - Enhanced with animations -->
-                    <div class="hidden lg:flex items-center space-x-6">
-                        <a href="<?php echo URLROOT; ?>/" 
-                           class="nav-link px-4 py-2 text-white/90 font-medium group rounded-lg">
-                            <span class="relative">Home</span>
-                        </a>
+                    <a href="<?php echo URLROOT; ?>/blogs" 
+                       class="nav-link px-2.5 lg:px-3 py-2 text-white/95 font-medium rounded-lg">
+                        <span class="relative">Blogs</span>
+                    </a>
 
-                        <a href="<?php echo URLROOT; ?>/blogs" 
-                           class="nav-link px-4 py-2 text-white/90 font-medium group rounded-lg">
-                            <span class="relative">Blogs</span>
-                        </a>
+                    <a href="<?php echo URLROOT; ?>/nieuws" 
+                       class="nav-link px-2.5 lg:px-3 py-2 text-white/95 font-medium rounded-lg">
+                        <span class="relative">Nieuws</span>
+                    </a>
 
-                        <a href="<?php echo URLROOT; ?>/nieuws" 
-                           class="nav-link px-4 py-2 text-white/90 font-medium group rounded-lg">
-                            <span class="relative">Nieuws</span>
-                        </a>
+                    <a href="<?php echo URLROOT; ?>/stemwijzer" 
+                       class="flex items-center nav-link px-2.5 lg:px-3 py-2 text-white/95 font-medium rounded-lg">
+                        <span class="relative">Stemwijzer</span>
+                    </a>
 
-                        <a href="<?php echo URLROOT; ?>/stemwijzer" 
-                           class="flex items-center nav-link px-4 py-2 text-white/90 font-medium group rounded-lg relative">
-                            <span class="relative">Stemwijzer</span>
-                            <div class="ml-2 inline-flex items-center px-2 py-0.5 text-[10px] font-medium 
-                                      bg-gradient-to-r from-secondary/30 to-secondary/50
-                                      border border-secondary/50 text-white rounded-full
-                                      shadow-[0_0_10px_rgba(196,30,58,0.3)] animate-pulse-slow">
-                                Nieuw
+                    <!-- Forum Dropdown - Elegant implementation -->
+                    <div class="relative group">
+                        <button class="nav-link px-2.5 lg:px-3 py-2 text-white/95 font-medium flex items-center rounded-lg">
+                            <span class="relative">Forum</span>
+                            <svg class="w-4 h-4 ml-1.5 transform transition-transform duration-300 group-hover:rotate-180" 
+                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+
+                        <div class="absolute left-0 mt-2 w-56 dropdown-content z-50">
+                            <div class="p-2 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden">
+                                <!-- Subtle top accent -->
+                                <div class="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-primary/30 via-secondary/30 to-primary/30"></div>
+                                
+                                <a href="<?php echo URLROOT; ?>/forum" 
+                                   class="flex items-center px-3 py-2.5 rounded-lg transition-all duration-200
+                                          hover:bg-gray-50 group/item">
+                                    <div class="flex items-center justify-center w-9 h-9 rounded-lg bg-primary/5
+                                              transition-transform duration-200 group-hover/item:scale-110">
+                                        <svg class="w-5 h-5 text-primary transition-all duration-200 
+                                                  group-hover/item:text-primary/90" 
+                                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                  d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/>
+                                        </svg>
+                                    </div>
+                                    <div class="ml-3">
+                                        <p class="text-sm font-medium text-gray-800">Alle discussies</p>
+                                        <p class="text-xs text-gray-500">Bekijk het forum</p>
+                                    </div>
+                                </a>
+
+                                <?php if(isset($_SESSION['user_id'])): ?>
+                                    <a href="<?php echo URLROOT; ?>/forum/create" 
+                                       class="flex items-center px-3 py-2.5 mt-1 rounded-lg transition-all duration-200
+                                              hover:bg-gray-50 group/item">
+                                        <div class="flex items-center justify-center w-9 h-9 rounded-lg bg-secondary/5
+                                                  transition-transform duration-200 group-hover/item:scale-110">
+                                            <svg class="w-5 h-5 text-secondary transition-all duration-200" 
+                                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                                            </svg>
+                                        </div>
+                                        <div class="ml-3">
+                                            <p class="text-sm font-medium text-gray-800">Start discussie</p>
+                                            <p class="text-xs text-gray-500">Nieuw onderwerp</p>
+                                        </div>
+                                    </a>
+                                <?php endif; ?>
                             </div>
-                        </a>
+                        </div>
+                    </div>
 
-                        <!-- Forum Dropdown Button - Enhanced with better animations -->
+                    <!-- Contact Dropdown - Elegant implementation -->
+                    <div class="relative group">
+                        <button class="nav-link px-2.5 lg:px-3 py-2 text-white/95 font-medium flex items-center rounded-lg">
+                            <span class="relative">Contact</span>
+                            <svg class="w-4 h-4 ml-1.5 transform transition-transform duration-300 group-hover:rotate-180" 
+                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+
+                        <div class="absolute left-0 mt-2 w-56 dropdown-content z-50">
+                            <div class="p-2 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden">
+                                <!-- Subtle top accent -->
+                                <div class="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-primary/30 via-secondary/30 to-primary/30"></div>
+                                
+                                <a href="<?php echo URLROOT; ?>/contact" 
+                                   class="flex items-center px-3 py-2.5 rounded-lg transition-all duration-200
+                                          hover:bg-gray-50 group/item">
+                                    <div class="flex items-center justify-center w-9 h-9 rounded-lg bg-primary/5
+                                              transition-transform duration-200 group-hover/item:scale-110">
+                                        <svg class="w-5 h-5 text-primary transition-all duration-200" 
+                                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                  d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                        </svg>
+                                    </div>
+                                    <div class="ml-3">
+                                        <p class="text-sm font-medium text-gray-800">Contact</p>
+                                        <p class="text-xs text-gray-500">Neem contact op</p>
+                                    </div>
+                                </a>
+
+                                <a href="<?php echo URLROOT; ?>/over-mij" 
+                                   class="flex items-center px-3 py-2.5 mt-1 rounded-lg transition-all duration-200
+                                          hover:bg-gray-50 group/item">
+                                    <div class="flex items-center justify-center w-9 h-9 rounded-lg bg-secondary/5
+                                              transition-transform duration-200 group-hover/item:scale-110">
+                                        <svg class="w-5 h-5 text-secondary transition-all duration-200" 
+                                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                        </svg>
+                                    </div>
+                                    <div class="ml-3">
+                                        <p class="text-sm font-medium text-gray-800">Over ons</p>
+                                        <p class="text-xs text-gray-500">Leer ons kennen</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Auth Buttons - Elegant & Modern -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <?php if(isset($_SESSION['user_id'])): ?>
                         <div class="relative group">
-                            <button class="nav-link px-4 py-2 text-white/90 font-medium flex items-center rounded-lg">
-                                <span class="relative">Forum</span>
-                                <svg class="w-4 h-4 ml-1.5 transform transition-transform duration-300 group-hover:rotate-180" 
+                            <button class="flex items-center space-x-2 bg-white/10 px-3 py-2 rounded-lg
+                                         border border-white/20 backdrop-blur-sm
+                                         transition-all duration-300
+                                         hover:bg-white/15 hover:border-secondary/30 hover:shadow-lg 
+                                         hover:shadow-secondary/5 group-hover:scale-[1.02] group-hover:pr-4">
+                                <div class="w-7 h-7 bg-gradient-to-br from-secondary to-primary/80
+                                         rounded-lg flex items-center justify-center
+                                         ring-1 ring-white/30 transition-all duration-300
+                                         group-hover:ring-white/50 group-hover:scale-110">
+                                    <span class="text-white font-bold text-sm">
+                                        <?php echo strtoupper(substr($_SESSION['username'], 0, 1)); ?>
+                                    </span>
+                                </div>
+                                <span class="font-medium text-white text-sm"><?php echo htmlspecialchars($_SESSION['username']); ?></span>
+                                <svg class="w-4 h-4 text-white transition-transform duration-300 group-hover:rotate-180" 
                                      fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                                 </svg>
                             </button>
 
-                            <div class="absolute left-0 mt-2 w-60 dropdown-content z-50">
-                                <div class="p-3 bg-white rounded-xl shadow-2xl ring-1 ring-black/5 border border-gray-100">
-                                    <!-- Subtle decorative accent at top -->
-                                    <div class="absolute top-0 left-4 right-4 h-0.5 bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
+                            <!-- User Dropdown -->
+                            <div class="absolute right-0 mt-2 w-56 dropdown-content z-50">
+                                <div class="bg-white rounded-xl shadow-xl py-2.5 px-1.5 border border-gray-100 overflow-hidden">
+                                    <!-- Subtle top accent -->
+                                    <div class="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-primary/30 via-secondary/30 to-primary/30"></div>
                                     
-                                    <a href="<?php echo URLROOT; ?>/forum" 
-                                       class="flex items-center px-3 py-2.5 rounded-lg transition-all duration-200
-                                              hover:bg-gray-50 group/item">
-                                        <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-primary/5
-                                                   transition-transform duration-200 group-hover/item:scale-110 
-                                                   group-hover/item:rotate-3 group-hover/item:bg-primary/10">
-                                            <svg class="w-5 h-5 text-primary transition-all duration-200 
-                                                        group-hover/item:text-primary/80" 
-                                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                                      d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/>
-                                            </svg>
-                                        </div>
-                                        <div class="ml-3">
-                                            <p class="text-sm font-medium text-gray-800 transition-colors duration-200 
-                                                      group-hover/item:text-primary">Alle discussies</p>
-                                            <p class="text-xs text-gray-500">Bekijk het forum</p>
-                                        </div>
-                                    </a>
-
-                                    <?php if(isset($_SESSION['user_id'])): ?>
-                                        <a href="<?php echo URLROOT; ?>/forum/create" 
-                                           class="flex items-center px-3 py-2.5 mt-1 rounded-lg transition-all duration-200
-                                                  hover:bg-gray-50 group/item">
-                                            <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-secondary/5
-                                                       transition-transform duration-200 group-hover/item:scale-110
-                                                       group-hover/item:rotate-3 group-hover/item:bg-secondary/10">
-                                                <svg class="w-5 h-5 text-secondary transition-all duration-200 
-                                                            group-hover/item:text-secondary/80" 
+                                    <?php if($_SESSION['is_admin']): ?>
+                                        <a href="<?php echo URLROOT; ?>/admin" 
+                                           class="flex items-center px-3 py-2 rounded-lg
+                                                 transition-all duration-200 hover:bg-gray-50 group/item">
+                                            <div class="w-9 h-9 bg-primary/5 rounded-lg flex items-center justify-center
+                                                      transition-transform duration-200 group-hover/item:scale-110">
+                                                <svg class="w-5 h-5 text-primary transition-colors duration-200" 
                                                      fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                          d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                                                 </svg>
                                             </div>
                                             <div class="ml-3">
-                                                <p class="text-sm font-medium text-gray-800 transition-colors duration-200 
-                                                          group-hover/item:text-secondary">Start discussie</p>
-                                                <p class="text-xs text-gray-500">Nieuw onderwerp</p>
+                                                <p class="text-sm font-medium text-gray-900">Dashboard</p>
+                                                <p class="text-xs text-gray-500">Beheer je website</p>
                                             </div>
                                         </a>
                                     <?php endif; ?>
-                                </div>
-                            </div>
-                        </div>
 
-                        <!-- Contact Dropdown - Enhanced -->
-                        <div class="relative group">
-                            <button class="nav-link text-white/90 hover:text-white transition-colors duration-300 font-medium py-2 flex items-center px-4 rounded-lg">
-                                <span>Contact</span>
-                                <svg class="w-4 h-4 ml-1.5 transform transition-transform duration-300 group-hover:rotate-180" 
-                                     fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                </svg>
-                            </button>
-
-                            <div class="absolute left-0 mt-2 w-60 dropdown-content z-50">
-                                <div class="p-3 bg-white rounded-xl shadow-2xl ring-1 ring-black/5 border border-gray-100">
-                                    <!-- Subtle decorative accent at top -->
-                                    <div class="absolute top-0 left-4 right-4 h-0.5 bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
-                                    
-                                    <a href="<?php echo URLROOT; ?>/contact" 
-                                       class="flex items-center px-3 py-2.5 rounded-lg transition-all duration-200
-                                              hover:bg-gray-50 group/item">
-                                        <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-primary/5
-                                                   transition-transform duration-200 group-hover/item:scale-110
-                                                   group-hover/item:rotate-3 group-hover/item:bg-primary/10">
-                                            <svg class="w-5 h-5 text-primary transition-all duration-200 
-                                                        group-hover/item:text-primary/80" 
-                                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                                            </svg>
-                                        </div>
-                                        <div class="ml-3">
-                                            <p class="text-sm font-medium text-gray-800 transition-colors duration-200 
-                                                      group-hover/item:text-primary">Contact</p>
-                                            <p class="text-xs text-gray-500">Neem contact op</p>
-                                        </div>
-                                    </a>
-
-                                    <a href="<?php echo URLROOT; ?>/over-mij" 
-                                       class="flex items-center px-3 py-2.5 mt-1 rounded-lg transition-all duration-200
-                                              hover:bg-gray-50 group/item">
-                                        <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-secondary/5
-                                                   transition-transform duration-200 group-hover/item:scale-110
-                                                   group-hover/item:rotate-3 group-hover/item:bg-secondary/10">
-                                            <svg class="w-5 h-5 text-secondary transition-all duration-200 
-                                                        group-hover/item:text-secondary/80" 
+                                    <a href="<?php echo URLROOT; ?>/profile" 
+                                       class="flex items-center px-3 py-2 rounded-lg
+                                              transition-all duration-200 hover:bg-gray-50 group/item">
+                                        <div class="w-9 h-9 bg-secondary/5 rounded-lg flex items-center justify-center
+                                                  transition-transform duration-200 group-hover/item:scale-110">
+                                            <svg class="w-5 h-5 text-secondary transition-colors duration-200" 
                                                  fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                                       d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                                             </svg>
                                         </div>
                                         <div class="ml-3">
-                                            <p class="text-sm font-medium text-gray-800 transition-colors duration-200 
-                                                      group-hover/item:text-secondary">Over ons</p>
-                                            <p class="text-xs text-gray-500">Leer ons kennen</p>
+                                            <p class="text-sm font-medium text-gray-900">Profiel</p>
+                                            <p class="text-xs text-gray-500">Beheer je account</p>
+                                        </div>
+                                    </a>
+                                    <div class="mx-3 my-1.5 border-t border-gray-100"></div>
+
+                                    <a href="<?php echo URLROOT; ?>/logout" 
+                                       class="flex items-center px-3 py-2 rounded-lg
+                                             transition-all duration-200 hover:bg-red-50 group/item">
+                                        <div class="w-9 h-9 bg-red-500/5 rounded-lg flex items-center justify-center
+                                                  transition-transform duration-200 group-hover/item:scale-110">
+                                            <svg class="w-5 h-5 text-red-500 transition-colors duration-200" 
+                                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                      d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                                            </svg>
+                                        </div>
+                                        <div class="ml-3">
+                                            <p class="text-sm font-medium text-red-600">Uitloggen</p>
+                                            <p class="text-xs text-red-400">Tot ziens!</p>
                                         </div>
                                     </a>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <!-- Desktop Auth Buttons - Enhanced with better animations and styling -->
-                    <div class="hidden lg:flex items-center space-x-6">
-                        <?php if(isset($_SESSION['user_id'])): ?>
-                            <div class="relative group">
-                                <button class="flex items-center space-x-3 bg-white/10 px-5 py-2.5 rounded-full
-                                              border border-white/30 backdrop-blur-sm
-                                              transform transition-all duration-300 ease-out
-                                              hover:bg-white/15 hover:border-secondary/40 hover:scale-[1.02]
-                                              hover:shadow-lg hover:shadow-secondary/10
-                                              active:scale-[0.98] overflow-hidden">
-                                    <!-- Animated highlight effect -->
-                                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent
-                                                translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-800"></div>
-                                    
-                                    <div class="w-8 h-8 bg-gradient-to-br from-secondary via-secondary/80 to-primary
-                                               rounded-full flex items-center justify-center
-                                               ring-2 ring-white/30 ring-offset-1 ring-offset-transparent
-                                               shadow-inner transform transition-all duration-300
-                                               group-hover:shadow-secondary/30 group-hover:scale-110
-                                               group-hover:ring-white/50">
-                                        <span class="text-white font-bold text-sm">
-                                            <?php echo strtoupper(substr($_SESSION['username'], 0, 1)); ?>
-                                        </span>
-                                    </div>
-                                    <span class="font-medium text-white relative">
-                                        <span class="relative z-10"><?php echo htmlspecialchars($_SESSION['username']); ?></span>
-                                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-secondary/50 
-                                                     transition-all duration-300 group-hover:w-full"></span>
-                                    </span>
-                                    <svg class="w-4 h-4 text-white transition-transform duration-300 group-hover:rotate-180" 
-                                         fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                    </svg>
-                                </button>
-
-                                <!-- Enhanced Dropdown Menu -->
-                                <div class="absolute right-0 mt-3 w-64 dropdown-content z-50">
-                                    <div class="bg-white rounded-2xl shadow-2xl py-3 px-1 border border-gray-100">
-                                        <!-- Subtle decorative accent at top -->
-                                        <div class="absolute top-0 left-4 right-4 h-0.5 bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
-                                        
-                                        <?php if($_SESSION['is_admin']): ?>
-                                            <a href="<?php echo URLROOT; ?>/admin" 
-                                               class="flex items-center px-4 py-3 rounded-xl
-                                                      transition-all duration-200 hover:bg-gray-50 group/item">
-                                                <div class="w-10 h-10 bg-primary/5 rounded-lg flex items-center justify-center
-                                                          transform transition-transform duration-200 group-hover/item:scale-110 
-                                                          group-hover/item:rotate-3 group-hover/item:bg-primary/10">
-                                                    <svg class="w-5 h-5 text-primary transition-colors duration-200
-                                                                group-hover/item:text-primary/80" 
-                                                         fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                                              d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                                              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                                    </svg>
-                                                </div>
-                                                <div class="ml-4">
-                                                    <p class="text-sm font-medium text-gray-900 transition-colors duration-200
-                                                              group-hover/item:text-primary">Dashboard</p>
-                                                    <p class="text-xs text-gray-500">Beheer je website</p>
-                                                </div>
-                                            </a>
-                                        <?php endif; ?>
-
-                                        <a href="<?php echo URLROOT; ?>/profile" 
-                                           class="flex items-center px-4 py-3 rounded-xl
-                                                  transition-all duration-200 hover:bg-gray-50 group/item">
-                                            <div class="w-10 h-10 bg-secondary/5 rounded-lg flex items-center justify-center
-                                                      transform transition-transform duration-200 group-hover/item:scale-110 
-                                                      group-hover/item:rotate-3 group-hover/item:bg-secondary/10">
-                                                <svg class="w-5 h-5 text-secondary transition-colors duration-200
-                                                            group-hover/item:text-secondary/80" 
-                                                     fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                                          d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                                                </svg>
-                                            </div>
-                                            <div class="ml-4">
-                                                <p class="text-sm font-medium text-gray-900 transition-colors duration-200
-                                                          group-hover/item:text-secondary">Profiel</p>
-                                                <p class="text-xs text-gray-500">Beheer je account</p>
-                                            </div>
-                                        </a>
-
-                                        <div class="mx-3 my-2 border-t border-gray-100"></div>
-
-                                        <a href="<?php echo URLROOT; ?>/logout" 
-                                           class="flex items-center px-4 py-3 rounded-xl
-                                                  transition-all duration-200 hover:bg-red-50 group/item">
-                                            <div class="w-10 h-10 bg-red-500/5 rounded-lg flex items-center justify-center
-                                                      transform transition-transform duration-200 group-hover/item:scale-110 
-                                                      group-hover/item:rotate-3 group-hover/item:bg-red-500/10">
-                                                <svg class="w-5 h-5 text-red-500 transition-colors duration-200
-                                                            group-hover/item:text-red-600" 
-                                                     fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                                          d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
-                                                </svg>
-                                            </div>
-                                            <div class="ml-4">
-                                                <p class="text-sm font-medium text-red-600 transition-colors duration-200
-                                                          group-hover/item:text-red-700">Uitloggen</p>
-                                                <p class="text-xs text-red-400">Tot ziens!</p>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        <?php else: ?>
-                            <a href="<?php echo URLROOT; ?>/login" 
-                               class="nav-link magic-link text-white/90 hover:text-white transition-all duration-300 font-medium py-2 px-5 rounded-lg">
-                                <span>Inloggen</span>
-                            </a>
-                            <a href="<?php echo URLROOT; ?>/register" 
-                               class="signup-btn px-8 py-3 rounded-xl font-semibold transition-all duration-300 relative overflow-hidden group">
-                                <span class="relative z-10">Aanmelden</span>
-                                <!-- Subtle hover animation -->
-                                <span class="absolute inset-0 bg-gradient-to-r from-secondary/0 via-secondary/0 to-secondary/0 
-                                            group-hover:from-secondary group-hover:via-secondary/90 group-hover:to-secondary
-                                            transition-all duration-500 ease-out -z-0"></span>
-                            </a>
-                        <?php endif; ?>
-                    </div>
-
-                    <!-- Enhanced Mobile Menu Button -->
-                    <button class="lg:hidden relative z-50 p-2.5 text-white hover:bg-white/15 rounded-xl border border-white/20 
-                              transition-all duration-300 hover:border-white/40 hover:scale-105 active:scale-95 
-                              hover:shadow-lg hover:shadow-white/5 group" 
-                            id="mobile-menu-button">
-                        <div class="relative">
-                            <svg class="w-6 h-6 transform transition-transform duration-300 group-hover:rotate-90" 
-                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                            </svg>
-                            <!-- Subtle glow effect -->
-                            <span class="absolute inset-0 rounded-full bg-white/20 blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                        </div>
-                    </button>
+                    <?php else: ?>
+                        <a href="<?php echo URLROOT; ?>/login" 
+                           class="magic-link text-white/90 hover:text-white transition-all duration-300 font-medium 
+                                 py-2 px-3.5 rounded-lg border border-white/10 hover:border-white/30 hover:bg-white/5">
+                            <span>Inloggen</span>
+                        </a>
+                        <a href="<?php echo URLROOT; ?>/register" 
+                           class="signup-btn px-4 py-2 rounded-lg font-medium transition-all duration-300 
+                                 relative overflow-hidden group hover:-translate-y-1">
+                            <span class="relative z-10">Aanmelden</span>
+                        </a>
+                    <?php endif; ?>
                 </div>
 
-                <!-- Enhanced Mobile Menu with better animations -->
-                <div class="lg:hidden hidden fixed inset-0 z-40" id="mobile-menu-overlay">
-                    <!-- Backdrop with blur effect -->
-                    <div class="absolute inset-0 bg-primary/90 backdrop-blur-md"
-                         onclick="closeMobileMenu()"></div>
-                    
-                    <!-- Menu Content -->
-                    <div class="relative h-full w-full max-w-xs ml-auto bg-gradient-to-b from-primary via-primary/98 to-primary/95 
-                               shadow-2xl overflow-y-auto transform transition-transform duration-500 translate-x-0">
-                        <div class="p-6 space-y-6">
-                            <!-- Close Button -->
-                            <div class="flex justify-end">
-                                <button class="p-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-xl 
-                                              transition-all duration-300 hover:scale-105 active:scale-95 
-                                              hover:shadow-lg hover:shadow-white/5 group" 
-                                        onclick="closeMobileMenu()">
-                                    <svg class="w-6 h-6 transform transition-transform duration-300 group-hover:rotate-90" 
-                                         fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                                    </svg>
-                                </button>
-                            </div>
-
-                            <!-- Enhanced Navigation Links -->
-                            <nav class="space-y-5">
-                                <a href="<?php echo URLROOT; ?>/" 
-                                   class="flex items-center text-white/90 hover:text-white p-2.5 transition-all duration-300 
-                                          rounded-xl hover:bg-white/5 hover:pl-4 group">
-                                    <div class="mr-3 p-2 bg-white/10 rounded-lg transition-all duration-300 
-                                                group-hover:bg-white/15 group-hover:scale-110 group-hover:rotate-3">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                                  d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                                        </svg>
-                                    </div>
-                                    <span class="font-medium">Home</span>
-                                </a>
-
-                                <!-- Media Section -->
-                                <div class="space-y-3">
-                                    <button class="w-full flex items-center justify-between text-white/90 hover:text-white 
-                                                 p-2.5 rounded-xl transition-all duration-300 hover:bg-white/5 hover:pl-4 group" 
-                                            onclick="toggleMobileSubmenu('media-submenu')">
-                                        <div class="flex items-center">
-                                            <div class="mr-3 p-2 bg-white/10 rounded-lg transition-all duration-300 
-                                                        group-hover:bg-white/15 group-hover:scale-110 group-hover:rotate-3">
-                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                                          d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v12a2 2 0 01-2 2z"/>
-                                                </svg>
-                                            </div>
-                                            <span class="font-medium">Media</span>
-                                        </div>
-                                        <svg class="w-4 h-4 transform transition-transform duration-300" 
-                                             id="media-submenu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                                  d="M19 9l-7 7-7-7"/>
-                                        </svg>
-                                    </button>
-                                    <div class="hidden pl-12 space-y-3 border-l border-white/10" id="media-submenu">
-                                        <a href="<?php echo URLROOT; ?>/nieuws" 
-                                           class="flex items-center text-white/80 hover:text-white p-2 rounded-lg 
-                                                  transition-all duration-300 hover:bg-white/5 hover:pl-4">
-                                            <span class="font-medium">Nieuws</span>
-                                        </a>
-                                        <a href="<?php echo URLROOT; ?>/blogs" 
-                                           class="flex items-center text-white/80 hover:text-white p-2 rounded-lg 
-                                           class="flex items-center text-white/80 hover:text-white transition-colors duration-300">
-                                            <span class="font-medium">Blogs</span>
-                                        </a>
-                                    </div>
-                                </div>
-
-                                <!-- Forum Section -->
-                                <div class="space-y-3">
-                                    <button class="w-full flex items-center justify-between text-white/90 hover:text-white 
-                                                 transition-colors duration-300" 
-                                            onclick="toggleMobileSubmenu('forum-submenu')">
-                                        <div class="flex items-center">
-                                            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                                      d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/>
-                                            </svg>
-                                            <span class="font-medium">Forum</span>
-                                        </div>
-                                        <svg class="w-4 h-4 transform transition-transform duration-300" 
-                                             id="forum-submenu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                                  d="M19 9l-7 7-7-7"/>
-                                        </svg>
-                                    </button>
-                                    <div class="hidden pl-8 space-y-3 border-l border-white/10" id="forum-submenu">
-                                        <a href="<?php echo URLROOT; ?>/forum" 
-                                           class="flex items-center text-white/80 hover:text-white transition-colors duration-300">
-                                            <span class="font-medium">Alle discussies</span>
-                                        </a>
-                                        <?php if(isset($_SESSION['user_id'])): ?>
-                                        <a href="<?php echo URLROOT; ?>/forum/create" 
-                                           class="flex items-center text-white/80 hover:text-white transition-colors duration-300">
-                                            <span class="font-medium">Start discussie</span>
-                                        </a>
-                                        <?php endif; ?>
-                                    </div>
-                                </div>
-
-                                <!-- Thema's Section -->
-                                <div class="space-y-3">
-                                    <button class="w-full flex items-center justify-between text-white/90 hover:text-white 
-                                                 transition-colors duration-300" 
-                                            onclick="toggleMobileSubmenu('themas-submenu')">
-                                        <div class="flex items-center">
-                                            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                                      d="M4 6h16M4 10h16M4 14h16M4 18h16"/>
-                                            </svg>
-                                            <span class="font-medium">Thema's</span>
-                                        </div>
-                                        <svg class="w-4 h-4 transform transition-transform duration-300" 
-                                             id="themas-submenu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                                  d="M19 9l-7 7-7-7"/>
-                                        </svg>
-                                    </button>
-                                    <div class="hidden pl-8 space-y-3 border-l border-white/10" id="themas-submenu">
-                                        <a href="<?php echo URLROOT; ?>/thema/economie" 
-                                           class="flex items-center text-white/80 hover:text-white transition-colors duration-300">
-                                            <span class="font-medium">💶 Economie</span>
-                                        </a>
-                                        <a href="<?php echo URLROOT; ?>/thema/zorg" 
-                                           class="flex items-center text-white/80 hover:text-white transition-colors duration-300">
-                                            <span class="font-medium">🏥 Zorg</span>
-                                        </a>
-                                        <a href="<?php echo URLROOT; ?>/thema/onderwijs" 
-                                           class="flex items-center text-white/80 hover:text-white transition-colors duration-300">
-                                            <span class="font-medium">📚 Onderwijs</span>
-                                        </a>
-                                        <a href="<?php echo URLROOT; ?>/themas" 
-                                           class="flex items-center text-white/80 hover:text-white transition-colors duration-300">
-                                            <span class="font-medium">Alle thema's</span>
-                                        </a>
-                                    </div>
-                                </div>
-
-                                <a href="<?php echo URLROOT; ?>/stemwijzer" 
-                                   class="flex items-center text-white/90 hover:text-white py-2 transition-colors duration-300">
-                                    <span class="font-medium flex items-center">
-                                        Stemwijzer
-                                        <span class="ml-2 inline-flex items-center px-2 py-0.5 text-[10px] font-medium 
-                                                     bg-gradient-to-r from-secondary/20 to-secondary/40
-                                                     border border-secondary/50 text-white rounded-full
-                                                     shadow-[0_0_10px_rgba(196,30,58,0.3)]">
-                                            Nieuw
-                                        </span>
-                                    </span>
-                                </a>
-
-                                <!-- Contact Dropdown -->
-                                <div class="space-y-3">
-                                    <button class="w-full flex items-center justify-between text-white/90 hover:text-white 
-                                                 transition-colors duration-300" 
-                                            onclick="toggleMobileSubmenu('contact-submenu')">
-                                        <div class="flex items-center">
-                                            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                                            </svg>
-                                            <span class="font-medium">Contact</span>
-                                        </div>
-                                        <svg class="w-4 h-4 transform transition-transform duration-300" 
-                                             id="contact-submenu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                                  d="M19 9l-7 7-7-7"/>
-                                        </svg>
-                                    </button>
-                                    <div class="hidden pl-8 space-y-3 border-l border-white/10" id="contact-submenu">
-                                        <a href="<?php echo URLROOT; ?>/contact" 
-                                           class="flex items-center text-white/80 hover:text-white transition-colors duration-300">
-                                            <span class="font-medium">Contact opnemen</span>
-                                        </a>
-                                        <a href="<?php echo URLROOT; ?>/over-mij" 
-                                           class="flex items-center text-white/80 hover:text-white transition-colors duration-300">
-                                            <span class="font-medium">Over ons</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </nav>
-
-                            <!-- Auth Section -->
-                            <?php if(isset($_SESSION['user_id'])): ?>
-                                <div class="pt-6 border-t border-white/10">
-                                    <div class="flex items-center space-x-4 mb-6 bg-white/5 p-3 rounded-xl">
-                                        <div class="w-12 h-12 bg-gradient-to-br from-secondary to-secondary/70 rounded-xl 
-                                                  flex items-center justify-center shadow-lg relative overflow-hidden group">
-                                            <!-- Animated background effect -->
-                                            <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent
-                                                      translate-x-[-100%] animate-shimmer"></div>
-                                            <span class="text-white text-xl font-bold relative z-10">
-                                                <?php echo strtoupper(substr($_SESSION['username'], 0, 1)); ?>
-                                            </span>
-                                        </div>
-                                        <div>
-                                            <p class="text-white font-medium"><?php echo htmlspecialchars($_SESSION['username']); ?></p>
-                                            <p class="text-sm text-white/70">Actief lid</p>
-                                        </div>
-                                    </div>
-                                    <div class="space-y-4">
-                                        <?php if($_SESSION['is_admin']): ?>
-                                            <a href="<?php echo URLROOT; ?>/admin" 
-                                               class="flex items-center text-white/90 hover:text-white p-2.5 rounded-xl 
-                                                      transition-all duration-300 hover:bg-white/5 hover:pl-4 group">
-                                                <div class="mr-3 p-2 bg-white/10 rounded-lg transition-all duration-300 
-                                                            group-hover:bg-white/15 group-hover:scale-110 group-hover:rotate-3">
-                                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                                              d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                                              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                                    </svg>
-                                                </div>
-                                                <span class="font-medium">Dashboard</span>
-                                            </a>
-                                        <?php endif; ?>
-                                        <a href="<?php echo URLROOT; ?>/profile" 
-                                           class="flex items-center text-white/90 hover:text-white p-2.5 rounded-xl 
-                                                  transition-all duration-300 hover:bg-white/5 hover:pl-4 group">
-                                            <div class="mr-3 p-2 bg-white/10 rounded-lg transition-all duration-300 
-                                                        group-hover:bg-white/15 group-hover:scale-110 group-hover:rotate-3">
-                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                                          d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                                                </svg>
-                                            </div>
-                                            <div>
-                                                <span class="font-medium">Profiel</span>
-                                                <span class="block text-xs text-white/60">Beheer je account</span>
-                                            </div>
-                                        </a>
-                                        <a href="<?php echo URLROOT; ?>/logout" 
-                                           class="flex items-center text-red-300 hover:text-red-200 p-2.5 rounded-xl 
-                                                  transition-all duration-300 hover:bg-red-500/10 hover:pl-4 group">
-                                            <div class="mr-3 p-2 bg-red-500/10 rounded-lg transition-all duration-300 
-                                                        group-hover:bg-red-500/20 group-hover:scale-110 group-hover:rotate-3">
-                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                                          d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
-                                                </svg>
-                                            </div>
-                                            <div>
-                                                <span class="font-medium">Uitloggen</span>
-                                                <span class="block text-xs text-red-300/70">Tot ziens!</span>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            <?php else: ?>
-                                <div class="pt-6 border-t border-white/10 space-y-4">
-                                    <a href="<?php echo URLROOT; ?>/login" 
-                                       class="flex items-center text-white/90 hover:text-white p-2.5 rounded-xl 
-                                              transition-all duration-300 hover:bg-white/5 hover:pl-4 group">
-                                        <div class="mr-3 p-2 bg-white/10 rounded-lg transition-all duration-300 
-                                                    group-hover:bg-white/15 group-hover:scale-110 group-hover:rotate-3">
-                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                                      d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
-                                            </svg>
-                                        </div>
-                                        <span class="font-medium">Inloggen</span>
-                                    </a>
-                                    <a href="<?php echo URLROOT; ?>/register" 
-                                       class="flex items-center justify-center px-6 py-3.5 bg-white text-primary font-semibold 
-                                              rounded-xl shadow-lg transition-all duration-300 
-                                              hover:bg-secondary hover:text-white transform hover:scale-[1.02]
-                                              active:scale-[0.98] relative overflow-hidden group">
-                                        <span class="relative z-10">Aanmelden</span>
-                                        <!-- Animated highlight effect -->
-                                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-secondary/20 to-transparent
-                                                    translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
-                                    </a>
-                                </div>
-                            <?php endif; ?>
-                        </div>
-                    </div>
-                </div>
+                <!-- Mobile Menu Button - Elegant & Modern -->
+                <button class="md:hidden relative z-50 p-1.5 text-white hover:bg-white/15 rounded-lg border border-white/20 
+                            transition-all duration-300 hover:border-white/30 group" 
+                        id="mobile-menu-button">
+                    <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:scale-110" 
+                         fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
             </div>
         </div>
     </nav>
 
+    <!-- Mobile Menu - Enhanced -->
+    <div class="md:hidden hidden fixed inset-0 z-40 glass-dark" id="mobile-menu-overlay">
+        <!-- Backdrop with blur effect -->
+        <div class="absolute inset-0 bg-primary/90 backdrop-blur-md"
+             onclick="closeMobileMenu()"></div>
+        
+        <!-- Menu Content -->
+        <div class="relative h-full w-full max-w-xs ml-auto bg-gradient-to-b from-primary to-primary/95 
+                    shadow-2xl overflow-y-auto transform transition-all duration-500 ease-in-out">
+            <!-- Mobile menu content -->
+            <div class="p-5 space-y-5">
+                <!-- Close Button -->
+                <div class="flex justify-end">
+                    <button class="p-2 text-white/80 hover:text-white hover:bg-white/10 rounded-lg 
+                                transition-all duration-300 group" 
+                            onclick="closeMobileMenu()">
+                        <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:rotate-90" 
+                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Mobile Navigation Links - Enhanced and Modernized -->
+                <nav class="space-y-3">
+                    <a href="<?php echo URLROOT; ?>/" 
+                       class="flex items-center text-white/90 hover:text-white p-2 rounded-lg transition-all duration-300 
+                              hover:bg-white/5 hover:pl-3 group">
+                        <div class="mr-3 p-1.5 bg-white/10 rounded-lg transition-all duration-300 
+                                    group-hover:bg-white/15 group-hover:scale-110">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                      d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                            </svg>
+                        </div>
+                        <span class="font-medium">Home</span>
+                    </a>
+
+                    <a href="<?php echo URLROOT; ?>/blogs" 
+                       class="flex items-center text-white/90 hover:text-white p-2 rounded-lg transition-all duration-300 
+                              hover:bg-white/5 hover:pl-3 group">
+                        <div class="mr-3 p-1.5 bg-white/10 rounded-lg transition-all duration-300 
+                                    group-hover:bg-white/15 group-hover:scale-110">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                      d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1M19 20a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0h4"/>
+                            </svg>
+                        </div>
+                        <span class="font-medium">Blogs</span>
+                    </a>
+
+                    <a href="<?php echo URLROOT; ?>/nieuws" 
+                       class="flex items-center text-white/90 hover:text-white p-2 rounded-lg transition-all duration-300 
+                              hover:bg-white/5 hover:pl-3 group">
+                        <div class="mr-3 p-1.5 bg-white/10 rounded-lg transition-all duration-300 
+                                    group-hover:bg-white/15 group-hover:scale-110">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                      d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v12a2 2 0 01-2 2z"/>
+                            </svg>
+                        </div>
+                        <span class="font-medium">Nieuws</span>
+                    </a>
+
+                    <a href="<?php echo URLROOT; ?>/stemwijzer" 
+                       class="flex items-center text-white/90 hover:text-white p-2 rounded-lg transition-all duration-300 
+                              hover:bg-white/5 hover:pl-3 group">
+                        <div class="mr-3 p-1.5 bg-white/10 rounded-lg transition-all duration-300 
+                                    group-hover:bg-white/15 group-hover:scale-110">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                      d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+                            </svg>
+                        </div>
+                        <span class="font-medium flex items-center">
+                            Stemwijzer
+                            <span class="ml-2 inline-flex items-center px-1.5 py-0.5 text-[10px] font-medium 
+                                        bg-secondary/20 border border-secondary/40 text-white rounded-full
+                                        shadow-[0_0_8px_rgba(196,30,58,0.3)]">
+                                Nieuw
+                            </span>
+                        </span>
+                    </a>
+
+                    <!-- Forum Section - Improved -->
+                    <div class="space-y-2">
+                        <button class="w-full flex items-center justify-between text-white/90 hover:text-white 
+                                     p-2 rounded-lg transition-all duration-300 hover:bg-white/5 group" 
+                                onclick="toggleMobileSubmenu('forum-submenu')">
+                            <div class="flex items-center">
+                                <div class="mr-3 p-1.5 bg-white/10 rounded-lg transition-all duration-300 
+                                            group-hover:bg-white/15 group-hover:scale-110">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                              d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/>
+                                    </svg>
+                                </div>
+                                <span class="font-medium">Forum</span>
+                            </div>
+                            <svg class="w-4 h-4 transform transition-transform duration-300" 
+                                 id="forum-submenu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                      d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div class="hidden pl-10 space-y-2 border-l border-white/15" id="forum-submenu">
+                            <a href="<?php echo URLROOT; ?>/forum" 
+                               class="flex items-center text-white/80 hover:text-white p-2 rounded-lg transition-all duration-300 
+                                      hover:bg-white/5 hover:pl-3">
+                                <span class="font-medium">Alle discussies</span>
+                            </a>
+                            <?php if(isset($_SESSION['user_id'])): ?>
+                            <a href="<?php echo URLROOT; ?>/forum/create" 
+                               class="flex items-center text-white/80 hover:text-white p-2 rounded-lg transition-all duration-300 
+                                      hover:bg-white/5 hover:pl-3">
+                                <span class="font-medium">Start discussie</span>
+                            </a>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+
+                    <!-- Contact Section - Improved -->
+                    <div class="space-y-2">
+                        <button class="w-full flex items-center justify-between text-white/90 hover:text-white 
+                                     p-2 rounded-lg transition-all duration-300 hover:bg-white/5 group" 
+                                onclick="toggleMobileSubmenu('contact-submenu')">
+                            <div class="flex items-center">
+                                <div class="mr-3 p-1.5 bg-white/10 rounded-lg transition-all duration-300 
+                                            group-hover:bg-white/15 group-hover:scale-110">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                              d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                    </svg>
+                                </div>
+                                <span class="font-medium">Contact</span>
+                            </div>
+                            <svg class="w-4 h-4 transform transition-transform duration-300" 
+                                 id="contact-submenu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                      d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div class="hidden pl-10 space-y-2 border-l border-white/15" id="contact-submenu">
+                            <a href="<?php echo URLROOT; ?>/contact" 
+                               class="flex items-center text-white/80 hover:text-white p-2 rounded-lg transition-all duration-300 
+                                      hover:bg-white/5 hover:pl-3">
+                                <span class="font-medium">Contact opnemen</span>
+                            </a>
+                            <a href="<?php echo URLROOT; ?>/over-mij" 
+                               class="flex items-center text-white/80 hover:text-white p-2 rounded-lg transition-all duration-300 
+                                     hover:bg-white/5 hover:pl-3">
+                                <span class="font-medium">Over ons</span>
+                            </a>
+                        </div>
+                    </div>
+                </nav>
+
+                <!-- Mobile Auth Section - Improved -->
+                <?php if(isset($_SESSION['user_id'])): ?>
+                    <div class="pt-5 mt-5 border-t border-white/15">
+                        <div class="flex items-center space-x-3 mb-4 bg-white/5 p-2.5 rounded-lg">
+                            <div class="w-10 h-10 bg-gradient-to-br from-secondary to-primary/80 rounded-lg 
+                                      flex items-center justify-center shadow-lg">
+                                <span class="text-white text-lg font-bold">
+                                    <?php echo strtoupper(substr($_SESSION['username'], 0, 1)); ?>
+                                </span>
+                            </div>
+                            <div>
+                                <p class="text-white font-medium"><?php echo htmlspecialchars($_SESSION['username']); ?></p>
+                                <p class="text-xs text-white/70">Actief lid</p>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <?php if($_SESSION['is_admin']): ?>
+                                <a href="<?php echo URLROOT; ?>/admin" 
+                                   class="flex items-center text-white/90 hover:text-white p-2 rounded-lg transition-all duration-300 
+                                          hover:bg-white/5 hover:pl-3 group">
+                                    <div class="mr-3 p-1.5 bg-white/10 rounded-lg transition-all duration-300 
+                                                group-hover:bg-white/15 group-hover:scale-110">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                  d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        </svg>
+                                    </div>
+                                    <span class="font-medium">Dashboard</span>
+                                </a>
+                            <?php endif; ?>
+                            <a href="<?php echo URLROOT; ?>/profile" 
+                               class="flex items-center text-white/90 hover:text-white p-2 rounded-lg transition-all duration-300 
+                                      hover:bg-white/5 hover:pl-3 group">
+                                <div class="mr-3 p-1.5 bg-white/10 rounded-lg transition-all duration-300 
+                                            group-hover:bg-white/15 group-hover:scale-110">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                    </svg>
+                                </div>
+                                <span class="font-medium">Profiel</span>
+                            </a>
+                            <a href="<?php echo URLROOT; ?>/logout" 
+                               class="flex items-center text-red-300 hover:text-red-200 p-2 rounded-lg transition-all duration-300 
+                                     hover:bg-red-500/10 hover:pl-3 group">
+                                <div class="mr-3 p-1.5 bg-red-500/10 rounded-lg transition-all duration-300 
+                                            group-hover:bg-red-500/20 group-hover:scale-110">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                              d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                                    </svg>
+                                </div>
+                                <span class="font-medium">Uitloggen</span>
+                            </a>
+                        </div>
+                    </div>
+                <?php else: ?>
+                    <div class="pt-5 mt-5 border-t border-white/15 space-y-4">
+                        <a href="<?php echo URLROOT; ?>/login" 
+                           class="flex items-center text-white/90 hover:text-white p-2 rounded-lg transition-all duration-300 
+                                  hover:bg-white/5 hover:pl-3 group">
+                            <div class="mr-3 p-1.5 bg-white/10 rounded-lg transition-all duration-300 
+                                        group-hover:bg-white/15 group-hover:scale-110">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                          d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
+                                </svg>
+                            </div>
+                            <span class="font-medium">Inloggen</span>
+                        </a>
+                        <a href="<?php echo URLROOT; ?>/register" 
+                           class="flex items-center justify-center px-4 py-2.5 bg-white text-primary font-medium 
+                                  rounded-lg shadow-lg transition-all duration-300 
+                                  hover:bg-secondary hover:text-white transform hover:scale-[1.02]
+                                  active:scale-[0.98]">
+                            <span>Aanmelden</span>
+                        </a>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+
     <!-- Enhanced Mobile Menu Toggle Script -->
     <script>
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu-overlay');
-        const mobileMenuContent = mobileMenu.querySelector('.max-w-xs');
-
-        function toggleMobileMenu() {
-            if (mobileMenu.classList.contains('hidden')) {
-                // Open menu with animations
-                mobileMenu.classList.remove('hidden');
-                document.body.classList.add('overflow-hidden');
-                
-                // Animate menu sliding in
-                setTimeout(() => {
-                    mobileMenuContent.classList.add('translate-x-0');
-                    mobileMenuContent.classList.remove('translate-x-full');
-                }, 10);
-            } else {
-                // Close menu with animations
-                mobileMenuContent.classList.remove('translate-x-0');
-                mobileMenuContent.classList.add('translate-x-full');
-                
-                // Hide completely after animation
-                setTimeout(() => {
-                    mobileMenu.classList.add('hidden');
-                    document.body.classList.remove('overflow-hidden');
-                }, 300);
-            }
-        }
-
-        function closeMobileMenu() {
-            // Close menu with animations
-            mobileMenuContent.classList.remove('translate-x-0');
-            mobileMenuContent.classList.add('translate-x-full');
-            
-            // Hide completely after animation
-            setTimeout(() => {
-                mobileMenu.classList.add('hidden');
-                document.body.classList.remove('overflow-hidden');
-            }, 300);
-        }
-
-        mobileMenuButton.addEventListener('click', toggleMobileMenu);
-
-        // Close mobile menu when clicking outside
-        mobileMenu.addEventListener('click', (e) => {
-            if (e.target === mobileMenu) {
-                closeMobileMenu();
-            }
-        });
-
-        // Mobile submenu toggle functionality with enhanced animations
-        function toggleMobileSubmenu(submenuId) {
-            const submenu = document.getElementById(submenuId);
-            const icon = document.getElementById(submenuId + '-icon');
-            
-            if (submenu.classList.contains('hidden')) {
-                // First add the display style but keep it invisible for animation
-                submenu.classList.remove('hidden');
-                submenu.style.opacity = '0';
-                submenu.style.maxHeight = '0';
-                
-                // Force a reflow to enable transition
-                void submenu.offsetWidth;
-                
-                // Then animate in
-                submenu.style.opacity = '1';
-                submenu.style.maxHeight = submenu.scrollHeight + 'px';
-                icon.classList.add('rotate-180');
-            } else {
-                // Animate out
-                submenu.style.opacity = '0';
-                submenu.style.maxHeight = '0';
-                icon.classList.remove('rotate-180');
-                
-                // Hide completely after animation
-                setTimeout(() => {
-                    submenu.classList.add('hidden');
-                    submenu.style.removeProperty('opacity');
-                    submenu.style.removeProperty('max-height');
-                }, 300);
-            }
-        }
-        
-        // Initialize AOS with enhanced settings
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize particle effects for decorative elements
-            const particles = document.querySelectorAll('.particle');
-            particles.forEach(particle => {
-                // Make particles visible when JavaScript is enabled
-                particle.style.display = 'block';
-                
-                // Randomize initial positions slightly
-                const xOffset = Math.random() * 20 - 10; // -10px to +10px
-                const yOffset = Math.random() * 20 - 10; // -10px to +10px
-                particle.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
-            });
+            console.log('Initializing mobile menu...');
             
-            // Initialize AOS animation library
-            AOS.init({
-                duration: 800,
-                easing: 'ease-out',
-                once: false,
-                mirror: true,
-                anchorPlacement: 'top-bottom'
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu-overlay');
+            const mobileMenuContent = mobileMenu.querySelector('.max-w-xs');
+
+            // Ensure mobile menu is properly initialized
+            mobileMenuContent.classList.add('mobile-menu-enter');
+
+            function toggleMobileMenu() {
+                console.log('Toggle mobile menu');
+                if (mobileMenu.classList.contains('hidden')) {
+                    // Open menu with animations
+                    mobileMenu.classList.remove('hidden');
+                    document.body.classList.add('overflow-hidden');
+                    
+                    // Animate menu sliding in
+                    mobileMenuContent.classList.remove('mobile-menu-enter');
+                    mobileMenuContent.classList.add('mobile-menu-enter-active');
+                } else {
+                    // Close menu with animations
+                    mobileMenuContent.classList.remove('mobile-menu-enter-active');
+                    mobileMenuContent.classList.add('mobile-menu-exit');
+                    
+                    requestAnimationFrame(() => {
+                        mobileMenuContent.classList.remove('mobile-menu-exit');
+                        mobileMenuContent.classList.add('mobile-menu-exit-active');
+                    
+                        // Hide completely after animation
+                        setTimeout(() => {
+                            mobileMenu.classList.add('hidden');
+                            document.body.classList.remove('overflow-hidden');
+                            mobileMenuContent.classList.remove('mobile-menu-exit-active');
+                            mobileMenuContent.classList.add('mobile-menu-enter');
+                        }, 300);
+                    });
+                }
+            }
+
+            function closeMobileMenu() {
+                console.log('Close mobile menu');
+                // Close menu with animations
+                mobileMenuContent.classList.remove('mobile-menu-enter-active');
+                mobileMenuContent.classList.add('mobile-menu-exit');
+                
+                requestAnimationFrame(() => {
+                    mobileMenuContent.classList.remove('mobile-menu-exit');
+                    mobileMenuContent.classList.add('mobile-menu-exit-active');
+                
+                    // Hide completely after animation
+                    setTimeout(() => {
+                        mobileMenu.classList.add('hidden');
+                        document.body.classList.remove('overflow-hidden');
+                        mobileMenuContent.classList.remove('mobile-menu-exit-active');
+                        mobileMenuContent.classList.add('mobile-menu-enter');
+                    }, 300);
+                });
+            }
+
+            // Making the closeMobileMenu function globally available
+            window.closeMobileMenu = closeMobileMenu;
+
+            mobileMenuButton.addEventListener('click', toggleMobileMenu);
+
+            // Close mobile menu when clicking outside
+            mobileMenu.addEventListener('click', (e) => {
+                if (e.target === mobileMenu) {
+                    closeMobileMenu();
+                }
             });
+
+            // Mobile submenu toggle functionality with enhanced animations
+            window.toggleMobileSubmenu = function(submenuId) {
+                console.log('Toggle submenu:', submenuId);
+                const submenu = document.getElementById(submenuId);
+                const icon = document.getElementById(submenuId + '-icon');
+                
+                if (submenu.classList.contains('hidden')) {
+                    // First add the display style but keep it invisible for animation
+                    submenu.classList.remove('hidden');
+                    submenu.style.opacity = '0';
+                    submenu.style.maxHeight = '0';
+                    
+                    // Force a reflow to enable transition
+                    void submenu.offsetWidth;
+                    
+                    // Then animate in
+                    submenu.style.opacity = '1';
+                    submenu.style.maxHeight = submenu.scrollHeight + 'px';
+                    icon.classList.add('rotate-180');
+                } else {
+                    // Animate out
+                    submenu.style.opacity = '0';
+                    submenu.style.maxHeight = '0';
+                    icon.classList.remove('rotate-180');
+                    
+                    // Hide completely after animation
+                    setTimeout(() => {
+                        submenu.classList.add('hidden');
+                        submenu.style.removeProperty('opacity');
+                        submenu.style.removeProperty('max-height');
+                    }, 300);
+                }
+            }
         });
     </script>
 
