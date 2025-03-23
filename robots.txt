@@ -6,7 +6,7 @@ Disallow: /config/
 Disallow: /views/templates/
 
 # Sitemap
-Sitemap: https://politiekplatform.nl/sitemap.xml
+Sitemap: https://politiekpraat.nl/sitemap.xml
 
 # Crawl-delay
 Crawl-delay: 10 
