@@ -3,32 +3,32 @@ require_once 'includes/config.php';
 require_once 'views/templates/header.php';
 ?>
 
-<main class="bg-gray-50 py-16">
-    <div class="container mx-auto px-4">
+<main class="bg-gradient-to-b from-slate-50 to-slate-100 py-16">
+    <div class="container mx-auto px-4 max-w-7xl">
         <!-- Hero Section -->
         <div class="text-center mb-16">
-            <h1 class="text-4xl font-bold text-gray-900 mb-4">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
                 <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
                     Stemwijzer 2025
                 </span>
             </h1>
-            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-                Ontdek welke partij het beste bij jouw standpunten past
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                Ontdek welke partij het beste bij jouw standpunten past met onze uitgebreide analyse
             </p>
         </div>
 
         <!-- Stemwijzer App -->
-        <div class="max-w-3xl mx-auto" x-data="stemwijzer()">
+        <div class="max-w-4xl mx-auto" x-data="stemwijzer()">
             <!-- Progress Bar -->
-            <div class="mb-8 bg-white rounded-xl p-6 shadow-lg">
+            <div class="mb-8 bg-white rounded-2xl p-8 shadow-xl">
                 <!-- Header met vraagnummer en tijd -->
-                <div class="flex items-center justify-between mb-4">
-                    <div class="flex items-center space-x-3">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center space-x-4">
                         <div class="relative">
-                            <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-primary/10 to-primary/5 
+                            <div class="w-14 h-14 rounded-lg bg-gradient-to-br from-primary/20 to-primary/10 
                                        flex items-center justify-center">
                                 <span class="text-lg font-semibold text-primary" x-text="currentStep + 1"></span>
-                                <div class="absolute inset-0 rounded-lg border-2 border-primary/20 
+                                <div class="absolute inset-0 rounded-lg border-2 border-primary/30 
                                            animate-pulse-subtle"></div>
                             </div>
                         </div>
@@ -47,15 +47,15 @@ require_once 'views/templates/header.php';
                 <!-- Progress track -->
                 <div class="relative">
                     <!-- Achtergrond -->
-                    <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
+                    <div class="h-3 bg-gray-100 rounded-full overflow-hidden">
                         <!-- Voortgangsbalk -->
-                        <div class="h-full bg-gradient-to-r from-primary/80 via-primary to-primary/90
+                        <div class="h-full bg-gradient-to-r from-primary/80 via-primary to-secondary
                                     transition-all duration-500 ease-out relative"
                              :style="'width: ' + (currentStep / totalSteps * 100) + '%'">
                             <!-- Glow effect -->
                             <div class="absolute inset-0 flex">
-                                <div class="w-1/2 bg-gradient-to-r from-transparent to-white/20"></div>
-                                <div class="w-1/2 bg-gradient-to-l from-transparent to-white/20"></div>
+                                <div class="w-1/2 bg-gradient-to-r from-transparent to-white/30"></div>
+                                <div class="w-1/2 bg-gradient-to-l from-transparent to-white/30"></div>
                             </div>
                             
                             <!-- Pulse effect aan het einde -->
@@ -69,13 +69,13 @@ require_once 'views/templates/header.php';
                     <div class="absolute top-1/2 -translate-y-1/2 w-full flex justify-between px-[1px]">
                         <template x-for="index in totalSteps" :key="index">
                             <div class="relative group">
-                                <div class="w-1 h-1 rounded-full transition-all duration-300"
+                                <div class="w-1.5 h-1.5 rounded-full transition-all duration-300"
                                      :class="currentStep >= index - 1 ? 'bg-primary' : 'bg-gray-300'">
                                 </div>
                                 <!-- Tooltip -->
                                 <div class="absolute bottom-full mb-2 -translate-x-1/2 left-1/2
-                                           opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <div class="px-2 py-1 text-xs text-white bg-gray-900 rounded-md whitespace-nowrap">
+                                           opacity-0 group-hover:opacity-100 transition-opacity z-10">
+                                    <div class="px-2 py-1 text-xs text-white bg-gray-900 rounded-md whitespace-nowrap shadow-lg">
                                         Vraag <span x-text="index"></span>
                                     </div>
                                 </div>
@@ -85,10 +85,10 @@ require_once 'views/templates/header.php';
                 </div>
 
                 <!-- Labels -->
-                <div class="flex justify-between mt-3 text-xs">
-                    <span class="text-gray-400 font-medium">Start</span>
-                    <span class="text-gray-400 font-medium">Halverwege</span>
-                    <span class="text-gray-400 font-medium">Einde</span>
+                <div class="flex justify-between mt-4 text-xs">
+                    <span class="text-gray-500 font-medium">Start</span>
+                    <span class="text-gray-500 font-medium">Halverwege</span>
+                    <span class="text-gray-500 font-medium">Einde</span>
                 </div>
             </div>
 
@@ -101,96 +101,114 @@ require_once 'views/templates/header.php';
 
             @keyframes pulse-slow {
                 0%, 100% { transform: translateY(-50%) scale(1); opacity: 1; }
-                50% { transform: translateY(-50%) scale(1.3); opacity: 0.6; }
+                50% { transform: translateY(-50%) scale(1.5); opacity: 0.6; }
+            }
+            
+            @keyframes float {
+                0%, 100% { transform: translateY(0px); }
+                50% { transform: translateY(-10px); }
             }
 
             .shadow-glow {
-                box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.7);
+                box-shadow: 0 0 12px 3px rgba(255, 255, 255, 0.8);
             }
 
             .animate-pulse-subtle {
-                animation: pulse-subtle 2s ease-in-out infinite;
+                animation: pulse-subtle 3s ease-in-out infinite;
             }
 
             .animate-pulse-slow {
-                animation: pulse-slow 2s ease-in-out infinite;
+                animation: pulse-slow 2.5s ease-in-out infinite;
+            }
+            
+            .animate-float {
+                animation: float 6s ease-in-out infinite;
             }
             </style>
 
             <!-- Start Screen -->
-            <div x-show="screen === 'start'" class="bg-white rounded-2xl shadow-lg p-8 relative overflow-hidden">
+            <div x-show="screen === 'start'" 
+                 x-transition:enter="transition ease-out duration-500"
+                 x-transition:enter-start="opacity-0 transform scale-95"
+                 x-transition:enter-end="opacity-100 transform scale-100"
+                 class="bg-white rounded-2xl shadow-xl p-10 relative overflow-hidden">
                 <!-- Decoratieve achtergrond elementen -->
-                <div class="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-primary/5 to-secondary/5 rounded-full blur-3xl -z-10 transform translate-x-1/2 -translate-y-1/2"></div>
-                <div class="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-secondary/5 to-primary/5 rounded-full blur-2xl -z-10 transform -translate-x-1/2 translate-y-1/2"></div>
+                <div class="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-full blur-3xl -z-10 transform translate-x-1/3 -translate-y-1/3 animate-float"></div>
+                <div class="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-secondary/10 to-primary/10 rounded-full blur-3xl -z-10 transform -translate-x-1/3 translate-y-1/3 animate-float" style="animation-delay: 2s;"></div>
 
                 <!-- Header met icon -->
-                <div class="flex items-center space-x-4 mb-6">
-                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-lg">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="flex flex-col md:flex-row md:items-center space-y-4 md:space-y-0 md:space-x-5 mb-8">
+                    <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center shadow-lg shadow-primary/20 mx-auto md:mx-0">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
                         </svg>
                     </div>
-                    <div>
-                        <h2 class="text-2xl font-bold text-gray-900">Welkom bij de Stemwijzer</h2>
-                        <div class="flex items-center mt-1">
-                            <span class="text-sm text-gray-500">±10 minuten</span>
+                    <div class="text-center md:text-left">
+                        <h2 class="text-2xl md:text-3xl font-bold text-gray-900">Welkom bij de Stemwijzer</h2>
+                        <div class="flex items-center justify-center md:justify-start mt-2">
+                            <span class="px-3 py-1 bg-gray-100 rounded-full text-xs font-medium text-gray-600 flex items-center">
+                                <svg class="w-3.5 h-3.5 mr-1.5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                ±10 minuten
+                            </span>
                         </div>
                     </div>
                 </div>
 
                 <!-- Content -->
                 <div class="space-y-6">
-                    <p class="text-gray-600 leading-relaxed">
+                    <p class="text-gray-600 leading-relaxed text-lg">
                         Deze stemwijzer helpt je om te ontdekken welke partij het beste bij jouw politieke voorkeuren past. 
                         Je krijgt een aantal stellingen te zien waarop je kunt aangeven in hoeverre je het ermee eens bent.
                     </p>
 
                     <!-- Features/voordelen -->
-                    <div class="grid grid-cols-2 gap-4 py-4">
-                        <div class="flex items-start space-x-3">
-                            <div class="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                                <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 py-6">
+                        <div class="flex items-start space-x-4 bg-gray-50 p-4 rounded-xl">
+                            <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                                <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                                 </svg>
                             </div>
-                            <span class="text-sm text-gray-600">Gebaseerd op actuele partijstandpunten</span>
+                            <span class="text-gray-700 font-medium">Gebaseerd op actuele partijstandpunten</span>
                         </div>
-                        <div class="flex items-start space-x-3">
-                            <div class="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                                <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="flex items-start space-x-4 bg-gray-50 p-4 rounded-xl">
+                            <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                                <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
                                 </svg>
                             </div>
-                            <span class="text-sm text-gray-600">Volledig anoniem en privacy-vriendelijk</span>
+                            <span class="text-gray-700 font-medium">Volledig anoniem en privacy-vriendelijk</span>
                         </div>
-                        <div class="flex items-start space-x-3">
-                            <div class="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                                <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="flex items-start space-x-4 bg-gray-50 p-4 rounded-xl">
+                            <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                                <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
                                 </svg>
                             </div>
-                            <span class="text-sm text-gray-600">Gedetailleerde resultaten</span>
+                            <span class="text-gray-700 font-medium">Gedetailleerde resultaten</span>
                         </div>
-                        <div class="flex items-start space-x-3">
-                            <div class="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                                <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="flex items-start space-x-4 bg-gray-50 p-4 rounded-xl">
+                            <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                                <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                 </svg>
                             </div>
-                            <span class="text-sm text-gray-600">Slechts 25 belangrijke stellingen</span>
+                            <span class="text-gray-700 font-medium">Slechts 25 belangrijke stellingen</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- Start button -->
                 <button @click="startQuiz()" 
-                        class="w-full mt-8 bg-gradient-to-r from-primary to-primary/90 text-white font-semibold 
-                               py-4 px-6 rounded-xl shadow-lg shadow-primary/10
-                               hover:shadow-xl hover:shadow-primary/20 
+                        class="w-full mt-10 bg-gradient-to-r from-primary to-secondary text-white font-semibold 
+                               py-4 px-6 rounded-xl shadow-lg shadow-primary/20
+                               hover:shadow-xl hover:shadow-primary/30
                                transform transition-all duration-300 hover:scale-[1.02]
                                focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2">
-                    <div class="flex items-center justify-center space-x-2">
-                        <span>Start de Stemwijzer</span>
+                    <div class="flex items-center justify-center space-x-3">
+                        <span class="text-lg">Start de Stemwijzer</span>
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
                         </svg>
@@ -206,46 +224,51 @@ require_once 'views/templates/header.php';
                  class="max-w-[1400px] mx-auto">
 
                 <!-- Main Content -->
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
                     <!-- Left Column: Question & Answers -->
-                    <div class="lg:col-span-7 bg-white rounded-xl shadow-lg p-6">
+                    <div class="lg:col-span-7 bg-white rounded-2xl shadow-xl p-8">
                         <!-- Question Header -->
-                        <div class="mb-6">
-                            <div class="flex items-center justify-between mb-4">
-                                <span class="px-3 py-1 bg-gray-100 rounded-full text-xs font-medium text-gray-600">
+                        <div class="mb-8">
+                            <div class="flex items-center justify-between mb-5">
+                                <span class="px-4 py-1.5 bg-gray-100 rounded-full text-xs font-medium text-gray-600 flex items-center">
+                                    <svg class="w-3.5 h-3.5 mr-1.5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                    </svg>
                                     Vraag <span x-text="currentStep + 1"></span> van <span x-text="totalSteps"></span>
                                 </span>
-                                <div class="flex items-center space-x-2 text-xs text-gray-500">
+                                <div class="flex items-center space-x-3 text-xs text-gray-500">
                                     <button @click="previousQuestion()" 
                                             x-show="currentStep > 0"
-                                            class="flex items-center space-x-1 hover:text-gray-900 transition-colors">
-                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            class="flex items-center space-x-1.5 px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors">
+                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                                         </svg>
-                                        <span class="hidden sm:inline">Vorige</span>
+                                        <span class="hidden sm:inline font-medium">Vorige</span>
                                     </button>
-                                    <span class="text-gray-300">|</span>
                                     <button @click="skipQuestion()"
-                                            class="flex items-center space-x-1 hover:text-gray-900 transition-colors">
-                                        <span class="hidden sm:inline">Overslaan</span>
-                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            class="flex items-center space-x-1.5 px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors">
+                                        <span class="hidden sm:inline font-medium">Overslaan</span>
+                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                                         </svg>
                                     </button>
                                 </div>
                             </div>
 
-                            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-3" x-text="questions[currentStep].title"></h2>
-                            <p class="text-sm sm:text-base text-gray-600 leading-relaxed" x-text="questions[currentStep].description"></p>
+                            <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-4" x-text="questions[currentStep].title"></h2>
+                            <p class="text-lg text-gray-600 leading-relaxed" x-text="questions[currentStep].description"></p>
                             
                             <!-- Nieuwe uitleg knop -->
                             <button @click="showExplanation = !showExplanation"
-                                    class="mt-4 text-sm text-primary hover:text-primary-dark flex items-center space-x-1">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    class="mt-5 px-4 py-2 bg-gray-50 text-sm text-gray-700 hover:bg-gray-100 rounded-full flex items-center space-x-2 transition-colors border border-gray-200">
+                                <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                           d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                 </svg>
                                 <span>Uitleg over deze stelling</span>
+                                <svg class="w-4 h-4 transition-transform duration-200" :class="showExplanation ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                </svg>
                             </button>
 
                             <!-- Uitleg panel -->
@@ -253,13 +276,16 @@ require_once 'views/templates/header.php';
                                  x-transition:enter="transition ease-out duration-200"
                                  x-transition:enter-start="opacity-0 transform -translate-y-2"
                                  x-transition:enter-end="opacity-100 transform translate-y-0"
-                                 class="mt-4 bg-gray-50 rounded-lg p-4 text-sm">
-                                <div x-text="questions[currentStep].context" 
-                                     class="text-gray-700 mb-6 p-4 bg-white rounded-lg shadow-sm border border-gray-100 leading-relaxed">
+                                 class="mt-6 rounded-xl overflow-hidden border border-gray-100">
+                                <div class="bg-blue-50 px-5 py-3 border-b border-blue-100">
+                                    <h3 class="font-semibold text-blue-900">Uitleg bij deze stelling</h3>
                                 </div>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
-                                        <h4 class="font-medium text-blue-900 mb-2 flex items-center">
+                                <div x-text="questions[currentStep].context" 
+                                     class="text-gray-700 p-5 bg-white leading-relaxed">
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border-t border-gray-100">
+                                    <div class="bg-blue-50 p-5 border-r border-blue-100">
+                                        <h4 class="font-medium text-blue-900 mb-3 flex items-center">
                                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                                       d="M14 5l7 7m0 0l-7 7m7-7H3"/>
@@ -269,8 +295,8 @@ require_once 'views/templates/header.php';
                                         <p x-text="questions[currentStep].leftView" 
                                            class="text-blue-800 leading-relaxed"></p>
                                     </div>
-                                    <div class="bg-red-50 p-4 rounded-lg border border-red-100">
-                                        <h4 class="font-medium text-red-900 mb-2 flex items-center">
+                                    <div class="bg-red-50 p-5">
+                                        <h4 class="font-medium text-red-900 mb-3 flex items-center">
                                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                                       d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
@@ -285,128 +311,240 @@ require_once 'views/templates/header.php';
                         </div>
 
                         <!-- Answer Options -->
-                        <div class="grid grid-cols-1 gap-4">
+                        <div class="grid grid-cols-1 gap-5 mt-8">
                             <!-- Eens button -->
                             <button @click="answerQuestion('eens')"
                                     class="relative bg-gradient-to-r from-emerald-50 to-white border-2 border-emerald-500 rounded-xl p-6 
                                            transition-all duration-300 hover:shadow-lg hover:shadow-emerald-100 group">
-                                <div class="flex items-center justify-between">
-                                    <div class="flex items-center space-x-4">
-                                        <div class="w-10 h-10 rounded-lg bg-emerald-500 flex items-center justify-center 
-                                                    transition-transform group-hover:scale-110">
-                                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
-                                            </svg>
-                                        </div>
-                                        <span class="text-lg font-semibold text-emerald-700 group-hover:text-emerald-800">Eens</span>
-                                    </div>
-                                    <div class="absolute right-6 opacity-0 group-hover:opacity-100 transition-opacity">
-                                        <svg class="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                                <div class="flex items-center space-x-4">
+                                    <div class="w-12 h-12 rounded-xl bg-emerald-500 flex items-center justify-center 
+                                                transition-transform group-hover:scale-110 shadow-md shadow-emerald-200">
+                                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
                                         </svg>
                                     </div>
+                                    <div class="text-left">
+                                        <h3 class="text-xl font-bold text-emerald-700">Eens</h3>
+                                        <p class="text-sm text-emerald-600">Ik ben het eens met deze stelling</p>
+                                    </div>
+                                </div>
+                                <!-- Hover effect -->
+                                <div class="absolute inset-y-0 right-0 pr-4 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <svg class="w-6 h-6 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                    </svg>
                                 </div>
                             </button>
 
                             <!-- Neutraal button -->
                             <button @click="answerQuestion('neutraal')"
-                                    class="relative bg-gradient-to-r from-gray-50 to-white border-2 border-gray-300 rounded-xl p-6 
-                                           transition-all duration-300 hover:shadow-lg hover:shadow-gray-100 group">
-                                <div class="flex items-center justify-between">
-                                    <div class="flex items-center space-x-4">
-                                        <div class="w-10 h-10 rounded-lg bg-gray-400 flex items-center justify-center 
-                                                    transition-transform group-hover:scale-110">
-                                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8 12h8"/>
-                                            </svg>
-                                        </div>
-                                        <span class="text-lg font-semibold text-gray-600 group-hover:text-gray-700">Neutraal</span>
-                                    </div>
-                                    <div class="absolute right-6 opacity-0 group-hover:opacity-100 transition-opacity">
-                                        <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                                    class="relative bg-gradient-to-r from-blue-50 to-white border-2 border-blue-400 rounded-xl p-6
+                                          transition-all duration-300 hover:shadow-lg hover:shadow-blue-100 group">
+                                <div class="flex items-center space-x-4">
+                                    <div class="w-12 h-12 rounded-xl bg-blue-400 flex items-center justify-center 
+                                                transition-transform group-hover:scale-110 shadow-md shadow-blue-200">
+                                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M18 12H6"/>
                                         </svg>
                                     </div>
+                                    <div class="text-left">
+                                        <h3 class="text-xl font-bold text-blue-700">Neutraal</h3>
+                                        <p class="text-sm text-blue-600">Ik sta hier neutraal tegenover</p>
+                                    </div>
+                                </div>
+                                <!-- Hover effect -->
+                                <div class="absolute inset-y-0 right-0 pr-4 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                    </svg>
                                 </div>
                             </button>
 
                             <!-- Oneens button -->
                             <button @click="answerQuestion('oneens')"
-                                    class="relative bg-gradient-to-r from-rose-50 to-white border-2 border-rose-500 rounded-xl p-6 
-                                           transition-all duration-300 hover:shadow-lg hover:shadow-rose-100 group">
-                                <div class="flex items-center justify-between">
-                                    <div class="flex items-center space-x-4">
-                                        <div class="w-10 h-10 rounded-lg bg-rose-500 flex items-center justify-center 
-                                                    transition-transform group-hover:scale-110">
-                                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
-                                            </svg>
-                                        </div>
-                                        <span class="text-lg font-semibold text-rose-700 group-hover:text-rose-800">Oneens</span>
-                                    </div>
-                                    <div class="absolute right-6 opacity-0 group-hover:opacity-100 transition-opacity">
-                                        <svg class="w-6 h-6 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                                    class="relative bg-gradient-to-r from-red-50 to-white border-2 border-red-500 rounded-xl p-6
+                                          transition-all duration-300 hover:shadow-lg hover:shadow-red-100 group">
+                                <div class="flex items-center space-x-4">
+                                    <div class="w-12 h-12 rounded-xl bg-red-500 flex items-center justify-center 
+                                                transition-transform group-hover:scale-110 shadow-md shadow-red-200">
+                                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
                                         </svg>
                                     </div>
+                                    <div class="text-left">
+                                        <h3 class="text-xl font-bold text-red-700">Oneens</h3>
+                                        <p class="text-sm text-red-600">Ik ben het oneens met deze stelling</p>
+                                    </div>
                                 </div>
+                                <!-- Hover effect -->
+                                <div class="absolute inset-y-0 right-0 pr-4 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <svg class="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                    </svg>
+                                </div>
+                            </button>
+
+                            <!-- Skip button (smaller) -->
+                            <button @click="skipQuestion()"
+                                    class="mt-2 px-6 py-3 bg-gray-100 hover:bg-gray-200 transition-colors rounded-xl mx-auto flex items-center space-x-2 text-gray-600">
+                                <span class="text-sm font-medium">Deze vraag overslaan</span>
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"/>
+                                </svg>
                             </button>
                         </div>
                     </div>
 
-                    <!-- Right Column: Party Positions -->
-                    <div class="lg:col-span-5 sticky top-6">
-                        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-                            <!-- Header -->
-                            <div class="p-4 border-b border-gray-100">
-                                <h3 class="text-lg font-bold text-gray-900">Partijstandpunten</h3>
-                            </div>
-
-                            <!-- Tabs -->
-                            <div x-data="{ activeTab: 'eens' }" class="overflow-x-auto">
-                                <div class="flex border-b border-gray-100 min-w-full">
-                                    <button @click="activeTab = 'eens'" 
-                                            :class="{ 'border-primary text-primary': activeTab === 'eens',
-                                                    'border-transparent text-gray-500': activeTab !== 'eens' }"
-                                            class="flex-1 py-3 px-2 sm:px-4 text-center text-sm font-medium border-b-2 transition-all duration-200
-                                                   hover:text-gray-900 whitespace-nowrap">
-                                        <div class="flex items-center justify-center space-x-2">
-                                            <div class="w-1.5 h-1.5 rounded-full bg-primary"></div>
-                                            <span>Eens</span>
-                                        </div>
-                                    </button>
-                                    <button @click="activeTab = 'neutraal'"
-                                            :class="{ 'border-gray-900 text-gray-900': activeTab === 'neutraal',
-                                                    'border-transparent text-gray-500': activeTab !== 'neutraal' }"
-                                            class="flex-1 py-3 px-2 sm:px-4 text-center text-sm font-medium border-b-2 transition-all duration-200
-                                                   hover:text-gray-900 whitespace-nowrap">
-                                        <div class="flex items-center justify-center space-x-2">
-                                            <div class="w-1.5 h-1.5 rounded-full bg-gray-400"></div>
-                                            <span>Neutraal</span>
-                                        </div>
-                                    </button>
-                                    <button @click="activeTab = 'oneens'"
-                                            :class="{ 'border-secondary text-secondary': activeTab === 'oneens',
-                                                    'border-transparent text-gray-500': activeTab !== 'oneens' }"
-                                            class="flex-1 py-3 px-2 sm:px-4 text-center text-sm font-medium border-b-2 transition-all duration-200
-                                                   hover:text-gray-900 whitespace-nowrap">
-                                        <div class="flex items-center justify-center space-x-2">
-                                            <div class="w-1.5 h-1.5 rounded-full bg-secondary"></div>
-                                            <span>Oneens</span>
-                                        </div>
-                                    </button>
-                                </div>
-
-                                <!-- Party List -->
-                                <div class="overflow-y-auto max-h-[300px] sm:max-h-[500px]">
-                                    <div class="divide-y divide-gray-100">
-                                        <template x-for="(position, party) in questions[currentStep].positions" :key="party">
-                                            <div x-show="position === activeTab"
-                                                 class="p-4 hover:bg-gray-50 transition-colors">
-                                                <h4 class="text-sm font-semibold text-gray-900 mb-1" x-text="party"></h4>
-                                                <p class="text-sm text-gray-600" x-text="questions[currentStep].explanations[party]"></p>
+                    <!-- Right Column: Party Information -->
+                    <div class="lg:col-span-5 space-y-6">
+                        <!-- Informatie over de vraag -->
+                        <div class="bg-white rounded-2xl shadow-xl p-8 relative overflow-hidden">
+                            <!-- Decorative elements -->
+                            <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-primary/5 to-secondary/5 rounded-full blur-xl -z-10 transform translate-x-1/3 -translate-y-1/3"></div>
+                            
+                            <h3 class="text-xl font-bold text-gray-900 mb-4 flex items-center">
+                                <svg class="w-5 h-5 mr-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                Partijstandpunten
+                            </h3>
+                            
+                            <p class="text-gray-600 mb-6">
+                                Bekijk hoe de belangrijkste politieke partijen staan tegenover deze stelling:
+                            </p>
+                            
+                            <div class="space-y-4">
+                                <!-- Eens groep -->
+                                <div>
+                                    <h4 class="text-sm font-semibold text-emerald-700 mb-2 flex items-center">
+                                        <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                        </svg>
+                                        Eens met deze stelling:
+                                    </h4>
+                                    <div class="flex flex-wrap gap-2" x-init="updatePartyGroups()">
+                                        <template x-for="(partido, index) in $data.eensParties" :key="index">
+                                            <div class="relative">
+                                                <div class="w-12 h-12 rounded-lg shadow-md bg-white p-1 border border-gray-200 hover:border-emerald-300 transition-all">
+                                                    <img :src="$data.partyLogos[partido]" :alt="partido" class="w-full h-full object-contain rounded-md">
+                                                </div>
                                             </div>
                                         </template>
+                                    </div>
+                                </div>
+                                
+                                <!-- Neutraal groep -->
+                                <div>
+                                    <h4 class="text-sm font-semibold text-blue-700 mb-2 flex items-center">
+                                        <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 12H6"/>
+                                        </svg>
+                                        Neutraal tegenover deze stelling:
+                                    </h4>
+                                    <div class="flex flex-wrap gap-2">
+                                        <template x-for="(partido, index) in $data.neutraalParties" :key="index">
+                                            <div class="relative">
+                                                <div class="w-12 h-12 rounded-lg shadow-md bg-white p-1 border border-gray-200 hover:border-blue-300 transition-all">
+                                                    <img :src="$data.partyLogos[partido]" :alt="partido" class="w-full h-full object-contain rounded-md">
+                                                </div>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                                
+                                <!-- Oneens groep -->
+                                <div>
+                                    <h4 class="text-sm font-semibold text-red-700 mb-2 flex items-center">
+                                        <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                        </svg>
+                                        Oneens met deze stelling:
+                                    </h4>
+                                    <div class="flex flex-wrap gap-2">
+                                        <template x-for="(partido, index) in $data.oneensParties" :key="index">
+                                            <div class="relative">
+                                                <div class="w-12 h-12 rounded-lg shadow-md bg-white p-1 border border-gray-200 hover:border-red-300 transition-all">
+                                                    <img :src="$data.partyLogos[partido]" :alt="partido" class="w-full h-full object-contain rounded-md">
+                                                </div>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Partij uitleg -->
+                        <div x-show="selectedParty !== null" 
+                             x-transition:enter="transition ease-out duration-300"
+                             x-transition:enter-start="opacity-0 transform translate-y-4"
+                             x-transition:enter-end="opacity-100 transform translate-y-0"
+                             class="bg-white rounded-2xl shadow-xl p-8">
+                            <div class="flex items-start space-x-4 mb-4">
+                                <div class="w-16 h-16 rounded-xl bg-white p-1 border border-gray-200 flex-shrink-0">
+                                    <img :src="$data.partyLogos[selectedParty]" :alt="selectedParty" class="w-full h-full object-contain rounded-lg">
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-gray-900" x-text="selectedParty"></h3>
+                                    <div class="mt-1 flex items-center">
+                                        <div class="px-2.5 py-0.5 rounded-full text-xs font-medium"
+                                             :class="{
+                                                'bg-emerald-100 text-emerald-800': questions[currentStep].positions[selectedParty] === 'eens',
+                                                'bg-blue-100 text-blue-800': questions[currentStep].positions[selectedParty] === 'neutraal',
+                                                'bg-red-100 text-red-800': questions[currentStep].positions[selectedParty] === 'oneens'
+                                             }">
+                                            <span x-text="questions[currentStep].positions[selectedParty]"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <p class="text-gray-700 bg-gray-50 p-4 rounded-xl border border-gray-100" 
+                               x-text="questions[currentStep].explanations[selectedParty]"></p>
+                               
+                            <button @click="selectedParty = null" 
+                                    class="mt-4 text-sm text-gray-500 hover:text-gray-700 flex items-center">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                </svg>
+                                Sluiten
+                            </button>
+                        </div>
+                        
+                        <!-- Voortgang box -->
+                        <div class="bg-white rounded-2xl shadow-xl p-8">
+                            <h3 class="text-xl font-bold text-gray-900 mb-4 flex items-center">
+                                <svg class="w-5 h-5 mr-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                </svg>
+                                Jouw voortgang
+                            </h3>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="flex justify-between mb-2 text-sm">
+                                        <span class="font-medium text-gray-700">Beantwoorde vragen</span>
+                                        <span class="text-primary font-semibold">
+                                            <span x-text="Object.keys(answers).length"></span>/<span x-text="totalSteps"></span>
+                                        </span>
+                                    </div>
+                                    <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
+                                        <div class="h-full bg-primary rounded-full transition-all duration-500 ease-out"
+                                             :style="'width: ' + (Object.keys(answers).length / totalSteps * 100) + '%'"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="border-t border-gray-100 pt-4 mt-4">
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span class="text-gray-600">Eens</span>
+                                        <span class="font-medium text-emerald-600" x-text="countAnswerType('eens')"></span>
+                                    </div>
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span class="text-gray-600">Neutraal</span>
+                                        <span class="font-medium text-blue-600" x-text="countAnswerType('neutraal')"></span>
+                                    </div>
+                                    <div class="flex justify-between text-sm">
+                                        <span class="text-gray-600">Oneens</span>
+                                        <span class="font-medium text-red-600" x-text="countAnswerType('oneens')"></span>
                                     </div>
                                 </div>
                             </div>
@@ -416,131 +554,239 @@ require_once 'views/templates/header.php';
             </div>
 
             <!-- Results Screen -->
-            <div x-show="screen === 'results'" class="bg-white rounded-2xl shadow-lg p-4 sm:p-8">
-                <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-4">Jouw Resultaten</h2>
+            <div x-show="screen === 'results'" 
+                 x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="opacity-0 transform translate-y-4"
+                 x-transition:enter-end="opacity-100 transform translate-y-0"
+                 class="max-w-5xl mx-auto">
                 
-                <!-- Politiek kompas -->
-                <div class="mb-12">
-                    <h3 class="text-lg font-semibold mb-6">Jouw politieke positie</h3>
-                    <div class="relative w-full h-[400px] bg-gradient-to-br from-gray-50 to-white rounded-2xl p-8 shadow-lg overflow-hidden">
-                        <!-- Grid lijnen -->
-                        <div class="absolute inset-0 grid grid-cols-4 grid-rows-4">
-                            <template x-for="i in 4">
-                                <div class="border-r border-gray-200"></div>
-                            </template>
-                            <template x-for="i in 4">
-                                <div class="border-b border-gray-200"></div>
-                            </template>
+                <!-- Hero Results -->
+                <div class="bg-white rounded-2xl shadow-xl p-8 mb-8 relative overflow-hidden">
+                    <!-- Decoratieve achtergrond elementen -->
+                    <div class="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-full blur-3xl -z-10 transform translate-x-1/3 -translate-y-1/3"></div>
+                    <div class="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-secondary/10 to-primary/10 rounded-full blur-3xl -z-10 transform -translate-x-1/3 translate-y-1/3"></div>
+                    
+                    <div class="text-center mb-8">
+                        <div class="inline-block p-3 bg-primary/10 rounded-full mb-4">
+                            <svg class="w-10 h-10 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
                         </div>
-                        
-                        <!-- Labels -->
-                        <div class="absolute inset-0 p-4">
-                            <div class="relative w-full h-full">
-                                <!-- Progressief/Conservatief as -->
-                                <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1 
-                                            bg-gradient-to-b from-primary/20 to-transparent text-center py-2 px-4 rounded-t-lg">
-                                    <span class="text-sm font-medium text-primary-dark">Progressief</span>
+                        <h2 class="text-3xl font-bold text-gray-900 mb-2">Jouw resultaten</h2>
+                        <p class="text-gray-600 max-w-3xl mx-auto">
+                            Gebaseerd op je antwoorden hebben we berekend welke partijen het beste bij jouw standpunten passen.
+                            Hoe hoger het percentage, hoe meer jullie standpunten overeenkomen.
+                        </p>
+                    </div>
+                    
+                    <!-- Top 3 Results -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <!-- #2 Result -->
+                        <div class="relative order-2 md:order-1 mt-6 md:mt-10">
+                            <div class="absolute -top-10 left-1/2 transform -translate-x-1/2 w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center border-4 border-white shadow-lg">
+                                <span class="text-xl font-bold text-gray-700">2</span>
+                            </div>
+                            <div class="bg-gray-50 rounded-xl border border-gray-200 p-6 pt-8 text-center h-full relative overflow-hidden">
+                                <div class="mb-3 w-20 h-20 mx-auto rounded-full p-2 bg-white shadow-md">
+                                    <img :src="finalResults[1]?.logo" :alt="finalResults[1]?.name" class="w-full h-full object-contain rounded-full">
                                 </div>
-                                <div class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1 
-                                            bg-gradient-to-t from-secondary/20 to-transparent text-center py-2 px-4 rounded-b-lg">
-                                    <span class="text-sm font-medium text-secondary-dark">Conservatief</span>
-                                </div>
+                                <h3 class="text-xl font-bold text-gray-800 mb-1" x-text="finalResults[1]?.name"></h3>
+                                <div class="text-3xl font-bold text-primary" x-text="finalResults[1]?.agreement + '%'"></div>
+                                <div class="text-sm text-gray-500 mb-4">overeenkomst</div>
                                 
-                                <!-- Links/Rechts as -->
-                                <div class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1 
-                                            bg-gradient-to-r from-blue-500/20 to-transparent text-center py-2 px-4 rounded-l-lg 
-                                            transform -rotate-90 origin-right">
-                                    <span class="text-sm font-medium text-blue-700">Links</span>
-                                </div>
-                                <div class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1 
-                                            bg-gradient-to-l from-red-500/20 to-transparent text-center py-2 px-4 rounded-r-lg 
-                                            transform rotate-90 origin-left">
-                                    <span class="text-sm font-medium text-red-700">Rechts</span>
-                                </div>
+                                <button @click="showPartyExplanation(finalResults[1])" 
+                                        class="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg text-sm font-medium transition-colors">
+                                    Details bekijken
+                                </button>
                             </div>
                         </div>
                         
-                        <!-- Positie marker -->
-                        <div class="absolute transition-all duration-500 ease-out"
-                             :style="'left: ' + politicalPosition.x + '%; top: ' + politicalPosition.y + '%'">
-                            <div class="relative -translate-x-1/2 -translate-y-1/2">
-                                <!-- Pulse effect -->
-                                <div class="absolute inset-0 animate-ping rounded-full bg-primary/30"></div>
-                                <!-- Marker -->
-                                <div class="relative w-6 h-6 bg-gradient-to-br from-primary to-primary-dark 
-                                            rounded-full shadow-lg shadow-primary/30 border-2 border-white
-                                            flex items-center justify-center">
-                                    <div class="w-2 h-2 bg-white rounded-full"></div>
+                        <!-- #1 Result (Larger) -->
+                        <div class="relative order-1 md:order-2 transform md:-translate-y-4">
+                            <div class="absolute -top-12 left-1/2 transform -translate-x-1/2 w-16 h-16 rounded-full bg-yellow-100 flex items-center justify-center border-4 border-white shadow-lg">
+                                <svg class="w-8 h-8 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <div class="bg-gradient-to-b from-primary/5 to-primary/10 rounded-xl border border-primary/20 p-8 text-center h-full relative overflow-hidden shadow-xl">
+                                <div class="mb-4 w-24 h-24 mx-auto rounded-full p-2 bg-white shadow-md">
+                                    <img :src="finalResults[0]?.logo" :alt="finalResults[0]?.name" class="w-full h-full object-contain rounded-full">
                                 </div>
+                                <h3 class="text-2xl font-bold text-gray-900 mb-1" x-text="finalResults[0]?.name"></h3>
+                                <div class="text-4xl font-bold text-primary mb-1" x-text="finalResults[0]?.agreement + '%'"></div>
+                                <div class="text-sm text-gray-600 mb-5">overeenkomst</div>
+                                
+                                <button @click="showPartyExplanation(finalResults[0])" 
+                                        class="px-5 py-2.5 bg-primary hover:bg-primary-dark text-white rounded-lg text-sm font-medium transition-colors shadow-md shadow-primary/20">
+                                    Details bekijken
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- #3 Result -->
+                        <div class="relative order-3 mt-6 md:mt-10">
+                            <div class="absolute -top-10 left-1/2 transform -translate-x-1/2 w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center border-4 border-white shadow-lg">
+                                <span class="text-xl font-bold text-gray-700">3</span>
+                            </div>
+                            <div class="bg-gray-50 rounded-xl border border-gray-200 p-6 pt-8 text-center h-full relative overflow-hidden">
+                                <div class="mb-3 w-20 h-20 mx-auto rounded-full p-2 bg-white shadow-md">
+                                    <img :src="finalResults[2]?.logo" :alt="finalResults[2]?.name" class="w-full h-full object-contain rounded-full">
+                                </div>
+                                <h3 class="text-xl font-bold text-gray-800 mb-1" x-text="finalResults[2]?.name"></h3>
+                                <div class="text-3xl font-bold text-primary" x-text="finalResults[2]?.agreement + '%'"></div>
+                                <div class="text-sm text-gray-500 mb-4">overeenkomst</div>
+                                
+                                <button @click="showPartyExplanation(finalResults[2])" 
+                                        class="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg text-sm font-medium transition-colors">
+                                    Details bekijken
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- All Results Table -->
+                    <div class="bg-white rounded-xl border border-gray-100 overflow-hidden shadow-md">
+                        <div class="px-6 py-4 bg-gray-50 border-b border-gray-100">
+                            <h3 class="font-semibold text-gray-900">Alle resultaten</h3>
+                        </div>
+                        <div class="divide-y divide-gray-100">
+                            <template x-for="(result, index) in finalResults.slice(0, 10)" :key="index">
+                                <div class="px-6 py-4 hover:bg-gray-50 transition-colors">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center space-x-4">
+                                            <div class="flex-shrink-0 w-12 h-12 rounded-lg bg-white p-1 border border-gray-200 shadow-sm">
+                                                <img :src="result.logo" :alt="result.name" class="w-full h-full object-contain rounded-md">
+                                            </div>
+                                            <div>
+                                                <h4 class="font-semibold text-gray-900" x-text="result.name"></h4>
+                                                <div class="flex items-center mt-1">
+                                                    <div class="text-xs text-gray-500 mr-2" x-text="'#' + (index + 1)"></div>
+                                                    <div class="h-1.5 w-24 bg-gray-100 rounded-full overflow-hidden">
+                                                        <div class="h-full bg-primary rounded-full" :style="'width: ' + result.agreement + '%'"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center space-x-4">
+                                            <div class="text-xl font-bold text-gray-900" x-text="result.agreement + '%'"></div>
+                                            <button @click="showPartyExplanation(result)" 
+                                                    class="p-2 text-gray-400 hover:text-gray-600 rounded-full hover:bg-gray-100 transition-colors">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Party Details Modal -->
+                <div x-show="showPartyDetails" 
+                     x-transition:enter="transition ease-out duration-300"
+                     x-transition:enter-start="opacity-0 transform scale-95"
+                     x-transition:enter-end="opacity-100 transform scale-100"
+                     x-transition:leave="transition ease-in duration-200"
+                     x-transition:leave-start="opacity-100 transform scale-100"
+                     x-transition:leave-end="opacity-0 transform scale-95"
+                     class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50">
+                    
+                    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto" @click.away="showPartyDetails = false">
+                        <!-- Header -->
+                        <div class="p-6 border-b border-gray-100 sticky top-0 bg-white z-10">
+                            <div class="flex items-start justify-between">
+                                <div class="flex items-center space-x-4">
+                                    <div class="w-16 h-16 rounded-xl bg-white p-1 border border-gray-200 shadow-sm">
+                                        <img :src="partyLogos[detailedParty?.name]" :alt="detailedParty?.name" class="w-full h-full object-contain rounded-md">
+                                    </div>
+                                    <div>
+                                        <h3 class="text-2xl font-bold text-gray-900" x-text="detailedParty?.name"></h3>
+                                        <div class="flex items-center mt-1">
+                                            <div class="px-3 py-1 bg-primary/10 rounded-full text-sm font-medium text-primary">
+                                                <span x-text="detailedParty?.agreement + '% overeenkomst'"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button @click="showPartyDetails = false" class="p-2 rounded-full hover:bg-gray-100 transition-colors">
+                                    <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Content -->
+                        <div class="p-6">
+                            <h4 class="text-lg font-semibold text-gray-900 mb-4">Standpunten per stelling</h4>
+                            
+                            <div class="space-y-6">
+                                <template x-for="(question, index) in questions" :key="index">
+                                    <div class="p-4 border border-gray-100 rounded-xl hover:border-gray-200 transition-colors">
+                                        <div class="flex justify-between items-start">
+                                            <div>
+                                                <div class="flex items-center space-x-2 mb-1">
+                                                    <span class="inline-block w-6 h-6 text-xs flex items-center justify-center bg-gray-100 text-gray-700 rounded-full font-medium" x-text="index + 1"></span>
+                                                    <h5 class="font-semibold text-gray-900" x-text="question.title"></h5>
+                                                </div>
+                                                <p class="text-sm text-gray-600 mb-3" x-text="question.description"></p>
+                                            </div>
+                                            
+                                            <div class="px-3 py-1 rounded-full text-sm font-medium"
+                                                 :class="{
+                                                    'bg-emerald-100 text-emerald-800': question.positions[detailedParty?.name] === 'eens',
+                                                    'bg-blue-100 text-blue-800': question.positions[detailedParty?.name] === 'neutraal',
+                                                    'bg-red-100 text-red-800': question.positions[detailedParty?.name] === 'oneens'
+                                                 }">
+                                                <span x-text="question.positions[detailedParty?.name]"></span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mt-1 p-3 bg-gray-50 rounded-lg text-sm text-gray-700"
+                                             x-text="question.explanations[detailedParty?.name]"></div>
+                                                 
+                                        <div class="mt-2 text-xs text-gray-500 flex items-center">
+                                            <template x-if="answers[index]">
+                                                <div class="flex items-center space-x-1">
+                                                    <span>Jouw antwoord:</span>
+                                                    <span class="font-medium px-2 py-0.5 rounded-full"
+                                                          :class="{
+                                                            'bg-emerald-100 text-emerald-800': answers[index] === 'eens',
+                                                            'bg-blue-100 text-blue-800': answers[index] === 'neutraal',
+                                                            'bg-red-100 text-red-800': answers[index] === 'oneens'
+                                                          }"
+                                                          x-text="answers[index]"></span>
+                                                </div>
+                                            </template>
+                                            <template x-if="!answers[index]">
+                                                <span>Je hebt deze vraag overgeslagen</span>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </template>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <!-- Gedetailleerde resultaten -->
-                <div class="space-y-6">
-                    <template x-for="(result, index) in results" :key="index">
-                        <div class="bg-white rounded-xl p-6 mb-4 shadow-sm hover:shadow-md transition-shadow">
-                            <div class="flex items-center justify-between flex-wrap gap-4 mb-4">
-                                <div class="flex items-center space-x-4">
-                                    <!-- Logo container -->
-                                    <div class="w-16 h-16 rounded-lg bg-gray-50 flex items-center justify-center overflow-hidden">
-                                        <img :src="partyLogos[result.party] || 'https://via.placeholder.com/48?text=' + result.party"
-                                             :alt="result.party + ' logo'"
-                                             class="w-12 h-12 object-contain"
-                                             @error="$event.target.src = 'https://via.placeholder.com/48?text=' + result.party"
-                                        >
-                                    </div>
-                                    <div>
-                                        <h3 class="font-semibold text-gray-900" x-text="result.party"></h3>
-                                        <p class="text-sm text-gray-600">
-                                            <span x-text="Math.round(result.match)"></span>% overeenkomst
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="w-full sm:w-48 h-2 bg-gray-200 rounded-full overflow-hidden">
-                                    <div class="h-2 bg-gradient-to-r from-primary to-secondary transition-all duration-1000"
-                                         :style="'width: ' + result.match + '%'"></div>
-                                </div>
-                            </div>
-                            
-                            <!-- Belangrijkste overeenkomsten -->
-                            <div class="mt-4">
-                                <h4 class="text-sm font-medium text-gray-700 mb-2">Belangrijkste overeenkomsten:</h4>
-                                <div class="space-y-2">
-                                    <template x-for="match in result.topMatches" :key="match.question">
-                                        <div class="text-sm text-gray-600 flex items-center space-x-2">
-                                            <svg class="w-4 h-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                                            </svg>
-                                            <span x-text="match.question"></span>
-                                        </div>
-                                    </template>
-                                </div>
-                            </div>
-                        </div>
-                    </template>
-                </div>
-
-                <!-- Deel resultaten -->
-                <div class="mt-8 flex flex-col sm:flex-row gap-4">
-                    <button @click="shareResults()"
-                            class="flex-1 bg-primary text-white font-semibold py-3 px-6 rounded-xl 
-                                   hover:bg-primary-dark transition-colors flex items-center justify-center space-x-2">
+                
+                <!-- Action buttons -->
+                <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <button @click="resetQuiz()" 
+                            class="w-full sm:w-auto px-6 py-3 bg-white border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors flex items-center justify-center space-x-2">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                  d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
                         </svg>
-                        <span>Deel resultaten</span>
+                        <span>Opnieuw beginnen</span>
                     </button>
-                    <button @click="saveResults()"
-                            class="flex-1 bg-secondary text-white font-semibold py-3 px-6 rounded-xl 
-                                   hover:bg-secondary-dark transition-colors flex items-center justify-center space-x-2">
+                    
+                    <button onclick="window.print()" 
+                            class="w-full sm:w-auto px-6 py-3 bg-primary text-white rounded-xl hover:bg-primary-dark transition-colors flex items-center justify-center space-x-2">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                  d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
                         </svg>
-                        <span>Bewaar resultaten</span>
+                        <span>Resultaten afdrukken</span>
                     </button>
                 </div>
             </div>
@@ -555,6 +801,18 @@ function stemwijzer() {
         currentStep: 0,
         totalSteps: 25,
         showExplanation: false,
+        selectedParty: null,
+        answers: {},
+        eensParties: [],
+        neutraalParties: [],
+        oneensParties: [],
+        
+        results: {},
+        finalResults: [],
+        showPartyDetails: false,
+        detailedParty: null,
+        showingQuestion: null,
+        
         partyLogos: {
             'PVV': 'https://i.ibb.co/DfR8pS2Y/403880390-713625330344634-198487231923339026-n.jpg',
             'VVD': 'https://logo.clearbit.com/vvd.nl',
@@ -1548,168 +1806,131 @@ function stemwijzer() {
                 }
             }
         ],
-        answers: [],
-        results: [],
+        answers: {},
+        results: {},
         politicalPosition: { x: 50, y: 50 },
         currentQuestion() {
             return this.questions[this.currentStep];
         },
         startQuiz() {
             this.screen = 'questions';
+            this.currentStep = 0;
+            this.updatePartyGroups();
+        },
+        updatePartyGroups() {
+            if (!this.questions[this.currentStep]) return;
+            
+            const positions = this.questions[this.currentStep].positions;
+            this.eensParties = [];
+            this.neutraalParties = [];
+            this.oneensParties = [];
+            
+            Object.keys(positions).forEach(party => {
+                if (positions[party] === 'eens') {
+                    this.eensParties.push(party);
+                } else if (positions[party] === 'neutraal') {
+                    this.neutraalParties.push(party);
+                } else if (positions[party] === 'oneens') {
+                    this.oneensParties.push(party);
+                }
+            });
+        },
+        countAnswerType(type) {
+            return Object.values(this.answers).filter(answer => answer === type).length;
         },
         answerQuestion(answer) {
             this.answers[this.currentStep] = answer;
+            
             if (this.currentStep < this.totalSteps - 1) {
                 this.currentStep++;
+                this.showExplanation = false;
+                this.selectedParty = null;
+                this.updatePartyGroups();
             } else {
                 this.calculateResults();
+                this.screen = 'results';
             }
         },
         skipQuestion() {
-            this.answers[this.currentStep] = 'skip';
             if (this.currentStep < this.totalSteps - 1) {
                 this.currentStep++;
+                this.showExplanation = false;
+                this.selectedParty = null;
+                this.updatePartyGroups();
             } else {
                 this.calculateResults();
+                this.screen = 'results';
             }
         },
         previousQuestion() {
             if (this.currentStep > 0) {
                 this.currentStep--;
+                this.showExplanation = false;
+                this.selectedParty = null;
+                this.updatePartyGroups();
             }
         },
         calculateResults() {
-            const partyPositions = {};
+            const parties = Object.keys(this.questions[0].positions);
+            const results = {};
             
-            // Voor elke vraag, haal de posities van alle partijen op
-            this.questions.forEach((question, index) => {
-                Object.entries(question.positions).forEach(([party, position]) => {
-                    if (!partyPositions[party]) {
-                        partyPositions[party] = { matches: [] };
+            parties.forEach(party => {
+                results[party] = { score: 0, total: 0, agreement: 0 };
+            });
+            
+            Object.keys(this.answers).forEach(questionIndex => {
+                const question = this.questions[questionIndex];
+                const userAnswer = this.answers[questionIndex];
+                
+                parties.forEach(party => {
+                    const partyAnswer = question.positions[party];
+                    
+                    if (userAnswer === partyAnswer) {
+                        results[party].score += 2;
+                    } else if (
+                        (userAnswer === 'neutraal' && (partyAnswer === 'eens' || partyAnswer === 'oneens')) ||
+                        ((userAnswer === 'eens' || userAnswer === 'oneens') && partyAnswer === 'neutraal')
+                    ) {
+                        results[party].score += 1;
                     }
                     
-                    if (this.answers[index] !== 'skip') {
-                        let match = 0;
-                        
-                        if (this.answers[index] === position) {
-                            match = 1;
-                        } else if (this.answers[index] === 'neutraal' || position === 'neutraal') {
-                            match = 0.5;
-                        }
-                        
-                        partyPositions[party].matches.push({
-                            question: question.title,
-                            match: match
-                        });
-                    }
+                    results[party].total += 2;
                 });
             });
-
-            // Bereken gewogen gemiddelde en top matches
-            this.results = Object.entries(partyPositions).map(([party, data]) => {
-                const matchPercentage = data.matches.reduce((acc, curr) => {
-                    return acc + curr.match;
-                }, 0) / data.matches.length * 100;
-
-                // Sorteer matches op basis van match score
-                const topMatches = data.matches
-                    .filter(m => m.match > 0.7)
-                    .sort((a, b) => b.match - a.match)
-                    .slice(0, 3);
-
-                return {
-                    party,
-                    match: matchPercentage,
-                    topMatches: topMatches
-                };
-            });
-
-            // Sorteer resultaten op match percentage
-            this.results.sort((a, b) => b.match - a.match);
-
-            // Bereken politieke positie
-            this.calculatePoliticalPosition();
             
-            this.screen = 'results';
+            // Calculate percentages
+            parties.forEach(party => {
+                results[party].agreement = Math.round((results[party].score / results[party].total) * 100);
+            });
+            
+            this.results = results;
+            
+            // Create sorted array for display
+            this.finalResults = parties
+                .map(party => ({
+                    name: party,
+                    agreement: results[party].agreement,
+                    logo: this.partyLogos[party]
+                }))
+                .sort((a, b) => b.agreement - a.agreement);
         },
-        calculatePoliticalPosition() {
-            let xScore = 0; // Links (-1) vs Rechts (1)
-            let yScore = 0; // Progressief (-1) vs Conservatief (1)
-            let xCount = 0;
-            let yCount = 0;
-
-            // Definieer thema's voor beide assen
-            const economicThemes = ['belasting', 'markt', 'minimumloon', 'winstbelasting', 'woningmarkt', 'zorgverzekering'];
-            const socialThemes = ['asielbeleid', 'klimaat', 'drugs', 'monarchie', 'kernwapens', 'europese'];
-
-            this.answers.forEach((answer, index) => {
-                const title = this.questions[index].title.toLowerCase();
-                
-                // Skip overgeslagen vragen
-                if (answer === 'skip') return;
-
-                // Economische as (Links-Rechts)
-                if (economicThemes.some(theme => title.includes(theme))) {
-                    xCount++;
-                    switch (answer) {
-                        case 'eens':
-                            // Voor economische thema's: 'eens' is meestal rechts
-                            xScore += 1;
-                            break;
-                        case 'oneens':
-                            xScore -= 1;
-                            break;
-                        case 'neutraal':
-                            xScore += 0;
-                            break;
-                    }
-                }
-
-                // Sociale as (Progressief-Conservatief)
-                if (socialThemes.some(theme => title.includes(theme))) {
-                    yCount++;
-                    switch (answer) {
-                        case 'eens':
-                            // Voor sociale thema's: 'eens' is meestal progressief
-                            yScore -= 1;
-                            break;
-                        case 'oneens':
-                            yScore += 1;
-                            break;
-                        case 'neutraal':
-                            yScore += 0;
-                            break;
-                    }
-                }
-            });
-
-            // Bereken gemiddelde scores en converteer naar percentages
-            // We gebruiken een schaal van 10-90% om te voorkomen dat de stip helemaal aan de rand komt
-            const xPercentage = xCount > 0 
-                ? 50 + ((xScore / xCount) * 40) // 40% spreiding van het midden (links of rechts)
-                : 50;
-            
-            const yPercentage = yCount > 0 
-                ? 50 + ((yScore / yCount) * 40) // 40% spreiding van het midden (progressief of conservatief)
-                : 50;
-
-            this.politicalPosition = {
-                x: Math.min(90, Math.max(10, xPercentage)), // Begrens tussen 10% en 90%
-                y: Math.min(90, Math.max(10, yPercentage))  // Begrens tussen 10% en 90%
-            };
-
-            console.log('Political Position:', {
-                x: xScore,
-                y: yScore,
-                xCount,
-                yCount,
-                position: this.politicalPosition
-            });
+        showPartyExplanation(party) {
+            this.detailedParty = party;
+            this.showPartyDetails = true;
+        },
+        resetQuiz() {
+            this.screen = 'start';
+            this.currentStep = 0;
+            this.answers = {};
+            this.results = {};
+            this.finalResults = [];
+            this.showExplanation = false;
+            this.selectedParty = null;
         },
         shareResults() {
             const text = `Mijn Stemwijzer resultaten:\n${
-                this.results.slice(0, 3)
-                    .map(r => `${r.party}: ${Math.round(r.match)}%`)
+                this.finalResults.slice(0, 3)
+                    .map(r => `${r.name}: ${r.agreement}%`)
                     .join('\n')
             }`;
             
@@ -1728,7 +1949,7 @@ function stemwijzer() {
         saveResults() {
             const results = {
                 timestamp: new Date().toISOString(),
-                matches: this.results,
+                matches: this.finalResults,
                 answers: this.answers,
                 position: this.politicalPosition
             };
