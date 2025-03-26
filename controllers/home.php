@@ -108,12 +108,195 @@ $agenda_items = $openDataAPI->getPolitiekeAgenda();
 require_once 'views/templates/header.php';
 ?>
 
+<!-- Add custom animations for floating elements -->
+<style>
+    @keyframes float-slow {
+        0% { transform: translateY(0) rotate(0deg); }
+        50% { transform: translateY(-15px) rotate(2deg); }
+        100% { transform: translateY(0) rotate(0deg); }
+    }
+    
+    @keyframes float-medium {
+        0% { transform: translateY(0) rotate(0deg); }
+        50% { transform: translateY(-10px) rotate(-2deg); }
+        100% { transform: translateY(0) rotate(0deg); }
+    }
+    
+    @keyframes float-fast {
+        0% { transform: translateY(0) rotate(0deg); }
+        50% { transform: translateY(-7px) rotate(1deg); }
+        100% { transform: translateY(0) rotate(0deg); }
+    }
+    
+    @keyframes float-particle {
+        0% { transform: translateY(0) translateX(0); }
+        100% { transform: translateY(10px) translateX(10px); }
+    }
+    
+    .animate-float-slow {
+        animation: float-slow 6s ease-in-out infinite;
+    }
+    
+    .animate-float-medium {
+        animation: float-medium 4s ease-in-out infinite;
+    }
+    
+    .animate-float-fast {
+        animation: float-fast 3s ease-in-out infinite;
+    }
+    
+    @keyframes slide {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(500%); }
+    }
+    
+    .animate-slide {
+        animation: slide 4s ease-in-out infinite;
+    }
+</style>
+
 <main class="bg-gray-50 overflow-x-hidden">
     <!-- Hero Section -->
     <section class="relative bg-gradient-to-br from-gray-900 to-primary overflow-hidden">
+        <!-- Decorative top bar -->
+        <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-secondary via-primary to-secondary"></div>
+        <div class="absolute top-0 left-0 h-1.5 w-1/3 bg-white opacity-40">
+            <div class="absolute top-0 left-0 h-full w-20 bg-white animate-slide"></div>
+        </div>
+        
         <!-- Animated background pattern -->
         <div class="absolute inset-0">
             <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"30\" height=\"30\" viewBox=\"0 0 30 30\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cpath d=\"M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z\" fill=\"rgba(255,255,255,0.05)\"%3E%3C/path%3E%3C/svg%3E')] opacity-20"></div>
+        </div>
+        
+        <!-- Spotlight effect -->
+        <div class="absolute inset-0 pointer-events-none"
+             x-data="{ mouseX: 0, mouseY: 0 }"
+             @mousemove="mouseX = $event.clientX; mouseY = $event.clientY"
+             >
+            <div class="absolute -top-[30%] -left-[30%] w-[130%] h-[130%] bg-gradient-radial from-primary/20 to-transparent opacity-50"
+                 :style="`transform: translate(${mouseX/50}px, ${mouseY/50}px);`"></div>
+        </div>
+        
+        <!-- Animated floating elements -->
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <!-- Political icons and symbols -->
+            <div class="absolute top-[15%] left-[12%] w-12 h-12 bg-white/10 rounded-full flex items-center justify-center animate-float-medium">
+                <svg class="w-6 h-6 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                </svg>
+            </div>
+            
+            <div class="absolute top-[30%] right-[22%] w-14 h-14 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center animate-float-slow">
+                <svg class="w-8 h-8 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 6l9-4 9 4v6a11 11 0 01-9 11 11 11 0 01-9-11V6z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4"></path>
+                </svg>
+            </div>
+            
+            <div class="absolute bottom-[25%] left-[28%] w-10 h-10 bg-secondary/20 rounded-lg flex items-center justify-center animate-float-fast">
+                <svg class="w-6 h-6 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 16h6"></path>
+                </svg>
+            </div>
+            
+            <div class="absolute bottom-[35%] right-[35%] w-10 h-10 bg-primary/20 backdrop-blur-sm rounded-full flex items-center justify-center animate-float-medium">
+                <svg class="w-6 h-6 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"></path>
+                </svg>
+            </div>
+            
+            <div class="absolute top-[45%] left-[38%] w-9 h-9 bg-white/10 backdrop-blur-sm rounded-lg flex items-center justify-center animate-float-slow">
+                <svg class="w-5 h-5 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path>
+                </svg>
+            </div>
+
+            <!-- Existing floating circles -->
+            <div class="absolute top-1/4 left-[10%] w-12 h-12 rounded-full bg-blue-400/20 animate-float-slow"></div>
+            <div class="absolute bottom-1/3 right-[15%] w-20 h-20 rounded-full bg-primary/20 animate-float-medium"></div>
+            <div class="absolute top-1/3 right-[30%] w-8 h-8 rounded-full bg-indigo-500/20 animate-float-fast"></div>
+            
+            <!-- Floating shapes -->
+            <div class="absolute top-1/2 left-[25%] w-16 h-16 bg-secondary/20 rounded-lg rotate-45 animate-float-medium"></div>
+            <div class="absolute bottom-1/4 left-[40%] w-10 h-10 border-2 border-white/10 rounded-md rotate-12 animate-float-slow"></div>
+            
+            <!-- Dutch flag element -->
+            <div class="absolute top-[60%] right-[18%] w-16 h-10 overflow-hidden rounded-md animate-float-slow">
+                <div class="absolute inset-0 flex flex-col">
+                    <div class="h-1/3 bg-[#AE1C28]"></div>
+                    <div class="h-1/3 bg-white"></div>
+                    <div class="h-1/3 bg-[#21468B]"></div>
+                </div>
+            </div>
+            
+            <!-- EU stars element -->
+            <div class="absolute bottom-[15%] right-[28%] w-12 h-12 bg-[#003399]/30 rounded-full flex items-center justify-center animate-float-medium">
+                <div class="relative w-8 h-8">
+                    <?php for ($i = 0; $i < 12; $i++): 
+                        $angle = $i * 30;
+                        $radians = $angle * M_PI / 180;
+                        $x = 4 + 3.5 * cos($radians);
+                        $y = 4 + 3.5 * sin($radians);
+                    ?>
+                    <div class="absolute w-1 h-1 bg-[#FFCC00] rounded-full" style="left: <?php echo $x; ?>px; top: <?php echo $y; ?>px;"></div>
+                    <?php endfor; ?>
+                </div>
+            </div>
+            
+            <!-- Ballot icon -->
+            <div class="absolute top-[70%] left-[15%] w-11 h-11 bg-secondary/20 backdrop-blur-sm rounded-lg flex items-center justify-center rotate-12 animate-float-medium">
+                <svg class="w-6 h-6 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                </svg>
+            </div>
+            
+            <!-- Scales of justice -->
+            <div class="absolute bottom-[20%] left-[20%] w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center animate-float-slow">
+                <svg class="w-7 h-7 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"></path>
+                </svg>
+            </div>
+            
+            <!-- Speech bubble / debate -->
+            <div class="absolute top-[20%] right-[10%] w-10 h-10 bg-primary/20 backdrop-blur-sm rounded-lg flex items-center justify-center animate-float-fast">
+                <svg class="w-6 h-6 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                </svg>
+            </div>
+            
+            <!-- Parliament/seats icon -->
+            <div class="absolute bottom-[40%] left-[8%] w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center animate-float-medium">
+                <svg class="w-7 h-7 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                </svg>
+            </div>
+            
+            <!-- Particle container with animated dots -->
+            <div class="absolute inset-0" 
+                 x-data="{
+                     particles: Array.from({length: 20}, () => ({
+                         x: Math.random() * 100,
+                         y: Math.random() * 100,
+                         size: Math.random() * 1.5 + 0.5,
+                         speed: Math.random() * 1 + 0.5,
+                         opacity: Math.random() * 0.5 + 0.2
+                     }))
+                 }">
+                <template x-for="(particle, index) in particles" :key="index">
+                    <div class="absolute rounded-full bg-white"
+                         :style="`
+                            left: ${particle.x}%; 
+                            top: ${particle.y}%; 
+                            width: ${particle.size}px; 
+                            height: ${particle.size}px; 
+                            opacity: ${particle.opacity};
+                            animation: float-particle ${particle.speed + 3}s infinite alternate ease-in-out;
+                         `"></div>
+                </template>
+            </div>
         </div>
         
         <div class="container mx-auto px-4 py-12 md:py-16 lg:py-20 relative">
@@ -186,333 +369,191 @@ require_once 'views/templates/header.php';
                     </div>
 
                     <!-- Right Column: Live Peilingen -->
-                    <div class="relative max-w-2xl mx-auto lg:max-w-none" data-aos="fade-left">
-                        <!-- Glassmorphism Background -->
-                        <div class="absolute inset-0 bg-gradient-to-br from-slate-800/90 via-slate-900/90 to-slate-800/90 rounded-xl backdrop-blur-md"></div>
+                    <div class="relative w-full" data-aos="fade-left">
+                        <!-- Achtergrond met kleuren die passen bij de website -->
+                        <div class="absolute inset-0 bg-[#1a365d] rounded-xl shadow-xl"></div>
                         
-                        <!-- Main Content -->
-                        <div class="relative bg-white/5 p-4 sm:p-6 rounded-xl border border-white/10">
-                            <!-- Dashboard Header -->
-                            <div class="flex items-center justify-between mb-6">
-                                <div class="flex items-center">
-                                    <div class="p-2 bg-blue-500/10 rounded-lg mr-3 ring-1 ring-blue-500/20">
-                                        <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"/>
-                                        </svg>
-                                    </div>
-                                    <div>
-                                        <h3 class="text-lg font-semibold text-white tracking-tight">Tweede Kamer</h3>
-                                        <p class="text-xs text-blue-300/80">
-                                            Volgende reguliere verkiezingen zijn in maart 2028
-                                        </p>
-                                    </div>
+                        <!-- Decoratieve accenten - verbeterde header met gradient -->
+                        <div class="absolute top-0 left-0 right-0 h-12 sm:h-16 bg-gradient-to-r from-[#1a365d] to-[#2a4a7c] rounded-t-xl flex items-center justify-between px-3 sm:px-5 overflow-hidden">
+                            <!-- Rode accent border bovenaan -->
+                            <div class="absolute top-0 left-0 right-0 h-1 bg-[#c41e3a]"></div>
+                            
+                            <!-- Decoratieve elementen -->
+                            <div class="absolute -right-16 -top-16 w-32 h-32 bg-[#c41e3a]/10 rounded-full blur-xl"></div>
+                            
+                            <!-- Linker deel met titel -->
+                            <div class="flex items-center space-x-2 sm:space-x-3 relative z-10">
+                                <div class="w-6 h-6 sm:w-8 sm:h-8 bg-[#c41e3a] rounded-full flex items-center justify-center shadow-md">
+                                    <svg class="w-3 h-3 sm:w-4 sm:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                                    </svg>
                                 </div>
-                                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-500/10 text-green-400 ring-1 ring-green-500/20">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-green-400 mr-1.5 animate-pulse"></span>
-                                    Live
-                                </span>
+                                <div>
+                                    <h3 class="text-sm sm:text-base md:text-lg font-bold text-white tracking-wide uppercase">ACTUELE PEILINGEN</h3>
+                                    <p class="hidden sm:block text-[10px] text-white/60">Laatste update: vandaag</p>
+                                </div>
                             </div>
-
-                            <!-- NEW DESIGN: Polling Data Visualization -->
-                            <div x-data="{ activeView: 'seats', activeTab: 'main', showAllParties: false }">
-                                <!-- Poll Header with Context -->
-                                <div class="flex flex-wrap items-center justify-between mb-3">
-                                    <div class="flex items-center space-x-2">
-                                        <div class="flex items-center px-3 py-1.5 bg-white/5 backdrop-blur-sm rounded-lg border border-white/10">
-                                            <svg class="w-4 h-4 text-blue-300 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                            </svg>
-                                            <span class="text-xs text-blue-100 font-medium">19 maart 2025</span>
-                                        </div>
-                                        <div class="flex items-center px-3 py-1.5 bg-white/5 backdrop-blur-sm rounded-lg border border-white/10">
-                                            <svg class="w-4 h-4 text-purple-300 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                                            </svg>
-                                            <span class="text-xs text-purple-100 font-medium">Ipsos I&O</span>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- View Switcher -->
-                                    <div class="flex p-0.5 bg-white/5 backdrop-blur-sm rounded-lg border border-white/10 text-xs font-medium mt-2 sm:mt-0">
-                                        <button @click="activeView = 'seats'" :class="{'bg-gradient-to-r from-blue-500/80 to-purple-500/80 text-white': activeView === 'seats', 'text-white/70 hover:text-white/90': activeView !== 'seats'}" class="px-3 py-1.5 rounded-md transition-all duration-200">
-                                            Zetels
-                                        </button>
-                                        <button @click="activeView = 'percentage'" :class="{'bg-gradient-to-r from-blue-500/80 to-purple-500/80 text-white': activeView === 'percentage', 'text-white/70 hover:text-white/90': activeView !== 'percentage'}" class="px-3 py-1.5 rounded-md transition-all duration-200">
-                                            Percentages
-                                        </button>
-                                        <button @click="activeView = 'trends'" :class="{'bg-gradient-to-r from-blue-500/80 to-purple-500/80 text-white': activeView === 'trends', 'text-white/70 hover:text-white/90': activeView !== 'trends'}" class="px-3 py-1.5 rounded-md transition-all duration-200">
-                                            Trends
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <!-- Visualization Area -->
-                                <div class="bg-gradient-to-br from-white/[0.03] to-white/[0.01] rounded-xl border border-white/10 overflow-hidden">
-                                    <!-- Tab Navigation -->
-                                    <div class="flex border-b border-white/10">
-                                        <button @click="activeTab = 'main'" :class="{'bg-white/5 border-b-2 border-blue-400': activeTab === 'main', 'hover:bg-white/[0.02]': activeTab !== 'main'}" class="flex-1 px-4 py-3 text-sm font-medium text-white transition-all duration-200">
-                                            Grote Partijen
-                                        </button>
-                                        <button @click="activeTab = 'others'" :class="{'bg-white/5 border-b-2 border-blue-400': activeTab === 'others', 'hover:bg-white/[0.02]': activeTab !== 'others'}" class="flex-1 px-4 py-3 text-sm font-medium text-white transition-all duration-200">
-                                            Overige Partijen
-                                        </button>
-                                    </div>
-
-                                    <!-- Main Parties Tab Content -->
-                                    <div x-show="activeTab === 'main'" class="p-4">
-                                        <?php 
-                                        $topParties = [
-                                            'pvv' => ['seats' => 30, 'percentage' => 20.0, 'color' => 'from-blue-600 to-blue-400', 'trend' => 'down', 'change' => '-4'],
-                                            'gl-pvda' => ['seats' => 27, 'percentage' => 18.0, 'color' => 'from-green-600 to-red-600', 'trend' => 'up', 'change' => '+3'],
-                                            'vvd' => ['seats' => 25, 'percentage' => 16.7, 'color' => 'from-orange-500 to-yellow-400', 'trend' => 'up', 'change' => '+5'],
-                                            'd66' => ['seats' => 11, 'percentage' => 7.3, 'color' => 'from-green-500 to-green-300', 'trend' => 'none', 'change' => '0'],
-                                            'cda' => ['seats' => 18, 'percentage' => 12.0, 'color' => 'from-green-700 to-green-500', 'trend' => 'up', 'change' => '+2']
-                                        ];
-                                        
-                                        foreach($topParties as $party => $data): 
-                                            $trendIcon = '';
-                                            $trendColor = '';
-                                            $trendBg = '';
-                                            
-                                            if($data['trend'] === 'up') {
-                                                $trendIcon = '<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>';
-                                                $trendColor = 'text-green-400';
-                                                $trendBg = 'bg-green-400/10';
-                                                $trendText = 'Stijging';
-                                            } elseif($data['trend'] === 'down') {
-                                                $trendIcon = '<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0v-8m0 8l-8-8-4 4-6-6"/></svg>';
-                                                $trendColor = 'text-red-400';
-                                                $trendBg = 'bg-red-400/10';
-                                                $trendText = 'Daling';
-                                            } else {
-                                                $trendIcon = '<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/></svg>';
-                                                $trendColor = 'text-yellow-400';
-                                                $trendBg = 'bg-yellow-400/10';
-                                                $trendText = 'Ongewijzigd';
-                                            }
-                                        ?>
-                                            <div class="mb-4 last:mb-0 relative group">
-                                                <!-- Party Row -->
-                                                <div class="flex items-center mb-2">
-                                                    <!-- Party name and visual elements -->
-                                                    <div class="w-24 flex items-center">
-                                                        <div class="flex items-center space-x-2">
-                                                            <div class="w-3 h-3 rounded-full bg-gradient-to-r <?php echo $data['color']; ?>"></div>
-                                                            <span class="text-sm font-semibold text-white"><?php echo strtoupper($party); ?></span>
-                                                                </div>
-                                                                </div>
-                                                    
-                                                    <!-- Seats/Percentage Counter -->
-                                                    <div class="ml-auto">
-                                                        <div x-show="activeView === 'seats'" class="flex items-center justify-center w-10 h-6 bg-white/10 backdrop-blur-sm rounded text-sm font-bold text-white">
-                                                            <?php echo $data['seats']; ?>
-                                                    </div>
-                                                        <div x-show="activeView === 'percentage'" class="flex items-center justify-center w-14 h-6 bg-white/10 backdrop-blur-sm rounded text-sm font-bold text-white">
-                                                            <?php echo $data['percentage']; ?>%
-                                                </div>
-                                                        <div x-show="activeView === 'trends'" class="w-10"></div>
-                                                    </div>
-                                                </div>
-                                                
-                                                <!-- Progress Bar - Made thinner for seats and percentage views -->
-                                                <div x-show="activeView === 'seats' || activeView === 'percentage'" class="relative h-4 bg-white/5 rounded-lg overflow-hidden">
-                                                    <!-- Animated Background -->
-                                                    <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"30\" height=\"30\" viewBox=\"0 0 30 30\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cpath d=\"M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z\" fill=\"rgba(255,255,255,0.07)\"%3E%3C/path%3E%3C/svg%3E')] opacity-30"></div>
-                                                    
-                                                    <!-- Progress fill with gradient -->
-                                                    <div x-show="activeView === 'seats'" 
-                                                         class="h-full bg-gradient-to-r <?php echo $data['color']; ?> transition-all duration-1000 ease-out rounded-lg"
-                                                         style="width: <?php echo ($data['seats'] / 150) * 100; ?>%">
-                                                    </div>
-                                                    <div x-show="activeView === 'percentage'" 
-                                                         class="h-full bg-gradient-to-r <?php echo $data['color']; ?> transition-all duration-1000 ease-out rounded-lg" 
-                                                         style="width: <?php echo $data['percentage']; ?>%">
-                                                </div>
-                                                    
-                                                    <!-- Party value label inside bar -->
-                                                    <div class="absolute inset-0 flex items-center">
-                                                        <div class="ml-3 text-xs font-medium text-white flex items-center space-x-1.5">
-                                                            <span x-show="activeView === 'seats'"><?php echo $data['seats']; ?> zetels</span>
-                                                            <span x-show="activeView === 'percentage'"><?php echo $data['percentage']; ?>% van de stemmen</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                
-                                                <!-- New Trend View - More elegant than the progress bar -->
-                                                <div x-show="activeView === 'trends'" class="flex items-center p-1.5 <?php echo $trendBg; ?> rounded-lg">
-                                                    <div class="flex items-center space-x-2">
-                                                        <span class="<?php echo $trendColor; ?>">
-                                                            <?php echo $trendIcon; ?>
-                                                        </span>
-                                                        <span class="<?php echo $trendColor; ?> font-medium text-sm">
-                                                            <?php echo $trendText; ?>: <?php echo $data['change']; ?> zetels
-                                                        </span>
-                                                        <span class="text-white/60 text-xs">t.o.v. 17 feb 2025</span>
-                                                    </div>
-                                                </div>
-                                                
-                                                <!-- Hover effect - glowing border -->
-                                                <div class="absolute inset-0 -m-0.5 rounded-lg bg-gradient-to-r <?php echo $data['color']; ?> opacity-0 group-hover:opacity-20 transition-opacity pointer-events-none"></div>
-                                            </div>
-                                        <?php endforeach; ?>
-
-                                        <!-- Total seats counter -->
-                                        <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
-                                            <span class="text-xs text-white/70">Totaal zetels in Tweede Kamer</span>
-                                            <span class="text-sm font-bold text-white bg-white/10 px-2 py-1 rounded-md">150</span>
-                                        </div>
-                                    </div>
-
-                                    <!-- Other Parties Tab Content -->
-                                    <div x-show="activeTab === 'others'" class="p-4">
-                                                <?php 
-                                                $otherParties = [
-                                            'pvdd' => ['seats' => 7, 'percentage' => 4.7, 'color' => 'from-green-400 to-emerald-600', 'trend' => 'down', 'change' => '-1'],
-                                            'sp' => ['seats' => 6, 'percentage' => 4.0, 'color' => 'from-red-600 to-red-400', 'trend' => 'down', 'change' => '-2'],
-                                            'denk' => ['seats' => 4, 'percentage' => 2.7, 'color' => 'from-teal-500 to-teal-300', 'trend' => 'up', 'change' => '+1'],
-                                            'cu' => ['seats' => 4, 'percentage' => 2.7, 'color' => 'from-blue-500 to-cyan-400', 'trend' => 'up', 'change' => '+1'],
-                                            'ja21' => ['seats' => 4, 'percentage' => 2.7, 'color' => 'from-orange-600 to-red-500', 'trend' => 'up', 'change' => '+1'],
-                                            'bbb' => ['seats' => 3, 'percentage' => 2.0, 'color' => 'from-emerald-600 to-emerald-400', 'trend' => 'down', 'change' => '-1'],
-                                            'fvd' => ['seats' => 3, 'percentage' => 2.0, 'color' => 'from-purple-600 to-purple-400', 'trend' => 'down', 'change' => '-1'],
-                                            'sgp' => ['seats' => 3, 'percentage' => 2.0, 'color' => 'from-orange-700 to-orange-500', 'trend' => 'down', 'change' => '-1'],
-                                            'volt' => ['seats' => 3, 'percentage' => 2.0, 'color' => 'from-purple-500 to-indigo-400', 'trend' => 'down', 'change' => '-2'],
-                                            'nsc' => ['seats' => 2, 'percentage' => 1.3, 'color' => 'from-cyan-600 to-cyan-400', 'trend' => 'down', 'change' => '-1']
-                                        ];
-                                        
-                                        // Display in grid for smaller parties
-                                        echo '<div class="grid grid-cols-1 md:grid-cols-2 gap-3">';
-                                                
-                                                foreach($otherParties as $party => $data): 
-                                            $trendIcon = '';
-                                            $trendColor = '';
-                                            $trendBg = '';
-                                            
-                                            if($data['trend'] === 'up') {
-                                                $trendIcon = '<svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>';
-                                                $trendColor = 'text-green-400';
-                                                $trendBg = 'bg-green-400/10';
-                                                $trendText = 'Stijging';
-                                            } elseif($data['trend'] === 'down') {
-                                                $trendIcon = '<svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0v-8m0 8l-8-8-4 4-6-6"/></svg>';
-                                                $trendColor = 'text-red-400';
-                                                $trendBg = 'bg-red-400/10';
-                                                $trendText = 'Daling';
-                                            } else {
-                                                $trendIcon = '<svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/></svg>';
-                                                $trendColor = 'text-yellow-400';
-                                                $trendBg = 'bg-yellow-400/10';
-                                                $trendText = 'Ongewijzigd';
-                                            }
-                                        ?>
-                                            <div class="relative group bg-white/5 rounded-lg p-3 hover:bg-white/[0.07] transition-all">
-                                                <div class="flex items-center justify-between mb-2">
-                                                    <div class="flex items-center space-x-2">
-                                                        <div class="w-2.5 h-2.5 rounded-full bg-gradient-to-r <?php echo $data['color']; ?>"></div>
-                                                        <span class="text-sm font-medium text-white"><?php echo strtoupper($party); ?></span>
-                                                                        </div>
-                                                    
-                                                            <div class="flex items-center space-x-2">
-                                                        <div x-show="activeView === 'seats'" class="flex items-center justify-center w-7 h-5 bg-white/10 rounded text-xs font-bold text-white">
-                                                                    <?php echo $data['seats']; ?>
-                                                            </div>
-                                                        <div x-show="activeView === 'percentage'" class="flex items-center justify-center w-12 h-5 bg-white/10 rounded text-xs font-bold text-white">
-                                                            <?php echo $data['percentage']; ?>%
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                
-                                                <!-- Seats & Percentage View -->
-                                                <div x-show="activeView === 'seats' || activewView === 'percentage'" class="relative h-2 bg-white/5 rounded-full overflow-hidden">
-                                                    <div x-show="activeView === 'seats'" 
-                                                         class="h-full bg-gradient-to-r <?php echo $data['color']; ?> transition-all duration-1000 ease-out rounded-full" 
-                                                                 style="width: <?php echo ($data['seats'] / 150) * 100; ?>%">
-                                                            </div>
-                                                    <div x-show="activeView === 'percentage'" 
-                                                         class="h-full bg-gradient-to-r <?php echo $data['color']; ?> transition-all duration-1000 ease-out rounded-full" 
-                                                         style="width: <?php echo $data['percentage']; ?>%">
-                                                        </div>
-                                                    </div>
-
-                                                <!-- Seats & Percentage View - Hidden Progress Bars -->
-                                                <div x-show="activeView === 'seats' || activeView === 'percentage'" class="relative h-0 bg-white/5 rounded-full overflow-hidden hidden">
-                                                    <div x-show="activeView === 'seats'" 
-                                                         class="h-full bg-gradient-to-r <?php echo $data['color']; ?> transition-all duration-1000 ease-out rounded-full" 
-                                                         style="width: <?php echo ($data['seats'] / 150) * 100; ?>%">
-                                            </div>
-                                                    <div x-show="activeView === 'percentage'" 
-                                                         class="h-full bg-gradient-to-r <?php echo $data['color']; ?> transition-all duration-1000 ease-out rounded-full" 
-                                                         style="width: <?php echo $data['percentage']; ?>%">
-                                        </div>
-                                    </div>
-                                                
-                                                <!-- Badge displays for seats and percentages -->
-                                                <div x-show="activeView === 'seats'" class="mt-2">
-                                                    <span class="inline-flex items-center px-2.5 py-1 bg-gradient-to-r <?php echo $data['color']; ?> rounded-full text-xs font-medium text-white">
-                                                        <?php echo $data['seats']; ?> zetels
-                                                    </span>
-                                </div>
-
-                                                <div x-show="activeView === 'percentage'" class="mt-2">
-                                                    <span class="inline-flex items-center px-2.5 py-1 bg-gradient-to-r <?php echo $data['color']; ?> rounded-full text-xs font-medium text-white">
-                                                        <?php echo $data['percentage']; ?>%
-                                        </span>
-                                    </div>
-                                    
-                                                <!-- Trends View -->
-                                                <div x-show="activeView === 'trends'" class="mt-1 flex items-center">
-                                                    <span class="<?php echo $trendColor; ?> text-xs font-medium">
-                                                        <?php echo $trendText; ?>: <?php echo $data['change']; ?>
-                                                    </span>
-                                                        </div>
-
-                                                <!-- Trends View Badge -->
-                                                <div x-show="activeView === 'trends'" class="mt-2">
-                                                    <span class="inline-flex items-center px-2.5 py-1 <?php echo $trendBg; ?> rounded-full">
-                                                        <span class="<?php echo $trendColor; ?> text-xs font-medium flex items-center">
-                                                            <?php echo $trendIcon; ?>
-                                                            <span class="ml-1"><?php echo $trendText; ?>: <?php echo $data['change']; ?></span>
-                                                        </span>
-                                                    </span>
-                                                        </div>
-                                                        </div>
-                                        <?php endforeach; 
-                                        echo '</div>';
-                                        ?>
+                        </div>
+                        
+                        <!-- Main Content - aangepast met meer padding-top voor de header -->
+                        <div class="relative p-3 sm:p-5 pt-16 sm:pt-20 rounded-xl overflow-hidden">
+                            <!-- Info regel - datum verwijderd -->
+                            <div class="flex items-center mb-3 sm:mb-4">
+                                <div class="flex items-center text-xs text-white/70">
+                                    <span class="text-[10px] sm:text-xs">Tweede Kamer</span>
+                                    <span class="inline-block mx-1 sm:mx-2">•</span>
+                                    <span class="flex items-center text-[10px] sm:text-xs">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-[#c41e3a] animate-pulse mr-1"></span>
+                                        <span>Live data</span>
+                                    </span>
                                 </div>
                             </div>
 
-                                <!-- Bottom Legend/Info -->
-                                <div class="mt-4 flex items-center justify-between text-xs text-white/60">
+                            <!-- Interactieve visualisatie van de peilingen -->
+                            <div x-data="{ activeView: 'seats' }" class="relative">
+                                <!-- Weergave selector -->
+                                <div class="flex mb-2 sm:mb-3">
+                                    <button @click="activeView = 'seats'" 
+                                            :class="{'bg-[#c41e3a] text-white': activeView === 'seats', 'bg-white/10 text-white hover:bg-white/20': activeView !== 'seats'}" 
+                                            class="text-[10px] sm:text-xs py-1 px-2 sm:px-3 rounded-l-md transition-colors duration-200 focus:outline-none font-semibold">
+                                        Zetels
+                                    </button>
+                                    <button @click="activeView = 'percentage'" 
+                                            :class="{'bg-[#c41e3a] text-white': activeView === 'percentage', 'bg-white/10 text-white hover:bg-white/20': activeView !== 'percentage'}" 
+                                            class="text-[10px] sm:text-xs py-1 px-2 sm:px-3 rounded-r-md transition-colors duration-200 focus:outline-none font-semibold">
+                                        Percentages
+                                    </button>
+                                </div>
+
+                                <!-- Partijen ranking met compacte visualisatie -->
+                                <div>
+                                    <?php 
+                                    $topParties = [
+                                        'pvv' => ['seats' => 30, 'percentage' => 20.0, 'color' => '#0D47A1', 'change' => -4],
+                                        'gl-pvda' => ['seats' => 27, 'percentage' => 18.0, 'color' => '#7B1FA2', 'change' => 3],
+                                        'vvd' => ['seats' => 25, 'percentage' => 16.7, 'color' => '#FF6F00', 'change' => 5],
+                                        'd66' => ['seats' => 11, 'percentage' => 7.3, 'color' => '#00796B', 'change' => 0],
+                                        'cda' => ['seats' => 18, 'percentage' => 12.0, 'color' => '#2E7D32', 'change' => 2],
+                                        'sp' => ['seats' => 6, 'percentage' => 4.0, 'color' => '#C62828', 'change' => -2],
+                                        'pvdd' => ['seats' => 7, 'percentage' => 4.7, 'color' => '#388E3C', 'change' => -1],
+                                        'ja21' => ['seats' => 4, 'percentage' => 2.7, 'color' => '#EF6C00', 'change' => 1]
+                                    ];
+                                    
+                                    foreach($topParties as $party => $data): 
+                                        $changeClass = $data['change'] > 0 ? 'text-green-400' : ($data['change'] < 0 ? 'text-red-400' : 'text-yellow-400');
+                                        $changeIndicator = $data['change'] > 0 ? '+' . $data['change'] : $data['change'];
+                                    ?>
+                                        <div class="mb-1 sm:mb-1.5 last:mb-0 relative">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex items-center w-16 sm:w-24">
+                                                    <div class="h-2 w-2 mr-1 sm:mr-1.5 rounded-full" style="background-color: <?php echo $data['color']; ?>"></div>
+                                                    <span class="text-[10px] sm:text-xs font-semibold text-white uppercase"><?php echo $party; ?></span>
+                                                </div>
+                                                <div class="relative h-1.5 sm:h-2 bg-white/10 rounded-full overflow-hidden flex-grow mx-1 sm:mx-2">
+                                                    <div x-show="activeView === 'seats'" class="absolute inset-y-0 left-0 rounded-full" 
+                                                         style="width: <?php echo ($data['seats'] / 150) * 100; ?>%; background-color: <?php echo $data['color']; ?>"></div>
+                                                    <div x-show="activeView === 'percentage'" class="absolute inset-y-0 left-0 rounded-full" 
+                                                         style="width: <?php echo $data['percentage']; ?>%; background-color: <?php echo $data['color']; ?>"></div>
+                                                </div>
+                                                <div class="flex items-center w-12 sm:w-16 justify-end">
+                                                    <span x-show="activeView === 'seats'" class="text-[10px] sm:text-xs font-bold text-white"><?php echo $data['seats']; ?></span>
+                                                    <span x-show="activeView === 'percentage'" class="text-[10px] sm:text-xs font-bold text-white"><?php echo $data['percentage']; ?>%</span>
+                                                    <span class="<?php echo $changeClass; ?> text-[8px] sm:text-[10px] ml-1 sm:ml-1.5"><?php echo $changeIndicator; ?></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                    
+                                    <!-- Resterende partijen samenvatting -->
+                                    <div class="mt-1 pt-1 border-t border-white/10">
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center w-16 sm:w-24">
+                                                <span class="text-[10px] sm:text-xs text-white/80">Overige partijen</span>
+                                            </div>
+                                            <div class="relative h-1.5 sm:h-2 bg-white/10 rounded-full overflow-hidden flex-grow mx-1 sm:mx-2">
+                                                <div x-show="activeView === 'seats'" class="absolute inset-y-0 left-0 bg-white/20 rounded-full" style="width: <?php echo (22 / 150) * 100; ?>%"></div>
+                                                <div x-show="activeView === 'percentage'" class="absolute inset-y-0 left-0 bg-white/20 rounded-full" style="width: 14.6%"></div>
+                                            </div>
+                                            <div class="flex items-center w-12 sm:w-16 justify-end">
+                                                <span x-show="activeView === 'seats'" class="text-[10px] sm:text-xs font-bold text-white">22</span>
+                                                <span x-show="activeView === 'percentage'" class="text-[10px] sm:text-xs font-bold text-white">14.6%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Ontwikkeling in 90 dagen -->
+                                <div class="mt-3 sm:mt-4 pt-2 sm:pt-3 border-t border-white/10">
+                                    <h4 class="text-[10px] sm:text-xs font-semibold text-white mb-1 sm:mb-2">Ontwikkeling in 90 dagen</h4>
+                                    <div class="relative h-14 sm:h-20 w-full">
+                                        <div class="absolute inset-0">
+                                            <!-- Verbeterde lijngrafiek met dikkere lijnen -->
+                                            <svg class="w-full h-full" viewBox="0 0 400 100" preserveAspectRatio="none">
+                                                <!-- Horizontale gridlijnen -->
+                                                <line x1="0" y1="25" x2="400" y2="25" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+                                                <line x1="0" y1="50" x2="400" y2="50" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+                                                <line x1="0" y1="75" x2="400" y2="75" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+                                                
+                                                <!-- Verticale gridlijnen voor beter referentiepunt -->
+                                                <line x1="100" y1="0" x2="100" y2="100" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
+                                                <line x1="200" y1="0" x2="200" y2="100" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
+                                                <line x1="300" y1="0" x2="300" y2="100" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
+                                                
+                                                <!-- PVV lijn - dikker en beter zichtbaar -->
+                                                <path d="M0,40 L50,45 L100,30 L150,45 L200,60 L250,40 L300,35 L350,30 L400,60" 
+                                                      fill="none" stroke="#0D47A1" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                
+                                                <!-- GL-PvdA lijn - dikker en beter zichtbaar -->
+                                                <path d="M0,60 L50,55 L100,55 L150,50 L200,45 L250,40 L300,40 L350,30 L400,25" 
+                                                      fill="none" stroke="#7B1FA2" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                
+                                                <!-- VVD lijn - dikker en beter zichtbaar -->
+                                                <path d="M0,50 L50,55 L100,60 L150,55 L200,50 L250,50 L300,50 L350,40 L400,30" 
+                                                      fill="none" stroke="#FF6F00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </div>
+                                        
+                                        <!-- Legenda met duidelijkere markers -->
+                                        <div class="absolute bottom-0 left-0 right-0 flex justify-between sm:justify-start sm:space-x-4">
+                                            <div class="flex items-center">
+                                                <div class="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-[#0D47A1] mr-1"></div>
+                                                <span class="text-[8px] sm:text-[10px] text-white/80">PVV</span>
+                                            </div>
+                                            <div class="flex items-center">
+                                                <div class="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-[#7B1FA2] mr-1"></div>
+                                                <span class="text-[8px] sm:text-[10px] text-white/80">GL-PvdA</span>
+                                            </div>
+                                            <div class="flex items-center">
+                                                <div class="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-[#FF6F00] mr-1"></div>
+                                                <span class="text-[8px] sm:text-[10px] text-white/80">VVD</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Tijdsaanduiding -->
+                                        <div class="absolute top-1 left-0 right-0 flex justify-between">
+                                            <span class="text-[7px] sm:text-[8px] text-white/40">90 dagen</span>
+                                            <span class="text-[7px] sm:text-[8px] text-white/40">Heden</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Footer met informatie en links -->
+                                <div class="mt-2 flex items-center justify-between">
                                     <div class="flex items-center space-x-1">
-                                        <svg class="w-3.5 h-3.5 text-blue-400/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                                            </svg>
-                                        <span>Peilingen tonen een momentopname, geen verkiezingsuitslag</span>
-                                        </div>
-                                    <div>
-                                        <a href="<?php echo URLROOT; ?>/peilingen" class="flex items-center space-x-1 text-blue-300 hover:text-blue-200 transition-colors">
-                                            <span>Alle peilingen</span>
-                                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
-                                                            </svg>
-                                        </a>
-                                                </div>
-                                        </div>
+                                        <span class="text-[8px] sm:text-[10px] text-white/50">Peilingwijzer • Ipsos I&O Research</span>
+                                    </div>
+                                </div>
                             </div>
-
-                            <!-- Decorative Elements -->
-                            <div class="absolute -top-4 -right-4 w-24 h-24 bg-blue-500/20 rounded-full blur-2xl"></div>
-                            <div class="absolute -bottom-4 -left-4 w-32 h-32 bg-purple-500/20 rounded-full blur-2xl"></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
+        
         <!-- Wave Separator -->
-        <div class="absolute bottom-0 left-0 right-0">
-            <svg class="w-full h-auto" viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M0 120L60 110C120 100 240 80 360 70C480 60 600 60 720 65C840 70 960 80 1080 85C1200 90 1320 90 1380 90L1440 90V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0V120Z" fill="white"/>
+        <div class="absolute bottom-[-20px] left-0 right-0 overflow-hidden z-0">
+            <svg class="w-full h-[80px]" viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                <path d="M0 120L40 114C80 108 160 96 240 90C320 84 400 84 480 78C560 72 640 60 720 54C800 48 880 48 960 54C1040 60 1120 72 1200 78C1280 84 1360 84 1400 84L1440 84V120H1400C1360 120 1280 120 1200 120C1120 120 1040 120 960 120C880 120 800 120 720 120C640 120 560 120 480 120C400 120 320 120 240 120C160 120 80 120 40 120H0Z" fill="white"/>
+                <path d="M0 120L40 102C80 84 160 48 240 36C320 24 400 36 480 48C560 60 640 72 720 78C800 84 880 84 960 78C1040 72 1120 60 1200 48C1280 36 1360 24 1400 18L1440 12V120H1400C1360 120 1280 120 1200 120C1120 120 1040 120 960 120C880 120 800 120 720 120C640 120 560 120 480 120C400 120 320 120 240 120C160 120 80 120 40 120H0Z" fill="white" fill-opacity="0.5"/>
             </svg>
         </div>
     </section>
@@ -1208,6 +1249,14 @@ require_once 'views/templates/header.php';
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
+
+        <!-- Wave Separator -->
+        <div class="absolute bottom-0 left-0 right-0">
+            <svg class="w-full h-auto" viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                
+            </svg>
         </div>
     </section>
 </main>

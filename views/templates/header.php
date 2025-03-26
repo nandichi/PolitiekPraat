@@ -529,6 +529,31 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
             z-index: -1;
             opacity: 0.5;
         }
+
+        /* New shadow-glow utilities for poll redesign */
+        .shadow-glow {
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.15), 
+                        0 0 25px rgba(59, 130, 246, 0.1);
+        }
+        
+        .shadow-glow-sm {
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.12), 
+                        0 0 12px rgba(59, 130, 246, 0.08);
+        }
+        
+        /* Enhanced animations for poll elements */
+        @keyframes pulse-subtle {
+            0%, 100% {
+                opacity: 0.85;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+        
+        .animate-pulse-subtle {
+            animation: pulse-subtle 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
     </style>
 </head>
 <body class="bg-gray-50 flex flex-col min-h-screen overflow-x-hidden">
@@ -657,7 +682,7 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                     </a>
 
                     <!-- Forum Dropdown - Elegant implementation -->
-                    <div class="relative group">
+                    <div class="relative group" style="display: none;">
                         <button class="nav-link px-2.5 lg:px-3 py-2 text-white/95 font-medium flex items-center rounded-lg">
                             <span class="relative">Forum</span>
                             <svg class="w-4 h-4 ml-1.5 transform transition-transform duration-300 group-hover:rotate-180" 
@@ -963,7 +988,7 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                     </a>
 
                     <!-- Forum Section - Improved -->
-                    <div class="space-y-2">
+                    <div class="space-y-2" style="display: none;">
                         <button class="w-full flex items-center justify-between text-white/90 hover:text-white 
                                      p-2 rounded-lg transition-all duration-300 hover:bg-white/5 group" 
                                 onclick="toggleMobileSubmenu('forum-submenu')">
