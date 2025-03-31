@@ -59,11 +59,14 @@
                             <!-- Profielfoto Upload -->
                             <div class="md:col-span-2 flex flex-col sm:flex-row items-start sm:items-center mb-4 pb-4 border-b border-gray-100">
                                 <div class="w-20 h-20 bg-gradient-to-br from-primary to-secondary/80 rounded-xl flex items-center justify-center text-3xl font-bold text-white mr-6">
-                                    <?php if (!empty($user['profile_photo'])): ?>
-                                        <img src="<?php echo URLROOT . '/' . htmlspecialchars($user['profile_photo']); ?>" 
+                                    <?php
+                                    $profilePhoto = getProfilePhotoUrl($user['profile_photo'], $user['username']);
+                                    if ($profilePhoto['type'] === 'img'): 
+                                    ?>
+                                        <img src="<?php echo $profilePhoto['value']; ?>" 
                                              alt="Profielfoto" class="w-full h-full rounded-xl object-cover">
                                     <?php else: ?>
-                                        <?php echo strtoupper(substr($user['username'], 0, 1)); ?>
+                                        <?php echo $profilePhoto['value']; ?>
                                     <?php endif; ?>
                                 </div>
                                 <div>

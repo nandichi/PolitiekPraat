@@ -26,13 +26,16 @@ require_once 'views/templates/header.php'; ?>
                         <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 leading-tight"><?php echo htmlspecialchars($blog->title); ?></h1>
                         <div class="flex items-center text-white/90 text-sm sm:text-base">
                             <span class="flex items-center">
-                                <?php if (!empty($blog->profile_photo)): ?>
-                                    <img src="<?php echo URLROOT . '/' . $blog->profile_photo; ?>" 
+                                <?php
+                                $profilePhoto = getProfilePhotoUrl($blog->profile_photo, $blog->author_name);
+                                if ($profilePhoto['type'] === 'img'): 
+                                ?>
+                                    <img src="<?php echo $profilePhoto['value']; ?>" 
                                          alt="<?php echo htmlspecialchars($blog->author_name); ?>"
                                          class="w-6 h-6 sm:w-7 sm:h-7 rounded-full object-cover mr-1.5 sm:mr-2">
                                 <?php else: ?>
                                     <div class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white text-primary flex items-center justify-center mr-1.5 sm:mr-2">
-                                        <?php echo substr($blog->author_name, 0, 1); ?>
+                                        <?php echo $profilePhoto['value']; ?>
                                     </div>
                                 <?php endif; ?>
                                 <?php echo htmlspecialchars($blog->author_name); ?>
@@ -59,13 +62,16 @@ require_once 'views/templates/header.php'; ?>
                     <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 leading-tight"><?php echo htmlspecialchars($blog->title); ?></h1>
                     <div class="flex items-center text-gray-600 text-sm sm:text-base">
                         <span class="flex items-center">
-                            <?php if (!empty($blog->profile_photo)): ?>
-                                <img src="<?php echo URLROOT . '/' . $blog->profile_photo; ?>" 
+                            <?php
+                            $profilePhoto = getProfilePhotoUrl($blog->profile_photo, $blog->author_name);
+                            if ($profilePhoto['type'] === 'img'): 
+                            ?>
+                                <img src="<?php echo $profilePhoto['value']; ?>" 
                                      alt="<?php echo htmlspecialchars($blog->author_name); ?>"
                                      class="w-6 h-6 sm:w-7 sm:h-7 rounded-full object-cover mr-1.5 sm:mr-2">
                             <?php else: ?>
                                 <div class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-primary text-white flex items-center justify-center mr-1.5 sm:mr-2">
-                                    <?php echo substr($blog->author_name, 0, 1); ?>
+                                    <?php echo $profilePhoto['value']; ?>
                                 </div>
                             <?php endif; ?>
                             <?php echo htmlspecialchars($blog->author_name); ?>
@@ -261,6 +267,14 @@ require_once 'views/templates/header.php'; ?>
         </div>
     </article>
 </main>
+
+<?php if (isAdmin()): ?>
+<div class="fixed bottom-4 right-4 opacity-70 hover:opacity-100 z-50">
+    <a href="?debug_photo=1" class="text-xs bg-gray-800 text-white py-1 px-2 rounded hover:bg-gray-700">
+        Debug Photo
+    </a>
+</div>
+<?php endif; ?>
 
 <!-- Swiper JS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />

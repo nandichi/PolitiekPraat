@@ -186,6 +186,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Update sessie gebruikersnaam
             $_SESSION['username'] = $username;
             
+            // Update session profile photo if changed
+            if ($photo_updated) {
+                $_SESSION['profile_photo'] = $profile_photo;
+            }
+            
             // Sla succesbericht op in sessie
             $_SESSION['success_message'] = "Profiel succesvol bijgewerkt!";
             

@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['is_admin'] = $user->is_admin;
             $_SESSION['profile_photo'] = $user->profile_photo;
             
-            // Redirect naar homepage
+            // Redirect to dashboard
             header('Location: ' . URLROOT);
             exit;
         } else {

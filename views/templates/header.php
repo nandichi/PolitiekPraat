@@ -804,12 +804,15 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                                          rounded-lg flex items-center justify-center
                                          ring-1 ring-white/30 transition-all duration-300
                                          group-hover:ring-white/50 group-hover:scale-110 overflow-hidden">
-                                    <?php if (isset($_SESSION['profile_photo']) && !empty($_SESSION['profile_photo'])): ?>
-                                        <img src="<?php echo URLROOT . '/' . htmlspecialchars($_SESSION['profile_photo']); ?>" 
+                                    <?php
+                                    $profilePhoto = getProfilePhotoUrl($_SESSION['profile_photo'] ?? '', $_SESSION['username']);
+                                    if ($profilePhoto['type'] === 'img'): 
+                                    ?>
+                                        <img src="<?php echo $profilePhoto['value']; ?>" 
                                              alt="Profile" class="w-full h-full object-cover">
                                     <?php else: ?>
                                         <span class="text-white font-bold text-sm">
-                                            <?php echo strtoupper(substr($_SESSION['username'], 0, 1)); ?>
+                                            <?php echo $profilePhoto['value']; ?>
                                         </span>
                                     <?php endif; ?>
                                 </div>

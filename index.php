@@ -3,12 +3,24 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+// Definieer het basis pad voor de applicatie
+$scriptDir = dirname($_SERVER['SCRIPT_FILENAME']);
+if (!defined('BASE_PATH')) {
+    define('BASE_PATH', $scriptDir);
+}
+
+// Voeg het base path toe aan de include path
+set_include_path(get_include_path() . PATH_SEPARATOR . BASE_PATH);
+
 // Composer autoloader
 require_once 'vendor/autoload.php';
 
+// Include function definitions first to avoid conflicts
+require_once 'includes/functions.php';
+
+// Then include other files that might use those functions
 require_once 'includes/config.php';
 require_once 'includes/Database.php';
-require_once 'includes/functions.php';
 require_once 'includes/Router.php';
 require_once 'includes/BlogController.php';
 require_once 'controllers/blogs.php';  // Add BlogsController
@@ -23,13 +35,6 @@ if (isset($_GET['debug'])) {
     echo "PHP Include Path: " . get_include_path() . "\n";
     echo "</pre>";
 }
-
-// Definieer het basis pad voor de applicatie
-$scriptDir = dirname($_SERVER['SCRIPT_FILENAME']);
-define('BASE_PATH', $scriptDir);
-
-// Voeg het base path toe aan de include path
-set_include_path(get_include_path() . PATH_SEPARATOR . BASE_PATH);
 
 // Start de sessie als die nog niet is gestart
 if (session_status() === PHP_SESSION_NONE) {

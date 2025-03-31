@@ -85,13 +85,16 @@
                         <div class="p-6">
                             <div class="flex items-center text-sm text-gray-500 mb-4">
                                 <span class="flex items-center">
-                                    <?php if (!empty($blog->profile_photo)): ?>
-                                        <img src="<?php echo URLROOT . '/' . $blog->profile_photo; ?>" 
+                                    <?php
+                                    $profilePhoto = getProfilePhotoUrl($blog->profile_photo, $blog->author_name);
+                                    if ($profilePhoto['type'] === 'img'): 
+                                    ?>
+                                        <img src="<?php echo $profilePhoto['value']; ?>" 
                                              alt="<?php echo htmlspecialchars($blog->author_name); ?>"
                                              class="w-8 h-8 rounded-full object-cover mr-2">
                                     <?php else: ?>
                                         <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center mr-2">
-                                            <?php echo substr($blog->author_name, 0, 1); ?>
+                                            <?php echo $profilePhoto['value']; ?>
                                         </div>
                                     <?php endif; ?>
                                     <?php echo htmlspecialchars($blog->author_name); ?>

@@ -21,11 +21,14 @@
                     
                     <div class="absolute -bottom-12 left-8">
                         <div class="w-24 h-24 bg-white rounded-xl shadow-lg flex items-center justify-center text-3xl font-bold text-primary overflow-hidden">
-                            <?php if (!empty($user['profile_photo'])): ?>
-                                <img src="<?php echo URLROOT . '/' . htmlspecialchars($user['profile_photo']); ?>" 
+                            <?php
+                            $profilePhoto = getProfilePhotoUrl($user['profile_photo'], $user['username']);
+                            if ($profilePhoto['type'] === 'img'): 
+                            ?>
+                                <img src="<?php echo $profilePhoto['value']; ?>" 
                                      alt="Profielfoto" class="w-full h-full object-cover">
                             <?php else: ?>
-                                <?php echo strtoupper(substr($user['username'], 0, 1)); ?>
+                                <?php echo $profilePhoto['value']; ?>
                             <?php endif; ?>
                         </div>
                     </div>
@@ -194,5 +197,13 @@
         </div>
     </div>
 </div>
+
+<?php if (isAdmin()): ?>
+<div class="fixed bottom-4 right-4 opacity-70 hover:opacity-100 z-50">
+    <a href="?debug_photo=1" class="text-xs bg-gray-800 text-white py-1 px-2 rounded hover:bg-gray-700">
+        Debug Photo
+    </a>
+</div>
+<?php endif; ?>
 
 <?php require_once __DIR__ . '/../templates/footer.php'; ?> 
