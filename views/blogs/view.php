@@ -26,9 +26,15 @@ require_once 'views/templates/header.php'; ?>
                         <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 leading-tight"><?php echo htmlspecialchars($blog->title); ?></h1>
                         <div class="flex items-center text-white/90 text-sm sm:text-base">
                             <span class="flex items-center">
-                                <svg class="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                                </svg>
+                                <?php if (!empty($blog->profile_photo)): ?>
+                                    <img src="<?php echo URLROOT . '/uploads/profile_photos/' . $blog->profile_photo; ?>" 
+                                         alt="<?php echo htmlspecialchars($blog->author_name); ?>"
+                                         class="w-6 h-6 sm:w-7 sm:h-7 rounded-full object-cover mr-1.5 sm:mr-2">
+                                <?php else: ?>
+                                    <div class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white text-primary flex items-center justify-center mr-1.5 sm:mr-2">
+                                        <?php echo substr($blog->author_name, 0, 1); ?>
+                                    </div>
+                                <?php endif; ?>
                                 <?php echo htmlspecialchars($blog->author_name); ?>
                             </span>
                             <span class="mx-2 sm:mx-4">•</span>
@@ -53,9 +59,15 @@ require_once 'views/templates/header.php'; ?>
                     <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 leading-tight"><?php echo htmlspecialchars($blog->title); ?></h1>
                     <div class="flex items-center text-gray-600 text-sm sm:text-base">
                         <span class="flex items-center">
-                            <svg class="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                            </svg>
+                            <?php if (!empty($blog->profile_photo)): ?>
+                                <img src="<?php echo URLROOT . '/uploads/profile_photos/' . $blog->profile_photo; ?>" 
+                                     alt="<?php echo htmlspecialchars($blog->author_name); ?>"
+                                     class="w-6 h-6 sm:w-7 sm:h-7 rounded-full object-cover mr-1.5 sm:mr-2">
+                            <?php else: ?>
+                                <div class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-primary text-white flex items-center justify-center mr-1.5 sm:mr-2">
+                                    <?php echo substr($blog->author_name, 0, 1); ?>
+                                </div>
+                            <?php endif; ?>
                             <?php echo htmlspecialchars($blog->author_name); ?>
                         </span>
                         <span class="mx-2 sm:mx-4">•</span>

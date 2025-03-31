@@ -803,10 +803,15 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                                 <div class="w-7 h-7 bg-gradient-to-br from-secondary to-primary/80
                                          rounded-lg flex items-center justify-center
                                          ring-1 ring-white/30 transition-all duration-300
-                                         group-hover:ring-white/50 group-hover:scale-110">
-                                    <span class="text-white font-bold text-sm">
-                                        <?php echo strtoupper(substr($_SESSION['username'], 0, 1)); ?>
-                                    </span>
+                                         group-hover:ring-white/50 group-hover:scale-110 overflow-hidden">
+                                    <?php if (isset($_SESSION['profile_photo']) && !empty($_SESSION['profile_photo'])): ?>
+                                        <img src="<?php echo URLROOT . '/' . htmlspecialchars($_SESSION['profile_photo']); ?>" 
+                                             alt="Profile" class="w-full h-full object-cover">
+                                    <?php else: ?>
+                                        <span class="text-white font-bold text-sm">
+                                            <?php echo strtoupper(substr($_SESSION['username'], 0, 1)); ?>
+                                        </span>
+                                    <?php endif; ?>
                                 </div>
                                 <span class="font-medium text-white text-sm"><?php echo htmlspecialchars($_SESSION['username']); ?></span>
                                 <svg class="w-4 h-4 text-white transition-transform duration-300 group-hover:rotate-180" 

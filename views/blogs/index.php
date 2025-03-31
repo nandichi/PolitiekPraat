@@ -85,9 +85,15 @@
                         <div class="p-6">
                             <div class="flex items-center text-sm text-gray-500 mb-4">
                                 <span class="flex items-center">
-                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                                    </svg>
+                                    <?php if (!empty($blog->profile_photo)): ?>
+                                        <img src="<?php echo URLROOT . '/uploads/profile_photos/' . $blog->profile_photo; ?>" 
+                                             alt="<?php echo htmlspecialchars($blog->author_name); ?>"
+                                             class="w-8 h-8 rounded-full object-cover mr-2">
+                                    <?php else: ?>
+                                        <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center mr-2">
+                                            <?php echo substr($blog->author_name, 0, 1); ?>
+                                        </div>
+                                    <?php endif; ?>
                                     <?php echo htmlspecialchars($blog->author_name); ?>
                                 </span>
                                 <span class="mx-3">•</span>
