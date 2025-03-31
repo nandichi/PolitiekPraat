@@ -390,7 +390,7 @@ require_once 'views/templates/header.php';
                                 </div>
                                 <div>
                                     <h3 class="text-sm sm:text-base md:text-lg font-bold text-white tracking-wide uppercase">ACTUELE PEILINGEN</h3>
-                                    <p class="hidden sm:block text-[10px] text-white/60">Laatste update: vandaag</p>
+                                    <p class="hidden sm:block text-[10px] text-white/60">Laatste update: <?php echo date('d-m-Y'); ?></p>
                                 </div>
                             </div>
                         </div>
@@ -429,14 +429,21 @@ require_once 'views/templates/header.php';
                                 <div>
                                     <?php 
                                     $topParties = [
-                                        'pvv' => ['seats' => 30, 'percentage' => 20.0, 'color' => '#0D47A1', 'change' => -4],
-                                        'gl-pvda' => ['seats' => 27, 'percentage' => 18.0, 'color' => '#7B1FA2', 'change' => 3],
-                                        'vvd' => ['seats' => 25, 'percentage' => 16.7, 'color' => '#FF6F00', 'change' => 5],
-                                        'd66' => ['seats' => 11, 'percentage' => 7.3, 'color' => '#00796B', 'change' => 0],
-                                        'cda' => ['seats' => 18, 'percentage' => 12.0, 'color' => '#2E7D32', 'change' => 2],
-                                        'sp' => ['seats' => 6, 'percentage' => 4.0, 'color' => '#C62828', 'change' => -2],
-                                        'pvdd' => ['seats' => 7, 'percentage' => 4.7, 'color' => '#388E3C', 'change' => -1],
-                                        'ja21' => ['seats' => 4, 'percentage' => 2.7, 'color' => '#EF6C00', 'change' => 1]
+                                        'pvv' => ['seats' => 29, 'percentage' => 19.3, 'color' => '#0D47A1', 'change' => -1],
+                                        'gl-pvda' => ['seats' => 28, 'percentage' => 18.7, 'color' => '#7B1FA2', 'change' => 1],
+                                        'vvd' => ['seats' => 26, 'percentage' => 17.3, 'color' => '#FF6F00', 'change' => 3],
+                                        'cda' => ['seats' => 18, 'percentage' => 12.0, 'color' => '#2E7D32', 'change' => 0],
+                                        'd66' => ['seats' => 9, 'percentage' => 6.0, 'color' => '#00796B', 'change' => -2],
+                                        'sp' => ['seats' => 7, 'percentage' => 4.7, 'color' => '#C62828', 'change' => 0],
+                                        'fvd' => ['seats' => 5, 'percentage' => 3.3, 'color' => '#795548', 'change' => 0],
+                                        'pvdd' => ['seats' => 4, 'percentage' => 2.7, 'color' => '#388E3C', 'change' => 0],
+                                        'sgp' => ['seats' => 4, 'percentage' => 2.7, 'color' => '#1565C0', 'change' => 0],
+                                        'denk' => ['seats' => 4, 'percentage' => 2.7, 'color' => '#29B6F6', 'change' => 0],
+                                        'ja21' => ['seats' => 4, 'percentage' => 2.7, 'color' => '#EF6C00', 'change' => 1],
+                                        'volt' => ['seats' => 4, 'percentage' => 2.7, 'color' => '#4527A0', 'change' => 0],
+                                        'cu' => ['seats' => 3, 'percentage' => 2.0, 'color' => '#558B2F', 'change' => 0],
+                                        'bbb' => ['seats' => 3, 'percentage' => 2.0, 'color' => '#689F38', 'change' => -1],
+                                        'nsc' => ['seats' => 2, 'percentage' => 1.3, 'color' => '#1A237E', 'change' => -1]
                                     ];
                                     
                                     foreach($topParties as $party => $data): 
@@ -463,23 +470,7 @@ require_once 'views/templates/header.php';
                                             </div>
                                         </div>
                                     <?php endforeach; ?>
-                                    
-                                    <!-- Resterende partijen samenvatting -->
-                                    <div class="mt-1 pt-1 border-t border-white/10">
-                                        <div class="flex items-center justify-between">
-                                            <div class="flex items-center w-16 sm:w-24">
-                                                <span class="text-[10px] sm:text-xs text-white/80">Overige partijen</span>
-                                            </div>
-                                            <div class="relative h-1.5 sm:h-2 bg-white/10 rounded-full overflow-hidden flex-grow mx-1 sm:mx-2">
-                                                <div x-show="activeView === 'seats'" class="absolute inset-y-0 left-0 bg-white/20 rounded-full" style="width: <?php echo (22 / 150) * 100; ?>%"></div>
-                                                <div x-show="activeView === 'percentage'" class="absolute inset-y-0 left-0 bg-white/20 rounded-full" style="width: 14.6%"></div>
-                                            </div>
-                                            <div class="flex items-center w-12 sm:w-16 justify-end">
-                                                <span x-show="activeView === 'seats'" class="text-[10px] sm:text-xs font-bold text-white">22</span>
-                                                <span x-show="activeView === 'percentage'" class="text-[10px] sm:text-xs font-bold text-white">14.6%</span>
-                                            </div>
-                                        </div>
-                                    </div>
+                                
                                 </div>
 
                                 <!-- Ontwikkeling in 90 dagen -->
@@ -540,6 +531,76 @@ require_once 'views/templates/header.php';
                                 <div class="mt-2 flex items-center justify-between">
                                     <div class="flex items-center space-x-1">
                                         <span class="text-[8px] sm:text-[10px] text-white/50">Peilingwijzer • Ipsos I&O Research</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Vergelijking met eerdere peilingen -->
+                                <div class="mt-3 pt-3 border-t border-white/10">
+                                    <h4 class="text-[10px] sm:text-xs font-semibold text-white mb-2 sm:mb-3 flex items-center">
+                                        <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 mr-1 text-[#c41e3a]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                        </svg>
+                                        Vergelijking met eerdere peilingen
+                                    </h4>
+                                    
+                                    <div class="space-y-2.5">
+                                        <!-- Vergelijking vs. 08-03-2025 -->
+                                        <div class="bg-white/5 rounded-lg p-2 border border-white/10">
+                                            <p class="text-[9px] sm:text-[11px] font-medium text-white/80 mb-1.5 flex items-center">
+                                                <span class="inline-block w-1.5 h-1.5 bg-[#c41e3a] rounded-full mr-1.5"></span>
+                                                vs. 08-03-2025
+                                            </p>
+                                            <div class="grid grid-cols-3 gap-1 sm:gap-2">
+                                                <div class="flex items-center text-[8px] sm:text-[10px]">
+                                                    <span class="text-green-400 font-medium mr-1">▲</span>
+                                                    <span class="text-white">CDA: +13</span>
+                                                </div>
+                                                <div class="flex items-center text-[8px] sm:text-[10px]">
+                                                    <span class="text-green-400 font-medium mr-1">▲</span>
+                                                    <span class="text-white">GL-PvdA: +3</span>
+                                                </div>
+                                                <div class="flex items-center text-[8px] sm:text-[10px]">
+                                                    <span class="text-green-400 font-medium mr-1">▲</span>
+                                                    <span class="text-white">VVD: +2</span>
+                                                </div>
+                                                <div class="flex items-center text-[8px] sm:text-[10px]">
+                                                    <span class="text-red-400 font-medium mr-1">▼</span>
+                                                    <span class="text-white">NSC: -18</span>
+                                                </div>
+                                                <div class="flex items-center text-[8px] sm:text-[10px]">
+                                                    <span class="text-red-400 font-medium mr-1">▼</span>
+                                                    <span class="text-white">PVV: -8</span>
+                                                </div>
+                                                <div class="flex items-center text-[8px] sm:text-[10px]">
+                                                    <span class="text-red-400 font-medium mr-1">▼</span>
+                                                    <span class="text-white">BBB: -4</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Vergelijking vs. Tweede Kamerverkiezingen 2023 -->
+                                        <div class="bg-white/5 rounded-lg p-2 border border-white/10">
+                                            <p class="text-[9px] sm:text-[11px] font-medium text-white/80 mb-1.5 flex items-center">
+                                                <span class="inline-block w-1.5 h-1.5 bg-[#c41e3a] rounded-full mr-1.5"></span>
+                                                vs. Tweede Kamerverkiezingen 2023
+                                            </p>
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex-1">
+                                                    <p class="text-[8px] sm:text-[9px] text-white/60 mb-0.5">Grootste stijgers:</p>
+                                                    <div class="flex items-center text-[8px] sm:text-[10px]">
+                                                        <span class="text-green-400 font-medium mr-1">▲</span>
+                                                        <span class="text-white">CDA: +13</span>
+                                                    </div>
+                                                </div>
+                                                <div class="flex-1">
+                                                    <p class="text-[8px] sm:text-[9px] text-white/60 mb-0.5">Grootste dalers:</p>
+                                                    <div class="flex items-center text-[8px] sm:text-[10px]">
+                                                        <span class="text-red-400 font-medium mr-1">▼</span>
+                                                        <span class="text-white">NSC: -18</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
