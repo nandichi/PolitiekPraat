@@ -108,8 +108,39 @@ class BlogsController {
             exit;
         }
         
-        // Get blogs for the current user
-        $blogs = $this->blogModel->getAllByUserId($_SESSION['user_id']);
+        // Get current page from URL parameter
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        
+        // Ensure page is at least 1
+        if ($page < 1) {
+            $page = 1;
+        }
+        
+        // Set number of blogs per page
+        $perPage = 5;
+        
+        // Get total blogs count for pagination
+        $totalBlogs = $this->blogModel->getTotalBlogCountByUserId($_SESSION['user_id']);
+        
+        // Calculate total pages
+        $totalPages = ceil($totalBlogs / $perPage);
+        
+        // Ensure page doesn't exceed total pages
+        if ($page > $totalPages && $totalPages > 0) {
+            $page = $totalPages;
+        }
+        
+        // Get blogs for the current user with pagination
+        $blogs = $this->blogModel->getAllByUserId($_SESSION['user_id'], $page, $perPage);
+        
+        // Pass pagination data to the view
+        $paginationData = [
+            'currentPage' => $page,
+            'totalPages' => $totalPages,
+            'perPage' => $perPage,
+            'totalBlogs' => $totalBlogs
+        ];
+        
         require_once BASE_PATH . '/views/blogs/manage.php';
     }
     

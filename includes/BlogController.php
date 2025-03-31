@@ -1,4 +1,7 @@
 <?php
+// Import PDO class if not available in global scope
+use PDO;
+
 class BlogController {
     private $db;
     private $parsedown;
@@ -161,19 +164,21 @@ class BlogController {
         return $slug;
     }
 
-    public function getAllByUserId($userId, $limit = null) {
+    public function getAllByUserId($userId, $page = 1, $perPage = 5) {
+        // Calculate offset
+        $offset = ($page - 1) * $perPage;
+        
         $sql = "SELECT blogs.*, users.username as author_name 
                 FROM blogs 
                 JOIN users ON blogs.author_id = users.id 
                 WHERE blogs.author_id = :author_id
-                ORDER BY published_at DESC";
-        
-        if ($limit) {
-            $sql .= " LIMIT " . $limit;
-        }
+                ORDER BY published_at DESC
+                LIMIT :offset, :per_page";
         
         $this->db->query($sql);
         $this->db->bind(':author_id', $userId);
+        $this->db->bind(':offset', $offset, PDO::PARAM_INT);
+        $this->db->bind(':per_page', $perPage, PDO::PARAM_INT);
         $blogs = $this->db->resultSet();
         
         // Parse Markdown naar HTML voor elk blog
@@ -189,6 +194,13 @@ class BlogController {
         }
         
         return $blogs;
+    }
+    
+    public function getTotalBlogCountByUserId($userId) {
+        $this->db->query("SELECT COUNT(*) as total FROM blogs WHERE author_id = :author_id");
+        $this->db->bind(':author_id', $userId);
+        $result = $this->db->single();
+        return $result->total;
     }
     
     public function getById($id) {

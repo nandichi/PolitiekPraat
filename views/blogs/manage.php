@@ -157,6 +157,94 @@
                     </div>
                 <?php endif; ?>
             </div>
+            
+            <?php if (!empty($blogs) && $paginationData['totalPages'] > 1): ?>
+                <!-- Pagination -->
+                <div class="mt-8 flex justify-center" data-aos="fade-up" data-aos-delay="100">
+                    <nav class="flex items-center bg-white px-4 py-3 rounded-xl shadow-md">
+                        <!-- Previous Page Button -->
+                        <?php if ($paginationData['currentPage'] > 1): ?>
+                            <a href="<?php echo URLROOT; ?>/blogs/manage?page=<?php echo $paginationData['currentPage'] - 1; ?>" 
+                               class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white rounded-lg border border-gray-200 hover:bg-gray-50 hover:text-primary">
+                                <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                                </svg>
+                                Vorige
+                            </a>
+                        <?php else: ?>
+                            <span class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-400 bg-white rounded-lg border border-gray-200 cursor-not-allowed">
+                                <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                                </svg>
+                                Vorige
+                            </span>
+                        <?php endif; ?>
+
+                        <!-- Page Numbers -->
+                        <div class="mx-4">
+                            <span class="font-medium text-sm text-gray-700">
+                                <?php 
+                                    // Show page range
+                                    $startPage = max(1, $paginationData['currentPage'] - 2);
+                                    $endPage = min($paginationData['totalPages'], $paginationData['currentPage'] + 2);
+                                    
+                                    // Always show first page if we're not starting at 1
+                                    if ($startPage > 1) {
+                                        echo '<a href="' . URLROOT . '/blogs/manage?page=1" class="px-3 py-1 mx-1 rounded-md ' . (1 == $paginationData['currentPage'] ? 'bg-primary/10 text-primary font-semibold' : 'text-gray-700 hover:bg-gray-100') . '">1</a>';
+                                        
+                                        // Add ellipsis if needed
+                                        if ($startPage > 2) {
+                                            echo '<span class="mx-1">...</span>';
+                                        }
+                                    }
+                                    
+                                    // Page links
+                                    for ($i = $startPage; $i <= $endPage; $i++) {
+                                        echo '<a href="' . URLROOT . '/blogs/manage?page=' . $i . '" class="px-3 py-1 mx-1 rounded-md ' . ($i == $paginationData['currentPage'] ? 'bg-primary/10 text-primary font-semibold' : 'text-gray-700 hover:bg-gray-100') . '">' . $i . '</a>';
+                                    }
+                                    
+                                    // Always show last page if we're not ending at last page
+                                    if ($endPage < $paginationData['totalPages']) {
+                                        // Add ellipsis if needed
+                                        if ($endPage < $paginationData['totalPages'] - 1) {
+                                            echo '<span class="mx-1">...</span>';
+                                        }
+                                        
+                                        echo '<a href="' . URLROOT . '/blogs/manage?page=' . $paginationData['totalPages'] . '" class="px-3 py-1 mx-1 rounded-md ' . ($paginationData['totalPages'] == $paginationData['currentPage'] ? 'bg-primary/10 text-primary font-semibold' : 'text-gray-700 hover:bg-gray-100') . '">' . $paginationData['totalPages'] . '</a>';
+                                    }
+                                ?>
+                            </span>
+                        </div>
+
+                        <!-- Next Page Button -->
+                        <?php if ($paginationData['currentPage'] < $paginationData['totalPages']): ?>
+                            <a href="<?php echo URLROOT; ?>/blogs/manage?page=<?php echo $paginationData['currentPage'] + 1; ?>" 
+                               class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white rounded-lg border border-gray-200 hover:bg-gray-50 hover:text-primary">
+                                Volgende
+                                <svg class="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </a>
+                        <?php else: ?>
+                            <span class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-400 bg-white rounded-lg border border-gray-200 cursor-not-allowed">
+                                Volgende
+                                <svg class="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </span>
+                        <?php endif; ?>
+                    </nav>
+                </div>
+                
+                <!-- Blog Count -->
+                <div class="mt-4 text-center text-sm text-gray-500">
+                    <?php if (count($blogs) > 0): ?>
+                        Toont <?php echo count($blogs); ?> van <?php echo $paginationData['totalBlogs']; ?> blogs (pagina <?php echo $paginationData['currentPage']; ?> van <?php echo $paginationData['totalPages']; ?>)
+                    <?php else: ?>
+                        Geen blogs gevonden.
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
         </div>
     </div>
 </main>
