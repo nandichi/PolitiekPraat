@@ -86,7 +86,7 @@
                             <div class="flex items-center text-sm text-gray-500 mb-4">
                                 <span class="flex items-center">
                                     <?php if (!empty($blog->profile_photo)): ?>
-                                        <img src="<?php echo URLROOT . '/uploads/profile_photos/' . $blog->profile_photo; ?>" 
+                                        <img src="<?php echo URLROOT . '/' . $blog->profile_photo; ?>" 
                                              alt="<?php echo htmlspecialchars($blog->author_name); ?>"
                                              class="w-8 h-8 rounded-full object-cover mr-2">
                                     <?php else: ?>

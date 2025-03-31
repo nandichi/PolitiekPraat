@@ -27,7 +27,7 @@ require_once 'views/templates/header.php'; ?>
                         <div class="flex items-center text-white/90 text-sm sm:text-base">
                             <span class="flex items-center">
                                 <?php if (!empty($blog->profile_photo)): ?>
-                                    <img src="<?php echo URLROOT . '/uploads/profile_photos/' . $blog->profile_photo; ?>" 
+                                    <img src="<?php echo URLROOT . '/' . $blog->profile_photo; ?>" 
                                          alt="<?php echo htmlspecialchars($blog->author_name); ?>"
                                          class="w-6 h-6 sm:w-7 sm:h-7 rounded-full object-cover mr-1.5 sm:mr-2">
                                 <?php else: ?>
@@ -60,7 +60,7 @@ require_once 'views/templates/header.php'; ?>
                     <div class="flex items-center text-gray-600 text-sm sm:text-base">
                         <span class="flex items-center">
                             <?php if (!empty($blog->profile_photo)): ?>
-                                <img src="<?php echo URLROOT . '/uploads/profile_photos/' . $blog->profile_photo; ?>" 
+                                <img src="<?php echo URLROOT . '/' . $blog->profile_photo; ?>" 
                                      alt="<?php echo htmlspecialchars($blog->author_name); ?>"
                                      class="w-6 h-6 sm:w-7 sm:h-7 rounded-full object-cover mr-1.5 sm:mr-2">
                             <?php else: ?>
