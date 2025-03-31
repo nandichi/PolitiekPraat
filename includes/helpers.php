@@ -12,54 +12,38 @@ if (!function_exists('getProfilePhotoUrl')) {
      * @return array ['type' => 'img'|'initial', 'value' => 'url'|'letter'] 
      */
     function getProfilePhotoUrl($profilePhoto, $username) {
-        $result = ['type' => 'initial', 'value' => ''];
-        
-        // Extract initial for fallback
-        if (!empty($username)) {
-            $result['value'] = strtoupper(substr($username, 0, 1));
-        } else {
-            $result['value'] = '?';
-        }
-        
-        // If no profile photo is set, return the initial
-        if (empty($profilePhoto)) {
-            return $result;
-        }
-        
-        // Check if the path starts with http:// or https://
-        if (preg_match('/^https?:\/\//', $profilePhoto)) {
-            return ['type' => 'img', 'value' => $profilePhoto];
-        }
-        
-        // Try different path combinations
-        $possible_paths = [
-            $profilePhoto,
-            'uploads/profile_photos/' . basename($profilePhoto),
-            'public/' . $profilePhoto
-        ];
-        
-        // If path already has public/, add a version without it
-        if (strpos($profilePhoto, 'public/') === 0) {
-            $possible_paths[] = substr($profilePhoto, 7); // Remove "public/"
-        } else {
-            $possible_paths[] = 'public/uploads/profile_photos/' . basename($profilePhoto);
-        }
-        
-        foreach ($possible_paths as $path) {
-            $full_path = BASE_PATH . '/' . $path;
-            if (file_exists($full_path)) {
-                $result['type'] = 'img';
-                // Make sure we're not duplicating public/ in the URL
-                $web_path = $path;
-                if (strpos($path, 'public/') === 0) {
-                    $web_path = substr($path, 7); // Remove "public/" for URL
+        if (!empty($profilePhoto)) {
+            // Check if the path starts with http:// or https://
+            if (preg_match('/^https?:\/\//', $profilePhoto)) {
+                return ['type' => 'img', 'value' => $profilePhoto];
+            }
+            
+            // Check if path already has public/
+            if (strpos($profilePhoto, 'public/') === 0) {
+                $profilePhoto = substr($profilePhoto, 7); // Remove "public/"
+            }
+            
+            // Check if the file exists in the public directory
+            if (file_exists(BASE_PATH . '/public/' . $profilePhoto)) {
+                return ['type' => 'img', 'value' => URLROOT . '/' . $profilePhoto];
+            }
+            
+            // Try alternate paths
+            $altPaths = [
+                $profilePhoto,
+                'uploads/profile_photos/' . basename($profilePhoto)
+            ];
+            
+            foreach ($altPaths as $path) {
+                if (file_exists(BASE_PATH . '/public/' . $path)) {
+                    return ['type' => 'img', 'value' => URLROOT . '/' . $path];
                 }
-                $result['value'] = URLROOT . '/' . $web_path;
-                break;
             }
         }
         
-        return $result;
+        // Return initial if no photo found
+        $initial = !empty($username) ? strtoupper(substr($username, 0, 1)) : '?';
+        return ['type' => 'initial', 'value' => $initial];
     }
 }
 

@@ -58,7 +58,47 @@ if (!defined('FUNCTIONS_INCLUDED')) {
         }
     }
 
-    // Note: getProfilePhotoUrl is now completely handled by helpers.php
-    // We don't need to redeclare it here
-    
+    // Don't redeclare if it already exists in helpers.php
+    if (!function_exists('getProfilePhotoUrl')) {
+        /**
+         * Get the URL for a profile photo with fallbacks
+         * @param string|null $profile_photo The profile photo path from database
+         * @param string $username The username (for initial fallback)
+         * @return array Contains 'type' (img or initial) and 'value' (image URL or initial letter)
+         */
+        function getProfilePhotoUrl($profile_photo, $username = '') {
+            $result = ['type' => 'initial', 'value' => ''];
+            
+            // Extract initial for fallback
+            if (!empty($username)) {
+                $result['value'] = strtoupper(substr($username, 0, 1));
+            } else {
+                $result['value'] = 'U';
+            }
+            
+            // If no profile photo is set, return the initial
+            if (empty($profile_photo)) {
+                return $result;
+            }
+            
+            // Try different path combinations
+            $possible_paths = [
+                $profile_photo,
+                'uploads/profile_photos/' . basename($profile_photo),
+                'public/' . $profile_photo,
+                'public/uploads/profile_photos/' . basename($profile_photo)
+            ];
+            
+            foreach ($possible_paths as $path) {
+                $full_path = BASE_PATH . '/' . $path;
+                if (file_exists($full_path)) {
+                    $result['type'] = 'img';
+                    $result['value'] = URLROOT . '/' . $path;
+                    break;
+                }
+            }
+            
+            return $result;
+        }
+    }
 } // End of FUNCTIONS_INCLUDED check 
