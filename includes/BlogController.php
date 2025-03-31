@@ -160,4 +160,48 @@ class BlogController {
         $slug = trim($slug, '-');
         return $slug;
     }
+
+    public function getAllByUserId($userId, $limit = null) {
+        $sql = "SELECT blogs.*, users.username as author_name 
+                FROM blogs 
+                JOIN users ON blogs.author_id = users.id 
+                WHERE blogs.author_id = :author_id
+                ORDER BY published_at DESC";
+        
+        if ($limit) {
+            $sql .= " LIMIT " . $limit;
+        }
+        
+        $this->db->query($sql);
+        $this->db->bind(':author_id', $userId);
+        $blogs = $this->db->resultSet();
+        
+        // Parse Markdown naar HTML voor elk blog
+        foreach ($blogs as $blog) {
+            // Bewaar de originele content voor de samenvatting
+            $originalContent = $blog->content;
+            // Converteer Markdown naar HTML voor de volledige content
+            $blog->content = $this->parsedown->text($blog->content);
+            // Maak een samenvatting van de originele content
+            $blog->summary = substr(strip_tags($this->parsedown->text($originalContent)), 0, 200) . '...';
+            // Bereken leestijd
+            $blog->reading_time = $this->calculateReadingTime($originalContent);
+        }
+        
+        return $blogs;
+    }
+    
+    public function getById($id) {
+        $this->db->query("SELECT blogs.*, users.username as author_name 
+                         FROM blogs 
+                         JOIN users ON blogs.author_id = users.id 
+                         WHERE blogs.id = :id");
+        $this->db->bind(':id', $id);
+        $blog = $this->db->single();
+        
+        // Don't convert Markdown to HTML here for editing purposes
+        // We need the original Markdown content
+        
+        return $blog;
+    }
 } 

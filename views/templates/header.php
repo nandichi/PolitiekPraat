@@ -438,6 +438,9 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
             transform: translateY(-10px) scale(0.97);
             pointer-events: none;
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            /* Add padding to create a hover gap */
+            padding-top: 10px;
+            margin-top: -10px;
         }
         
         .group:hover .dropdown-content,
@@ -691,7 +694,7 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                             </svg>
                         </button>
 
-                        <div class="absolute left-0 mt-2 w-56 dropdown-content z-50">
+                        <div class="absolute left-0 mt-2 w-56 dropdown-content z-50" style="margin-top: -5px; padding-top: 15px;">
                             <div class="p-2 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden">
                                 <!-- Subtle top accent -->
                                 <div class="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-primary/30 via-secondary/30 to-primary/30"></div>
@@ -745,7 +748,7 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                             </svg>
                         </button>
 
-                        <div class="absolute left-0 mt-2 w-56 dropdown-content z-50">
+                        <div class="absolute left-0 mt-2 w-56 dropdown-content z-50" style="margin-top: -5px; padding-top: 15px;">
                             <div class="p-2 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden">
                                 <!-- Subtle top accent -->
                                 <div class="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-primary/30 via-secondary/30 to-primary/30"></div>
@@ -813,7 +816,7 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                             </button>
 
                             <!-- User Dropdown -->
-                            <div class="absolute right-0 mt-2 w-56 dropdown-content z-50">
+                            <div class="absolute right-0 mt-2 w-56 dropdown-content z-50" style="margin-top: -5px; padding-top: 15px;">
                                 <div class="bg-white rounded-xl shadow-xl py-2.5 px-1.5 border border-gray-100 overflow-hidden">
                                     <!-- Subtle top accent -->
                                     <div class="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-primary/30 via-secondary/30 to-primary/30"></div>
@@ -838,6 +841,23 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                                             </div>
                                         </a>
                                     <?php endif; ?>
+
+                                    <a href="<?php echo URLROOT; ?>/blogs/manage" 
+                                       class="flex items-center px-3 py-2 rounded-lg
+                                              transition-all duration-200 hover:bg-gray-50 group/item">
+                                        <div class="w-9 h-9 bg-primary/5 rounded-lg flex items-center justify-center
+                                                  transition-transform duration-200 group-hover/item:scale-110">
+                                            <svg class="w-5 h-5 text-primary transition-colors duration-200" 
+                                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                      d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                            </svg>
+                                        </div>
+                                        <div class="ml-3">
+                                            <p class="text-sm font-medium text-gray-900">Mijn Blogs</p>
+                                            <p class="text-xs text-gray-500">Beheer je blogs</p>
+                                        </div>
+                                    </a>
 
                                     <a href="<?php echo URLROOT; ?>/profile" 
                                        class="flex items-center px-3 py-2 rounded-lg
@@ -1092,6 +1112,18 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                                     <span class="font-medium">Dashboard</span>
                                 </a>
                             <?php endif; ?>
+                            <a href="<?php echo URLROOT; ?>/blogs/manage" 
+                               class="flex items-center text-white/90 hover:text-white p-2 rounded-lg transition-all duration-300 
+                                      hover:bg-white/5 hover:pl-3 group">
+                                <div class="mr-3 p-1.5 bg-white/10 rounded-lg transition-all duration-300 
+                                            group-hover:bg-white/15 group-hover:scale-110">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                              d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                    </svg>
+                                </div>
+                                <span class="font-medium">Mijn Blogs</span>
+                            </a>
                             <a href="<?php echo URLROOT; ?>/profile" 
                                class="flex items-center text-white/90 hover:text-white p-2 rounded-lg transition-all duration-300 
                                       hover:bg-white/5 hover:pl-3 group">
@@ -1156,6 +1188,100 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
 
             // Ensure mobile menu is properly initialized
             mobileMenuContent.classList.add('mobile-menu-enter');
+
+            // Handle desktop dropdowns
+            const dropdownGroups = document.querySelectorAll('.group');
+            dropdownGroups.forEach(group => {
+                const button = group.querySelector('button');
+                const dropdown = group.querySelector('.dropdown-content');
+                
+                if (button && dropdown) {
+                    let timeoutId;
+                    
+                    // Show dropdown on hover or focus
+                    group.addEventListener('mouseenter', () => {
+                        clearTimeout(timeoutId);
+                        dropdown.classList.add('dropdown-active');
+                        dropdown.style.opacity = '1';
+                        dropdown.style.visibility = 'visible';
+                        dropdown.style.transform = 'translateY(0) scale(1)';
+                        dropdown.style.pointerEvents = 'auto';
+                    });
+                    
+                    // Hide dropdown when mouse leaves the group
+                    group.addEventListener('mouseleave', () => {
+                        timeoutId = setTimeout(() => {
+                            dropdown.classList.remove('dropdown-active');
+                            dropdown.style.opacity = '0';
+                            dropdown.style.visibility = 'hidden';
+                            dropdown.style.transform = 'translateY(-10px) scale(0.97)';
+                            dropdown.style.pointerEvents = 'none';
+                        }, 100); // Small delay to prevent flickering
+                    });
+                    
+                    // Ensure dropdown stays visible when focused
+                    button.addEventListener('focus', () => {
+                        clearTimeout(timeoutId);
+                        dropdown.classList.add('dropdown-active');
+                        dropdown.style.opacity = '1';
+                        dropdown.style.visibility = 'visible';
+                        dropdown.style.transform = 'translateY(0) scale(1)';
+                        dropdown.style.pointerEvents = 'auto';
+                    });
+                    
+                    // Handle keyboard navigation
+                    button.addEventListener('keydown', (e) => {
+                        if (e.key === 'Escape') {
+                            dropdown.classList.remove('dropdown-active');
+                            dropdown.style.opacity = '0';
+                            dropdown.style.visibility = 'hidden';
+                            dropdown.style.transform = 'translateY(-10px) scale(0.97)';
+                            dropdown.style.pointerEvents = 'none';
+                            button.blur();
+                        } else if (e.key === 'ArrowDown' || e.key === 'Enter') {
+                            e.preventDefault();
+                            dropdown.classList.add('dropdown-active');
+                            dropdown.style.opacity = '1';
+                            dropdown.style.visibility = 'visible';
+                            dropdown.style.transform = 'translateY(0) scale(1)';
+                            dropdown.style.pointerEvents = 'auto';
+                            
+                            // Focus the first link in the dropdown
+                            const firstLink = dropdown.querySelector('a');
+                            if (firstLink) {
+                                firstLink.focus();
+                            }
+                        }
+                    });
+                    
+                    // Handle keyboard navigation within dropdown
+                    const links = dropdown.querySelectorAll('a');
+                    links.forEach((link, index) => {
+                        link.addEventListener('keydown', (e) => {
+                            if (e.key === 'Escape') {
+                                dropdown.classList.remove('dropdown-active');
+                                dropdown.style.opacity = '0';
+                                dropdown.style.visibility = 'hidden';
+                                dropdown.style.transform = 'translateY(-10px) scale(0.97)';
+                                dropdown.style.pointerEvents = 'none';
+                                button.focus();
+                            } else if (e.key === 'ArrowDown') {
+                                e.preventDefault();
+                                const nextLink = links[index + 1] || links[0];
+                                if (nextLink) {
+                                    nextLink.focus();
+                                }
+                            } else if (e.key === 'ArrowUp') {
+                                e.preventDefault();
+                                const prevLink = links[index - 1] || links[links.length - 1];
+                                if (prevLink) {
+                                    prevLink.focus();
+                                }
+                            }
+                        });
+                    });
+                }
+            });
 
             function toggleMobileMenu() {
                 console.log('Toggle mobile menu');

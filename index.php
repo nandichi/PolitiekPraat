@@ -49,6 +49,18 @@ $router->add('blogs/create', function() {
     $controller = new BlogsController();
     $controller->create();
 });
+$router->add('blogs/manage', function() {
+    $controller = new BlogsController();
+    $controller->manage();
+});
+$router->add('blogs/edit/([0-9]+)', function($id) {
+    $controller = new BlogsController();
+    $controller->edit($id);
+});
+$router->add('blogs/delete/([0-9]+)', function($id) {
+    $controller = new BlogsController();
+    $controller->delete($id);
+});
 $router->add('blogs/view/([^/]+)', function($slug) {
     $controller = new BlogsController();
     $controller->view($slug);
