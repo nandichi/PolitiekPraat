@@ -175,6 +175,22 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
             transition: transform 0.3s ease-in;
         }
 
+        /* Blog card button animation */
+        .bg-size-200 {
+            background-size: 200% 100%;
+        }
+        
+        .animate-shimmer {
+            animation: shimmer 3s infinite linear;
+            background-position: -100% 0;
+        }
+        
+        @keyframes shimmer {
+            to {
+                background-position: 200% 0;
+            }
+        }
+
         /* Base effects - refined */
         .glass-effect {
             background: rgba(255, 255, 255, 0.12);
