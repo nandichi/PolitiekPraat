@@ -19,6 +19,63 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $new_password = trim($_POST['new_password']);
     $confirm_password = trim($_POST['confirm_password']);
     
+    // Profile photo processing
+    $profile_photo = null;
+    $photo_updated = false;
+    
+    if (isset($_FILES['profile_photo']) && $_FILES['profile_photo']['error'] === UPLOAD_ERR_OK) {
+        $allowed_types = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+        $file_type = $_FILES['profile_photo']['type'];
+        $file_size = $_FILES['profile_photo']['size'];
+        $max_size = 5 * 1024 * 1024; // 5MB max size
+        
+        if (!in_array($file_type, $allowed_types)) {
+            $error = "Alleen JPG, PNG, GIF of WEBP afbeeldingen zijn toegestaan.";
+        } elseif ($file_size > $max_size) {
+            $error = "De afbeelding mag niet groter zijn dan 5MB.";
+        } else {
+            // Create upload directory if it doesn't exist
+            $upload_dir = BASE_PATH . '/public/uploads/profile_photos/';
+            if (!file_exists($upload_dir)) {
+                mkdir($upload_dir, 0755, true);
+            }
+            
+            // Generate unique filename
+            $file_extension = pathinfo($_FILES['profile_photo']['name'], PATHINFO_EXTENSION);
+            $filename = 'profile_' . $user_id . '_' . uniqid() . '.' . $file_extension;
+            $destination = $upload_dir . $filename;
+            
+            // Move uploaded file
+            if (move_uploaded_file($_FILES['profile_photo']['tmp_name'], $destination)) {
+                $profile_photo = 'uploads/profile_photos/' . $filename;
+                $photo_updated = true;
+                
+                // Delete old photo if exists
+                $stmt = $pdo->prepare("SELECT profile_photo FROM users WHERE id = ?");
+                $stmt->execute([$user_id]);
+                $old_photo = $stmt->fetchColumn();
+                
+                if ($old_photo && file_exists(BASE_PATH . '/public/' . $old_photo)) {
+                    unlink(BASE_PATH . '/public/' . $old_photo);
+                }
+            } else {
+                $error = "Er is een fout opgetreden bij het uploaden van de afbeelding.";
+            }
+        }
+    } elseif (isset($_POST['remove_photo']) && $_POST['remove_photo'] === '1') {
+        // Remove existing photo
+        $stmt = $pdo->prepare("SELECT profile_photo FROM users WHERE id = ?");
+        $stmt->execute([$user_id]);
+        $old_photo = $stmt->fetchColumn();
+        
+        if ($old_photo && file_exists(BASE_PATH . '/public/' . $old_photo)) {
+            unlink(BASE_PATH . '/public/' . $old_photo);
+        }
+        
+        $profile_photo = null;
+        $photo_updated = true;
+    }
+    
     // Privacy instellingen
     $profile_public = isset($_POST['profile_public']) ? 1 : 0;
     $show_email = isset($_POST['show_email']) ? 1 : 0;
@@ -50,6 +107,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!empty($new_password)) {
                 $sql .= ", password = ?";
                 $params[] = password_hash($new_password, PASSWORD_DEFAULT);
+            }
+            
+            // Update profile photo if changed
+            if ($photo_updated) {
+                $sql .= ", profile_photo = ?";
+                $params[] = $profile_photo;
             }
 
             $sql .= " WHERE id = ?";
@@ -139,7 +202,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // Huidige gebruikersgegevens ophalen
 $stmt = $pdo->prepare("
-    SELECT u.username, u.email, u.bio, 
+    SELECT u.username, u.email, u.bio, u.profile_photo,
            COALESCE(s.profile_public, 1) as profile_public,
            COALESCE(s.show_email, 0) as show_email,
            COALESCE(s.show_activity, 1) as show_activity,

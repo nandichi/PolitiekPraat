@@ -36,6 +36,20 @@ if (!$column_exists) {
     $migrations[] = "ALTER TABLE users ADD COLUMN bio TEXT DEFAULT NULL";
 }
 
+// Controleer of profile_photo kolom al bestaat
+$photo_column_exists = false;
+try {
+    $check_photo_column = $pdo->query("SHOW COLUMNS FROM users LIKE 'profile_photo'");
+    $photo_column_exists = $check_photo_column->rowCount() > 0;
+} catch (PDOException $e) {
+    // Negeer fouten bij het controleren
+}
+
+// Alleen toevoegen als de kolom nog niet bestaat
+if (!$photo_column_exists) {
+    $migrations[] = "ALTER TABLE users ADD COLUMN profile_photo VARCHAR(255) DEFAULT NULL";
+}
+
 // Voeg de user_settings tabel toe
 $migrations[] = "CREATE TABLE IF NOT EXISTS user_settings (
     id INT AUTO_INCREMENT PRIMARY KEY,

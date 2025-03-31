@@ -52,14 +52,19 @@
                     </button>
                 </div>
                 
-                <form method="POST" class="space-y-6" id="profile-form">
+                <form method="POST" class="space-y-6" id="profile-form" enctype="multipart/form-data">
                     <!-- Tab: Account Gegevens -->
                     <div class="tab-content" id="content-account">
                         <div class="grid gap-6 md:grid-cols-2">
                             <!-- Profielfoto Upload -->
                             <div class="md:col-span-2 flex flex-col sm:flex-row items-start sm:items-center mb-4 pb-4 border-b border-gray-100">
                                 <div class="w-20 h-20 bg-gradient-to-br from-primary to-secondary/80 rounded-xl flex items-center justify-center text-3xl font-bold text-white mr-6">
-                                    <?php echo strtoupper(substr($user['username'], 0, 1)); ?>
+                                    <?php if (!empty($user['profile_photo'])): ?>
+                                        <img src="<?php echo URLROOT . '/' . htmlspecialchars($user['profile_photo']); ?>" 
+                                             alt="Profielfoto" class="w-full h-full rounded-xl object-cover">
+                                    <?php else: ?>
+                                        <?php echo strtoupper(substr($user['username'], 0, 1)); ?>
+                                    <?php endif; ?>
                                 </div>
                                 <div>
                                     <div class="mb-2">
@@ -67,31 +72,34 @@
                                         <p class="text-gray-500 text-xs">Personaliseer je profiel met een profielfoto</p>
                                     </div>
                                     <div class="flex space-x-3">
-                                        <button type="button" 
-                                                class="inline-flex items-center px-3 py-1.5 border border-gray-300 shadow-sm 
-                                                      text-sm font-medium rounded-lg text-gray-700 bg-white 
-                                                      hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 
-                                                      focus:ring-primary transition-colors duration-200"
-                                                disabled>
+                                        <label for="profile_photo_input" 
+                                               class="inline-flex items-center px-3 py-1.5 border border-gray-300 shadow-sm 
+                                                     text-sm font-medium rounded-lg text-gray-700 bg-white 
+                                                     hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 
+                                                     focus:ring-primary transition-colors duration-200 cursor-pointer">
                                             <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                                     d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                                             </svg>
                                             Uploaden
-                                        </button>
+                                        </label>
+                                        <input type="file" id="profile_photo_input" name="profile_photo" class="hidden" accept="image/jpeg,image/png,image/gif,image/webp">
                                         <button type="button" 
                                                 class="inline-flex items-center px-3 py-1.5 border border-transparent shadow-sm 
                                                       text-sm font-medium rounded-lg text-red-600 bg-red-50 
                                                       hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 
                                                       focus:ring-red-500 transition-colors duration-200"
-                                                disabled>
+                                                id="remove_photo_button" 
+                                                <?php echo empty($user['profile_photo']) ? 'disabled' : ''; ?>>
                                             <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                                     d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                                             </svg>
                                             Verwijderen
                                         </button>
+                                        <input type="hidden" id="remove_photo" name="remove_photo" value="0">
                                     </div>
+                                    <p class="mt-2 text-xs text-gray-500">Ondersteunde formaten: JPG, PNG, GIF, WEBP. Max 5MB.</p>
                                 </div>
                             </div>
 
@@ -146,7 +154,7 @@
                                           class="block w-full px-3 py-2 border border-gray-300 rounded-lg
                                                focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary
                                                transition-colors duration-200"
-                                          placeholder="Vertel iets over jezelf..."></textarea>
+                                          placeholder="Vertel iets over jezelf..."><?php echo htmlspecialchars($user['bio'] ?? ''); ?></textarea>
                                 <p class="mt-1 text-xs text-gray-500">Een korte introductie die op je profielpagina wordt weergegeven</p>
                             </div>
                             
@@ -447,6 +455,78 @@
         // Form submission - include all fields from all tabs
         document.getElementById('profile-form').addEventListener('submit', function(e) {
             // The form will submit all visible and hidden fields
+        });
+        
+        // Profile Photo Handling
+        const profilePhotoInput = document.getElementById('profile_photo_input');
+        const removePhotoButton = document.getElementById('remove_photo_button');
+        const removePhotoInput = document.getElementById('remove_photo');
+        const profilePhotoPreview = document.querySelector('.w-20.h-20.rounded-xl');
+        
+        // Handle file selection
+        profilePhotoInput.addEventListener('change', function(e) {
+            if (this.files && this.files[0]) {
+                const file = this.files[0];
+                
+                // Validate file type
+                const validTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+                if (!validTypes.includes(file.type)) {
+                    alert('Alleen JPG, PNG, GIF of WEBP afbeeldingen zijn toegestaan.');
+                    this.value = ''; // Clear the input
+                    return;
+                }
+                
+                // Validate file size (max 5MB)
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('De afbeelding mag niet groter zijn dan 5MB.');
+                    this.value = ''; // Clear the input
+                    return;
+                }
+                
+                // Show preview
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    // Create or update image preview
+                    let imgElement = profilePhotoPreview.querySelector('img');
+                    if (!imgElement) {
+                        // Remove the text content (initial)
+                        profilePhotoPreview.textContent = '';
+                        // Create new image element
+                        imgElement = document.createElement('img');
+                        imgElement.classList.add('w-full', 'h-full', 'rounded-xl', 'object-cover');
+                        imgElement.alt = 'Profielfoto';
+                        profilePhotoPreview.appendChild(imgElement);
+                    }
+                    imgElement.src = e.target.result;
+                    
+                    // Enable remove button
+                    removePhotoButton.disabled = false;
+                    
+                    // Reset remove flag (in case it was set)
+                    removePhotoInput.value = '0';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+        
+        // Handle remove button click
+        removePhotoButton.addEventListener('click', function() {
+            // Reset the file input
+            profilePhotoInput.value = '';
+            
+            // Set the remove flag
+            removePhotoInput.value = '1';
+            
+            // Remove the image preview
+            const imgElement = profilePhotoPreview.querySelector('img');
+            if (imgElement) {
+                profilePhotoPreview.removeChild(imgElement);
+                // Add back the initial letter
+                profilePhotoPreview.textContent = '<?php echo strtoupper(substr($user['username'], 0, 1)); ?>';
+            }
+            
+            // Disable remove button
+            this.disabled = true;
         });
     });
 </script>

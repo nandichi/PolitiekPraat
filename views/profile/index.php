@@ -20,8 +20,13 @@
                     </div>
                     
                     <div class="absolute -bottom-12 left-8">
-                        <div class="w-24 h-24 bg-white rounded-xl shadow-lg flex items-center justify-center text-3xl font-bold text-primary">
-                            <?php echo strtoupper(substr($user['username'], 0, 1)); ?>
+                        <div class="w-24 h-24 bg-white rounded-xl shadow-lg flex items-center justify-center text-3xl font-bold text-primary overflow-hidden">
+                            <?php if (!empty($user['profile_photo'])): ?>
+                                <img src="<?php echo URLROOT . '/' . htmlspecialchars($user['profile_photo']); ?>" 
+                                     alt="Profielfoto" class="w-full h-full object-cover">
+                            <?php else: ?>
+                                <?php echo strtoupper(substr($user['username'], 0, 1)); ?>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -138,21 +143,34 @@
                         <div class="mt-6">
                             <h3 class="font-medium text-gray-700 mb-3">Activiteit Overzicht</h3>
                             <div class="bg-gray-50 rounded-lg p-4">
-                                <div class="relative pt-1">
-                                    <div class="flex mb-2 items-center justify-between">
-                                        <div>
-                                            <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-primary bg-primary/10">
-                                                Activiteit niveau
-                                            </span>
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-14 h-14 rounded-full bg-gradient-to-r <?php echo $stats['engagement_color']; ?> flex items-center justify-center text-white shadow-md">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                            </svg>
                                         </div>
-                                        <div class="text-right">
-                                            <span class="text-xs font-semibold inline-block text-primary">
-                                                <?php echo isset($stats['activity_level']) ? $stats['activity_level'] : '30%'; ?>
-                                            </span>
+                                        <div>
+                                            <span class="text-sm text-gray-500">Engagement niveau</span>
+                                            <h4 class="text-lg font-bold text-gray-800"><?php echo $stats['engagement_level']; ?></h4>
                                         </div>
                                     </div>
-                                    <div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-primary/10">
-                                        <div style="width:<?php echo isset($stats['activity_level']) ? $stats['activity_level'] : '30%'; ?>" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-primary"></div>
+                                    <div class="text-right">
+                                        <div class="text-sm text-gray-500">Laatste activiteit</div>
+                                        <div class="font-medium text-gray-800"><?php echo $stats['last_activity']; ?></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-4">
+                                    <div class="overflow-hidden h-2.5 mb-2 text-xs flex rounded-full bg-gray-200">
+                                        <div style="width:<?php echo $stats['engagement_percentage']; ?>" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center rounded-full bg-gradient-to-r <?php echo $stats['engagement_color']; ?>"></div>
+                                    </div>
+                                    <div class="flex justify-between text-xs text-gray-600">
+                                        <span>Beginner</span>
+                                        <span>Regelmatig</span>
+                                        <span>Actief</span>
+                                        <span>Gevorderd</span>
+                                        <span>Expert</span>
                                     </div>
                                 </div>
                             </div>
@@ -172,37 +190,60 @@
                         <?php if (!empty($recent_activity)): ?>
                             <div class="space-y-4">
                                 <?php foreach ($recent_activity as $activity): ?>
-                                    <div class="flex items-start p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200">
-                                        <div class="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center mr-4">
-                                            <?php if ($activity['type'] == 'blog'): ?>
-                                                <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                                                </svg>
-                                            <?php elseif ($activity['type'] == 'comment'): ?>
-                                                <svg class="w-5 h-5 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                                        d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/>
-                                                </svg>
-                                            <?php else: ?>
-                                                <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                                        d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/>
-                                                </svg>
-                                            <?php endif; ?>
+                                    <?php 
+                                    // Default URL en check of blog_id bestaat en geldig is
+                                    $url = '#';
+                                    $has_valid_link = false;
+                                    
+                                    if ($activity['type'] == 'blog' && !empty($activity['blog_id'])) {
+                                        $url = URLROOT . '/blogs/show/' . $activity['blog_id'];
+                                        $has_valid_link = true;
+                                    } elseif ($activity['type'] == 'comment' && !empty($activity['blog_id'])) {
+                                        $url = URLROOT . '/blogs/show/' . $activity['blog_id'] . '#comment-section';
+                                        $has_valid_link = true;
+                                    }
+                                    ?>
+                                    
+                                    <a href="<?php echo $url; ?>" class="block group <?php echo !$has_valid_link ? 'cursor-default' : ''; ?>"
+                                       <?php if (!$has_valid_link): ?>onclick="return false;"<?php endif; ?>>
+                                        <div class="flex items-start p-4 rounded-xl bg-gradient-to-r from-gray-50 to-white border border-gray-100 group-hover:from-primary/5 group-hover:to-white group-hover:border-primary/20 group-hover:shadow-md transition-all duration-300">
+                                            <div class="flex-shrink-0 w-12 h-12 rounded-xl overflow-hidden bg-gradient-to-br 
+                                                <?php echo $activity['type'] == 'blog' ? 'from-primary/20 to-primary/70' : 'from-secondary/20 to-secondary/70'; ?> 
+                                                flex items-center justify-center mr-4 shadow-sm group-hover:shadow">
+                                                <?php if ($activity['type'] == 'blog'): ?>
+                                                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                                    </svg>
+                                                <?php elseif ($activity['type'] == 'comment'): ?>
+                                                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                            d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/>
+                                                    </svg>
+                                                <?php endif; ?>
+                                            </div>
+                                            <div class="flex-1 min-w-0">
+                                                <div class="flex items-center justify-between">
+                                                    <h4 class="text-sm md:text-base font-semibold text-gray-800 truncate group-hover:text-primary transition-colors">
+                                                        <?php echo htmlspecialchars($activity['title']); ?>
+                                                    </h4>
+                                                    <span class="ml-2 flex-shrink-0 inline-flex px-2 py-0.5 text-xs font-medium rounded-full 
+                                                        <?php echo $activity['type'] == 'blog' ? 'bg-primary/10 text-primary' : 'bg-secondary/10 text-secondary'; ?>">
+                                                        <?php echo $activity['type'] == 'blog' ? 'Blog' : 'Reactie'; ?>
+                                                    </span>
+                                                </div>
+                                                <p class="mt-1 text-sm text-gray-600 line-clamp-2">
+                                                    <?php echo htmlspecialchars($activity['description']); ?>
+                                                </p>
+                                                <div class="mt-2 flex items-center text-xs text-gray-500">
+                                                    <svg class="flex-shrink-0 mr-1.5 h-4 w-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
+                                                    </svg>
+                                                    <?php echo htmlspecialchars($activity['date']); ?>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="flex-1 min-w-0">
-                                            <p class="text-sm font-medium text-gray-800 truncate">
-                                                <?php echo htmlspecialchars($activity['title']); ?>
-                                            </p>
-                                            <p class="text-xs text-gray-500 mt-1">
-                                                <?php echo htmlspecialchars($activity['description']); ?>
-                                            </p>
-                                            <p class="text-xs text-gray-400 mt-2">
-                                                <?php echo htmlspecialchars($activity['date']); ?>
-                                            </p>
-                                        </div>
-                                    </div>
+                                    </a>
                                 <?php endforeach; ?>
                             </div>
                         <?php else: ?>
