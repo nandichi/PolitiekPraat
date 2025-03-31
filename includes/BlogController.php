@@ -1,7 +1,5 @@
 <?php
-// Import PDO class if not available in global scope
-use PDO;
-
+// PDO is in the global namespace so no import is needed
 class BlogController {
     private $db;
     private $parsedown;
