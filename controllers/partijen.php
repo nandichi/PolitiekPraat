@@ -719,8 +719,8 @@ include_once BASE_PATH . '/views/templates/header.php';
 <div class="container mx-auto px-4 py-8 mb-12">
     <div class="bg-white rounded-xl shadow-lg overflow-hidden">
         <div class="relative">
-            <div class="bg-gradient-to-br from-primary to-primary-dark p-6 text-white">
-                <h2 class="text-2xl font-bold mb-2">Coalitiemaker</h2>
+            <div class="bg-gradient-to-br from-blue-500 to-red-600 p-6 text-white">
+                <h2 class="text-2xl font-bold mb-2">Coalitie maker</h2>
                 <p class="text-white/80">Stel je eigen coalitie samen en bekijk of je een meerderheid kunt behalen</p>
             </div>
             
@@ -746,17 +746,17 @@ include_once BASE_PATH . '/views/templates/header.php';
                 <!-- Left column: Available parties -->
                 <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
                     <h3 class="text-lg font-semibold text-gray-800 mb-4">Beschikbare partijen</h3>
-                    <div id="available-parties" class="space-y-2 max-h-[500px] overflow-y-auto pr-1">
+                    <div id="available-parties" class="grid grid-cols-2 sm:grid-cols-3 gap-3 max-h-[500px] overflow-y-auto pr-1">
                         <!-- Parties will be added by JavaScript -->
-                        <div class="text-center text-gray-500 py-4">Partijen worden geladen...</div>
+                        <div class="text-center text-gray-500 py-4 col-span-full">Partijen worden geladen...</div>
                     </div>
                 </div>
                 
                 <!-- Middle column: Selected coalition -->
                 <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
                     <h3 class="text-lg font-semibold text-gray-800 mb-4">Jouw coalitie</h3>
-                    <div id="selected-coalition" class="space-y-2 min-h-[250px] max-h-[500px] overflow-y-auto pr-1 flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-4">
-                        <p class="text-gray-500 text-center italic">Sleep partijen hierheen om een coalitie te vormen</p>
+                    <div id="selected-coalition" class="grid grid-cols-2 sm:grid-cols-3 gap-3 min-h-[250px] max-h-[500px] overflow-y-auto pr-1 border-2 border-dashed border-gray-300 rounded-lg p-4 flex flex-col items-center justify-center">
+                        <p class="text-gray-500 text-center italic col-span-full">Sleep partijen hierheen om een coalitie te vormen</p>
                     </div>
                     
                     <div class="mt-6">
@@ -791,36 +791,7 @@ include_once BASE_PATH . '/views/templates/header.php';
                         <div id="coalition-status" class="mt-4 text-center py-2 rounded-lg bg-gray-200 text-gray-700">
                             Nog geen meerderheid
                         </div>
-                    </div>
-                    
-                    <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
-                        <h3 class="text-lg font-semibold text-gray-800 mb-4">Politieke verdeling</h3>
-                        <div id="coalition-spectrum-container" class="flex items-center justify-between h-8 bg-gradient-to-r from-blue-600 via-purple-500 to-red-600 rounded-full overflow-hidden relative mb-2">
-                            <div id="coalition-spectrum-indicator" class="absolute h-12 w-4 bg-white shadow-md opacity-80 top-0 left-50% transition-all duration-300 -mt-2 border-2 border-gray-800" style="left: 50%; transform: translateX(-50%)"></div>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <div class="flex items-center">
-                                <div class="w-4 h-4 rounded-full bg-blue-600 mr-1"></div>
-                                <span class="text-xs font-medium">Links</span>
-                            </div>
-                            <div class="flex items-center">
-                                <div class="w-4 h-4 rounded-full bg-purple-500 mr-1"></div>
-                                <span class="text-xs font-medium">Midden</span>
-                            </div>
-                            <div class="flex items-center">
-                                <div class="w-4 h-4 rounded-full bg-red-600 mr-1"></div>
-                                <span class="text-xs font-medium">Rechts</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Coalition combinations suggestions -->
-            <div class="mt-8">
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">Suggesties</h3>
-                <div id="coalition-suggestions" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <!-- Suggestions will be added by JavaScript -->
+                    </div>  
                 </div>
             </div>
         </div>
@@ -1287,7 +1258,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             if (seats > 0) {
                 const card = document.createElement('div');
-                card.className = 'party-item bg-white p-3 rounded-lg border border-gray-200 shadow-sm flex items-center justify-between cursor-move transition-all hover:shadow-md mb-2';
+                card.className = 'party-item bg-white rounded-lg border border-gray-200 shadow-sm cursor-move transition-all hover:shadow-md hover:translate-y-[-2px] mb-3 w-full aspect-square flex flex-col items-center justify-center p-2 relative';
                 card.setAttribute('draggable', 'true');
                 card.setAttribute('data-party', partyKey);
                 card.setAttribute('data-seats', seats);
@@ -1295,13 +1266,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 const color = getPartyColor(partyKey);
                 
                 card.innerHTML = `
-                    <div class="flex items-center">
-                        <div class="w-6 h-6 rounded-full overflow-hidden mr-2 bg-white flex items-center justify-center border" style="border-color: ${color}">
-                            <img src="${party.logo}" alt="${party.name}" class="w-5 h-5 object-contain">
-                        </div>
-                        <span class="font-medium">${partyKey}</span>
+                    <div class="absolute top-2 right-2 bg-gray-100 text-gray-800 text-sm font-bold px-2 py-1 rounded-full">${seats}</div>
+                    <div class="w-12 h-12 rounded-lg overflow-hidden mb-2 bg-white flex items-center justify-center border-2" style="border-color: ${color}">
+                        <img src="${party.logo}" alt="${party.name}" class="w-10 h-10 object-contain">
                     </div>
-                    <span class="bg-gray-100 text-gray-800 text-xs font-bold px-2 py-1 rounded-full">${seats}</span>
+                    <span class="font-medium text-center">${partyKey}</span>
                 `;
                 
                 container.appendChild(card);
@@ -1545,24 +1514,9 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Make existing coalition items removable
         document.addEventListener('click', function(e) {
-            if (e.target.classList.contains('remove-party')) {
+            if (e.target.classList.contains('remove-party') || e.target.closest('.remove-party')) {
                 const partyEl = e.target.closest('.party-item');
-                const partyKey = partyEl.getAttribute('data-party');
-                
-                // Remove from coalition array
-                currentCoalition = currentCoalition.filter(p => p !== partyKey);
-                
-                // Move back to available
-                const availableContainer = document.getElementById('available-parties');
-                
-                // Remove close button
-                partyEl.querySelector('.remove-party').remove();
-                
-                // Add back to available parties
-                availableContainer.appendChild(partyEl);
-                
-                // Update status
-                updateCoalitionStatus();
+                moveToAvailable(partyEl);
             }
         });
     }
@@ -1586,7 +1540,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Add close button to the party card
         const closeBtn = document.createElement('button');
-        closeBtn.className = 'remove-party ml-2 text-gray-400 hover:text-gray-600';
+        closeBtn.className = 'remove-party absolute top-2 left-2 text-gray-400 hover:text-gray-600 bg-white rounded-full p-1 shadow-sm z-10';
         closeBtn.innerHTML = `
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -1595,7 +1549,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Check if the close button already exists before adding
         if (!partyEl.querySelector('.remove-party')) {
-            partyEl.querySelector('div').appendChild(closeBtn);
+            partyEl.appendChild(closeBtn);
         }
         
         // Move to coalition
@@ -1627,7 +1581,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Add placeholder back
         coalitionContainer.innerHTML = `
-            <p class="text-gray-500 text-center italic">Sleep partijen hierheen om een coalitie te vormen</p>
+            <p class="text-gray-500 text-center italic col-span-full">Sleep partijen hierheen om een coalitie te vormen</p>
         `;
         
         // Restore flex styling
@@ -1685,7 +1639,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 .sort((a, b) => b[1].current_seats - a[1].current_seats) // Sorteer op zetels
                 .forEach(([partyKey, party]) => {
                  const card = document.createElement('div');
-                 card.className = 'party-item bg-white p-3 rounded-lg border border-gray-200 shadow-sm flex items-center justify-between cursor-move transition-all hover:shadow-md mb-2';
+                 card.className = 'party-item bg-white rounded-lg border border-gray-200 shadow-sm cursor-move transition-all hover:shadow-md hover:translate-y-[-2px] mb-3 w-full aspect-square flex flex-col items-center justify-center p-2 relative';
                  card.setAttribute('draggable', 'true');
                  card.setAttribute('data-party', partyKey);
                  card.setAttribute('data-seats', party.current_seats);
@@ -1702,13 +1656,11 @@ document.addEventListener('DOMContentLoaded', function() {
                  }
                  
                  card.innerHTML = `
-                     <div class="flex items-center">
-                         <div class="w-6 h-6 rounded-full overflow-hidden mr-2 bg-white flex items-center justify-center border" style="border-color: ${color}">
-                             <img src="${party.logo}" alt="${party.name}" class="w-5 h-5 object-contain">
-                         </div>
-                         <span class="font-medium">${partyKey}</span>
+                     <div class="absolute top-2 right-2 bg-gray-100 text-gray-800 text-sm font-bold px-2 py-1 rounded-full">${party.current_seats}</div>
+                     <div class="w-12 h-12 rounded-lg overflow-hidden mb-2 bg-white flex items-center justify-center border-2" style="border-color: ${color}">
+                         <img src="${party.logo}" alt="${party.name}" class="w-10 h-10 object-contain">
                      </div>
-                     <span class="bg-gray-100 text-gray-800 text-xs font-bold px-2 py-1 rounded-full">${party.current_seats}</span>
+                     <span class="font-medium text-center">${partyKey}</span>
                  `;
                  
                  availableContainer.appendChild(card);
@@ -1770,13 +1722,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Voeg sluitknop toe als deze niet bestaat
                     if (!partyEl.querySelector('.remove-party')) {
                         const closeBtn = document.createElement('button');
-                        closeBtn.className = 'remove-party ml-2 text-gray-400 hover:text-gray-600';
+                        closeBtn.className = 'remove-party absolute top-2 left-2 text-gray-400 hover:text-gray-600 bg-white rounded-full p-1 shadow-sm z-10';
                         closeBtn.innerHTML = `
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                             </svg>
                         `;
-                        partyEl.querySelector('div').appendChild(closeBtn);
+                        partyEl.appendChild(closeBtn);
                     }
                     
                     // Verplaats naar coalitie
@@ -1793,23 +1745,24 @@ document.addEventListener('DOMContentLoaded', function() {
             const removeBtn = e.target.closest('.remove-party');
             if (removeBtn) {
                 const partyEl = removeBtn.closest('.party-item');
-                const availableContainer = document.getElementById('available-parties');
                 
-                // Verwijder sluitknop
-                removeBtn.remove();
-                
-                // Verplaats terug naar beschikbare partijen
-                if (availableContainer) {
-                    availableContainer.appendChild(partyEl);
+                // Remove from available parties
+                const closeBtn = partyEl.querySelector('.remove-party');
+                if (closeBtn) {
+                    closeBtn.remove();
                 }
+                
+                // Move to available container
+                const availableContainer = document.getElementById('available-parties');
+                availableContainer.appendChild(partyEl);
                 
                 // Update status
                 updateCoalitionStatusFallback();
                 
-                // Voeg placeholder toe als er geen partijen meer zijn
+                // Add placeholder if needed
                 const coalitionContainer = document.getElementById('selected-coalition');
                 if (coalitionContainer && coalitionContainer.querySelectorAll('.party-item').length === 0) {
-                    coalitionContainer.innerHTML = `<p class="text-gray-500 text-center italic">Sleep partijen hierheen om een coalitie te vormen</p>`;
+                    coalitionContainer.innerHTML = `<p class="text-gray-500 text-center italic col-span-full">Sleep partijen hierheen om een coalitie te vormen</p>`;
                     coalitionContainer.classList.add('flex', 'flex-col', 'items-center', 'justify-center');
                 }
             }
@@ -1855,6 +1808,31 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 });
+
+// Function to move a party back to available
+function moveToAvailable(partyEl) {
+    if (partyEl.classList.contains('party-item')) {
+        const partyKey = partyEl.getAttribute('data-party');
+        
+        // Remove from coalition array
+        currentCoalition = currentCoalition.filter(p => p !== partyKey);
+        
+        // Move back to available
+        const availableContainer = document.getElementById('available-parties');
+        
+        // Remove close button
+        const closeBtn = partyEl.querySelector('.remove-party');
+        if (closeBtn) {
+            closeBtn.remove();
+        }
+        
+        // Add back to available parties
+        availableContainer.appendChild(partyEl);
+        
+        // Update status
+        updateCoalitionStatus();
+    }
+}
 </script>
 
 <style>
