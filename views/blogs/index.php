@@ -1,68 +1,62 @@
 <?php require_once 'views/templates/header.php'; ?>
 
 <main class="bg-gradient-to-b from-gray-50 to-white min-h-screen">
-    <!-- Hero Section met cleaner design -->
-    <section class="relative bg-gradient-to-r from-indigo-600 via-blue-700 to-blue-800 py-20 overflow-hidden">
+    <!-- Hero Section - Rebuilt to be elegant and professional -->
+    <section class="relative bg-gradient-to-br from-primary-dark via-primary to-blue-600 py-20 overflow-hidden">
+        <!-- Top accent line -->
+        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-secondary to-blue-400"></div>
+        
         <!-- Decorative elements -->
-        <div class="absolute inset-0 overflow-hidden">
-            <svg class="absolute left-0 top-0 h-full w-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-                <path fill="rgba(255, 255, 255, 0.05)" fill-opacity="1" d="M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,250.7C672,235,768,181,864,181.3C960,181,1056,235,1152,234.7C1248,235,1344,181,1392,154.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <!-- Abstract wave pattern -->
+            <svg class="absolute w-full h-56 -bottom-10 left-0 text-white/5" viewBox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                <path fill="currentColor" fill-opacity="1" d="M0,128L40,138.7C80,149,160,171,240,170.7C320,171,400,149,480,149.3C560,149,640,171,720,192C800,213,880,235,960,229.3C1040,224,1120,192,1200,165.3C1280,139,1360,117,1400,106.7L1440,96L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z"></path>
             </svg>
-            <div class="absolute right-0 -bottom-20 opacity-20">
-                <svg width="400" height="400" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                    <path fill="rgba(255, 255, 255, 0.1)" d="M47.1,-68.1C59.4,-62.5,67.2,-46.6,71.2,-30.9C75.1,-15.2,75.2,0.4,72.6,16.3C70,32.2,64.8,48.5,53.5,58.1C42.3,67.7,25.2,70.5,8.5,72.2C-8.2,73.9,-24.6,74.5,-39.8,69.2C-55,63.9,-69,52.6,-76.6,37.5C-84.3,22.4,-85.7,3.4,-81.4,-13.7C-77.2,-30.7,-67.4,-45.8,-54.4,-52.4C-41.4,-59,-25.9,-57.1,-10.3,-58.7C5.3,-60.2,34.8,-73.7,47.1,-68.1Z" transform="translate(100 100)" />
-                </svg>
-            </div>
+            
+            <!-- Decorative circles -->
+            <div class="absolute top-20 left-10 w-40 h-40 rounded-full bg-secondary/10 filter blur-2xl"></div>
+            <div class="absolute bottom-10 right-10 w-60 h-60 rounded-full bg-blue-500/10 filter blur-3xl"></div>
+            <div class="absolute top-1/2 left-1/3 w-20 h-20 rounded-full bg-secondary/20 filter blur-xl"></div>
+            
+            <!-- Dot pattern -->
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"30\" height=\"30\" viewBox=\"0 0 30 30\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cpath d=\"M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z\" fill=\"rgba(255,255,255,0.07)\"%3E%3C/path%3E%3C/svg%3E')] opacity-30"></div>
         </div>
-
+        
         <div class="container mx-auto px-4 relative z-10">
             <div class="max-w-4xl mx-auto text-center">
-                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 tracking-tight leading-tight">
-                    Politieke Blogs
+                <!-- Small decorative element above title -->
+                <div class="inline-block mb-3">
+                    <div class="flex items-center justify-center space-x-1">
+                        <span class="block w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                        <span class="block w-3 h-1.5 rounded-full bg-blue-400"></span>
+                        <span class="block w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                    </div>
+                </div>
+                
+                <!-- Title with gradient text -->
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 tracking-tight leading-tight">
+                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-100 via-white to-secondary-light">
+                        Politieke Blogs
+                    </span>
                 </h1>
-                <p class="text-xl text-blue-100 mb-8 max-w-3xl mx-auto leading-relaxed">
+                
+                <!-- Subtitle with lighter weight -->
+                <p class="text-lg md:text-xl text-blue-100 mb-8 max-w-3xl mx-auto leading-relaxed font-light">
                     Ontdek diepgaande analyses en persoonlijke inzichten over de Nederlandse politiek
                 </p>
                 
-                <!-- Call to action buttons -->
-                <div class="flex flex-wrap justify-center gap-4 mb-12">
+                <!-- Call to action button -->
+                <div class="flex justify-center mb-6">
                     <?php if (isset($_SESSION['user_id'])): ?>
                         <a href="<?php echo URLROOT; ?>/blogs/create" 
-                           class="px-6 py-3 bg-white text-blue-700 font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 flex items-center">
+                           class="px-6 py-3.5 bg-gradient-to-r from-secondary to-secondary-dark text-white font-medium rounded-lg shadow-lg hover:shadow-secondary/30 hover:-translate-y-0.5 transition-all duration-200 flex items-center">
                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                             </svg>
                             <span>Nieuwe Blog Schrijven</span>
                         </a>
                     <?php endif; ?>
-                    <a href="#blogs" class="px-6 py-3 bg-blue-900 bg-opacity-50 text-white font-medium rounded-lg shadow-lg hover:bg-opacity-70 transition-all duration-200 backdrop-blur-sm flex items-center">
-                        <span>Verken blogs</span>
-                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                        </svg>
-                    </a>
                 </div>
-                
-                <?php if (!empty($blogs)): ?>
-                <!-- Blog statistieken in modern cards layout -->
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mt-4">
-                    <div class="bg-white/15 backdrop-blur-md rounded-xl p-4 border border-white/20 shadow-lg">
-                        <div class="text-4xl font-bold text-white mb-2"><?php echo count($blogs); ?></div>
-                        <div class="text-sm text-blue-100 font-medium uppercase tracking-wide">Blogs</div>
-                    </div>
-                    <div class="bg-white/15 backdrop-blur-md rounded-xl p-4 border border-white/20 shadow-lg">
-                        <div class="text-4xl font-bold text-white mb-2"><?php echo count(array_unique(array_column((array) $blogs, 'author_id'))); ?></div>
-                        <div class="text-sm text-blue-100 font-medium uppercase tracking-wide">Auteurs</div>
-                    </div>
-                    <div class="bg-white/15 backdrop-blur-md rounded-xl p-4 border border-white/20 shadow-lg">
-                        <?php 
-                            $total_reading_time = array_sum(array_column((array) $blogs, 'reading_time')); 
-                        ?>
-                        <div class="text-4xl font-bold text-white mb-2"><?php echo $total_reading_time; ?></div>
-                        <div class="text-sm text-blue-100 font-medium uppercase tracking-wide">Min. Leestijd</div>
-                    </div>
-                </div>
-                <?php endif; ?>
             </div>
         </div>
     </section>

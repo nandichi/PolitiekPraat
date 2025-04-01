@@ -841,7 +841,7 @@ require_once 'views/templates/header.php';
                         <div class="space-y-6">
                             <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
                                 <span class="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                                    Ontdek de Politieke Partijen
+                                    Politieke Partijen
                                 </span>
                             </h2>
                             <p class="text-xl text-gray-600 leading-relaxed">

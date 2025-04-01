@@ -3,40 +3,84 @@ require_once 'includes/config.php';
 require_once 'views/templates/header.php';
 ?>
 
-<main class="bg-gradient-to-b from-slate-50 to-slate-100 py-16">
-    <div class="container mx-auto px-4 max-w-7xl">
-        <!-- Hero Section -->
-        <div class="text-center mb-16">
-            <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                    Stemwijzer 2025
-                </span>
-            </h1>
-            <p class="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-                Ontdek welke partij het beste bij jouw standpunten past met onze uitgebreide analyse
-            </p>
+<main class="bg-gradient-to-b from-slate-50 to-white min-h-screen">
+    <!-- Hero Section - Elegant and professional design -->
+    <section class="relative bg-gradient-to-br from-primary-dark via-primary to-blue-600 py-20 overflow-hidden">
+        <!-- Top accent line -->
+        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-secondary to-blue-400"></div>
+        
+        <!-- Decorative elements -->
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <!-- Abstract wave pattern -->
+            <svg class="absolute w-full h-56 -bottom-10 left-0 text-white/5" viewBox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                <path fill="currentColor" fill-opacity="1" d="M0,128L40,138.7C80,149,160,171,240,170.7C320,171,400,149,480,149.3C560,149,640,171,720,192C800,213,880,235,960,229.3C1040,224,1120,192,1200,165.3C1280,139,1360,117,1400,106.7L1440,96L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z"></path>
+            </svg>
+            
+            <!-- Decorative circles -->
+            <div class="absolute top-20 left-10 w-40 h-40 rounded-full bg-secondary/10 filter blur-2xl"></div>
+            <div class="absolute bottom-10 right-10 w-60 h-60 rounded-full bg-blue-500/10 filter blur-3xl"></div>
+            <div class="absolute top-1/2 left-1/3 w-20 h-20 rounded-full bg-secondary/20 filter blur-xl"></div>
+            
+            <!-- Dot pattern -->
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"30\" height=\"30\" viewBox=\"0 0 30 30\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cpath d=\"M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z\" fill=\"rgba(255,255,255,0.07)\"%3E%3C/path%3E%3C/svg%3E')] opacity-30"></div>
         </div>
-
+        
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-4xl mx-auto text-center">
+                <!-- Small decorative element above title -->
+                <div class="inline-block mb-3">
+                    <div class="flex items-center justify-center space-x-1">
+                        <span class="block w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                        <span class="block w-3 h-1.5 rounded-full bg-blue-400"></span>
+                        <span class="block w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                    </div>
+                </div>
+                
+                <!-- Title with gradient text -->
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 tracking-tight leading-tight">
+                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-100 via-white to-secondary-light">
+                        Stemwijzer 2025
+                    </span>
+                </h1>
+                
+                <!-- Subtitle with lighter weight -->
+                <p class="text-lg md:text-xl text-blue-100 mb-8 max-w-3xl mx-auto leading-relaxed font-light">
+                    Ontdek welke partij het beste bij jouw standpunten past met onze uitgebreide analyse
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <div class="container mx-auto px-4 max-w-7xl -mt-6 relative z-10">
         <!-- Stemwijzer App -->
         <div class="max-w-4xl mx-auto" x-data="stemwijzer()">
             <!-- Progress Bar -->
-            <div class="mb-8 bg-white rounded-2xl p-8 shadow-xl">
+            <div class="mb-8 bg-white rounded-2xl p-8 shadow-xl relative overflow-hidden">
+                <!-- Decorative background elements -->
+                <div class="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-primary/5 to-secondary/5 rounded-full blur-2xl -z-10 transform translate-x-1/3 -translate-y-1/3"></div>
+                <div class="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-secondary/5 to-primary/5 rounded-full blur-2xl -z-10 transform -translate-x-1/3 translate-y-1/3"></div>
+                
                 <!-- Header met vraagnummer en tijd -->
-                <div class="flex items-center justify-between mb-6">
-                    <div class="flex items-center space-x-4">
+                <div class="flex items-center justify-between mb-8">
+                    <div class="flex items-center space-x-5">
                         <div class="relative">
-                            <div class="w-14 h-14 rounded-lg bg-gradient-to-br from-primary/20 to-primary/10 
+                            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-primary/10 to-primary/5 
                                        flex items-center justify-center">
-                                <span class="text-lg font-semibold text-primary" x-text="currentStep + 1"></span>
-                                <div class="absolute inset-0 rounded-lg border-2 border-primary/30 
+                                <span class="text-xl font-semibold text-primary" x-text="currentStep + 1"></span>
+                                <div class="absolute inset-0 rounded-full border-2 border-primary/20 
                                            animate-pulse-subtle"></div>
                             </div>
                         </div>
                         <div class="flex flex-col">
-                            <span class="text-sm font-medium text-gray-900">Vraag</span>
-                            <span class="text-xs text-gray-500">
-                                van <span x-text="totalSteps"></span> stellingen
-                            </span>
+                            <span class="text-base font-medium text-gray-900">Vraag</span>
+                            <div class="flex items-center">
+                                <span class="text-sm text-gray-500">
+                                    <span x-text="currentStep + 1"></span> van <span x-text="totalSteps"></span> stellingen
+                                </span>
+                                <span class="ml-2 px-2 py-0.5 bg-primary/10 text-primary text-xs font-medium rounded-full">
+                                    <span x-text="Math.round((currentStep / totalSteps) * 100)"></span>% voltooid
+                                </span>
+                            </div>
                         </div>
                     </div>
                     
@@ -45,50 +89,72 @@ require_once 'views/templates/header.php';
                 </div>
                 
                 <!-- Progress track -->
-                <div class="relative">
-                    <!-- Achtergrond -->
-                    <div class="h-3 bg-gray-100 rounded-full overflow-hidden">
-                        <!-- Voortgangsbalk -->
-                        <div class="h-full bg-gradient-to-r from-primary/80 via-primary to-secondary
-                                    transition-all duration-500 ease-out relative"
+                <div class="relative mb-6">
+                    <!-- Background track -->
+                    <div class="h-2.5 bg-gray-100 rounded-full overflow-hidden backdrop-blur-sm shadow-inner">
+                        <!-- Progress bar -->
+                        <div class="h-full bg-gradient-to-r from-primary via-primary/90 to-secondary
+                                    transition-all duration-500 ease-out-cubic relative"
                              :style="'width: ' + (currentStep / totalSteps * 100) + '%'">
-                            <!-- Glow effect -->
+                            <!-- Shine effect -->
                             <div class="absolute inset-0 flex">
-                                <div class="w-1/2 bg-gradient-to-r from-transparent to-white/30"></div>
-                                <div class="w-1/2 bg-gradient-to-l from-transparent to-white/30"></div>
+                                <div class="w-1/2 bg-gradient-to-r from-transparent to-white/40"></div>
+                                <div class="w-1/2 bg-gradient-to-l from-transparent to-white/40"></div>
                             </div>
                             
-                            <!-- Pulse effect aan het einde -->
-                            <div class="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 
-                                       bg-white rounded-full shadow-glow
-                                       animate-pulse-slow"></div>
+                            <!-- Progress indicator -->
+                            <div class="absolute right-0 top-1/2 -translate-y-1/2 -translate-x-1/2 w-5 h-5 
+                                       bg-white rounded-full shadow-lg shadow-primary/30 border-2 border-primary/30
+                                       animate-pulse-slow z-10"></div>
                         </div>
                     </div>
 
-                    <!-- Stap markers -->
+                    <!-- Step markers with segments -->
                     <div class="absolute top-1/2 -translate-y-1/2 w-full flex justify-between px-[1px]">
-                        <template x-for="index in totalSteps" :key="index">
+                        <template x-for="(_, index) in Array.from({length: 5})" :key="index">
                             <div class="relative group">
-                                <div class="w-1.5 h-1.5 rounded-full transition-all duration-300"
-                                     :class="currentStep >= index - 1 ? 'bg-primary' : 'bg-gray-300'">
+                                <div class="w-1 h-3.5 rounded-sm transition-all duration-300"
+                                     :class="currentStep >= Math.floor(index * (totalSteps / 4)) ? 'bg-primary/70' : 'bg-gray-200'">
                                 </div>
                                 <!-- Tooltip -->
                                 <div class="absolute bottom-full mb-2 -translate-x-1/2 left-1/2
-                                           opacity-0 group-hover:opacity-100 transition-opacity z-10">
+                                           opacity-0 group-hover:opacity-100 transition-opacity z-20 pointer-events-none">
                                     <div class="px-2 py-1 text-xs text-white bg-gray-900 rounded-md whitespace-nowrap shadow-lg">
-                                        Vraag <span x-text="index"></span>
+                                        <span x-text="Math.round((index / 4) * 100)"></span>% voltooid
                                     </div>
+                                    <div class="w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900 mx-auto"></div>
                                 </div>
                             </div>
                         </template>
                     </div>
                 </div>
 
-                <!-- Labels -->
-                <div class="flex justify-between mt-4 text-xs">
-                    <span class="text-gray-500 font-medium">Start</span>
-                    <span class="text-gray-500 font-medium">Halverwege</span>
-                    <span class="text-gray-500 font-medium">Einde</span>
+                <!-- Labels with icons -->
+                <div class="flex justify-between px-1 text-xs font-medium">
+                    <div class="flex flex-col items-center">
+                        <div class="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center mb-1">
+                            <svg class="w-3 h-3 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                            </svg>
+                        </div>
+                        <span class="text-gray-600">Start</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center mb-1">
+                            <svg class="w-3 h-3 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <span class="text-gray-600">Halverwege</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center mb-1">
+                            <svg class="w-3 h-3 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <span class="text-gray-600">Einde</span>
+                    </div>
                 </div>
             </div>
 
@@ -100,13 +166,18 @@ require_once 'views/templates/header.php';
             }
 
             @keyframes pulse-slow {
-                0%, 100% { transform: translateY(-50%) scale(1); opacity: 1; }
-                50% { transform: translateY(-50%) scale(1.5); opacity: 0.6; }
+                0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+                50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; }
             }
             
             @keyframes float {
                 0%, 100% { transform: translateY(0px); }
                 50% { transform: translateY(-10px); }
+            }
+            
+            @keyframes ease-out-cubic {
+                0% { transition-timing-function: cubic-bezier(0.33, 1, 0.68, 1); }
+                100% { transition-timing-function: cubic-bezier(0.33, 1, 0.68, 1); }
             }
 
             .shadow-glow {
