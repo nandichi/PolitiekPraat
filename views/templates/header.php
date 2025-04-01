@@ -42,9 +42,22 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
     
     <!-- Additional SEO meta tags -->
     <meta name="author" content="PolitiekPraat">
-    <meta name="robots" content="index, follow">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta name="language" content="Dutch">
     <meta name="revisit-after" content="7 days">
+    <meta name="generator" content="PolitiekPraat CMS">
+    <meta name="rating" content="general">
+    <meta name="geo.region" content="NL">
+    <meta name="geo.placename" content="Nederland">
+    
+    <!-- Improved SEO Performance -->
+    <link rel="preconnect" href="https://unpkg.com">
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="dns-prefetch" href="https://unpkg.com">
+    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+    
+    <!-- Preload Critical Resources -->
+    <link rel="preload" href="<?php echo URLROOT; ?>/images/favicon-512x512.png" as="image">
     
     <!-- Open Graph / Social Media Meta Tags -->
     <meta property="og:type" content="<?php echo isset($data['title']) ? 'article' : 'website'; ?>">
@@ -63,6 +76,20 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
 
     <!-- Canonical URL -->
     <link rel="canonical" href="<?php echo URLROOT . $_SERVER['REQUEST_URI']; ?>">
+
+    <!-- Sitemap Link -->
+    <link rel="sitemap" type="application/xml" href="<?php echo URLROOT; ?>/sitemap.xml">
+    
+    <!-- Provide translation alternates if available in the future -->
+    <link rel="alternate" hreflang="nl-nl" href="<?php echo URLROOT . $_SERVER['REQUEST_URI']; ?>">
+    
+    <!-- Browser configs -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="<?php echo SITENAME; ?>">
+    <meta name="application-name" content="<?php echo SITENAME; ?>">
+    <meta name="msapplication-TileColor" content="#1a365d">
+    <meta name="theme-color" content="#1a365d">
 
     <meta name="google-site-verification" content="e72Qn95mvwZrvfw5CvXBKfeIv0vSqmo88Fw-oTJ5sgw" />
     <title><?php echo $metaTitle; ?></title>
@@ -184,6 +211,128 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
             }
         }
     </script>
+    
+    <!-- Schema.org Structured Data for Organization -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "<?php echo SITENAME; ?>",
+        "url": "<?php echo URLROOT; ?>",
+        "logo": "<?php echo URLROOT; ?>/images/favicon-512x512.png",
+        "description": "<?php echo htmlspecialchars($metaDescriptions['home']); ?>",
+        "sameAs": [
+            "https://twitter.com/politiekpraat",
+            "https://facebook.com/politiekpraat",
+            "https://linkedin.com/company/politiekpraat"
+        ]
+    }
+    </script>
+
+    <!-- Schema.org Structured Data for WebSite -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "<?php echo SITENAME; ?>",
+        "url": "<?php echo URLROOT; ?>",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": "<?php echo URLROOT; ?>/zoeken?q={search_term_string}"
+            },
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
+
+    <!-- Schema.org Structured Data for WebPage -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "<?php echo htmlspecialchars($metaTitle); ?>",
+        "description": "<?php echo htmlspecialchars($metaDescription); ?>",
+        "url": "<?php echo URLROOT . $_SERVER['REQUEST_URI']; ?>",
+        "publisher": {
+            "@type": "Organization",
+            "name": "<?php echo SITENAME; ?>",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "<?php echo URLROOT; ?>/images/favicon-512x512.png"
+            }
+        },
+        "inLanguage": "nl-NL",
+        "isPartOf": {
+            "@type": "WebSite",
+            "url": "<?php echo URLROOT; ?>"
+        }
+    }
+    </script>
+    
+    <?php if(isset($data['is_blog']) && $data['is_blog']): ?>
+    <!-- Schema.org Structured Data for Blog Article -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "<?php echo URLROOT . $_SERVER['REQUEST_URI']; ?>"
+        },
+        "headline": "<?php echo htmlspecialchars($data['title']); ?>",
+        "description": "<?php echo htmlspecialchars($data['description']); ?>",
+        "image": "<?php echo htmlspecialchars($data['image']); ?>",
+        "author": {
+            "@type": "Person",
+            "name": "<?php echo htmlspecialchars($data['author'] ?? 'PolitiekPraat'); ?>"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "<?php echo SITENAME; ?>",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "<?php echo URLROOT; ?>/images/favicon-512x512.png"
+            }
+        },
+        "datePublished": "<?php echo isset($data['created_at']) ? date('c', strtotime($data['created_at'])) : date('c'); ?>",
+        "dateModified": "<?php echo isset($data['updated_at']) ? date('c', strtotime($data['updated_at'])) : date('c'); ?>"
+    }
+    </script>
+    <?php endif; ?>
+    
+    <?php if(isset($data['is_news']) && $data['is_news']): ?>
+    <!-- Schema.org Structured Data for News Article -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "NewsArticle",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "<?php echo URLROOT . $_SERVER['REQUEST_URI']; ?>"
+        },
+        "headline": "<?php echo htmlspecialchars($data['title']); ?>",
+        "description": "<?php echo htmlspecialchars($data['description']); ?>",
+        "image": "<?php echo htmlspecialchars($data['image']); ?>",
+        "author": {
+            "@type": "Person",
+            "name": "<?php echo htmlspecialchars($data['author'] ?? 'PolitiekPraat'); ?>"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "<?php echo SITENAME; ?>",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "<?php echo URLROOT; ?>/images/favicon-512x512.png"
+            }
+        },
+        "datePublished": "<?php echo isset($data['created_at']) ? date('c', strtotime($data['created_at'])) : date('c'); ?>",
+        "dateModified": "<?php echo isset($data['updated_at']) ? date('c', strtotime($data['updated_at'])) : date('c'); ?>"
+    }
+    </script>
+    <?php endif; ?>
+    
     <style>
         [x-cloak] { 
             display: none !important; 
