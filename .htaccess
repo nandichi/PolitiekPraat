@@ -6,13 +6,6 @@ Options -Indexes
 RewriteEngine On
 RewriteBase /
 
-# Allow direct access to files in specific directories like public, uploads, etc.
-RewriteRule ^public/ - [L]
-RewriteRule ^uploads/ - [L]
-RewriteRule ^images/ - [L]
-RewriteRule ^css/ - [L]
-RewriteRule ^js/ - [L]
-
 # Allow direct access to files
 RewriteCond %{REQUEST_FILENAME} -f
 RewriteRule ^ - [L]
