@@ -805,16 +805,27 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                                          ring-1 ring-white/30 transition-all duration-300
                                          group-hover:ring-white/50 group-hover:scale-110 overflow-hidden">
                                     <?php
-                                    $profilePhoto = getProfilePhotoUrl($_SESSION['profile_photo'] ?? '', $_SESSION['username']);
-                                    if ($profilePhoto['type'] === 'img'): 
-                                    ?>
-                                        <img src="<?php echo $profilePhoto['value']; ?>" 
+                                    if (isset($_SESSION['username']) && $_SESSION['username'] === 'Naoufal') {
+                                        // Special profile photo for Naoufal
+                                        $profilePhotoUrl = "https://media.licdn.com/dms/image/v2/D4E03AQH41qDaDSt19A/profile-displayphoto-shrink_800_800/B4EZWO8j20HgAg-/0/1741859995715?e=1749081600&v=beta&t=RsXjUDf5AAjzVEK7lMDS2InjE18FehpMDQB7JxICP64";
+                                        ?>
+                                        <img src="<?php echo $profilePhotoUrl; ?>" 
                                              alt="Profile" class="w-full h-full object-cover">
-                                    <?php else: ?>
-                                        <span class="text-white font-bold text-sm">
-                                            <?php echo $profilePhoto['value']; ?>
-                                        </span>
-                                    <?php endif; ?>
+                                    <?php
+                                    } else {
+                                        // Normal profile photo handling for other users
+                                        $profilePhoto = getProfilePhotoUrl($_SESSION['profile_photo'] ?? '', $_SESSION['username']);
+                                        if ($profilePhoto['type'] === 'img'): 
+                                        ?>
+                                            <img src="<?php echo $profilePhoto['value']; ?>" 
+                                                 alt="Profile" class="w-full h-full object-cover">
+                                        <?php else: ?>
+                                            <span class="text-white font-bold text-sm">
+                                                <?php echo $profilePhoto['value']; ?>
+                                            </span>
+                                        <?php endif;
+                                    }
+                                    ?>
                                 </div>
                                 <span class="font-medium text-white text-sm"><?php echo htmlspecialchars($_SESSION['username']); ?></span>
                                 <svg class="w-4 h-4 text-white transition-transform duration-300 group-hover:rotate-180" 
