@@ -37,8 +37,7 @@
                         </div>
                         <p class="text-white/80 leading-relaxed mb-8">
                             PolitiekPraat is het toonaangevende platform voor open en constructieve discussie over 
-                            politieke onderwerpen in Nederland. Wij faciliteren een respectvolle dialoog en 
-                            stimuleren kritisch denken over actuele politieke thema's.
+                            politieke onderwerpen in Nederland. 
                         </p>
                         <div class="flex space-x-4">
                             <a href="#" class="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center hover:bg-secondary hover:text-white transition-all duration-300">

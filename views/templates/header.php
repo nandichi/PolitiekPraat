@@ -9,13 +9,25 @@ $metaDescriptions = [
     'contact' => 'Neem contact op met PolitiekPlatform. We staan klaar om je vragen te beantwoorden en feedback te ontvangen.'
 ];
 
+// Define keywords for each page
+$metaKeywords = [
+    'home' => 'politiek, nieuws, blogs, Nederland, politieke partijen, democratie, verkiezingen, overheid, Nederlandse politiek, Haags nieuws',
+    'blogs' => 'politieke blogs, opinieartikelen, politieke analyses, Nederlandse politiek, politiek commentaar, verkiezingen, columnisten',
+    'nieuws' => 'politiek nieuws, Nederlands nieuws, Haags nieuws, regering, oppositie, kabinet, ministeries, Tweede Kamer',
+    'stemwijzer' => 'stemwijzer, politieke keuze, verkiezingen, stemhulp, kieskompas, partijkeuze, verkiezingen 2025, stemadvies',
+    'forum' => 'politiek forum, politieke discussie, debat, meningen, Nederlandse politiek, politieke standpunten, actuele discussies',
+    'contact' => 'contact, vragen, feedback, hulp, informatie, politiekpraat, bereikbaarheid'
+];
+
 // Get current page from URL
 $currentPage = basename($_SERVER['PHP_SELF'], '.php');
 $metaDescription = $metaDescriptions[$currentPage] ?? $metaDescriptions['home'];
+$metaKeyword = $metaKeywords[$currentPage] ?? $metaKeywords['home'];
 
 // Controleer of we specifieke meta data hebben voor deze pagina (bijv. voor blogs)
 $metaTitle = isset($data['title']) ? $data['title'] : (SITENAME . ' - Politiek voor iedereen');
 $metaDescription = isset($data['description']) ? $data['description'] : $metaDescription;
+$metaKeyword = isset($data['keywords']) ? $data['keywords'] : $metaKeyword;
 $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og-image.jpg');
 ?>
 
@@ -26,6 +38,13 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <meta name="description" content="<?php echo htmlspecialchars($metaDescription); ?>">
+    <meta name="keywords" content="<?php echo htmlspecialchars($metaKeyword); ?>">
+    
+    <!-- Additional SEO meta tags -->
+    <meta name="author" content="PolitiekPraat">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="Dutch">
+    <meta name="revisit-after" content="7 days">
     
     <!-- Open Graph / Social Media Meta Tags -->
     <meta property="og:type" content="<?php echo isset($data['title']) ? 'article' : 'website'; ?>">
