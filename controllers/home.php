@@ -306,7 +306,7 @@ require_once 'views/templates/header.php';
                     <div class="text-white space-y-6 md:space-y-8" data-aos="fade-right">
                         <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
                             <span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-blue-200">
-                                Politiek voor iedereen
+                                PolitiekPraat
                             </span>
                         </h1>
                         <div class="h-16 sm:h-20 md:h-24 flex items-center">
