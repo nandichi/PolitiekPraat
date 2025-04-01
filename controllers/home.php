@@ -735,6 +735,183 @@ require_once 'views/templates/header.php';
         </div>
     </section>
 
+    <!-- Partijen Highlight Section -->
+    <section class="py-16 bg-gradient-to-br from-blue-50 to-white relative overflow-hidden">
+        <!-- Decorative elements -->
+        <div class="absolute inset-0">
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"30\" height=\"30\" viewBox=\"0 0 30 30\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cpath d=\"M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z\" fill=\"rgba(0,0,0,0.03)\"%3E%3C/path%3E%3C/svg%3E')] opacity-50"></div>
+        </div>
+        <div class="absolute -top-40 -right-40 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
+        <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-secondary/5 rounded-full blur-3xl"></div>
+        
+        <div class="container mx-auto px-4 relative">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <!-- Linker kolom: Interactieve visualisatie -->
+                    <div class="relative" data-aos="fade-right">
+                        <div class="absolute -inset-1 bg-gradient-to-r from-primary to-secondary rounded-2xl blur opacity-25"></div>
+                        <div class="relative bg-white rounded-2xl shadow-xl overflow-hidden group hover:shadow-2xl transition-all duration-500">
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold mb-4 text-gray-900">Zetelverdeling Tweede Kamer</h3>
+                                
+                                <!-- Pie chart implementatie voor zetelverdeling -->
+                                <div class="relative w-full py-4">
+                                    <?php
+                                    $parties = [
+                                        ['name' => 'PVV', 'color' => '#0078D7', 'seats' => 37],
+                                        ['name' => 'GL-PvdA', 'color' => '#008800', 'seats' => 25],
+                                        ['name' => 'VVD', 'color' => '#FF9900', 'seats' => 24],
+                                        ['name' => 'NSC', 'color' => '#4D7F78', 'seats' => 20],
+                                        ['name' => 'D66', 'color' => '#00B13C', 'seats' => 9],
+                                        ['name' => 'CDA', 'color' => '#1E8449', 'seats' => 5],
+                                        ['name' => 'SP', 'color' => '#EE0000', 'seats' => 5]
+                                    ];
+                                    // Sorteer partijen op aantal zetels (aflopend)
+                                    usort($parties, function($a, $b) {
+                                        return $b['seats'] - $a['seats'];
+                                    });
+                                    
+                                    // Bereken totaal aantal zetels
+                                    $totalSeats = array_sum(array_column($parties, 'seats'));
+                                    
+                                    // Bereken de percentages en bouw de conic-gradient op
+                                    $gradientParts = [];
+                                    $currentPercentage = 0;
+                                    
+                                    foreach($parties as $party) {
+                                        $percentage = ($party['seats'] / $totalSeats) * 100;
+                                        $endPercentage = $currentPercentage + $percentage;
+                                        
+                                        $gradientParts[] = $party['color'] . ' ' . 
+                                                         round($currentPercentage, 1) . '% ' . 
+                                                         round($endPercentage, 1) . '%';
+                                        
+                                        $currentPercentage = $endPercentage;
+                                    }
+                                    
+                                    $conicGradient = implode(', ', $gradientParts);
+                                    ?>
+                                    
+                                    <div class="flex flex-col md:flex-row items-center justify-center gap-8 mb-8">
+                                        <!-- Pie chart -->
+                                        <div class="relative">
+                                            <div class="w-48 h-48 rounded-full shadow-lg" 
+                                                 style="background: conic-gradient(<?php echo $conicGradient; ?>);">
+                                            </div>
+                                            <div class="absolute inset-0 flex items-center justify-center">
+                                                <div class="w-16 h-16 bg-white rounded-full shadow-inner flex items-center justify-center text-sm font-medium">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Legenda -->
+                                        <div class="grid grid-cols-2 gap-x-8 gap-y-2">
+                                            <?php foreach($parties as $party): ?>
+                                                <div class="flex items-center">
+                                                    <div class="w-4 h-4 rounded-sm mr-2" style="background-color: <?php echo $party['color']; ?>"></div>
+                                                    <div class="text-sm">
+                                                        <span class="font-medium"><?php echo $party['name']; ?></span>
+                                                        <span class="ml-1 text-gray-600">(<?php echo $party['seats']; ?>)</span>
+                                                    </div>
+                                                </div>
+                                            <?php endforeach; ?>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="text-center text-xs text-gray-500 mt-2">
+                                        Totaal: <?php echo $totalSeats; ?> van 150 zetels in de Tweede Kamer
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-6 text-right">
+                                    <a href="<?php echo URLROOT; ?>/partijen" class="text-primary hover:text-secondary transition-colors text-sm font-medium">
+                                        Bekijk alle partijen →
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <!-- Animated background effect -->
+                            <div class="absolute inset-0 bg-gradient-to-r from-primary/5 to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Left column: Content (now on right) -->
+                    <div class="space-y-8" data-aos="fade-left">
+                        <div class="space-y-6">
+                            <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
+                                <span class="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                                    Ontdek de Politieke Partijen
+                                </span>
+                            </h2>
+                            <p class="text-xl text-gray-600 leading-relaxed">
+                                Verken alle politieke partijen in Nederland en hun standpunten op één overzichtelijke plek. 
+                                Leer meer over hun leiders, geschiedenis en waar ze voor staan in het huidige politieke landschap.
+                            </p>
+                        </div>
+
+                        <!-- Features Grid -->
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="flex items-start space-x-3">
+                                <div class="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center flex-shrink-0">
+                                    <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-sm font-semibold text-gray-900">Alle Partijen</h3>
+                                    <p class="text-sm text-gray-500">Van groot tot klein</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <div class="w-10 h-10 rounded-xl bg-indigo-100 flex items-center justify-center flex-shrink-0">
+                                    <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-sm font-semibold text-gray-900">Standpunten</h3>
+                                    <p class="text-sm text-gray-500">Helder en duidelijk</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <div class="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center flex-shrink-0">
+                                    <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-sm font-semibold text-gray-900">Partijleiders</h3>
+                                    <p class="text-sm text-gray-500">Leer ze kennen</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <div class="w-10 h-10 rounded-xl bg-indigo-100 flex items-center justify-center flex-shrink-0">
+                                    <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-sm font-semibold text-gray-900">Zetelverdeling</h3>
+                                    <p class="text-sm text-gray-500">Actuele peilingen</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pt-4">
+                            <a href="<?php echo URLROOT; ?>/partijen" class="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition-all shadow-md">
+                                <span>Bekijk alle partijen</span>
+                                <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Nieuwe Stemwijzer Highlight Section -->
     <section class="py-16 bg-gradient-to-br from-gray-50 to-white relative overflow-hidden">
         <!-- Decoratieve elementen -->
@@ -753,7 +930,7 @@ require_once 'views/templates/header.php';
                         <div class="space-y-6">
                             <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
                                 <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                                    Ontdek de Stemwijzer 2025
+                                    Stemwijzer 2025
                                 </span>
                             </h2>
                             <p class="text-xl text-gray-600 leading-relaxed">
@@ -1205,23 +1382,6 @@ require_once 'views/templates/header.php';
                                     <?php echo $thema['description']; ?>
                                 </p>
 
-                                <!-- Stats & Tags -->
-                                <div class="flex flex-wrap gap-2 pt-4">
-                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary">
-                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path>
-                                        </svg>
-                                        <?php echo rand(10, 99); ?> discussies
-                                    </span>
-                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-secondary/10 text-secondary">
-                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7 1.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
-                                        </svg>
-                                        <?php echo rand(100, 999); ?> volgers
-                                    </span>
-                                </div>
-
                                 <!-- Action Link -->
                                 <a href="<?php echo URLROOT; ?>/thema/<?php echo strtolower(str_replace(' ', '-', $thema['title'])); ?>" 
                                    class="inline-flex items-center mt-6 text-primary font-semibold group-hover:text-secondary transition-colors">
@@ -1255,63 +1415,7 @@ require_once 'views/templates/header.php';
         </div>
     </section>
 
-    <!-- Call-to-Action Section -->
-    <section class="py-16 bg-gradient-to-br from-primary/10 to-secondary/10">
-        <div class="container mx-auto px-4">
-            <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 hover:shadow-2xl">
-                <div class="flex flex-col md:flex-row">
-                    <div class="md:w-1/2 p-8 md:p-12">
-                        <h2 class="text-3xl font-bold text-gray-900 mb-4">
-                            Doe mee aan het debat
-                        </h2>
-                        <p class="text-gray-600 mb-6">
-                            Word lid van onze community en deel jouw perspectief op de Nederlandse politiek. 
-                            Start discussies, schrijf blogs en draag bij aan het politieke debat.
-                        </p>
-                        <div class="space-y-4">
-                            <a href="<?php echo URLROOT; ?>/register" 
-                               class="block text-center bg-primary text-white px-6 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-all">
-                                Registreer nu
-                            </a>
-                            <a href="<?php echo URLROOT; ?>/login" 
-                               class="block text-center text-primary hover:text-secondary transition-colors">
-                                Al een account? Log in
-                            </a>
-                        </div>
-                    </div>
-                    <div class="md:w-1/2 bg-gradient-to-br from-primary to-secondary p-8 md:p-12 text-white">
-                        <h3 class="text-2xl font-bold mb-6">Waarom meedoen?</h3>
-                        <ul class="space-y-4">
-                            <li class="flex items-center">
-                                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                </svg>
-                                Deel je politieke inzichten
-                            </li>
-                            <li class="flex items-center">
-                                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                </svg>
-                                Neem deel aan discussies
-                            </li>
-                            <li class="flex items-center">
-                                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                </svg>
-                                Schrijf en publiceer blogs
-                            </li>
-                            <li class="flex items-center">
-                                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                </svg>
-                                Verbind met gelijkgestemden
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+
 
         <!-- Wave Separator -->
         <div class="absolute bottom-0 left-0 right-0">
@@ -1366,4 +1470,4 @@ function getRelativeTime($date) {
     } else {
         return date('d M Y', $timestamp);
     }
-} 
+}
