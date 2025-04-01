@@ -1,22 +1,28 @@
     </div>
     <footer class="relative mt-auto">
-        <!-- Decorative Top Border -->
+        <!-- Decoratieve top border met gradient -->
         <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-secondary to-accent"></div>
         
+        <!-- Subtiele golven patroon als decoratie -->
+        <div aria-hidden="true" class="absolute top-0 left-0 right-0 h-16 overflow-hidden">
+            <svg class="absolute h-full w-full text-primary/5" preserveAspectRatio="none" viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg">
+                <path d="M321.39 56.44c58-10.79 114.16-30.13 172-41.86 82.39-16.72 168.19-17.73 250.45-.39C823.78 31 906.67 72 985.66 92.83c70.05 18.48 146.53 26.09 214.34 3V0H0v27.35a600.21 600.21 0 00321.39 29.09z" fill="currentColor" />
+            </svg>
+        </div>
 
-        <!-- Main Footer Content -->
+        <!-- Main Footer Content met verbeterde structuur -->
         <div class="bg-primary/95 text-white">
-            <div class="container mx-auto px-4 py-12">
+            <div class="container mx-auto px-4 py-16">
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-12">
-                    <!-- About Section -->
-                    <div class="md:col-span-5">
+                    <!-- Over PolitiekPraat Sectie -->
+                    <div class="md:col-span-4">
                         <div class="flex items-center space-x-3 mb-6 group">
                             <div class="relative">
                                 <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center group-hover:bg-white/20 transition-all duration-300">
-                                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" 
-                                              d="M19 21v-6a2 2 0 00-2-2h-2v3h-3v-3h-2a2 2 0 00-2 2v6M3 21V5a2 2 0 012-2h14a2 2 0 012 2v16M9 7h.01M9 11h.01M15 7h.01M15 11h.01M12 7v5"/>
-                                    </svg>
+                                    <!-- Logo met verbeterde styling -->
+                                    <img src="<?php echo URLROOT; ?>/images/favicon-512x512.png" 
+                                         alt="PolitiekPraat Logo" 
+                                         class="w-8 h-8 object-contain transition-all duration-300 group-hover:scale-110">
                                 </div>
                                 <div class="absolute -top-1 -right-1 w-6 h-6 bg-secondary rounded-full flex items-center justify-center shadow-lg animate-float">
                                     <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -37,28 +43,30 @@
                         </div>
                         <p class="text-white/80 leading-relaxed mb-8">
                             PolitiekPraat is het toonaangevende platform voor open en constructieve discussie over 
-                            politieke onderwerpen in Nederland. 
+                            politieke onderwerpen in Nederland. Samen werken we aan een geïnformeerd politiek debat.
                         </p>
+
+                        <!-- Social Media Links -->
                         <div class="flex space-x-4">
-                            <a href="#" class="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center hover:bg-secondary hover:text-white transition-all duration-300">
-                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <a href="#" class="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center hover:bg-secondary hover:text-white transition-all duration-300 group">
+                                <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:scale-110" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                                 </svg>
                             </a>
-                            <a href="#" class="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center hover:bg-secondary hover:text-white transition-all duration-300">
-                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <a href="#" class="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center hover:bg-secondary hover:text-white transition-all duration-300 group">
+                                <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:scale-110" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
                                 </svg>
                             </a>
-                            <a href="https://www.linkedin.com/in/naoufalandichi/" class="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center hover:bg-secondary hover:text-white transition-all duration-300" target="_blank" rel="noopener noreferrer">
-                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <a href="https://www.linkedin.com/in/naoufalandichi/" class="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center hover:bg-secondary hover:text-white transition-all duration-300 group" target="_blank" rel="noopener noreferrer">
+                                <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:scale-110" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.016 18.6h-2.472v-3.9c0-.923-.018-2.11-1.287-2.11-1.29 0-1.487 1.005-1.487 2.044v3.966H9.297V9.6h2.376v1.09h.033c.33-.627 1.14-1.29 2.347-1.29 2.51 0 2.97 1.653 2.97 3.803v5.397zM7.031 8.51a1.434 1.434 0 11.001-2.868 1.434 1.434 0 01-.001 2.868zm1.235 10.09H5.795V9.6h2.471v8.999z"/>
                                 </svg>
                             </a>
                         </div>
                     </div>
 
-                    <!-- Quick Links -->
+                    <!-- Verbeterde Navigatie Links Sectie -->
                     <div class="md:col-span-3">
                         <h4 class="text-lg font-bold mb-6 flex items-center">
                             <svg class="w-5 h-5 mr-2 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -69,6 +77,13 @@
                         </h4>
                         <ul class="space-y-4">
                             <li>
+                                <a href="<?php echo URLROOT; ?>/" 
+                                   class="group flex items-center text-white/80 hover:text-white transition-colors duration-300">
+                                    <span class="w-2 h-2 bg-secondary rounded-full mr-3 transform scale-0 group-hover:scale-100 transition-transform duration-300"></span>
+                                    Home
+                                </a>
+                            </li>
+                            <li>
                                 <a href="<?php echo URLROOT; ?>/blogs" 
                                    class="group flex items-center text-white/80 hover:text-white transition-colors duration-300">
                                     <span class="w-2 h-2 bg-secondary rounded-full mr-3 transform scale-0 group-hover:scale-100 transition-transform duration-300"></span>
@@ -76,12 +91,39 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="<?php echo URLROOT; ?>/forum" 
+                                <a href="<?php echo URLROOT; ?>/nieuws" 
                                    class="group flex items-center text-white/80 hover:text-white transition-colors duration-300">
                                     <span class="w-2 h-2 bg-secondary rounded-full mr-3 transform scale-0 group-hover:scale-100 transition-transform duration-300"></span>
-                                    Forum
+                                    Nieuws
                                 </a>
                             </li>
+                            <li>
+                                <a href="<?php echo URLROOT; ?>/stemwijzer" 
+                                   class="group flex items-center text-white/80 hover:text-white transition-colors duration-300">
+                                    <span class="w-2 h-2 bg-secondary rounded-full mr-3 transform scale-0 group-hover:scale-100 transition-transform duration-300"></span>
+                                    Stemwijzer
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<?php echo URLROOT; ?>/partijen" 
+                                   class="group flex items-center text-white/80 hover:text-white transition-colors duration-300">
+                                    <span class="w-2 h-2 bg-secondary rounded-full mr-3 transform scale-0 group-hover:scale-100 transition-transform duration-300"></span>
+                                    Partijen
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Extra Links Sectie -->
+                    <div class="md:col-span-2">
+                        <h4 class="text-lg font-bold mb-6 flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                      d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                            </svg>
+                            Meer
+                        </h4>
+                        <ul class="space-y-4">
                             <li>
                                 <a href="<?php echo URLROOT; ?>/contact" 
                                    class="group flex items-center text-white/80 hover:text-white transition-colors duration-300">
@@ -89,11 +131,32 @@
                                     Contact
                                 </a>
                             </li>
+                            <li>
+                                <a href="<?php echo URLROOT; ?>/over-mij" 
+                                   class="group flex items-center text-white/80 hover:text-white transition-colors duration-300">
+                                    <span class="w-2 h-2 bg-secondary rounded-full mr-3 transform scale-0 group-hover:scale-100 transition-transform duration-300"></span>
+                                    Over ons
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" 
+                                   class="group flex items-center text-white/80 hover:text-white transition-colors duration-300">
+                                    <span class="w-2 h-2 bg-secondary rounded-full mr-3 transform scale-0 group-hover:scale-100 transition-transform duration-300"></span>
+                                    Privacybeleid
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" 
+                                   class="group flex items-center text-white/80 hover:text-white transition-colors duration-300">
+                                    <span class="w-2 h-2 bg-secondary rounded-full mr-3 transform scale-0 group-hover:scale-100 transition-transform duration-300"></span>
+                                    Voorwaarden
+                                </a>
+                            </li>
                         </ul>
                     </div>
 
-                    <!-- Contact Info -->
-                    <div class="md:col-span-4">
+                    <!-- Verbeterde Contact Info en Nieuwsbrief Sectie -->
+                    <div class="md:col-span-3">
                         <h4 class="text-lg font-bold mb-6 flex items-center">
                             <svg class="w-5 h-5 mr-2 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
@@ -127,16 +190,47 @@
                                 </div>
                             </li>
                         </ul>
+
+                        <!-- Nieuwsbrief Inschrijfformulier -->
+                        <div class="mt-8">
+                            <h5 class="text-md font-bold mb-3 flex items-center">
+                                <svg class="w-4 h-4 mr-2 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                          d="M19 9l-7 7-7-7"/>
+                                </svg>
+                                Nieuwsbrief
+                            </h5>
+                            <p class="text-sm text-white/70 mb-4">Blijf op de hoogte van het laatste nieuws en updates.</p>
+                            
+                            <form id="newsletterForm" class="space-y-3">
+                                <div class="relative">
+                                    <input type="email" name="email" required 
+                                           class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/50 
+                                                focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent transition-all duration-300"
+                                           placeholder="Jouw e-mailadres">
+                                    <button type="submit" 
+                                            class="absolute right-2 top-2 bg-secondary text-white p-1.5 rounded-md 
+                                                 hover:bg-secondary/90 transition-all duration-300 transform hover:scale-105">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div id="newsletterMessage" class="hidden">
+                                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-lg"></div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Copyright -->
+        <!-- Copyright Sectie -->
         <div class="bg-primary/90 border-t border-white/10">
             <div class="container mx-auto px-4 py-6">
                 <div class="flex flex-col md:flex-row justify-between items-center text-white/60 text-sm">
-                <p>&copy; <?php echo date('Y'); ?> PolitiekPraat. Alle rechten voorbehouden.</p>
+                    <p>&copy; <?php echo date('Y'); ?> PolitiekPraat. Alle rechten voorbehouden.</p>
                     <div class="flex space-x-8 mt-4 md:mt-0">
                         <a href="#" class="hover:text-white transition-colors duration-300">Privacy Policy</a>
                         <a href="#" class="hover:text-white transition-colors duration-300">Gebruiksvoorwaarden</a>

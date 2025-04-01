@@ -11,12 +11,12 @@ $metaDescriptions = [
 
 // Define keywords for each page
 $metaKeywords = [
-    'home' => 'politiek, nieuws, blogs, Nederland, politieke partijen, democratie, verkiezingen, overheid, Nederlandse politiek, Haags nieuws',
-    'blogs' => 'politieke blogs, opinieartikelen, politieke analyses, Nederlandse politiek, politiek commentaar, verkiezingen, columnisten',
-    'nieuws' => 'politiek nieuws, Nederlands nieuws, Haags nieuws, regering, oppositie, kabinet, ministeries, Tweede Kamer',
-    'stemwijzer' => 'stemwijzer, politieke keuze, verkiezingen, stemhulp, kieskompas, partijkeuze, verkiezingen 2025, stemadvies',
-    'forum' => 'politiek forum, politieke discussie, debat, meningen, Nederlandse politiek, politieke standpunten, actuele discussies',
-    'contact' => 'contact, vragen, feedback, hulp, informatie, politiekpraat, bereikbaarheid'
+    'home' => 'politiek, nieuws, blogs, Nederland, politieke partijen, democratie, verkiezingen, overheid, Nederlandse politiek, Haags nieuws, Politiek Praat',
+    'blogs' => 'politieke blogs, opinieartikelen, politieke analyses, Nederlandse politiek, politiek commentaar, verkiezingen, columnisten, Politiek Praat',
+    'nieuws' => 'politiek nieuws, Nederlands nieuws, Haags nieuws, regering, oppositie, kabinet, ministeries, Tweede Kamer, Politiek Praat',
+    'stemwijzer' => 'stemwijzer, politieke keuze, verkiezingen, stemhulp, kieskompas, partijkeuze, verkiezingen 2025, stemadvies, Politiek Praat',
+    'forum' => 'politiek forum, politieke discussie, debat, meningen, Nederlandse politiek, politieke standpunten, actuele discussies, Politiek Praat',
+    'contact' => 'contact, vragen, feedback, hulp, informatie, Politiek Praat, bereikbaarheid'
 ];
 
 // Get current page from URL
