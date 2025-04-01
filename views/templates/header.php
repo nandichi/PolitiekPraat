@@ -47,8 +47,19 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
 
     <meta name="google-site-verification" content="e72Qn95mvwZrvfw5CvXBKfeIv0vSqmo88Fw-oTJ5sgw" />
     <title><?php echo $metaTitle; ?></title>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMS41IiBkPSJNMyAyMWgxOE0zIDIxVjhsOS02IDkgNnYxM003IDIxVjExbTQgMTBWMTFtNiAxMFYxMW0tOC00aDQiIHN0cm9rZT0iIzFhMzY1ZCIvPjwvc3ZnPg==">
-    <link rel="icon" type="image/png" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMS41IiBkPSJNMyAyMWgxOE0zIDIxVjhsOS02IDkgNnYxM003IDIxVjExbTQgMTBWMTFtNiAxMFYxMW0tOC00aDQiIHN0cm9rZT0iIzFhMzY1ZCIvPjwvc3ZnPg==">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="<?php echo URLROOT; ?>/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="<?php echo URLROOT; ?>/images/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="<?php echo URLROOT; ?>/images/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="<?php echo URLROOT; ?>/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="<?php echo URLROOT; ?>/images/android-chrome-192x192.png">
+    <link rel="shortcut icon" href="<?php echo URLROOT; ?>/favicon.ico">
+    <meta name="msapplication-TileImage" content="<?php echo URLROOT; ?>/images/favicon-144x144.png">
+    <meta name="msapplication-TileColor" content="#1a365d">
+    <meta name="theme-color" content="#1a365d">
+    <link rel="manifest" href="<?php echo URLROOT; ?>/site.webmanifest">
+    
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
