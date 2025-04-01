@@ -556,39 +556,6 @@ require_once BASE_PATH . '/views/templates/header.php';
                     </div>
                 </form>
             </div>
-
-            <!-- Additional contact details -->
-            <div class="mt-16 grid md:grid-cols-3 gap-6 text-center">
-                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition-shadow duration-300">
-                    <div class="inline-flex items-center justify-center p-3 bg-primary/10 text-primary rounded-full mb-4">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-lg font-semibold mb-2">Telefonisch</h3>
-                    <p class="text-gray-600">Bel ons tijdens kantooruren</p>
-                </div>
-                
-                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition-shadow duration-300">
-                    <div class="inline-flex items-center justify-center p-3 bg-primary/10 text-primary rounded-full mb-4">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-lg font-semibold mb-2">E-mail</h3>
-                    <p class="text-gray-600">Antwoord binnen 48 uur</p>
-                </div>
-                
-                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition-shadow duration-300">
-                    <div class="inline-flex items-center justify-center p-3 bg-primary/10 text-primary rounded-full mb-4">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-lg font-semibold mb-2">Social Media</h3>
-                    <p class="text-gray-600">Volg ons online</p>
-                </div>
-            </div>
         </div>
     </div>
 </main>
