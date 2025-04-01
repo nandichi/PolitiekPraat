@@ -74,10 +74,9 @@ class BlogController {
     }
 
     public function create($data) {
-        // Sla de originele Markdown content op
+        // Use the provided summary or generate a new one
         $content = $data['content'];
-        // Genereer een samenvatting van de content
-        $summary = substr(strip_tags($this->parsedown->text($content)), 0, 200) . '...';
+        $summary = isset($data['summary']) ? $data['summary'] : substr(strip_tags($this->parsedown->text($content)), 0, 200) . '...';
         
         $this->db->query("INSERT INTO blogs (title, slug, content, summary, image_path, video_path, video_url, author_id, published_at) 
                          VALUES (:title, :slug, :content, :summary, :image_path, :video_path, :video_url, :author_id, NOW())");
@@ -91,7 +90,11 @@ class BlogController {
         $this->db->bind(':video_url', $data['video_url'] ?? null);
         $this->db->bind(':author_id', $_SESSION['user_id']);
 
-        return $this->db->execute();
+        if ($this->db->execute()) {
+            return $this->db->lastInsertId();
+        }
+        
+        return false;
     }
 
     public function update($data) {

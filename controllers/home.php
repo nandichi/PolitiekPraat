@@ -1320,7 +1320,32 @@ require_once 'views/templates/header.php';
             </svg>
         </div>
     </section>
-</main>
+
+    <!-- Newsletter Subscription Section -->
+    <section class="py-16 px-4 md:px-8 bg-gradient-to-br from-primary/5 to-gray-50 rounded-3xl mx-4 mb-16">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="animate-float-medium inline-block mb-6 bg-white p-4 rounded-2xl shadow-md">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+        </div>
+        <h2 class="text-3xl font-bold text-gray-800 mb-4">Blijf op de hoogte van het laatste nieuws</h2>
+        <p class="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">Schrijf je in voor onze nieuwsbrief en ontvang automatisch een bericht wanneer er een nieuwe blog wordt gepubliceerd.</p>
+        
+        <div class="max-w-md mx-auto">
+            <form id="newsletterForm" class="flex flex-col sm:flex-row gap-3">
+                <input type="email" name="email" id="newsletter-email" placeholder="Je e-mailadres" required 
+                       class="flex-1 px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary">
+                <button type="submit" class="px-6 py-3 bg-primary text-white font-semibold rounded-lg transition-colors hover:bg-primary/90 focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                    Inschrijven
+                </button>
+            </form>
+            <div id="newsletterMessage" class="mt-4 text-center hidden"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Vervolg van de pagina... -->
 
 <?php require_once 'views/templates/footer.php'; ?>
 

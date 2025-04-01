@@ -60,6 +60,10 @@ class Database {
         return $this->stmt->fetch(PDO::FETCH_OBJ);
     }
 
+    public function lastInsertId() {
+        return $this->dbh->lastInsertId();
+    }
+
     public function getConnection() {
         return $this->dbh;
     }

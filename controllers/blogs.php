@@ -79,15 +79,27 @@ class BlogsController {
                 }
             }
             
+            // Create blog post data
             $data = [
                 'title' => trim($_POST['title']),
                 'content' => trim($_POST['content']),
+                'summary' => !empty($_POST['summary']) ? trim($_POST['summary']) : substr(strip_tags(trim($_POST['content'])), 0, 150) . '...',
                 'image_path' => $image_path,
                 'video_path' => $video_path,
                 'video_url' => $video_url
             ];
             
-            if ($this->blogModel->create($data)) {
+            // Create the blog post
+            $blogId = $this->blogModel->create($data);
+            
+            if ($blogId) {
+                // Send notifications to subscribers
+                define('CALLED_FROM_BLOG_CONTROLLER', true);
+                require_once BASE_PATH . '/controllers/newsletter.php';
+                $newsletterController = new Newsletter();
+                $newsletterController->sendNewBlogNotifications($blogId);
+                
+                // Redirect to blogs page
                 header('Location: ' . URLROOT . '/blogs');
                 exit;
             } else {

@@ -87,6 +87,9 @@ $router->add('nieuws', 'controllers/nieuws.php');
 $router->add('profile', 'controllers/profile/index.php');
 $router->add('profile/edit', 'controllers/profile/edit.php');
 $router->add('newsletter/subscribe', 'controllers/newsletter.php');
+$router->add('newsletter/unsubscribe', 'controllers/newsletter.php?action=unsubscribe');
+$router->add('newsletter/unsubscribe-success', 'controllers/newsletter.php?action=unsubscribe-success');
+$router->add('newsletter/unsubscribe-error', 'controllers/newsletter.php?action=unsubscribe-error');
 $router->add('stemwijzer', 'controllers/stemwijzer.php');
 
 // Get the requested URL

@@ -247,37 +247,24 @@
     <?php if (isAdmin() && isset($_GET['debug_photo'])): ?>
     <div class="fixed bottom-0 right-0 bg-black/80 text-white p-4 rounded-tl-lg text-xs font-mono max-w-lg overflow-auto max-h-64">
         <h3 class="font-bold mb-2">Profile Photo Debug:</h3>
-        <?php 
-        if (isset($_SESSION['user_id'])) {
-            $db = new Database();
-            $db->query("SELECT profile_photo FROM users WHERE id = :id");
-            $db->bind(':id', $_SESSION['user_id']);
-            $dbPhoto = $db->single()->profile_photo;
-            
-            echo "<p><strong>DB Path:</strong> " . htmlspecialchars($dbPhoto ?? 'NULL') . "</p>";
-            echo "<p><strong>Session Path:</strong> " . htmlspecialchars($_SESSION['profile_photo'] ?? 'NULL') . "</p>";
-            
-            if (!empty($dbPhoto)) {
-                $paths = [
-                    $dbPhoto,
-                    'uploads/profile_photos/' . basename($dbPhoto),
-                    'public/' . $dbPhoto,
-                    'public/uploads/profile_photos/' . basename($dbPhoto)
-                ];
-                
-                echo "<p><strong>Path checks:</strong></p><ul>";
-                foreach ($paths as $path) {
-                    $fullPath = BASE_PATH . '/' . $path;
-                    $exists = file_exists($fullPath);
-                    echo "<li>" . htmlspecialchars($path) . ": " . ($exists ? "✅" : "❌") . "</li>";
-                }
-                echo "</ul>";
-            }
-        } else {
-            echo "<p>Not logged in</p>";
-        }
-        ?>
+        <?php print_r($_SESSION['profile_photo_debug'] ?? 'No debug info available'); ?>
     </div>
     <?php endif; ?>
+
+    <!-- Dynamic Scripts -->
+    <?php if (basename($_SERVER['PHP_SELF']) == 'blogs.php' || strpos($_SERVER['REQUEST_URI'], '/blogs/') !== false): ?>
+        <script src="<?php echo URLROOT; ?>/js/blog_likes.js"></script>
+    <?php endif; ?>
+    
+    <!-- Newsletter JavaScript -->
+    <script src="<?php echo URLROOT; ?>/js/newsletter.js"></script>
+
+    <script>
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+    </script>
 </body>
 </html> 
