@@ -647,15 +647,14 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                 <!-- Logo - Modern & Elegant -->
                 <a href="<?php echo URLROOT; ?>" class="flex items-center space-x-3 group relative z-10">
                     <div class="flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-xl bg-white/10 
-                                border border-white/20 backdrop-blur-sm shadow-lg transition-all duration-500 
-                                group-hover:bg-white/15 group-hover:border-secondary/30 group-hover:scale-105 
+                                backdrop-blur-sm shadow-lg transition-all duration-500 
+                                group-hover:bg-white/15 group-hover:scale-105 
                                 group-hover:shadow-secondary/10 group-hover:shadow-lg">
-                        <!-- Logo icon -->
-                        <svg class="w-6 h-6 md:w-7 md:h-7 text-white transition-all duration-500 group-hover:text-secondary" 
-                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                  d="M3 21h18M3 21V8l9-6 9 6v13M7 21V11m4 10V11m6 10V11m-8-4h4"/>
-                        </svg>
+                        
+                        <!-- PolitiekPraat Logo -->
+                        <img src="<?php echo URLROOT; ?>/images/favicon-512x512.png" 
+                             alt="PolitiekPraat Logo" 
+                             class="w-8 h-8 md:w-9 md:h-9 object-contain transition-all duration-500">
                         
                         <!-- Subtle glow effect -->
                         <div class="absolute inset-0 rounded-xl bg-white/5 opacity-0 blur-sm group-hover:opacity-100 
@@ -988,10 +987,9 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                               hover:bg-white/5 hover:pl-3 group">
                         <div class="mr-3 p-1.5 bg-white/10 rounded-lg transition-all duration-300 
                                     group-hover:bg-white/15 group-hover:scale-110">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                      d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                            </svg>
+                            <img src="<?php echo URLROOT; ?>/images/favicon-512x512.png" 
+                                 alt="PolitiekPraat Logo" 
+                                 class="w-7 h-7 object-contain">
                         </div>
                         <span class="font-medium">Home</span>
                     </a>
