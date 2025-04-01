@@ -1322,7 +1322,7 @@ require_once 'views/templates/header.php';
     </section>
 
     <!-- Newsletter Subscription Section -->
-    <section class="py-16 px-4 md:px-8 bg-gradient-to-br from-primary/5 to-gray-50 rounded-3xl mx-4 mb-16">
+    <section class="py-16 px-4 md:px-8 bg-gradient-to-br from-primary/5 to-gray-50 rounded-3xl mx-4 mb-16 mt-16">
         <div class="max-w-4xl mx-auto text-center">
             <div class="animate-float-medium inline-block mb-6 bg-white p-4 rounded-2xl shadow-md">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">

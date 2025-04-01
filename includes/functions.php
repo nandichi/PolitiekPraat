@@ -81,19 +81,30 @@ if (!defined('FUNCTIONS_INCLUDED')) {
                 return $result;
             }
             
-            // Try different path combinations
-            $possible_paths = [
-                $profile_photo,
-                'uploads/profile_photos/' . basename($profile_photo),
-                'public/' . $profile_photo,
-                'public/uploads/profile_photos/' . basename($profile_photo)
+            // Define potential paths to check
+            $possiblePaths = [
+                // Check in public directory (preferred location)
+                BASE_PATH . '/public/' . $profile_photo,
+                // Check in root uploads directory (alternate location)
+                BASE_PATH . '/' . $profile_photo,
+                // Check with just the filename in both locations
+                BASE_PATH . '/public/uploads/profile_photos/' . basename($profile_photo),
+                BASE_PATH . '/uploads/profile_photos/' . basename($profile_photo)
             ];
             
-            foreach ($possible_paths as $path) {
-                $full_path = BASE_PATH . '/' . $path;
-                if (file_exists($full_path)) {
+            foreach ($possiblePaths as $path) {
+                if (file_exists($path)) {
+                    // Convert the path to a URL
+                    $urlPath = str_replace(BASE_PATH . '/public/', '', $path);
+                    $urlPath = str_replace(BASE_PATH . '/', '', $urlPath);
+                    
+                    // Make sure the path starts from webroot
+                    if (strpos($urlPath, 'public/') === 0) {
+                        $urlPath = substr($urlPath, 7);
+                    }
+                    
                     $result['type'] = 'img';
-                    $result['value'] = URLROOT . '/' . $path;
+                    $result['value'] = URLROOT . '/' . $urlPath;
                     break;
                 }
             }

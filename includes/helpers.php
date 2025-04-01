@@ -23,20 +23,29 @@ if (!function_exists('getProfilePhotoUrl')) {
                 $profilePhoto = substr($profilePhoto, 7); // Remove "public/"
             }
             
-            // Check if the file exists in the public directory
-            if (file_exists(BASE_PATH . '/public/' . $profilePhoto)) {
-                return ['type' => 'img', 'value' => URLROOT . '/' . $profilePhoto];
-            }
-            
-            // Try alternate paths
-            $altPaths = [
-                $profilePhoto,
-                'uploads/profile_photos/' . basename($profilePhoto)
+            // Define potential paths to check
+            $possiblePaths = [
+                // Check in public directory (preferred location)
+                BASE_PATH . '/public/' . $profilePhoto,
+                // Check in root uploads directory (alternate location)
+                BASE_PATH . '/' . $profilePhoto,
+                // Check with just the filename in both locations
+                BASE_PATH . '/public/uploads/profile_photos/' . basename($profilePhoto),
+                BASE_PATH . '/uploads/profile_photos/' . basename($profilePhoto)
             ];
             
-            foreach ($altPaths as $path) {
-                if (file_exists(BASE_PATH . '/public/' . $path)) {
-                    return ['type' => 'img', 'value' => URLROOT . '/' . $path];
+            foreach ($possiblePaths as $path) {
+                if (file_exists($path)) {
+                    // Convert the path to a URL
+                    $urlPath = str_replace(BASE_PATH . '/public/', '', $path);
+                    $urlPath = str_replace(BASE_PATH . '/', '', $urlPath);
+                    
+                    // Make sure the path starts from webroot
+                    if (strpos($urlPath, 'public/') === 0) {
+                        $urlPath = substr($urlPath, 7);
+                    }
+                    
+                    return ['type' => 'img', 'value' => URLROOT . '/' . $urlPath];
                 }
             }
         }
