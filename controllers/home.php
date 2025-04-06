@@ -414,22 +414,6 @@ require_once 'views/templates/header.php';
                 <!-- Linker kolom: Welkomstekst en CTA -->
                 <div class="w-full lg:w-1/2 text-white mb-10 lg:mb-0">
                     <div class="relative">
-                        <!-- Logo icon in header stijl -->
-                        <div class="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-white/10 
-                                    backdrop-blur-sm shadow-lg transition-all duration-500 
-                                    hover:bg-white/15 hover:scale-105 
-                                    hover:shadow-secondary/10 hover:shadow-lg mb-6 relative">
-                            
-                            <!-- PolitiekPraat Logo -->
-                            <img src="<?php echo URLROOT; ?>/images/favicon-512x512.png" 
-                                 alt="PolitiekPraat Logo" 
-                                 class="w-9 h-9 object-contain transition-all duration-500">
-                            
-                            <!-- Subtle glow effect -->
-                            <div class="absolute inset-0 rounded-xl bg-white/5 opacity-0 blur-sm hover:opacity-100 
-                                        transition-opacity duration-500"></div>
-            </div>
-            
                         <!-- Hoofdtitel met moderne styling -->
                         <h1 class="text-4xl sm:text-5xl lg:text-5xl font-bold mb-6 tracking-tight">
                             PolitiekPraat
@@ -438,7 +422,6 @@ require_once 'views/templates/header.php';
                         <!-- Ondertitel met dynamische typewriter effect -->
                         <div class="text-lg sm:text-xl text-white/80 mb-8 max-w-lg leading-relaxed">
                             <span id="typewriter" class="inline-block"></span>
-                            <span class="animate-pulse">|</span>
             </div>
             
                         <script>
@@ -526,23 +509,6 @@ require_once 'views/templates/header.php';
                                     </p>
                                 </div>
                             </div>
-                            
-                            <!-- Voortgangsindicator -->
-                            <div class="hidden sm:flex items-center space-x-2">
-                                <div class="flex space-x-1">
-                                    <div class="hero-swiper-button-prev w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 text-white hover:bg-primary hover:text-white transition-all duration-300 backdrop-blur-sm border border-white/10">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-                                        </svg>
-                                    </div>
-                                    
-                                    <div class="hero-swiper-button-next w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 text-white hover:bg-primary hover:text-white transition-all duration-300 backdrop-blur-sm border border-white/10">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                                        </svg>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                         
                         <!-- Blog swiper container - Verbeterde stijl en layout -->
@@ -590,7 +556,7 @@ require_once 'views/templates/header.php';
                                             <!-- Content section - Verbeterd -->
                                             <div class="flex-grow p-4 flex flex-col justify-between bg-gradient-to-b from-gray-800/30 to-gray-900/30 rounded-b-lg">
                                                 <div>
-                                                    <h4 class="text-base font-semibold text-white mb-2 line-clamp-2 group-hover:text-primary transition-colors duration-300">
+                                                    <h4 class="text-base font-semibold text-white mb-2 line-clamp-2 group-hover:text-white transition-colors duration-300">
                                                         <?php echo htmlspecialchars($blog->title); ?>
                                                     </h4>
                                                     
@@ -615,7 +581,7 @@ require_once 'views/templates/header.php';
                                                         <span class="text-xs text-white/80"><?php echo htmlspecialchars($blog->author_name); ?></span>
                                                     </div>
                                                     
-                                                    <span class="inline-flex items-center text-xs font-medium text-white group-hover:text-primary transition-colors duration-300">
+                                                    <span class="inline-flex items-center text-xs font-medium text-white group-hover:text-white transition-colors duration-300">
                                                         Lees meer
                                                         <svg class="w-3.5 h-3.5 ml-1.5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -946,18 +912,6 @@ require_once 'views/templates/header.php';
                         </div>
                     </div>
                 </div>
-            </div>
-            
-            <!-- CTA Button -->
-            <div class="text-center mt-12">
-                <a href="<?php echo URLROOT; ?>/peilingen" 
-                   class="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-primary text-white text-sm sm:text-base font-medium rounded-lg shadow-md hover:bg-primary/90 transition-all transform hover:translate-y-[-2px]">
-                    <span class="hidden sm:inline">Bekijk alle peilingen en trends</span>
-                    <span class="sm:hidden">Bekijk alle peilingen</span>
-                    <svg class="w-4 h-4 sm:w-5 sm:h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                    </svg>
-                </a>
             </div>
         </div>
     </section>

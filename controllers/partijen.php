@@ -34,7 +34,7 @@ $parties = [
             'Energie' => 'Voorstander van kernenergie als onderdeel van de energiemix'
         ],
         'current_seats' => 37,
-        'polling' => ['seats' => 29, 'percentage' => 19.3, 'change' => -1],
+        'polling' => ['seats' => 29, 'percentage' => 19.3, 'change' => -3],
         'perspectives' => [
             'left' => 'De PVV pleit voor afschaffing van het eigen risico in de zorg, wat de gezondheidszorg toegankelijker en betaalbaarder maakt voor alle burgers, vooral voor mensen met lagere inkomens.',
             'right' => 'De PVV komt sterk op voor nationale soevereiniteit en strenger immigratiebeleid, wat aanhangers zien als bescherming van de Nederlandse cultuur en identiteit.'
@@ -54,7 +54,7 @@ $parties = [
             'Energie' => 'Voorstander van kernenergie als aanvulling op duurzame bronnen'
         ],
         'current_seats' => 24,
-        'polling' => ['seats' => 26, 'percentage' => 17.3, 'change' => 3],
+        'polling' => ['seats' => 25, 'percentage' => 16.7, 'change' => +4],
         'perspectives' => [
             'left' => 'De VVD steunt praktische klimaatmaatregelen en energietransitieplannen die de industrie niet vervreemden, waardoor een duurzamere economie mogelijk wordt zonder massaal banenverlies.',
             'right' => 'De VVD bevordert economische groei, lagere belastingen en minder bureaucratie, wat ondernemerschap stimuleert en de markteconomie versterkt.'
@@ -114,7 +114,7 @@ $parties = [
             'Energie' => 'Tegen kernenergie vanwege risico\'s en lange doorlooptijden'
         ],
         'current_seats' => 25,
-        'polling' => ['seats' => 28, 'percentage' => 18.7, 'change' => 1],
+        'polling' => ['seats' => 29, 'percentage' => 19.3, 'change' => +5],
         'perspectives' => [
             'left' => 'Dit verbond steunt ambitieus klimaatbeleid en sociale rechtvaardigheid, en strijdt voor gelijkheid en milieubescherming.',
             'right' => 'Hun focus op sociale cohesie en gemeenschapskracht helpt sociale stabiliteit te behouden, wat een beter ondernemingsklimaat schept en maatschappelijke kosten reduceert.'
@@ -134,7 +134,7 @@ $parties = [
             'Energie' => 'Kritisch over kernenergie, maar innovatie en veiligheid kunnen doorslaggevend zijn'
         ],
         'current_seats' => 9,
-        'polling' => ['seats' => 9, 'percentage' => 6.0, 'change' => -2],
+        'polling' => ['seats' => 9, 'percentage' => 6.0, 'change' => -3],
         'perspectives' => [
             'left' => 'D66 pleit voor investering in onderwijs en wetenschap, bevordert gelijke kansen en innovatieve oplossingen voor maatschappelijke problemen.',
             'right' => 'Hun nadruk op individuele vrijheid en progressief-liberale waarden stimuleert persoonlijke verantwoordelijkheid en modernisering van de economie.'
@@ -2141,6 +2141,7 @@ document.addEventListener('DOMContentLoaded', function() {
     border-radius: 2px;
 }
 </style>
+
 
 <?php
 // Include the footer
