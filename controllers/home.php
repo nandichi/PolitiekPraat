@@ -20,6 +20,189 @@ $partijData = $politicalDataAPI->getPartijInformatie();
 $latestPolls = $pollAPI->getLatestPolls();
 $historicalPolls = $pollAPI->getHistoricalPolls(3);
 
+// Data voor zetelverdeling peiling 4-4-2025
+$peilingData = [
+    [
+        'partij' => 'PVV',
+        'zetels' => [
+            'peiling' => 29,
+            'vorige' => 29,
+            'tkvorigepeiling' => 32,
+            'tk2023' => 37
+        ],
+        'color' => '#0078D7'
+    ],
+    [
+        'partij' => 'GroenLinks/PvdA',
+        'zetels' => [
+            'peiling' => 29,
+            'vorige' => 28,
+            'tkvorigepeiling' => 24,
+            'tk2023' => 25
+        ],
+        'color' => '#008800'
+    ],
+    [
+        'partij' => 'VVD',
+        'zetels' => [
+            'peiling' => 25,
+            'vorige' => 26,
+            'tkvorigepeiling' => 21,
+            'tk2023' => 24
+        ],
+        'color' => '#FF9900'
+    ],
+    [
+        'partij' => 'CDA',
+        'zetels' => [
+            'peiling' => 19,
+            'vorige' => 18,
+            'tkvorigepeiling' => 17,
+            'tk2023' => 5
+        ],
+        'color' => '#1E8449'
+    ],
+    [
+        'partij' => 'D66',
+        'zetels' => [
+            'peiling' => 9,
+            'vorige' => 9,
+            'tkvorigepeiling' => 12,
+            'tk2023' => 9
+        ],
+        'color' => '#00B13C'
+    ],
+    [
+        'partij' => 'SP',
+        'zetels' => [
+            'peiling' => 7,
+            'vorige' => 7,
+            'tkvorigepeiling' => 8,
+            'tk2023' => 5
+        ],
+        'color' => '#EE0000'
+    ],
+    [
+        'partij' => 'FVD',
+        'zetels' => [
+            'peiling' => 5,
+            'vorige' => 5,
+            'tkvorigepeiling' => 5,
+            'tk2023' => 3
+        ],
+        'color' => '#8B4513'
+    ],
+    [
+        'partij' => 'PvdDieren',
+        'zetels' => [
+            'peiling' => 4,
+            'vorige' => 4,
+            'tkvorigepeiling' => 5,
+            'tk2023' => 3
+        ],
+        'color' => '#006400'
+    ],
+    [
+        'partij' => 'SGP',
+        'zetels' => [
+            'peiling' => 4,
+            'vorige' => 4,
+            'tkvorigepeiling' => 4,
+            'tk2023' => 3
+        ],
+        'color' => '#ff7f00'
+    ],
+    [
+        'partij' => 'DENK',
+        'zetels' => [
+            'peiling' => 4,
+            'vorige' => 4,
+            'tkvorigepeiling' => 4,
+            'tk2023' => 3
+        ],
+        'color' => '#00BFFF'
+    ],
+    [
+        'partij' => 'JA21',
+        'zetels' => [
+            'peiling' => 4,
+            'vorige' => 4,
+            'tkvorigepeiling' => 3,
+            'tk2023' => 1
+        ],
+        'color' => '#4B0082'
+    ],
+    [
+        'partij' => 'Volt',
+        'zetels' => [
+            'peiling' => 3,
+            'vorige' => 4,
+            'tkvorigepeiling' => 4,
+            'tk2023' => 2
+        ],
+        'color' => '#800080'
+    ],
+    [
+        'partij' => 'ChristenUnie',
+        'zetels' => [
+            'peiling' => 3,
+            'vorige' => 3,
+            'tkvorigepeiling' => 4,
+            'tk2023' => 3
+        ],
+        'color' => '#4682B4'
+    ],
+    [
+        'partij' => 'BBB',
+        'zetels' => [
+            'peiling' => 3,
+            'vorige' => 3,
+            'tkvorigepeiling' => 4,
+            'tk2023' => 7
+        ],
+        'color' => '#7CFC00'
+    ],
+    [
+        'partij' => 'Nieuw Soc.Contr.',
+        'zetels' => [
+            'peiling' => 2,
+            'vorige' => 2,
+            'tkvorigepeiling' => 3,
+            'tk2023' => 20
+        ],
+        'color' => '#4D7F78'
+    ]
+];
+
+// Mogelijke coalities berekenen op basis van de peilingdata
+$mogelijkeCoalities = [
+    [
+        'naam' => 'Links-progressief',
+        'partijen' => ['GroenLinks/PvdA', 'D66', 'SP', 'PvdDieren', 'Volt'],
+        'zetels' => 29 + 9 + 7 + 4 + 3
+    ],
+    [
+        'naam' => 'Rechts-conservatief',
+        'partijen' => ['PVV', 'VVD', 'BBB', 'JA21', 'SGP', 'FVD'],
+        'zetels' => 29 + 25 + 3 + 4 + 4 + 5
+    ],
+    [
+        'naam' => 'Centrum-breed',
+        'partijen' => ['GroenLinks/PvdA', 'VVD', 'CDA', 'D66', 'ChristenUnie'],
+        'zetels' => 29 + 25 + 19 + 9 + 3
+    ],
+    [
+        'naam' => 'Huidige coalitie',
+        'partijen' => ['PVV', 'VVD', 'BBB', 'Nieuw Soc.Contr.'],
+        'zetels' => 29 + 25 + 3 + 2
+    ]
+];
+
+// Sorteer coalities op aantal zetels (aflopend)
+usort($mogelijkeCoalities, function($a, $b) {
+    return $b['zetels'] - $a['zetels'];
+});
+
 // Haal de laatste 6 blogs op
 $db->query("SELECT blogs.*, users.username as author_name, users.profile_photo 
            FROM blogs 
@@ -405,6 +588,276 @@ require_once 'views/templates/header.php';
                 <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".2" fill="#FFFFFF"></path>
                 <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" opacity=".25" fill="#FFFFFF"></path>
             </svg>
+        </div>
+    </section>
+
+    <!-- Actuele Peilingen Section -->
+    <section class="py-16 bg-white relative overflow-hidden">
+        <!-- Decoratieve elementen -->
+        <div class="absolute -top-40 -right-40 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
+        <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-secondary/5 rounded-full blur-3xl"></div>
+        
+        <div class="container mx-auto px-4 relative">
+            <div class="text-center mb-16 relative" data-aos="fade-up">
+                <span class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-9xl text-gray-100 font-bold opacity-50 select-none">PEILINGEN</span>
+                <h2 class="text-4xl font-bold text-gray-900 mb-4 relative">
+                    <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Actuele Peilingen</span>
+                </h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full mb-4"></div>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Zetelverdeling volgens de recentste peiling van 4 april 2025</p>
+                <p class="text-sm text-gray-500 mt-2">Bron: Peil.nl / Maurice de Hond</p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                <!-- Linker kolom: Zetelverdeling Tabel -->
+                <div class="relative" data-aos="fade-right">
+                    <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold mb-4 text-gray-900">Zetelverdeling Tweede Kamer</h3>
+                            
+                            <!-- Tabel met zetelverdelingen -->
+                            <div class="overflow-x-auto">
+                                <table class="w-full border-collapse">
+                                    <thead>
+                                        <tr class="bg-gray-50">
+                                            <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700">Partijen</th>
+                                            <th class="py-3 px-4 text-center text-sm font-semibold text-gray-700">04-04-25</th>
+                                            <th class="py-3 px-4 text-center text-sm font-semibold text-gray-700">29-03-25</th>
+                                            <th class="py-3 px-4 text-center text-sm font-semibold text-gray-700">22-02-25</th>
+                                            <th class="py-3 px-4 text-center text-sm font-semibold text-gray-700">Verschil</th>
+                                            <th class="py-3 px-4 text-center text-sm font-semibold text-gray-700">TK2023</th>
+                                            <th class="py-3 px-4 text-center text-sm font-semibold text-gray-700">+/-</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach($peilingData as $partij): 
+                                            // Bereken veranderingen
+                                            $verandering = $partij['zetels']['peiling'] - $partij['zetels']['tkvorigepeiling'];
+                                            $veranderingTK = $partij['zetels']['peiling'] - $partij['zetels']['tk2023'];
+                                            
+                                            // Bepaal de kleur voor de veranderingen
+                                            $veranderingClass = $verandering > 0 ? 'bg-green-100 text-green-800' : 
+                                                               ($verandering < 0 ? 'bg-red-100 text-red-800' : 
+                                                               'bg-gray-100 text-gray-600');
+                                            
+                                            $veranderingTKClass = $veranderingTK > 0 ? 'bg-green-100 text-green-800' : 
+                                                                ($veranderingTK < 0 ? 'bg-red-100 text-red-800' : 
+                                                                'bg-gray-100 text-gray-600');
+                                            
+                                            // Teken veranderingssymbolen
+                                            $veranderingSymbol = $verandering > 0 ? '+' . $verandering : 
+                                                                ($verandering < 0 ? $verandering : '0');
+                                            
+                                            $veranderingTKSymbol = $veranderingTK > 0 ? '+' . $veranderingTK : 
+                                                                  ($veranderingTK < 0 ? $veranderingTK : '0');
+                                        ?>
+                                        <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors">
+                                            <td class="py-3 px-4">
+                                                <div class="flex items-center">
+                                                    <div class="w-3 h-3 rounded-full mr-2" style="background-color: <?php echo $partij['color']; ?>"></div>
+                                                    <span class="font-medium text-gray-900"><?php echo $partij['partij']; ?></span>
+                                                </div>
+                                            </td>
+                                            <td class="py-3 px-4 text-center font-semibold text-gray-900"><?php echo $partij['zetels']['peiling']; ?></td>
+                                            <td class="py-3 px-4 text-center text-gray-700"><?php echo $partij['zetels']['vorige']; ?></td>
+                                            <td class="py-3 px-4 text-center text-gray-700"><?php echo $partij['zetels']['tkvorigepeiling']; ?></td>
+                                            <td class="py-3 px-4 text-center">
+                                                <span class="inline-block px-2 py-1 rounded-full text-xs <?php echo $veranderingClass; ?>">
+                                                    <?php echo $veranderingSymbol; ?>
+                                                </span>
+                                            </td>
+                                            <td class="py-3 px-4 text-center text-gray-700"><?php echo $partij['zetels']['tk2023']; ?></td>
+                                            <td class="py-3 px-4 text-center">
+                                                <span class="inline-block px-2 py-1 rounded-full text-xs <?php echo $veranderingTKClass; ?>">
+                                                    <?php echo $veranderingTKSymbol; ?>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <div class="mt-6 text-xs text-gray-500 flex items-center justify-between">
+                                <div>Peilingdatum: 4 april 2025</div>
+                                <div class="flex items-center">
+                                    <span class="inline-block w-3 h-3 bg-green-100 rounded-full mr-1"></span>
+                                    <span class="mr-3">Winst</span>
+                                    <span class="inline-block w-3 h-3 bg-red-100 rounded-full mr-1"></span>
+                                    <span>Verlies</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Rechter kolom: Visualisaties en Coalities -->
+                <div class="space-y-8" data-aos="fade-left">
+                    <!-- Donut Chart Visualisatie -->
+                    <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold mb-6 text-gray-900">Zetelverdeling Visualisatie</h3>
+                            
+                            <div class="flex justify-center mb-8">
+                                <!-- SVG Donut Chart -->
+                                <div class="relative w-64 h-64">
+                                    <?php
+                                    $totaalZetels = 150; // Totaal aantal zetels in de Tweede Kamer
+                                    $cumulatiefPercentage = 0;
+                                    $donutSegmenten = [];
+                                    
+                                    // Bereken het aandeel per partij en maak donutsegmenten
+                                    foreach($peilingData as $partij) {
+                                        $percentage = ($partij['zetels']['peiling'] / $totaalZetels) * 100;
+                                        $startAngle = $cumulatiefPercentage * 3.6; // 3.6 graden per 1%
+                                        $endAngle = ($cumulatiefPercentage + $percentage) * 3.6;
+                                        
+                                        // Bereken de coördinaten voor het pad
+                                        $x1 = 32 + 28 * cos(deg2rad($startAngle));
+                                        $y1 = 32 + 28 * sin(deg2rad($startAngle));
+                                        $x2 = 32 + 28 * cos(deg2rad($endAngle));
+                                        $y2 = 32 + 28 * sin(deg2rad($endAngle));
+                                        
+                                        // Bepaal of het pad een grote boog moet zijn (voor segmenten > 180 graden)
+                                        $largeArcFlag = $percentage > 50 ? 1 : 0;
+                                        
+                                        // Formatteer het SVG path
+                                        $path = "M 32 32 L $x1 $y1 A 28 28 0 $largeArcFlag 1 $x2 $y2 Z";
+                                        
+                                        $donutSegmenten[] = [
+                                            'path' => $path,
+                                            'color' => $partij['color'],
+                                            'partij' => $partij['partij'],
+                                            'zetels' => $partij['zetels']['peiling']
+                                        ];
+                                        
+                                        $cumulatiefPercentage += $percentage;
+                                    }
+                                    ?>
+                                    
+                                    <svg width="100%" height="100%" viewBox="0 0 64 64">
+                                        <?php 
+                                        // Teken eerst een cirkelvormige achtergrond
+                                        echo '<circle cx="32" cy="32" r="28" fill="white" stroke="#e5e7eb" stroke-width="1" />';
+                                        
+                                        // Teken alle segmenten
+                                        foreach($donutSegmenten as $segment) {
+                                            echo '<path d="' . $segment['path'] . '" fill="' . $segment['color'] . '" stroke="white" stroke-width="0.5" class="transition-all duration-300 hover:opacity-80 cursor-pointer" />';
+                                        }
+                                        
+                                        // Teken een witte cirkel in het midden om er een donut van te maken
+                                        echo '<circle cx="32" cy="32" r="18" fill="white" />';
+                                        ?>
+                                        
+                                        <!-- Middentekst met totaal aantal zetels -->
+                                        <text x="32" y="30" text-anchor="middle" font-size="6" font-weight="bold" fill="#1a365d">Totaal</text>
+                                        <text x="32" y="38" text-anchor="middle" font-size="8" font-weight="bold" fill="#1a365d">150</text>
+                                    </svg>
+                                </div>
+                            </div>
+                            
+                            <!-- Legenda in grid format -->
+                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-2">
+                                <?php
+                                // Toon alleen de top 9 partijen in de legenda
+                                $topPartijen = array_slice($peilingData, 0, 9);
+                                foreach($topPartijen as $partij):
+                                ?>
+                                <div class="flex items-center">
+                                    <div class="w-3 h-3 rounded-full mr-2" style="background-color: <?php echo $partij['color']; ?>"></div>
+                                    <span class="text-xs text-gray-700">
+                                        <?php echo $partij['partij']; ?> (<?php echo $partij['zetels']['peiling']; ?>)
+                                    </span>
+                                </div>
+                                <?php endforeach; ?>
+                                
+                                <?php if(count($peilingData) > 9): ?>
+                                <div class="flex items-center">
+                                    <div class="w-3 h-3 rounded-full mr-2 bg-gray-300"></div>
+                                    <span class="text-xs text-gray-700">
+                                        Overige (<?php 
+                                        $overige = 0;
+                                        for($i = 9; $i < count($peilingData); $i++) {
+                                            $overige += $peilingData[$i]['zetels']['peiling'];
+                                        }
+                                        echo $overige;
+                                        ?>)
+                                    </span>
+                                </div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Mogelijke Coalities -->
+                    <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold mb-6 text-gray-900">Mogelijke Coalities</h3>
+                            
+                            <div class="space-y-6">
+                                <?php foreach($mogelijkeCoalities as $index => $coalitie): 
+                                    // Bepaal of het een meerderheid is
+                                    $isMeerderheid = $coalitie['zetels'] >= 76;
+                                    $meerderheidClass = $isMeerderheid ? 'bg-green-50 border-green-200' : 'bg-gray-50 border-gray-200';
+                                    $progressClass = $isMeerderheid ? 'bg-green-500' : 'bg-gray-400';
+                                    $percentage = ($coalitie['zetels'] / 150) * 100;
+                                ?>
+                                <div class="border <?php echo $meerderheidClass; ?> rounded-xl p-4 hover:shadow-md transition-shadow">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <h4 class="font-semibold text-gray-900"><?php echo $coalitie['naam']; ?></h4>
+                                        <div class="flex items-center">
+                                            <span class="font-semibold text-gray-900"><?php echo $coalitie['zetels']; ?></span>
+                                            <span class="text-xs text-gray-500 ml-1">zetels</span>
+                                            <?php if($isMeerderheid): ?>
+                                            <span class="ml-2 px-2 py-1 text-xs bg-green-100 text-green-800 rounded-full">Meerderheid</span>
+                                            <?php else: ?>
+                                            <span class="ml-2 px-2 py-1 text-xs bg-red-100 text-red-800 rounded-full">Geen meerderheid</span>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Voortgangsbalk voor aantal zetels -->
+                                    <div class="w-full h-2 bg-gray-200 rounded-full overflow-hidden mb-3">
+                                        <div class="h-full <?php echo $progressClass; ?> rounded-full" style="width: <?php echo $percentage; ?>%"></div>
+                                    </div>
+                                    
+                                    <!-- Partijen in coalitie -->
+                                    <div class="flex flex-wrap gap-2">
+                                        <?php foreach($coalitie['partijen'] as $partijNaam): 
+                                            // Zoek de kleur van de partij
+                                            $partijKleur = '#888888'; // Standaardkleur
+                                            foreach($peilingData as $partij) {
+                                                if($partij['partij'] === $partijNaam) {
+                                                    $partijKleur = $partij['color'];
+                                                    break;
+                                                }
+                                            }
+                                        ?>
+                                        <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium" 
+                                              style="background-color: <?php echo $partijKleur; ?>20; color: <?php echo $partijKleur; ?>;">
+                                            <span class="w-2 h-2 rounded-full mr-1" style="background-color: <?php echo $partijKleur; ?>;"></span>
+                                            <?php echo $partijNaam; ?>
+                                        </span>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- CTA Button -->
+            <div class="text-center mt-12">
+                <a href="<?php echo URLROOT; ?>/peilingen" 
+                   class="inline-flex items-center px-6 py-3 bg-primary text-white font-medium rounded-lg shadow-md hover:bg-primary/90 transition-all transform hover:translate-y-[-2px]">
+                    <span>Bekijk alle peilingen en trends</span>
+                    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                    </svg>
+                </a>
+            </div>
         </div>
     </section>
 
@@ -1254,9 +1707,6 @@ require_once 'views/templates/header.php';
         </div>
     </section>
 
-
-
-    </section>
 
     <!-- Newsletter Subscription Section -->
     <section class="py-16 px-4 md:px-8 bg-gradient-to-br from-primary/5 to-gray-50 rounded-3xl mx-4 mb-16 mt-16">
