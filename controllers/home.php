@@ -352,6 +352,50 @@ require_once 'views/templates/header.php';
     .animate-slide {
         animation: slide 4s ease-in-out infinite;
     }
+    
+    /* Glow effect voor de actieve slide */
+    .swiper-slide-active-custom {
+        transform: scale(1.02);
+        transition: all 0.5s ease;
+        animation: subtle-pulse 3s infinite alternate;
+    }
+    
+    @keyframes subtle-pulse {
+        0% {
+            box-shadow: 0 0 0 rgba(26, 86, 219, 0);
+        }
+        100% {
+            box-shadow: 0 0 25px rgba(26, 86, 219, 0.3);
+        }
+    }
+    
+    /* Glassmorphism effect verbetering */
+    .hero-blog-swiper .swiper-slide a {
+        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .hero-blog-swiper .swiper-slide a:hover {
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        transform: translateY(-3px);
+    }
+    
+    /* Verbetering voor bullets paginering */
+    .hero-swiper-pagination .inline-block {
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+    
+    /* Animatie voor de progress bar */
+    .swiper-progress-bar {
+        transition: width 0.1s linear;
+    }
+    
+    /* Verbeterde hover effect voor navigatie knoppen */
+    .hero-swiper-button-next:hover,
+    .hero-swiper-button-prev:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 15px rgba(26, 86, 219, 0.4);
+    }
 </style>
 
 <main class="bg-gray-50 overflow-x-hidden">
@@ -455,140 +499,159 @@ require_once 'views/templates/header.php';
                         </div>
                     </div>
 
-                <!-- Rechter kolom: Blog slider - Smaller gemaakt -->
+                <!-- Rechter kolom: Blog slider - Vernieuwde elegante versie -->
                 <div class="w-full lg:w-5/12 mx-auto">
-                    <div class="relative bg-white/5 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden">
-                        <!-- Header met titel -->
-                        <div class="flex items-center py-3 px-4 border-b border-white/10">
-                            <div class="w-6 h-6 bg-[#c41e3a] rounded-full flex items-center justify-center mr-3">
-                                <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-                                    </svg>
+                    <div class="relative bg-gradient-to-br from-gray-900/70 to-gray-800/70 backdrop-blur-xl rounded-2xl shadow-2xl overflow-hidden border border-white/10">
+                        <!-- Decoratieve elementen -->
+                        <div class="absolute top-0 right-0 w-40 h-40 bg-primary/20 rounded-full blur-3xl -translate-y-20 translate-x-20"></div>
+                        <div class="absolute bottom-0 left-0 w-40 h-40 bg-secondary/20 rounded-full blur-3xl translate-y-20 -translate-x-20"></div>
+                        
+                        <!-- Header met titel - Vernieuwd design -->
+                        <div class="relative flex items-center justify-between py-4 px-6 border-b border-white/10 bg-white/5">
+                            <div class="flex items-center">
+                                <div class="flex h-10 w-10 rounded-xl bg-gradient-to-br from-primary to-secondary p-0.5 overflow-hidden shadow-lg mr-3">
+                                    <div class="w-full h-full bg-gray-900 rounded-lg flex items-center justify-center">
+                                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"></path>
+                                        </svg>
+                                    </div>
                                 </div>
                                 <div>
-                                <h3 class="text-sm font-medium text-white uppercase tracking-wide">Uitgelichte Blogs</h3>
-                                <p class="text-xs text-white/60">Actueel: <?php echo date('d-m-Y'); ?></p>
+                                    <h3 class="text-base font-semibold text-white tracking-wide">Uitgelichte Blogs</h3>
+                                    <p class="text-xs text-white/60 flex items-center">
+                                        <svg class="w-3 h-3 mr-1 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                        </svg>
+                                        Actueel: <?php echo date('d-m-Y'); ?>
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <!-- Voortgangsindicator -->
+                            <div class="hidden sm:flex items-center space-x-2">
+                                <div class="flex space-x-1">
+                                    <div class="hero-swiper-button-prev w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 text-white hover:bg-primary hover:text-white transition-all duration-300 backdrop-blur-sm border border-white/10">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                                        </svg>
+                                    </div>
+                                    
+                                    <div class="hero-swiper-button-next w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 text-white hover:bg-primary hover:text-white transition-all duration-300 backdrop-blur-sm border border-white/10">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                        </svg>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         
-                        <!-- Blog swiper container - Hoogte aangepast -->
-                        <div class="hero-blog-swiper h-[320px] sm:h-[340px]">
+                        <!-- Blog swiper container - Verbeterde stijl en layout -->
+                        <div class="hero-blog-swiper h-[360px] sm:h-[400px]">
                             <div class="swiper-wrapper">
                                 <?php foreach($featured_blogs as $blog): ?>
-                                <div class="swiper-slide">
-                                    <a href="<?php echo URLROOT; ?>/blogs/view/<?php echo $blog->slug; ?>" class="group block h-full">
-                                        <div class="relative h-full">
+                                <div class="swiper-slide p-4">
+                                    <a href="<?php echo URLROOT; ?>/blogs/view/<?php echo $blog->slug; ?>" 
+                                       class="group block h-full bg-white/5 hover:bg-white/10 rounded-xl p-1 border border-white/5 hover:border-white/20 transition-all duration-300 overflow-hidden">
+                                        <div class="relative h-full rounded-lg overflow-hidden flex flex-col">
                                             <!-- Afbeelding met overlay -->
-                                            <div class="relative h-36 sm:h-40">
+                                            <div class="relative h-40 sm:h-44 rounded-t-lg overflow-hidden">
                                                 <?php if($blog->image_path): ?>
                                                     <img src="<?php echo URLROOT . '/' . $blog->image_path; ?>" 
                                                          alt="<?php echo htmlspecialchars($blog->title); ?>" 
-                                                         class="w-full h-full object-cover">
+                                                         class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out">
+                                                    <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-60"></div>
                                                 <?php else: ?>
-                                                    <div class="w-full h-full bg-gradient-to-br from-primary/50 to-secondary/50 flex items-center justify-center">
-                                                        <svg class="w-10 h-10 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <div class="w-full h-full bg-gradient-to-br from-primary/70 to-secondary/70 flex items-center justify-center">
+                                                        <svg class="w-12 h-12 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1M15 3v4m0 0v4m0-4h4m-4 0H7m15 5v5a2 2 0 01-2 2h-4"></path>
                                                         </svg>
-                                            </div>
+                                                    </div>
+                                                    <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-60"></div>
                                                 <?php endif; ?>
                                                 
-                                                <!-- Category badge -->
-                                                <div class="absolute top-3 left-3">
-                                                    <span class="inline-flex items-center px-2 py-1 bg-[#c41e3a] text-white text-xs font-medium rounded-md shadow-sm">
+                                                <!-- Category badge - Eleganter -->
+                                                <div class="absolute top-3 left-3 z-10">
+                                                    <span class="inline-flex items-center px-3 py-1.5 bg-primary text-white text-xs font-medium rounded-full shadow-lg backdrop-blur-sm">
                                                         <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                                                         </svg>
                                                         Blog
                                                     </span>
                                                 </div>
-                                                </div>
                                                 
-                                            <!-- Content section -->
-                                            <div class="p-4 bg-white/5">
-                                                <h4 class="text-base font-semibold text-white mb-2 line-clamp-2 group-hover:text-[#c41e3a] transition-colors duration-300">
-                                                    <?php echo htmlspecialchars($blog->title); ?>
-                                                </h4>
-                                                
-                                                <p class="text-xs text-white/70 mb-3 line-clamp-2">
-                                                    <?php echo htmlspecialchars($blog->summary); ?>
-                                                </p>
-                                                
-                                                <div class="flex items-center justify-between">
-                                                    <div class="flex items-center">
-                                                        <div class="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center mr-2">
-                                                            <svg class="w-3 h-3 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                                        </svg>
-                                                        </div>
-                                                        <span class="text-xs text-white/80"><?php echo htmlspecialchars($blog->author_name); ?></span>
-                                                    </div>
-                                                    
-                                                    <span class="text-xs text-white/60">
+                                                <!-- Datum badge - Toegevoegd -->
+                                                <div class="absolute top-3 right-3 z-10">
+                                                    <span class="inline-flex items-center px-2 py-1 bg-black/50 text-white text-xs rounded-md backdrop-blur-sm border border-white/10">
                                                         <?php echo $blog->relative_date; ?>
                                                     </span>
                                                 </div>
+                                            </div>
                                                 
-                                                <div class="mt-3 flex">
-                                                    <span class="inline-flex items-center text-xs font-medium text-white hover:text-white/90 transition-colors duration-300">
-                                                        Lees artikel
-                                                        <svg class="w-3.5 h-3.5 ml-1.5 group-hover:translate-x-0.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <!-- Content section - Verbeterd -->
+                                            <div class="flex-grow p-4 flex flex-col justify-between bg-gradient-to-b from-gray-800/30 to-gray-900/30 rounded-b-lg">
+                                                <div>
+                                                    <h4 class="text-base font-semibold text-white mb-2 line-clamp-2 group-hover:text-primary transition-colors duration-300">
+                                                        <?php echo htmlspecialchars($blog->title); ?>
+                                                    </h4>
+                                                    
+                                                    <p class="text-xs text-white/70 mb-3 line-clamp-2">
+                                                        <?php echo htmlspecialchars($blog->summary); ?>
+                                                    </p>
+                                                </div>
+                                                
+                                                <div class="flex items-center justify-between mt-auto pt-3 border-t border-white/10">
+                                                    <div class="flex items-center">
+                                                        <?php if($blog->profile_photo): ?>
+                                                            <img src="<?php echo URLROOT . '/' . $blog->profile_photo; ?>" 
+                                                                 alt="<?php echo htmlspecialchars($blog->author_name); ?>"
+                                                                 class="w-6 h-6 rounded-full object-cover border border-white/20 mr-2">
+                                                        <?php else: ?>
+                                                            <div class="w-6 h-6 rounded-full bg-gradient-to-br from-primary/30 to-secondary/30 flex items-center justify-center mr-2">
+                                                                <svg class="w-3 h-3 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                                                </svg>
+                                                            </div>
+                                                        <?php endif; ?>
+                                                        <span class="text-xs text-white/80"><?php echo htmlspecialchars($blog->author_name); ?></span>
+                                                    </div>
+                                                    
+                                                    <span class="inline-flex items-center text-xs font-medium text-white group-hover:text-primary transition-colors duration-300">
+                                                        Lees meer
+                                                        <svg class="w-3.5 h-3.5 ml-1.5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                                                         </svg>
                                                     </span>
                                                 </div>
-                                                </div>
                                             </div>
-                                        </a>
-                                    </div>
-                                    <?php endforeach; ?>
-                            </div>
-                            
-                            <!-- Navigatie controls -->
-                            <div class="absolute top-1/2 -translate-y-1/2 z-10 flex justify-between w-full px-3">
-                                <button class="hero-swiper-button-prev w-7 h-7 flex items-center justify-center rounded-full bg-black/30 text-white hover:bg-[#c41e3a] transition-colors duration-300">
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                                            </svg>
-                                        </button>
-                                        
-                                <button class="hero-swiper-button-next w-7 h-7 flex items-center justify-center rounded-full bg-black/30 text-white hover:bg-[#c41e3a] transition-colors duration-300">
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                                            </svg>
-                                        </button>
-                            </div>
-                            
-                            <!-- Progress en paginering -->
-                            <div class="absolute bottom-0 inset-x-0 h-8 px-4 z-10 flex items-center">
-                                <div class="w-full">
-                                    <!-- Paginering indicators -->
-                                    <div class="hero-swiper-pagination flex justify-center"></div>
-                                    
-                                    <!-- Progress bar -->
-                                    <div class="h-0.5 w-full bg-white/10 rounded-full overflow-hidden mt-1">
-                                        <div class="swiper-progress-bar h-full bg-[#c41e3a]" style="width: 0%"></div>
-                                    </div>
-                                    </div>
+                                        </div>
+                                    </a>
                                 </div>
+                                <?php endforeach; ?>
                             </div>
+                            
 
-                        <!-- Footer leeg gelaten -->
-                        <div class="px-4 py-2 flex justify-end">
-                            <!-- Link verwijderd -->
+                        
+                        <!-- Footer met paginering en progressie -->
+                        <div class="px-6 py-3 bg-white/5 border-t border-white/10">
+                            <div class="flex items-center justify-between">
+                                <div class="hero-swiper-pagination flex space-x-1"></div>
+                                
+                                <a href="<?php echo URLROOT; ?>/blogs" class="text-xs text-white/70 hover:text-white flex items-center transition-colors duration-300">
+                                    Alle blogs
+                                    <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                    </svg>
+                                </a>
+                            </div>
+                            
+                            <!-- Progress bar -->
+                            <div class="h-1 w-full bg-white/5 rounded-full overflow-hidden mt-2">
+                                <div class="swiper-progress-bar h-full bg-gradient-to-r from-primary to-secondary rounded-full" style="width: 0%"></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        
-        <!-- Wave separator toegevoegd -->
-        <div class="absolute bottom-0 left-0 right-0 overflow-hidden leading-0 transform z-0">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none" class="relative block h-8 w-full" style="transform: rotate(180deg)">
-                <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".15" fill="#FFFFFF"></path>
-                <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".2" fill="#FFFFFF"></path>
-                <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" opacity=".25" fill="#FFFFFF"></path>
-            </svg>
-        </div>
     </section>
 
     <!-- Actuele Peilingen Section -->
@@ -612,26 +675,34 @@ require_once 'views/templates/header.php';
                 <!-- Linker kolom: Zetelverdeling Tabel -->
                 <div class="relative" data-aos="fade-right">
                     <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
-                        <div class="p-6">
-                            <h3 class="text-2xl font-bold mb-4 text-gray-900">Zetelverdeling Tweede Kamer</h3>
+                        <div class="p-4 sm:p-6">
+                            <h3 class="text-xl sm:text-2xl font-bold mb-4 text-gray-900">Zetelverdeling Tweede Kamer</h3>
                             
-                            <!-- Tabel met zetelverdelingen -->
-                            <div class="overflow-x-auto">
-                                <table class="w-full border-collapse">
+                            <!-- Verbeterde tabel met zetelverdelingen, responsief voor mobiel -->
+                            <div class="overflow-visible">
+                                <table class="w-full border-collapse text-xs sm:text-sm">
                                     <thead>
                                         <tr class="bg-gray-50">
-                                            <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700">Partijen</th>
-                                            <th class="py-3 px-4 text-center text-sm font-semibold text-gray-700">04-04-25</th>
-                                            <th class="py-3 px-4 text-center text-sm font-semibold text-gray-700">29-03-25</th>
-                                            <th class="py-3 px-4 text-center text-sm font-semibold text-gray-700">22-02-25</th>
-                                            <th class="py-3 px-4 text-center text-sm font-semibold text-gray-700">Verschil</th>
-                                            <th class="py-3 px-4 text-center text-sm font-semibold text-gray-700">TK2023</th>
-                                            <th class="py-3 px-4 text-center text-sm font-semibold text-gray-700">+/-</th>
+                                            <th class="py-2 px-1 sm:px-3 text-left font-semibold text-gray-700">Partijen</th>
+                                            <th class="py-2 px-1 sm:px-3 text-center font-semibold text-gray-700 whitespace-nowrap">
+                                                <span class="hidden sm:inline">04-04-25</span>
+                                                <span class="sm:hidden">4 Apr</span>
+                                            </th>
+                                            <th class="py-2 px-1 sm:px-3 text-center font-semibold text-gray-700 whitespace-nowrap">
+                                                <span class="hidden sm:inline">22-02-25</span>
+                                                <span class="sm:hidden">22 Feb</span>
+                                            </th>
+                                            <th class="py-2 px-1 sm:px-3 text-center font-semibold text-gray-700">
+                                                <span class="hidden sm:inline">Verschil</span>
+                                                <span class="sm:hidden">+/-</span>
+                                            </th>
+                                            <th class="py-2 px-1 sm:px-3 text-center font-semibold text-gray-700">TK2023</th>
+                                            <th class="py-2 px-1 sm:px-3 text-center font-semibold text-gray-700">+/-</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php foreach($peilingData as $partij): 
-                                            // Bereken veranderingen
+                                            // Bereken veranderingen (nu direct vergeleken met tkvorigepeiling)
                                             $verandering = $partij['zetels']['peiling'] - $partij['zetels']['tkvorigepeiling'];
                                             $veranderingTK = $partij['zetels']['peiling'] - $partij['zetels']['tk2023'];
                                             
@@ -650,25 +721,38 @@ require_once 'views/templates/header.php';
                                             
                                             $veranderingTKSymbol = $veranderingTK > 0 ? '+' . $veranderingTK : 
                                                                   ($veranderingTK < 0 ? $veranderingTK : '0');
+                                                                  
+                                            // Maak een verkorte versie van de partijnaam voor mobiel
+                                            $kortNaam = $partij['partij'];
+                                            if (strpos($kortNaam, '/') !== false) {
+                                                $delen = explode('/', $kortNaam);
+                                                $kortNaam = $delen[0];
+                                            } else if (strlen($kortNaam) > 10) {
+                                                // Afkorten voor lange namen
+                                                $kortNaam = preg_replace('/[aeiou]/i', '', $kortNaam); // Verwijder klinkers
+                                                if (strlen($kortNaam) > 6) {
+                                                    $kortNaam = substr($kortNaam, 0, 6);
+                                                }
+                                            }
                                         ?>
                                         <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors">
-                                            <td class="py-3 px-4">
+                                            <td class="py-2 px-1 sm:px-3">
                                                 <div class="flex items-center">
-                                                    <div class="w-3 h-3 rounded-full mr-2" style="background-color: <?php echo $partij['color']; ?>"></div>
-                                                    <span class="font-medium text-gray-900"><?php echo $partij['partij']; ?></span>
+                                                    <div class="w-2 h-2 sm:w-3 sm:h-3 rounded-full mr-1 sm:mr-2" style="background-color: <?php echo $partij['color']; ?>"></div>
+                                                    <span class="hidden sm:inline font-medium text-gray-900"><?php echo $partij['partij']; ?></span>
+                                                    <span class="sm:hidden font-medium text-gray-900"><?php echo $kortNaam; ?></span>
                                                 </div>
                                             </td>
-                                            <td class="py-3 px-4 text-center font-semibold text-gray-900"><?php echo $partij['zetels']['peiling']; ?></td>
-                                            <td class="py-3 px-4 text-center text-gray-700"><?php echo $partij['zetels']['vorige']; ?></td>
-                                            <td class="py-3 px-4 text-center text-gray-700"><?php echo $partij['zetels']['tkvorigepeiling']; ?></td>
-                                            <td class="py-3 px-4 text-center">
-                                                <span class="inline-block px-2 py-1 rounded-full text-xs <?php echo $veranderingClass; ?>">
+                                            <td class="py-2 px-1 sm:px-3 text-center font-semibold text-gray-900"><?php echo $partij['zetels']['peiling']; ?></td>
+                                            <td class="py-2 px-1 sm:px-3 text-center text-gray-700"><?php echo $partij['zetels']['tkvorigepeiling']; ?></td>
+                                            <td class="py-2 px-1 sm:px-3 text-center">
+                                                <span class="inline-block px-1 sm:px-2 py-0.5 sm:py-1 rounded-full <?php echo $veranderingClass; ?>">
                                                     <?php echo $veranderingSymbol; ?>
                                                 </span>
                                             </td>
-                                            <td class="py-3 px-4 text-center text-gray-700"><?php echo $partij['zetels']['tk2023']; ?></td>
-                                            <td class="py-3 px-4 text-center">
-                                                <span class="inline-block px-2 py-1 rounded-full text-xs <?php echo $veranderingTKClass; ?>">
+                                            <td class="py-2 px-1 sm:px-3 text-center text-gray-700"><?php echo $partij['zetels']['tk2023']; ?></td>
+                                            <td class="py-2 px-1 sm:px-3 text-center">
+                                                <span class="inline-block px-1 sm:px-2 py-0.5 sm:py-1 rounded-full <?php echo $veranderingTKClass; ?>">
                                                     <?php echo $veranderingTKSymbol; ?>
                                                 </span>
                                             </td>
@@ -678,8 +762,11 @@ require_once 'views/templates/header.php';
                                 </table>
                             </div>
                             
-                            <div class="mt-6 text-xs text-gray-500 flex items-center justify-between">
-                                <div>Peilingdatum: 4 april 2025</div>
+                            <div class="mt-6 text-xs text-gray-500 flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                                <div class="mb-2 sm:mb-0">
+                                    <span class="hidden sm:inline">Peilingdatum: 4 april 2025</span>
+                                    <span class="sm:hidden">Peiling: 4 apr 2025</span>
+                                </div>
                                 <div class="flex items-center">
                                     <span class="inline-block w-3 h-3 bg-green-100 rounded-full mr-1"></span>
                                     <span class="mr-3">Winst</span>
@@ -695,12 +782,12 @@ require_once 'views/templates/header.php';
                 <div class="space-y-8" data-aos="fade-left">
                     <!-- Donut Chart Visualisatie -->
                     <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
-                        <div class="p-6">
-                            <h3 class="text-2xl font-bold mb-6 text-gray-900">Zetelverdeling Visualisatie</h3>
+                        <div class="p-4 sm:p-6">
+                            <h3 class="text-xl sm:text-2xl font-bold mb-6 text-gray-900">Zetelverdeling Visualisatie</h3>
                             
                             <div class="flex justify-center mb-8">
                                 <!-- SVG Donut Chart -->
-                                <div class="relative w-64 h-64">
+                                <div class="relative w-56 sm:w-64 h-56 sm:h-64">
                                     <?php
                                     $totaalZetels = 150; // Totaal aantal zetels in de Tweede Kamer
                                     $cumulatiefPercentage = 0;
@@ -791,8 +878,8 @@ require_once 'views/templates/header.php';
                     
                     <!-- Mogelijke Coalities -->
                     <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
-                        <div class="p-6">
-                            <h3 class="text-2xl font-bold mb-6 text-gray-900">Mogelijke Coalities</h3>
+                        <div class="p-4 sm:p-6">
+                            <h3 class="text-xl sm:text-2xl font-bold mb-6 text-gray-900">Mogelijke Coalities</h3>
                             
                             <div class="space-y-6">
                                 <?php foreach($mogelijkeCoalities as $index => $coalitie): 
@@ -802,8 +889,8 @@ require_once 'views/templates/header.php';
                                     $progressClass = $isMeerderheid ? 'bg-green-500' : 'bg-gray-400';
                                     $percentage = ($coalitie['zetels'] / 150) * 100;
                                 ?>
-                                <div class="border <?php echo $meerderheidClass; ?> rounded-xl p-4 hover:shadow-md transition-shadow">
-                                    <div class="flex items-center justify-between mb-2">
+                                <div class="border <?php echo $meerderheidClass; ?> rounded-xl p-3 sm:p-4 hover:shadow-md transition-shadow">
+                                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2 gap-2 sm:gap-0">
                                         <h4 class="font-semibold text-gray-900"><?php echo $coalitie['naam']; ?></h4>
                                         <div class="flex items-center">
                                             <span class="font-semibold text-gray-900"><?php echo $coalitie['zetels']; ?></span>
@@ -811,7 +898,7 @@ require_once 'views/templates/header.php';
                                             <?php if($isMeerderheid): ?>
                                             <span class="ml-2 px-2 py-1 text-xs bg-green-100 text-green-800 rounded-full">Meerderheid</span>
                                             <?php else: ?>
-                                            <span class="ml-2 px-2 py-1 text-xs bg-red-100 text-red-800 rounded-full">Geen meerderheid</span>
+                                            <span class="ml-2 px-2 py-1 text-xs bg-red-100 text-red-800 rounded-full">Geen meerd.</span>
                                             <?php endif; ?>
                                         </div>
                                     </div>
@@ -832,11 +919,24 @@ require_once 'views/templates/header.php';
                                                     break;
                                                 }
                                             }
+                                            
+                                            // Maak verkorte naam voor mobiel
+                                            $kortPartyNaam = $partijNaam;
+                                            if (strpos($kortPartyNaam, '/') !== false) {
+                                                $delen = explode('/', $kortPartyNaam);
+                                                $kortPartyNaam = $delen[0];
+                                            } else if (strlen($kortPartyNaam) > 8) {
+                                                $kortPartyNaam = preg_replace('/[aeiou]/i', '', $kortPartyNaam);
+                                                if (strlen($kortPartyNaam) > 6) {
+                                                    $kortPartyNaam = substr($kortPartyNaam, 0, 6);
+                                                }
+                                            }
                                         ?>
                                         <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium" 
                                               style="background-color: <?php echo $partijKleur; ?>20; color: <?php echo $partijKleur; ?>;">
                                             <span class="w-2 h-2 rounded-full mr-1" style="background-color: <?php echo $partijKleur; ?>;"></span>
-                                            <?php echo $partijNaam; ?>
+                                            <span class="hidden sm:inline"><?php echo $partijNaam; ?></span>
+                                            <span class="sm:hidden"><?php echo $kortPartyNaam; ?></span>
                                         </span>
                                         <?php endforeach; ?>
                                     </div>
@@ -851,9 +951,10 @@ require_once 'views/templates/header.php';
             <!-- CTA Button -->
             <div class="text-center mt-12">
                 <a href="<?php echo URLROOT; ?>/peilingen" 
-                   class="inline-flex items-center px-6 py-3 bg-primary text-white font-medium rounded-lg shadow-md hover:bg-primary/90 transition-all transform hover:translate-y-[-2px]">
-                    <span>Bekijk alle peilingen en trends</span>
-                    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                   class="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-primary text-white text-sm sm:text-base font-medium rounded-lg shadow-md hover:bg-primary/90 transition-all transform hover:translate-y-[-2px]">
+                    <span class="hidden sm:inline">Bekijk alle peilingen en trends</span>
+                    <span class="sm:hidden">Bekijk alle peilingen</span>
+                    <svg class="w-4 h-4 sm:w-5 sm:h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
                     </svg>
                 </a>
@@ -1746,7 +1847,10 @@ document.addEventListener('DOMContentLoaded', function() {
         slidesPerView: 1,
         spaceBetween: 0,
         speed: 800,
-        effect: 'slide',
+        effect: 'fade',
+        fadeEffect: {
+            crossFade: true
+        },
         autoplay: {
             delay: 5000,
             disableOnInteraction: false,
@@ -1757,8 +1861,8 @@ document.addEventListener('DOMContentLoaded', function() {
         pagination: {
             el: '.hero-swiper-pagination',
             clickable: true,
-            bulletClass: 'inline-block w-1.5 h-1.5 mx-1 cursor-pointer transition-all duration-200 bg-white/30 hover:bg-white/70 rounded-full',
-            bulletActiveClass: 'w-4 bg-[#c41e3a]'
+            bulletClass: 'inline-block w-2 h-2 mx-1 cursor-pointer transition-all duration-300 bg-white/30 hover:bg-white/70 rounded-full',
+            bulletActiveClass: 'w-6 bg-gradient-to-r from-primary to-secondary'
         },
         navigation: {
             nextEl: '.hero-swiper-button-next',
@@ -1770,6 +1874,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (progressBar) {
                     progressBar.style.width = (1 - progress) * 100 + '%';
                 }
+            },
+            init: function() {
+                // Voeg extra klasse toe aan de actieve slide
+                this.slides.forEach((slide) => {
+                    slide.classList.remove('swiper-slide-active-custom');
+                });
+                this.slides[this.activeIndex].classList.add('swiper-slide-active-custom');
+            },
+            slideChange: function() {
+                // Update de actieve slide klasse
+                this.slides.forEach((slide) => {
+                    slide.classList.remove('swiper-slide-active-custom');
+                });
+                this.slides[this.activeIndex].classList.add('swiper-slide-active-custom');
             }
         }
     });
