@@ -572,11 +572,9 @@ require_once 'views/templates/header.php';
                                                                  alt="<?php echo htmlspecialchars($blog->author_name); ?>"
                                                                  class="w-6 h-6 rounded-full object-cover border border-white/20 mr-2">
                                                         <?php else: ?>
-                                                            <div class="w-6 h-6 rounded-full bg-gradient-to-br from-primary/30 to-secondary/30 flex items-center justify-center mr-2">
-                                                                <svg class="w-3 h-3 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                                                </svg>
-                                                            </div>
+                                                            <img src="https://media.licdn.com/dms/image/v2/D4E03AQH41qDaDSt19A/profile-displayphoto-shrink_800_800/B4EZWO8j20HgAg-/0/1741859995715?e=1749081600&v=beta&t=RsXjUDf5AAjzVEK7lMDS2InjE18FehpMDQB7JxICP64" 
+                                                                 alt="<?php echo htmlspecialchars($blog->author_name); ?>"
+                                                                 class="w-6 h-6 rounded-full object-cover border border-white/20 mr-2">
                                                         <?php endif; ?>
                                                         <span class="text-xs text-white/80"><?php echo htmlspecialchars($blog->author_name); ?></span>
                                                     </div>
