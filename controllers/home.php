@@ -567,15 +567,9 @@ require_once 'views/templates/header.php';
                                                 
                                                 <div class="flex items-center justify-between mt-auto pt-3 border-t border-white/10">
                                                     <div class="flex items-center">
-                                                        <?php if($blog->profile_photo): ?>
-                                                            <img src="<?php echo URLROOT . '/' . $blog->profile_photo; ?>" 
-                                                                 alt="<?php echo htmlspecialchars($blog->author_name); ?>"
-                                                                 class="w-6 h-6 rounded-full object-cover border border-white/20 mr-2">
-                                                        <?php else: ?>
-                                                            <img src="https://media.licdn.com/dms/image/v2/D4E03AQH41qDaDSt19A/profile-displayphoto-shrink_800_800/B4EZWO8j20HgAg-/0/1741859995715?e=1749081600&v=beta&t=RsXjUDf5AAjzVEK7lMDS2InjE18FehpMDQB7JxICP64" 
-                                                                 alt="<?php echo htmlspecialchars($blog->author_name); ?>"
-                                                                 class="w-6 h-6 rounded-full object-cover border border-white/20 mr-2">
-                                                        <?php endif; ?>
+                                                        <img src="https://media.licdn.com/dms/image/v2/D4E03AQH41qDaDSt19A/profile-displayphoto-shrink_800_800/B4EZWO8j20HgAg-/0/1741859995715?e=1749081600&v=beta&t=RsXjUDf5AAjzVEK7lMDS2InjE18FehpMDQB7JxICP64" 
+                                                             alt="<?php echo htmlspecialchars($blog->author_name); ?>"
+                                                             class="w-6 h-6 rounded-full object-cover border border-white/20 mr-2">
                                                         <span class="text-xs text-white/80"><?php echo htmlspecialchars($blog->author_name); ?></span>
                                                     </div>
                                                     
