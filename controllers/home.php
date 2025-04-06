@@ -21,12 +21,28 @@ $latestPolls = $pollAPI->getLatestPolls();
 $historicalPolls = $pollAPI->getHistoricalPolls(3);
 
 // Haal de laatste 6 blogs op
-$db->query("SELECT blogs.*, users.username as author_name 
+$db->query("SELECT blogs.*, users.username as author_name, users.profile_photo 
            FROM blogs 
            JOIN users ON blogs.author_id = users.id 
            ORDER BY published_at DESC 
            LIMIT 6");
 $latest_blogs = $db->resultSet();
+
+// Haal de populairste blogs op voor de hero sectie
+$db->query("SELECT blogs.*, users.username as author_name, users.profile_photo 
+           FROM blogs 
+           JOIN users ON blogs.author_id = users.id 
+           ORDER BY views DESC, published_at DESC 
+           LIMIT 4");
+$featured_blogs = $db->resultSet();
+
+// Berekenen van relatieve publicatiedatum voor blogs
+foreach ($latest_blogs as $blog) {
+    $blog->relative_date = getRelativeTime($blog->published_at);
+}
+foreach ($featured_blogs as $blog) {
+    $blog->relative_date = getRelativeTime($blog->published_at);
+}
 
 // Haal het laatste nieuws op
 $news_sources = [
@@ -156,468 +172,291 @@ require_once 'views/templates/header.php';
 </style>
 
 <main class="bg-gray-50 overflow-x-hidden">
-    <!-- Hero Section -->
-    <section class="relative bg-gradient-to-br from-gray-900 to-primary overflow-hidden">
-        <!-- Decorative top bar -->
-        <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-secondary via-primary to-secondary"></div>
-        <div class="absolute top-0 left-0 h-1.5 w-1/3 bg-white opacity-40">
-            <div class="absolute top-0 left-0 h-full w-20 bg-white animate-slide"></div>
+    <!-- Hero Section - Volledig vernieuwde versie -->
+    <section class="relative bg-gradient-to-br from-gray-900 to-primary pt-12 pb-16 overflow-hidden">
+        <!-- Subtiele achtergrond patronen -->
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"30\" height=\"30\" viewBox=\"0 0 30 30\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cpath d=\"M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z\" fill=\"rgba(255,255,255,0.05)\"%3E%3C/path%3E%3C/svg%3E')]"></div>
         </div>
         
-        <!-- Animated background pattern -->
-        <div class="absolute inset-0">
-            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"30\" height=\"30\" viewBox=\"0 0 30 30\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cpath d=\"M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z\" fill=\"rgba(255,255,255,0.05)\"%3E%3C/path%3E%3C/svg%3E')] opacity-20"></div>
-        </div>
+        <!-- Decoratieve accent lijn bovenaan -->
+        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-secondary via-primary to-secondary"></div>
         
-        <!-- Spotlight effect -->
-        <div class="absolute inset-0 pointer-events-none"
-             x-data="{ mouseX: 0, mouseY: 0 }"
-             @mousemove="mouseX = $event.clientX; mouseY = $event.clientY"
-             >
-            <div class="absolute -top-[30%] -left-[30%] w-[130%] h-[130%] bg-gradient-radial from-primary/20 to-transparent opacity-50"
-                 :style="`transform: translate(${mouseX/50}px, ${mouseY/50}px);`"></div>
-        </div>
-        
-        <!-- Animated floating elements -->
-        <div class="absolute inset-0 overflow-hidden pointer-events-none">
-            <!-- Political icons and symbols -->
-            <div class="absolute top-[15%] left-[12%] w-12 h-12 bg-white/10 rounded-full flex items-center justify-center animate-float-medium">
-                <svg class="w-6 h-6 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-                </svg>
+        <div class="container mx-auto px-4 sm:px-6 relative z-10">
+            <div class="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
+                <!-- Linker kolom: Welkomstekst en CTA -->
+                <div class="w-full lg:w-1/2 text-white mb-10 lg:mb-0">
+                    <div class="relative">
+                        <!-- Logo icon in header stijl -->
+                        <div class="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-white/10 
+                                    backdrop-blur-sm shadow-lg transition-all duration-500 
+                                    hover:bg-white/15 hover:scale-105 
+                                    hover:shadow-secondary/10 hover:shadow-lg mb-6 relative">
+                            
+                            <!-- PolitiekPraat Logo -->
+                            <img src="<?php echo URLROOT; ?>/images/favicon-512x512.png" 
+                                 alt="PolitiekPraat Logo" 
+                                 class="w-9 h-9 object-contain transition-all duration-500">
+                            
+                            <!-- Subtle glow effect -->
+                            <div class="absolute inset-0 rounded-xl bg-white/5 opacity-0 blur-sm hover:opacity-100 
+                                        transition-opacity duration-500"></div>
             </div>
             
-            <div class="absolute top-[30%] right-[22%] w-14 h-14 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center animate-float-slow">
-                <svg class="w-8 h-8 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 6l9-4 9 4v6a11 11 0 01-9 11 11 11 0 01-9-11V6z"></path>
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4"></path>
-                </svg>
-            </div>
-            
-            <div class="absolute bottom-[25%] left-[28%] w-10 h-10 bg-secondary/20 rounded-lg flex items-center justify-center animate-float-fast">
-                <svg class="w-6 h-6 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6"></path>
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 16h6"></path>
-                </svg>
-            </div>
-            
-            <div class="absolute bottom-[35%] right-[35%] w-10 h-10 bg-primary/20 backdrop-blur-sm rounded-full flex items-center justify-center animate-float-medium">
-                <svg class="w-6 h-6 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"></path>
-                </svg>
-            </div>
-            
-            <div class="absolute top-[45%] left-[38%] w-9 h-9 bg-white/10 backdrop-blur-sm rounded-lg flex items-center justify-center animate-float-slow">
-                <svg class="w-5 h-5 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path>
-                </svg>
-            </div>
-
-            <!-- Existing floating circles -->
-            <div class="absolute top-1/4 left-[10%] w-12 h-12 rounded-full bg-blue-400/20 animate-float-slow"></div>
-            <div class="absolute bottom-1/3 right-[15%] w-20 h-20 rounded-full bg-primary/20 animate-float-medium"></div>
-            <div class="absolute top-1/3 right-[30%] w-8 h-8 rounded-full bg-indigo-500/20 animate-float-fast"></div>
-            
-            <!-- Floating shapes -->
-            <div class="absolute top-1/2 left-[25%] w-16 h-16 bg-secondary/20 rounded-lg rotate-45 animate-float-medium"></div>
-            <div class="absolute bottom-1/4 left-[40%] w-10 h-10 border-2 border-white/10 rounded-md rotate-12 animate-float-slow"></div>
-            
-            <!-- Dutch flag element -->
-            <div class="absolute top-[60%] right-[18%] w-16 h-10 overflow-hidden rounded-md animate-float-slow">
-                <div class="absolute inset-0 flex flex-col">
-                    <div class="h-1/3 bg-[#AE1C28]"></div>
-                    <div class="h-1/3 bg-white"></div>
-                    <div class="h-1/3 bg-[#21468B]"></div>
-                </div>
-            </div>
-            
-            <!-- EU stars element -->
-            <div class="absolute bottom-[15%] right-[28%] w-12 h-12 bg-[#003399]/30 rounded-full flex items-center justify-center animate-float-medium">
-                <div class="relative w-8 h-8">
-                    <?php for ($i = 0; $i < 12; $i++): 
-                        $angle = $i * 30;
-                        $radians = $angle * M_PI / 180;
-                        $x = 4 + 3.5 * cos($radians);
-                        $y = 4 + 3.5 * sin($radians);
-                    ?>
-                    <div class="absolute w-1 h-1 bg-[#FFCC00] rounded-full" style="left: <?php echo $x; ?>px; top: <?php echo $y; ?>px;"></div>
-                    <?php endfor; ?>
-                </div>
-            </div>
-            
-            <!-- Ballot icon -->
-            <div class="absolute top-[70%] left-[15%] w-11 h-11 bg-secondary/20 backdrop-blur-sm rounded-lg flex items-center justify-center rotate-12 animate-float-medium">
-                <svg class="w-6 h-6 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
-                </svg>
-            </div>
-            
-            <!-- Scales of justice -->
-            <div class="absolute bottom-[20%] left-[20%] w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center animate-float-slow">
-                <svg class="w-7 h-7 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"></path>
-                </svg>
-            </div>
-            
-            <!-- Speech bubble / debate -->
-            <div class="absolute top-[20%] right-[10%] w-10 h-10 bg-primary/20 backdrop-blur-sm rounded-lg flex items-center justify-center animate-float-fast">
-                <svg class="w-6 h-6 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
-                </svg>
-            </div>
-            
-            <!-- Parliament/seats icon -->
-            <div class="absolute bottom-[40%] left-[8%] w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center animate-float-medium">
-                <svg class="w-7 h-7 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
-                </svg>
-            </div>
-            
-            <!-- Particle container with animated dots -->
-            <div class="absolute inset-0" 
-                 x-data="{
-                     particles: Array.from({length: 20}, () => ({
-                         x: Math.random() * 100,
-                         y: Math.random() * 100,
-                         size: Math.random() * 1.5 + 0.5,
-                         speed: Math.random() * 1 + 0.5,
-                         opacity: Math.random() * 0.5 + 0.2
-                     }))
-                 }">
-                <template x-for="(particle, index) in particles" :key="index">
-                    <div class="absolute rounded-full bg-white"
-                         :style="`
-                            left: ${particle.x}%; 
-                            top: ${particle.y}%; 
-                            width: ${particle.size}px; 
-                            height: ${particle.size}px; 
-                            opacity: ${particle.opacity};
-                            animation: float-particle ${particle.speed + 3}s infinite alternate ease-in-out;
-                         `"></div>
-                </template>
-            </div>
-        </div>
-        
-        <div class="container mx-auto px-4 py-12 md:py-16 lg:py-20 relative">
-            <div class="max-w-7xl mx-auto">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
-                    <!-- Left Column: Main Content -->
-                    <div class="text-white space-y-6 md:space-y-8" data-aos="fade-right">
-                        <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
-                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-blue-200">
-                                PolitiekPraat
-                            </span>
+                        <!-- Hoofdtitel met moderne styling -->
+                        <h1 class="text-4xl sm:text-5xl lg:text-5xl font-bold mb-6 tracking-tight">
+                            PolitiekPraat
                         </h1>
-                        <div class="h-16 sm:h-20 md:h-24 flex items-center">
-                            <p class="text-lg sm:text-xl md:text-2xl text-gray-300 leading-relaxed"
-                               x-data="{
-                                   texts: [
-                                       'Ontdek hoe de Nederlandse politiek werkt en wat dit voor jou betekent.',
-                                       'Praat mee over actuele onderwerpen die Nederland bezighouden.',
-                                       'Deel jouw mening en lees wat anderen ervan vinden.',
-                                       'Blijf op de hoogte van de laatste politieke ontwikkelingen.',
-                                       'Leer meer over verkiezingen en hoe jouw stem verschil maakt.'
-                                   ],
-                                   currentText: '',
-                                   currentIndex: 0,
-                                   isDeleting: false,
-                                   typeSpeed: 50,
-                                   deleteSpeed: 30,
-                                   pauseSpeed: 2000
-                               }"
-                               x-init="$nextTick(() => {
-                                   function type() {
-                                       const current = texts[currentIndex];
-                                       
-                                       if (!isDeleting) {
-                                           currentText = current.substring(0, currentText.length + 1);
-                                           
-                                           if (currentText === current) {
-                                               isDeleting = true;
-                                               setTimeout(type, pauseSpeed);
-                                               return;
-                                           }
-                                           
-                                           setTimeout(type, typeSpeed);
-                                       } else {
-                                           currentText = current.substring(0, currentText.length - 1);
-                                           
-                                           if (currentText === '') {
-                                               isDeleting = false;
-                                               currentIndex = (currentIndex + 1) % texts.length;
-                                           }
-                                           
-                                           setTimeout(type, deleteSpeed);
-                                       }
-                                   }
-                                   
-                                   type();
-                               })"
-                               x-text="currentText">
-                            </p>
-                        </div>
-                        <div class="flex flex-col sm:flex-row gap-4 pt-2">
+                        
+                        <!-- Ondertitel met dynamische typewriter effect -->
+                        <div class="text-lg sm:text-xl text-white/80 mb-8 max-w-lg leading-relaxed">
+                            <span id="typewriter" class="inline-block"></span>
+                            <span class="animate-pulse">|</span>
+            </div>
+            
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                const typewriterElement = document.getElementById('typewriter');
+                                const sentences = [
+                                    "Ontdek hoe de Nederlandse politiek werkt en wat dit voor jou betekent.",
+                                    "Volg de laatste ontwikkelingen in Den Haag op een toegankelijke manier.",
+                                    "Blijf op de hoogte van belangrijke debatten en beslissingen in de Tweede Kamer.",
+                                    "Leer meer over het Nederlandse democratische systeem en je rol daarin.",
+                                    "Verdiep je in actuele politieke thema's die Nederland bezighouden.",
+                                    "Ontdek hoe wetsvoorstellen tot stand komen en wat de gevolgen zijn.",
+                                    "Krijg inzicht in de coalitievorming en politieke samenwerking in Nederland.",
+                                    "Begrijp hoe de verkiezingen werken en waarom jouw stem belangrijk is.",
+                                    "Verken de geschiedenis en toekomst van de Nederlandse politiek."
+                                ];
+                                
+                                // Zet direct de eerste zin neer zodat er meteen iets zichtbaar is
+                                typewriterElement.textContent = sentences[0];
+                                
+                                // Geen typewriter effect meer, gewoon de zinnen wisselen
+                                let currentIndex = 0;
+                                
+                                function changeSentence() {
+                                    currentIndex = (currentIndex + 1) % sentences.length;
+                                    
+                                    // Fade out effect
+                                    typewriterElement.style.opacity = 0;
+                                    
+                                    setTimeout(function() {
+                                        // Verander de tekst
+                                        typewriterElement.textContent = sentences[currentIndex];
+                                        
+                                        // Fade in effect
+                                        typewriterElement.style.opacity = 1;
+                                    }, 500);
+                                    
+                                    setTimeout(changeSentence, 3000);
+                                }
+                                
+                                // Voeg CSS toe voor de fade transitie
+                                typewriterElement.style.transition = "opacity 0.5s ease";
+                                typewriterElement.style.opacity = 1;
+                                
+                                // Start het wisselen van zinnen na een pauze
+                                setTimeout(changeSentence, 3000);
+                            });
+                        </script>
+                        
+                        <!-- Call-to-action knop -->
                             <a href="<?php echo URLROOT; ?>/blogs" 
-                               class="inline-flex items-center justify-center bg-white text-primary px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold hover:bg-opacity-90 transition-all transform hover:scale-105 shadow-lg group">
+                           class="inline-flex items-center px-6 py-3 bg-white text-primary rounded-lg font-medium shadow-md hover:shadow-lg transition-all duration-300 group">
                                 <span>Ontdek onze blogs</span>
-                                <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
                                 </svg>
                             </a>
                         </div>
                     </div>
 
-                    <!-- Right Column: Live Peilingen -->
-                    <div class="relative w-full" data-aos="fade-left">
-                        <!-- Achtergrond met kleuren die passen bij de website -->
-                        <div class="absolute inset-0 bg-[#1a365d] rounded-xl shadow-xl"></div>
-                        
-                        <!-- Decoratieve accenten - verbeterde header met gradient -->
-                        <div class="absolute top-0 left-0 right-0 h-12 sm:h-16 bg-gradient-to-r from-[#1a365d] to-[#2a4a7c] rounded-t-xl flex items-center justify-between px-3 sm:px-5 overflow-hidden">
-                            <!-- Rode accent border bovenaan -->
-                            <div class="absolute top-0 left-0 right-0 h-1 bg-[#c41e3a]"></div>
-                            
-                            <!-- Decoratieve elementen -->
-                            <div class="absolute -right-16 -top-16 w-32 h-32 bg-[#c41e3a]/10 rounded-full blur-xl"></div>
-                            
-                            <!-- Linker deel met titel -->
-                            <div class="flex items-center space-x-2 sm:space-x-3 relative z-10">
-                                <div class="w-6 h-6 sm:w-8 sm:h-8 bg-[#c41e3a] rounded-full flex items-center justify-center shadow-md">
-                                    <svg class="w-3 h-3 sm:w-4 sm:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                <!-- Rechter kolom: Blog slider - Smaller gemaakt -->
+                <div class="w-full lg:w-5/12 mx-auto">
+                    <div class="relative bg-white/5 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden">
+                        <!-- Header met titel -->
+                        <div class="flex items-center py-3 px-4 border-b border-white/10">
+                            <div class="w-6 h-6 bg-[#c41e3a] rounded-full flex items-center justify-center mr-3">
+                                <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                                     </svg>
                                 </div>
                                 <div>
-                                    <h3 class="text-sm sm:text-base md:text-lg font-bold text-white tracking-wide uppercase">ACTUELE PEILINGEN</h3>
-                                    <p class="hidden sm:block text-[10px] text-white/60">Laatste update: <?php echo date('d-m-Y'); ?></p>
-                                </div>
+                                <h3 class="text-sm font-medium text-white uppercase tracking-wide">Uitgelichte Blogs</h3>
+                                <p class="text-xs text-white/60">Actueel: <?php echo date('d-m-Y'); ?></p>
                             </div>
                         </div>
                         
-                        <!-- Main Content - aangepast met meer padding-top voor de header -->
-                        <div class="relative p-3 sm:p-5 pt-16 sm:pt-20 rounded-xl overflow-hidden">
-                            <!-- Info regel - datum verwijderd -->
-                            <div class="flex items-center mb-3 sm:mb-4">
-                                <div class="flex items-center text-xs text-white/70">
-                                    <span class="text-[10px] sm:text-xs">Tweede Kamer</span>
-                                    <span class="inline-block mx-1 sm:mx-2">•</span>
-                                    <span class="flex items-center text-[10px] sm:text-xs">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-[#c41e3a] animate-pulse mr-1"></span>
-                                        <span>Live data</span>
-                                    </span>
+                        <!-- Blog swiper container - Hoogte aangepast -->
+                        <div class="hero-blog-swiper h-[320px] sm:h-[340px]">
+                            <div class="swiper-wrapper">
+                                <?php foreach($featured_blogs as $blog): ?>
+                                <div class="swiper-slide">
+                                    <a href="<?php echo URLROOT; ?>/blogs/view/<?php echo $blog->slug; ?>" class="group block h-full">
+                                        <div class="relative h-full">
+                                            <!-- Afbeelding met overlay -->
+                                            <div class="relative h-36 sm:h-40">
+                                                <?php if($blog->image_path): ?>
+                                                    <img src="<?php echo URLROOT . '/' . $blog->image_path; ?>" 
+                                                         alt="<?php echo htmlspecialchars($blog->title); ?>" 
+                                                         class="w-full h-full object-cover">
+                                                <?php else: ?>
+                                                    <div class="w-full h-full bg-gradient-to-br from-primary/50 to-secondary/50 flex items-center justify-center">
+                                                        <svg class="w-10 h-10 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1M15 3v4m0 0v4m0-4h4m-4 0H7m15 5v5a2 2 0 01-2 2h-4"></path>
+                                                        </svg>
+                                            </div>
+                                                <?php endif; ?>
+                                                
+                                                <!-- Category badge -->
+                                                <div class="absolute top-3 left-3">
+                                                    <span class="inline-flex items-center px-2 py-1 bg-[#c41e3a] text-white text-xs font-medium rounded-md shadow-sm">
+                                                        <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                                        </svg>
+                                                        Blog
+                                                    </span>
+                                                </div>
+                                                </div>
+                                                
+                                            <!-- Content section -->
+                                            <div class="p-4 bg-white/5">
+                                                <h4 class="text-base font-semibold text-white mb-2 line-clamp-2 group-hover:text-[#c41e3a] transition-colors duration-300">
+                                                    <?php echo htmlspecialchars($blog->title); ?>
+                                                </h4>
+                                                
+                                                <p class="text-xs text-white/70 mb-3 line-clamp-2">
+                                                    <?php echo htmlspecialchars($blog->summary); ?>
+                                                </p>
+                                                
+                                                <div class="flex items-center justify-between">
+                                                    <div class="flex items-center">
+                                                        <div class="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center mr-2">
+                                                            <svg class="w-3 h-3 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                                        </svg>
+                                                        </div>
+                                                        <span class="text-xs text-white/80"><?php echo htmlspecialchars($blog->author_name); ?></span>
+                                                    </div>
+                                                    
+                                                    <span class="text-xs text-white/60">
+                                                        <?php echo $blog->relative_date; ?>
+                                                    </span>
+                                                </div>
+                                                
+                                                <div class="mt-3 flex">
+                                                    <span class="inline-flex items-center text-xs font-medium text-white hover:text-white/90 transition-colors duration-300">
+                                                        Lees artikel
+                                                        <svg class="w-3.5 h-3.5 ml-1.5 group-hover:translate-x-0.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                                        </svg>
+                                                    </span>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <?php endforeach; ?>
+                            </div>
+                            
+                            <!-- Navigatie controls -->
+                            <div class="absolute top-1/2 -translate-y-1/2 z-10 flex justify-between w-full px-3">
+                                <button class="hero-swiper-button-prev w-7 h-7 flex items-center justify-center rounded-full bg-black/30 text-white hover:bg-[#c41e3a] transition-colors duration-300">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                                            </svg>
+                                        </button>
+                                        
+                                <button class="hero-swiper-button-next w-7 h-7 flex items-center justify-center rounded-full bg-black/30 text-white hover:bg-[#c41e3a] transition-colors duration-300">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                            </svg>
+                                        </button>
+                            </div>
+                            
+                            <!-- Progress en paginering -->
+                            <div class="absolute bottom-0 inset-x-0 h-8 px-4 z-10 flex items-center">
+                                <div class="w-full">
+                                    <!-- Paginering indicators -->
+                                    <div class="hero-swiper-pagination flex justify-center"></div>
+                                    
+                                    <!-- Progress bar -->
+                                    <div class="h-0.5 w-full bg-white/10 rounded-full overflow-hidden mt-1">
+                                        <div class="swiper-progress-bar h-full bg-[#c41e3a]" style="width: 0%"></div>
+                                    </div>
+                                    </div>
                                 </div>
                             </div>
 
-                            <!-- Interactieve visualisatie van de peilingen -->
-                            <div x-data="{ activeView: 'seats' }" class="relative">
-                                <!-- Weergave selector -->
-                                <div class="flex mb-2 sm:mb-3">
-                                    <button @click="activeView = 'seats'" 
-                                            :class="{'bg-[#c41e3a] text-white': activeView === 'seats', 'bg-white/10 text-white hover:bg-white/20': activeView !== 'seats'}" 
-                                            class="text-[10px] sm:text-xs py-1 px-2 sm:px-3 rounded-l-md transition-colors duration-200 focus:outline-none font-semibold">
-                                        Zetels
-                                    </button>
-                                    <button @click="activeView = 'percentage'" 
-                                            :class="{'bg-[#c41e3a] text-white': activeView === 'percentage', 'bg-white/10 text-white hover:bg-white/20': activeView !== 'percentage'}" 
-                                            class="text-[10px] sm:text-xs py-1 px-2 sm:px-3 rounded-r-md transition-colors duration-200 focus:outline-none font-semibold">
-                                        Percentages
-                                    </button>
-                                </div>
-
-                                <!-- Partijen ranking met compacte visualisatie -->
-                                <div>
-                                    <?php 
-                                    $topParties = [
-                                        'pvv' => ['seats' => 29, 'percentage' => 19.3, 'color' => '#0D47A1', 'change' => -1],
-                                        'gl-pvda' => ['seats' => 28, 'percentage' => 18.7, 'color' => '#7B1FA2', 'change' => 1],
-                                        'vvd' => ['seats' => 26, 'percentage' => 17.3, 'color' => '#FF6F00', 'change' => 3],
-                                        'cda' => ['seats' => 18, 'percentage' => 12.0, 'color' => '#2E7D32', 'change' => 0],
-                                        'd66' => ['seats' => 9, 'percentage' => 6.0, 'color' => '#00796B', 'change' => -2],
-                                        'sp' => ['seats' => 7, 'percentage' => 4.7, 'color' => '#C62828', 'change' => 0],
-                                        'fvd' => ['seats' => 5, 'percentage' => 3.3, 'color' => '#795548', 'change' => 0],
-                                        'pvdd' => ['seats' => 4, 'percentage' => 2.7, 'color' => '#388E3C', 'change' => 0],
-                                        'sgp' => ['seats' => 4, 'percentage' => 2.7, 'color' => '#1565C0', 'change' => 0],
-                                        'denk' => ['seats' => 4, 'percentage' => 2.7, 'color' => '#29B6F6', 'change' => 0],
-                                        'ja21' => ['seats' => 4, 'percentage' => 2.7, 'color' => '#EF6C00', 'change' => 1],
-                                        'volt' => ['seats' => 4, 'percentage' => 2.7, 'color' => '#4527A0', 'change' => 0],
-                                        'cu' => ['seats' => 3, 'percentage' => 2.0, 'color' => '#558B2F', 'change' => 0],
-                                        'bbb' => ['seats' => 3, 'percentage' => 2.0, 'color' => '#689F38', 'change' => -1],
-                                        'nsc' => ['seats' => 2, 'percentage' => 1.3, 'color' => '#1A237E', 'change' => -1]
-                                    ];
-                                    
-                                    foreach($topParties as $party => $data): 
-                                        $changeClass = $data['change'] > 0 ? 'text-green-400' : ($data['change'] < 0 ? 'text-red-400' : 'text-yellow-400');
-                                        $changeIndicator = $data['change'] > 0 ? '+' . $data['change'] : $data['change'];
-                                    ?>
-                                        <div class="mb-1 sm:mb-1.5 last:mb-0 relative">
-                                            <div class="flex items-center justify-between">
-                                                <div class="flex items-center w-16 sm:w-24">
-                                                    <div class="h-2 w-2 mr-1 sm:mr-1.5 rounded-full" style="background-color: <?php echo $data['color']; ?>"></div>
-                                                    <span class="text-[10px] sm:text-xs font-semibold text-white uppercase"><?php echo $party; ?></span>
-                                                </div>
-                                                <div class="relative h-1.5 sm:h-2 bg-white/10 rounded-full overflow-hidden flex-grow mx-1 sm:mx-2">
-                                                    <div x-show="activeView === 'seats'" class="absolute inset-y-0 left-0 rounded-full" 
-                                                         style="width: <?php echo ($data['seats'] / 150) * 100; ?>%; background-color: <?php echo $data['color']; ?>"></div>
-                                                    <div x-show="activeView === 'percentage'" class="absolute inset-y-0 left-0 rounded-full" 
-                                                         style="width: <?php echo $data['percentage']; ?>%; background-color: <?php echo $data['color']; ?>"></div>
-                                                </div>
-                                                <div class="flex items-center w-12 sm:w-16 justify-end">
-                                                    <span x-show="activeView === 'seats'" class="text-[10px] sm:text-xs font-bold text-white"><?php echo $data['seats']; ?></span>
-                                                    <span x-show="activeView === 'percentage'" class="text-[10px] sm:text-xs font-bold text-white"><?php echo $data['percentage']; ?>%</span>
-                                                    <span class="<?php echo $changeClass; ?> text-[8px] sm:text-[10px] ml-1 sm:ml-1.5"><?php echo $changeIndicator; ?></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    <?php endforeach; ?>
-                                
-                                </div>
-
-                                <!-- Ontwikkeling in 90 dagen -->
-                                <div class="mt-3 sm:mt-4 pt-2 sm:pt-3 border-t border-white/10">
-                                    <h4 class="text-[10px] sm:text-xs font-semibold text-white mb-1 sm:mb-2">Ontwikkeling in 90 dagen</h4>
-                                    <div class="relative h-14 sm:h-20 w-full">
-                                        <div class="absolute inset-0">
-                                            <!-- Verbeterde lijngrafiek met dikkere lijnen -->
-                                            <svg class="w-full h-full" viewBox="0 0 400 100" preserveAspectRatio="none">
-                                                <!-- Horizontale gridlijnen -->
-                                                <line x1="0" y1="25" x2="400" y2="25" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
-                                                <line x1="0" y1="50" x2="400" y2="50" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
-                                                <line x1="0" y1="75" x2="400" y2="75" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
-                                                
-                                                <!-- Verticale gridlijnen voor beter referentiepunt -->
-                                                <line x1="100" y1="0" x2="100" y2="100" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
-                                                <line x1="200" y1="0" x2="200" y2="100" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
-                                                <line x1="300" y1="0" x2="300" y2="100" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
-                                                
-                                                <!-- PVV lijn - dikker en beter zichtbaar -->
-                                                <path d="M0,40 L50,45 L100,30 L150,45 L200,60 L250,40 L300,35 L350,30 L400,60" 
-                                                      fill="none" stroke="#0D47A1" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-                                                
-                                                <!-- GL-PvdA lijn - dikker en beter zichtbaar -->
-                                                <path d="M0,60 L50,55 L100,55 L150,50 L200,45 L250,40 L300,40 L350,30 L400,25" 
-                                                      fill="none" stroke="#7B1FA2" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-                                                
-                                                <!-- VVD lijn - dikker en beter zichtbaar -->
-                                                <path d="M0,50 L50,55 L100,60 L150,55 L200,50 L250,50 L300,50 L350,40 L400,30" 
-                                                      fill="none" stroke="#FF6F00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-                                            </svg>
-                                        </div>
-                                        
-                                        <!-- Legenda met duidelijkere markers -->
-                                        <div class="absolute bottom-0 left-0 right-0 flex justify-between sm:justify-start sm:space-x-4">
-                                            <div class="flex items-center">
-                                                <div class="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-[#0D47A1] mr-1"></div>
-                                                <span class="text-[8px] sm:text-[10px] text-white/80">PVV</span>
-                                            </div>
-                                            <div class="flex items-center">
-                                                <div class="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-[#7B1FA2] mr-1"></div>
-                                                <span class="text-[8px] sm:text-[10px] text-white/80">GL-PvdA</span>
-                                            </div>
-                                            <div class="flex items-center">
-                                                <div class="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-[#FF6F00] mr-1"></div>
-                                                <span class="text-[8px] sm:text-[10px] text-white/80">VVD</span>
-                                            </div>
-                                        </div>
-                                        
-                                        <!-- Tijdsaanduiding -->
-                                        <div class="absolute top-1 left-0 right-0 flex justify-between">
-                                            <span class="text-[7px] sm:text-[8px] text-white/40">90 dagen</span>
-                                            <span class="text-[7px] sm:text-[8px] text-white/40">Heden</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Footer met informatie en links -->
-                                <div class="mt-2 flex items-center justify-between">
-                                    <div class="flex items-center space-x-1">
-                                        <span class="text-[8px] sm:text-[10px] text-white/50">Peilingwijzer • Ipsos I&O Research</span>
-                                    </div>
-                                </div>
-                                
-                                <!-- Vergelijking met eerdere peilingen -->
-                                <div class="mt-3 pt-3 border-t border-white/10">
-                                    <h4 class="text-[10px] sm:text-xs font-semibold text-white mb-2 sm:mb-3 flex items-center">
-                                        <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 mr-1 text-[#c41e3a]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                                        </svg>
-                                        Vergelijking met eerdere peilingen
-                                    </h4>
-                                    
-                                    <div class="space-y-2.5">
-                                        <!-- Vergelijking vs. 08-03-2025 -->
-                                        <div class="bg-white/5 rounded-lg p-2 border border-white/10">
-                                            <p class="text-[9px] sm:text-[11px] font-medium text-white/80 mb-1.5 flex items-center">
-                                                <span class="inline-block w-1.5 h-1.5 bg-[#c41e3a] rounded-full mr-1.5"></span>
-                                                vs. 08-03-2025
-                                            </p>
-                                            <div class="grid grid-cols-3 gap-1 sm:gap-2">
-                                                <div class="flex items-center text-[8px] sm:text-[10px]">
-                                                    <span class="text-green-400 font-medium mr-1">▲</span>
-                                                    <span class="text-white">CDA: +13</span>
-                                                </div>
-                                                <div class="flex items-center text-[8px] sm:text-[10px]">
-                                                    <span class="text-green-400 font-medium mr-1">▲</span>
-                                                    <span class="text-white">GL-PvdA: +3</span>
-                                                </div>
-                                                <div class="flex items-center text-[8px] sm:text-[10px]">
-                                                    <span class="text-green-400 font-medium mr-1">▲</span>
-                                                    <span class="text-white">VVD: +2</span>
-                                                </div>
-                                                <div class="flex items-center text-[8px] sm:text-[10px]">
-                                                    <span class="text-red-400 font-medium mr-1">▼</span>
-                                                    <span class="text-white">NSC: -18</span>
-                                                </div>
-                                                <div class="flex items-center text-[8px] sm:text-[10px]">
-                                                    <span class="text-red-400 font-medium mr-1">▼</span>
-                                                    <span class="text-white">PVV: -8</span>
-                                                </div>
-                                                <div class="flex items-center text-[8px] sm:text-[10px]">
-                                                    <span class="text-red-400 font-medium mr-1">▼</span>
-                                                    <span class="text-white">BBB: -4</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        <!-- Vergelijking vs. Tweede Kamerverkiezingen 2023 -->
-                                        <div class="bg-white/5 rounded-lg p-2 border border-white/10">
-                                            <p class="text-[9px] sm:text-[11px] font-medium text-white/80 mb-1.5 flex items-center">
-                                                <span class="inline-block w-1.5 h-1.5 bg-[#c41e3a] rounded-full mr-1.5"></span>
-                                                vs. Tweede Kamerverkiezingen 2023
-                                            </p>
-                                            <div class="flex items-center justify-between">
-                                                <div class="flex-1">
-                                                    <p class="text-[8px] sm:text-[9px] text-white/60 mb-0.5">Grootste stijgers:</p>
-                                                    <div class="flex items-center text-[8px] sm:text-[10px]">
-                                                        <span class="text-green-400 font-medium mr-1">▲</span>
-                                                        <span class="text-white">CDA: +13</span>
-                                                    </div>
-                                                </div>
-                                                <div class="flex-1">
-                                                    <p class="text-[8px] sm:text-[9px] text-white/60 mb-0.5">Grootste dalers:</p>
-                                                    <div class="flex items-center text-[8px] sm:text-[10px]">
-                                                        <span class="text-red-400 font-medium mr-1">▼</span>
-                                                        <span class="text-white">NSC: -18</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                        <!-- Footer leeg gelaten -->
+                        <div class="px-4 py-2 flex justify-end">
+                            <!-- Link verwijderd -->
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
         
-        <!-- Wave Separator -->
-        <div class="absolute bottom-[-20px] left-0 right-0 overflow-hidden z-0">
-            <svg class="w-full h-[80px]" viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-                <path d="M0 120L40 114C80 108 160 96 240 90C320 84 400 84 480 78C560 72 640 60 720 54C800 48 880 48 960 54C1040 60 1120 72 1200 78C1280 84 1360 84 1400 84L1440 84V120H1400C1360 120 1280 120 1200 120C1120 120 1040 120 960 120C880 120 800 120 720 120C640 120 560 120 480 120C400 120 320 120 240 120C160 120 80 120 40 120H0Z" fill="white"/>
-                <path d="M0 120L40 102C80 84 160 48 240 36C320 24 400 36 480 48C560 60 640 72 720 78C800 84 880 84 960 78C1040 72 1120 60 1200 48C1280 36 1360 24 1400 18L1440 12V120H1400C1360 120 1280 120 1200 120C1120 120 1040 120 960 120C880 120 800 120 720 120C640 120 560 120 480 120C400 120 320 120 240 120C160 120 80 120 40 120H0Z" fill="white" fill-opacity="0.5"/>
+        <!-- Wave separator toegevoegd -->
+        <div class="absolute bottom-0 left-0 right-0 overflow-hidden leading-0 transform z-0">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none" class="relative block h-8 w-full" style="transform: rotate(180deg)">
+                <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".15" fill="#FFFFFF"></path>
+                <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".2" fill="#FFFFFF"></path>
+                <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" opacity=".25" fill="#FFFFFF"></path>
             </svg>
         </div>
     </section>
+
+    <script>
+        // Hero blog swiper initialisatie
+        document.addEventListener('DOMContentLoaded', function() {
+            const heroSwiper = new Swiper('.hero-blog-swiper', {
+                slidesPerView: 1,
+                spaceBetween: 0,
+                grabCursor: true,
+                autoplay: {
+                    delay: 5000,
+                    disableOnInteraction: false,
+                },
+                speed: 800,
+                loop: true,
+                effect: 'slide',
+                navigation: {
+                    nextEl: '.hero-swiper-button-next',
+                    prevEl: '.hero-swiper-button-prev',
+                },
+                pagination: {
+                    el: '.hero-swiper-pagination',
+                    clickable: true,
+                    bulletClass: 'w-1.5 h-1.5 mx-1 rounded-full bg-white/30 transition-all duration-300 cursor-pointer',
+                    bulletActiveClass: 'w-4 bg-[#c41e3a]',
+                    renderBullet: function (index, className) {
+                        return '<span class="' + className + '"></span>';
+                    },
+                },
+                on: {
+                    init: function() {
+                        updateProgressBar(this);
+                    },
+                    slideChange: function() {
+                        updateProgressBar(this);
+                    }
+                }
+            });
+            
+            // Update progress bar functie
+            function updateProgressBar(swiper) {
+                const progressBar = document.querySelector('.swiper-progress-bar');
+                if (progressBar) {
+                    const totalSlides = swiper.slides.length - 2; // Loop mode dupliceert 2 slides
+                    const currentIndex = swiper.realIndex;
+                    const percentage = (currentIndex / (totalSlides - 1)) * 100;
+                    progressBar.style.width = percentage + '%';
+                }
+            }
+        });
+    </script>
 
     <!-- Uitgelichte Nieuwste Blog Section -->
     <section class="py-16 bg-white relative overflow-hidden">
@@ -866,7 +705,7 @@ require_once 'views/templates/header.php';
                             <div class="flex items-start space-x-3">
                                 <div class="w-10 h-10 rounded-xl bg-indigo-100 flex items-center justify-center flex-shrink-0">
                                     <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
                                     </svg>
                                 </div>
                                 <div>
@@ -1417,12 +1256,6 @@ require_once 'views/templates/header.php';
 
 
 
-        <!-- Wave Separator -->
-        <div class="absolute bottom-0 left-0 right-0">
-            <svg class="w-full h-auto" viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                
-            </svg>
-        </div>
     </section>
 
     <!-- Newsletter Subscription Section -->
@@ -1450,6 +1283,48 @@ require_once 'views/templates/header.php';
 </section>
 
 <!-- Vervolg van de pagina... -->
+
+<!-- Swiper JS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<!-- Initialisatie van de blog hero slider -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Hero blog slider
+    const heroSwiper = new Swiper('.hero-blog-swiper', {
+        slidesPerView: 1,
+        spaceBetween: 0,
+        speed: 800,
+        effect: 'slide',
+        autoplay: {
+            delay: 5000,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true
+        },
+        loop: true,
+        grabCursor: true,
+        pagination: {
+            el: '.hero-swiper-pagination',
+            clickable: true,
+            bulletClass: 'inline-block w-1.5 h-1.5 mx-1 cursor-pointer transition-all duration-200 bg-white/30 hover:bg-white/70 rounded-full',
+            bulletActiveClass: 'w-4 bg-[#c41e3a]'
+        },
+        navigation: {
+            nextEl: '.hero-swiper-button-next',
+            prevEl: '.hero-swiper-button-prev'
+        },
+        on: {
+            autoplayTimeLeft(s, time, progress) {
+                const progressBar = document.querySelector('.swiper-progress-bar');
+                if (progressBar) {
+                    progressBar.style.width = (1 - progress) * 100 + '%';
+                }
+            }
+        }
+    });
+});
+</script>
 
 <?php require_once 'views/templates/footer.php'; ?>
 
