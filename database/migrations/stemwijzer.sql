@@ -61,7 +61,7 @@ INSERT INTO parties (name, logo_url) VALUES
 
 -- -----------------------------
 -- 4. Vragen invoeren (25 stuks)
---    Let op: question_id wordt AUTO_INCREMENT.
+--    Let op: id wordt AUTO_INCREMENT.
 --    We nemen exact titel, description, context, left_view, right_view over.
 -- -----------------------------
 

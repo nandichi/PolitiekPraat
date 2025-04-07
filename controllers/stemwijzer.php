@@ -770,7 +770,7 @@ require_once 'views/templates/header.php';
                             <div class="flex items-start justify-between">
                                 <div class="flex items-center space-x-4">
                                     <div class="w-16 h-16 rounded-xl bg-white p-1 border border-gray-200 shadow-sm">
-                                        <img :src="partyLogos[detailedParty?.name]" :alt="detailedParty?.name" class="w-full h-full object-contain rounded-md">
+                                        <img :src="$data.partyLogos[detailedParty?.name]" :alt="detailedParty?.name" class="w-full h-full object-contain rounded-md">
                                     </div>
                                     <div>
                                         <h3 class="text-2xl font-bold text-gray-900" x-text="detailedParty?.name"></h3>
@@ -906,10 +906,33 @@ function stemwijzer() {
                 }
                 
                 // Partijgegevens instellen
-                this.partyLogos = data.partyLogos;
+                // Converteer de array naar een object met partijnaam als key en logoUrl als value
+                const logos = {};
+                data.partyLogos.forEach(party => {
+                    logos[party.name] = party.logoUrl;
+                });
+                this.partyLogos = logos;
                 
-                // Vragen instellen
-                this.questions = data.questions;
+                // Vragen instellen - voorbereiden van de positie data
+                const formattedQuestions = data.questions.map(question => {
+                    // Herformatteren van de positions array naar object-structuur
+                    const positionsObject = {};
+                    const explanationsObject = {};
+                    
+                    // Voor elke partij-positie, zet de standpunten in de juiste format
+                    question.positions.forEach(position => {
+                        positionsObject[position.partyName] = position.position;
+                        explanationsObject[position.partyName] = position.explanation;
+                    });
+                    
+                    return {
+                        ...question,
+                        positions: positionsObject,
+                        explanations: explanationsObject
+                    };
+                });
+                
+                this.questions = formattedQuestions;
                 this.totalSteps = this.questions.length;
                 
                 // Partijen per stelling bijwerken
