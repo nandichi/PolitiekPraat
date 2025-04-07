@@ -894,6 +894,7 @@ function stemwijzer() {
             
             fetch(apiUrl)
             .then(response => {
+                console.log('API Response status:', response.status); // Debug info
                 if (!response.ok) {
                     throw new Error('Network response was not ok: ' + response.status);
                 }
@@ -901,8 +902,25 @@ function stemwijzer() {
             })
             .then(data => {
                 console.log('Data ontvangen:', data); // Debug info
+                
+                // Indien debug info aanwezig, toon deze
+                if (data.debug) {
+                    console.log('API Debug Info:', data.debug);
+                }
+                
                 if (!data.success) {
                     throw new Error('API error: ' + (data.message || 'Onbekende fout'));
+                }
+                
+                // Controleer of we alle verwachte data hebben
+                if (!data.partyLogos || !Array.isArray(data.partyLogos) || data.partyLogos.length === 0) {
+                    console.error('Geen partij gegevens ontvangen:', data.partyLogos);
+                    throw new Error('Geen partij gegevens ontvangen');
+                }
+                
+                if (!data.questions || !Array.isArray(data.questions) || data.questions.length === 0) {
+                    console.error('Geen vragen ontvangen:', data.questions);
+                    throw new Error('Geen vragen ontvangen');
                 }
                 
                 // Partijgegevens instellen
@@ -934,13 +952,22 @@ function stemwijzer() {
                 
                 this.questions = formattedQuestions;
                 this.totalSteps = this.questions.length;
+                console.log('Vragen geladen:', this.questions.length); // Debug info
                 
                 // Partijen per stelling bijwerken
                 this.updatePartyGroups();
             })
             .catch(error => {
                 console.error('Fout bij het ophalen van de stemwijzer gegevens:', error);
-                alert('Er is een fout opgetreden bij het laden van de stemwijzer. Probeer het later opnieuw.');
+                
+                // Toon een meer specifieke foutmelding, indien bekend
+                if (error.message.includes('cors')) {
+                    alert('Er is een CORS fout opgetreden bij het laden van de stemwijzer. Controleer de server configuratie.');
+                } else if (error.message.includes('Network')) {
+                    alert('De stemwijzer API is niet bereikbaar. Controleer of de server draait en de URL juist is.');
+                } else {
+                    alert('Er is een fout opgetreden bij het laden van de stemwijzer: ' + error.message);
+                }
             });
         },
         
