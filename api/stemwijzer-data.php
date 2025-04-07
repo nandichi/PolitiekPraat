@@ -154,7 +154,7 @@ try {
             $questionId = $question['question_id'];
             
             // Haal de posities op voor deze vraag
-            $positionsQuery = "SELECT p.party_id, p.stance, p.explanation, pa.party_name 
+            $positionsQuery = "SELECT p.party_id, p.stance as position, p.explanation, pa.party_name 
                               FROM positions p 
                               JOIN parties pa ON p.party_id = pa.party_id 
                               WHERE p.question_id = :question_id 
@@ -171,7 +171,7 @@ try {
                 $positions[] = [
                     'partyId' => $position['party_id'],
                     'partyName' => $position['party_name'],
-                    'position' => $position['stance'],
+                    'position' => $position['position'],
                     'explanation' => $position['explanation']
                 ];
             }

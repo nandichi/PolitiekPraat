@@ -9,7 +9,19 @@ require_once 'includes/config.php';
 require_once 'includes/Database.php';
 
 // SQL-bestand controleren
-$sqlFile = 'database/migrations/stemwijzer.sql';
+$sqlFile = isset($_GET['file']) ? $_GET['file'] : 'database/migrations/stemwijzer.sql';
+
+// Controleer of het bestand bestaat en of het een toegestaan bestand is
+$allowedFiles = [
+    'database/migrations/stemwijzer.sql', 
+    'database/migrations/stemwijzer-fix.sql'
+];
+
+if (!in_array($sqlFile, $allowedFiles)) {
+    // Veiligheidscheck, sta alleen toegestane bestanden toe
+    $sqlFile = 'database/migrations/stemwijzer.sql';
+}
+
 if (!file_exists($sqlFile)) {
     die('SQL-bestand niet gevonden: ' . $sqlFile);
 }
@@ -48,6 +60,43 @@ try {
     $database = new Database();
     $db = $database->getConnection();
     echo '<div class="success">✅ Database connectie succesvol</div>';
+    
+    // Controleer of er een specifieke query moet worden uitgevoerd
+    if (isset($_GET['query']) && $_GET['query'] === 'fix') {
+        echo '<h2>Kolom Hernoemen</h2>';
+        
+        try {
+            // Controleer eerst of de kolom 'stance' bestaat
+            $stmt = $db->prepare("SHOW COLUMNS FROM positions LIKE 'stance'");
+            $stmt->execute();
+            if ($stmt->rowCount() > 0) {
+                // Voer de hernoem query uit
+                $alterQuery = "ALTER TABLE positions CHANGE COLUMN stance position ENUM('eens','oneens','neutraal') NOT NULL";
+                $db->exec($alterQuery);
+                echo '<div class="success">✅ Kolom succesvol hernoemd van "stance" naar "position"</div>';
+            } else {
+                echo '<div class="warning">⚠️ Kolom "stance" niet gevonden. Misschien is de kolom al hernoemd of heeft deze een andere naam.</div>';
+            }
+            
+            // Toon link naar instructies
+            echo '<div style="margin: 20px 0;">';
+            echo '<a href="stemwijzer-fix-instructies.php" class="btn">Terug naar instructies</a>';
+            echo '<a href="diagnose-schema.php" class="btn" style="margin-left: 10px;">Schema Diagnosticeren</a>';
+            echo '</div>';
+            
+            echo '</div></body></html>';
+            exit;
+        } catch (PDOException $e) {
+            echo '<div class="error">❌ Fout bij uitvoeren query: ' . $e->getMessage() . '</div>';
+            
+            echo '<div style="margin: 20px 0;">';
+            echo '<a href="stemwijzer-fix-instructies.php" class="btn">Terug naar instructies</a>';
+            echo '</div>';
+            
+            echo '</div></body></html>';
+            exit;
+        }
+    }
     
     // Controleer of tabellen bestaan
     $tables = ['parties', 'questions', 'positions'];
