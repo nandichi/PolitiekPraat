@@ -1,8 +1,9 @@
 -- -----------------------------
--- 1. We gebruiken de bestaande database
+-- 1. (Optioneel) Maak de database zelf aan
+--    Pas de naam "stemwijzerdb" aan als je wilt
 -- -----------------------------
--- We gebruiken de bestaande database (politiek_db lokaal of naoufal_politiekpraat_db in productie)
--- zoals gedefinieerd in includes/config.php
+CREATE DATABASE IF NOT EXISTS stemwijzerdb;
+USE stemwijzerdb;
 
 -- -----------------------------
 -- 2. Tabellen aanmaken
@@ -12,38 +13,38 @@ DROP TABLE IF EXISTS questions;
 DROP TABLE IF EXISTS parties;
 
 CREATE TABLE parties (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(100) NOT NULL UNIQUE,
-  logo_url VARCHAR(255) DEFAULT NULL
+  party_id INT AUTO_INCREMENT PRIMARY KEY,
+  party_name VARCHAR(100) NOT NULL UNIQUE,
+  party_logo VARCHAR(255) DEFAULT NULL
 );
 
 CREATE TABLE questions (
-  id INT AUTO_INCREMENT PRIMARY KEY,
+  question_id INT AUTO_INCREMENT PRIMARY KEY,
   title VARCHAR(255) NOT NULL,
   description TEXT NOT NULL,
-  context TEXT DEFAULT NULL,
-  left_view TEXT DEFAULT NULL,
-  right_view TEXT DEFAULT NULL
+  context TEXT NOT NULL,
+  left_view TEXT NOT NULL,
+  right_view TEXT NOT NULL
 );
 
 CREATE TABLE positions (
-  id INT AUTO_INCREMENT PRIMARY KEY,
+  position_id INT AUTO_INCREMENT PRIMARY KEY,
   question_id INT NOT NULL,
   party_id INT NOT NULL,
-  position ENUM('eens','oneens','neutraal') NOT NULL,
+  stance ENUM('eens','oneens','neutraal') NOT NULL,
   explanation TEXT,
   CONSTRAINT fk_question
-    FOREIGN KEY (question_id) REFERENCES questions(id)
+    FOREIGN KEY (question_id) REFERENCES questions(question_id)
     ON DELETE CASCADE,
   CONSTRAINT fk_party
-    FOREIGN KEY (party_id) REFERENCES parties(id)
+    FOREIGN KEY (party_id) REFERENCES parties(party_id)
     ON DELETE CASCADE
 );
 
 -- -----------------------------
 -- 3. Partijen (14 stuks) invoeren
 -- -----------------------------
-INSERT INTO parties (name, logo_url) VALUES
+INSERT INTO parties (party_name, party_logo) VALUES
 ('PVV', 'https://i.ibb.co/DfR8pS2Y/403880390-713625330344634-198487231923339026-n.jpg'),
 ('VVD', 'https://logo.clearbit.com/vvd.nl'),
 ('NSC', 'https://i.ibb.co/YT2fJZb4/nsc.png'),
@@ -61,7 +62,7 @@ INSERT INTO parties (name, logo_url) VALUES
 
 -- -----------------------------
 -- 4. Vragen invoeren (25 stuks)
---    Let op: id wordt AUTO_INCREMENT.
+--    Let op: question_id wordt AUTO_INCREMENT.
 --    We nemen exact titel, description, context, left_view, right_view over.
 -- -----------------------------
 
