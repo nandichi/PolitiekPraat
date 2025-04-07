@@ -1,107 +1,114 @@
 <?php
+// Debug inschakelen
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+// Log eventuele fouten naar een bestand
+ini_set('log_errors', 1);
+ini_set('error_log', '../error.log');
+
 // Includes voor de database configuratie en eventuele andere benodigde bestanden
 require_once '../includes/config.php';
 require_once '../includes/Database.php';
 
 // CORS headers toevoegen om API toegankelijk te maken
-header('Content-Type: application/json');
+header('Content-Type: application/json; charset=UTF-8');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET');
+
+// Initialiseer response array
+$response = [
+    'success' => true,
+    'partyLogos' => [],
+    'questions' => [],
+    'debug' => [] // Debug informatie
+];
 
 // Connect met de database via onze Database class
 try {
     $database = new Database();
     $db = $database->getConnection();
-} catch(Exception $e) {
-    // Error bij database connectie
-    http_response_code(500);
-    echo json_encode([
-        'success' => false,
-        'message' => 'Database connectie fout: ' . $e->getMessage()
-    ]);
-    exit;
-}
-
-// Response data structuur
-$response = [
-    'success' => true,
-    'partyLogos' => [],
-    'questions' => []
-];
-
-// 1. Alle partijen en hun logo's ophalen
-try {
-    $query = "SELECT party_id, party_name, party_logo FROM parties ORDER BY party_name";
-    $stmt = $db->prepare($query);
-    $stmt->execute();
     
-    $parties = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
-    // Maak een lookup array voor party_id -> party_name
-    $partyIdToName = [];
-    
-    foreach ($parties as $party) {
-        $partyIdToName[$party['party_id']] = $party['party_name'];
-        $response['partyLogos'][$party['party_name']] = $party['party_logo'];
+    if ($db === null) {
+        throw new Exception("Database connectie is null");
     }
-} catch(PDOException $e) {
-    http_response_code(500);
-    echo json_encode([
-        'success' => false,
-        'message' => 'Fout bij ophalen partijen: ' . $e->getMessage()
-    ]);
-    exit;
-}
-
-// 2. Alle vragen ophalen
-try {
-    $query = "SELECT question_id, title, description, context, left_view, right_view 
-              FROM questions 
-              ORDER BY question_id";
-    $stmt = $db->prepare($query);
-    $stmt->execute();
     
-    $questions = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $response['debug'][] = "Database connectie succesvol";
     
-    // Voor elke vraag, haal de standpunten van alle partijen op
-    foreach ($questions as $question) {
-        $questionData = [
-            'title' => $question['title'],
-            'description' => $question['description'],
-            'context' => $question['context'],
-            'leftView' => $question['left_view'],
-            'rightView' => $question['right_view'],
-            'positions' => [],
-            'explanations' => []
+    // Haal alle partijen en hun logo's op
+    $partiesQuery = "SELECT id, name, logo_url FROM parties ORDER BY name";
+    $partiesStmt = $db->prepare($partiesQuery);
+    $partiesStmt->execute();
+    
+    $partyCount = $partiesStmt->rowCount();
+    $response['debug'][] = "Aantal partijen gevonden: $partyCount";
+    
+    while ($party = $partiesStmt->fetch(PDO::FETCH_ASSOC)) {
+        $response['partyLogos'][] = [
+            'partyId' => $party['id'],
+            'name' => $party['name'],
+            'logoUrl' => $party['logo_url']
         ];
+    }
+    
+    // Haal alle vragen op met hun stellingen en partijposities
+    $questionsQuery = "SELECT id, title, description FROM questions ORDER BY id";
+    $questionsStmt = $db->prepare($questionsQuery);
+    $questionsStmt->execute();
+    
+    $questionCount = $questionsStmt->rowCount();
+    $response['debug'][] = "Aantal vragen gevonden: $questionCount";
+    
+    while ($question = $questionsStmt->fetch(PDO::FETCH_ASSOC)) {
+        $questionId = $question['id'];
         
-        // Haal standpunten en uitleg op voor deze vraag
-        $positionsQuery = "SELECT party_id, stance, explanation 
-                          FROM positions 
-                          WHERE question_id = :question_id";
-        $posStmt = $db->prepare($positionsQuery);
-        $posStmt->bindParam(':question_id', $question['question_id']);
-        $posStmt->execute();
+        // Haal de posities op voor deze vraag
+        $positionsQuery = "SELECT p.party_id, p.position, p.explanation, pa.name as party_name 
+                          FROM positions p 
+                          JOIN parties pa ON p.party_id = pa.id 
+                          WHERE p.question_id = :question_id 
+                          ORDER BY pa.name";
+        $positionsStmt = $db->prepare($positionsQuery);
+        $positionsStmt->bindParam(':question_id', $questionId);
+        $positionsStmt->execute();
         
-        $positions = $posStmt->fetchAll(PDO::FETCH_ASSOC);
+        $positionCount = $positionsStmt->rowCount();
+        $response['debug'][] = "Aantal posities voor vraag $questionId: $positionCount";
         
-        foreach ($positions as $position) {
-            $partyName = $partyIdToName[$position['party_id']];
-            $questionData['positions'][$partyName] = $position['stance'];
-            $questionData['explanations'][$partyName] = $position['explanation'];
+        $positions = [];
+        while ($position = $positionsStmt->fetch(PDO::FETCH_ASSOC)) {
+            $positions[] = [
+                'partyId' => $position['party_id'],
+                'partyName' => $position['party_name'],
+                'position' => $position['position'],
+                'explanation' => $position['explanation']
+            ];
         }
         
-        $response['questions'][] = $questionData;
+        $response['questions'][] = [
+            'id' => $questionId,
+            'title' => $question['title'],
+            'description' => $question['description'],
+            'positions' => $positions
+        ];
     }
     
-} catch(PDOException $e) {
-    http_response_code(500);
-    echo json_encode([
-        'success' => false,
-        'message' => 'Fout bij ophalen vragen: ' . $e->getMessage()
-    ]);
-    exit;
+} catch (Exception $e) {
+    $response['success'] = false;
+    $response['message'] = $e->getMessage();
+    $response['debug'][] = "Fout opgetreden: " . $e->getMessage();
+    error_log("Stemwijzer API Error: " . $e->getMessage());
+}
+
+// Debug informatie alleen in development
+// In productie deze regel verwijderen of aanpassen
+if (defined('ENVIRONMENT') && ENVIRONMENT === 'development') {
+    // Debug informatie behouden
+} else {
+    // Verwijder debug informatie in productie
+    unset($response['debug']);
 }
 
 // Stuur de JSON response terug
-echo json_encode($response); 
+echo json_encode($response, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE); 

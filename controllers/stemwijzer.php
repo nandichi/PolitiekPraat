@@ -888,10 +888,23 @@ function stemwijzer() {
         questions: [],
         
         init() {
-            // Gegevens via AJAX ophalen
-            fetch('api/stemwijzer-data.php')
-            .then(response => response.json())
+            // Gegevens via AJAX ophalen - zorg voor het juiste absolute pad
+            const apiUrl = window.location.origin + '/api/stemwijzer-data.php';
+            console.log('API URL:', apiUrl); // Debug info
+            
+            fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok: ' + response.status);
+                }
+                return response.json();
+            })
             .then(data => {
+                console.log('Data ontvangen:', data); // Debug info
+                if (!data.success) {
+                    throw new Error('API error: ' + (data.message || 'Onbekende fout'));
+                }
+                
                 // Partijgegevens instellen
                 this.partyLogos = data.partyLogos;
                 

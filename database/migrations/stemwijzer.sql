@@ -12,38 +12,38 @@ DROP TABLE IF EXISTS questions;
 DROP TABLE IF EXISTS parties;
 
 CREATE TABLE parties (
-  party_id INT AUTO_INCREMENT PRIMARY KEY,
-  party_name VARCHAR(100) NOT NULL UNIQUE,
-  party_logo VARCHAR(255) DEFAULT NULL
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL UNIQUE,
+  logo_url VARCHAR(255) DEFAULT NULL
 );
 
 CREATE TABLE questions (
-  question_id INT AUTO_INCREMENT PRIMARY KEY,
+  id INT AUTO_INCREMENT PRIMARY KEY,
   title VARCHAR(255) NOT NULL,
   description TEXT NOT NULL,
-  context TEXT NOT NULL,
-  left_view TEXT NOT NULL,
-  right_view TEXT NOT NULL
+  context TEXT DEFAULT NULL,
+  left_view TEXT DEFAULT NULL,
+  right_view TEXT DEFAULT NULL
 );
 
 CREATE TABLE positions (
-  position_id INT AUTO_INCREMENT PRIMARY KEY,
+  id INT AUTO_INCREMENT PRIMARY KEY,
   question_id INT NOT NULL,
   party_id INT NOT NULL,
-  stance ENUM('eens','oneens','neutraal') NOT NULL,
+  position ENUM('eens','oneens','neutraal') NOT NULL,
   explanation TEXT,
   CONSTRAINT fk_question
-    FOREIGN KEY (question_id) REFERENCES questions(question_id)
+    FOREIGN KEY (question_id) REFERENCES questions(id)
     ON DELETE CASCADE,
   CONSTRAINT fk_party
-    FOREIGN KEY (party_id) REFERENCES parties(party_id)
+    FOREIGN KEY (party_id) REFERENCES parties(id)
     ON DELETE CASCADE
 );
 
 -- -----------------------------
 -- 3. Partijen (14 stuks) invoeren
 -- -----------------------------
-INSERT INTO parties (party_name, party_logo) VALUES
+INSERT INTO parties (name, logo_url) VALUES
 ('PVV', 'https://i.ibb.co/DfR8pS2Y/403880390-713625330344634-198487231923339026-n.jpg'),
 ('VVD', 'https://logo.clearbit.com/vvd.nl'),
 ('NSC', 'https://i.ibb.co/YT2fJZb4/nsc.png'),
