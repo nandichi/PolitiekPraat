@@ -1,9 +1,7 @@
--- -----------------------------
+
 -- 1. (Optioneel) Maak de database zelf aan
 --    Pas de naam "stemwijzerdb" aan als je wilt
--- -----------------------------
-CREATE DATABASE IF NOT EXISTS stemwijzerdb;
-USE stemwijzerdb;
+-- ---------------------------- 
 
 -- -----------------------------
 -- 2. Tabellen aanmaken
