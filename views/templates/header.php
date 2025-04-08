@@ -333,6 +333,9 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
     </script>
     <?php endif; ?>
     
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5550921434025979" crossorigin="anonymous"></script>
+
     <style>
         [x-cloak] { 
             display: none !important; 
