@@ -245,57 +245,57 @@ $news_sources = [
 $latest_news = [
     [
         'orientation' => 'links',
-        'source' => 'Socialisme.nu',
+        'source' => 'Socialisme.nu', 
         'bias' => 'links',
         'publishedAt' => date('Y-m-d H:i:s'), // Vandaag 08:30
-        'title' => 'Hoe de PVV Henk en Ingrid wil kaalplukken',
-        'description' => 'De PVV presenteert zich als de partij van "gewone mensen" zoals Henk en Ingrid. Maar uit analyse van het verkiezingsprogramma blijkt dat de partij juist deze groep het hardst raakt met bezuinigingen op sociale voorzieningen.',
-        'url' => 'https://socialisme.nu/hoe-de-pvv-henk-en-ingrid-wil-kaalplukken/'
+        'title' => 'Palestijn in Gaza: "Israël blijft ons bombarderen"',
+        'description' => 'Een Palestijnse inwoner van Gaza vertelt over de aanhoudende bombardementen door Israël en de humanitaire crisis die hieruit voortvloeit.',
+        'url' => 'https://socialisme.nu/palestijn-in-gaza-israel-blijft-ons-bombarderen/'
     ],
     [
         'orientation' => 'links',
         'source' => 'NRC',
-        'bias' => 'centrum-links',
+        'bias' => 'centrum-links', 
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-2 hours')), // 2 uur geleden
-        'title' => 'Duitsland Blog 23 februari: Laatste ontwikkelingen in de Duitse politiek',
-        'description' => 'Volg de laatste ontwikkelingen in de Duitse politiek, met updates over de coalitievorming, verkiezingen en belangrijke debatten.',
-        'url' => 'https://www.nrc.nl/nieuws/2025/02/23/duitslandblog-23-februari-a4884064'
+        'title' => 'Tweede Kamer wil dat vuurwerkverbod niet al deze jaarwisseling van kracht wordt',
+        'description' => 'Een meerderheid in de Tweede Kamer wil dat het landelijke vuurwerkverbod niet al deze jaarwisseling van kracht wordt. De Kamer vindt dat er meer tijd nodig is voor een goede voorbereiding.',
+        'url' => 'https://www.nrc.nl/nieuws/2025/04/08/tweede-kamer-wil-dat-vuurwerkverbod-niet-al-deze-jaarwisseling-van-kracht-wordt-a4889224'
     ],
     [
         'orientation' => 'links',
         'source' => 'Trouw',
-        'bias' => 'centrum-links',
+        'bias' => 'centrum-links', 
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-4 hours')), // 4 uur geleden
-        'title' => 'Hoe de bromance tussen Trump en Poetin de wereld verandert (en heeft de NAVO haar langste tijd gehad?)',
-        'description' => 'De relatie tussen Donald Trump en Vladimir Poetin lijkt steeds hechter te worden. Wat betekent dit voor de internationale verhoudingen en de toekomst van de NAVO?',
-        'url' => 'https://www.trouw.nl/buitenland/hoe-de-bromance-tussen-trump-en-poetin-de-wereld-verandert-en-heeft-de-navo-haar-langste-tijd-gehad~bc9c11ae/'
+        'title' => 'VS bouwen militaire macht op rond Iran, Trump wil zo deal afdwingen',
+        'description' => 'De Verenigde Staten bouwen hun militaire aanwezigheid op in de regio rond Iran. President Trump hoopt hiermee Iran te dwingen tot nieuwe onderhandelingen.',
+        'url' => 'https://www.trouw.nl/buitenland/vs-bouwen-militaire-macht-op-rond-iran-trump-wil-zo-deal-afdwingen~b5084af8/'
     ],
     [
         'orientation' => 'rechts',
         'source' => 'FVD',
-        'bias' => 'rechts',
+        'bias' => 'rechts', 
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-6 hours')), // 6 uur geleden
-        'title' => 'Vredesplan Trump-Poetin: Wat doet de EU? Ralf Dekker in Tweede Kamerdebat over Oekraïne-conflict',
-        'description' => 'Tijdens het Tweede Kamerdebat over het Oekraïne-conflict besprak Ralf Dekker het vredesplan van Trump en Poetin en de rol van de EU hierin. FVD pleit voor een diplomatieke oplossing.',
-        'url' => 'https://fvd.nl/nieuws/vredesplan-trump-poetin-wat-doet-de-eu-ralf-dekker-in-tweede-kamerdebat-over-oekraine-conflict'
+        'title' => 'Kamervragen Baudet over diversiteitsquota bij overheid: "Dit beleid is juist discriminerend"',
+        'description' => 'Thierry Baudet heeft Kamervragen gesteld over het diversiteitsbeleid bij de overheid. Hij stelt dat quota en voorkeursbeleid juist discriminerend werken.',
+        'url' => 'https://fvd.nl/nieuws/kamervragen-baudet-over-diversiteitsquota-bij-overheid-dit-beleid-is-juist-discriminerend'
     ],
     [
         'orientation' => 'rechts',
         'source' => 'De Dagelijkse Standaard',
-        'bias' => 'rechts',
+        'bias' => 'rechts', 
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-8 hours')), // 8 uur geleden
-        'title' => 'Peilingen: Vertrouwen in kabinet keldert, PVV nog altijd aan kop als grootste partij',
-        'description' => 'Uit recente peilingen blijkt dat het vertrouwen in het kabinet verder is gedaald. De PVV van Geert Wilders blijft de grootste partij in de peilingen, terwijl andere partijen terrein verliezen.',
-        'url' => 'https://www.dagelijksestandaard.nl/politiek/peilingen-vertrouwen-in-kabinet-keldert-pvv-nog-altijd-aan-kop-als-grootste-partij'
+        'title' => 'Knettergek: CDAer Berendsen wil EU-burgers censureren om Trump te pesten',
+        'description' => 'CDA-Europarlementariër Tom Berendsen wil dat de EU maatregelen neemt om de verspreiding van desinformatie door Trump-aanhangers tegen te gaan.',
+        'url' => 'https://www.dagelijksestandaard.nl/politiek/knettergek-cdaer-berendsen-wil-eu-burgers-censureren-om-trump-te-pesten'
     ],
     [
         'orientation' => 'rechts',
         'source' => 'BNR',
-        'bias' => 'centrum-rechts',
+        'bias' => 'centrum-rechts', 
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-10 hours')), // 10 uur geleden
-        'title' => 'Timmermans gaat tijdens debat proberen de coalitie uit elkaar te spelen',
-        'description' => 'GroenLinks-PvdA-leider Frans Timmermans gaat tijdens het debat over de regeringsverklaring proberen de coalitie uit elkaar te spelen. Dat zegt politiek commentator Laurens Boven.',
-        'url' => 'https://www.bnr.nl/nieuws/nieuws-politiek/10567499/timmermans-gaat-tijdens-debat-proberen-de-coalitie-uit-elkaar-te-spelen'
+        'title' => 'De vraag waarom Trump dit bizarre beleid uitvoert, houdt de wereld in een houdgreep',
+        'description' => 'De wereld kijkt met verbazing naar het beleid van Donald Trump. Zijn onvoorspelbare acties en uitspraken zorgen voor onrust en verwarring bij bondgenoten en tegenstanders.',
+        'url' => 'https://www.bnr.nl/nieuws/columns-opinie/10571131/de-vraag-waarom-trump-dit-bizarre-beleid-uitvoert-houdt-de-wereld-in-een-houdgreep'
     ]
 ];
 
