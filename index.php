@@ -66,6 +66,10 @@ $router->add('blogs/delete/([0-9]+)', function($id) {
     $controller = new BlogsController();
     $controller->delete($id);
 });
+$router->add('blogs/updateLikes/([0-9]+)', function($id) {
+    $controller = new BlogsController();
+    $controller->updateLikes($id);
+});
 $router->add('blogs/view/([^/]+)', function($slug) {
     $controller = new BlogsController();
     $controller->view($slug);

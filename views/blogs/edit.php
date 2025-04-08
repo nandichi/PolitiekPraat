@@ -2,8 +2,6 @@
 
 <main class="min-h-screen py-12 relative z-10 bg-gradient-to-br from-gray-50 via-white to-gray-50">
     <!-- Decorative elements -->
-    <div class="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-primary/10 to-transparent"></div>
-    <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-secondary/10 to-transparent"></div>
     
     <div class="container mx-auto px-4">
         <div class="max-w-5xl mx-auto">

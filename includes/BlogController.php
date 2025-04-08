@@ -153,6 +153,17 @@ class BlogController {
         return false;
     }
 
+    public function updateLikesDirectly($id, $likes) {
+        $likes = max(0, (int)$likes); // Voorkom negatieve likes
+        
+        $this->db->query("UPDATE blogs SET likes = :likes WHERE id = :id AND author_id = :author_id");
+        $this->db->bind(':likes', $likes);
+        $this->db->bind(':id', $id);
+        $this->db->bind(':author_id', $_SESSION['user_id']);
+        
+        return $this->db->execute();
+    }
+
     private function generateSlug($title) {
         // Convert to lowercase
         $slug = strtolower($title);

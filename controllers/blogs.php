@@ -306,6 +306,40 @@ class BlogsController {
         exit;
     }
     
+    public function updateLikes($id = null) {
+        // Check if user is logged in
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: ' . URLROOT . '/auth/login');
+            exit;
+        }
+        
+        if (!$id) {
+            header('Location: ' . URLROOT . '/blogs/manage');
+            exit;
+        }
+        
+        // Check if blog exists and belongs to the current user
+        $blog = $this->blogModel->getById($id);
+        
+        if (!$blog || $blog->author_id != $_SESSION['user_id']) {
+            header('Location: ' . URLROOT . '/blogs/manage');
+            exit;
+        }
+        
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (isset($_POST['likes'])) {
+                $likes = (int)$_POST['likes'];
+                if ($this->blogModel->updateLikesDirectly($id, $likes)) {
+                    header('Location: ' . URLROOT . '/blogs/manage');
+                    exit;
+                }
+            }
+        }
+        
+        // Als we hier komen, toon dan het formulier
+        require_once BASE_PATH . '/views/blogs/update_likes.php';
+    }
+    
     public function view($slug) {
         $blog = $this->blogModel->getBySlug($slug);
         
