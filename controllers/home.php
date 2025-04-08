@@ -713,91 +713,126 @@ require_once 'views/templates/header.php';
                     </div>
                 </div>
 
-                <!-- Rechter kolom: Blog slider - Vernieuwde elegante versie -->
+                <!-- Rechter kolom: Blog slider - Premium design 2023 -->
                 <div class="w-full lg:w-5/12 mx-auto">
-                    <div class="hero-blog-card">
-                        <!-- Header met titel - Vernieuwd design -->
-                        <div class="hero-blog-card-header relative flex items-center justify-between py-4 px-6">
-                            <div class="flex items-center">
-                                <div class="flex h-10 w-10 hero-blog-card-icon p-0.5 overflow-hidden mr-3">
-                                    <div class="w-full h-full bg-gray-800/80 rounded-lg flex items-center justify-center">
-                                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"></path>
-                                        </svg>
-                                    </div>
-                                </div>
+                    <div class="hero-blog-card relative backdrop-blur-lg bg-[#0c111a]/90 border border-[#2a3a59]/50 rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.3)] overflow-hidden transition-all duration-300 before:absolute before:inset-0 before:bg-gradient-to-br before:from-primary/10 before:to-secondary/5 before:opacity-50">
+                        
+                        <!-- Moderne header met subtiele glow effect -->
+                        <div class="hero-blog-card-header relative py-3 px-6 border-b border-white/5 z-10 bg-black/30 backdrop-blur-md">
+                            <div class="flex items-center justify-between">
                                 <div>
-                                    <h3 class="text-base font-semibold text-white tracking-wide">Uitgelichte Blogs</h3>
-                                    <p class="text-xs text-white/60 flex items-center">
-                                        <svg class="w-3 h-3 mr-1 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                        </svg>
-                                        Actueel: <?php echo date('d-m-Y'); ?>
+                                    <!-- Minimalistische titel met onderlijn accent -->
+                                    <h3 class="text-base font-medium text-white">
+                                        <span class="relative inline-block pr-1">
+                                            <span class="relative z-10">Uitgelichte</span>
+                                            <span class="absolute left-0 bottom-0.5 w-full h-[2px] bg-primary rounded-full"></span>
+                                        </span>
+                                        Blogs
+                                    </h3>
+                                    
+                                    <!-- Subtiele datum indicator -->
+                                    <p class="text-xs text-white/50 flex items-center mt-1">
+                                        Bijgewerkt: <?php echo date('d-m-Y'); ?>
                                     </p>
                                 </div>
+                                
+                                <!-- Strakke navigatieknoppen -->
+                                <div class="flex space-x-1">
+                                    <button class="blog-nav-prev w-7 h-7 flex items-center justify-center rounded bg-black/40 border border-white/5 hover:bg-primary/20 transition-all duration-300 group">
+                                        <svg class="w-3.5 h-3.5 text-white/60 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7"></path>
+                                        </svg>
+                                    </button>
+                                    <button class="blog-nav-next w-7 h-7 flex items-center justify-center rounded bg-black/40 border border-white/5 hover:bg-primary/20 transition-all duration-300 group">
+                                        <svg class="w-3.5 h-3.5 text-white/60 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"></path>
+                                        </svg>
+                                    </button>
+                                </div>
                             </div>
-                        </div><!-- Ondertitel met dynamische typewriter effect -->
+                        </div>
                         
-                        <!-- Blog swiper container - Verbeterde stijl en layout -->
-                        <div class="hero-blog-swiper h-[360px] sm:h-[400px]">
+                        <!-- Blog swiper container - Geavanceerd glasmorfisme design -->
+                        <div class="hero-blog-swiper h-[400px] sm:h-[450px] z-10 relative">
                             <div class="swiper-wrapper">
                                 <?php foreach($featured_blogs as $blog): ?>
-                                <div class="swiper-slide p-4">
+                                <div class="swiper-slide p-5">
                                     <a href="<?php echo URLROOT; ?>/blogs/view/<?php echo $blog->slug; ?>" 
-                                       class="group block h-full bg-black/20 hover:bg-white/10 rounded-xl p-1 border border-white/5 hover:border-white/20 transition-all duration-300 overflow-hidden">
-                                        <div class="relative h-full rounded-lg overflow-hidden flex flex-col">
-                                            <!-- Afbeelding met overlay -->
-                                            <div class="relative h-40 sm:h-44 rounded-t-lg overflow-hidden">
+                                       class="group block h-full relative">
+                                        <!-- Glasmorfisme kaart ontwerp met subtiele border glow effect -->
+                                        <div class="absolute inset-0 bg-gradient-to-br from-[#1c2434]/90 to-[#0c111a]/95 rounded-xl"></div>
+                                        <div class="absolute inset-0 backdrop-blur-md rounded-xl overflow-hidden transition-all duration-500">
+                                            <!-- Dynamische achtergrond elementen -->
+                                            <div class="absolute -top-32 -right-16 w-64 h-64 bg-primary/10 rounded-full blur-3xl opacity-0 group-hover:opacity-30 transition-all duration-1000"></div>
+                                            <div class="absolute -bottom-32 -left-16 w-64 h-64 bg-secondary/10 rounded-full blur-3xl opacity-0 group-hover:opacity-30 transition-all duration-1000 delay-100"></div>
+                                        </div>
+                                        <!-- Border effect -->
+                                        <div class="absolute inset-0 rounded-xl border border-white/5 group-hover:border-primary/30 transition-colors duration-500 overflow-hidden">
+                                            <div class="absolute inset-0 bg-gradient-to-r from-transparent via-primary/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1500"></div>
+                                        </div>
+                                        
+                                        <!-- Content container met relative positie -->
+                                        <div class="relative h-full rounded-xl overflow-hidden flex flex-col z-10">
+                                            <!-- Afbeelding met dynamische overlays -->
+                                            <div class="relative h-44 sm:h-52 rounded-t-xl overflow-hidden">
                                                 <?php if($blog->image_path): ?>
                                                     <img src="<?php echo URLROOT . '/' . $blog->image_path; ?>" 
                                                          alt="<?php echo htmlspecialchars($blog->title); ?>" 
-                                                         class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out">
-                                                    <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-60"></div>
+                                                         class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000 ease-out">
+                                                    <div class="absolute inset-0 bg-gradient-to-t from-[#0c111a] via-[#0c111a]/50 to-transparent opacity-80 group-hover:opacity-70 transition-opacity duration-500"></div>
                                                 <?php else: ?>
-                                                    <div class="w-full h-full bg-gradient-to-br from-primary/70 to-secondary/70 flex items-center justify-center">
-                                                        <svg class="w-12 h-12 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <div class="w-full h-full bg-gradient-to-br from-primary/40 to-secondary/40 flex items-center justify-center">
+                                                        <svg class="w-16 h-16 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1M15 3v4m0 0v4m0-4h4m-4 0H7m15 5v5a2 2 0 01-2 2h-4"></path>
                                                         </svg>
                                                     </div>
-                                                    <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-60"></div>
+                                                    <div class="absolute inset-0 bg-gradient-to-t from-[#0c111a] via-[#0c111a]/30 to-transparent opacity-80"></div>
                                                 <?php endif; ?>
                                                 
-                                                <!-- Category badge - Eleganter -->
-                                                <div class="absolute top-3 left-3 z-10">
-                                                    <span class="inline-flex items-center px-3 py-1.5 bg-primary text-white text-xs font-medium rounded-full shadow-lg backdrop-blur-sm">
-                                                        <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <!-- Moderne category badge -->
+                                                <div class="absolute top-4 left-4 z-10">
+                                                    <span class="inline-flex items-center px-3 py-1.5 bg-black/60 border border-white/10 text-white text-xs font-medium rounded-full backdrop-blur-md shadow-lg group-hover:bg-gradient-to-r group-hover:from-primary group-hover:to-secondary group-hover:border-white/20 transition-all duration-500">
+                                                        <svg class="w-3 h-3 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                                                         </svg>
                                                         Blog
                                                     </span>
                                                 </div>
                                                 
-                                                <!-- Datum badge - Toegevoegd -->
-                                                <div class="absolute top-3 right-3 z-10">
-                                                    <span class="inline-flex items-center px-2 py-1 bg-black/50 text-white text-xs rounded-md backdrop-blur-sm border border-white/10">
+                                                <!-- Elegante datum badge met neon glow effect -->
+                                                <div class="absolute top-4 right-4 z-10">
+                                                    <span class="inline-flex items-center px-3 py-1.5 bg-black/60 text-white/90 text-xs font-medium rounded-lg backdrop-blur-md border border-white/10 shadow-lg group-hover:border-primary/30 group-hover:text-white group-hover:shadow-[0_0_10px_rgba(var(--primary-rgb),0.3)] transition-all duration-500">
                                                         <?php echo $blog->relative_date; ?>
                                                     </span>
                                                 </div>
                                             </div>
                                                 
-                                            <!-- Content section - Verbeterd -->
-                                            <div class="flex-grow p-4 flex flex-col justify-between bg-gradient-to-b from-gray-800/30 to-gray-900/30 rounded-b-lg">
+                                            <!-- Content section - Premium ontwerp -->
+                                            <div class="flex-grow p-5 flex flex-col justify-between">
                                                 <div>
-                                                    <h4 class="text-base font-semibold text-white mb-2 line-clamp-2 group-hover:text-white transition-colors duration-300">
+                                                    <h4 class="text-base sm:text-lg font-bold text-white mb-3 line-clamp-2 group-hover:text-white transition-colors duration-300">
                                                         <?php echo htmlspecialchars($blog->title); ?>
                                                     </h4>
                                                     
-                                                    <p class="text-xs text-white/70 mb-3 line-clamp-2">
+                                                    <p class="text-sm text-[#a8b9d5] group-hover:text-white/80 mb-4 line-clamp-3 transition-colors duration-300">
                                                         <?php echo htmlspecialchars($blog->summary); ?>
                                                     </p>
                                                 </div>
                                                 
-                                                <div class="flex items-center justify-between mt-auto pt-3 border-t border-white/10">
-                                                    <span class="inline-flex items-center text-xs font-medium text-white group-hover:text-white transition-colors duration-300">
-                                                        Lees meer
-                                                        <svg class="w-3.5 h-3.5 ml-1.5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <div class="flex items-center justify-between mt-auto pt-4 border-t border-white/10 group-hover:border-primary/20 transition-colors duration-500">
+                                                    <span class="inline-flex items-center text-sm font-medium text-white/80 group-hover:text-white transition-colors duration-300">
+                                                        Lees verder
+                                                        <svg class="w-4 h-4 ml-2 transform group-hover:translate-x-1.5 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                                                         </svg>
+                                                    </span>
+                                                    
+                                                    <!-- Interactieve leestijd indicator -->
+                                                    <span class="text-xs text-white/50 group-hover:text-white/70 flex items-center transition-colors duration-300">
+                                                        <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                                        </svg>
+                                                        5 min
                                                     </span>
                                                 </div>
                                             </div>
@@ -807,33 +842,55 @@ require_once 'views/templates/header.php';
                                 <?php endforeach; ?>
                             </div>
                             
-                        <!-- Navigatie knoppen voor Swiper -->
-                        <div class="absolute top-1/2 -left-12 transform -translate-y-1/2 z-10 hero-swiper-button-prev opacity-0 lg:opacity-100 pointer-events-none lg:pointer-events-auto">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                            </svg>
-                        </div>
-                        <div class="absolute top-1/2 -right-12 transform -translate-y-1/2 z-10 hero-swiper-button-next opacity-0 lg:opacity-100 pointer-events-none lg:pointer-events-auto">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                            </svg>
-                        </div>
-                        
-                        <!-- Footer met paginering en progressie -->
-                        <div class="px-6 py-4 hero-blog-card-header">
-                            <div class="flex items-center justify-between">
-                                <div class="hero-swiper-progress-bar">
-                                    <div class="progress" id="hero-swiper-progressbar"></div>
-                                </div>
-                                
-                                <a href="<?php echo URLROOT; ?>/blogs" class="text-xs text-white/70 hover:text-white flex items-center transition-colors duration-300 ml-6">
-                                    Alle blogs
-                                    <svg class="w-3.5 h-3.5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                                    </svg>
-                                </a>
+                            <!-- Modern swiper paginering -->
+                            <div class="absolute bottom-4 left-0 right-0 z-20 flex justify-center">
+                                <div class="swiper-pagination blog-pagination"></div>
                             </div>
                         </div>
+                        
+                        <!-- Ambient glow effecten voor de hele kaart -->
+                        <div class="absolute top-1/4 -left-1/2 w-full h-1/2 bg-primary/5 rounded-full blur-3xl"></div>
+                        <div class="absolute top-1/2 -right-1/2 w-full h-1/2 bg-secondary/5 rounded-full blur-3xl"></div>
+                        
+                        <!-- Verbeterd Swiper script -->
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                const blogSwiper = new Swiper('.hero-blog-swiper', {
+                                    slidesPerView: 1,
+                                    spaceBetween: 30,
+                                    speed: 800,
+                                    loop: true,
+                                    autoplay: {
+                                        delay: 6000,
+                                        disableOnInteraction: false,
+                                    },
+                                    effect: 'creative',
+                                    creativeEffect: {
+                                        prev: {
+                                            translate: [0, 0, -400],
+                                            opacity: 0
+                                        },
+                                        next: {
+                                            translate: [0, 0, -400],
+                                            opacity: 0
+                                        },
+                                    },
+                                    pagination: {
+                                        el: '.blog-pagination',
+                                        clickable: true,
+                                        bulletClass: 'w-2 h-2 mx-1 rounded-full bg-white/20 transition-all duration-300 cursor-pointer hover:bg-primary/60',
+                                        bulletActiveClass: 'w-6 bg-gradient-to-r from-primary to-secondary',
+                                        renderBullet: function (index, className) {
+                                            return '<span class="' + className + '"></span>';
+                                        },
+                                    },
+                                    navigation: {
+                                        nextEl: '.blog-nav-next',
+                                        prevEl: '.blog-nav-prev',
+                                    }
+                                });
+                            });
+                        </script>
                     </div>
                 </div>
             </div>
