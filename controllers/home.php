@@ -396,34 +396,263 @@ require_once 'views/templates/header.php';
         transform: scale(1.1);
         box-shadow: 0 0 15px rgba(26, 86, 219, 0.4);
     }
+
+    /* Verbeterde hero styling */
+    .hero-section {
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(135deg, #121928 0%, #1a56db 100%);
+        padding: 4rem 0 6rem;
+        isolation: isolate;
+    }
+    
+    /* Moderne decoratieve elementen */
+    .hero-pattern {
+        position: absolute;
+        inset: 0;
+        opacity: 0.07;
+        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='white' fill-opacity='1' fill-rule='evenodd'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
+    }
+    
+    .hero-accent {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #1a56db, #7e3af2, #1a56db);
+        animation: gradientShift 8s ease infinite;
+        background-size: 200% 200%;
+    }
+
+    /* Moderne floating shapes */
+    .hero-shape {
+        position: absolute;
+        border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+        filter: blur(40px);
+        z-index: 0;
+        animation: shapeFloat 15s ease-in-out infinite alternate;
+        opacity: 0.12;
+    }
+    
+    .hero-shape-1 {
+        background: #1a56db;
+        width: 300px;
+        height: 300px;
+        top: -100px;
+        right: 5%;
+    }
+    
+    .hero-shape-2 {
+        background: #7e3af2;
+        width: 200px;
+        height: 200px;
+        bottom: -50px;
+        left: 10%;
+        animation-delay: 2s;
+    }
+    
+    .hero-shape-3 {
+        background: #1a56db;
+        width: 150px;
+        height: 150px;
+        bottom: 20%;
+        right: 15%;
+        animation-delay: 4s;
+    }
+
+    /* Blog slider styling */
+    .hero-blog-card {
+        backdrop-filter: blur(10px);
+        background: rgba(17, 24, 39, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .hero-blog-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.3);
+    }
+    
+    .hero-blog-card-header {
+        background: rgba(255, 255, 255, 0.05);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+        backdrop-filter: blur(5px);
+    }
+    
+    .hero-blog-card-icon {
+        background: linear-gradient(135deg, rgba(26, 86, 219, 0.2), rgba(126, 58, 242, 0.2));
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Typewriter text effect */
+    #typewriter {
+        display: inline-block;
+        transition: opacity 0.5s ease;
+        position: relative;
+        padding-right: 0.1em;
+    }
+    
+    #typewriter::after {
+        content: '';
+        position: absolute;
+        right: -0.1em;
+        animation: blink 1s step-end infinite;
+    }
+    
+    /* Swiper controls styling */
+    .hero-swiper-pagination {
+        display: flex;
+        gap: 0.25rem;
+    }
+    
+    .hero-swiper-pagination .swiper-pagination-bullet {
+        width: 2rem;
+        height: 0.25rem;
+        border-radius: 1rem;
+        background: rgba(255, 255, 255, 0.3);
+        opacity: 1;
+        transition: all 0.3s ease;
+    }
+    
+    .hero-swiper-pagination .swiper-pagination-bullet-active {
+        background: linear-gradient(90deg, #1a56db, #7e3af2);
+        width: 3rem;
+    }
+    
+    .hero-swiper-button-next,
+    .hero-swiper-button-prev {
+        width: 3rem;
+        height: 3rem;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 50%;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    .hero-swiper-button-next:hover,
+    .hero-swiper-button-prev:hover {
+        background: rgba(26, 86, 219, 0.3);
+        transform: scale(1.05);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+    
+    .hero-swiper-progress-bar {
+        height: 4px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 2px;
+        overflow: hidden;
+        width: 100%;
+    }
+    
+    .hero-swiper-progress-bar .progress {
+        height: 100%;
+        background: linear-gradient(90deg, #1a56db, #7e3af2);
+        width: 0;
+        transition: width 0.3s ease;
+    }
+    
+    /* CTA button styling */
+    .hero-cta-button {
+        background: white;
+        color: #1a56db;
+        border-radius: 0.75rem;
+        font-weight: 600;
+        padding: 0.875rem 1.75rem;
+        display: inline-flex;
+        align-items: center;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+    
+    .hero-cta-button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 0;
+        height: 100%;
+        background: linear-gradient(90deg, #1a56db, #7e3af2);
+        transition: width 0.3s ease;
+        z-index: -1;
+    }
+    
+    .hero-cta-button:hover {
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+    
+    .hero-cta-button:hover::before {
+        width: 100%;
+    }
+    
+    .hero-cta-button:hover svg {
+        transform: translateX(4px);
+        color: white;
+    }
+    
+    .hero-cta-button svg {
+        transition: transform 0.3s ease, color 0.3s ease;
+    }
+    
+    /* Animations */
+    @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    @keyframes shapeFloat {
+        0% { transform: translateY(0) rotate(0); }
+        50% { transform: translateY(-20px) rotate(5deg); }
+        100% { transform: translateY(0) rotate(0); }
+    }
+    
+    @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+    }
 </style>
 
 <main class="bg-gray-50 overflow-x-hidden">
-    <!-- Hero Section - Volledig vernieuwde versie -->
-    <section class="relative bg-gradient-to-br from-gray-900 to-primary pt-12 pb-24 overflow-hidden">
-        <!-- Subtiele achtergrond patronen -->
-        <div class="absolute inset-0 opacity-10">
-            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"30\" height=\"30\" viewBox=\"0 0 30 30\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cpath d=\"M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z\" fill=\"rgba(255,255,255,0.05)\"%3E%3C/path%3E%3C/svg%3E')]"></div>
-        </div>
-        
-        <!-- Decoratieve accent lijn bovenaan -->
-        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-secondary via-primary to-secondary"></div>
+    <!-- Hero Section - Volledig vernieuwde moderne versie -->
+    <section class="hero-section">
+        <!-- Decoratieve elementen -->
+        <div class="hero-pattern"></div>
+        <div class="hero-accent"></div>
+        <div class="hero-shape hero-shape-1"></div>
+        <div class="hero-shape hero-shape-2"></div>
+        <div class="hero-shape hero-shape-3"></div>
         
         <div class="container mx-auto px-4 sm:px-6 relative z-10">
-            <div class="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
+            <div class="flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
                 <!-- Linker kolom: Welkomstekst en CTA -->
                 <div class="w-full lg:w-1/2 text-white mb-10 lg:mb-0">
                     <div class="relative">
                         <!-- Hoofdtitel met moderne styling -->
-                        <h1 class="text-4xl sm:text-5xl lg:text-5xl font-bold mb-6 tracking-tight">
-                            PolitiekPraat
+                        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 tracking-tight leading-tight">
+                            <span class="bg-clip-text text-transparent bg-gradient-to-r from-white to-white/80">PolitiekPraat</span>
                         </h1>
                         
                         <!-- Ondertitel met dynamische typewriter effect -->
-                        <div class="text-lg sm:text-xl text-white/80 mb-8 max-w-lg leading-relaxed">
+                        <div class="text-lg sm:text-xl text-white/90 mb-8 max-w-lg leading-relaxed">
                             <span id="typewriter" class="inline-block"></span>
-            </div>
-            
+                        </div>
+                        
                         <script>
                             document.addEventListener('DOMContentLoaded', function() {
                                 const typewriterElement = document.getElementById('typewriter');
@@ -471,29 +700,24 @@ require_once 'views/templates/header.php';
                             });
                         </script>
                         
-                        <!-- Call-to-action knop -->
-                            <a href="<?php echo URLROOT; ?>/blogs" 
-                           class="inline-flex items-center px-6 py-3 bg-white text-primary rounded-lg font-medium shadow-md hover:shadow-lg transition-all duration-300 group">
-                                <span>Ontdek onze blogs</span>
-                            <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-                                </svg>
-                            </a>
-                        </div>
+                        <!-- Call-to-action knop met verbeterde styling -->
+                        <a href="<?php echo URLROOT; ?>/blogs" class="hero-cta-button">
+                            <span>Ontdek onze blogs</span>
+                            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                            </svg>
+                        </a>
                     </div>
+                </div>
 
                 <!-- Rechter kolom: Blog slider - Vernieuwde elegante versie -->
                 <div class="w-full lg:w-5/12 mx-auto">
-                    <div class="relative bg-gradient-to-br from-gray-900/70 to-gray-800/70 backdrop-blur-xl rounded-2xl shadow-2xl overflow-hidden border border-white/10">
-                        <!-- Decoratieve elementen -->
-                        <div class="absolute top-0 right-0 w-40 h-40 bg-primary/20 rounded-full blur-3xl -translate-y-20 translate-x-20"></div>
-                        <div class="absolute bottom-0 left-0 w-40 h-40 bg-secondary/20 rounded-full blur-3xl translate-y-20 -translate-x-20"></div>
-                        
+                    <div class="hero-blog-card">
                         <!-- Header met titel - Vernieuwd design -->
-                        <div class="relative flex items-center justify-between py-4 px-6 border-b border-white/10 bg-white/5">
+                        <div class="hero-blog-card-header relative flex items-center justify-between py-4 px-6">
                             <div class="flex items-center">
-                                <div class="flex h-10 w-10 rounded-xl bg-gradient-to-br from-primary to-secondary p-0.5 overflow-hidden shadow-lg mr-3">
-                                    <div class="w-full h-full bg-gray-900 rounded-lg flex items-center justify-center">
+                                <div class="flex h-10 w-10 hero-blog-card-icon p-0.5 overflow-hidden mr-3">
+                                    <div class="w-full h-full bg-gray-800/80 rounded-lg flex items-center justify-center">
                                         <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"></path>
                                         </svg>
@@ -509,7 +733,7 @@ require_once 'views/templates/header.php';
                                     </p>
                                 </div>
                             </div>
-                        </div>
+                        </div><!-- Ondertitel met dynamische typewriter effect -->
                         
                         <!-- Blog swiper container - Verbeterde stijl en layout -->
                         <div class="hero-blog-swiper h-[360px] sm:h-[400px]">
@@ -517,7 +741,7 @@ require_once 'views/templates/header.php';
                                 <?php foreach($featured_blogs as $blog): ?>
                                 <div class="swiper-slide p-4">
                                     <a href="<?php echo URLROOT; ?>/blogs/view/<?php echo $blog->slug; ?>" 
-                                       class="group block h-full bg-white/5 hover:bg-white/10 rounded-xl p-1 border border-white/5 hover:border-white/20 transition-all duration-300 overflow-hidden">
+                                       class="group block h-full bg-black/20 hover:bg-white/10 rounded-xl p-1 border border-white/5 hover:border-white/20 transition-all duration-300 overflow-hidden">
                                         <div class="relative h-full rounded-lg overflow-hidden flex flex-col">
                                             <!-- Afbeelding met overlay -->
                                             <div class="relative h-40 sm:h-44 rounded-t-lg overflow-hidden">
@@ -587,39 +811,75 @@ require_once 'views/templates/header.php';
                                 <?php endforeach; ?>
                             </div>
                             
-
+                        <!-- Navigatie knoppen voor Swiper -->
+                        <div class="absolute top-1/2 -left-12 transform -translate-y-1/2 z-10 hero-swiper-button-prev opacity-0 lg:opacity-100 pointer-events-none lg:pointer-events-auto">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                            </svg>
+                        </div>
+                        <div class="absolute top-1/2 -right-12 transform -translate-y-1/2 z-10 hero-swiper-button-next opacity-0 lg:opacity-100 pointer-events-none lg:pointer-events-auto">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </div>
                         
                         <!-- Footer met paginering en progressie -->
-                        <div class="px-6 py-3 bg-white/5 border-t border-white/10">
+                        <div class="px-6 py-4 hero-blog-card-header">
                             <div class="flex items-center justify-between">
-                                <div class="hero-swiper-pagination flex space-x-1"></div>
+                                <div class="hero-swiper-progress-bar">
+                                    <div class="progress" id="hero-swiper-progressbar"></div>
+                                </div>
                                 
-                                <a href="<?php echo URLROOT; ?>/blogs" class="text-xs text-white/70 hover:text-white flex items-center transition-colors duration-300">
+                                <a href="<?php echo URLROOT; ?>/blogs" class="text-xs text-white/70 hover:text-white flex items-center transition-colors duration-300 ml-6">
                                     Alle blogs
-                                    <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-3.5 h-3.5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                                     </svg>
                                 </a>
-                            </div>
-                            
-                            <!-- Progress bar -->
-                            <div class="h-1 w-full bg-white/5 rounded-full overflow-hidden mt-2">
-                                <div class="swiper-progress-bar h-full bg-gradient-to-r from-primary to-secondary rounded-full" style="width: 0%"></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
     </section>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hero Blog Swiper
+            const heroBlogSwiper = new Swiper('.hero-blog-swiper', {
+                slidesPerView: 1,
+                spaceBetween: 20,
+                grabCursor: true,
+                loop: true,
+                autoplay: {
+                    delay: 3000,
+                    disableOnInteraction: false,
+                },
+                effect: 'fade',
+                fadeEffect: {
+                    crossFade: true
+                },
+                navigation: {
+                    nextEl: '.hero-swiper-button-next',
+                    prevEl: '.hero-swiper-button-prev',
+                },
+                on: {
+                    slideChange: function (swiper) {
+                        // Update progress bar
+                        const progress = ((swiper.realIndex + 1) / swiper.slides.length) * 100;
+                        document.getElementById('hero-swiper-progressbar').style.width = progress + '%';
+                    },
+                    init: function(swiper) {
+                        // Set initial progress
+                        document.getElementById('hero-swiper-progressbar').style.width = (1 / swiper.slides.length) * 100 + '%';
+                    }
+                }
+            });
+        });
+    </script>
 
-    <!-- Wave Separator -->
-    <div class="relative -mt-24 bg-gradient-to-br from-gray-900 to-primary">
-        <svg class="w-full h-24 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
-            <path fill="#ffffff" fill-opacity="1" d="M0,64L48,80C96,96,192,128,288,128C384,128,480,96,576,80C672,64,768,64,864,90.7C960,117,1056,171,1152,186.7C1248,203,1344,181,1392,170.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
-        </svg>
-    </div>
-
-    <!-- Actuele Peilingen Section -->
+    <!-- Peiling Section met opvallend design -->
     <section class="py-16 bg-white relative overflow-hidden -mt-1">
         <!-- Decoratieve elementen -->
         <div class="absolute -top-40 -right-40 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
@@ -914,56 +1174,6 @@ require_once 'views/templates/header.php';
             </div>
         </div>
     </section>
-
-    <script>
-        // Hero blog swiper initialisatie
-        document.addEventListener('DOMContentLoaded', function() {
-            const heroSwiper = new Swiper('.hero-blog-swiper', {
-                slidesPerView: 1,
-                spaceBetween: 0,
-                grabCursor: true,
-                autoplay: {
-                    delay: 5000,
-                    disableOnInteraction: false,
-                },
-                speed: 800,
-                loop: true,
-                effect: 'slide',
-                navigation: {
-                    nextEl: '.hero-swiper-button-next',
-                    prevEl: '.hero-swiper-button-prev',
-                },
-                pagination: {
-                    el: '.hero-swiper-pagination',
-                    clickable: true,
-                    bulletClass: 'w-1.5 h-1.5 mx-1 rounded-full bg-white/30 transition-all duration-300 cursor-pointer',
-                    bulletActiveClass: 'w-4 bg-[#c41e3a]',
-                    renderBullet: function (index, className) {
-                        return '<span class="' + className + '"></span>';
-                    },
-                },
-                on: {
-                    init: function() {
-                        updateProgressBar(this);
-                    },
-                    slideChange: function() {
-                        updateProgressBar(this);
-                    }
-                }
-            });
-            
-            // Update progress bar functie
-            function updateProgressBar(swiper) {
-                const progressBar = document.querySelector('.swiper-progress-bar');
-                if (progressBar) {
-                    const totalSlides = swiper.slides.length - 2; // Loop mode dupliceert 2 slides
-                    const currentIndex = swiper.realIndex;
-                    const percentage = (currentIndex / (totalSlides - 1)) * 100;
-                    progressBar.style.width = percentage + '%';
-                }
-            }
-        });
-    </script>
 
     <!-- Uitgelichte Nieuwste Blog Section -->
     <section class="py-16 bg-white relative overflow-hidden">
