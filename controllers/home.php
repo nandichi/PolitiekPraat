@@ -1632,24 +1632,33 @@ require_once 'views/templates/header.php';
     <section class="py-16 bg-gradient-to-b from-gray-50 to-white">
         <div class="container mx-auto px-4">
             <!-- Laatste Blogs -->
-            <div class="mb-20">
-                <div class="text-center mb-16 relative" data-aos="fade-up" data-aos-once="true">
-                    <span class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-9xl text-gray-100 font-bold opacity-50 select-none">BLOGS</span>
-                    <h2 class="text-4xl font-bold text-gray-900 mb-4 relative">
+            <div class="mb-20 relative">
+                <!-- Decoratieve elementen -->
+                <div class="absolute -top-20 left-0 w-120 h-120 bg-primary/10 rounded-full blur-3xl"></div>
+                <div class="absolute bottom-0 right-0 w-120 h-120 bg-secondary/10 rounded-full blur-3xl"></div>
+                <div class="absolute top-1/3 left-1/4 w-64 h-64 bg-green-400/5 rounded-full blur-2xl"></div>
+                <div class="absolute bottom-1/2 right-1/3 w-48 h-48 bg-yellow-400/5 rounded-full blur-xl"></div>
+
+                <div class="text-center mb-20 relative" data-aos="fade-up" data-aos-once="true">
+                    <span class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-9xl text-gray-100 font-bold opacity-60 select-none">BLOGS</span>
+                    <h2 class="text-5xl font-extrabold text-gray-900 mb-5 relative">
                         <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Laatste Blogs</span>
                     </h2>
-                    <div class="w-24 h-1 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full mb-4"></div>
-                    <p class="text-xl text-gray-600 max-w-2xl mx-auto">Ontdek de meest recente politieke analyses en inzichten van onze community</p>
+                    <div class="w-32 h-1.5 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full mb-6"></div>
+                    <p class="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">Ontdek de meest recente politieke analyses en inzichten van onze community</p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                     <?php foreach($latest_blogs as $index => $blog): ?>
-                        <article class="bg-white rounded-2xl shadow-lg overflow-hidden group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 relative" 
+                        <article class="group relative bg-white rounded-2xl shadow-lg overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl border border-gray-100" 
                                 data-aos="fade-up" 
                                 data-aos-delay="<?php echo $index * 100; ?>"
                                 data-aos-duration="800"
                                 data-aos-easing="ease-out-cubic"
                                 data-aos-once="true">
+                            <!-- Decoratieve hover accent lijn -->
+                            <div class="absolute inset-0 top-auto h-1 bg-gradient-to-r from-primary to-secondary transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 z-10"></div>
+                            
                             <?php 
                             // Check of de blog minder dan 12 uur oud is
                             $published_time = strtotime($blog->published_at);
@@ -1659,7 +1668,7 @@ require_once 'views/templates/header.php';
                             ?>
                                 <!-- Nieuw Badge voor recent geplaatste blogs -->
                                 <div class="absolute top-4 right-4 z-20">
-                                    <div class="inline-flex items-center px-3 py-1 rounded-full bg-gradient-to-r from-primary to-secondary text-white text-sm font-semibold shadow-lg">
+                                    <div class="inline-flex items-center px-3 py-1.5 rounded-full bg-gradient-to-r from-primary to-secondary text-white text-sm font-bold shadow-lg">
                                         <span class="relative flex h-2 w-2 mr-2">
                                             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
                                             <span class="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
@@ -1673,63 +1682,84 @@ require_once 'views/templates/header.php';
 
                             <a href="<?php echo URLROOT . '/blogs/view/' . $blog->slug; ?>" class="block relative">
                                 <?php if ($blog->image_path): ?>
-                                    <div class="relative h-48 overflow-hidden">
+                                    <div class="relative h-52 overflow-hidden">
                                         <img src="<?php echo URLROOT . '/' . $blog->image_path; ?>" 
                                              alt="<?php echo htmlspecialchars($blog->title); ?>"
-                                             class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
-                                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                             class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110">
+                                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                    </div>
+                                <?php else: ?>
+                                    <!-- Fallback voor blogs zonder afbeelding -->
+                                    <div class="h-40 bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
+                                        <svg class="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                                        </svg>
                                     </div>
                                 <?php endif; ?>
 
-                                <div class="p-6">
-                                    <div class="flex items-center text-sm text-gray-500 mb-4">
-                                        <span class="flex items-center">
-                                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <circle cx="12" cy="7" r="4" stroke-width="2"/>
-                                                <path stroke-width="2" d="M5 21v-2a7 7 0 0114 0v2"/>
-                                            </svg>
-                                            <?php echo htmlspecialchars($blog->author_name); ?>
-                                        </span>
-                                        <span class="mx-3">-</span>
-                                        <span class="flex items-center">
-                                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <div class="p-7">
+                                    <!-- Auteur en datum info met verbeterd design -->
+                                    <div class="flex items-center justify-between mb-5">
+                                        <div class="flex items-center space-x-3">
+                                            <div class="w-10 h-10 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full flex items-center justify-center">
+                                                <span class="text-primary font-bold"><?php echo substr(htmlspecialchars($blog->author_name), 0, 1); ?></span>
+                                            </div>
+                                            <span class="text-sm font-bold text-gray-800"><?php echo htmlspecialchars($blog->author_name); ?></span>
+                                        </div>
+                                        
+                                        <div class="text-xs bg-gray-100 text-gray-600 px-3 py-1.5 rounded-full font-medium flex items-center">
+                                            <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                             </svg>
                                             <?php echo getRelativeTime($blog->published_at); ?>
-                                        </span>
+                                        </div>
                                     </div>
 
-                                    <h2 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary transition-colors">
-                                        <a href="<?php echo URLROOT . '/blogs/view/' . $blog->slug; ?>">
-                                            <?php echo htmlspecialchars($blog->title); ?>
-                                        </a>
+                                    <h2 class="text-2xl font-bold text-gray-900 mb-4 group-hover:text-primary transition-colors duration-300 line-clamp-2">
+                                        <?php echo htmlspecialchars($blog->title); ?>
                                     </h2>
 
-                                    <p class="text-gray-600 mb-4 line-clamp-3">
+                                    <p class="text-gray-600 mb-6 line-clamp-3 leading-relaxed">
                                         <?php echo htmlspecialchars($blog->summary); ?>
                                     </p>
 
-                                    <a href="<?php echo URLROOT . '/blogs/view/' . $blog->slug; ?>" 
-                                       class="inline-flex items-center text-primary font-medium group-hover:text-secondary transition-colors">
-                                        <span>Lees meer</span>
-                                        <svg class="w-5 h-5 ml-2 transform transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                                        </svg>
-                                    </a>
+                                    <!-- Actieknop met verbeterd ontwerp -->
+                                    <div class="flex items-center justify-between pt-2">
+                                        <div class="inline-flex items-center px-4 py-2 bg-primary/5 hover:bg-primary/10 text-primary font-semibold rounded-lg transition-colors duration-300">
+                                            <span>Lees meer</span>
+                                            <svg class="w-4 h-4 ml-2 transform transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                            </svg>
+                                        </div>
+                                        
+                                        <!-- Leestijd indicatie -->
+                                        <div class="flex items-center text-gray-400 text-sm">
+                                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                            </svg>
+                                            <span>5 min leestijd</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </a>
+                            
+                            <!-- Decoratieve hoekelementen -->
+                            <div class="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-primary/5 to-secondary/5 transform rotate-45 translate-x-10 -translate-y-10 group-hover:translate-x-6 group-hover:-translate-y-6 transition-transform duration-700"></div>
                         </article>
                     <?php endforeach; ?>
                 </div>
 
-                <!-- CTA Button -->
-                <div class="text-center mt-16" data-aos="zoom-in" data-aos-delay="300" data-aos-once="true">
+                <!-- CTA Button met verbeterde styling -->
+                <div class="text-center mt-20" data-aos="zoom-in" data-aos-delay="300" data-aos-once="true">
                     <a href="<?php echo URLROOT; ?>/blogs" 
-                       class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-xl hover:opacity-90 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl">
-                        <span>Bekijk alle blogs</span>
-                        <svg class="w-5 h-5 ml-2 animate-bounce-x" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                        </svg>
+                       class="inline-flex items-center px-10 py-4 bg-gradient-to-r from-primary to-secondary text-white font-bold rounded-xl hover:opacity-95 transition-all transform hover:scale-105 shadow-xl hover:shadow-2xl group relative overflow-hidden">
+                        <span class="relative z-10 flex items-center">
+                            <span class="mr-1">Bekijk alle blogs</span>
+                            <svg class="w-5 h-5 ml-2 transform transition-transform duration-500 group-hover:translate-x-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                            <span class="absolute inset-0 -z-10 bg-white opacity-0 group-hover:opacity-20 rounded-xl transition-opacity"></span>
+                        </span>
                     </a>
                 </div>
             </div>
