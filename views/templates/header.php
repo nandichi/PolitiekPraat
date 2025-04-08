@@ -768,29 +768,51 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
             <div class="flex justify-between items-center h-16 md:h-20">
                 <!-- Logo - Modern & Elegant -->
                 <a href="<?php echo URLROOT; ?>" class="flex items-center space-x-3 group relative z-10">
-                    <div class="flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-xl bg-white/10 
+                    <div class="relative overflow-hidden flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-xl 
+                                bg-gradient-to-br from-primary to-primary/80 
                                 backdrop-blur-sm shadow-lg transition-all duration-500 
-                                group-hover:bg-white/15 group-hover:scale-105 
-                                group-hover:shadow-secondary/10 group-hover:shadow-lg">
+                                group-hover:from-primary/90 group-hover:to-secondary/80 group-hover:scale-105 
+                                group-hover:shadow-secondary/20 group-hover:shadow-xl border border-white/10 
+                                group-hover:border-white/20">
                         
-                        <!-- PolitiekPraat Logo -->
+                        <!-- PolitiekPraat Logo met verbeterde effecten -->
                         <img src="<?php echo URLROOT; ?>/images/favicon-512x512.png" 
                              alt="PolitiekPraat Logo" 
-                             class="w-8 h-8 md:w-9 md:h-9 object-contain transition-all duration-500">
+                             class="w-8 h-8 md:w-9 md:h-9 object-contain transition-all duration-500
+                                    group-hover:scale-110 group-hover:rotate-3 group-hover:brightness-110">
                         
-                        <!-- Subtle glow effect -->
-                        <div class="absolute inset-0 rounded-xl bg-white/5 opacity-0 blur-sm group-hover:opacity-100 
-                                    transition-opacity duration-500"></div>
+                        <!-- Dynamic glow effect -->
+                        <div class="absolute inset-0 rounded-xl bg-white/10 opacity-0 blur-md group-hover:opacity-80 
+                                    transition-all duration-500 animate-pulse-slow"></div>
+                        
+                        <!-- Animated particles for decoration -->
+                        <div class="absolute h-1 w-1 rounded-full bg-white/40 top-1 left-1 opacity-0 
+                                    group-hover:opacity-100 group-hover:animate-ping"></div>
+                        <div class="absolute h-1 w-1 rounded-full bg-white/40 bottom-2 right-1 opacity-0 
+                                    group-hover:opacity-100 group-hover:animate-ping" style="animation-delay: 0.5s"></div>
                     </div>
                     
-                    <!-- Text with animated underline -->
+                    <!-- Text with enhanced styling and animations -->
                     <div class="flex flex-col">
-                        <span class="text-lg md:text-xl font-bold text-white tracking-tight relative overflow-hidden">
-                            <?php echo SITENAME; ?>
-                            <span class="absolute bottom-0 left-0 h-[2px] w-0 bg-secondary 
-                                      group-hover:w-full transition-all duration-500"></span>
+                        <div class="relative overflow-hidden">
+                            <span class="text-lg md:text-xl font-bold text-white tracking-tight relative 
+                                         transition-all duration-500 group-hover:text-transparent 
+                                         group-hover:bg-clip-text group-hover:bg-gradient-to-r 
+                                         group-hover:from-white group-hover:to-white/80">
+                                <?php echo SITENAME; ?>
+                            </span>
+                            <!-- Enhanced underline animation -->
+                            <span class="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-secondary via-secondary/80 to-white/70 
+                                        group-hover:w-full transition-all duration-700 ease-out"></span>
+                        </div>
+                        <!-- Tagline with improved styling -->
+                        <span class="text-xs md:text-sm text-white/70 font-medium transition-all duration-500 
+                                    group-hover:text-white/90 italic">
+                            <span class="hidden md:inline">Samen</span> bouwen aan democratie
+                            <!-- Subtle dot indicator -->
+                            <span class="inline-block w-1.5 h-1.5 ml-1 bg-secondary rounded-full 
+                                        animate-pulse-slow"></span>
                         </span>
-                        <span class="text-xs md:text-sm text-white/80 font-medium">Samen bouwen aan democratie</span>
                     </div>
                 </a>
 

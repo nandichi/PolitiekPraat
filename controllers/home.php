@@ -793,15 +793,6 @@ require_once 'views/templates/header.php';
                                                 </div>
                                                 
                                                 <div class="flex items-center justify-between mt-auto pt-3 border-t border-white/10">
-                                                    <div class="flex items-center">
-                                                        <div class="w-10 h-10 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full flex items-center justify-center overflow-hidden">
-                                                            <img src="https://media.licdn.com/dms/image/v2/D4E03AQH41qDaDSt19A/profile-displayphoto-shrink_800_800/B4EZWO8j20HgAg-/0/1741859995715?e=1749081600&v=beta&t=RsXjUDf5AAjzVEK7lMDS2InjE18FehpMDQB7JxICP64" 
-                                                                 alt="<?php echo htmlspecialchars($blog->author_name); ?>"
-                                                                 class="w-full h-full object-cover">
-                                                            </div>
-                                                        <span class="text-sm font-bold text-gray-800"><?php echo htmlspecialchars($blog->author_name); ?></span>
-                                                    </div>
-                                                    
                                                     <span class="inline-flex items-center text-xs font-medium text-white group-hover:text-white transition-colors duration-300">
                                                         Lees meer
                                                         <svg class="w-3.5 h-3.5 ml-1.5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
