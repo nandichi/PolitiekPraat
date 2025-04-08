@@ -1173,10 +1173,6 @@ require_once 'views/templates/header.php';
 
     <!-- Uitgelichte Nieuwste Blog Section -->
     <section class="py-16 bg-white relative overflow-hidden">
-        <!-- Decorative elements -->
-        <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-gray-50 via-white to-gray-50"></div>
-        <div class="absolute top-40 right-20 w-80 h-80 bg-primary/5 rounded-full blur-3xl"></div>
-        <div class="absolute bottom-10 left-20 w-72 h-72 bg-secondary/5 rounded-full blur-3xl"></div>
     <!-- Partijen Highlight Section -->
     <section class="py-16 bg-gradient-to-br from-blue-50 to-white relative overflow-hidden">
         <!-- Decorative elements -->
