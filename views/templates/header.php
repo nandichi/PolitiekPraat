@@ -750,55 +750,6 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
     </div>
     
     <div class="flex-grow relative z-10">
-        <!-- Beta Notification Popup - Geoptimaliseerd -->
-        <div x-data="{ showBetaNotice: localStorage.getItem('betaNoticeShown') === null }"
-             x-show="showBetaNotice"
-             x-cloak
-             class="fixed inset-0 z-50 overflow-y-auto bg-gray-500/75 backdrop-blur-sm"
-             aria-labelledby="modal-title"
-             role="dialog"
-             aria-modal="true">
-            <div class="min-h-screen px-4 text-center flex items-center justify-center">
-                <div x-show="showBetaNotice" 
-                     x-transition:enter="transition ease-out duration-300" 
-                     x-transition:enter-start="transform scale-95 opacity-0" 
-                     x-transition:enter-end="transform scale-100 opacity-100"
-                     x-transition:leave="transition ease-in duration-200" 
-                     x-transition:leave-start="transform scale-100 opacity-100" 
-                     x-transition:leave-end="transform scale-95 opacity-0"
-                     class="relative bg-white w-full max-w-lg p-6 rounded-2xl text-left shadow-2xl mx-auto border border-gray-200">
-                    <div class="absolute top-0 left-0 w-full h-1 overflow-hidden">
-                        <div class="animate-shimmer h-full bg-gradient-to-r from-transparent via-primary to-transparent"></div>
-                    </div>
-                    
-                    <div class="flex items-center mb-4">
-                        <div class="mr-4 flex-shrink-0 bg-gradient-to-br from-primary to-primary/80 rounded-xl p-3 shadow-lg">
-                            <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                            </svg>
-                        </div>
-                        <h3 class="text-lg font-semibold text-gray-900" id="modal-title">
-                            Welkom bij de Beta versie
-                        </h3>
-                    </div>
-                    <p class="text-sm text-gray-600 mb-6 leading-relaxed">
-                        Deze website bevindt zich momenteel in de beta fase. Wij werken hard aan nieuwe functionaliteiten en verbeteringen. Jouw feedback is zeer waardevol voor ons! Heb je suggesties of kom je problemen tegen? Laat het ons weten via de contactpagina.
-                    </p>
-                    <div class="flex gap-3">
-                        <button type="button"
-                                @click="localStorage.setItem('betaNoticeShown', 'true'); showBetaNotice = false"
-                                class="flex-1 bg-primary text-white px-4 py-2.5 rounded-xl text-sm font-medium transform transition-all duration-300 hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/20 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/60 active:translate-y-0">
-                            Doorgaan
-                        </button>
-                        <a href="<?php echo URLROOT; ?>/contact"
-                           @click="localStorage.setItem('betaNoticeShown', 'true'); showBetaNotice = false"
-                           class="flex-1 bg-white text-primary border border-primary/20 px-4 py-2.5 rounded-xl text-sm font-medium text-center transform transition-all duration-300 hover:bg-gray-50 hover:border-primary hover:shadow-lg hover:shadow-primary/10 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/60 active:translate-y-0">
-                            Feedback
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 
     <!-- Main Navigation - Modernized -->
