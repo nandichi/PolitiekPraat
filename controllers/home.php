@@ -400,7 +400,7 @@ require_once 'views/templates/header.php';
 
 <main class="bg-gray-50 overflow-x-hidden">
     <!-- Hero Section - Volledig vernieuwde versie -->
-    <section class="relative bg-gradient-to-br from-gray-900 to-primary pt-12 pb-16 overflow-hidden">
+    <section class="relative bg-gradient-to-br from-gray-900 to-primary pt-12 pb-24 overflow-hidden">
         <!-- Subtiele achtergrond patronen -->
         <div class="absolute inset-0 opacity-10">
             <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"30\" height=\"30\" viewBox=\"0 0 30 30\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cpath d=\"M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z\" fill=\"rgba(255,255,255,0.05)\"%3E%3C/path%3E%3C/svg%3E')]"></div>
@@ -612,8 +612,15 @@ require_once 'views/templates/header.php';
             </div>
     </section>
 
+    <!-- Wave Separator -->
+    <div class="relative -mt-24 bg-gradient-to-br from-gray-900 to-primary">
+        <svg class="w-full h-24 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
+            <path fill="#ffffff" fill-opacity="1" d="M0,64L48,80C96,96,192,128,288,128C384,128,480,96,576,80C672,64,768,64,864,90.7C960,117,1056,171,1152,186.7C1248,203,1344,181,1392,170.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+        </svg>
+    </div>
+
     <!-- Actuele Peilingen Section -->
-    <section class="py-16 bg-white relative overflow-hidden">
+    <section class="py-16 bg-white relative overflow-hidden -mt-1">
         <!-- Decoratieve elementen -->
         <div class="absolute -top-40 -right-40 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
         <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-secondary/5 rounded-full blur-3xl"></div>
