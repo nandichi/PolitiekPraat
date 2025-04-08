@@ -1934,82 +1934,118 @@ require_once 'views/templates/header.php';
     </section>
 
     <!-- Actuele Thema's Grid -->
-    <section class="py-16 relative overflow-hidden">
+    <section class="py-24 relative overflow-hidden">
         <!-- Decoratieve elementen -->
         <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-gray-50 via-white to-gray-50"></div>
-        <div class="absolute -top-40 -left-40 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
-        <div class="absolute -bottom-40 -right-40 w-96 h-96 bg-secondary/5 rounded-full blur-3xl"></div>
+        <div class="absolute -top-40 -left-40 w-120 h-120 bg-primary/10 rounded-full blur-3xl"></div>
+        <div class="absolute -bottom-40 -right-40 w-120 h-120 bg-secondary/10 rounded-full blur-3xl"></div>
+        <div class="absolute top-1/4 left-1/3 w-64 h-64 bg-purple-400/5 rounded-full blur-2xl"></div>
+        <div class="absolute bottom-1/3 right-1/3 w-48 h-48 bg-yellow-400/5 rounded-full blur-xl"></div>
 
         <div class="container mx-auto px-4 relative">
-            <div class="text-center mb-16 relative" data-aos="fade-up">
-                <span class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-9xl text-gray-100 font-bold opacity-50 select-none">THEMA'S</span>
-                <h2 class="text-4xl font-bold text-gray-900 mb-4 relative">
+            <div class="text-center mb-20 relative" data-aos="fade-up">
+                <span class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-9xl text-gray-100 font-bold opacity-60 select-none">THEMA'S</span>
+                <h2 class="text-5xl font-extrabold text-gray-900 mb-5 relative">
                     <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Actuele Thema's</span>
                 </h2>
-                <div class="w-24 h-1 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full mb-4"></div>
-                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Ontdek de belangrijkste politieke onderwerpen van dit moment</p>
+                <div class="w-32 h-1.5 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full mb-6"></div>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">Ontdek de belangrijkste politieke onderwerpen die Nederland bezighouden</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Thema's grid met verbeterd design -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                 <?php foreach($actuele_themas as $index => $thema): ?>
-                    <div class="group relative" data-aos="zoom-in" data-aos-delay="<?php echo $index * 100; ?>">
-                        <!-- Card Background with Gradient Border -->
-                        <div class="absolute inset-0 bg-gradient-to-br from-primary to-secondary rounded-2xl opacity-50 blur group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="group relative" 
+                         data-aos="zoom-in" 
+                         data-aos-delay="<?php echo $index * 100; ?>"
+                         data-aos-duration="800"
+                         data-aos-once="true">
+                        <!-- Card Background met subtiele schaduw & glow -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-2xl opacity-0 blur-xl group-hover:opacity-70 transition-all duration-500 transform group-hover:scale-105"></div>
                         
-                        <!-- Main Card -->
-                        <div class="relative bg-white rounded-2xl p-6 shadow-lg transform transition-all duration-500 group-hover:-translate-y-2 group-hover:shadow-2xl overflow-hidden">
-                            <!-- Decorative Pattern -->
-                            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"30\" height=\"30\" viewBox=\"0 0 30 30\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cpath d=\"M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z\" fill=\"rgba(0,0,0,0.07)\"%3E%3C/path%3E%3C/svg%3E')] opacity-10"></div>
+                        <!-- Hoofdkaart met verbeterd design -->
+                        <div class="relative bg-white rounded-2xl shadow-lg transform transition-all duration-500 group-hover:-translate-y-2 group-hover:shadow-2xl overflow-hidden border border-gray-100 h-full">
+                            <!-- Decoratieve hover accent lijn -->
+                            <div class="absolute inset-0 top-auto h-1 bg-gradient-to-r from-primary to-secondary transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
+                            
+                            <!-- Decoratief patroon -->
+                            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"30\" height=\"30\" viewBox=\"0 0 30 30\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cpath d=\"M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z\" fill=\"rgba(0,0,0,0.05)\"%3E%3C/path%3E%3C/svg%3E')] opacity-0 group-hover:opacity-10 transition-opacity duration-500"></div>
 
-                            <!-- Icon Container -->
-                            <div class="relative">
-                                <div class="w-16 h-16 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-xl flex items-center justify-center mb-6 transform transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6">
-                                    <span class="text-4xl"><?php echo $thema['icon']; ?></span>
+                            <!-- Inhoud container met verbeterde padding -->
+                            <div class="relative p-8">
+                                <!-- Icon container met verbeterd ontwerp -->
+                                <div class="mb-6 flex items-center">
+                                    <div class="w-16 h-16 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-2xl flex items-center justify-center transform transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 group-hover:shadow-md group-hover:from-primary/20 group-hover:to-secondary/20">
+                                        <span class="text-4xl"><?php echo $thema['icon']; ?></span>
+                                    </div>
+                                    <div class="ml-4">
+                                        <div class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-medium">
+                                            Politiek thema
+                                        </div>
+                                    </div>
                                 </div>
+
+                                <!-- Content met verbeterde typografie en spacing -->
+                                <div class="space-y-5">
+                                    <h3 class="text-2xl font-bold text-gray-900 group-hover:text-primary transition-colors duration-300">
+                                        <?php echo $thema['title']; ?>
+                                    </h3>
+                                    <p class="text-gray-600 line-clamp-3 leading-relaxed">
+                                        <?php echo $thema['description']; ?>
+                                    </p>
+
+                                    <!-- Stats of relevante info -->
+                                    <div class="flex items-center space-x-6 pt-2">
+                                        <div class="flex items-center text-gray-500 text-sm">
+                                            <svg class="w-4 h-4 mr-1 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                            </svg>
+                                            <span>Recent geüpdatet</span>
+                                        </div>
+                                        <div class="flex items-center text-gray-500 text-sm">
+                                            <svg class="w-4 h-4 mr-1 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path>
+                                            </svg>
+                                            <span>Actueel</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Actieknop met verbeterd ontwerp -->
+                                    <div class="pt-2">
+                                        <a href="<?php echo URLROOT; ?>/thema/<?php echo strtolower(str_replace(' ', '-', $thema['title'])); ?>" 
+                                           class="inline-flex items-center px-5 py-2.5 bg-gradient-to-r from-primary/5 to-secondary/5 hover:from-primary/10 hover:to-secondary/10 text-primary font-semibold rounded-lg transition-all duration-300 mt-2 group-hover:shadow-sm">
+                                            <span>Ontdek meer</span>
+                                            <svg class="w-5 h-5 ml-2 transform transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <!-- Decoratieve hoek elementen -->
+                                <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-primary/5 to-secondary/5 transform rotate-45 translate-x-12 -translate-y-12 group-hover:translate-x-8 group-hover:-translate-y-8 transition-transform duration-700"></div>
+                                <div class="absolute bottom-0 left-0 w-16 h-16 bg-gradient-to-tr from-primary/5 to-secondary/5 transform rotate-45 -translate-x-8 translate-y-8 group-hover:-translate-x-6 group-hover:translate-y-6 transition-transform duration-700 opacity-0 group-hover:opacity-100"></div>
                             </div>
-
-                            <!-- Content -->
-                            <div class="relative space-y-4">
-                                <h3 class="text-xl font-bold text-gray-900 group-hover:text-primary transition-colors">
-                                    <?php echo $thema['title']; ?>
-                                </h3>
-                                <p class="text-gray-600 line-clamp-3">
-                                    <?php echo $thema['description']; ?>
-                                </p>
-
-                                <!-- Action Link -->
-                                <a href="<?php echo URLROOT; ?>/thema/<?php echo strtolower(str_replace(' ', '-', $thema['title'])); ?>" 
-                                   class="inline-flex items-center mt-6 text-primary font-semibold group-hover:text-secondary transition-colors">
-                                    <span class="relative">
-                                        Ontdek meer
-                                        <div class="absolute bottom-0 left-0 w-full h-0.5 bg-secondary transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
-                                    </span>
-                                    <svg class="w-5 h-5 ml-2 transform transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                                    </svg>
-                                </a>
-                            </div>
-
-                            <!-- Decorative Corner -->
-                            <div class="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-primary/5 to-secondary/5 transform rotate-45 translate-x-10 -translate-y-10 group-hover:translate-x-8 group-hover:-translate-y-8 transition-transform duration-500"></div>
                         </div>
                     </div>
                 <?php endforeach; ?>
             </div>
 
-            <!-- CTA Button -->
-            <div class="text-center mt-16" data-aos="fade-up">
+            <!-- CTA Button met verbeterde styling -->
+            <div class="text-center mt-20" data-aos="fade-up">
                 <a href="<?php echo URLROOT; ?>/themas" 
-                   class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-xl hover:opacity-90 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl group">
-                    <span>Bekijk alle thema's</span>
-                    <svg class="w-5 h-5 ml-2 transform transition-transform group-hover:translate-x-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                    </svg>
+                   class="inline-flex items-center px-10 py-4 bg-gradient-to-r from-primary to-secondary text-white font-bold rounded-xl hover:opacity-95 transition-all transform hover:scale-105 shadow-xl hover:shadow-2xl group relative overflow-hidden">
+                    <span class="relative z-10 flex items-center">
+                        <span class="mr-1">Bekijk alle thema's</span>
+                        <svg class="w-5 h-5 ml-2 transform transition-transform duration-500 group-hover:translate-x-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                        </svg>
+                        <span class="absolute inset-0 -z-10 bg-white opacity-0 group-hover:opacity-20 rounded-xl transition-opacity"></span>
+                    </span>
                 </a>
             </div>
         </div>
     </section>
-
 
     <!-- Newsletter Subscription Section -->
     <section class="py-16 px-4 md:px-8 bg-gradient-to-br from-primary/5 to-gray-50 rounded-3xl mx-4 mb-16 mt-16">
