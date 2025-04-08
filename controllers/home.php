@@ -791,10 +791,12 @@ require_once 'views/templates/header.php';
                                                 
                                                 <div class="flex items-center justify-between mt-auto pt-3 border-t border-white/10">
                                                     <div class="flex items-center">
-                                                        <img src="https://media.licdn.com/dms/image/v2/D4E03AQH41qDaDSt19A/profile-displayphoto-shrink_800_800/B4EZWO8j20HgAg-/0/1741859995715?e=1749081600&v=beta&t=RsXjUDf5AAjzVEK7lMDS2InjE18FehpMDQB7JxICP64" 
-                                                             alt="<?php echo htmlspecialchars($blog->author_name); ?>"
-                                                             class="w-6 h-6 rounded-full object-cover border border-white/20 mr-2">
-                                                        <span class="text-xs text-white/80"><?php echo htmlspecialchars($blog->author_name); ?></span>
+                                                        <div class="w-10 h-10 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full flex items-center justify-center overflow-hidden">
+                                                            <img src="https://media.licdn.com/dms/image/v2/D4E03AQH41qDaDSt19A/profile-displayphoto-shrink_800_800/B4EZWO8j20HgAg-/0/1741859995715?e=1749081600&v=beta&t=RsXjUDf5AAjzVEK7lMDS2InjE18FehpMDQB7JxICP64" 
+                                                                 alt="<?php echo htmlspecialchars($blog->author_name); ?>"
+                                                                 class="w-full h-full object-cover">
+                                                            </div>
+                                                        <span class="text-sm font-bold text-gray-800"><?php echo htmlspecialchars($blog->author_name); ?></span>
                                                     </div>
                                                     
                                                     <span class="inline-flex items-center text-xs font-medium text-white group-hover:text-white transition-colors duration-300">
@@ -1645,7 +1647,7 @@ require_once 'views/templates/header.php';
                         <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Laatste Blogs</span>
                     </h2>
                     <div class="w-32 h-1.5 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full mb-6"></div>
-                    <p class="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">Ontdek de meest recente politieke analyses en inzichten van onze community</p>
+                    <p class="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">Ontdek mijn meest recente politieke analyses en inzichten</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
@@ -1701,9 +1703,11 @@ require_once 'views/templates/header.php';
                                     <!-- Auteur en datum info met verbeterd design -->
                                     <div class="flex items-center justify-between mb-5">
                                         <div class="flex items-center space-x-3">
-                                            <div class="w-10 h-10 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full flex items-center justify-center">
-                                                <span class="text-primary font-bold"><?php echo substr(htmlspecialchars($blog->author_name), 0, 1); ?></span>
-                                            </div>
+                                            <div class="w-10 h-10 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full flex items-center justify-center overflow-hidden">
+                                                <img src="https://media.licdn.com/dms/image/v2/D4E03AQH41qDaDSt19A/profile-displayphoto-shrink_800_800/B4EZWO8j20HgAg-/0/1741859995715?e=1749081600&v=beta&t=RsXjUDf5AAjzVEK7lMDS2InjE18FehpMDQB7JxICP64" 
+                                                     alt="<?php echo htmlspecialchars($blog->author_name); ?>"
+                                                     class="w-full h-full object-cover">
+                                                </div>
                                             <span class="text-sm font-bold text-gray-800"><?php echo htmlspecialchars($blog->author_name); ?></span>
                                         </div>
                                         
@@ -1732,12 +1736,18 @@ require_once 'views/templates/header.php';
                                             </svg>
                                         </div>
                                         
-                                        <!-- Leestijd indicatie -->
+                                        <!-- Leestijd indicatie vervangen door likes -->
                                         <div class="flex items-center text-gray-400 text-sm">
                                             <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
                                             </svg>
-                                            <span>5 min leestijd</span>
+                                            <span>
+                                                <?php 
+                                                    // Toon het aantal likes uit de database
+                                                    echo (isset($blog->likes) && $blog->likes > 0) ? $blog->likes : '0';
+                                                    echo ' likes';
+                                                ?>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
