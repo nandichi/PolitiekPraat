@@ -308,20 +308,56 @@ $description = "Een overzicht van alle Nederlandse politieke partijen, hun stand
 include_once BASE_PATH . '/views/templates/header.php';
 ?>
 
-<div class="container mx-auto px-4 py-8">
-    <section class="mb-10">
-        <div class="bg-gradient-to-br from-blue-500 to-red-600 rounded-3xl shadow-xl overflow-hidden mb-8">
-            <div class="relative">
-                <!-- Decorative pattern -->
-                <div class="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml,%3Csvg width=\"30\" height=\"30\" viewBox=\"0 0 30 30\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cpath d=\"M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z\" fill=\"rgba(255,255,255,0.25)\"%3E%3C/path%3E%3C/svg%3E')]"></div>
-                
-                <div class="py-8 px-6 md:px-10 text-center text-white z-10 relative">
-                    <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">Nederlandse Politieke Partijen</h1>
-                    <p class="text-lg md:text-xl text-white/80 max-w-3xl mx-auto">Ontdek de standpunten, lijsttrekkers en actuele peilingen van alle partijen in de Nederlandse politiek</p>
-                </div>
-            </div>
+<main class="bg-gradient-to-b from-slate-50 to-white min-h-screen">
+    <!-- Hero Section - Elegant and professional design zoals in stemwijzer.php -->
+    <section class="relative bg-gradient-to-br from-primary-dark via-primary to-blue-600 py-20 overflow-hidden">
+        <!-- Top accent line -->
+        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-secondary to-blue-400"></div>
+        
+        <!-- Decorative elements -->
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <!-- Abstract wave pattern -->
+            <svg class="absolute w-full h-56 -bottom-10 left-0 text-white/5" viewBox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                <path fill="currentColor" fill-opacity="1" d="M0,128L40,138.7C80,149,160,171,240,170.7C320,171,400,149,480,149.3C560,149,640,171,720,192C800,213,880,235,960,229.3C1040,224,1120,192,1200,165.3C1280,139,1360,117,1400,106.7L1440,96L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z"></path>
+            </svg>
+            
+            <!-- Decorative circles -->
+            <div class="absolute top-20 left-10 w-40 h-40 rounded-full bg-secondary/10 filter blur-2xl"></div>
+            <div class="absolute bottom-10 right-10 w-60 h-60 rounded-full bg-blue-500/10 filter blur-3xl"></div>
+            <div class="absolute top-1/2 left-1/3 w-20 h-20 rounded-full bg-secondary/20 filter blur-xl"></div>
+            
+            <!-- Dot pattern -->
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"30\" height=\"30\" viewBox=\"0 0 30 30\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cpath d=\"M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z\" fill=\"rgba(255,255,255,0.07)\"%3E%3C/path%3E%3C/svg%3E')] opacity-30"></div>
         </div>
         
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-4xl mx-auto text-center">
+                <!-- Small decorative element above title -->
+                <div class="inline-block mb-3">
+                    <div class="flex items-center justify-center space-x-1">
+                        <span class="block w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                        <span class="block w-3 h-1.5 rounded-full bg-blue-400"></span>
+                        <span class="block w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                    </div>
+                </div>
+                
+                <!-- Title with gradient text -->
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 tracking-tight leading-tight">
+                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-100 via-white to-secondary-light">
+                        Nederlandse Politieke Partijen
+                    </span>
+                </h1>
+                
+                <!-- Subtitle with lighter weight -->
+                <p class="text-lg md:text-xl text-blue-100 mb-8 max-w-3xl mx-auto leading-relaxed font-light">
+                    Ontdek de standpunten, lijsttrekkers en actuele peilingen van alle partijen in de Nederlandse politiek
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <div class="container mx-auto px-4 max-w-7xl -mt-6 relative z-10">
+        <!-- Content section -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
             <!-- Filter & Sortering -->
             <div class="lg:col-span-3 bg-white rounded-xl shadow p-4 mb-2">
@@ -337,116 +373,146 @@ include_once BASE_PATH . '/views/templates/header.php';
                 </div>
             </div>
         </div>
-    </section>
-    
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
-        <?php foreach ($parties as $partyKey => $party): ?>
-            <div class="party-card bg-white rounded-xl overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-300 group relative">
-                <!-- Decorative accent strip matching party color -->
-                <div class="absolute top-0 left-0 right-0 h-1.5" style="background-color: <?php echo getPartyColor($partyKey); ?>"></div>
-                
-                <!-- Party header with logo and stats -->
-                <div class="relative p-5 border-b border-gray-100">
-                    <div class="flex items-center mb-3">
-                        <div class="relative">
-                            <div class="w-16 h-16 rounded-full overflow-hidden shadow-md border-2 border-white flex items-center justify-center bg-white">
-                                <img src="<?php echo htmlspecialchars($party['logo']); ?>" alt="<?php echo htmlspecialchars($party['name']); ?> logo" 
-                                    class="w-14 h-14 object-contain">
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
+            <?php foreach ($parties as $partyKey => $party): ?>
+                <div class="party-card bg-white rounded-xl overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-300 group relative">
+                    <!-- Decorative accent strip matching party color -->
+                    <div class="absolute top-0 left-0 right-0 h-1.5" style="background-color: <?php echo getPartyColor($partyKey); ?>"></div>
+                    
+                    <!-- Party header with logo and stats -->
+                    <div class="relative p-5 border-b border-gray-100">
+                        <div class="flex items-center mb-3">
+                            <div class="relative">
+                                <div class="w-16 h-16 rounded-full overflow-hidden shadow-md border-2 border-white flex items-center justify-center bg-white">
+                                    <img src="<?php echo htmlspecialchars($party['logo']); ?>" alt="<?php echo htmlspecialchars($party['name']); ?> logo" 
+                                        class="w-14 h-14 object-contain">
+                                </div>
+                                
+                                <!-- Current seats badge -->
+                                <div class="absolute -bottom-1.5 -right-1.5 bg-primary text-white text-xs font-bold rounded-full w-8 h-8 flex items-center justify-center border-2 border-white shadow-md">
+                                    <?php echo $party['current_seats']; ?>
+                                </div>
                             </div>
                             
-                            <!-- Current seats badge -->
-                            <div class="absolute -bottom-1.5 -right-1.5 bg-primary text-white text-xs font-bold rounded-full w-8 h-8 flex items-center justify-center border-2 border-white shadow-md">
-                                <?php echo $party['current_seats']; ?>
+                            <div class="ml-4">
+                                <h2 class="text-xl font-extrabold text-gray-800 mb-0.5"><?php echo htmlspecialchars($partyKey); ?></h2>
+                                <p class="text-sm text-gray-500 font-medium tracking-tight"><?php echo htmlspecialchars($party['name']); ?></p>
                             </div>
                         </div>
                         
-                        <div class="ml-4">
-                            <h2 class="text-xl font-extrabold text-gray-800 mb-0.5"><?php echo htmlspecialchars($partyKey); ?></h2>
-                            <p class="text-sm text-gray-500 font-medium tracking-tight"><?php echo htmlspecialchars($party['name']); ?></p>
-                        </div>
-                    </div>
-                    
-                    <!-- Polling trend indicator with glass effect -->
-                    <div class="mt-3 bg-gradient-to-br from-white to-gray-50 rounded-lg p-3 border border-gray-200 backdrop-blur-sm shadow-sm">
-                        <div class="flex items-center justify-between mb-1.5">
-                            <span class="text-xs font-medium text-gray-700">Peilingen:</span>
-                            <?php 
-                            $changeClass = $party['polling']['change'] > 0 ? 'text-green-600' : ($party['polling']['change'] < 0 ? 'text-red-600' : 'text-yellow-600');
-                            $changeIcon = $party['polling']['change'] > 0 ? '↑' : ($party['polling']['change'] < 0 ? '↓' : '•');
-                            $changeText = $party['polling']['change'] > 0 ? '+' . $party['polling']['change'] : $party['polling']['change'];
-                            ?>
-                            <span class="flex items-center <?php echo $changeClass; ?> text-xs font-semibold">
-                                <?php echo $changeIcon; ?> <?php echo $changeText !== 0 ? $changeText : ''; ?>
-                            </span>
-                        </div>
-                        <div class="flex items-center">
-                            <div class="w-full bg-gray-200 rounded-full h-2.5 mr-2 overflow-hidden">
-                                <div class="h-full rounded-full transition-all duration-500" 
-                                     style="width: <?php echo ($party['polling']['seats'] / 150) * 100; ?>%; background-color: <?php echo getPartyColor($partyKey); ?>"></div>
+                        <!-- Modern polling indicator with clean design -->
+                        <div class="mt-4 bg-white rounded-xl p-3 border border-gray-100 shadow-sm">
+                            <div class="flex justify-between items-center mb-1">
+                                <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Zetels in peilingen</h3>
                             </div>
-                            <span class="text-xs font-bold"><?php echo $party['polling']['seats']; ?></span>
+                            
+                            <!-- Modern visualization with party color -->
+                            <div class="mt-2 flex items-center justify-between">
+                                <?php 
+                                $changeValue = $party['polling']['change'];
+                                $isPositive = $changeValue > 0;
+                                $isNegative = $changeValue < 0;
+                                $absChange = abs($changeValue);
+                                
+                                if ($isPositive) {
+                                    $trendColor = 'text-green-600';
+                                    $trendBg = 'bg-green-50';
+                                    $trendBorderColor = 'border-green-100';
+                                    $trendIcon = '↑';
+                                } elseif ($isNegative) {
+                                    $trendColor = 'text-red-600';
+                                    $trendBg = 'bg-red-50';
+                                    $trendBorderColor = 'border-red-100';
+                                    $trendIcon = '↓';
+                                } else {
+                                    $trendColor = 'text-blue-600';
+                                    $trendBg = 'bg-blue-50';
+                                    $trendBorderColor = 'border-blue-100';
+                                    $trendIcon = '•';
+                                }
+                                
+                                $trendText = $changeValue !== 0 ? ($changeValue > 0 ? '+' : '') . $changeValue . ' zetels' : 'Ongewijzigd';
+                                ?>
+                                
+                                <!-- Zetels with trend in single clear display -->
+                                <div class="flex items-center">
+                                    <span class="text-4xl font-bold" style="color: <?php echo getPartyColor($partyKey); ?>">
+                                        <?php echo $party['polling']['seats']; ?>
+                                    </span>
+                                    <span class="text-sm text-gray-400 font-medium ml-1 mt-3">/ 150</span>
+                                </div>
+                                
+                                <!-- Single trend indicator -->
+                                <div class="flex items-center <?php echo $trendBg; ?> px-3 py-2 rounded-lg border <?php echo $trendBorderColor; ?>">
+                                    <span class="<?php echo $trendColor; ?> text-lg font-bold mr-1"><?php echo $trendIcon; ?></span>
+                                    <span class="<?php echo $trendColor; ?> font-semibold">
+                                        <?php echo $changeValue !== 0 ? ($changeValue > 0 ? '+' : '') . $changeValue : '±0'; ?>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Party content -->
+                    <div class="p-5">
+                        <!-- Party Leader Preview -->
+                        <div class="flex items-center mb-4 pb-3 border-b border-gray-100">
+                            <div class="w-14 h-14 rounded-full overflow-hidden mr-3 border-2 shadow-md" style="border-color: <?php echo getPartyColor($partyKey); ?>">
+                                <img src="<?php echo htmlspecialchars($party['leader_photo']); ?>" alt="<?php echo htmlspecialchars($party['leader']); ?>" 
+                                     class="w-full h-full object-cover">
+                            </div>
+                            <div>
+                                <p class="text-sm font-bold text-gray-800 mb-0.5"><?php echo htmlspecialchars($party['leader']); ?></p>
+                                <p class="text-xs text-gray-500">Partijleider</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Party description preview -->
+                        <p class="text-sm text-gray-600 mb-4 line-clamp-3 leading-relaxed"><?php echo htmlspecialchars(mb_substr($party['description'], 0, 150)) . '...'; ?></p>
+                        
+                        <!-- Key standpoints preview with custom badges -->
+                        <div class="mb-5">
+                            <h3 class="text-xs uppercase font-bold text-gray-700 mb-2.5 tracking-wider">Kernstandpunten:</h3>
+                            <div class="flex flex-wrap gap-1.5">
+                                <?php foreach (array_slice(array_keys($party['standpoints']), 0, 3) as $topic): ?>
+                                <span class="px-2.5 py-1 rounded-full text-xs font-medium" 
+                                      style="background-color: <?php echo adjustColorOpacity(getPartyColor($partyKey), 0.15); ?>; 
+                                             color: <?php echo adjustColorBrightness(getPartyColor($partyKey), -30); ?>;">
+                                    <?php echo htmlspecialchars($topic); ?>
+                                </span>
+                                <?php endforeach; ?>
+                                <span class="bg-gray-100 text-gray-500 text-xs px-2.5 py-1 rounded-full font-medium">
+                                    +<?php echo count($party['standpoints']) - 3; ?> meer
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <!-- Action buttons with hover effects -->
+                        <div class="flex gap-3">
+                            <button class="party-btn flex-1 text-white text-sm px-4 py-2.5 rounded-lg transition-all duration-200 flex items-center justify-center font-medium shadow-sm hover:shadow-md" 
+                                    style="background-color: <?php echo getPartyColor($partyKey); ?>; 
+                                           box-shadow: 0 2px 0 <?php echo adjustColorBrightness(getPartyColor($partyKey), -30); ?>;"
+                                    data-party="<?php echo htmlspecialchars($partyKey); ?>">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                </svg>
+                                Partij
+                            </button>
+                            <button class="leader-btn flex-1 bg-white border border-gray-200 text-gray-700 text-sm px-4 py-2.5 rounded-lg transition-all duration-200 flex items-center justify-center font-medium hover:bg-gray-50 shadow-sm hover:shadow-md"
+                                    data-leader="<?php echo htmlspecialchars($partyKey); ?>">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                </svg>
+                                Leider
+                            </button>
                         </div>
                     </div>
                 </div>
-                
-                <!-- Party content -->
-                <div class="p-5">
-                    <!-- Party Leader Preview -->
-                    <div class="flex items-center mb-4 pb-3 border-b border-gray-100">
-                        <div class="w-14 h-14 rounded-full overflow-hidden mr-3 border-2 shadow-md" style="border-color: <?php echo getPartyColor($partyKey); ?>">
-                            <img src="<?php echo htmlspecialchars($party['leader_photo']); ?>" alt="<?php echo htmlspecialchars($party['leader']); ?>" 
-                                 class="w-full h-full object-cover">
-                        </div>
-                        <div>
-                            <p class="text-sm font-bold text-gray-800 mb-0.5"><?php echo htmlspecialchars($party['leader']); ?></p>
-                            <p class="text-xs text-gray-500">Partijleider</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Party description preview -->
-                    <p class="text-sm text-gray-600 mb-4 line-clamp-3 leading-relaxed"><?php echo htmlspecialchars(mb_substr($party['description'], 0, 150)) . '...'; ?></p>
-                    
-                    <!-- Key standpoints preview with custom badges -->
-                    <div class="mb-5">
-                        <h3 class="text-xs uppercase font-bold text-gray-700 mb-2.5 tracking-wider">Kernstandpunten:</h3>
-                        <div class="flex flex-wrap gap-1.5">
-                            <?php foreach (array_slice(array_keys($party['standpoints']), 0, 3) as $topic): ?>
-                            <span class="px-2.5 py-1 rounded-full text-xs font-medium" 
-                                  style="background-color: <?php echo adjustColorOpacity(getPartyColor($partyKey), 0.15); ?>; 
-                                         color: <?php echo adjustColorBrightness(getPartyColor($partyKey), -30); ?>;">
-                                <?php echo htmlspecialchars($topic); ?>
-                            </span>
-                            <?php endforeach; ?>
-                            <span class="bg-gray-100 text-gray-500 text-xs px-2.5 py-1 rounded-full font-medium">
-                                +<?php echo count($party['standpoints']) - 3; ?> meer
-                            </span>
-                        </div>
-                    </div>
-                    
-                    <!-- Action buttons with hover effects -->
-                    <div class="flex gap-3">
-                        <button class="party-btn flex-1 text-white text-sm px-4 py-2.5 rounded-lg transition-all duration-200 flex items-center justify-center font-medium shadow-sm hover:shadow-md" 
-                                style="background-color: <?php echo getPartyColor($partyKey); ?>; 
-                                       box-shadow: 0 2px 0 <?php echo adjustColorBrightness(getPartyColor($partyKey), -30); ?>;"
-                                data-party="<?php echo htmlspecialchars($partyKey); ?>">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                            </svg>
-                            Partij
-                        </button>
-                        <button class="leader-btn flex-1 bg-white border border-gray-200 text-gray-700 text-sm px-4 py-2.5 rounded-lg transition-all duration-200 flex items-center justify-center font-medium hover:bg-gray-50 shadow-sm hover:shadow-md"
-                                data-leader="<?php echo htmlspecialchars($partyKey); ?>">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                            </svg>
-                            Leider
-                        </button>
-                    </div>
-                </div>
-            </div>
-        <?php endforeach; ?>
+            <?php endforeach; ?>
+        </div>
     </div>
-</div>
+</main>
 
 <!-- Enhanced Modals -->
 <div id="party-modal" class="fixed inset-0 bg-black bg-opacity-70 hidden z-50 flex items-center justify-center">

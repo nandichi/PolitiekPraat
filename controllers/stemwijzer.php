@@ -202,7 +202,7 @@ require_once 'views/templates/header.php';
                  x-transition:enter="transition ease-out duration-500"
                  x-transition:enter-start="opacity-0 transform scale-95"
                  x-transition:enter-end="opacity-100 transform scale-100"
-                 class="bg-white rounded-2xl shadow-xl p-10 relative overflow-hidden">
+                 class="bg-white rounded-2xl shadow-xl p-10 relative overflow-hidden mb-20">
                 <!-- Decoratieve achtergrond elementen -->
                 <div class="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-full blur-3xl -z-10 transform translate-x-1/3 -translate-y-1/3 animate-float"></div>
                 <div class="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-secondary/10 to-primary/10 rounded-full blur-3xl -z-10 transform -translate-x-1/3 translate-y-1/3 animate-float" style="animation-delay: 2s;"></div>
