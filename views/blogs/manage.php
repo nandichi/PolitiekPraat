@@ -141,6 +141,7 @@
                                                     </svg>
                                                     Bewerken
                                                 </a>
+                                                <?php /* Tijdelijk verborgen
                                                 <a href="<?php echo URLROOT; ?>/blogs/updateLikes/<?php echo $blog->id; ?>"
                                                    class="group inline-flex items-center px-3 py-2 border border-blue-300 rounded-lg text-blue-600 bg-white hover:bg-blue-50 transition-colors">
                                                     <svg class="w-4 h-4 mr-1.5 text-blue-400 group-hover:text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -148,6 +149,7 @@
                                                     </svg>
                                                     Likes Aanpassen
                                                 </a>
+                                                */ ?>
                                                 <a href="<?php echo URLROOT; ?>/blogs/delete/<?php echo $blog->id; ?>"
                                                    onclick="return confirm('Weet je zeker dat je deze blog wilt verwijderen? Dit kan niet ongedaan worden gemaakt.')"
                                                    class="group inline-flex items-center px-3 py-2 border border-red-300 rounded-lg text-red-600 bg-white hover:bg-red-50 transition-colors">
@@ -220,6 +222,7 @@
                                                 </svg>
                                                 Bewerken
                                             </a>
+                                            <?php /* Tijdelijk verborgen
                                             <a href="<?php echo URLROOT; ?>/blogs/updateLikes/<?php echo $blog->id; ?>"
                                                class="group inline-flex items-center px-2 py-1 border border-blue-300 rounded-md text-xs text-blue-600 bg-white hover:bg-blue-50 transition-colors">
                                                 <svg class="w-3 h-3 mr-1 text-blue-400 group-hover:text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -227,6 +230,7 @@
                                                 </svg>
                                                 Likes
                                             </a>
+                                            */ ?>
                                             <a href="<?php echo URLROOT; ?>/blogs/delete/<?php echo $blog->id; ?>"
                                                onclick="return confirm('Weet je zeker dat je deze blog wilt verwijderen? Dit kan niet ongedaan worden gemaakt.')"
                                                class="group inline-flex items-center px-2 py-1 border border-red-300 rounded-md text-xs text-red-600 bg-white hover:bg-red-50 transition-colors">
