@@ -651,7 +651,7 @@ require_once 'views/templates/header.php';
                     </div>
                     
                     <!-- Top 3 Results -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 mt-20">
                         <!-- #2 Result -->
                         <div class="relative order-2 md:order-1 mt-6 md:mt-10">
                             <div class="absolute -top-10 left-1/2 transform -translate-x-1/2 w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center border-4 border-white shadow-lg">
@@ -674,7 +674,7 @@ require_once 'views/templates/header.php';
                         
                         <!-- #1 Result (Larger) -->
                         <div class="relative order-1 md:order-2 transform md:-translate-y-4">
-                            <div class="absolute -top-12 left-1/2 transform -translate-x-1/2 w-16 h-16 rounded-full bg-yellow-100 flex items-center justify-center border-4 border-white shadow-lg">
+                            <div class="absolute -top-14 left-1/2 transform -translate-x-1/2 w-16 h-16 rounded-full bg-yellow-100 flex items-center justify-center border-4 border-white shadow-lg">
                                 <svg class="w-8 h-8 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" clip-rule="evenodd"/>
                                 </svg>
