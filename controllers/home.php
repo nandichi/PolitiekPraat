@@ -245,57 +245,57 @@ $news_sources = [
 $latest_news = [
     [
         'orientation' => 'links',
-        'source' => 'Socialisme.nu', 
-        'bias' => 'links',
+        'source' => 'Socialisme.nu',
+        'bias' => 'links', 
         'publishedAt' => date('Y-m-d H:i:s'), // Vandaag 08:30
-        'title' => 'Palestijn in Gaza: "Israël blijft ons bombarderen"',
-        'description' => 'Een Palestijnse inwoner van Gaza vertelt over de aanhoudende bombardementen door Israël en de humanitaire crisis die hieruit voortvloeit.',
-        'url' => 'https://socialisme.nu/palestijn-in-gaza-israel-blijft-ons-bombarderen/'
+        'title' => 'PVV-kabinet laat huren explosief stijgen',
+        'description' => 'Het PVV-kabinet laat de huren explosief stijgen door het afschaffen van de huurprijsbescherming en het verlagen van de huurtoeslag.',
+        'url' => 'https://socialisme.nu/pvv-kabinet-laat-huren-explosief-stijgen/'
     ],
     [
         'orientation' => 'links',
         'source' => 'NRC',
         'bias' => 'centrum-links', 
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-2 hours')), // 2 uur geleden
-        'title' => 'Tweede Kamer wil dat vuurwerkverbod niet al deze jaarwisseling van kracht wordt',
-        'description' => 'Een meerderheid in de Tweede Kamer wil dat het landelijke vuurwerkverbod niet al deze jaarwisseling van kracht wordt. De Kamer vindt dat er meer tijd nodig is voor een goede voorbereiding.',
-        'url' => 'https://www.nrc.nl/nieuws/2025/04/08/tweede-kamer-wil-dat-vuurwerkverbod-niet-al-deze-jaarwisseling-van-kracht-wordt-a4889224'
+        'title' => 'Het CDA was doodverklaard, maar herrijst dankzij Henri Bontenbal weer in de peilingen: wat is er gebeurd?',
+        'description' => 'Na een historisch dieptepunt in de peilingen lijkt het CDA onder leiding van Henri Bontenbal weer op te krabbelen. De nieuwe partijleider weet met zijn inhoudelijke aanpak en focus op kernthema\'s kiezers terug te winnen.',
+        'url' => 'https://www.nrc.nl/nieuws/2025/04/12/het-cda-was-doodverklaard-maar-herrijst-dankzij-henri-bontenbal-weer-in-de-peilingen-wat-is-er-gebeurd-a4889700'
     ],
     [
         'orientation' => 'links',
         'source' => 'Trouw',
         'bias' => 'centrum-links', 
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-4 hours')), // 4 uur geleden
-        'title' => 'VS bouwen militaire macht op rond Iran, Trump wil zo deal afdwingen',
-        'description' => 'De Verenigde Staten bouwen hun militaire aanwezigheid op in de regio rond Iran. President Trump hoopt hiermee Iran te dwingen tot nieuwe onderhandelingen.',
-        'url' => 'https://www.trouw.nl/buitenland/vs-bouwen-militaire-macht-op-rond-iran-trump-wil-zo-deal-afdwingen~b5084af8/'
+        'title' => 'D66 pakt vrije rol in de oppositie en presenteert wilde plannen',
+        'description' => 'D66 presenteert als oppositiepartij een reeks opvallende voorstellen, waaronder het afschaffen van de monarchie en het legaliseren van harddrugs. De partij kiest voor een vrije rol in de oppositie.',
+        'url' => 'https://www.trouw.nl/politiek/d66-pakt-vrije-rol-in-de-oppositie-en-presenteert-wilde-plannen~bf16313b/'
     ],
     [
         'orientation' => 'rechts',
         'source' => 'FVD',
-        'bias' => 'rechts', 
+        'bias' => 'extreem-rechts', 
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-6 hours')), // 6 uur geleden
-        'title' => 'Kamervragen Baudet over diversiteitsquota bij overheid: "Dit beleid is juist discriminerend"',
-        'description' => 'Thierry Baudet heeft Kamervragen gesteld over het diversiteitsbeleid bij de overheid. Hij stelt dat quota en voorkeursbeleid juist discriminerend werken.',
-        'url' => 'https://fvd.nl/nieuws/kamervragen-baudet-over-diversiteitsquota-bij-overheid-dit-beleid-is-juist-discriminerend'
+        'title' => 'Extinction Rebellion dreigt met stinkbommen, FVD stelt Kamervragen',
+        'description' => 'Forum voor Democratie heeft Kamervragen gesteld over de dreiging van Extinction Rebellion om stinkbommen te gebruiken bij demonstraties.',
+        'url' => 'https://fvd.nl/nieuws/extinction-rebellion-dreigt-met-stinkbommen-fvd-stelt-kamervragen'
     ],
     [
         'orientation' => 'rechts',
         'source' => 'De Dagelijkse Standaard',
-        'bias' => 'rechts', 
+        'bias' => 'extreem-rechts', 
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-8 hours')), // 8 uur geleden
-        'title' => 'Knettergek: CDAer Berendsen wil EU-burgers censureren om Trump te pesten',
-        'description' => 'CDA-Europarlementariër Tom Berendsen wil dat de EU maatregelen neemt om de verspreiding van desinformatie door Trump-aanhangers tegen te gaan.',
-        'url' => 'https://www.dagelijksestandaard.nl/politiek/knettergek-cdaer-berendsen-wil-eu-burgers-censureren-om-trump-te-pesten'
+        'title' => 'Hypocriet: Jetten vergeet D66\'s eigen wanbeleid',
+        'description' => 'D66-minister Rob Jetten wordt beschuldigd van hypocrisie bij het bekritiseren van beleid terwijl zijn eigen partij soortgelijke maatregelen heeft gesteund.',
+        'url' => 'https://www.dagelijksestandaard.nl/politiek/hypocriet-jetten-vergeet-d66s-eigen-wanbeleid'
     ],
     [
         'orientation' => 'rechts',
         'source' => 'Nieuw Rechts',
         'bias' => 'rechts',
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-10 hours')), // 10 uur geleden
-        'title' => 'Coenradie zet zich af tegen eigen partij: "Ze is flink aan het schoppen"',
-        'description' => 'Voormalig VVD-Kamerlid Coenradie uit kritiek op haar eigen partij. Ze vindt dat de partij te veel afstand neemt van haar traditionele standpunten.',
-        'url' => 'https://nieuwrechts.nl/103648-coenradie-zet-zich-af-tegen-eigen-partij-ze-is-flink-aan-het-schoppen'
+        'title' => 'Onrust bij PVV: verziekte sfeer en ruzies binnen kabinetsteam Wilders',
+        'description' => 'Binnen het kabinetsteam van de PVV heerst onrust en een verziekte sfeer. Er zijn interne ruzies ontstaan die de samenwerking bemoeilijken.',
+        'url' => 'https://nieuwrechts.nl/103730-onrust-bij-pvv-verziekte-sfeer-en-ruzies-binnen-kabinetsteam-wilders'
     ]
 ];
 
