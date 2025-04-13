@@ -932,6 +932,349 @@ require_once 'views/templates/header.php';
         });
     </script>
 
+        <!-- Laatste Nieuws & Blogs Sections -->
+        <section class="py-16 bg-gradient-to-b from-gray-50 to-white">
+        <div class="container mx-auto px-4">
+            <!-- Laatste Blogs -->
+            <div class="mb-20 relative">
+                <!-- Decoratieve elementen -->
+                <div class="absolute -top-20 left-0 w-120 h-120 bg-primary/10 rounded-full blur-3xl"></div>
+                <div class="absolute bottom-0 right-0 w-120 h-120 bg-secondary/10 rounded-full blur-3xl"></div>
+                <div class="absolute top-1/3 left-1/4 w-64 h-64 bg-green-400/5 rounded-full blur-2xl"></div>
+                <div class="absolute bottom-1/2 right-1/3 w-48 h-48 bg-yellow-400/5 rounded-full blur-xl"></div>
+
+                <div class="text-center mb-20 relative" data-aos="fade-up" data-aos-once="true">
+                    <span class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-9xl text-gray-100 font-bold opacity-60 select-none">BLOGS</span>
+                    <h2 class="text-5xl font-extrabold text-gray-900 mb-5 relative">
+                        <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Laatste Blogs</span>
+                    </h2>
+                    <div class="w-32 h-1.5 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full mb-6"></div>
+                    <p class="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">Ontdek mijn meest recente politieke analyses en inzichten</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                    <?php foreach($latest_blogs as $index => $blog): ?>
+                        <article class="group relative bg-white rounded-2xl shadow-lg overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl border border-gray-100" 
+                                data-aos="fade-up" 
+                                data-aos-delay="<?php echo $index * 100; ?>"
+                                data-aos-duration="800"
+                                data-aos-easing="ease-out-cubic"
+                                data-aos-once="true">
+                            <!-- Decoratieve hover accent lijn -->
+                            <div class="absolute inset-0 top-auto h-1 bg-gradient-to-r from-primary to-secondary transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 z-10"></div>
+                            
+                            <?php 
+                            // Check of de blog minder dan 12 uur oud is
+                            $published_time = strtotime($blog->published_at);
+                            $twelve_hours_ago = time() - (12 * 3600); // 12 uur in seconden
+                            
+                            if ($published_time > $twelve_hours_ago): 
+                            ?>
+                                <!-- Nieuw Badge voor recent geplaatste blogs -->
+                                <div class="absolute top-4 right-4 z-20">
+                                    <div class="inline-flex items-center px-3 py-1.5 rounded-full bg-gradient-to-r from-primary to-secondary text-white text-sm font-bold shadow-lg">
+                                        <span class="relative flex h-2 w-2 mr-2">
+                                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                                            <span class="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+                                        </span>
+                                        NIEUW
+                                    </div>
+                                </div>
+                                <!-- Extra highlight effect voor nieuwe blogs -->
+                                <div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5 pointer-events-none"></div>
+                            <?php endif; ?>
+
+                            <a href="<?php echo URLROOT . '/blogs/view/' . $blog->slug; ?>" class="block relative">
+                                <?php if ($blog->image_path): ?>
+                                    <div class="relative h-52 overflow-hidden">
+                                        <img src="<?php echo URLROOT . '/' . $blog->image_path; ?>" 
+                                             alt="<?php echo htmlspecialchars($blog->title); ?>"
+                                             class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110">
+                                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                    </div>
+                                <?php else: ?>
+                                    <!-- Fallback voor blogs zonder afbeelding -->
+                                    <div class="h-40 bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
+                                        <svg class="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                                        </svg>
+                                    </div>
+                                <?php endif; ?>
+
+                                <div class="p-7">
+                                    <!-- Auteur en datum info met verbeterd design -->
+                                    <div class="flex items-center justify-between mb-5">
+                                        <div class="flex items-center space-x-3">
+                                            <div class="w-10 h-10 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full flex items-center justify-center overflow-hidden">
+                                                <img src="https://media.licdn.com/dms/image/v2/D4E03AQH41qDaDSt19A/profile-displayphoto-shrink_800_800/B4EZWO8j20HgAg-/0/1741859995715?e=1749081600&v=beta&t=RsXjUDf5AAjzVEK7lMDS2InjE18FehpMDQB7JxICP64" 
+                                                     alt="<?php echo htmlspecialchars($blog->author_name); ?>"
+                                                     class="w-full h-full object-cover">
+                                                </div>
+                                            <span class="text-sm font-bold text-gray-800"><?php echo htmlspecialchars($blog->author_name); ?></span>
+                                        </div>
+                                        
+                                        <div class="text-xs bg-gray-100 text-gray-600 px-3 py-1.5 rounded-full font-medium flex items-center">
+                                            <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                            </svg>
+                                            <?php echo getRelativeTime($blog->published_at); ?>
+                                        </div>
+                                    </div>
+
+                                    <h2 class="text-2xl font-bold text-gray-900 mb-4 group-hover:text-primary transition-colors duration-300 line-clamp-2">
+                                        <?php echo htmlspecialchars($blog->title); ?>
+                                    </h2>
+
+                                    <p class="text-gray-600 mb-6 line-clamp-3 leading-relaxed">
+                                        <?php echo htmlspecialchars($blog->summary); ?>
+                                    </p>
+
+                                    <!-- Actieknop met verbeterd ontwerp -->
+                                    <div class="flex items-center justify-between pt-2">
+                                        <div class="inline-flex items-center px-4 py-2 bg-primary/5 hover:bg-primary/10 text-primary font-semibold rounded-lg transition-colors duration-300">
+                                            <span>Lees meer</span>
+                                            <svg class="w-4 h-4 ml-2 transform transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                            </svg>
+                                        </div>
+                                        
+                                        <!-- Leestijd indicatie vervangen door likes -->
+                                        <div class="flex items-center text-gray-400 text-sm">
+                                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                            </svg>
+                                            <span>
+                                                <?php 
+                                                    // Toon het aantal likes uit de database
+                                                    echo (isset($blog->likes) && $blog->likes > 0) ? $blog->likes : '0';
+                                                    echo ' likes';
+                                                ?>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            
+                            <!-- Decoratieve hoekelementen -->
+                            <div class="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-primary/5 to-secondary/5 transform rotate-45 translate-x-10 -translate-y-10 group-hover:translate-x-6 group-hover:-translate-y-6 transition-transform duration-700"></div>
+                        </article>
+                    <?php endforeach; ?>
+                </div>
+
+                <!-- CTA Button met verbeterde styling -->
+                <div class="text-center mt-20" data-aos="zoom-in" data-aos-delay="300" data-aos-once="true">
+                    <a href="<?php echo URLROOT; ?>/blogs" 
+                       class="inline-flex items-center px-10 py-4 bg-gradient-to-r from-primary to-secondary text-white font-bold rounded-xl hover:opacity-95 transition-all transform hover:scale-105 shadow-xl hover:shadow-2xl group relative overflow-hidden">
+                        <span class="relative z-10 flex items-center">
+                            <span class="mr-1">Bekijk alle blogs</span>
+                            <svg class="w-5 h-5 ml-2 transform transition-transform duration-500 group-hover:translate-x-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                            <span class="absolute inset-0 -z-10 bg-white opacity-0 group-hover:opacity-20 rounded-xl transition-opacity"></span>
+                        </span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Laatste Nieuws -->
+            <div class="relative py-24" data-aos="fade-up" data-aos-once="true">
+                <!-- Decoratieve elementen -->
+                <div class="absolute -top-20 right-0 w-120 h-120 bg-primary/10 rounded-full blur-3xl"></div>
+                <div class="absolute bottom-20 left-0 w-120 h-120 bg-secondary/10 rounded-full blur-3xl"></div>
+                <div class="absolute top-1/3 right-1/4 w-64 h-64 bg-blue-400/5 rounded-full blur-2xl"></div>
+                <div class="absolute top-1/2 left-1/3 w-48 h-48 bg-red-400/5 rounded-full blur-xl"></div>
+
+                <div class="text-center mb-20 relative" data-aos="fade-up" data-aos-once="true">
+                    <span class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-9xl text-gray-100 font-bold opacity-60 select-none">NIEUWS</span>
+                    <h2 class="text-5xl font-extrabold text-gray-900 mb-5 relative">
+                        <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Laatste Politiek Nieuws</span>
+                    </h2>
+                    <div class="w-32 h-1.5 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full mb-6"></div>
+                    <p class="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">Blijf op de hoogte van de laatste ontwikkelingen in de Nederlandse politiek door beide perspectieven te vergelijken</p>
+                </div>
+
+                <!-- Laatste Nieuws Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 relative">
+                    <!-- Links georiënteerde bronnen -->
+                    <div class="space-y-10" data-aos="fade-right" data-aos-duration="1000" data-aos-once="true">
+                        <div class="flex items-center justify-center lg:justify-start">
+                            <div class="bg-gradient-to-r from-blue-500 to-blue-700 px-5 py-3 rounded-xl shadow-md inline-flex items-center">
+                                <svg class="w-5 h-5 mr-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                                </svg>
+                                <h3 class="text-xl font-bold text-white">Progressieve Media</h3>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-8">
+                            <?php
+                            $links_news = array_filter($latest_news, function($news) {
+                                return $news['orientation'] === 'links';
+                            });
+                            foreach($links_news as $index => $news):
+                            ?>
+                                <article class="group bg-white border border-blue-100 rounded-2xl shadow-lg overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl relative"
+                                        data-aos="fade-up" 
+                                        data-aos-delay="<?php echo $index * 100; ?>"
+                                        data-aos-duration="800"
+                                        data-aos-once="true">
+                                    <!-- Accent border -->
+                                    <div class="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-blue-400 to-blue-600 transform origin-left scale-y-0 group-hover:scale-y-100 transition-transform duration-300"></div>
+                                    
+                                    <div class="relative p-7">
+                                        <!-- News Source & Date -->
+                                        <div class="flex items-center justify-between mb-5">
+                                            <div class="flex items-center space-x-3">
+                                                <div class="relative">
+                                                    <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center overflow-hidden group-hover:bg-blue-200 transition-all duration-300">
+                                                        <span class="text-blue-600 font-bold text-lg"><?php echo substr($news['source'], 0, 2); ?></span>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <p class="text-sm font-bold text-gray-900"><?php echo $news['source']; ?></p>
+                                                    <span class="text-xs px-2.5 py-1 bg-blue-100 text-blue-700 rounded-full font-medium"><?php echo $news['bias']; ?></span>
+                                                </div>
+                                            </div>
+                                            <div class="text-xs bg-gray-100 text-gray-600 px-3 py-1.5 rounded-full font-medium">
+                                                <?php echo getRelativeTime($news['publishedAt']); ?>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Rest van de artikel content -->
+                                        <div class="space-y-4">
+                                            <h3 class="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2">
+                                                <?php echo $news['title']; ?>
+                                            </h3>
+                                            <p class="text-gray-600 line-clamp-3 leading-relaxed">
+                                                <?php echo $news['description']; ?>
+                                            </p>
+                                        </div>
+                                        
+                                        <!-- Article Footer -->
+                                        <div class="mt-7 flex items-center justify-between">
+                                            <a href="<?php echo $news['url']; ?>" 
+                                            target="_blank" 
+                                            rel="noopener noreferrer"
+                                            class="inline-flex items-center px-4 py-2 bg-blue-50 hover:bg-blue-100 text-blue-600 font-semibold rounded-lg transition-colors duration-300">
+                                                <span>Lees artikel</span>
+                                                <svg class="w-4 h-4 ml-2 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                                                </svg>
+                                            </a>
+                                            
+                                            <div class="flex items-center text-gray-400 text-sm">
+                                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                                </svg>
+                                                <span>Progressief perspectief</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </article>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+
+                    <!-- Rechts georiënteerde bronnen -->
+                    <div class="space-y-10" data-aos="fade-left" data-aos-duration="1000" data-aos-once="true">
+                        <div class="flex items-center justify-center lg:justify-start">
+                            <div class="bg-gradient-to-r from-red-500 to-red-700 px-5 py-3 rounded-xl shadow-md inline-flex items-center">
+                                <svg class="w-5 h-5 mr-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                                </svg>
+                                <h3 class="text-xl font-bold text-white">Conservatieve Media</h3>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-8">
+                            <?php
+                            $rechts_news = array_filter($latest_news, function($news) {
+                                return $news['orientation'] === 'rechts';
+                            });
+                            foreach($rechts_news as $index => $news):
+                            ?>
+                                <article class="group bg-white border border-red-100 rounded-2xl shadow-lg overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl relative"
+                                        data-aos="fade-up" 
+                                        data-aos-delay="<?php echo $index * 100; ?>"
+                                        data-aos-duration="800"
+                                        data-aos-once="true">
+                                    <!-- Accent border -->
+                                    <div class="absolute right-0 top-0 h-full w-1 bg-gradient-to-b from-red-400 to-red-600 transform origin-right scale-y-0 group-hover:scale-y-100 transition-transform duration-300"></div>
+                                    
+                                    <div class="relative p-7">
+                                        <!-- News Source & Date -->
+                                        <div class="flex items-center justify-between mb-5">
+                                            <div class="flex items-center space-x-3">
+                                                <div class="relative">
+                                                    <div class="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center overflow-hidden group-hover:bg-red-200 transition-all duration-300">
+                                                        <span class="text-red-600 font-bold text-lg"><?php echo substr($news['source'], 0, 2); ?></span>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <p class="text-sm font-bold text-gray-900"><?php echo $news['source']; ?></p>
+                                                    <span class="text-xs px-2.5 py-1 bg-red-100 text-red-700 rounded-full font-medium"><?php echo $news['bias']; ?></span>
+                                                </div>
+                                            </div>
+                                            <div class="text-xs bg-gray-100 text-gray-600 px-3 py-1.5 rounded-full font-medium">
+                                                <?php echo getRelativeTime($news['publishedAt']); ?>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Rest van de artikel content -->
+                                        <div class="space-y-4">
+                                            <h3 class="text-xl font-bold text-gray-900 group-hover:text-red-600 transition-colors line-clamp-2">
+                                                <?php echo $news['title']; ?>
+                                            </h3>
+                                            <p class="text-gray-600 line-clamp-3 leading-relaxed">
+                                                <?php echo $news['description']; ?>
+                                            </p>
+                                        </div>
+                                        
+                                        <!-- Article Footer -->
+                                        <div class="mt-7 flex items-center justify-between">
+                                            <a href="<?php echo $news['url']; ?>" 
+                                            target="_blank" 
+                                            rel="noopener noreferrer"
+                                            class="inline-flex items-center px-4 py-2 bg-red-50 hover:bg-red-100 text-red-600 font-semibold rounded-lg transition-colors duration-300">
+                                                <span>Lees artikel</span>
+                                                <svg class="w-4 h-4 ml-2 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                                                </svg>
+                                            </a>
+                                            
+                                            <div class="flex items-center text-gray-400 text-sm">
+                                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                                </svg>
+                                                <span>Conservatief perspectief</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </article>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CTA Button met verbeterde styling -->
+                <div class="text-center mt-20">
+                    <a href="<?php echo URLROOT; ?>/nieuws" 
+                       class="inline-flex items-center px-10 py-4 bg-gradient-to-r from-primary to-secondary text-white font-bold rounded-xl hover:opacity-95 transition-all transform hover:scale-105 shadow-xl hover:shadow-2xl group relative overflow-hidden">
+                        <span class="relative z-10 flex items-center">
+                            <span class="mr-1">Bekijk al het nieuws</span>
+                            <svg class="w-5 h-5 ml-2 transform transition-transform duration-500 group-hover:translate-x-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                            <span class="absolute inset-0 -z-10 bg-white opacity-0 group-hover:opacity-20 rounded-xl transition-opacity"></span>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Peiling Section met opvallend design -->
     <section class="py-16 bg-white relative overflow-hidden -mt-1">
         <!-- Decoratieve elementen -->
@@ -1567,349 +1910,6 @@ require_once 'views/templates/header.php';
         </div>
     </section>
 
-    <!-- Laatste Nieuws & Blogs Sections -->
-    <section class="py-16 bg-gradient-to-b from-gray-50 to-white">
-        <div class="container mx-auto px-4">
-            <!-- Laatste Blogs -->
-            <div class="mb-20 relative">
-                <!-- Decoratieve elementen -->
-                <div class="absolute -top-20 left-0 w-120 h-120 bg-primary/10 rounded-full blur-3xl"></div>
-                <div class="absolute bottom-0 right-0 w-120 h-120 bg-secondary/10 rounded-full blur-3xl"></div>
-                <div class="absolute top-1/3 left-1/4 w-64 h-64 bg-green-400/5 rounded-full blur-2xl"></div>
-                <div class="absolute bottom-1/2 right-1/3 w-48 h-48 bg-yellow-400/5 rounded-full blur-xl"></div>
-
-                <div class="text-center mb-20 relative" data-aos="fade-up" data-aos-once="true">
-                    <span class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-9xl text-gray-100 font-bold opacity-60 select-none">BLOGS</span>
-                    <h2 class="text-5xl font-extrabold text-gray-900 mb-5 relative">
-                        <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Laatste Blogs</span>
-                    </h2>
-                    <div class="w-32 h-1.5 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full mb-6"></div>
-                    <p class="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">Ontdek mijn meest recente politieke analyses en inzichten</p>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                    <?php foreach($latest_blogs as $index => $blog): ?>
-                        <article class="group relative bg-white rounded-2xl shadow-lg overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl border border-gray-100" 
-                                data-aos="fade-up" 
-                                data-aos-delay="<?php echo $index * 100; ?>"
-                                data-aos-duration="800"
-                                data-aos-easing="ease-out-cubic"
-                                data-aos-once="true">
-                            <!-- Decoratieve hover accent lijn -->
-                            <div class="absolute inset-0 top-auto h-1 bg-gradient-to-r from-primary to-secondary transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 z-10"></div>
-                            
-                            <?php 
-                            // Check of de blog minder dan 12 uur oud is
-                            $published_time = strtotime($blog->published_at);
-                            $twelve_hours_ago = time() - (12 * 3600); // 12 uur in seconden
-                            
-                            if ($published_time > $twelve_hours_ago): 
-                            ?>
-                                <!-- Nieuw Badge voor recent geplaatste blogs -->
-                                <div class="absolute top-4 right-4 z-20">
-                                    <div class="inline-flex items-center px-3 py-1.5 rounded-full bg-gradient-to-r from-primary to-secondary text-white text-sm font-bold shadow-lg">
-                                        <span class="relative flex h-2 w-2 mr-2">
-                                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-                                            <span class="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
-                                        </span>
-                                        NIEUW
-                                    </div>
-                                </div>
-                                <!-- Extra highlight effect voor nieuwe blogs -->
-                                <div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5 pointer-events-none"></div>
-                            <?php endif; ?>
-
-                            <a href="<?php echo URLROOT . '/blogs/view/' . $blog->slug; ?>" class="block relative">
-                                <?php if ($blog->image_path): ?>
-                                    <div class="relative h-52 overflow-hidden">
-                                        <img src="<?php echo URLROOT . '/' . $blog->image_path; ?>" 
-                                             alt="<?php echo htmlspecialchars($blog->title); ?>"
-                                             class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110">
-                                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                                    </div>
-                                <?php else: ?>
-                                    <!-- Fallback voor blogs zonder afbeelding -->
-                                    <div class="h-40 bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
-                                        <svg class="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-                                        </svg>
-                                    </div>
-                                <?php endif; ?>
-
-                                <div class="p-7">
-                                    <!-- Auteur en datum info met verbeterd design -->
-                                    <div class="flex items-center justify-between mb-5">
-                                        <div class="flex items-center space-x-3">
-                                            <div class="w-10 h-10 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full flex items-center justify-center overflow-hidden">
-                                                <img src="https://media.licdn.com/dms/image/v2/D4E03AQH41qDaDSt19A/profile-displayphoto-shrink_800_800/B4EZWO8j20HgAg-/0/1741859995715?e=1749081600&v=beta&t=RsXjUDf5AAjzVEK7lMDS2InjE18FehpMDQB7JxICP64" 
-                                                     alt="<?php echo htmlspecialchars($blog->author_name); ?>"
-                                                     class="w-full h-full object-cover">
-                                                </div>
-                                            <span class="text-sm font-bold text-gray-800"><?php echo htmlspecialchars($blog->author_name); ?></span>
-                                        </div>
-                                        
-                                        <div class="text-xs bg-gray-100 text-gray-600 px-3 py-1.5 rounded-full font-medium flex items-center">
-                                            <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                            </svg>
-                                            <?php echo getRelativeTime($blog->published_at); ?>
-                                        </div>
-                                    </div>
-
-                                    <h2 class="text-2xl font-bold text-gray-900 mb-4 group-hover:text-primary transition-colors duration-300 line-clamp-2">
-                                        <?php echo htmlspecialchars($blog->title); ?>
-                                    </h2>
-
-                                    <p class="text-gray-600 mb-6 line-clamp-3 leading-relaxed">
-                                        <?php echo htmlspecialchars($blog->summary); ?>
-                                    </p>
-
-                                    <!-- Actieknop met verbeterd ontwerp -->
-                                    <div class="flex items-center justify-between pt-2">
-                                        <div class="inline-flex items-center px-4 py-2 bg-primary/5 hover:bg-primary/10 text-primary font-semibold rounded-lg transition-colors duration-300">
-                                            <span>Lees meer</span>
-                                            <svg class="w-4 h-4 ml-2 transform transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                                            </svg>
-                                        </div>
-                                        
-                                        <!-- Leestijd indicatie vervangen door likes -->
-                                        <div class="flex items-center text-gray-400 text-sm">
-                                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-                                            </svg>
-                                            <span>
-                                                <?php 
-                                                    // Toon het aantal likes uit de database
-                                                    echo (isset($blog->likes) && $blog->likes > 0) ? $blog->likes : '0';
-                                                    echo ' likes';
-                                                ?>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                            
-                            <!-- Decoratieve hoekelementen -->
-                            <div class="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-primary/5 to-secondary/5 transform rotate-45 translate-x-10 -translate-y-10 group-hover:translate-x-6 group-hover:-translate-y-6 transition-transform duration-700"></div>
-                        </article>
-                    <?php endforeach; ?>
-                </div>
-
-                <!-- CTA Button met verbeterde styling -->
-                <div class="text-center mt-20" data-aos="zoom-in" data-aos-delay="300" data-aos-once="true">
-                    <a href="<?php echo URLROOT; ?>/blogs" 
-                       class="inline-flex items-center px-10 py-4 bg-gradient-to-r from-primary to-secondary text-white font-bold rounded-xl hover:opacity-95 transition-all transform hover:scale-105 shadow-xl hover:shadow-2xl group relative overflow-hidden">
-                        <span class="relative z-10 flex items-center">
-                            <span class="mr-1">Bekijk alle blogs</span>
-                            <svg class="w-5 h-5 ml-2 transform transition-transform duration-500 group-hover:translate-x-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                            </svg>
-                            <span class="absolute inset-0 -z-10 bg-white opacity-0 group-hover:opacity-20 rounded-xl transition-opacity"></span>
-                        </span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Laatste Nieuws -->
-            <div class="relative py-24" data-aos="fade-up" data-aos-once="true">
-                <!-- Decoratieve elementen -->
-                <div class="absolute -top-20 right-0 w-120 h-120 bg-primary/10 rounded-full blur-3xl"></div>
-                <div class="absolute bottom-20 left-0 w-120 h-120 bg-secondary/10 rounded-full blur-3xl"></div>
-                <div class="absolute top-1/3 right-1/4 w-64 h-64 bg-blue-400/5 rounded-full blur-2xl"></div>
-                <div class="absolute top-1/2 left-1/3 w-48 h-48 bg-red-400/5 rounded-full blur-xl"></div>
-
-                <div class="text-center mb-20 relative" data-aos="fade-up" data-aos-once="true">
-                    <span class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-9xl text-gray-100 font-bold opacity-60 select-none">NIEUWS</span>
-                    <h2 class="text-5xl font-extrabold text-gray-900 mb-5 relative">
-                        <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Laatste Politiek Nieuws</span>
-                    </h2>
-                    <div class="w-32 h-1.5 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full mb-6"></div>
-                    <p class="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">Blijf op de hoogte van de laatste ontwikkelingen in de Nederlandse politiek door beide perspectieven te vergelijken</p>
-                </div>
-
-                <!-- Laatste Nieuws Grid -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 relative">
-                    <!-- Links georiënteerde bronnen -->
-                    <div class="space-y-10" data-aos="fade-right" data-aos-duration="1000" data-aos-once="true">
-                        <div class="flex items-center justify-center lg:justify-start">
-                            <div class="bg-gradient-to-r from-blue-500 to-blue-700 px-5 py-3 rounded-xl shadow-md inline-flex items-center">
-                                <svg class="w-5 h-5 mr-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                                </svg>
-                                <h3 class="text-xl font-bold text-white">Progressieve Media</h3>
-                            </div>
-                        </div>
-                        
-                        <div class="space-y-8">
-                            <?php
-                            $links_news = array_filter($latest_news, function($news) {
-                                return $news['orientation'] === 'links';
-                            });
-                            foreach($links_news as $index => $news):
-                            ?>
-                                <article class="group bg-white border border-blue-100 rounded-2xl shadow-lg overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl relative"
-                                        data-aos="fade-up" 
-                                        data-aos-delay="<?php echo $index * 100; ?>"
-                                        data-aos-duration="800"
-                                        data-aos-once="true">
-                                    <!-- Accent border -->
-                                    <div class="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-blue-400 to-blue-600 transform origin-left scale-y-0 group-hover:scale-y-100 transition-transform duration-300"></div>
-                                    
-                                    <div class="relative p-7">
-                                        <!-- News Source & Date -->
-                                        <div class="flex items-center justify-between mb-5">
-                                            <div class="flex items-center space-x-3">
-                                                <div class="relative">
-                                                    <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center overflow-hidden group-hover:bg-blue-200 transition-all duration-300">
-                                                        <span class="text-blue-600 font-bold text-lg"><?php echo substr($news['source'], 0, 2); ?></span>
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    <p class="text-sm font-bold text-gray-900"><?php echo $news['source']; ?></p>
-                                                    <span class="text-xs px-2.5 py-1 bg-blue-100 text-blue-700 rounded-full font-medium"><?php echo $news['bias']; ?></span>
-                                                </div>
-                                            </div>
-                                            <div class="text-xs bg-gray-100 text-gray-600 px-3 py-1.5 rounded-full font-medium">
-                                                <?php echo getRelativeTime($news['publishedAt']); ?>
-                                            </div>
-                                        </div>
-                                        
-                                        <!-- Rest van de artikel content -->
-                                        <div class="space-y-4">
-                                            <h3 class="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2">
-                                                <?php echo $news['title']; ?>
-                                            </h3>
-                                            <p class="text-gray-600 line-clamp-3 leading-relaxed">
-                                                <?php echo $news['description']; ?>
-                                            </p>
-                                        </div>
-                                        
-                                        <!-- Article Footer -->
-                                        <div class="mt-7 flex items-center justify-between">
-                                            <a href="<?php echo $news['url']; ?>" 
-                                            target="_blank" 
-                                            rel="noopener noreferrer"
-                                            class="inline-flex items-center px-4 py-2 bg-blue-50 hover:bg-blue-100 text-blue-600 font-semibold rounded-lg transition-colors duration-300">
-                                                <span>Lees artikel</span>
-                                                <svg class="w-4 h-4 ml-2 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
-                                                </svg>
-                                            </a>
-                                            
-                                            <div class="flex items-center text-gray-400 text-sm">
-                                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                                                </svg>
-                                                <span>Progressief perspectief</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </article>
-                            <?php endforeach; ?>
-                        </div>
-                    </div>
-
-                    <!-- Rechts georiënteerde bronnen -->
-                    <div class="space-y-10" data-aos="fade-left" data-aos-duration="1000" data-aos-once="true">
-                        <div class="flex items-center justify-center lg:justify-start">
-                            <div class="bg-gradient-to-r from-red-500 to-red-700 px-5 py-3 rounded-xl shadow-md inline-flex items-center">
-                                <svg class="w-5 h-5 mr-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                                </svg>
-                                <h3 class="text-xl font-bold text-white">Conservatieve Media</h3>
-                            </div>
-                        </div>
-                        
-                        <div class="space-y-8">
-                            <?php
-                            $rechts_news = array_filter($latest_news, function($news) {
-                                return $news['orientation'] === 'rechts';
-                            });
-                            foreach($rechts_news as $index => $news):
-                            ?>
-                                <article class="group bg-white border border-red-100 rounded-2xl shadow-lg overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl relative"
-                                        data-aos="fade-up" 
-                                        data-aos-delay="<?php echo $index * 100; ?>"
-                                        data-aos-duration="800"
-                                        data-aos-once="true">
-                                    <!-- Accent border -->
-                                    <div class="absolute right-0 top-0 h-full w-1 bg-gradient-to-b from-red-400 to-red-600 transform origin-right scale-y-0 group-hover:scale-y-100 transition-transform duration-300"></div>
-                                    
-                                    <div class="relative p-7">
-                                        <!-- News Source & Date -->
-                                        <div class="flex items-center justify-between mb-5">
-                                            <div class="flex items-center space-x-3">
-                                                <div class="relative">
-                                                    <div class="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center overflow-hidden group-hover:bg-red-200 transition-all duration-300">
-                                                        <span class="text-red-600 font-bold text-lg"><?php echo substr($news['source'], 0, 2); ?></span>
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    <p class="text-sm font-bold text-gray-900"><?php echo $news['source']; ?></p>
-                                                    <span class="text-xs px-2.5 py-1 bg-red-100 text-red-700 rounded-full font-medium"><?php echo $news['bias']; ?></span>
-                                                </div>
-                                            </div>
-                                            <div class="text-xs bg-gray-100 text-gray-600 px-3 py-1.5 rounded-full font-medium">
-                                                <?php echo getRelativeTime($news['publishedAt']); ?>
-                                            </div>
-                                        </div>
-                                        
-                                        <!-- Rest van de artikel content -->
-                                        <div class="space-y-4">
-                                            <h3 class="text-xl font-bold text-gray-900 group-hover:text-red-600 transition-colors line-clamp-2">
-                                                <?php echo $news['title']; ?>
-                                            </h3>
-                                            <p class="text-gray-600 line-clamp-3 leading-relaxed">
-                                                <?php echo $news['description']; ?>
-                                            </p>
-                                        </div>
-                                        
-                                        <!-- Article Footer -->
-                                        <div class="mt-7 flex items-center justify-between">
-                                            <a href="<?php echo $news['url']; ?>" 
-                                            target="_blank" 
-                                            rel="noopener noreferrer"
-                                            class="inline-flex items-center px-4 py-2 bg-red-50 hover:bg-red-100 text-red-600 font-semibold rounded-lg transition-colors duration-300">
-                                                <span>Lees artikel</span>
-                                                <svg class="w-4 h-4 ml-2 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
-                                                </svg>
-                                            </a>
-                                            
-                                            <div class="flex items-center text-gray-400 text-sm">
-                                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                                                </svg>
-                                                <span>Conservatief perspectief</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </article>
-                            <?php endforeach; ?>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- CTA Button met verbeterde styling -->
-                <div class="text-center mt-20">
-                    <a href="<?php echo URLROOT; ?>/nieuws" 
-                       class="inline-flex items-center px-10 py-4 bg-gradient-to-r from-primary to-secondary text-white font-bold rounded-xl hover:opacity-95 transition-all transform hover:scale-105 shadow-xl hover:shadow-2xl group relative overflow-hidden">
-                        <span class="relative z-10 flex items-center">
-                            <span class="mr-1">Bekijk al het nieuws</span>
-                            <svg class="w-5 h-5 ml-2 transform transition-transform duration-500 group-hover:translate-x-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                            </svg>
-                            <span class="absolute inset-0 -z-10 bg-white opacity-0 group-hover:opacity-20 rounded-xl transition-opacity"></span>
-                        </span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Actuele Thema's Grid -->
     <section class="py-24 relative overflow-hidden">
         <!-- Decoratieve elementen -->
@@ -2025,89 +2025,89 @@ require_once 'views/templates/header.php';
     </section>
 
     <!-- Newsletter Subscription Section -->
-    <section class="py-16 px-4 md:px-8 bg-gradient-to-br from-primary/5 to-gray-50 rounded-3xl mx-4 mb-16 mt-16">
+    <section class="py-12 px-4 md:px-8 bg-gradient-to-br from-primary/10 to-gray-100 rounded-3xl mx-4 mb-0 mt-16 shadow-lg">
         <div class="max-w-4xl mx-auto text-center">
-            <div class="animate-float-medium inline-block mb-6 bg-white p-4 rounded-2xl shadow-md">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div class="animate-float-slow inline-block mb-6 bg-white p-3 rounded-full shadow-md">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-            </svg>
+                </svg>
+            </div>
+            <h2 class="text-3xl font-bold text-gray-800 mb-3" data-aos="fade-up">Blijf op de hoogte van het laatste nieuws</h2>
+            <p class="text-lg text-gray-600 mb-6 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">Schrijf je in voor onze nieuwsbrief en ontvang automatisch een bericht wanneer er een nieuwe blog wordt gepubliceerd.</p>
+            
+            <div class="max-w-md mx-auto" data-aos="fade-up" data-aos-delay="200">
+                <form id="newsletterForm" class="flex flex-col sm:flex-row gap-3">
+                    <input type="email" name="email" id="newsletter-email" placeholder="Je e-mailadres" required 
+                           class="flex-1 px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary shadow-sm">
+                    <button type="submit" class="px-6 py-3 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-lg transition-all transform hover:scale-105 shadow-md hover:shadow-lg">
+                        Inschrijven
+                    </button>
+                </form>
+                <div id="newsletterMessage" class="mt-4 text-center hidden"></div>
+            </div>
         </div>
-        <h2 class="text-3xl font-bold text-gray-800 mb-4">Blijf op de hoogte van het laatste nieuws</h2>
-        <p class="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">Schrijf je in voor onze nieuwsbrief en ontvang automatisch een bericht wanneer er een nieuwe blog wordt gepubliceerd.</p>
-        
-        <div class="max-w-md mx-auto">
-            <form id="newsletterForm" class="flex flex-col sm:flex-row gap-3">
-                <input type="email" name="email" id="newsletter-email" placeholder="Je e-mailadres" required 
-                       class="flex-1 px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary">
-                <button type="submit" class="px-6 py-3 bg-primary text-white font-semibold rounded-lg transition-colors hover:bg-primary/90 focus:ring-2 focus:ring-offset-2 focus:ring-primary">
-                    Inschrijven
-                </button>
-            </form>
-            <div id="newsletterMessage" class="mt-4 text-center hidden"></div>
-        </div>
-    </div>
-</section>
+    </section>
 
-<!-- Vervolg van de pagina... -->
+    <!-- Vervolg van de pagina... -->
 
-<!-- Swiper JS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <!-- Swiper JS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-<!-- Initialisatie van de blog hero slider -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Hero blog slider
-    const heroSwiper = new Swiper('.hero-blog-swiper', {
-        slidesPerView: 1,
-        spaceBetween: 0,
-        speed: 800,
-        effect: 'fade',
-        fadeEffect: {
-            crossFade: true
-        },
-        autoplay: {
-            delay: 5000,
-            disableOnInteraction: false,
-            pauseOnMouseEnter: true
-        },
-        loop: true,
-        grabCursor: true,
-        pagination: {
-            el: '.hero-swiper-pagination',
-            clickable: true,
-            bulletClass: 'inline-block w-2 h-2 mx-1 cursor-pointer transition-all duration-300 bg-white/30 hover:bg-white/70 rounded-full',
-            bulletActiveClass: 'w-6 bg-gradient-to-r from-primary to-secondary'
-        },
-        navigation: {
-            nextEl: '.hero-swiper-button-next',
-            prevEl: '.hero-swiper-button-prev'
-        },
-        on: {
-            autoplayTimeLeft(s, time, progress) {
-                const progressBar = document.querySelector('.swiper-progress-bar');
-                if (progressBar) {
-                    progressBar.style.width = (1 - progress) * 100 + '%';
+    <!-- Initialisatie van de blog hero slider -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Hero blog slider
+        const heroSwiper = new Swiper('.hero-blog-swiper', {
+            slidesPerView: 1,
+            spaceBetween: 0,
+            speed: 800,
+            effect: 'fade',
+            fadeEffect: {
+                crossFade: true
+            },
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+                pauseOnMouseEnter: true
+            },
+            loop: true,
+            grabCursor: true,
+            pagination: {
+                el: '.hero-swiper-pagination',
+                clickable: true,
+                bulletClass: 'inline-block w-2 h-2 mx-1 cursor-pointer transition-all duration-300 bg-white/30 hover:bg-white/70 rounded-full',
+                bulletActiveClass: 'w-6 bg-gradient-to-r from-primary to-secondary'
+            },
+            navigation: {
+                nextEl: '.hero-swiper-button-next',
+                prevEl: '.hero-swiper-button-prev'
+            },
+            on: {
+                autoplayTimeLeft(s, time, progress) {
+                    const progressBar = document.querySelector('.swiper-progress-bar');
+                    if (progressBar) {
+                        progressBar.style.width = (1 - progress) * 100 + '%';
+                    }
+                },
+                init: function() {
+                    // Voeg extra klasse toe aan de actieve slide
+                    this.slides.forEach((slide) => {
+                        slide.classList.remove('swiper-slide-active-custom');
+                    });
+                    this.slides[this.activeIndex].classList.add('swiper-slide-active-custom');
+                },
+                slideChange: function() {
+                    // Update de actieve slide klasse
+                    this.slides.forEach((slide) => {
+                        slide.classList.remove('swiper-slide-active-custom');
+                    });
+                    this.slides[this.activeIndex].classList.add('swiper-slide-active-custom');
                 }
-            },
-            init: function() {
-                // Voeg extra klasse toe aan de actieve slide
-                this.slides.forEach((slide) => {
-                    slide.classList.remove('swiper-slide-active-custom');
-                });
-                this.slides[this.activeIndex].classList.add('swiper-slide-active-custom');
-            },
-            slideChange: function() {
-                // Update de actieve slide klasse
-                this.slides.forEach((slide) => {
-                    slide.classList.remove('swiper-slide-active-custom');
-                });
-                this.slides[this.activeIndex].classList.add('swiper-slide-active-custom');
             }
-        }
+        });
     });
-});
-</script>
+    </script>
 
 <?php require_once 'views/templates/footer.php'; ?>
 
