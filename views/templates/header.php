@@ -966,7 +966,7 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                                     <?php
                                     if (isset($_SESSION['username']) && $_SESSION['username'] === 'Naoufal') {
                                         // Special profile photo for Naoufal
-                                        $profilePhotoUrl = "https://media.licdn.com/dms/image/v2/D4E03AQH41qDaDSt19A/profile-displayphoto-shrink_800_800/B4EZWO8j20HgAg-/0/1741859995715?e=1749081600&v=beta&t=RsXjUDf5AAjzVEK7lMDS2InjE18FehpMDQB7JxICP64";
+                                        $profilePhotoUrl = "https://media.licdn.com/dms/image/v2/D4E03AQFQkWCitMT1ug/profile-displayphoto-shrink_400_400/B4EZYuubOTHMAg-/0/1744540644719?e=1750291200&v=beta&t=Qs38y2l_-SWd_N2CcavekytGxrU06ixhojbHdDktfxM";
                                         ?>
                                         <img src="<?php echo $profilePhotoUrl; ?>" 
                                              alt="Profile" class="w-full h-full object-cover">
