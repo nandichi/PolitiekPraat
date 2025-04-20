@@ -1,81 +1,86 @@
 <?php require_once BASE_PATH . '/views/templates/header.php'; ?>
 
-<!-- Decoratieve achtergrond patronen -->
+<!-- Stijlvolle achtergrond met subtiel patroon -->
 <div class="fixed inset-0 z-0 opacity-10">
     <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%239C92AC\" fill-opacity=\"0.15\"%3E%3Cpath d=\"M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-50"></div>
 </div>
 
-<main class="min-h-screen py-12 relative z-10 bg-gradient-to-br from-gray-50 via-white to-gray-50">
-    <!-- Decoratieve elementen -->
+<main class="min-h-screen py-8 md:py-16 relative z-10 bg-gradient-to-br from-gray-50 via-white to-gray-50">
+    <!-- Decoratieve achtergrond elementen -->
     <div class="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-primary/10 to-transparent"></div>
     <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-secondary/10 to-transparent"></div>
     
-    <div class="container mx-auto px-4">
+    <div class="container mx-auto px-4 sm:px-6">
         <div class="max-w-5xl mx-auto">
-            <!-- Header Sectie -->
-            <div class="text-center mb-12" data-aos="fade-down">
-                <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4 relative inline-block">
+            <!-- Header met moderne styling -->
+            <div class="text-center mb-10" data-aos="fade-down">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 relative inline-block tracking-tight">
                     <span class="relative z-10">Nieuwe Blog Schrijven</span>
-                    <div class="absolute -bottom-2 left-0 w-full h-3 bg-primary/20 -rotate-1"></div>
+                    <div class="absolute -bottom-3 left-0 w-full h-3 bg-primary/20 -rotate-1 transform origin-left scale-110"></div>
                 </h1>
-                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
                     Deel jouw politieke inzichten en draag bij aan het maatschappelijke debat
                 </p>
             </div>
 
-            <!-- Hoofdformulier -->
+            <!-- Hoofdformulier met verbeterde styling -->
             <form action="<?php echo URLROOT; ?>/blogs/create" method="POST" enctype="multipart/form-data" 
-                  class="bg-white rounded-2xl shadow-xl overflow-hidden transform transition-all duration-500 hover:shadow-2xl">
+                  class="bg-white rounded-3xl shadow-xl overflow-hidden transform transition-all duration-500 hover:shadow-2xl relative">
                 
-                <!-- Decoratieve header -->
-                <div class="bg-gradient-to-r from-primary to-secondary h-2"></div>
+                <!-- Decoratieve header bar met gradient -->
+                <div class="bg-gradient-to-r from-primary via-primary/90 to-secondary h-2"></div>
 
-                <div class="p-8">
+                <!-- Subtiele strepen patroon voor decoratie -->
+                <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-primary/5 to-secondary/5 opacity-70 rounded-bl-full"></div>
+                
+                <div class="p-6 sm:p-10 relative">
                     <!-- Titel Sectie -->
                     <div class="mb-8" data-aos="fade-up" data-aos-delay="100">
-                        <label for="title" class="block text-sm font-medium text-gray-700 mb-2">
+                        <label for="title" class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                            <svg class="w-5 h-5 text-primary mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
                             Titel van je blog
                         </label>
                         <div class="relative group">
                             <input type="text" 
                                    name="title" 
                                    id="title" 
-                                   class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all duration-300 text-lg font-medium"
+                                   class="w-full px-5 py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition-all duration-300 text-lg font-medium bg-gray-50/50"
                                    required
                                    placeholder="Een pakkende titel voor je blog...">
                             <div class="absolute inset-0 bg-primary/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
                         </div>
                     </div>
 
-                    <!-- Afbeelding Upload Sectie -->
-                    <div class="mb-8" data-aos="fade-up" data-aos-delay="200">
-                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                    <!-- Afbeelding Upload Sectie - verbeterd ontwerp -->
+                    <div class="mb-10" data-aos="fade-up" data-aos-delay="200">
+                        <label class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                            <svg class="w-5 h-5 text-primary mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4-4a2 2 0 012.8 0L16 17m-2-2l1.6-1.6a2 2 0 012.8 0L20 15m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
                             Header afbeelding
                         </label>
                         <div class="relative">
-                            <!-- Hoofdcontainer voor upload -->
+                            <!-- Upload zone met verbeterd design -->
                             <div class="group/upload relative overflow-hidden">
-                                <!-- Upload zone -->
-                                <div class="relative flex flex-col items-center gap-6 p-8 bg-white rounded-2xl border-2 border-dashed border-gray-200 transition-all duration-500 ease-out hover:border-primary">
-                                    <!-- Achtergrond effect -->
-                                    <div class="absolute inset-0 bg-gradient-to-br from-primary/[0.02] to-secondary/[0.02] opacity-0 group-hover/upload:opacity-100 transition-opacity duration-500"></div>
-                                    
-                                    <!-- Geanimeerde cirkels -->
+                                <div class="relative flex flex-col items-center gap-6 p-8 bg-gradient-to-br from-white to-gray-50 rounded-2xl border-2 border-dashed border-gray-200 transition-all duration-500 ease-out hover:border-primary hover:from-primary/[0.02] hover:to-secondary/[0.02]">
+                                    <!-- Decoratieve elementen -->
                                     <div class="absolute -left-4 -top-4 w-32 h-32 bg-primary/5 rounded-full mix-blend-multiply filter blur-xl opacity-0 group-hover/upload:opacity-70 transition-all duration-700 group-hover/upload:translate-x-4 group-hover/upload:translate-y-4"></div>
                                     <div class="absolute -right-4 -bottom-4 w-32 h-32 bg-secondary/5 rounded-full mix-blend-multiply filter blur-xl opacity-0 group-hover/upload:opacity-70 transition-all duration-700 group-hover/upload:translate-x-4 group-hover/upload:translate-y-4"></div>
 
-                                    <!-- Upload icoon container -->
+                                    <!-- Upload icoon container met verbeterde animaties -->
                                     <div class="relative z-10 group/icon">
-                                        <div class="p-4 bg-gray-50 rounded-xl border border-gray-100 transition-all duration-300 group-hover/upload:bg-white group-hover/upload:shadow-lg group-hover/upload:scale-110">
+                                        <div class="p-5 bg-white rounded-2xl border border-gray-100 shadow-sm transition-all duration-500 group-hover/upload:bg-white group-hover/upload:shadow-lg group-hover/upload:scale-110">
                                             <svg class="w-12 h-12 text-gray-400 transition-colors duration-300 group-hover/upload:text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                                                 <path class="transition-all duration-500" d="M4 16l4-4a2 2 0 012.8 0L16 17m-2-2l1.6-1.6a2 2 0 012.8 0L20 15m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                             </svg>
                                         </div>
                                     </div>
 
-                                    <!-- Upload tekst en knop -->
+                                    <!-- Upload tekst en knop met verbeterd ontwerp -->
                                     <div class="relative z-10 text-center space-y-4">
-                                        <label for="image" class="group/button inline-flex items-center px-6 py-3 bg-white border-2 border-primary/20 text-primary font-medium rounded-xl cursor-pointer transition-all duration-300 hover:border-primary hover:bg-primary hover:text-white">
+                                        <label for="image" class="group/button inline-flex items-center px-6 py-3 bg-white border-2 border-primary/30 text-primary font-medium rounded-xl cursor-pointer shadow-sm transition-all duration-300 hover:border-primary hover:bg-primary hover:text-white hover:shadow-md">
                                             <svg class="w-5 h-5 mr-2 transition-transform duration-300 group-hover/button:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
                                             </svg>
@@ -97,9 +102,9 @@
                                     </div>
                                 </div>
 
-                                <!-- Preview container -->
+                                <!-- Preview container met verbeterde styling -->
                                 <div id="imagePreview" class="hidden mt-6">
-                                    <div class="relative bg-gray-50 rounded-2xl p-4">
+                                    <div class="relative bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
                                         <!-- Preview header -->
                                         <div class="flex items-center justify-between mb-3">
                                             <div class="flex items-center space-x-2">
@@ -118,8 +123,8 @@
                                             </button>
                                         </div>
 
-                                        <!-- Preview image container -->
-                                        <div class="relative rounded-xl overflow-hidden bg-white shadow-inner">
+                                        <!-- Preview image container met verbeterde styling -->
+                                        <div class="relative rounded-xl overflow-hidden bg-white shadow-md">
                                             <div class="aspect-[16/9] overflow-hidden">
                                                 <img src="" alt="Preview" class="w-full h-full object-cover transition-transform duration-700 hover:scale-105">
                                             </div>
@@ -135,140 +140,222 @@
                     </div>
 
                     <!-- Video Upload Sectie -->
-                    <div class="mb-8" data-aos="fade-up" data-aos-delay="250">
-                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                    <div class="mb-10" data-aos="fade-up" data-aos-delay="250">
+                        <label class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                            <svg class="w-5 h-5 text-primary mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
                             Video toevoegen
                         </label>
-                        <div class="space-y-4">
-                            <!-- Video URL input -->
-                            <div>
-                                <label for="video_url" class="block text-sm text-gray-600 mb-2">Video URL (YouTube, Vimeo)</label>
-                                <div class="relative group">
+                        
+                        <!-- Video opties kaartweergave -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Video URL input kaart -->
+                            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300">
+                                <div class="flex items-center mb-3">
+                                    <svg class="w-5 h-5 text-primary mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/>
+                                    </svg>
+                                    <h3 class="font-medium text-gray-900">Video URL</h3>
+                                </div>
+                                
+                                <div class="relative group mb-2">
                                     <input type="url" 
                                            name="video_url" 
                                            id="video_url" 
-                                           class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all duration-300"
+                                           class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition-all duration-300 bg-gray-50/50"
                                            placeholder="https://www.youtube.com/watch?v=...">
                                     <div class="absolute inset-0 bg-primary/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
                                 </div>
-                                <p class="mt-1 text-sm text-gray-500">Plak hier een YouTube of Vimeo video URL</p>
+                                <p class="text-sm text-gray-500">Plak een YouTube of Vimeo video URL</p>
                             </div>
 
-                            <div class="relative">
-                                <div class="absolute inset-0 flex items-center">
-                                    <div class="w-full border-t border-gray-200"></div>
+                            <!-- Video bestand upload kaart -->
+                            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300">
+                                <div class="flex items-center mb-3">
+                                    <svg class="w-5 h-5 text-primary mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                                    </svg>
+                                    <h3 class="font-medium text-gray-900">Video bestand</h3>
                                 </div>
-                                <div class="relative flex justify-center text-sm">
-                                    <span class="px-2 bg-white text-gray-500">OF</span>
-                                </div>
-                            </div>
-
-                            <!-- Video bestand upload -->
-                            <div>
-                                <label for="video" class="block text-sm text-gray-600 mb-2">Video bestand uploaden</label>
+                                
                                 <div class="relative group/upload">
-                                    <div class="relative flex flex-col items-center gap-6 p-8 bg-white rounded-2xl border-2 border-dashed border-gray-200 transition-all duration-500 ease-out hover:border-primary">
-                                        <!-- Achtergrond effect -->
-                                        <div class="absolute inset-0 bg-gradient-to-br from-primary/[0.02] to-secondary/[0.02] opacity-0 group-hover/upload:opacity-100 transition-opacity duration-500"></div>
-                                        
-                                        <!-- Upload icoon -->
-                                        <div class="relative z-10 group/icon">
-                                            <div class="p-4 bg-gray-50 rounded-xl border border-gray-100 transition-all duration-300 group-hover/upload:bg-white group-hover/upload:shadow-lg group-hover/upload:scale-110">
-                                                <svg class="w-12 h-12 text-gray-400 transition-colors duration-300 group-hover/upload:text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                                    <path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                                </svg>
-                                            </div>
-                                        </div>
-
-                                        <!-- Upload tekst en knop -->
-                                        <div class="relative z-10 text-center space-y-4">
-                                            <label for="video" class="group/button inline-flex items-center px-6 py-3 bg-white border-2 border-primary/20 text-primary font-medium rounded-xl cursor-pointer transition-all duration-300 hover:border-primary hover:bg-primary hover:text-white">
-                                                <svg class="w-5 h-5 mr-2 transition-transform duration-300 group-hover/button:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-                                                </svg>
-                                                <span>Video kiezen</span>
-                                                <input id="video" name="video" type="file" class="sr-only" accept="video/*">
-                                            </label>
-                                            
-                                            <div class="flex flex-col items-center space-y-2">
-                                                <p class="text-sm text-gray-500">
-                                                    Sleep je video hierheen of gebruik de knop hierboven
-                                                </p>
-                                                <span class="inline-flex items-center px-3 py-1 space-x-1 bg-gray-50 rounded-full text-xs text-gray-500">
-                                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                                    </svg>
-                                                    <span>MP4, WebM of OGG (max. 100MB)</span>
-                                                </span>
-                                            </div>
-                                        </div>
+                                    <div class="relative flex flex-col items-center p-4 bg-gray-50 rounded-xl border border-dashed border-gray-200 transition-all duration-300 hover:bg-gray-50/70 hover:border-primary/30">
+                                        <label for="video" class="w-full group/button flex flex-col items-center justify-center cursor-pointer py-3">
+                                            <svg class="w-8 h-8 text-gray-400 mb-2 transition-colors duration-300 group-hover/button:text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                                <path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                            <span class="text-sm font-medium text-gray-700 group-hover/button:text-primary transition-colors">Klik of sleep om video te uploaden</span>
+                                            <input id="video" name="video" type="file" class="sr-only" accept="video/*">
+                                        </label>
+                                        <p class="text-xs text-gray-500 mt-1">MP4, WebM of OGG (max. 100MB)</p>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
 
-                                    <!-- Video Preview -->
-                                    <div id="videoPreview" class="hidden mt-6">
-                                        <div class="relative bg-gray-50 rounded-2xl p-4">
-                                            <!-- Preview header -->
-                                            <div class="flex items-center justify-between mb-3">
-                                                <div class="flex items-center space-x-2">
-                                                    <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
-                                                    </svg>
-                                                    <h3 class="font-medium text-gray-900">Video preview</h3>
-                                                </div>
-                                                <button type="button" 
-                                                        onclick="removeVideo()" 
-                                                        class="group inline-flex items-center px-3 py-1 space-x-1 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors duration-300">
-                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                                    </svg>
-                                                    <span class="text-sm font-medium">Verwijderen</span>
-                                                </button>
-                                            </div>
+                        <!-- Video Preview -->
+                        <div id="videoPreview" class="hidden mt-6">
+                            <div class="relative bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
+                                <!-- Preview header -->
+                                <div class="flex items-center justify-between mb-3">
+                                    <div class="flex items-center space-x-2">
+                                        <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                                        </svg>
+                                        <h3 class="font-medium text-gray-900">Video preview</h3>
+                                    </div>
+                                    <button type="button" 
+                                            onclick="removeVideo()" 
+                                            class="group inline-flex items-center px-3 py-1 space-x-1 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors duration-300">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                        </svg>
+                                        <span class="text-sm font-medium">Verwijderen</span>
+                                    </button>
+                                </div>
 
-                                            <!-- Video player container -->
-                                            <div class="relative rounded-xl overflow-hidden bg-black">
-                                                <div class="aspect-video">
-                                                    <video id="videoPlayer" controls class="w-full h-full">
-                                                        <source src="" type="video/mp4">
-                                                        Je browser ondersteunt geen video weergave.
-                                                    </video>
-                                                </div>
-                                                <!-- Video info -->
-                                                <div class="absolute bottom-0 inset-x-0 p-4 bg-gradient-to-t from-black/60 to-transparent">
-                                                    <p class="text-white text-sm" id="videoInfo">Video info laden...</p>
-                                                </div>
-                                            </div>
-                                        </div>
+                                <!-- Video player container -->
+                                <div class="relative rounded-xl overflow-hidden bg-black">
+                                    <div class="aspect-video">
+                                        <video id="videoPlayer" controls class="w-full h-full">
+                                            <source src="" type="video/mp4">
+                                            Je browser ondersteunt geen video weergave.
+                                        </video>
+                                    </div>
+                                    <!-- Video info -->
+                                    <div class="absolute bottom-0 inset-x-0 p-4 bg-gradient-to-t from-black/60 to-transparent">
+                                        <p class="text-white text-sm" id="videoInfo">Video info laden...</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Content Editor Sectie -->
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8" data-aos="fade-up" data-aos-delay="300">
-                        <!-- Editor -->
-                        <div>
-                            <label for="content" class="block text-sm font-medium text-gray-700 mb-2">
+                    <!-- Content Editor Sectie - volledig herontworpen met markdown knoppen -->
+                    <div class="mt-10" data-aos="fade-up" data-aos-delay="300">
+                        <div class="mb-6">
+                            <h3 class="text-lg font-medium text-gray-900 mb-1 flex items-center">
+                                <svg class="w-5 h-5 text-primary mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                </svg>
                                 Blog content
-                                <span class="text-primary">(Markdown ondersteund)</span>
-                            </label>
-                            <div class="relative group h-[500px]">
-                                <textarea name="content" 
-                                          id="content" 
-                                          class="w-full h-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all duration-300 font-mono resize-none"
-                                          required
-                                          placeholder="Begin hier met schrijven..."></textarea>
-                                <div class="absolute inset-0 bg-primary/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
-                            </div>
+                            </h3>
+                            <p class="text-sm text-gray-600">Schrijf hier je artikeltekst met ondersteuning voor opmaak</p>
                         </div>
 
-                        <!-- Live Preview -->
-                        <div>
-                            <div class="sticky top-4">
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Live preview</label>
-                                <div id="preview" class="prose prose-lg max-w-none p-6 bg-white rounded-xl border-2 border-gray-200 h-[500px] overflow-y-auto">
+                        <!-- Moderne Editor met Markdown Knoppen -->
+                        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                            <!-- Markdown toolbar -->
+                            <div class="flex flex-wrap items-center gap-1 p-2 border-b border-gray-100 bg-gray-50/70">
+                                <div class="flex items-center divide-x divide-gray-200">
+                                    <!-- Koppen -->
+                                    <div class="pr-1">
+                                        <button type="button" onclick="insertMarkdown('heading')" class="p-1.5 text-gray-600 hover:text-primary hover:bg-gray-100 rounded transition-colors" title="Koptekst">
+                                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    
+                                    <!-- Tekstopmaak -->
+                                    <div class="px-1 flex items-center gap-1">
+                                        <button type="button" onclick="insertMarkdown('bold')" class="p-1.5 text-gray-600 hover:text-primary hover:bg-gray-100 rounded transition-colors" title="Vetgedrukt">
+                                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11h4a4 4 0 100-8H8v8zm0 0v8h5a4 4 0 000-8H8z"/>
+                                            </svg>
+                                        </button>
+                                        <button type="button" onclick="insertMarkdown('italic')" class="p-1.5 text-gray-600 hover:text-primary hover:bg-gray-100 rounded transition-colors" title="Cursief">
+                                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.5 9l-3 9m0 0l-3-9m3 9v-9m0 0H9m6 0h3"/>
+                                            </svg>
+                                        </button>
+                                        <button type="button" onclick="insertMarkdown('quote')" class="p-1.5 text-gray-600 hover:text-primary hover:bg-gray-100 rounded transition-colors" title="Citaat">
+                                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    
+                                    <!-- Lijsten -->
+                                    <div class="px-1 flex items-center gap-1">
+                                        <button type="button" onclick="insertMarkdown('bullet')" class="p-1.5 text-gray-600 hover:text-primary hover:bg-gray-100 rounded transition-colors" title="Opsomming">
+                                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"/>
+                                            </svg>
+                                        </button>
+                                        <button type="button" onclick="insertMarkdown('number')" class="p-1.5 text-gray-600 hover:text-primary hover:bg-gray-100 rounded transition-colors" title="Genummerde lijst">
+                                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    
+                                    <!-- Links en media -->
+                                    <div class="pl-1 flex items-center gap-1">
+                                        <button type="button" onclick="insertMarkdown('link')" class="p-1.5 text-gray-600 hover:text-primary hover:bg-gray-100 rounded transition-colors" title="Link invoegen">
+                                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/>
+                                            </svg>
+                                        </button>
+                                        <button type="button" onclick="insertMarkdown('image')" class="p-1.5 text-gray-600 hover:text-primary hover:bg-gray-100 rounded transition-colors" title="Afbeelding invoegen">
+                                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4-4a2 2 0 012.8 0L16 17m-2-2l1.6-1.6a2 2 0 012.8 0L20 15m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                            </svg>
+                                        </button>
+                                        <button type="button" onclick="insertMarkdown('code')" class="p-1.5 text-gray-600 hover:text-primary hover:bg-gray-100 rounded transition-colors" title="Code blok">
+                                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Editor en Preview Tabs -->
+                            <div class="flex border-b border-gray-100">
+                                <button type="button" 
+                                        id="editorTabBtn" 
+                                        onclick="switchToEditor()" 
+                                        class="px-4 py-2 font-medium text-primary border-b-2 border-primary">
+                                    Bewerken
+                                </button>
+                                <button type="button" 
+                                        id="previewTabBtn" 
+                                        onclick="switchToPreview()" 
+                                        class="px-4 py-2 font-medium text-gray-500 hover:text-gray-700">
+                                    Preview
+                                </button>
+                            </div>
+                            
+                            <!-- Editor Container -->
+                            <div id="editorContainer" class="relative">
+                                <textarea name="content" 
+                                          id="content" 
+                                          class="w-full h-[500px] px-4 py-3 border-0 outline-none transition-all duration-300 font-mono resize-none focus:ring-0"
+                                          required
+                                          placeholder="Begin hier met schrijven... Gebruik de knoppen hierboven voor opmaak."></textarea>
+                            </div>
+                            
+                            <!-- Preview Container -->
+                            <div id="previewContainer" class="hidden h-[500px] overflow-y-auto p-6">
+                                <div id="preview" class="prose prose-lg max-w-none">
                                     <em class="text-gray-500">Begin met typen om de preview te zien...</em>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Handige tips -->
+                        <div class="mt-4 p-4 bg-primary/5 rounded-xl">
+                            <div class="flex items-start">
+                                <svg class="w-5 h-5 text-primary mt-0.5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                <div>
+                                    <p class="text-sm text-gray-600">
+                                        <span class="font-medium text-gray-900">Tip:</span> 
+                                        Gebruik de knoppen hierboven om markdown opmaak toe te voegen. Schakel naar de preview-tab om te zien hoe je artikel eruit zal zien.
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -382,18 +469,18 @@
                         </div>
                     </div>
 
-                    <!-- Actie Knoppen -->
-                    <div class="mt-8 flex items-center justify-between space-x-4" data-aos="fade-up" data-aos-delay="400">
+                    <!-- Actie Knoppen met verbeterd design -->
+                    <div class="mt-10 flex flex-col sm:flex-row items-center justify-between gap-4" data-aos="fade-up" data-aos-delay="400">
                         <a href="<?php echo URLROOT; ?>/blogs" 
-                           class="inline-flex items-center px-4 py-2 sm:px-6 sm:py-3 border-2 border-gray-200 rounded-xl text-gray-600 hover:border-gray-300 hover:text-gray-900 transition-colors duration-300 text-sm sm:text-base">
-                            <svg class="w-4 h-4 sm:w-5 sm:h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                           class="w-full sm:w-auto inline-flex items-center justify-center px-5 py-3 border-2 border-gray-200 rounded-xl text-gray-600 bg-white hover:border-gray-300 hover:text-gray-900 transition-colors duration-300 text-sm font-medium">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12"></path>
                             </svg>
                             Annuleren
                         </a>
                         <button type="submit" 
-                                class="inline-flex items-center px-4 py-2 sm:px-8 sm:py-3 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-xl hover:opacity-90 transition-all transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 text-sm sm:text-base">
-                            <svg class="w-4 h-4 sm:w-5 sm:h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition-all transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 text-sm">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
                             Blog Publiceren
@@ -433,6 +520,84 @@ document.addEventListener('DOMContentLoaded', function() {
     const imageInput = document.getElementById('image');
     const imagePreview = document.getElementById('imagePreview');
     const imageInfoText = document.getElementById('imageInfo');
+    const editorContainer = document.getElementById('editorContainer');
+    const previewContainer = document.getElementById('previewContainer');
+    const editorTabBtn = document.getElementById('editorTabBtn');
+    const previewTabBtn = document.getElementById('previewTabBtn');
+
+    // Tabfunctionaliteit voor editor/preview
+    window.switchToEditor = function() {
+        editorContainer.classList.remove('hidden');
+        previewContainer.classList.add('hidden');
+        editorTabBtn.classList.add('text-primary', 'border-b-2', 'border-primary');
+        editorTabBtn.classList.remove('text-gray-500');
+        previewTabBtn.classList.remove('text-primary', 'border-b-2', 'border-primary');
+        previewTabBtn.classList.add('text-gray-500');
+    };
+
+    window.switchToPreview = function() {
+        updatePreview(); // Zorg dat preview up-to-date is
+        editorContainer.classList.add('hidden');
+        previewContainer.classList.remove('hidden');
+        previewTabBtn.classList.add('text-primary', 'border-b-2', 'border-primary');
+        previewTabBtn.classList.remove('text-gray-500');
+        editorTabBtn.classList.remove('text-primary', 'border-b-2', 'border-primary');
+        editorTabBtn.classList.add('text-gray-500');
+    };
+
+    // Markdown invoegfunctionaliteit
+    window.insertMarkdown = function(type) {
+        // Huidige cursor positie opslaan
+        const start = contentTextarea.selectionStart;
+        const end = contentTextarea.selectionEnd;
+        const selectedText = contentTextarea.value.substring(start, end);
+        
+        let markdownText = '';
+        
+        switch(type) {
+            case 'heading':
+                markdownText = `## ${selectedText || 'Koptekst'}`;
+                break;
+            case 'bold':
+                markdownText = `**${selectedText || 'vetgedrukte tekst'}**`;
+                break;
+            case 'italic':
+                markdownText = `*${selectedText || 'cursieve tekst'}*`;
+                break;
+            case 'quote':
+                markdownText = `> ${selectedText || 'citaat tekst'}`;
+                break;
+            case 'bullet':
+                markdownText = `- ${selectedText || 'lijstitem'}`;
+                break;
+            case 'number':
+                markdownText = `1. ${selectedText || 'genummerd item'}`;
+                break;
+            case 'link':
+                markdownText = `[${selectedText || 'link tekst'}](url)`;
+                break;
+            case 'image':
+                markdownText = `![${selectedText || 'alt tekst'}](afbeelding-url)`;
+                break;
+            case 'code':
+                markdownText = `\`\`\`\n${selectedText || 'code hier'}\n\`\`\``;
+                break;
+            default:
+                return;
+        }
+        
+        // Nieuwe content samenstellen
+        const newContent = contentTextarea.value.substring(0, start) + markdownText + contentTextarea.value.substring(end);
+        contentTextarea.value = newContent;
+        
+        // Focus terugzetten en preview updaten
+        contentTextarea.focus();
+        contentTextarea.selectionStart = start;
+        contentTextarea.selectionEnd = start + markdownText.length;
+        
+        // Preview bijwerken
+        updatePreview();
+    };
 
     // Configureer marked met aangepaste renderer
     const renderer = {
@@ -442,7 +607,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 2: 'text-3xl font-bold mb-4',
                 3: 'text-2xl font-bold mb-3'
             };
-            return `<h${level} class="${sizes[level]}">${text}</h${level}>`;
+            return `<h${level} class="${sizes[level] || 'text-xl font-bold mb-2'}">${text}</h${level}>`;
         },
         paragraph(text) {
             return `<p class="mb-6 text-gray-700 leading-relaxed">${text}</p>`;
@@ -503,7 +668,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Update de preview met fade effect
             previewDiv.style.opacity = '0';
             setTimeout(() => {
-                previewDiv.innerHTML = `<div class="prose prose-lg">${cleanHtml}</div>`;
+                previewDiv.innerHTML = cleanHtml;
                 previewDiv.style.opacity = '1';
             }, 150);
         } catch (error) {
@@ -669,14 +834,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Video bestand upload en preview
-    function formatFileSize(bytes) {
-        if (bytes === 0) return '0 Bytes';
-        const k = 1024 * 1024; // We werken met MB voor video's
-        const sizes = ['MB', 'GB'];
-        const i = Math.floor(Math.log(bytes) / Math.log(k));
-        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-    }
-
     function updateVideoPreview(file) {
         const reader = new FileReader();
         reader.onload = function(e) {
@@ -743,50 +900,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Drag and drop voor video's
-    const videoDropZone = document.querySelector('.group/upload');
-    
-    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-        videoDropZone.addEventListener(eventName, preventDefaults, false);
+    // Voeg animaties toe
+    const inputs = document.querySelectorAll('input, textarea');
+    inputs.forEach(input => {
+        input.addEventListener('focus', function() {
+            this.parentElement.classList.add('shadow-sm');
+        });
+        input.addEventListener('blur', function() {
+            this.parentElement.classList.remove('shadow-sm');
+        });
     });
-
-    ['dragenter', 'dragover'].forEach(eventName => {
-        videoDropZone.addEventListener(eventName, highlightVideo, false);
-    });
-
-    ['dragleave', 'drop'].forEach(eventName => {
-        videoDropZone.addEventListener(eventName, unhighlightVideo, false);
-    });
-
-    function highlightVideo(e) {
-        videoDropZone.classList.add('border-primary');
-    }
-
-    function unhighlightVideo(e) {
-        videoDropZone.classList.remove('border-primary');
-    }
-
-    videoDropZone.addEventListener('drop', handleVideoDrop, false);
-
-    function handleVideoDrop(e) {
-        const dt = e.dataTransfer;
-        const files = dt.files;
-
-        if (files && files[0]) {
-            const file = files[0];
-            if (!file.type.startsWith('video/')) {
-                alert('Upload alleen videobestanden');
-                return;
-            }
-            if (file.size > 100 * 1024 * 1024) {
-                alert('Video mag niet groter zijn dan 100MB');
-                return;
-            }
-            videoInput.files = files;
-            updateVideoPreview(file);
-            videoUrlInput.value = ''; // Reset URL input
-        }
-    }
 });
 </script>
 

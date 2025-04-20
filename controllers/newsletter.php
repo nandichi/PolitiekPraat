@@ -117,9 +117,7 @@ class Newsletter extends Controller {
         
         // Recipients
         $mail->setFrom($mail_config['from_email'], $mail_config['from_name']);
-        foreach ($mail_config['to_emails'] as $to_email) {
-            $mail->addAddress($to_email);
-        }
+        $mail->addAddress('info@politiekpraat.nl');
         
         // Content
         $mail->isHTML(true);

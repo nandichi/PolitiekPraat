@@ -38,9 +38,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             // Recipients
             $mail->setFrom($mail_config['from_email'], $mail_config['from_name']);
-            foreach ($mail_config['to_emails'] as $to_email) {
-                $mail->addAddress($to_email);
-            }
+            $mail->addAddress('info@politiekpraat.nl');
+            $mail->addAddress('naoufal.exe@gmail.com');
             $mail->addReplyTo($email, $name);
 
             // Content
