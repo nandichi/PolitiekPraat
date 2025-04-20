@@ -57,6 +57,9 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
     <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
     
     <!-- Preload Critical Resources -->
+    <?php if (isset($first_hero_image_url) && $first_hero_image_url): ?>
+    <link rel="preload" href="<?php echo $first_hero_image_url; ?>" as="image">
+    <?php endif; ?>
     <link rel="preload" href="<?php echo URLROOT; ?>/images/favicon-512x512.png" as="image">
     
     <!-- Open Graph / Social Media Meta Tags -->
@@ -106,10 +109,8 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
     <meta name="theme-color" content="#1a365d">
     <link rel="manifest" href="<?php echo URLROOT; ?>/site.webmanifest">
     
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script>
         tailwind.config = {
