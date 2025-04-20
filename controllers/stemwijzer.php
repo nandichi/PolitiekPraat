@@ -3,7 +3,7 @@ require_once 'includes/config.php';
 require_once 'views/templates/header.php';
 ?>
 
-<main class="bg-gradient-to-b from-slate-50 to-white min-h-screen">
+<main class="bg-gradient-to-b from-slate-50 to-white min-h-screen mb-20">
     <!-- Hero Section - Elegant and professional design -->
     <section class="relative bg-gradient-to-br from-primary-dark via-primary to-blue-600 py-20 overflow-hidden">
         <!-- Top accent line -->
