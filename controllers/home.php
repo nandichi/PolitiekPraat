@@ -1486,37 +1486,60 @@ require_once 'views/templates/header.php';
         </div>
     </section>
 
-    <!-- Newsletter Subscription Section -->
-    <section class="py-12 px-4 md:px-8 bg-gradient-to-br from-primary/10 to-gray-100 rounded-3xl mx-4 mb-0 mt-16 shadow-lg">
-        <div class="max-w-4xl mx-auto text-center">
-            <div class="animate-float-slow inline-block mb-6 bg-white p-3 rounded-full shadow-md">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-            </div>
-            <h2 class="text-3xl font-bold text-gray-800 mb-3" data-aos="fade-up">Blijf op de hoogte van het laatste nieuws</h2>
-            <p class="text-lg text-gray-600 mb-6 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">Schrijf je in voor onze nieuwsbrief en ontvang automatisch een bericht wanneer er een nieuwe blog wordt gepubliceerd.</p>
-            
-            <div class="max-w-md mx-auto" data-aos="fade-up" data-aos-delay="200">
-                <form id="newsletterForm" class="flex flex-col sm:flex-row gap-3">
-                    <input type="email" name="email" id="newsletter-email" placeholder="Je e-mailadres" required 
-                           class="flex-1 px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary shadow-sm">
-                    <button type="submit" class="px-6 py-3 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-lg transition-all transform hover:scale-105 shadow-md hover:shadow-lg">
-                        Inschrijven
-                    </button>
-                </form>
-                <div id="newsletterMessage" class="mt-4 text-center hidden"></div>
+    <!-- Newsletter Subscription Section - Herbouwd -->
+    <section class="py-20 bg-gradient-to-b from-white to-blue-50 relative overflow-hidden">
+        <!-- Decoratieve elementen -->
+        <div class="absolute top-0 left-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl opacity-70 transform -translate-x-1/4 -translate-y-1/4"></div>
+        <div class="absolute bottom-0 right-0 w-72 h-72 bg-secondary/5 rounded-full blur-3xl opacity-70 transform translate-x-1/4 translate-y-1/4"></div>
+        
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-3xl mx-auto text-center">
+                <!-- Icon met verfijnde styling -->
+                <div class="inline-block p-4 bg-gradient-to-br from-primary to-secondary rounded-2xl shadow-lg mb-8 transform transition-transform hover:scale-110 duration-300" data-aos="zoom-in">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                </div>
+                
+                <!-- Titel met verbeterde typografie -->
+                <h2 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-5 leading-tight" data-aos="fade-up">
+                    Mis nooit meer <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">politiek nieuws</span>
+                </h2>
+                
+                <!-- Beschrijving met verbeterde leesbaarheid -->
+                <p class="text-lg text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed" data-aos="fade-up" data-aos-delay="100">
+                    Schrijf je in voor onze nieuwsbrief en ontvang direct een melding bij nieuwe blogs, analyses en belangrijke politieke updates. Blijf voorop lopen!
+                </p>
+                
+                <!-- Inschrijfformulier met verbeterde styling -->
+                <div class="max-w-lg mx-auto" data-aos="fade-up" data-aos-delay="200">
+                    <form id="newsletterForm" class="relative flex flex-col sm:flex-row gap-3 group">
+                        <input type="email" name="email" id="newsletter-email" placeholder="jouw@emailadres.nl" required 
+                               class="flex-1 px-6 py-4 rounded-xl border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary shadow-sm text-base transition-all duration-300 focus:shadow-lg focus:scale-[1.02] placeholder-gray-400">
+                        <button type="submit" 
+                                class="px-8 py-4 bg-gradient-to-r from-primary to-secondary text-white font-bold rounded-xl transition-all transform hover:scale-105 shadow-lg hover:shadow-xl relative overflow-hidden group-focus-within:ring-4 group-focus-within:ring-primary/30 flex items-center justify-center text-base">
+                            <span class="relative z-10 flex items-center">
+                                Inschrijven
+                                <svg class="w-5 h-5 ml-2 transform transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                                </svg>
+                            </span>
+                            <span class="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300 rounded-xl"></span>
+                        </button>
+                    </form>
+                    <div id="newsletterMessage" class="mt-4 text-center text-sm hidden transition-all"></div> 
+                </div>
+                <p class="text-xs text-gray-500 mt-6" data-aos="fade-up" data-aos-delay="300">
+                    We respecteren je privacy. Geen spam, alleen relevante updates.
+                </p>
             </div>
         </div>
     </section>
-
-    <!-- Vervolg van de pagina... -->
 
     <!-- Swiper JS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-    <!-- Verwijderd inline Swiper initialisatie script -->
     <!-- Laad het externe home.js script -->
     <script src="<?php echo URLROOT; ?>/public/js/home.js" defer></script>
 
@@ -1537,6 +1560,8 @@ function getRelativeTime($date) {
         $hours = floor($difference / 3600);
         return $hours . ' ' . ($hours == 1 ? 'uur' : 'uur') . ' geleden';
     } else {
-        return date('d M Y', $timestamp);
+        // Formatteer de datum als 'dag Maand Jaar' (bijv. '15 Apr 2025')
+        $formatter = new IntlDateFormatter('nl_NL', IntlDateFormatter::MEDIUM, IntlDateFormatter::NONE, null, null, 'd MMM yyyy');
+        return $formatter->format($timestamp);
     }
 }
