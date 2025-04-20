@@ -5,6 +5,7 @@ require_once 'includes/OpenDataAPI.php';
 require_once 'includes/PoliticalDataAPI.php';
 require_once 'includes/PollAPI.php';
 
+// PERFORMANCE TODO: Implement server-side caching (e.g., Redis, Memcached) for database queries and API responses to significantly improve TTFB (Time To First Byte).
 $db = new Database();
 $newsAPI = new NewsAPI();
 $openDataAPI = new OpenDataAPI();
@@ -242,6 +243,7 @@ $news_sources = [
 ];
 
 // Voorbeeldnieuws (vervangt de API-call voor demonstratiedoeleinden)
+// PERFORMANCE TODO: Overweeg API-calls asynchroon te maken (bv. met JavaScript na het laden van de pagina) of te cachen voor betere laadtijden.
 $latest_news = [
     [
         'orientation' => 'links',
@@ -1192,7 +1194,9 @@ require_once 'views/templates/header.php';
                                                 <?php if($blog->image_path): ?>
                                                     <img src="<?php echo URLROOT . '/' . $blog->image_path; ?>" 
                                                          alt="<?php echo htmlspecialchars($blog->title); ?>" 
-                                                         class="w-full h-full object-cover">
+                                                         class="w-full h-full object-cover"
+                                                         width="400" height="225"  
+                                                         decoding="async"> 
                                                     <div class="image-overlay"></div>
                                                 <?php else: ?>
                                                     <div class="w-full h-full no-image-fallback">
@@ -1215,7 +1219,7 @@ require_once 'views/templates/header.php';
                                             </div>
                                                 
                                             <!-- Content section -->
-                                            <div class="blog-card-content">
+                                            <div class="blog-card-content min-h-[160px]"> 
                                                 <div>
                                                     <h4 class="blog-card-title line-clamp-2">
                                                         <?php echo htmlspecialchars($blog->title); ?>
@@ -1237,7 +1241,7 @@ require_once 'views/templates/header.php';
                                                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                                         </svg>
-                                                        5 min
+                                                        5 min <!-- TODO: Dynamisch berekenen -->
                                                     </span>
                                                 </div>
                                             </div>
@@ -1249,56 +1253,18 @@ require_once 'views/templates/header.php';
                             
                             <!-- Swiper paginering -->
                             <div class="absolute bottom-3 left-0 right-0 z-20 flex justify-center"> 
-                                <div class="swiper-pagination blog-pagination"></div>
+                                <div class="swiper-pagination blog-pagination"></div> <!-- Was: hero-swiper-pagination -->
                             </div>
                         </div>
                         
-                        <!-- Swiper script -->
-                        <script>
-                            document.addEventListener('DOMContentLoaded', function() {
-                                const blogSwiperContainer = document.querySelector('.hero-blog-swiper');
-                                if (blogSwiperContainer) { // Ensure container exists
-                                    const blogSwiper = new Swiper(blogSwiperContainer, {
-                                        slidesPerView: 1,
-                                        spaceBetween: 0, // No space between slides in fade effect
-                                        speed: 600, // Slightly faster transition
-                                        loop: true,
-                                        autoplay: {
-                                            delay: 5000, // Keep delay
-                                            disableOnInteraction: true, // Stop on interaction
-                                        },
-                                        effect: 'fade', // Use fade effect
-                                        fadeEffect: {
-                                            crossFade: true
-                                        },
-                                        pagination: {
-                                            el: '.blog-pagination',
-                                            clickable: true,
-                                            bulletClass: 'swiper-pagination-bullet', // Use classes defined in CSS
-                                            bulletActiveClass: 'swiper-pagination-bullet-active', // Use classes defined in CSS
-                                        },
-                                        navigation: {
-                                            nextEl: '.blog-nav-next',
-                                            prevEl: '.blog-nav-prev',
-                                        }
-                                    });
-                                }
-                            });
-                        </script>
+                        <!-- Verwijderd inline Swiper script -->
                     </div>
                 </div>
             </div>
         </div>
     </section>
     
-    <script>
-        // Ensure this script runs only once and doesn't interfere with others
-        // document.addEventListener('DOMContentLoaded', function() {
-            // Hero Blog Swiper logic is now inside the HTML section above
-            // Typewriter logic is also inside the HTML section above
-        // });
-        // Remove the duplicate outer script block below if it exists
-    </script>
+    <!-- Verwijderd leeg script blok -->
 
         <!-- Laatste Nieuws & Blogs Sections -->
         <section class="py-16 bg-gradient-to-b from-gray-50 to-white">
@@ -1357,7 +1323,9 @@ require_once 'views/templates/header.php';
                                     <div class="relative h-52 overflow-hidden">
                                         <img src="<?php echo URLROOT . '/' . $blog->image_path; ?>" 
                                              alt="<?php echo htmlspecialchars($blog->title); ?>"
-                                             class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110">
+                                             class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
+                                             width="400" height="208" 
+                                             loading="lazy" decoding="async"> 
                                         <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                                     </div>
                                 <?php else: ?>
@@ -1369,14 +1337,16 @@ require_once 'views/templates/header.php';
                                     </div>
                                 <?php endif; ?>
 
-                                <div class="p-7">
+                                <div class="p-7 min-h-[280px]"> 
                                     <!-- Auteur en datum info met verbeterd design -->
                                     <div class="flex items-center justify-between mb-5">
                                         <div class="flex items-center space-x-3">
                                             <div class="w-10 h-10 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full flex items-center justify-center overflow-hidden">
                                                 <img src="https://media.licdn.com/dms/image/v2/D4E03AQFQkWCitMT1ug/profile-displayphoto-shrink_400_400/B4EZYuubOTHMAg-/0/1744540644719?e=1750291200&v=beta&t=Qs38y2l_-SWd_N2CcavekytGxrU06ixhojbHdDktfxM" 
                                                      alt="<?php echo htmlspecialchars($blog->author_name); ?>"
-                                                     class="w-full h-full object-cover">
+                                                     class="w-full h-full object-cover"
+                                                     width="40" height="40"
+                                                     loading="lazy" decoding="async"> 
                                                 </div>
                                             <span class="text-sm font-bold text-gray-800"><?php echo htmlspecialchars($blog->author_name); ?></span>
                                         </div>
@@ -1489,7 +1459,7 @@ require_once 'views/templates/header.php';
                                     <!-- Accent border -->
                                     <div class="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-blue-400 to-blue-600 transform origin-left scale-y-0 group-hover:scale-y-100 transition-transform duration-300"></div>
                                     
-                                    <div class="relative p-7">
+                                    <div class="relative p-7 min-h-[280px]">
                                         <!-- News Source & Date -->
                                         <div class="flex items-center justify-between mb-5">
                                             <div class="flex items-center space-x-3">
@@ -1508,8 +1478,8 @@ require_once 'views/templates/header.php';
                                             </div>
                                         </div>
                                         
-                                        <!-- Rest van de artikel content -->
-                                        <div class="space-y-4">
+                                        <!-- Rest van de artikel content met min-height -->
+                                        <div class="space-y-4 min-h-[120px]"> 
                                             <h3 class="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2">
                                                 <?php echo $news['title']; ?>
                                             </h3>
@@ -1570,7 +1540,7 @@ require_once 'views/templates/header.php';
                                     <!-- Accent border -->
                                     <div class="absolute right-0 top-0 h-full w-1 bg-gradient-to-b from-red-400 to-red-600 transform origin-right scale-y-0 group-hover:scale-y-100 transition-transform duration-300"></div>
                                     
-                                    <div class="relative p-7">
+                                    <div class="relative p-7 min-h-[280px]">
                                         <!-- News Source & Date -->
                                         <div class="flex items-center justify-between mb-5">
                                             <div class="flex items-center space-x-3">
@@ -1589,8 +1559,8 @@ require_once 'views/templates/header.php';
                                             </div>
                                         </div>
                                         
-                                        <!-- Rest van de artikel content -->
-                                        <div class="space-y-4">
+                                        <!-- Rest van de artikel content met min-height -->
+                                        <div class="space-y-4 min-h-[120px]"> 
                                             <h3 class="text-xl font-bold text-gray-900 group-hover:text-red-600 transition-colors line-clamp-2">
                                                 <?php echo $news['title']; ?>
                                             </h3>
@@ -2331,7 +2301,7 @@ require_once 'views/templates/header.php';
                                 </div>
 
                                 <!-- Content met verbeterde typografie en spacing -->
-                                <div class="space-y-5">
+                                <div class="space-y-5 min-h-[180px]"> 
                                     <h3 class="text-2xl font-bold text-gray-900 group-hover:text-primary transition-colors duration-300">
                                         <?php echo $thema['title']; ?>
                                     </h3>
@@ -2422,65 +2392,14 @@ require_once 'views/templates/header.php';
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-    <!-- Initialisatie van de blog hero slider -->
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Hero blog slider
-        const heroSwiper = new Swiper('.hero-blog-swiper', {
-            slidesPerView: 1,
-            spaceBetween: 0,
-            speed: 800,
-            effect: 'fade',
-            fadeEffect: {
-                crossFade: true
-            },
-            autoplay: {
-                delay: 5000,
-                disableOnInteraction: false,
-                pauseOnMouseEnter: true
-            },
-            loop: true,
-            grabCursor: true,
-            pagination: {
-                el: '.hero-swiper-pagination',
-                clickable: true,
-                bulletClass: 'inline-block w-2 h-2 mx-1 cursor-pointer transition-all duration-300 bg-white/30 hover:bg-white/70 rounded-full',
-                bulletActiveClass: 'w-6 bg-gradient-to-r from-primary to-secondary'
-            },
-            navigation: {
-                nextEl: '.hero-swiper-button-next',
-                prevEl: '.hero-swiper-button-prev'
-            },
-            on: {
-                autoplayTimeLeft(s, time, progress) {
-                    const progressBar = document.querySelector('.swiper-progress-bar');
-                    if (progressBar) {
-                        progressBar.style.width = (1 - progress) * 100 + '%';
-                    }
-                },
-                init: function() {
-                    // Voeg extra klasse toe aan de actieve slide
-                    this.slides.forEach((slide) => {
-                        slide.classList.remove('swiper-slide-active-custom');
-                    });
-                    this.slides[this.activeIndex].classList.add('swiper-slide-active-custom');
-                },
-                slideChange: function() {
-                    // Update de actieve slide klasse
-                    this.slides.forEach((slide) => {
-                        slide.classList.remove('swiper-slide-active-custom');
-                    });
-                    this.slides[this.activeIndex].classList.add('swiper-slide-active-custom');
-                }
-            }
-        });
-    });
-    </script>
+    <!-- Verwijderd inline Swiper initialisatie script -->
+    <!-- Laad het externe home.js script -->
+    <script src="<?php echo URLROOT; ?>/js/home.js" defer></script>
 
 <?php require_once 'views/templates/footer.php'; ?>
 
 <?php
-// Helper functie voor relatieve tijd (voeg deze toe bovenaan het bestand na de requires)
+// Helper functie voor relatieve tijd
 function getRelativeTime($date) {
     $timestamp = strtotime($date);
     $difference = time() - $timestamp;
