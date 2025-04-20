@@ -33,105 +33,59 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => setInterval(changeSentence, 4000), 3000); // Change every 4 seconds after initial 3s delay
     }
 
-    // Hero blog slider initialization (from the first inline script block)
-    const blogSwiperContainer = document.querySelector('.hero-blog-swiper');
-    if (blogSwiperContainer) { 
-        const blogSwiper = new Swiper(blogSwiperContainer, {
+    // Hero blog slider initialization 
+    const heroSwiperContainer = document.querySelector('.hero-blog-swiper');
+    if (heroSwiperContainer) {
+        const heroSwiper = new Swiper(heroSwiperContainer, { 
             slidesPerView: 1,
-            spaceBetween: 0, // No space between slides in fade effect
-            speed: 600, // Slightly faster transition
-            loop: true,
-            autoplay: {
-                delay: 5000, 
-                disableOnInteraction: true, // Stop on interaction
-                pauseOnMouseEnter: true,    // Pause autoplay on hover
-            },
-            effect: 'fade', 
+            spaceBetween: 0,
+            speed: 800,
+            effect: 'fade',
             fadeEffect: {
                 crossFade: true
             },
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false, 
+                pauseOnMouseEnter: true
+            },
+            loop: true,
+            grabCursor: true,
             pagination: {
-                el: '.blog-pagination',
+                el: '.blog-pagination', // Corrected selector
                 clickable: true,
-                bulletClass: 'swiper-pagination-bullet', // Use classes defined in CSS
-                bulletActiveClass: 'swiper-pagination-bullet-active', // Use classes defined in CSS
+                bulletClass: 'swiper-pagination-bullet',
+                bulletActiveClass: 'swiper-pagination-bullet-active'
             },
             navigation: {
-                nextEl: '.blog-nav-next',
-                prevEl: '.blog-nav-prev',
+                nextEl: '.blog-nav-next', // Corrected selector
+                prevEl: '.blog-nav-prev'  // Corrected selector
+            },
+            on: {
+                // Removed progress bar logic as element doesn't exist
+                init: function() {
+                    // Add extra class to the active slide
+                    this.slides.forEach((slide) => {
+                        slide.classList.remove('swiper-slide-active-custom');
+                    });
+                    if (this.slides[this.activeIndex]) {
+                       this.slides[this.activeIndex].classList.add('swiper-slide-active-custom');
+                    }
+                },
+                slideChange: function() {
+                    // Update the active slide class
+                    this.slides.forEach((slide) => {
+                        slide.classList.remove('swiper-slide-active-custom');
+                    });
+                     if (this.slides[this.activeIndex]) {
+                       this.slides[this.activeIndex].classList.add('swiper-slide-active-custom');
+                     }
+                }
             }
         });
     }
 
-    // Hero blog slider initialization (from the second inline script block at the end)
-    // Note: This seems redundant as the first one already initializes .hero-blog-swiper.
-    // We'll keep the more detailed initialization from the end of the original file.
-    // If the selector '.hero-blog-swiper' targeted a different element previously, adjust accordingly.
-    const heroSwiperDetailed = new Swiper('.hero-blog-swiper', { // Assuming it's the same element
-        slidesPerView: 1,
-        spaceBetween: 0,
-        speed: 800,
-        effect: 'fade',
-        fadeEffect: {
-            crossFade: true
-        },
-        autoplay: {
-            delay: 5000,
-            disableOnInteraction: false, // Let's keep this consistent with the first init
-            pauseOnMouseEnter: true
-        },
-        loop: true,
-        grabCursor: true,
-        pagination: {
-            el: '.hero-swiper-pagination', // Check if this selector exists, might be '.blog-pagination' from first init
-            clickable: true,
-            // The original second script had different bullet classes, let's use the more styled ones from the first init
-            bulletClass: 'swiper-pagination-bullet',
-            bulletActiveClass: 'swiper-pagination-bullet-active'
-            // Original second init classes:
-            // bulletClass: 'inline-block w-2 h-2 mx-1 cursor-pointer transition-all duration-300 bg-white/30 hover:bg-white/70 rounded-full',
-            // bulletActiveClass: 'w-6 bg-gradient-to-r from-primary to-secondary'
-        },
-        navigation: {
-            nextEl: '.hero-swiper-button-next', // Check if this selector exists, might be '.blog-nav-next' from first init
-            prevEl: '.hero-swiper-button-prev'  // Check if this selector exists, might be '.blog-nav-prev' from first init
-        },
-        on: {
-            autoplayTimeLeft(s, time, progress) {
-                const progressBar = document.querySelector('.swiper-progress-bar'); // Check if this element exists
-                if (progressBar) {
-                    // Assuming there's a nested .progress element inside .swiper-progress-bar
-                    const innerProgress = progressBar.querySelector('.progress'); 
-                    if(innerProgress) {
-                       innerProgress.style.width = (1 - progress) * 100 + '%';
-                    } else {
-                       // Fallback if no nested .progress element, apply to the bar itself
-                       progressBar.style.width = (1 - progress) * 100 + '%'; 
-                    }
-                }
-            },
-            init: function() {
-                // Add extra class to the active slide
-                this.slides.forEach((slide) => {
-                    slide.classList.remove('swiper-slide-active-custom');
-                });
-                if (this.slides[this.activeIndex]) {
-                   this.slides[this.activeIndex].classList.add('swiper-slide-active-custom');
-                }
-            },
-            slideChange: function() {
-                // Update the active slide class
-                this.slides.forEach((slide) => {
-                    slide.classList.remove('swiper-slide-active-custom');
-                });
-                 if (this.slides[this.activeIndex]) {
-                   this.slides[this.activeIndex].classList.add('swiper-slide-active-custom');
-                 }
-            }
-        }
-    });
-
-    // Newsletter form submission (if logic is needed)
+    // Newsletter form submission
     const newsletterForm = document.getElementById('newsletterForm');
     const newsletterMessage = document.getElementById('newsletterMessage');
     if (newsletterForm && newsletterMessage) {
@@ -153,34 +107,8 @@ document.addEventListener('DOMContentLoaded', function() {
             newsletterMessage.className = 'mt-4 text-center text-gray-600';
             newsletterMessage.classList.remove('hidden');
 
-            // Example: Use Fetch API to send data
-            /*
-            fetch('/api/subscribe', { // Replace with your actual API endpoint
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email: email }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    newsletterMessage.textContent = 'Bedankt voor je inschrijving!';
-                    newsletterMessage.className = 'mt-4 text-center text-green-600';
-                    emailInput.value = ''; // Clear input
-                } else {
-                    newsletterMessage.textContent = data.message || 'Er is iets misgegaan. Probeer het opnieuw.';
-                    newsletterMessage.className = 'mt-4 text-center text-red-600';
-                }
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-                newsletterMessage.textContent = 'Er is een fout opgetreden. Controleer de console.';
-                newsletterMessage.className = 'mt-4 text-center text-red-600';
-            });
-            */
-
-            // --- Simulation ---
+            // --- Simulation --- 
+            // TODO: Replace with actual fetch call to backend API endpoint
             setTimeout(() => {
                  // Simulate success
                  newsletterMessage.textContent = 'Bedankt voor je inschrijving!';

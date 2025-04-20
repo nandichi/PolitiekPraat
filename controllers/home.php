@@ -306,774 +306,12 @@ $actuele_themas = $openDataAPI->getActueleThemas();
 $debatten = $openDataAPI->getPolitiekeDebatten();
 $agenda_items = $openDataAPI->getPolitiekeAgenda();
 
+?>
+<!-- Link to external CSS file -->
+<link rel="stylesheet" href="<?php echo URLROOT; ?>/public/css/home.css">
+<?php
 require_once 'views/templates/header.php';
 ?>
-
-<!-- Add custom animations for floating elements -->
-<style>
-    @keyframes float-slow {
-        0% { transform: translateY(0) rotate(0deg); }
-        50% { transform: translateY(-15px) rotate(2deg); }
-        100% { transform: translateY(0) rotate(0deg); }
-    }
-    
-    @keyframes float-medium {
-        0% { transform: translateY(0) rotate(0deg); }
-        50% { transform: translateY(-10px) rotate(-2deg); }
-        100% { transform: translateY(0) rotate(0deg); }
-    }
-    
-    @keyframes float-fast {
-        0% { transform: translateY(0) rotate(0deg); }
-        50% { transform: translateY(-7px) rotate(1deg); }
-        100% { transform: translateY(0) rotate(0deg); }
-    }
-    
-    @keyframes float-particle {
-        0% { transform: translateY(0) translateX(0); }
-        100% { transform: translateY(10px) translateX(10px); }
-    }
-    
-    .animate-float-slow {
-        animation: float-slow 6s ease-in-out infinite;
-    }
-    
-    .animate-float-medium {
-        animation: float-medium 4s ease-in-out infinite;
-    }
-    
-    .animate-float-fast {
-        animation: float-fast 3s ease-in-out infinite;
-    }
-    
-    @keyframes slide {
-        0% { transform: translateX(-100%); }
-        100% { transform: translateX(500%); }
-    }
-    
-    .animate-slide {
-        animation: slide 4s ease-in-out infinite;
-    }
-    
-    /* Glow effect voor de actieve slide */
-    .swiper-slide-active-custom {
-        transform: scale(1.02);
-        transition: all 0.5s ease;
-        animation: subtle-pulse 3s infinite alternate;
-    }
-    
-    @keyframes subtle-pulse {
-        0% {
-            box-shadow: 0 0 0 rgba(26, 86, 219, 0);
-        }
-        100% {
-            box-shadow: 0 0 25px rgba(26, 86, 219, 0.3);
-        }
-    }
-    
-    /* Glassmorphism effect verbetering */
-    .hero-blog-swiper .swiper-slide a {
-        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    }
-    
-    .hero-blog-swiper .swiper-slide a:hover {
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-        transform: translateY(-3px);
-    }
-    
-    /* Verbetering voor bullets paginering */
-    .hero-swiper-pagination .inline-block {
-        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    }
-    
-    /* Animatie voor de progress bar */
-    .swiper-progress-bar {
-        transition: width 0.1s linear;
-    }
-    
-    /* Verbeterde hover effect voor navigatie knoppen */
-    .hero-swiper-button-next:hover,
-    .hero-swiper-button-prev:hover {
-        transform: scale(1.1);
-        box-shadow: 0 0 15px rgba(26, 86, 219, 0.4);
-    }
-
-    /* Verbeterde hero styling */
-    .hero-section {
-        position: relative;
-        overflow: hidden;
-        background: linear-gradient(135deg, #121928 0%, #1a56db 100%);
-        padding: 4rem 0 6rem;
-        isolation: isolate;
-    }
-    
-    /* Moderne decoratieve elementen */
-    .hero-pattern {
-        position: absolute;
-        inset: 0;
-        opacity: 0.07;
-        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='white' fill-opacity='1' fill-rule='evenodd'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
-    }
-    
-    .hero-accent {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
-        background: linear-gradient(90deg, #1a56db, #7e3af2, #1a56db);
-        animation: gradientShift 8s ease infinite;
-        background-size: 200% 200%;
-    }
-
-    /* Moderne floating shapes */
-    .hero-shape {
-        position: absolute;
-        border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
-        filter: blur(40px);
-        z-index: 0;
-        animation: shapeFloat 15s ease-in-out infinite alternate;
-        opacity: 0.12;
-    }
-    
-    .hero-shape-1 {
-        background: #1a56db;
-        width: 300px;
-        height: 300px;
-        top: -100px;
-        right: 5%;
-    }
-    
-    .hero-shape-2 {
-        background: #7e3af2;
-        width: 200px;
-        height: 200px;
-        bottom: -50px;
-        left: 10%;
-        animation-delay: 2s;
-    }
-    
-    .hero-shape-3 {
-        background: #1a56db;
-        width: 150px;
-        height: 150px;
-        bottom: 20%;
-        right: 15%;
-        animation-delay: 4s;
-    }
-
-    /* Blog slider styling */
-    .hero-blog-card {
-        backdrop-filter: blur(10px);
-        background: rgba(17, 24, 39, 0.7);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 16px;
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-        overflow: hidden;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    
-    .hero-blog-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.3);
-    }
-    
-    .hero-blog-card-header {
-        background: rgba(255, 255, 255, 0.05);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-        backdrop-filter: blur(5px);
-    }
-    
-    .hero-blog-card-icon {
-        background: linear-gradient(135deg, rgba(26, 86, 219, 0.2), rgba(126, 58, 242, 0.2));
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-    
-    /* Typewriter text effect */
-    #typewriter {
-        display: inline-block;
-        transition: opacity 0.5s ease;
-        position: relative;
-        padding-right: 0.1em;
-    }
-    
-    /* Swiper controls styling */
-    .hero-swiper-pagination {
-        display: flex;
-        gap: 0.25rem;
-    }
-    
-    .hero-swiper-pagination .swiper-pagination-bullet {
-        width: 2rem;
-        height: 0.25rem;
-        border-radius: 1rem;
-        background: rgba(255, 255, 255, 0.3);
-        opacity: 1;
-        transition: all 0.3s ease;
-    }
-    
-    .hero-swiper-pagination .swiper-pagination-bullet-active {
-        background: linear-gradient(90deg, #1a56db, #7e3af2);
-        width: 3rem;
-    }
-    
-    .hero-swiper-button-next,
-    .hero-swiper-button-prev {
-        width: 3rem;
-        height: 3rem;
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(5px);
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        border-radius: 50%;
-        color: white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    }
-    
-    .hero-swiper-button-next:hover,
-    .hero-swiper-button-prev:hover {
-        background: rgba(26, 86, 219, 0.3);
-        transform: scale(1.05);
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    }
-    
-    .hero-swiper-progress-bar {
-        height: 4px;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 2px;
-        overflow: hidden;
-        width: 100%;
-    }
-    
-    .hero-swiper-progress-bar .progress {
-        height: 100%;
-        background: linear-gradient(90deg, #1a56db, #7e3af2);
-        width: 0;
-        transition: width 0.3s ease;
-    }
-    
-    /* CTA button styling */
-    .hero-cta-button {
-        background: white;
-        color: #1a56db;
-        border-radius: 0.75rem;
-        font-weight: 600;
-        padding: 0.875rem 1.75rem;
-        display: inline-flex;
-        align-items: center;
-        transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
-        z-index: 1;
-        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    }
-    
-    .hero-cta-button::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 0;
-        height: 100%;
-        background: linear-gradient(90deg, #1a56db, #7e3af2);
-        transition: width 0.3s ease;
-        z-index: -1;
-    }
-    
-    .hero-cta-button:hover {
-        color: white;
-        transform: translateY(-2px);
-        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    }
-    
-    .hero-cta-button:hover::before {
-        width: 100%;
-    }
-    
-    .hero-cta-button:hover svg {
-        transform: translateX(4px);
-        color: white;
-    }
-    
-    .hero-cta-button svg {
-        transition: transform 0.3s ease, color 0.3s ease;
-    }
-    
-    /* Animations */
-    @keyframes gradientShift {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
-    
-    @keyframes shapeFloat {
-        0% { transform: translateY(0) rotate(0); }
-        50% { transform: translateY(-20px) rotate(5deg); }
-        100% { transform: translateY(0) rotate(0); }
-    }
-    
-    @keyframes blink {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0; }
-    }
-
-    /* Custom animations */
-    @keyframes float-subtle {
-        0% { transform: translateY(0); }
-        50% { transform: translateY(-5px); }
-        100% { transform: translateY(0); }
-    }
-
-    @keyframes subtle-pulse {
-        0% { box-shadow: 0 0 0 rgba(26, 86, 219, 0); }
-        50% { box-shadow: 0 0 15px rgba(26, 86, 219, 0.1); }
-        100% { box-shadow: 0 0 0 rgba(26, 86, 219, 0); }
-    }
-
-    @keyframes gradientShift {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
-    
-    @keyframes shapeFloat {
-        0% { transform: translateY(0) rotate(0); }
-        50% { transform: translateY(-15px) rotate(3deg); }
-        100% { transform: translateY(0) rotate(0); }
-    }
-
-    /* Hero Section Styling */
-    .hero-section {
-        position: relative;
-        overflow: hidden;
-        background: linear-gradient(145deg, #0A192F 10%, #172A46 60%, #1A56DB 100%); /* Dark sophisticated gradient */
-        padding: 6rem 0 8rem; /* Increased padding */
-        isolation: isolate; /* Stacking context */
-    }
-
-    /* Subtle background pattern */
-    .hero-pattern {
-        position: absolute;
-        inset: 0;
-        opacity: 0.03; /* Even more subtle */
-        background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23FFFFFF' fill-opacity='1' fill-rule='evenodd'%3E%3Ccircle cx='40' cy='40' r='1.5'/%3E%3C/g%3E%3C/svg%3E"); /* Dot pattern */
-    }
-
-    /* Top accent line - thinner and more subtle */
-    .hero-accent {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 2px; /* Thinner */
-        background: linear-gradient(90deg, rgba(26, 86, 219, 0.5), rgba(126, 58, 242, 0.5), rgba(26, 86, 219, 0.5));
-        animation: gradientShift 10s ease infinite;
-        background-size: 200% 200%;
-    }
-
-    /* Floating shapes - softer, more atmospheric */
-    .hero-shape {
-        position: absolute;
-        border-radius: 50%; /* Simple circles */
-        filter: blur(60px); /* Increased blur */
-        z-index: 0;
-        animation: shapeFloat 20s ease-in-out infinite alternate;
-        opacity: 0.08; /* Reduced opacity */
-    }
-
-    .hero-shape-1 {
-        background: #1a56db;
-        width: 400px;
-        height: 400px;
-        top: -150px;
-        right: 10%;
-        animation-delay: 0s;
-    }
-
-    .hero-shape-2 {
-        background: #7e3af2;
-        width: 300px;
-        height: 300px;
-        bottom: -100px;
-        left: 15%;
-        animation-delay: 5s;
-    }
-
-    .hero-shape-3 {
-        background: #1a56db; /* Consistent color scheme */
-        width: 200px;
-        height: 200px;
-        bottom: 25%;
-        right: 20%;
-        animation-delay: 10s;
-    }
-
-    /* Hero Content Styling */
-    .hero-title {
-        color: #E0E0E0; /* Off-white for sophistication */
-        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-    }
-    .hero-title .highlight {
-        color: #FFFFFF; /* Pure white highlight */
-    }
-    .hero-title .underline-accent {
-        display: block;
-        width: 100px;
-        height: 3px;
-        background: linear-gradient(90deg, #1a56db, #7e3af2);
-        margin-top: 0.5rem;
-        border-radius: 3px;
-    }
-
-    .hero-subtitle {
-        color: #A8B2CC; /* Lighter grey for subtitle */
-        max-width: 550px; /* Slightly increased max-width */
-    }
-
-    /* Typewriter effect container */
-    #typewriter-container {
-        min-height: 5em; /* Reserve space to prevent layout shifts */
-        display: flex;
-        align-items: center;
-    }
-    #typewriter {
-        display: inline-block;
-        transition: opacity 0.6s ease-in-out;
-        position: relative;
-        padding-right: 0.15em;
-    }
-
-    /* Hero CTA Button - Refined and professional */
-    .hero-cta-button {
-        background: linear-gradient(90deg, #1a56db, #3b82f6); /* Blue gradient */
-        color: white;
-        border-radius: 8px; /* Slightly less rounded */
-        font-weight: 600;
-        padding: 0.875rem 1.75rem;
-        display: inline-flex;
-        align-items: center;
-        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Smooth transition */
-        position: relative;
-        overflow: hidden;
-        z-index: 1;
-        box-shadow: 0 4px 15px rgba(26, 86, 219, 0.2), 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    }
-
-    .hero-cta-button::before { /* Hover effect */
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(255, 255, 255, 0.1);
-        transform: scaleX(0);
-        transform-origin: right;
-        transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-        z-index: -1;
-    }
-
-    .hero-cta-button:hover {
-        box-shadow: 0 8px 25px rgba(26, 86, 219, 0.3), 0 4px 10px rgba(0, 0, 0, 0.15);
-        transform: translateY(-2px);
-    }
-
-    .hero-cta-button:hover::before {
-        transform: scaleX(1);
-        transform-origin: left;
-    }
-
-    .hero-cta-button svg {
-        transition: transform 0.3s ease;
-    }
-
-    .hero-cta-button:hover svg {
-        transform: translateX(3px);
-    }
-
-    /* Blog Slider Styling within Hero */
-    .hero-blog-card-wrapper { /* Added wrapper for positioning/shadow */
-       position: relative;
-       perspective: 1000px; /* For 3D effect */
-    }
-
-    .hero-blog-card {
-        backdrop-filter: blur(12px) saturate(150%);
-        background: rgba(10, 25, 47, 0.7); /* Darker, less transparent background */
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 12px; /* Consistent border-radius */
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-        overflow: hidden;
-        transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-        transform-style: preserve-3d;
-        will-change: transform, box-shadow;
-    }
-    
-    .hero-blog-card:hover {
-        transform: translateY(-8px) rotateX(2deg) rotateY(-1deg); /* Subtle 3D tilt */
-        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
-    }
-    
-    .hero-blog-card-header {
-        background: rgba(255, 255, 255, 0.03); /* Very subtle header background */
-        border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-        backdrop-filter: blur(5px);
-        padding: 0.75rem 1.5rem; /* Adjusted padding */
-    }
-
-    .hero-blog-card-header h3 {
-        color: #E0E0E0; /* Consistent off-white */
-    }
-    .hero-blog-card-header .highlight-text { /* Reusable highlight */
-        position: relative;
-        display: inline-block;
-    }
-    .hero-blog-card-header .highlight-text::after {
-        content: '';
-        position: absolute;
-        left: 0;
-        bottom: -2px;
-        width: 70%;
-        height: 2px;
-        background: linear-gradient(90deg, rgba(26, 86, 219, 0.8), rgba(126, 58, 242, 0.8));
-        border-radius: 2px;
-    }
-
-    .hero-blog-card-header p {
-        color: #A8B2CC; /* Consistent subtitle color */
-    }
-    
-    .blog-nav-button { /* Common style for nav buttons */
-        width: 2rem;
-        height: 2rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%; /* Circular buttons */
-        background: rgba(255, 255, 255, 0.08);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        transition: all 0.3s ease;
-    }
-    .blog-nav-button:hover {
-        background: rgba(26, 86, 219, 0.3);
-        transform: scale(1.1);
-    }
-    .blog-nav-button svg {
-        width: 0.8rem;
-        height: 0.8rem;
-        color: rgba(255, 255, 255, 0.7);
-        transition: color 0.3s ease;
-    }
-    .blog-nav-button:hover svg {
-        color: #FFFFFF;
-    }
-    
-    .hero-blog-swiper {
-        height: 420px; /* Slightly adjusted height */
-        position: relative;
-        z-index: 10;
-    }
-
-    .hero-blog-swiper .swiper-slide {
-        padding: 1.25rem; /* Consistent padding */
-    }
-    
-    .hero-blog-swiper .swiper-slide a {
-        display: block;
-        height: 100%;
-        position: relative;
-        border-radius: 10px; /* Inner card radius */
-        overflow: hidden;
-        background: linear-gradient(145deg, rgba(28, 36, 52, 0.8), rgba(12, 17, 26, 0.9)); /* Darker inner card */
-        transition: box-shadow 0.4s ease;
-    }
-
-    .hero-blog-swiper .swiper-slide a:hover {
-       box-shadow: 0 0 20px rgba(26, 86, 219, 0.2);
-    }
-
-    /* Inner Blog Card Elements */
-    .blog-card-image-wrapper {
-        position: relative;
-        height: 180px; /* Fixed height for consistency */
-        overflow: hidden;
-        border-radius: 10px 10px 0 0; /* Match card radius */
-    }
-    .blog-card-image-wrapper img {
-        transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
-    }
-    .hero-blog-swiper .swiper-slide a:hover .blog-card-image-wrapper img {
-        transform: scale(1.08);
-    }
-    .image-overlay {
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(to top, rgba(10, 25, 47, 0.8) 0%, rgba(10, 25, 47, 0) 60%);
-        transition: background 0.4s ease;
-    }
-     .hero-blog-swiper .swiper-slide a:hover .image-overlay {
-         background: linear-gradient(to top, rgba(10, 25, 47, 0.9) 0%, rgba(10, 25, 47, 0.1) 70%);
-     }
-
-    .blog-card-category {
-        position: absolute;
-        top: 1rem;
-        left: 1rem;
-        z-index: 11;
-        background: rgba(0, 0, 0, 0.5);
-        backdrop-filter: blur(4px);
-        color: #E0E0E0;
-        padding: 0.3rem 0.8rem;
-        border-radius: 20px; /* Pill shape */
-        font-size: 0.7rem;
-        font-weight: 500;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        display: inline-flex;
-        align-items: center;
-        transition: all 0.3s ease;
-    }
-    .hero-blog-swiper .swiper-slide a:hover .blog-card-category {
-        background: rgba(26, 86, 219, 0.7);
-        color: #FFFFFF;
-        border-color: rgba(255, 255, 255, 0.2);
-    }
-    .blog-card-category svg {
-        width: 0.75rem;
-        height: 0.75rem;
-        margin-right: 0.3rem;
-    }
-
-    .blog-card-date {
-        position: absolute;
-        top: 1rem;
-        right: 1rem;
-        z-index: 11;
-        background: rgba(0, 0, 0, 0.5);
-        backdrop-filter: blur(4px);
-        color: #A8B2CC;
-        padding: 0.3rem 0.8rem;
-        border-radius: 20px;
-        font-size: 0.7rem;
-        font-weight: 500;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .blog-card-content {
-        padding: 1.25rem; /* Content padding */
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        flex-grow: 1;
-    }
-    .blog-card-title {
-        font-size: 1.1rem; /* Slightly smaller title */
-        font-weight: 600; /* Semibold */
-        color: #E0E0E0;
-        margin-bottom: 0.5rem; /* Reduced margin */
-        line-height: 1.4;
-        transition: color 0.3s ease;
-    }
-    .hero-blog-swiper .swiper-slide a:hover .blog-card-title {
-        color: #FFFFFF;
-    }
-    .blog-card-summary {
-        font-size: 0.85rem; /* Smaller summary */
-        color: #A8B2CC;
-        margin-bottom: 1rem;
-        line-height: 1.6;
-        flex-grow: 1; /* Allow summary to take space */
-        transition: color 0.3s ease;
-    }
-     .hero-blog-swiper .swiper-slide a:hover .blog-card-summary {
-         color: #C0C8E0;
-     }
-
-    .blog-card-footer {
-        margin-top: auto; /* Push footer to bottom */
-        padding-top: 1rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-    .blog-card-readmore {
-        font-size: 0.8rem;
-        font-weight: 500;
-        color: #A8B2CC;
-        display: inline-flex;
-        align-items: center;
-        transition: all 0.3s ease;
-    }
-    .hero-blog-swiper .swiper-slide a:hover .blog-card-readmore {
-        color: #1a56db;
-    }
-    .blog-card-readmore svg {
-        width: 0.9rem;
-        height: 0.9rem;
-        margin-left: 0.4rem;
-        transition: transform 0.3s ease;
-    }
-    .hero-blog-swiper .swiper-slide a:hover .blog-card-readmore svg {
-        transform: translateX(3px);
-    }
-    .blog-card-readtime {
-        font-size: 0.75rem;
-        color: #A8B2CC;
-        display: inline-flex;
-        align-items: center;
-    }
-     .blog-card-readtime svg {
-         width: 0.8rem;
-         height: 0.8rem;
-         margin-right: 0.3rem;
-         opacity: 0.7;
-     }
-
-    /* Swiper Pagination */
-    .blog-pagination .swiper-pagination-bullet {
-        width: 8px; /* Smaller bullets */
-        height: 8px;
-        background-color: rgba(255, 255, 255, 0.3);
-        opacity: 1;
-        transition: all 0.3s ease;
-        margin: 0 4px; /* Adjusted margin */
-    }
-    
-    .blog-pagination .swiper-pagination-bullet-active {
-        background: linear-gradient(90deg, #1a56db, #7e3af2);
-        width: 20px; /* Elongated active bullet */
-        border-radius: 4px; /* Keep rounded ends */
-    }
-
-    /* Fallback for no image */
-    .no-image-fallback {
-         background: linear-gradient(145deg, rgba(28, 36, 52, 0.8), rgba(12, 17, 26, 0.9));
-         display: flex;
-         align-items: center;
-         justify-content: center;
-         border-radius: 10px 10px 0 0;
-    }
-     .no-image-fallback svg {
-         width: 3rem;
-         height: 3rem;
-         color: rgba(255, 255, 255, 0.3);
-     }
-
-
-    /* Other existing styles */
-    @keyframes float-slow { /* Keep existing keyframes if used elsewhere */
-        0% { transform: translateY(0) rotate(0deg); }
-        50% { transform: translateY(-15px) rotate(2deg); }
-        100% { transform: translateY(0) rotate(0deg); }
-    }
-    .animate-float-slow { animation: float-slow 6s ease-in-out infinite; }
-    /* ... keep other necessary keyframes and utility classes ... */
-</style>
 
 <main class="bg-gray-50 overflow-x-hidden">
     <!-- Hero Section - Volledig vernieuwde moderne versie -->
@@ -1093,13 +331,13 @@ require_once 'views/templates/header.php';
                         <!-- Hoofdtitel met nieuwe styling -->
                         <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 hero-title"> <!-- Added hero-title class -->
                             <span class="highlight">Politiek</span>Praat
-                        </h1>
+                    </h1>
                         <span class="underline-accent mb-6 block mx-auto lg:mx-0"></span> <!-- Added underline -->
                         
                         <!-- Ondertitel met dynamische typewriter effect -->
                         <div id="typewriter-container" class="text-lg sm:text-xl hero-subtitle mb-8 flex justify-center lg:justify-start"> <!-- Added hero-subtitle, typewriter-container -->
                             <span id="typewriter"></span> <!-- Initial text set in JS -->
-                        </div>
+                    </div>
                         
                         <script>
                             document.addEventListener('DOMContentLoaded', function() {
@@ -1144,18 +382,18 @@ require_once 'views/templates/header.php';
                             <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
                             </svg>
-                        </a>
-                    </div>
+                    </a>
+                </div>
                 </div>
 
                 <!-- Rechter kolom: Blog slider - Professioneel design -->
                 <div class="w-full lg:w-[45%] mx-auto hero-blog-card-wrapper">
-                    <div class="hero-blog-card">
+                        <div class="hero-blog-card">
                         
                         <!-- Header met nieuwe styling -->
                         <div class="hero-blog-card-header">
                             <div class="flex items-center justify-between">
-                                <div>
+                                    <div>
                                     <h3 class="text-base font-semibold">
                                         <span class="highlight-text">Uitgelichte Blogs</span>
                                     </h3>
@@ -1163,7 +401,7 @@ require_once 'views/templates/header.php';
                                         <svg class="w-3 h-3 mr-1 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                                         Actueel
                                     </p>
-                                </div>
+                                    </div>
                                 
                                 <!-- Navigatieknoppen met nieuwe styling -->
                                 <div class="flex space-x-2">
@@ -1220,14 +458,14 @@ require_once 'views/templates/header.php';
                                                 
                                             <!-- Content section -->
                                             <div class="blog-card-content min-h-[160px]"> 
-                                                <div>
+                                <div>
                                                     <h4 class="blog-card-title line-clamp-2">
                                                         <?php echo htmlspecialchars($blog->title); ?>
                                                     </h4>
                                                     <p class="blog-card-summary line-clamp-3">
                                                         <?php echo htmlspecialchars($blog->summary); ?>
                                                     </p>
-                                                </div>
+                                </div>
                                                 
                                                 <div class="blog-card-footer">
                                                     <span class="blog-card-readmore">
@@ -1243,19 +481,19 @@ require_once 'views/templates/header.php';
                                                         </svg>
                                                         5 min <!-- TODO: Dynamisch berekenen -->
                                                     </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <?php endforeach; ?>
                             </div>
+                            </div>
+                        </div>
+                                    </a>
+                    </div>
+                                <?php endforeach; ?>
+                </div>
                             
                             <!-- Swiper paginering -->
                             <div class="absolute bottom-3 left-0 right-0 z-20 flex justify-center"> 
                                 <div class="swiper-pagination blog-pagination"></div> <!-- Was: hero-swiper-pagination -->
-                            </div>
-                        </div>
+            </div>
+        </div>
                         
                         <!-- Verwijderd inline Swiper script -->
                     </div>
@@ -1263,7 +501,7 @@ require_once 'views/templates/header.php';
             </div>
         </div>
     </section>
-    
+
     <!-- Verwijderd leeg script blok -->
 
         <!-- Laatste Nieuws & Blogs Sections -->
@@ -1284,7 +522,7 @@ require_once 'views/templates/header.php';
                     </h2>
                     <div class="w-32 h-1.5 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full mb-6"></div>
                     <p class="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">Ontdek mijn meest recente politieke analyses en inzichten</p>
-                </div>
+                    </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                     <?php foreach($latest_blogs as $index => $blog): ?>
@@ -1312,7 +550,7 @@ require_once 'views/templates/header.php';
                                             <span class="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
                                         </span>
                                         NIEUW
-                                    </div>
+                    </div>
                                 </div>
                                 <!-- Extra highlight effect voor nieuwe blogs -->
                                 <div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5 pointer-events-none"></div>
@@ -1468,7 +706,7 @@ require_once 'views/templates/header.php';
                                                         <span class="text-blue-600 font-bold text-lg"><?php echo substr($news['source'], 0, 2); ?></span>
                                                     </div>
                                                 </div>
-                                                <div>
+                            <div>
                                                     <p class="text-sm font-bold text-gray-900"><?php echo $news['source']; ?></p>
                                                     <span class="text-xs px-2.5 py-1 bg-blue-100 text-blue-700 rounded-full font-medium"><?php echo $news['bias']; ?></span>
                                                 </div>
@@ -1547,17 +785,17 @@ require_once 'views/templates/header.php';
                                                 <div class="relative">
                                                     <div class="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center overflow-hidden group-hover:bg-red-200 transition-all duration-300">
                                                         <span class="text-red-600 font-bold text-lg"><?php echo substr($news['source'], 0, 2); ?></span>
-                                                    </div>
-                                                </div>
-                                                <div>
+                            </div>
+                        </div>
+                        <div>
                                                     <p class="text-sm font-bold text-gray-900"><?php echo $news['source']; ?></p>
                                                     <span class="text-xs px-2.5 py-1 bg-red-100 text-red-700 rounded-full font-medium"><?php echo $news['bias']; ?></span>
-                                                </div>
-                                            </div>
+                        </div>
+                    </div>
                                             <div class="text-xs bg-gray-100 text-gray-600 px-3 py-1.5 rounded-full font-medium">
                                                 <?php echo getRelativeTime($news['publishedAt']); ?>
-                                            </div>
-                                        </div>
+                </div>
+                    </div>
                                         
                                         <!-- Rest van de artikel content met min-height -->
                                         <div class="space-y-4 min-h-[120px]"> 
@@ -1567,7 +805,7 @@ require_once 'views/templates/header.php';
                                             <p class="text-gray-600 line-clamp-3 leading-relaxed">
                                                 <?php echo $news['description']; ?>
                                             </p>
-                                        </div>
+                    </div>
                                         
                                         <!-- Article Footer -->
                                         <div class="mt-7 flex items-center justify-between">
@@ -1696,11 +934,11 @@ require_once 'views/templates/header.php';
                                         ?>
                                         <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors">
                                             <td class="py-2 px-1 sm:px-3">
-                                                <div class="flex items-center">
+                        <div class="flex items-center">
                                                     <div class="w-2 h-2 sm:w-3 sm:h-3 rounded-full mr-1 sm:mr-2" style="background-color: <?php echo $partij['color']; ?>"></div>
                                                     <span class="hidden sm:inline font-medium text-gray-900"><?php echo $partij['partij']; ?></span>
                                                     <span class="sm:hidden font-medium text-gray-900"><?php echo $kortNaam; ?></span>
-                                                </div>
+                            </div>
                                             </td>
                                             <td class="py-2 px-1 sm:px-3 text-center font-semibold text-gray-900"><?php echo $partij['zetels']['peiling']; ?></td>
                                             <td class="py-2 px-1 sm:px-3 text-center text-gray-700"><?php echo $partij['zetels']['tkvorigepeiling']; ?></td>
@@ -1719,21 +957,21 @@ require_once 'views/templates/header.php';
                                         <?php endforeach; ?>
                                     </tbody>
                                 </table>
-                            </div>
+                        </div>
                             
                             <div class="mt-6 text-xs text-gray-500 flex flex-col sm:flex-row sm:items-center sm:justify-between">
                                 <div class="mb-2 sm:mb-0">
                                     <span class="hidden sm:inline">Peilingdatum: 4 april 2025</span>
                                     <span class="sm:hidden">Peiling: 4 apr 2025</span>
-                                </div>
+                        </div>
                                 <div class="flex items-center">
                                     <span class="inline-block w-3 h-3 bg-green-100 rounded-full mr-1"></span>
                                     <span class="mr-3">Winst</span>
                                     <span class="inline-block w-3 h-3 bg-red-100 rounded-full mr-1"></span>
                                     <span>Verlies</span>
-                                </div>
-                            </div>
-                        </div>
+                    </div>
+                </div>
+                    </div>
                     </div>
                 </div>
                 
@@ -1809,12 +1047,12 @@ require_once 'views/templates/header.php';
                                 $topPartijen = array_slice($peilingData, 0, 9);
                                 foreach($topPartijen as $partij):
                                 ?>
-                                <div class="flex items-center">
+                        <div class="flex items-center">
                                     <div class="w-3 h-3 rounded-full mr-2" style="background-color: <?php echo $partij['color']; ?>"></div>
                                     <span class="text-xs text-gray-700">
                                         <?php echo $partij['partij']; ?> (<?php echo $partij['zetels']['peiling']; ?>)
                                     </span>
-                                </div>
+                            </div>
                                 <?php endforeach; ?>
                                 
                                 <?php if(count($peilingData) > 9): ?>
@@ -1829,7 +1067,7 @@ require_once 'views/templates/header.php';
                                         echo $overige;
                                         ?>)
                                     </span>
-                                </div>
+                        </div>
                                 <?php endif; ?>
                             </div>
                         </div>
@@ -1916,7 +1154,7 @@ require_once 'views/templates/header.php';
         <!-- Decorative elements -->
         <div class="absolute inset-0">
             <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"30\" height=\"30\" viewBox=\"0 0 30 30\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cpath d=\"M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z\" fill=\"rgba(0,0,0,0.03)\"%3E%3C/path%3E%3C/svg%3E')] opacity-50"></div>
-        </div>
+                    </div>
         <div class="absolute -top-40 -right-40 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
         <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-secondary/5 rounded-full blur-3xl"></div>
         
@@ -1973,7 +1211,7 @@ require_once 'views/templates/header.php';
                                         <div class="relative">
                                             <div class="w-48 h-48 rounded-full shadow-lg" 
                                                  style="background: conic-gradient(<?php echo $conicGradient; ?>);">
-                                            </div>
+                    </div>
                                             <div class="absolute inset-0 flex items-center justify-center">
                                                 <div class="w-16 h-16 bg-white rounded-full shadow-inner flex items-center justify-center text-sm font-medium">
 
@@ -1984,27 +1222,27 @@ require_once 'views/templates/header.php';
                                         <!-- Legenda -->
                                         <div class="grid grid-cols-2 gap-x-8 gap-y-2">
                                             <?php foreach($parties as $party): ?>
-                                                <div class="flex items-center">
+                        <div class="flex items-center">
                                                     <div class="w-4 h-4 rounded-sm mr-2" style="background-color: <?php echo $party['color']; ?>"></div>
                                                     <div class="text-sm">
                                                         <span class="font-medium"><?php echo $party['name']; ?></span>
                                                         <span class="ml-1 text-gray-600">(<?php echo $party['seats']; ?>)</span>
-                                                    </div>
-                                                </div>
+                            </div>
+                        </div>
                                             <?php endforeach; ?>
-                                        </div>
-                                    </div>
+                        </div>
+                    </div>
                                     
                                     <div class="text-center text-xs text-gray-500 mt-2">
                                         Totaal: <?php echo $totalSeats; ?> van 150 zetels in de Tweede Kamer
-                                    </div>
-                                </div>
+                </div>
+                    </div>
                                 
                                 <div class="mt-6 text-right">
                                     <a href="<?php echo URLROOT; ?>/partijen" class="text-primary hover:text-secondary transition-colors text-sm font-medium">
                                         Bekijk alle partijen →
                                     </a>
-                                </div>
+                    </div>
                             </div>
                             
                             <!-- Animated background effect -->
@@ -2033,41 +1271,41 @@ require_once 'views/templates/header.php';
                                     <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
                                     </svg>
-                                </div>
-                                <div>
+                        </div>
+                        <div>
                                     <h3 class="text-sm font-semibold text-gray-900">Alle Partijen</h3>
                                     <p class="text-sm text-gray-500">Van groot tot klein</p>
-                                </div>
-                            </div>
+                        </div>
+                    </div>
                             <div class="flex items-start space-x-3">
                                 <div class="w-10 h-10 rounded-xl bg-indigo-100 flex items-center justify-center flex-shrink-0">
                                     <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
                                     </svg>
-                                </div>
+                </div>
                                 <div>
                                     <h3 class="text-sm font-semibold text-gray-900">Standpunten</h3>
                                     <p class="text-sm text-gray-500">Helder en duidelijk</p>
-                                </div>
-                            </div>
+                    </div>
+                    </div>
                             <div class="flex items-start space-x-3">
                                 <div class="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center flex-shrink-0">
                                     <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
                                     </svg>
                                 </div>
-                                <div>
+                            <div>
                                     <h3 class="text-sm font-semibold text-gray-900">Partijleiders</h3>
                                     <p class="text-sm text-gray-500">Leer ze kennen</p>
-                                </div>
+                            </div>
                             </div>
                             <div class="flex items-start space-x-3">
                                 <div class="w-10 h-10 rounded-xl bg-indigo-100 flex items-center justify-center flex-shrink-0">
                                     <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"/>
                                     </svg>
-                                </div>
-                                <div>
+                        </div>
+                        <div>
                                     <h3 class="text-sm font-semibold text-gray-900">Zetelverdeling</h3>
                                     <p class="text-sm text-gray-500">Actuele peilingen</p>
                                 </div>
@@ -2093,7 +1331,7 @@ require_once 'views/templates/header.php';
         <!-- Decoratieve elementen -->
         <div class="absolute inset-0">
             <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"30\" height=\"30\" viewBox=\"0 0 30 30\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cpath d=\"M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z\" fill=\"rgba(0,0,0,0.03)\"%3E%3C/path%3E%3C/svg%3E')] opacity-50"></div>
-        </div>
+                        </div>
         <div class="absolute -top-40 -right-40 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
         <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-secondary/5 rounded-full blur-3xl"></div>
         
@@ -2133,23 +1371,23 @@ require_once 'views/templates/header.php';
                                     <svg class="w-5 h-5 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
                                     </svg>
-                                </div>
-                                <div>
+                            </div>
+                            <div>
                                     <h3 class="text-sm font-semibold text-gray-900">100% Anoniem</h3>
                                     <p class="text-sm text-gray-500">Privacy gewaarborgd</p>
-                                </div>
                             </div>
+                        </div>
                             <div class="flex items-start space-x-3">
                                 <div class="w-10 h-10 rounded-xl bg-green-100 flex items-center justify-center flex-shrink-0 transform transition-transform group-hover:scale-110">
                                     <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
                                     </svg>
-                                </div>
+                    </div>
                                 <div>
                                     <h3 class="text-sm font-semibold text-gray-900">Direct Resultaat</h3>
                                     <p class="text-sm text-gray-500">Meteen inzicht</p>
-                                </div>
-                            </div>
+            </div>
+        </div>
                             <div class="flex items-start space-x-3">
                                 <div class="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center flex-shrink-0 transform transition-transform group-hover:scale-110">
                                     <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -2173,10 +1411,10 @@ require_once 'views/templates/header.php';
                                     <svg class="w-5 h-5 transform transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
                                     </svg>
-                                </div>
+                        </div>
                             </a>
                         </div>
-                    </div>
+                                </div>
 
                     <!-- Rechter kolom: Interactieve Illustratie -->
                     <div class="relative lg:pl-12" data-aos="fade-left">
@@ -2193,17 +1431,17 @@ require_once 'views/templates/header.php';
                                             <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
                                             </svg>
-                                        </div>
-                                        <div>
+                            </div>
+                            <div>
                                             <h3 class="text-lg font-semibold text-gray-900">Stemwijzer 2025</h3>
                                             <p class="text-sm text-gray-500">25 belangrijke stellingen</p>
-                                        </div>
-                                    </div>
+                            </div>
+                        </div>
                                     <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
                                         <span class="w-1.5 h-1.5 rounded-full bg-green-500 mr-1.5 animate-pulse"></span>
                                         Live
                                     </span>
-                                </div>
+                    </div>
 
                                 <!-- Example question -->
                                 <div class="space-y-6">
@@ -2248,120 +1486,6 @@ require_once 'views/templates/header.php';
         </div>
     </section>
 
-    <!-- Actuele Thema's Grid -->
-    <section class="py-24 relative overflow-hidden">
-        <!-- Decoratieve elementen -->
-        <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-gray-50 via-white to-gray-50"></div>
-        <div class="absolute -top-40 -left-40 w-120 h-120 bg-primary/10 rounded-full blur-3xl"></div>
-        <div class="absolute -bottom-40 -right-40 w-120 h-120 bg-secondary/10 rounded-full blur-3xl"></div>
-        <div class="absolute top-1/4 left-1/3 w-64 h-64 bg-purple-400/5 rounded-full blur-2xl"></div>
-        <div class="absolute bottom-1/3 right-1/3 w-48 h-48 bg-yellow-400/5 rounded-full blur-xl"></div>
-
-        <div class="container mx-auto px-4 relative">
-            <div class="text-center mb-20 relative" data-aos="fade-up">
-                <span class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-9xl text-gray-100 font-bold opacity-60 select-none">THEMA'S</span>
-                <h2 class="text-5xl font-extrabold text-gray-900 mb-5 relative">
-                    <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Actuele Thema's</span>
-                </h2>
-                <div class="w-32 h-1.5 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full mb-6"></div>
-                <p class="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">Ontdek de belangrijkste politieke onderwerpen die Nederland bezighouden</p>
-            </div>
-
-            <!-- Thema's grid met verbeterd design -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                <?php foreach($actuele_themas as $index => $thema): ?>
-                    <div class="group relative" 
-                         data-aos="zoom-in" 
-                         data-aos-delay="<?php echo $index * 100; ?>"
-                         data-aos-duration="800"
-                         data-aos-once="true">
-                        <!-- Card Background met subtiele schaduw & glow -->
-                        <div class="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-2xl opacity-0 blur-xl group-hover:opacity-70 transition-all duration-500 transform group-hover:scale-105"></div>
-                        
-                        <!-- Hoofdkaart met verbeterd design -->
-                        <div class="relative bg-white rounded-2xl shadow-lg transform transition-all duration-500 group-hover:-translate-y-2 group-hover:shadow-2xl overflow-hidden border border-gray-100 h-full">
-                            <!-- Decoratieve hover accent lijn -->
-                            <div class="absolute inset-0 top-auto h-1 bg-gradient-to-r from-primary to-secondary transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
-                            
-                            <!-- Decoratief patroon -->
-                            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"30\" height=\"30\" viewBox=\"0 0 30 30\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cpath d=\"M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z\" fill=\"rgba(0,0,0,0.05)\"%3E%3C/path%3E%3C/svg%3E')] opacity-0 group-hover:opacity-10 transition-opacity duration-500"></div>
-
-                            <!-- Inhoud container met verbeterde padding -->
-                            <div class="relative p-8">
-                                <!-- Icon container met verbeterd ontwerp -->
-                                <div class="mb-6 flex items-center">
-                                    <div class="w-16 h-16 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-2xl flex items-center justify-center transform transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 group-hover:shadow-md group-hover:from-primary/20 group-hover:to-secondary/20">
-                                        <span class="text-4xl"><?php echo $thema['icon']; ?></span>
-                                    </div>
-                                    <div class="ml-4">
-                                        <div class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-medium">
-                                            Politiek thema
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Content met verbeterde typografie en spacing -->
-                                <div class="space-y-5 min-h-[180px]"> 
-                                    <h3 class="text-2xl font-bold text-gray-900 group-hover:text-primary transition-colors duration-300">
-                                        <?php echo $thema['title']; ?>
-                                    </h3>
-                                    <p class="text-gray-600 line-clamp-3 leading-relaxed">
-                                        <?php echo $thema['description']; ?>
-                                    </p>
-
-                                    <!-- Stats of relevante info -->
-                                    <div class="flex items-center space-x-6 pt-2">
-                                        <div class="flex items-center text-gray-500 text-sm">
-                                            <svg class="w-4 h-4 mr-1 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                            </svg>
-                                            <span>Recent geüpdatet</span>
-                                        </div>
-                                        <div class="flex items-center text-gray-500 text-sm">
-                                            <svg class="w-4 h-4 mr-1 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path>
-                                            </svg>
-                                            <span>Actueel</span>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- Actieknop met verbeterd ontwerp -->
-                                    <div class="pt-2">
-                                        <a href="<?php echo URLROOT; ?>/thema/<?php echo strtolower(str_replace(' ', '-', $thema['title'])); ?>" 
-                                           class="inline-flex items-center px-5 py-2.5 bg-gradient-to-r from-primary/5 to-secondary/5 hover:from-primary/10 hover:to-secondary/10 text-primary font-semibold rounded-lg transition-all duration-300 mt-2 group-hover:shadow-sm">
-                                            <span>Ontdek meer</span>
-                                            <svg class="w-5 h-5 ml-2 transform transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                                            </svg>
-                                        </a>
-                                    </div>
-                                </div>
-
-                                <!-- Decoratieve hoek elementen -->
-                                <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-primary/5 to-secondary/5 transform rotate-45 translate-x-12 -translate-y-12 group-hover:translate-x-8 group-hover:-translate-y-8 transition-transform duration-700"></div>
-                                <div class="absolute bottom-0 left-0 w-16 h-16 bg-gradient-to-tr from-primary/5 to-secondary/5 transform rotate-45 -translate-x-8 translate-y-8 group-hover:-translate-x-6 group-hover:translate-y-6 transition-transform duration-700 opacity-0 group-hover:opacity-100"></div>
-                            </div>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-
-            <!-- CTA Button met verbeterde styling -->
-            <div class="text-center mt-20" data-aos="fade-up">
-                <a href="<?php echo URLROOT; ?>/themas" 
-                   class="inline-flex items-center px-10 py-4 bg-gradient-to-r from-primary to-secondary text-white font-bold rounded-xl hover:opacity-95 transition-all transform hover:scale-105 shadow-xl hover:shadow-2xl group relative overflow-hidden">
-                    <span class="relative z-10 flex items-center">
-                        <span class="mr-1">Bekijk alle thema's</span>
-                        <svg class="w-5 h-5 ml-2 transform transition-transform duration-500 group-hover:translate-x-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                        </svg>
-                        <span class="absolute inset-0 -z-10 bg-white opacity-0 group-hover:opacity-20 rounded-xl transition-opacity"></span>
-                    </span>
-                </a>
-            </div>
-        </div>
-    </section>
-
     <!-- Newsletter Subscription Section -->
     <section class="py-12 px-4 md:px-8 bg-gradient-to-br from-primary/10 to-gray-100 rounded-3xl mx-4 mb-0 mt-16 shadow-lg">
         <div class="max-w-4xl mx-auto text-center">
@@ -2394,7 +1518,7 @@ require_once 'views/templates/header.php';
 
     <!-- Verwijderd inline Swiper initialisatie script -->
     <!-- Laad het externe home.js script -->
-    <script src="<?php echo URLROOT; ?>/js/home.js" defer></script>
+    <script src="<?php echo URLROOT; ?>/public/js/home.js" defer></script>
 
 <?php require_once 'views/templates/footer.php'; ?>
 

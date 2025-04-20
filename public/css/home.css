@@ -1,0 +1,646 @@
+/* Custom animations for floating elements */
+@keyframes float-slow {
+    0% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(2deg); }
+    100% { transform: translateY(0) rotate(0deg); }
+}
+
+@keyframes float-medium {
+    0% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(-2deg); }
+    100% { transform: translateY(0) rotate(0deg); }
+}
+
+@keyframes float-fast {
+    0% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-7px) rotate(1deg); }
+    100% { transform: translateY(0) rotate(0deg); }
+}
+
+@keyframes float-particle {
+    0% { transform: translateY(0) translateX(0); }
+    100% { transform: translateY(10px) translateX(10px); }
+}
+
+.animate-float-slow {
+    animation: float-slow 6s ease-in-out infinite;
+}
+
+.animate-float-medium {
+    animation: float-medium 4s ease-in-out infinite;
+}
+
+.animate-float-fast {
+    animation: float-fast 3s ease-in-out infinite;
+}
+
+@keyframes slide {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(500%); }
+}
+
+.animate-slide {
+    animation: slide 4s ease-in-out infinite;
+}
+
+/* Glow effect voor de actieve slide */
+.swiper-slide-active-custom {
+    transform: scale(1.02);
+    transition: all 0.5s ease;
+    animation: subtle-pulse 3s infinite alternate;
+}
+
+@keyframes subtle-pulse {
+    0% {
+        box-shadow: 0 0 0 rgba(26, 86, 219, 0);
+    }
+    100% {
+        box-shadow: 0 0 25px rgba(26, 86, 219, 0.3);
+    }
+}
+
+/* Glassmorphism effect verbetering */
+.hero-blog-swiper .swiper-slide a {
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.hero-blog-swiper .swiper-slide a:hover {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    transform: translateY(-3px);
+}
+
+/* Verbetering voor bullets paginering */
+.hero-swiper-pagination .inline-block {
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Animatie voor de progress bar (indien gebruikt) */
+.swiper-progress-bar .progress {
+    transition: width 0.1s linear;
+}
+
+/* Verbeterde hover effect voor navigatie knoppen */
+.hero-swiper-button-next:hover,
+.hero-swiper-button-prev:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(26, 86, 219, 0.4);
+}
+
+/* Verbeterde hero styling */
+.hero-section {
+    position: relative;
+    overflow: hidden;
+    /* background: linear-gradient(135deg, #121928 0%, #1a56db 100%); */ /* Oude gradient */
+    background: linear-gradient(145deg, #0A192F 10%, #172A46 60%, #1A56DB 100%); /* Dark sophisticated gradient */
+    padding: 6rem 0 8rem; /* Increased padding */
+    isolation: isolate; /* Stacking context */
+}
+
+/* Moderne decoratieve elementen / Subtle background pattern */
+.hero-pattern {
+    position: absolute;
+    inset: 0;
+    /* opacity: 0.07; */ /* Oude opacity */
+    opacity: 0.03; /* Even more subtle */
+    /* Oude pattern */
+    /* background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='white' fill-opacity='1' fill-rule='evenodd'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E"); */
+    background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23FFFFFF' fill-opacity='1' fill-rule='evenodd'%3E%3Ccircle cx='40' cy='40' r='1.5'/%3E%3C/g%3E%3C/svg%3E"); /* Dot pattern */
+}
+
+/* Top accent line - thinner and more subtle */
+.hero-accent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    /* height: 4px; */ /* Oude height */
+    height: 2px; /* Thinner */
+    /* background: linear-gradient(90deg, #1a56db, #7e3af2, #1a56db); */ /* Oude gradient */
+    background: linear-gradient(90deg, rgba(26, 86, 219, 0.5), rgba(126, 58, 242, 0.5), rgba(26, 86, 219, 0.5));
+    animation: gradientShift 10s ease infinite;
+    background-size: 200% 200%;
+}
+
+/* Moderne floating shapes / Floating shapes - softer, more atmospheric */
+.hero-shape {
+    position: absolute;
+    /* border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; */ /* Oude radius */
+    border-radius: 50%; /* Simple circles */
+    /* filter: blur(40px); */ /* Oude blur */
+    filter: blur(60px); /* Increased blur */
+    z-index: 0;
+    /* animation: shapeFloat 15s ease-in-out infinite alternate; */ /* Oude animation */
+    animation: shapeFloat 20s ease-in-out infinite alternate;
+    /* opacity: 0.12; */ /* Oude opacity */
+    opacity: 0.08; /* Reduced opacity */
+}
+
+.hero-shape-1 {
+    background: #1a56db;
+    /* width: 300px; */ /* Oude width */
+    /* height: 300px; */ /* Oude height */
+    width: 400px;
+    height: 400px;
+    /* top: -100px; */ /* Oude top */
+    top: -150px;
+    /* right: 5%; */ /* Oude right */
+    right: 10%;
+    animation-delay: 0s;
+}
+
+.hero-shape-2 {
+    background: #7e3af2;
+    /* width: 200px; */ /* Oude width */
+    /* height: 200px; */ /* Oude height */
+    width: 300px;
+    height: 300px;
+    /* bottom: -50px; */ /* Oude bottom */
+    bottom: -100px;
+    /* left: 10%; */ /* Oude left */
+    left: 15%;
+    animation-delay: 5s; /* Oude delay 2s */
+}
+
+.hero-shape-3 {
+    background: #1a56db; /* Consistent color scheme */
+    /* width: 150px; */ /* Oude width */
+    /* height: 150px; */ /* Oude height */
+    width: 200px;
+    height: 200px;
+    /* bottom: 20%; */ /* Oude bottom */
+    bottom: 25%;
+    /* right: 15%; */ /* Oude right */
+    right: 20%;
+    animation-delay: 10s; /* Oude delay 4s */
+}
+
+/* Hero Content Styling */
+.hero-title {
+    color: #E0E0E0; /* Off-white for sophistication */
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+.hero-title .highlight {
+    color: #FFFFFF; /* Pure white highlight */
+}
+.hero-title .underline-accent {
+    display: block;
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(90deg, #1a56db, #7e3af2);
+    margin-top: 0.5rem;
+    border-radius: 3px;
+}
+
+.hero-subtitle {
+    color: #A8B2CC; /* Lighter grey for subtitle */
+    max-width: 550px; /* Slightly increased max-width */
+}
+
+/* Typewriter text effect container */
+#typewriter-container {
+    min-height: 5em; /* Reserve space to prevent layout shifts */
+    display: flex;
+    align-items: center;
+}
+#typewriter {
+    display: inline-block;
+    transition: opacity 0.6s ease-in-out;
+    position: relative;
+    padding-right: 0.15em;
+}
+
+/* Swiper controls styling */
+.hero-swiper-pagination {
+    display: flex;
+    gap: 0.25rem;
+}
+
+.hero-swiper-pagination .swiper-pagination-bullet {
+    width: 2rem;
+    height: 0.25rem;
+    border-radius: 1rem;
+    background: rgba(255, 255, 255, 0.3);
+    opacity: 1;
+    transition: all 0.3s ease;
+}
+
+.hero-swiper-pagination .swiper-pagination-bullet-active {
+    background: linear-gradient(90deg, #1a56db, #7e3af2);
+    width: 3rem;
+}
+
+.hero-swiper-button-next,
+.hero-swiper-button-prev {
+    width: 3rem;
+    height: 3rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.hero-swiper-button-next:hover,
+.hero-swiper-button-prev:hover {
+    background: rgba(26, 86, 219, 0.3);
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.hero-swiper-progress-bar {
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    overflow: hidden;
+    width: 100%;
+}
+
+.hero-swiper-progress-bar .progress {
+    height: 100%;
+    background: linear-gradient(90deg, #1a56db, #7e3af2);
+    width: 0;
+    transition: width 0.3s ease;
+}
+
+/* CTA button styling / Hero CTA Button - Refined and professional */
+.hero-cta-button {
+    /* background: white; */ /* Oude background */
+    /* color: #1a56db; */ /* Oude color */
+    background: linear-gradient(90deg, #1a56db, #3b82f6); /* Blue gradient */
+    color: white;
+    /* border-radius: 0.75rem; */ /* Oude radius */
+    border-radius: 8px; /* Slightly less rounded */
+    font-weight: 600;
+    padding: 0.875rem 1.75rem;
+    display: inline-flex;
+    align-items: center;
+    /* transition: all 0.3s ease; */ /* Oude transition */
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Smooth transition */
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    /* box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); */ /* Oude shadow */
+    box-shadow: 0 4px 15px rgba(26, 86, 219, 0.2), 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.hero-cta-button::before { /* Hover effect */
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* width: 0; */ /* Oude width */
+    width: 100%;
+    height: 100%;
+    /* background: linear-gradient(90deg, #1a56db, #7e3af2); */ /* Oude background */
+    background: rgba(255, 255, 255, 0.1);
+    /* transition: width 0.3s ease; */ /* Oude transition */
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    z-index: -1;
+}
+
+.hero-cta-button:hover {
+    /* color: white; */ /* Oude color */
+    /* transform: translateY(-2px); */ /* Oude transform */
+    /* box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); */ /* Oude shadow */
+    box-shadow: 0 8px 25px rgba(26, 86, 219, 0.3), 0 4px 10px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+.hero-cta-button:hover::before {
+    /* width: 100%; */ /* Oude width */
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+.hero-cta-button svg {
+    /* transition: transform 0.3s ease, color 0.3s ease; */ /* Oude transition */
+    transition: transform 0.3s ease;
+}
+
+.hero-cta-button:hover svg {
+    /* transform: translateX(4px); */ /* Oude transform */
+    /* color: white; */ /* Oude color */
+    transform: translateX(3px);
+}
+
+
+/* Animations */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes shapeFloat {
+    0% { transform: translateY(0) rotate(0); }
+    /* 50% { transform: translateY(-20px) rotate(5deg); } */ /* Oude transform */
+    50% { transform: translateY(-15px) rotate(3deg); }
+    100% { transform: translateY(0) rotate(0); }
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Custom animations */
+@keyframes float-subtle {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+    100% { transform: translateY(0); }
+}
+
+/* Subtle pulse animation exists above already */
+
+
+/* Blog slider styling / Blog Slider Styling within Hero */
+.hero-blog-card-wrapper { /* Added wrapper for positioning/shadow */
+   position: relative;
+   perspective: 1000px; /* For 3D effect */
+}
+
+.hero-blog-card {
+    /* backdrop-filter: blur(10px); */ /* Oude backdrop */
+    backdrop-filter: blur(12px) saturate(150%);
+    /* background: rgba(17, 24, 39, 0.7); */ /* Oude background */
+    background: rgba(10, 25, 47, 0.7); /* Darker, less transparent background */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    /* border-radius: 16px; */ /* Oude radius */
+    border-radius: 12px; /* Consistent border-radius */
+    /* box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); */ /* Oude shadow */
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    /* transition: transform 0.3s ease, box-shadow 0.3s ease; */ /* Oude transition */
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transform-style: preserve-3d;
+    will-change: transform, box-shadow;
+}
+
+.hero-blog-card:hover {
+    /* transform: translateY(-5px); */ /* Oude transform */
+    /* box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.3); */ /* Oude shadow */
+    transform: translateY(-8px) rotateX(2deg) rotateY(-1deg); /* Subtle 3D tilt */
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+}
+
+.hero-blog-card-header {
+    /* background: rgba(255, 255, 255, 0.05); */ /* Oude background */
+    background: rgba(255, 255, 255, 0.03); /* Very subtle header background */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(5px);
+    padding: 0.75rem 1.5rem; /* Adjusted padding */
+}
+
+/* Nieuwe styles toegevoegd */
+.hero-blog-card-header h3 {
+    color: #E0E0E0; /* Consistent off-white */
+}
+.hero-blog-card-header .highlight-text { /* Reusable highlight */
+    position: relative;
+    display: inline-block;
+}
+.hero-blog-card-header .highlight-text::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 70%;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(26, 86, 219, 0.8), rgba(126, 58, 242, 0.8));
+    border-radius: 2px;
+}
+
+.hero-blog-card-header p {
+    color: #A8B2CC; /* Consistent subtitle color */
+}
+/* --- Einde nieuwe styles --- */
+
+.hero-blog-card-icon { /* This class seems unused in the latest HTML */
+    background: linear-gradient(135deg, rgba(26, 86, 219, 0.2), rgba(126, 58, 242, 0.2));
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.blog-nav-button { /* Common style for nav buttons */
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%; /* Circular buttons */
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+.blog-nav-button:hover {
+    background: rgba(26, 86, 219, 0.3);
+    transform: scale(1.1);
+}
+.blog-nav-button svg {
+    width: 0.8rem;
+    height: 0.8rem;
+    color: rgba(255, 255, 255, 0.7);
+    transition: color 0.3s ease;
+}
+.blog-nav-button:hover svg {
+    color: #FFFFFF;
+}
+
+.hero-blog-swiper {
+    height: 420px; /* Slightly adjusted height */
+    position: relative;
+    z-index: 10;
+}
+
+.hero-blog-swiper .swiper-slide {
+    padding: 1.25rem; /* Consistent padding */
+}
+
+.hero-blog-swiper .swiper-slide a {
+    display: block;
+    height: 100%;
+    position: relative;
+    border-radius: 10px; /* Inner card radius */
+    overflow: hidden;
+    background: linear-gradient(145deg, rgba(28, 36, 52, 0.8), rgba(12, 17, 26, 0.9)); /* Darker inner card */
+    transition: box-shadow 0.4s ease;
+}
+
+.hero-blog-swiper .swiper-slide a:hover {
+   box-shadow: 0 0 20px rgba(26, 86, 219, 0.2);
+}
+
+/* Inner Blog Card Elements */
+.blog-card-image-wrapper {
+    position: relative;
+    height: 180px; /* Fixed height for consistency */
+    overflow: hidden;
+    border-radius: 10px 10px 0 0; /* Match card radius */
+}
+.blog-card-image-wrapper img {
+    transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.hero-blog-swiper .swiper-slide a:hover .blog-card-image-wrapper img {
+    transform: scale(1.08);
+}
+.image-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(10, 25, 47, 0.8) 0%, rgba(10, 25, 47, 0) 60%);
+    transition: background 0.4s ease;
+}
+ .hero-blog-swiper .swiper-slide a:hover .image-overlay {
+     background: linear-gradient(to top, rgba(10, 25, 47, 0.9) 0%, rgba(10, 25, 47, 0.1) 70%);
+ }
+
+.blog-card-category {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    z-index: 11;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    color: #E0E0E0;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px; /* Pill shape */
+    font-size: 0.7rem;
+    font-weight: 500;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: inline-flex;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+.hero-blog-swiper .swiper-slide a:hover .blog-card-category {
+    background: rgba(26, 86, 219, 0.7);
+    color: #FFFFFF;
+    border-color: rgba(255, 255, 255, 0.2);
+}
+.blog-card-category svg {
+    width: 0.75rem;
+    height: 0.75rem;
+    margin-right: 0.3rem;
+}
+
+.blog-card-date {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 11;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    color: #A8B2CC;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 500;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.blog-card-content {
+    padding: 1.25rem; /* Content padding */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+}
+.blog-card-title {
+    font-size: 1.1rem; /* Slightly smaller title */
+    font-weight: 600; /* Semibold */
+    color: #E0E0E0;
+    margin-bottom: 0.5rem; /* Reduced margin */
+    line-height: 1.4;
+    transition: color 0.3s ease;
+}
+.hero-blog-swiper .swiper-slide a:hover .blog-card-title {
+    color: #FFFFFF;
+}
+.blog-card-summary {
+    font-size: 0.85rem; /* Smaller summary */
+    color: #A8B2CC;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+    flex-grow: 1; /* Allow summary to take space */
+    transition: color 0.3s ease;
+}
+ .hero-blog-swiper .swiper-slide a:hover .blog-card-summary {
+     color: #C0C8E0;
+ }
+
+.blog-card-footer {
+    margin-top: auto; /* Push footer to bottom */
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.blog-card-readmore {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #A8B2CC;
+    display: inline-flex;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+.hero-blog-swiper .swiper-slide a:hover .blog-card-readmore {
+    color: #1a56db;
+}
+.blog-card-readmore svg {
+    width: 0.9rem;
+    height: 0.9rem;
+    margin-left: 0.4rem;
+    transition: transform 0.3s ease;
+}
+.hero-blog-swiper .swiper-slide a:hover .blog-card-readmore svg {
+    transform: translateX(3px);
+}
+.blog-card-readtime {
+    font-size: 0.75rem;
+    color: #A8B2CC;
+    display: inline-flex;
+    align-items: center;
+}
+ .blog-card-readtime svg {
+     width: 0.8rem;
+     height: 0.8rem;
+     margin-right: 0.3rem;
+     opacity: 0.7;
+ }
+
+/* Swiper Pagination */
+.blog-pagination .swiper-pagination-bullet {
+    width: 8px; /* Smaller bullets */
+    height: 8px;
+    background-color: rgba(255, 255, 255, 0.3);
+    opacity: 1;
+    transition: all 0.3s ease;
+    margin: 0 4px; /* Adjusted margin */
+}
+
+.blog-pagination .swiper-pagination-bullet-active {
+    background: linear-gradient(90deg, #1a56db, #7e3af2);
+    width: 20px; /* Elongated active bullet */
+    border-radius: 4px; /* Keep rounded ends */
+}
+
+/* Fallback for no image */
+.no-image-fallback {
+     background: linear-gradient(145deg, rgba(28, 36, 52, 0.8), rgba(12, 17, 26, 0.9));
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     border-radius: 10px 10px 0 0;
+}
+ .no-image-fallback svg {
+     width: 3rem;
+     height: 3rem;
+     color: rgba(255, 255, 255, 0.3);
+ } 
