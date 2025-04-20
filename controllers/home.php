@@ -1487,7 +1487,7 @@ require_once 'views/templates/header.php';
     </section>
 
     <!-- Newsletter Subscription Section - Herbouwd -->
-    <section class="py-20 bg-gradient-to-b from-white to-blue-50 relative overflow-hidden">
+    <section class="py-20 bg-white relative overflow-hidden">
         <!-- Decoratieve elementen -->
         <div class="absolute top-0 left-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl opacity-70 transform -translate-x-1/4 -translate-y-1/4"></div>
         <div class="absolute bottom-0 right-0 w-72 h-72 bg-secondary/5 rounded-full blur-3xl opacity-70 transform translate-x-1/4 translate-y-1/4"></div>
