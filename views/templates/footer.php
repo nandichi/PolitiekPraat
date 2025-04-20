@@ -352,7 +352,12 @@
     <!-- Newsletter JavaScript -->
     <script src="<?php echo URLROOT; ?>/js/newsletter.js"></script>
 
-    <script src="<?php echo URLROOT; ?>/js/scroll-top.js"></script>
-
+    <script>
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+    </script>
 </body>
 </html> 

@@ -411,7 +411,7 @@ require_once 'views/templates/header.php';
         position: absolute;
         inset: 0;
         opacity: 0.07;
-        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='white' fill-opacity='1' fill-rule='evenodd'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2V6h4V4H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
+        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='white' fill-opacity='1' fill-rule='evenodd'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
     }
     
     .hero-accent {
@@ -1192,15 +1192,11 @@ require_once 'views/templates/header.php';
                                                 <?php if($blog->image_path): ?>
                                                     <img src="<?php echo URLROOT . '/' . $blog->image_path; ?>" 
                                                          alt="<?php echo htmlspecialchars($blog->title); ?>" 
-                                                         class="w-full h-full object-cover" 
-                                                         width="1200" 
-                                                         height="800" 
-                                                         decoding="async">
+                                                         class="w-full h-full object-cover">
                                                     <div class="image-overlay"></div>
                                                 <?php else: ?>
                                                     <div class="w-full h-full no-image-fallback">
                                                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V7a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                                                         </svg>
                                                     </div>
@@ -1315,7 +1311,7 @@ require_once 'views/templates/header.php';
                 <div class="absolute top-1/3 left-1/4 w-64 h-64 bg-green-400/5 rounded-full blur-2xl"></div>
                 <div class="absolute bottom-1/2 right-1/3 w-48 h-48 bg-yellow-400/5 rounded-full blur-xl"></div>
 
-                <div class="text-center mb-20 relative">
+                <div class="text-center mb-20 relative" data-aos="fade-up" data-aos-once="true">
                     <span class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-9xl text-gray-100 font-bold opacity-60 select-none">BLOGS</span>
                     <h2 class="text-5xl font-extrabold text-gray-900 mb-5 relative">
                         <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Laatste Blogs</span>
@@ -1326,7 +1322,12 @@ require_once 'views/templates/header.php';
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                     <?php foreach($latest_blogs as $index => $blog): ?>
-                        <article class="group relative bg-white rounded-2xl shadow-lg overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl border border-gray-100">
+                        <article class="group relative bg-white rounded-2xl shadow-lg overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl border border-gray-100" 
+                                data-aos="fade-up" 
+                                data-aos-delay="<?php echo $index * 100; ?>"
+                                data-aos-duration="800"
+                                data-aos-easing="ease-out-cubic"
+                                data-aos-once="true">
                             <!-- Decoratieve hover accent lijn -->
                             <div class="absolute inset-0 top-auto h-1 bg-gradient-to-r from-primary to-secondary transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 z-10"></div>
                             
@@ -1356,11 +1357,7 @@ require_once 'views/templates/header.php';
                                     <div class="relative h-52 overflow-hidden">
                                         <img src="<?php echo URLROOT . '/' . $blog->image_path; ?>" 
                                              alt="<?php echo htmlspecialchars($blog->title); ?>"
-                                             class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110" 
-                                             width="400" 
-                                             height="250" 
-                                             loading="lazy" 
-                                             decoding="async">
+                                             class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110">
                                         <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                                     </div>
                                 <?php else: ?>
@@ -1379,11 +1376,7 @@ require_once 'views/templates/header.php';
                                             <div class="w-10 h-10 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full flex items-center justify-center overflow-hidden">
                                                 <img src="https://media.licdn.com/dms/image/v2/D4E03AQFQkWCitMT1ug/profile-displayphoto-shrink_400_400/B4EZYuubOTHMAg-/0/1744540644719?e=1750291200&v=beta&t=Qs38y2l_-SWd_N2CcavekytGxrU06ixhojbHdDktfxM" 
                                                      alt="<?php echo htmlspecialchars($blog->author_name); ?>"
-                                                     class="w-full h-full object-cover" 
-                                                     width="40" 
-                                                     height="40" 
-                                                     loading="lazy" 
-                                                     decoding="async">
+                                                     class="w-full h-full object-cover">
                                                 </div>
                                             <span class="text-sm font-bold text-gray-800"><?php echo htmlspecialchars($blog->author_name); ?></span>
                                         </div>
@@ -1437,7 +1430,7 @@ require_once 'views/templates/header.php';
                 </div>
 
                 <!-- CTA Button met verbeterde styling -->
-                <div class="text-center mt-20">
+                <div class="text-center mt-20" data-aos="zoom-in" data-aos-delay="300" data-aos-once="true">
                     <a href="<?php echo URLROOT; ?>/blogs" 
                        class="inline-flex items-center px-10 py-4 bg-gradient-to-r from-primary to-secondary text-white font-bold rounded-xl hover:opacity-95 transition-all transform hover:scale-105 shadow-xl hover:shadow-2xl group relative overflow-hidden">
                         <span class="relative z-10 flex items-center">
@@ -1452,14 +1445,14 @@ require_once 'views/templates/header.php';
             </div>
 
             <!-- Laatste Nieuws -->
-            <div class="relative py-24">
+            <div class="relative py-24" data-aos="fade-up" data-aos-once="true">
                 <!-- Decoratieve elementen -->
                 <div class="absolute -top-20 right-0 w-120 h-120 bg-primary/10 rounded-full blur-3xl"></div>
                 <div class="absolute bottom-20 left-0 w-120 h-120 bg-secondary/10 rounded-full blur-3xl"></div>
                 <div class="absolute top-1/3 right-1/4 w-64 h-64 bg-blue-400/5 rounded-full blur-2xl"></div>
                 <div class="absolute top-1/2 left-1/3 w-48 h-48 bg-red-400/5 rounded-full blur-xl"></div>
 
-                <div class="text-center mb-20 relative">
+                <div class="text-center mb-20 relative" data-aos="fade-up" data-aos-once="true">
                     <span class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-9xl text-gray-100 font-bold opacity-60 select-none">NIEUWS</span>
                     <h2 class="text-5xl font-extrabold text-gray-900 mb-5 relative">
                         <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Laatste Politiek Nieuws</span>
@@ -1471,7 +1464,7 @@ require_once 'views/templates/header.php';
                 <!-- Laatste Nieuws Grid -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 relative">
                     <!-- Links georiënteerde bronnen -->
-                    <div class="space-y-10">
+                    <div class="space-y-10" data-aos="fade-right" data-aos-duration="1000" data-aos-once="true">
                         <div class="flex items-center justify-center lg:justify-start">
                             <div class="bg-gradient-to-r from-blue-500 to-blue-700 px-5 py-3 rounded-xl shadow-md inline-flex items-center">
                                 <svg class="w-5 h-5 mr-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1488,7 +1481,11 @@ require_once 'views/templates/header.php';
                             });
                             foreach($links_news as $index => $news):
                             ?>
-                                <article class="group bg-white border border-blue-100 rounded-2xl shadow-lg overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl relative">
+                                <article class="group bg-white border border-blue-100 rounded-2xl shadow-lg overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl relative"
+                                        data-aos="fade-up" 
+                                        data-aos-delay="<?php echo $index * 100; ?>"
+                                        data-aos-duration="800"
+                                        data-aos-once="true">
                                     <!-- Accent border -->
                                     <div class="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-blue-400 to-blue-600 transform origin-left scale-y-0 group-hover:scale-y-100 transition-transform duration-300"></div>
                                     
@@ -1548,7 +1545,7 @@ require_once 'views/templates/header.php';
                     </div>
 
                     <!-- Rechts georiënteerde bronnen -->
-                    <div class="space-y-10">
+                    <div class="space-y-10" data-aos="fade-left" data-aos-duration="1000" data-aos-once="true">
                         <div class="flex items-center justify-center lg:justify-start">
                             <div class="bg-gradient-to-r from-red-500 to-red-700 px-5 py-3 rounded-xl shadow-md inline-flex items-center">
                                 <svg class="w-5 h-5 mr-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1565,7 +1562,11 @@ require_once 'views/templates/header.php';
                             });
                             foreach($rechts_news as $index => $news):
                             ?>
-                                <article class="group bg-white border border-red-100 rounded-2xl shadow-lg overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl relative">
+                                <article class="group bg-white border border-red-100 rounded-2xl shadow-lg overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl relative"
+                                        data-aos="fade-up" 
+                                        data-aos-delay="<?php echo $index * 100; ?>"
+                                        data-aos-duration="800"
+                                        data-aos-once="true">
                                     <!-- Accent border -->
                                     <div class="absolute right-0 top-0 h-full w-1 bg-gradient-to-b from-red-400 to-red-600 transform origin-right scale-y-0 group-hover:scale-y-100 transition-transform duration-300"></div>
                                     
@@ -1649,7 +1650,7 @@ require_once 'views/templates/header.php';
         <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-secondary/5 rounded-full blur-3xl"></div>
         
         <div class="container mx-auto px-4 relative">
-            <div class="text-center mb-16 relative">
+            <div class="text-center mb-16 relative" data-aos="fade-up">
                 <span class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-9xl text-gray-100 font-bold opacity-50 select-none">PEILINGEN</span>
                 <h2 class="text-4xl font-bold text-gray-900 mb-4 relative">
                     <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Actuele Peilingen</span>
@@ -1661,7 +1662,7 @@ require_once 'views/templates/header.php';
             
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
                 <!-- Linker kolom: Zetelverdeling Tabel -->
-                <div class="relative">
+                <div class="relative" data-aos="fade-right">
                     <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
                         <div class="p-4 sm:p-6">
                             <h3 class="text-xl sm:text-2xl font-bold mb-4 text-gray-900">Zetelverdeling Tweede Kamer</h3>
@@ -1767,7 +1768,7 @@ require_once 'views/templates/header.php';
                 </div>
                 
                 <!-- Rechter kolom: Visualisaties en Coalities -->
-                <div class="space-y-8">
+                <div class="space-y-8" data-aos="fade-left">
                     <!-- Donut Chart Visualisatie -->
                     <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
                         <div class="p-4 sm:p-6">
@@ -1953,7 +1954,7 @@ require_once 'views/templates/header.php';
             <div class="max-w-7xl mx-auto">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                     <!-- Linker kolom: Interactieve visualisatie -->
-                    <div class="relative">
+                    <div class="relative" data-aos="fade-right">
                         <div class="absolute -inset-1 bg-gradient-to-r from-primary to-secondary rounded-2xl blur opacity-25"></div>
                         <div class="relative bg-white rounded-2xl shadow-xl overflow-hidden group hover:shadow-2xl transition-all duration-500">
                             <div class="p-6">
@@ -2042,7 +2043,7 @@ require_once 'views/templates/header.php';
                     </div>
                     
                     <!-- Left column: Content (now on right) -->
-                    <div class="space-y-8">
+                    <div class="space-y-8" data-aos="fade-left">
                         <div class="space-y-6">
                             <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
                                 <span class="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
@@ -2131,7 +2132,7 @@ require_once 'views/templates/header.php';
             <div class="max-w-7xl mx-auto">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                     <!-- Linker kolom: Content -->
-                    <div class="space-y-8">
+                    <div class="space-y-8" data-aos="fade-right">
                         <div class="space-y-6">
                             <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
                                 <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
@@ -2208,7 +2209,7 @@ require_once 'views/templates/header.php';
                     </div>
 
                     <!-- Rechter kolom: Interactieve Illustratie -->
-                    <div class="relative lg:pl-12">
+                    <div class="relative lg:pl-12" data-aos="fade-left">
                         <div class="relative">
                             <!-- Decoratieve achtergrond -->
                             <div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5 rounded-3xl transform rotate-3"></div>
@@ -2220,7 +2221,7 @@ require_once 'views/templates/header.php';
                                     <div class="flex items-center space-x-4">
                                         <div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
                                             <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
                                             </svg>
                                         </div>
                                         <div>
@@ -2287,7 +2288,7 @@ require_once 'views/templates/header.php';
         <div class="absolute bottom-1/3 right-1/3 w-48 h-48 bg-yellow-400/5 rounded-full blur-xl"></div>
 
         <div class="container mx-auto px-4 relative">
-            <div class="text-center mb-20 relative">
+            <div class="text-center mb-20 relative" data-aos="fade-up">
                 <span class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-9xl text-gray-100 font-bold opacity-60 select-none">THEMA'S</span>
                 <h2 class="text-5xl font-extrabold text-gray-900 mb-5 relative">
                     <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Actuele Thema's</span>
@@ -2299,7 +2300,11 @@ require_once 'views/templates/header.php';
             <!-- Thema's grid met verbeterd design -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                 <?php foreach($actuele_themas as $index => $thema): ?>
-                    <div class="group relative">
+                    <div class="group relative" 
+                         data-aos="zoom-in" 
+                         data-aos-delay="<?php echo $index * 100; ?>"
+                         data-aos-duration="800"
+                         data-aos-once="true">
                         <!-- Card Background met subtiele schaduw & glow -->
                         <div class="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-2xl opacity-0 blur-xl group-hover:opacity-70 transition-all duration-500 transform group-hover:scale-105"></div>
                         
@@ -2372,7 +2377,7 @@ require_once 'views/templates/header.php';
             </div>
 
             <!-- CTA Button met verbeterde styling -->
-            <div class="text-center mt-20">
+            <div class="text-center mt-20" data-aos="fade-up">
                 <a href="<?php echo URLROOT; ?>/themas" 
                    class="inline-flex items-center px-10 py-4 bg-gradient-to-r from-primary to-secondary text-white font-bold rounded-xl hover:opacity-95 transition-all transform hover:scale-105 shadow-xl hover:shadow-2xl group relative overflow-hidden">
                     <span class="relative z-10 flex items-center">
@@ -2395,10 +2400,10 @@ require_once 'views/templates/header.php';
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
             </div>
-            <h2 class="text-3xl font-bold text-gray-800 mb-3">Blijf op de hoogte van het laatste nieuws</h2>
-            <p class="text-lg text-gray-600 mb-6 max-w-2xl mx-auto leading-relaxed">Schrijf je in voor onze nieuwsbrief en ontvang automatisch een bericht wanneer er een nieuwe blog wordt gepubliceerd.</p>
+            <h2 class="text-3xl font-bold text-gray-800 mb-3" data-aos="fade-up">Blijf op de hoogte van het laatste nieuws</h2>
+            <p class="text-lg text-gray-600 mb-6 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">Schrijf je in voor onze nieuwsbrief en ontvang automatisch een bericht wanneer er een nieuwe blog wordt gepubliceerd.</p>
             
-            <div class="max-w-md mx-auto">
+            <div class="max-w-md mx-auto" data-aos="fade-up" data-aos-delay="200">
                 <form id="newsletterForm" class="flex flex-col sm:flex-row gap-3">
                     <input type="email" name="email" id="newsletter-email" placeholder="Je e-mailadres" required 
                            class="flex-1 px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary shadow-sm">
