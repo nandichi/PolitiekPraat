@@ -405,13 +405,13 @@ require_once 'views/templates/header.php';
                                 
                                 <!-- Navigatieknoppen met nieuwe styling -->
                                 <div class="flex space-x-2">
-                                    <button class="blog-nav-prev blog-nav-button">
-                                        <svg viewBox="0 0 24 24">
+                                    <button class="blog-nav-prev w-8 h-8 rounded-full bg-white bg-opacity-20 text-white hover:bg-opacity-30 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50 transition-all duration-300 flex items-center justify-center">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                                         </svg>
                                     </button>
-                                    <button class="blog-nav-next blog-nav-button">
-                                        <svg viewBox="0 0 24 24">
+                                    <button class="blog-nav-next w-8 h-8 rounded-full bg-white bg-opacity-20 text-white hover:bg-opacity-30 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50 transition-all duration-300 flex items-center justify-center">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                         </svg>
                                     </button>
@@ -420,7 +420,7 @@ require_once 'views/templates/header.php';
                         </div>
                         
                         <!-- Blog swiper container -->
-                        <div class="hero-blog-swiper">
+                        <div class="hero-blog-swiper relative">
                             <div class="swiper-wrapper">
                                 <?php foreach($featured_blogs as $blog): ?>
                                 <div class="swiper-slide">
@@ -468,19 +468,7 @@ require_once 'views/templates/header.php';
                                 </div>
                                                 
                                                 <div class="blog-card-footer">
-                                                    <span class="blog-card-readmore">
-                                                        Lees verder
-                                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                                                        </svg>
-                                                    </span>
-                                                    
-                                                    <span class="blog-card-readtime">
-                                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                                        </svg>
-                                                        5 min <!-- TODO: Dynamisch berekenen -->
-                                                    </span>
+                                                    <!-- Lees verder en leestijd zijn verwijderd -->
                             </div>
                             </div>
                         </div>
@@ -489,8 +477,8 @@ require_once 'views/templates/header.php';
                                 <?php endforeach; ?>
                 </div>
                             
-                            <!-- Swiper paginering -->
-                            <div class="absolute bottom-3 left-0 right-0 z-20 flex justify-center"> 
+                            <!-- Swiper paginering - Verhoogd voor betere centrering -->
+                            <div class="absolute bottom-6 left-0 right-0 z-20 flex justify-center"> 
                                 <div class="swiper-pagination blog-pagination"></div> <!-- Was: hero-swiper-pagination -->
             </div>
         </div>
