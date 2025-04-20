@@ -756,6 +756,7 @@ require_once 'views/templates/header.php';
                 
                 <!-- Party Details Modal -->
                 <div x-show="showPartyDetails" 
+                     x-cloak
                      x-transition:enter="transition ease-out duration-300"
                      x-transition:enter-start="opacity-0 transform scale-95"
                      x-transition:enter-end="opacity-100 transform scale-100"
@@ -770,7 +771,7 @@ require_once 'views/templates/header.php';
                             <div class="flex items-start justify-between">
                                 <div class="flex items-center space-x-4">
                                     <div class="w-16 h-16 rounded-xl bg-white p-1 border border-gray-200 shadow-sm">
-                                        <img :src="partyLogos[detailedParty?.name]" :alt="detailedParty?.name" class="w-full h-full object-contain rounded-md">
+                                        <img :src="$data.partyLogos[detailedParty?.name]" :alt="detailedParty?.name" class="w-full h-full object-contain rounded-md">
                                     </div>
                                     <div>
                                         <h3 class="text-2xl font-bold text-gray-900" x-text="detailedParty?.name"></h3>

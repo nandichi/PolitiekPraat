@@ -20,12 +20,12 @@ $partijData = $politicalDataAPI->getPartijInformatie();
 $latestPolls = $pollAPI->getLatestPolls();
 $historicalPolls = $pollAPI->getHistoricalPolls(3);
 
-// Data voor zetelverdeling peiling 4-4-2025
+// Data voor zetelverdeling peiling 14-04-2025 (Ipsos I&O)
 $peilingData = [
     [
         'partij' => 'PVV',
         'zetels' => [
-            'peiling' => 29,
+            'peiling' => 28, // Updated
             'vorige' => 29,
             'tkvorigepeiling' => 32,
             'tk2023' => 37
@@ -35,7 +35,7 @@ $peilingData = [
     [
         'partij' => 'GroenLinks/PvdA',
         'zetels' => [
-            'peiling' => 29,
+            'peiling' => 27, // Updated
             'vorige' => 28,
             'tkvorigepeiling' => 24,
             'tk2023' => 25
@@ -45,7 +45,7 @@ $peilingData = [
     [
         'partij' => 'VVD',
         'zetels' => [
-            'peiling' => 25,
+            'peiling' => 26, // Updated
             'vorige' => 26,
             'tkvorigepeiling' => 21,
             'tk2023' => 24
@@ -55,7 +55,7 @@ $peilingData = [
     [
         'partij' => 'CDA',
         'zetels' => [
-            'peiling' => 19,
+            'peiling' => 18, // Updated
             'vorige' => 18,
             'tkvorigepeiling' => 17,
             'tk2023' => 5
@@ -65,7 +65,7 @@ $peilingData = [
     [
         'partij' => 'D66',
         'zetels' => [
-            'peiling' => 9,
+            'peiling' => 10, // Updated
             'vorige' => 9,
             'tkvorigepeiling' => 12,
             'tk2023' => 9
@@ -75,7 +75,7 @@ $peilingData = [
     [
         'partij' => 'SP',
         'zetels' => [
-            'peiling' => 7,
+            'peiling' => 5, // Updated
             'vorige' => 7,
             'tkvorigepeiling' => 8,
             'tk2023' => 5
@@ -85,7 +85,7 @@ $peilingData = [
     [
         'partij' => 'FVD',
         'zetels' => [
-            'peiling' => 5,
+            'peiling' => 4, // Updated
             'vorige' => 5,
             'tkvorigepeiling' => 5,
             'tk2023' => 3
@@ -95,7 +95,7 @@ $peilingData = [
     [
         'partij' => 'PvdDieren',
         'zetels' => [
-            'peiling' => 4,
+            'peiling' => 7, // Updated
             'vorige' => 4,
             'tkvorigepeiling' => 5,
             'tk2023' => 3
@@ -105,7 +105,7 @@ $peilingData = [
     [
         'partij' => 'SGP',
         'zetels' => [
-            'peiling' => 4,
+            'peiling' => 3, // Updated
             'vorige' => 4,
             'tkvorigepeiling' => 4,
             'tk2023' => 3
@@ -115,7 +115,7 @@ $peilingData = [
     [
         'partij' => 'DENK',
         'zetels' => [
-            'peiling' => 4,
+            'peiling' => 4, // Updated
             'vorige' => 4,
             'tkvorigepeiling' => 4,
             'tk2023' => 3
@@ -125,7 +125,7 @@ $peilingData = [
     [
         'partij' => 'JA21',
         'zetels' => [
-            'peiling' => 4,
+            'peiling' => 4, // Updated
             'vorige' => 4,
             'tkvorigepeiling' => 3,
             'tk2023' => 1
@@ -135,7 +135,7 @@ $peilingData = [
     [
         'partij' => 'Volt',
         'zetels' => [
-            'peiling' => 3,
+            'peiling' => 4, // Updated
             'vorige' => 4,
             'tkvorigepeiling' => 4,
             'tk2023' => 2
@@ -145,7 +145,7 @@ $peilingData = [
     [
         'partij' => 'ChristenUnie',
         'zetels' => [
-            'peiling' => 3,
+            'peiling' => 3, // Updated
             'vorige' => 3,
             'tkvorigepeiling' => 4,
             'tk2023' => 3
@@ -155,7 +155,7 @@ $peilingData = [
     [
         'partij' => 'BBB',
         'zetels' => [
-            'peiling' => 3,
+            'peiling' => 5, // Updated
             'vorige' => 3,
             'tkvorigepeiling' => 4,
             'tk2023' => 7
@@ -165,7 +165,7 @@ $peilingData = [
     [
         'partij' => 'Nieuw Soc.Contr.',
         'zetels' => [
-            'peiling' => 2,
+            'peiling' => 2, // Updated
             'vorige' => 2,
             'tkvorigepeiling' => 3,
             'tk2023' => 20
@@ -174,27 +174,27 @@ $peilingData = [
     ]
 ];
 
-// Mogelijke coalities berekenen op basis van de peilingdata
+// Mogelijke coalities berekenen op basis van de bijgewerkte peilingdata
 $mogelijkeCoalities = [
     [
         'naam' => 'Links-progressief',
         'partijen' => ['GroenLinks/PvdA', 'D66', 'SP', 'PvdDieren', 'Volt'],
-        'zetels' => 29 + 9 + 7 + 4 + 3
+        'zetels' => 27 + 10 + 5 + 7 + 4 // Updated: 53
     ],
     [
         'naam' => 'Rechts-conservatief',
         'partijen' => ['PVV', 'VVD', 'BBB', 'JA21', 'SGP', 'FVD'],
-        'zetels' => 29 + 25 + 3 + 4 + 4 + 5
+        'zetels' => 28 + 26 + 5 + 4 + 3 + 4 // Updated: 70
     ],
     [
         'naam' => 'Centrum-breed',
         'partijen' => ['GroenLinks/PvdA', 'VVD', 'CDA', 'D66', 'ChristenUnie'],
-        'zetels' => 29 + 25 + 19 + 9 + 3
+        'zetels' => 27 + 26 + 18 + 10 + 3 // Updated: 84
     ],
     [
         'naam' => 'Huidige coalitie',
         'partijen' => ['PVV', 'VVD', 'BBB', 'Nieuw Soc.Contr.'],
-        'zetels' => 29 + 25 + 3 + 2
+        'zetels' => 28 + 26 + 5 + 2 // Updated: 61
     ]
 ];
 
@@ -497,13 +497,6 @@ require_once 'views/templates/header.php';
         padding-right: 0.1em;
     }
     
-    #typewriter::after {
-        content: '';
-        position: absolute;
-        right: -0.1em;
-        animation: blink 1s step-end infinite;
-    }
-    
     /* Swiper controls styling */
     .hero-swiper-pagination {
         display: flex;
@@ -626,6 +619,458 @@ require_once 'views/templates/header.php';
         0%, 100% { opacity: 1; }
         50% { opacity: 0; }
     }
+
+    /* Custom animations */
+    @keyframes float-subtle {
+        0% { transform: translateY(0); }
+        50% { transform: translateY(-5px); }
+        100% { transform: translateY(0); }
+    }
+
+    @keyframes subtle-pulse {
+        0% { box-shadow: 0 0 0 rgba(26, 86, 219, 0); }
+        50% { box-shadow: 0 0 15px rgba(26, 86, 219, 0.1); }
+        100% { box-shadow: 0 0 0 rgba(26, 86, 219, 0); }
+    }
+
+    @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    @keyframes shapeFloat {
+        0% { transform: translateY(0) rotate(0); }
+        50% { transform: translateY(-15px) rotate(3deg); }
+        100% { transform: translateY(0) rotate(0); }
+    }
+
+    /* Hero Section Styling */
+    .hero-section {
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(145deg, #0A192F 10%, #172A46 60%, #1A56DB 100%); /* Dark sophisticated gradient */
+        padding: 6rem 0 8rem; /* Increased padding */
+        isolation: isolate; /* Stacking context */
+    }
+
+    /* Subtle background pattern */
+    .hero-pattern {
+        position: absolute;
+        inset: 0;
+        opacity: 0.03; /* Even more subtle */
+        background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23FFFFFF' fill-opacity='1' fill-rule='evenodd'%3E%3Ccircle cx='40' cy='40' r='1.5'/%3E%3C/g%3E%3C/svg%3E"); /* Dot pattern */
+    }
+
+    /* Top accent line - thinner and more subtle */
+    .hero-accent {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px; /* Thinner */
+        background: linear-gradient(90deg, rgba(26, 86, 219, 0.5), rgba(126, 58, 242, 0.5), rgba(26, 86, 219, 0.5));
+        animation: gradientShift 10s ease infinite;
+        background-size: 200% 200%;
+    }
+
+    /* Floating shapes - softer, more atmospheric */
+    .hero-shape {
+        position: absolute;
+        border-radius: 50%; /* Simple circles */
+        filter: blur(60px); /* Increased blur */
+        z-index: 0;
+        animation: shapeFloat 20s ease-in-out infinite alternate;
+        opacity: 0.08; /* Reduced opacity */
+    }
+
+    .hero-shape-1 {
+        background: #1a56db;
+        width: 400px;
+        height: 400px;
+        top: -150px;
+        right: 10%;
+        animation-delay: 0s;
+    }
+
+    .hero-shape-2 {
+        background: #7e3af2;
+        width: 300px;
+        height: 300px;
+        bottom: -100px;
+        left: 15%;
+        animation-delay: 5s;
+    }
+
+    .hero-shape-3 {
+        background: #1a56db; /* Consistent color scheme */
+        width: 200px;
+        height: 200px;
+        bottom: 25%;
+        right: 20%;
+        animation-delay: 10s;
+    }
+
+    /* Hero Content Styling */
+    .hero-title {
+        color: #E0E0E0; /* Off-white for sophistication */
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+    .hero-title .highlight {
+        color: #FFFFFF; /* Pure white highlight */
+    }
+    .hero-title .underline-accent {
+        display: block;
+        width: 100px;
+        height: 3px;
+        background: linear-gradient(90deg, #1a56db, #7e3af2);
+        margin-top: 0.5rem;
+        border-radius: 3px;
+    }
+
+    .hero-subtitle {
+        color: #A8B2CC; /* Lighter grey for subtitle */
+        max-width: 550px; /* Slightly increased max-width */
+    }
+
+    /* Typewriter effect container */
+    #typewriter-container {
+        min-height: 5em; /* Reserve space to prevent layout shifts */
+        display: flex;
+        align-items: center;
+    }
+    #typewriter {
+        display: inline-block;
+        transition: opacity 0.6s ease-in-out;
+        position: relative;
+        padding-right: 0.15em;
+    }
+
+    /* Hero CTA Button - Refined and professional */
+    .hero-cta-button {
+        background: linear-gradient(90deg, #1a56db, #3b82f6); /* Blue gradient */
+        color: white;
+        border-radius: 8px; /* Slightly less rounded */
+        font-weight: 600;
+        padding: 0.875rem 1.75rem;
+        display: inline-flex;
+        align-items: center;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Smooth transition */
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+        box-shadow: 0 4px 15px rgba(26, 86, 219, 0.2), 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    }
+
+    .hero-cta-button::before { /* Hover effect */
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.1);
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        z-index: -1;
+    }
+
+    .hero-cta-button:hover {
+        box-shadow: 0 8px 25px rgba(26, 86, 219, 0.3), 0 4px 10px rgba(0, 0, 0, 0.15);
+        transform: translateY(-2px);
+    }
+
+    .hero-cta-button:hover::before {
+        transform: scaleX(1);
+        transform-origin: left;
+    }
+
+    .hero-cta-button svg {
+        transition: transform 0.3s ease;
+    }
+
+    .hero-cta-button:hover svg {
+        transform: translateX(3px);
+    }
+
+    /* Blog Slider Styling within Hero */
+    .hero-blog-card-wrapper { /* Added wrapper for positioning/shadow */
+       position: relative;
+       perspective: 1000px; /* For 3D effect */
+    }
+
+    .hero-blog-card {
+        backdrop-filter: blur(12px) saturate(150%);
+        background: rgba(10, 25, 47, 0.7); /* Darker, less transparent background */
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px; /* Consistent border-radius */
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+        transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        transform-style: preserve-3d;
+        will-change: transform, box-shadow;
+    }
+    
+    .hero-blog-card:hover {
+        transform: translateY(-8px) rotateX(2deg) rotateY(-1deg); /* Subtle 3D tilt */
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+    }
+    
+    .hero-blog-card-header {
+        background: rgba(255, 255, 255, 0.03); /* Very subtle header background */
+        border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+        backdrop-filter: blur(5px);
+        padding: 0.75rem 1.5rem; /* Adjusted padding */
+    }
+
+    .hero-blog-card-header h3 {
+        color: #E0E0E0; /* Consistent off-white */
+    }
+    .hero-blog-card-header .highlight-text { /* Reusable highlight */
+        position: relative;
+        display: inline-block;
+    }
+    .hero-blog-card-header .highlight-text::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -2px;
+        width: 70%;
+        height: 2px;
+        background: linear-gradient(90deg, rgba(26, 86, 219, 0.8), rgba(126, 58, 242, 0.8));
+        border-radius: 2px;
+    }
+
+    .hero-blog-card-header p {
+        color: #A8B2CC; /* Consistent subtitle color */
+    }
+    
+    .blog-nav-button { /* Common style for nav buttons */
+        width: 2rem;
+        height: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%; /* Circular buttons */
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.3s ease;
+    }
+    .blog-nav-button:hover {
+        background: rgba(26, 86, 219, 0.3);
+        transform: scale(1.1);
+    }
+    .blog-nav-button svg {
+        width: 0.8rem;
+        height: 0.8rem;
+        color: rgba(255, 255, 255, 0.7);
+        transition: color 0.3s ease;
+    }
+    .blog-nav-button:hover svg {
+        color: #FFFFFF;
+    }
+    
+    .hero-blog-swiper {
+        height: 420px; /* Slightly adjusted height */
+        position: relative;
+        z-index: 10;
+    }
+
+    .hero-blog-swiper .swiper-slide {
+        padding: 1.25rem; /* Consistent padding */
+    }
+    
+    .hero-blog-swiper .swiper-slide a {
+        display: block;
+        height: 100%;
+        position: relative;
+        border-radius: 10px; /* Inner card radius */
+        overflow: hidden;
+        background: linear-gradient(145deg, rgba(28, 36, 52, 0.8), rgba(12, 17, 26, 0.9)); /* Darker inner card */
+        transition: box-shadow 0.4s ease;
+    }
+
+    .hero-blog-swiper .swiper-slide a:hover {
+       box-shadow: 0 0 20px rgba(26, 86, 219, 0.2);
+    }
+
+    /* Inner Blog Card Elements */
+    .blog-card-image-wrapper {
+        position: relative;
+        height: 180px; /* Fixed height for consistency */
+        overflow: hidden;
+        border-radius: 10px 10px 0 0; /* Match card radius */
+    }
+    .blog-card-image-wrapper img {
+        transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+    .hero-blog-swiper .swiper-slide a:hover .blog-card-image-wrapper img {
+        transform: scale(1.08);
+    }
+    .image-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(10, 25, 47, 0.8) 0%, rgba(10, 25, 47, 0) 60%);
+        transition: background 0.4s ease;
+    }
+     .hero-blog-swiper .swiper-slide a:hover .image-overlay {
+         background: linear-gradient(to top, rgba(10, 25, 47, 0.9) 0%, rgba(10, 25, 47, 0.1) 70%);
+     }
+
+    .blog-card-category {
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        z-index: 11;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        color: #E0E0E0;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px; /* Pill shape */
+        font-size: 0.7rem;
+        font-weight: 500;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        display: inline-flex;
+        align-items: center;
+        transition: all 0.3s ease;
+    }
+    .hero-blog-swiper .swiper-slide a:hover .blog-card-category {
+        background: rgba(26, 86, 219, 0.7);
+        color: #FFFFFF;
+        border-color: rgba(255, 255, 255, 0.2);
+    }
+    .blog-card-category svg {
+        width: 0.75rem;
+        height: 0.75rem;
+        margin-right: 0.3rem;
+    }
+
+    .blog-card-date {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        z-index: 11;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        color: #A8B2CC;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.7rem;
+        font-weight: 500;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .blog-card-content {
+        padding: 1.25rem; /* Content padding */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        flex-grow: 1;
+    }
+    .blog-card-title {
+        font-size: 1.1rem; /* Slightly smaller title */
+        font-weight: 600; /* Semibold */
+        color: #E0E0E0;
+        margin-bottom: 0.5rem; /* Reduced margin */
+        line-height: 1.4;
+        transition: color 0.3s ease;
+    }
+    .hero-blog-swiper .swiper-slide a:hover .blog-card-title {
+        color: #FFFFFF;
+    }
+    .blog-card-summary {
+        font-size: 0.85rem; /* Smaller summary */
+        color: #A8B2CC;
+        margin-bottom: 1rem;
+        line-height: 1.6;
+        flex-grow: 1; /* Allow summary to take space */
+        transition: color 0.3s ease;
+    }
+     .hero-blog-swiper .swiper-slide a:hover .blog-card-summary {
+         color: #C0C8E0;
+     }
+
+    .blog-card-footer {
+        margin-top: auto; /* Push footer to bottom */
+        padding-top: 1rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .blog-card-readmore {
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: #A8B2CC;
+        display: inline-flex;
+        align-items: center;
+        transition: all 0.3s ease;
+    }
+    .hero-blog-swiper .swiper-slide a:hover .blog-card-readmore {
+        color: #1a56db;
+    }
+    .blog-card-readmore svg {
+        width: 0.9rem;
+        height: 0.9rem;
+        margin-left: 0.4rem;
+        transition: transform 0.3s ease;
+    }
+    .hero-blog-swiper .swiper-slide a:hover .blog-card-readmore svg {
+        transform: translateX(3px);
+    }
+    .blog-card-readtime {
+        font-size: 0.75rem;
+        color: #A8B2CC;
+        display: inline-flex;
+        align-items: center;
+    }
+     .blog-card-readtime svg {
+         width: 0.8rem;
+         height: 0.8rem;
+         margin-right: 0.3rem;
+         opacity: 0.7;
+     }
+
+    /* Swiper Pagination */
+    .blog-pagination .swiper-pagination-bullet {
+        width: 8px; /* Smaller bullets */
+        height: 8px;
+        background-color: rgba(255, 255, 255, 0.3);
+        opacity: 1;
+        transition: all 0.3s ease;
+        margin: 0 4px; /* Adjusted margin */
+    }
+    
+    .blog-pagination .swiper-pagination-bullet-active {
+        background: linear-gradient(90deg, #1a56db, #7e3af2);
+        width: 20px; /* Elongated active bullet */
+        border-radius: 4px; /* Keep rounded ends */
+    }
+
+    /* Fallback for no image */
+    .no-image-fallback {
+         background: linear-gradient(145deg, rgba(28, 36, 52, 0.8), rgba(12, 17, 26, 0.9));
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         border-radius: 10px 10px 0 0;
+    }
+     .no-image-fallback svg {
+         width: 3rem;
+         height: 3rem;
+         color: rgba(255, 255, 255, 0.3);
+     }
+
+
+    /* Other existing styles */
+    @keyframes float-slow { /* Keep existing keyframes if used elsewhere */
+        0% { transform: translateY(0) rotate(0deg); }
+        50% { transform: translateY(-15px) rotate(2deg); }
+        100% { transform: translateY(0) rotate(0deg); }
+    }
+    .animate-float-slow { animation: float-slow 6s ease-in-out infinite; }
+    /* ... keep other necessary keyframes and utility classes ... */
 </style>
 
 <main class="bg-gray-50 overflow-x-hidden">
@@ -639,71 +1084,59 @@ require_once 'views/templates/header.php';
         <div class="hero-shape hero-shape-3"></div>
         
         <div class="container mx-auto px-4 sm:px-6 relative z-10">
-            <div class="flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
+            <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-20"> <!-- Increased gap -->
                 <!-- Linker kolom: Welkomstekst en CTA -->
-                <div class="w-full lg:w-1/2 text-white mb-10 lg:mb-0">
+                <div class="w-full lg:w-1/2 text-white mb-12 lg:mb-0 text-center lg:text-left"> <!-- Centered on mobile -->
                     <div class="relative">
-                        <!-- Hoofdtitel met moderne styling -->
-                        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 tracking-tight leading-tight">
-                            <span class="bg-clip-text text-transparent bg-gradient-to-r from-white via-white/90 to-white relative">
-                                PolitiekPraat
-                                <span class="absolute bottom-0 left-0 w-full h-0.5 bg-white/30 rounded-full"></span>
-                            </span>
+                        <!-- Hoofdtitel met nieuwe styling -->
+                        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 hero-title"> <!-- Added hero-title class -->
+                            <span class="highlight">Politiek</span>Praat
                         </h1>
+                        <span class="underline-accent mb-6 block mx-auto lg:mx-0"></span> <!-- Added underline -->
                         
                         <!-- Ondertitel met dynamische typewriter effect -->
-                        <div class="text-lg sm:text-xl text-white/90 mb-8 max-w-lg leading-relaxed">
-                            <span id="typewriter" class="inline-block"></span>
+                        <div id="typewriter-container" class="text-lg sm:text-xl hero-subtitle mb-8 flex justify-center lg:justify-start"> <!-- Added hero-subtitle, typewriter-container -->
+                            <span id="typewriter"></span> <!-- Initial text set in JS -->
                         </div>
                         
                         <script>
                             document.addEventListener('DOMContentLoaded', function() {
                                 const typewriterElement = document.getElementById('typewriter');
-                                const sentences = [
-                                    "Ontdek hoe de Nederlandse politiek werkt en wat dit voor jou betekent.",
-                                    "Volg de laatste ontwikkelingen in Den Haag op een toegankelijke manier.",
-                                    "Blijf op de hoogte van belangrijke debatten en beslissingen in de Tweede Kamer.",
-                                    "Leer meer over het Nederlandse democratische systeem en je rol daarin.",
-                                    "Verdiep je in actuele politieke thema's die Nederland bezighouden.",
-                                    "Ontdek hoe wetsvoorstellen tot stand komen en wat de gevolgen zijn.",
-                                    "Krijg inzicht in de coalitievorming en politieke samenwerking in Nederland.",
-                                    "Begrijp hoe de verkiezingen werken en waarom jouw stem belangrijk is.",
-                                    "Verken de geschiedenis en toekomst van de Nederlandse politiek."
-                                ];
-                                
-                                // Zet direct de eerste zin neer zodat er meteen iets zichtbaar is
-                                typewriterElement.textContent = sentences[0];
-                                
-                                // Geen typewriter effect meer, gewoon de zinnen wisselen
-                                let currentIndex = 0;
-                                
-                                function changeSentence() {
-                                    currentIndex = (currentIndex + 1) % sentences.length;
+                                if (typewriterElement) { // Check if element exists
+                                    const sentences = [
+                                        "Ontdek hoe de Nederlandse politiek werkt en wat dit voor jou betekent.",
+                                        "Volg de laatste ontwikkelingen in Den Haag op een toegankelijke manier.",
+                                        "Blijf op de hoogte van belangrijke debatten en beslissingen in de Tweede Kamer.",
+                                        "Leer meer over het Nederlandse democratische systeem en je rol daarin.",
+                                        "Verdiep je in actuele politieke thema's die Nederland bezighouden.",
+                                        "Ontdek hoe wetsvoorstellen tot stand komen en wat de gevolgen zijn.",
+                                        "Krijg inzicht in de coalitievorming en politieke samenwerking in Nederland.",
+                                        "Begrijp hoe de verkiezingen werken en waarom jouw stem belangrijk है.",
+                                        "Verken de geschiedenis en toekomst van de Nederlandse politiek."
+                                    ];
                                     
-                                    // Fade out effect
-                                    typewriterElement.style.opacity = 0;
-                                    
-                                    setTimeout(function() {
-                                        // Verander de tekst
-                                        typewriterElement.textContent = sentences[currentIndex];
+                                    let currentIndex = 0;
+                                    typewriterElement.textContent = sentences[currentIndex]; // Set initial text immediately
+                                    typewriterElement.style.opacity = 1; // Ensure it's visible
+
+                                    function changeSentence() {
+                                        currentIndex = (currentIndex + 1) % sentences.length;
                                         
-                                        // Fade in effect
-                                        typewriterElement.style.opacity = 1;
-                                    }, 500);
+                                        typewriterElement.style.opacity = 0; // Start fade out
+                                        
+                                        setTimeout(function() {
+                                            typewriterElement.textContent = sentences[currentIndex]; // Change text when invisible
+                                            typewriterElement.style.opacity = 1; // Start fade in
+                                        }, 600); // Wait for fade out (must match CSS transition duration)
+                                    }
                                     
-                                    setTimeout(changeSentence, 3000);
+                                    // Start the sentence changing loop after an initial delay
+                                    setTimeout(() => setInterval(changeSentence, 4000), 3000); // Change every 4 seconds after initial 3s delay
                                 }
-                                
-                                // Voeg CSS toe voor de fade transitie
-                                typewriterElement.style.transition = "opacity 0.5s ease";
-                                typewriterElement.style.opacity = 1;
-                                
-                                // Start het wisselen van zinnen na een pauze
-                                setTimeout(changeSentence, 3000);
                             });
                         </script>
                         
-                        <!-- Call-to-action knop met verbeterde styling -->
+                        <!-- Call-to-action knop met nieuwe styling -->
                         <a href="<?php echo URLROOT; ?>/blogs" class="hero-cta-button">
                             <span>Ontdek onze blogs</span>
                             <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -713,123 +1146,95 @@ require_once 'views/templates/header.php';
                     </div>
                 </div>
 
-                <!-- Rechter kolom: Blog slider - Premium design 2023 -->
-                <div class="w-full lg:w-5/12 mx-auto">
-                    <div class="hero-blog-card relative backdrop-blur-lg bg-[#0c111a]/90 border border-[#2a3a59]/50 rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.3)] overflow-hidden transition-all duration-300 before:absolute before:inset-0 before:bg-gradient-to-br before:from-primary/10 before:to-secondary/5 before:opacity-50">
+                <!-- Rechter kolom: Blog slider - Professioneel design -->
+                <div class="w-full lg:w-[45%] mx-auto hero-blog-card-wrapper">
+                    <div class="hero-blog-card">
                         
-                        <!-- Moderne header met subtiele glow effect -->
-                        <div class="hero-blog-card-header relative py-3 px-6 border-b border-white/5 z-10 bg-black/30 backdrop-blur-md">
+                        <!-- Header met nieuwe styling -->
+                        <div class="hero-blog-card-header">
                             <div class="flex items-center justify-between">
                                 <div>
-                                    <!-- Minimalistische titel met onderlijn accent -->
-                                    <h3 class="text-base font-medium text-white">
-                                        <span class="relative inline-block pr-1">
-                                            <span class="relative z-10">Uitgelichte</span>
-                                            <span class="absolute left-0 bottom-0.5 w-full h-[2px] bg-primary rounded-full"></span>
-                                        </span>
-                                        Blogs
+                                    <h3 class="text-base font-semibold">
+                                        <span class="highlight-text">Uitgelichte Blogs</span>
                                     </h3>
-                                    
-                                    <!-- Subtiele datum indicator -->
-                                    <p class="text-xs text-white/50 flex items-center mt-1">
-                                        Bijgewerkt: <?php echo date('d-m-Y'); ?>
+                                    <p class="text-xs mt-1 flex items-center">
+                                        <svg class="w-3 h-3 mr-1 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                        Actueel
                                     </p>
                                 </div>
                                 
-                                <!-- Strakke navigatieknoppen -->
-                                <div class="flex space-x-1">
-                                    <button class="blog-nav-prev w-7 h-7 flex items-center justify-center rounded bg-black/40 border border-white/5 hover:bg-primary/20 transition-all duration-300 group">
-                                        <svg class="w-3.5 h-3.5 text-white/60 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7"></path>
+                                <!-- Navigatieknoppen met nieuwe styling -->
+                                <div class="flex space-x-2">
+                                    <button class="blog-nav-prev blog-nav-button">
+                                        <svg viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                                         </svg>
                                     </button>
-                                    <button class="blog-nav-next w-7 h-7 flex items-center justify-center rounded bg-black/40 border border-white/5 hover:bg-primary/20 transition-all duration-300 group">
-                                        <svg class="w-3.5 h-3.5 text-white/60 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"></path>
+                                    <button class="blog-nav-next blog-nav-button">
+                                        <svg viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                         </svg>
                                     </button>
                                 </div>
                             </div>
                         </div>
                         
-                        <!-- Blog swiper container - Geavanceerd glasmorfisme design -->
-                        <div class="hero-blog-swiper h-[400px] sm:h-[450px] z-10 relative">
+                        <!-- Blog swiper container -->
+                        <div class="hero-blog-swiper">
                             <div class="swiper-wrapper">
                                 <?php foreach($featured_blogs as $blog): ?>
-                                <div class="swiper-slide p-5">
-                                    <a href="<?php echo URLROOT; ?>/blogs/view/<?php echo $blog->slug; ?>" 
-                                       class="group block h-full relative">
-                                        <!-- Glasmorfisme kaart ontwerp met subtiele border glow effect -->
-                                        <div class="absolute inset-0 bg-gradient-to-br from-[#1c2434]/90 to-[#0c111a]/95 rounded-xl"></div>
-                                        <div class="absolute inset-0 backdrop-blur-md rounded-xl overflow-hidden transition-all duration-500">
-                                            <!-- Dynamische achtergrond elementen -->
-                                            <div class="absolute -top-32 -right-16 w-64 h-64 bg-primary/10 rounded-full blur-3xl opacity-0 group-hover:opacity-30 transition-all duration-1000"></div>
-                                            <div class="absolute -bottom-32 -left-16 w-64 h-64 bg-secondary/10 rounded-full blur-3xl opacity-0 group-hover:opacity-30 transition-all duration-1000 delay-100"></div>
-                                        </div>
-                                        <!-- Border effect -->
-                                        <div class="absolute inset-0 rounded-xl border border-white/5 group-hover:border-primary/30 transition-colors duration-500 overflow-hidden">
-                                            <div class="absolute inset-0 bg-gradient-to-r from-transparent via-primary/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1500"></div>
-                                        </div>
-                                        
-                                        <!-- Content container met relative positie -->
-                                        <div class="relative h-full rounded-xl overflow-hidden flex flex-col z-10">
-                                            <!-- Afbeelding met dynamische overlays -->
-                                            <div class="relative h-44 sm:h-52 rounded-t-xl overflow-hidden">
+                                <div class="swiper-slide">
+                                    <a href="<?php echo URLROOT; ?>/blogs/view/<?php echo $blog->slug; ?>" class="group">
+                                        <!-- Inner structure refactored -->
+                                        <div class="flex flex-col h-full">
+                                            <!-- Afbeelding -->
+                                            <div class="blog-card-image-wrapper">
                                                 <?php if($blog->image_path): ?>
                                                     <img src="<?php echo URLROOT . '/' . $blog->image_path; ?>" 
                                                          alt="<?php echo htmlspecialchars($blog->title); ?>" 
-                                                         class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000 ease-out">
-                                                    <div class="absolute inset-0 bg-gradient-to-t from-[#0c111a] via-[#0c111a]/50 to-transparent opacity-80 group-hover:opacity-70 transition-opacity duration-500"></div>
+                                                         class="w-full h-full object-cover">
+                                                    <div class="image-overlay"></div>
                                                 <?php else: ?>
-                                                    <div class="w-full h-full bg-gradient-to-br from-primary/40 to-secondary/40 flex items-center justify-center">
-                                                        <svg class="w-16 h-16 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1M15 3v4m0 0v4m0-4h4m-4 0H7m15 5v5a2 2 0 01-2 2h-4"></path>
+                                                    <div class="w-full h-full no-image-fallback">
+                                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                                                         </svg>
                                                     </div>
-                                                    <div class="absolute inset-0 bg-gradient-to-t from-[#0c111a] via-[#0c111a]/30 to-transparent opacity-80"></div>
                                                 <?php endif; ?>
                                                 
-                                                <!-- Moderne category badge -->
-                                                <div class="absolute top-4 left-4 z-10">
-                                                    <span class="inline-flex items-center px-3 py-1.5 bg-black/60 border border-white/10 text-white text-xs font-medium rounded-full backdrop-blur-md shadow-lg group-hover:bg-gradient-to-r group-hover:from-primary group-hover:to-secondary group-hover:border-white/20 transition-all duration-500">
-                                                        <svg class="w-3 h-3 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-                                                        </svg>
-                                                        Blog
-                                                    </span>
+                                                <div class="blog-card-category">
+                                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                                    </svg>
+                                                    Blog
                                                 </div>
                                                 
-                                                <!-- Elegante datum badge met neon glow effect -->
-                                                <div class="absolute top-4 right-4 z-10">
-                                                    <span class="inline-flex items-center px-3 py-1.5 bg-black/60 text-white/90 text-xs font-medium rounded-lg backdrop-blur-md border border-white/10 shadow-lg group-hover:border-primary/30 group-hover:text-white group-hover:shadow-[0_0_10px_rgba(var(--primary-rgb),0.3)] transition-all duration-500">
-                                                        <?php echo $blog->relative_date; ?>
-                                                    </span>
+                                                <div class="blog-card-date">
+                                                    <?php echo $blog->relative_date; ?>
                                                 </div>
                                             </div>
                                                 
-                                            <!-- Content section - Premium ontwerp -->
-                                            <div class="flex-grow p-5 flex flex-col justify-between">
+                                            <!-- Content section -->
+                                            <div class="blog-card-content">
                                                 <div>
-                                                    <h4 class="text-base sm:text-lg font-bold text-white mb-3 line-clamp-2 group-hover:text-white transition-colors duration-300">
+                                                    <h4 class="blog-card-title line-clamp-2">
                                                         <?php echo htmlspecialchars($blog->title); ?>
                                                     </h4>
-                                                    
-                                                    <p class="text-sm text-[#a8b9d5] group-hover:text-white/80 mb-4 line-clamp-3 transition-colors duration-300">
+                                                    <p class="blog-card-summary line-clamp-3">
                                                         <?php echo htmlspecialchars($blog->summary); ?>
                                                     </p>
                                                 </div>
                                                 
-                                                <div class="flex items-center justify-between mt-auto pt-4 border-t border-white/10 group-hover:border-primary/20 transition-colors duration-500">
-                                                    <span class="inline-flex items-center text-sm font-medium text-white/80 group-hover:text-white transition-colors duration-300">
+                                                <div class="blog-card-footer">
+                                                    <span class="blog-card-readmore">
                                                         Lees verder
-                                                        <svg class="w-4 h-4 ml-2 transform group-hover:translate-x-1.5 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                                                         </svg>
                                                     </span>
                                                     
-                                                    <!-- Interactieve leestijd indicator -->
-                                                    <span class="text-xs text-white/50 group-hover:text-white/70 flex items-center transition-colors duration-300">
-                                                        <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <span class="blog-card-readtime">
+                                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                                         </svg>
                                                         5 min
@@ -842,53 +1247,42 @@ require_once 'views/templates/header.php';
                                 <?php endforeach; ?>
                             </div>
                             
-                            <!-- Modern swiper paginering -->
-                            <div class="absolute bottom-4 left-0 right-0 z-20 flex justify-center">
+                            <!-- Swiper paginering -->
+                            <div class="absolute bottom-3 left-0 right-0 z-20 flex justify-center"> 
                                 <div class="swiper-pagination blog-pagination"></div>
                             </div>
                         </div>
                         
-                        <!-- Ambient glow effecten voor de hele kaart -->
-                        <div class="absolute top-1/4 -left-1/2 w-full h-1/2 bg-primary/5 rounded-full blur-3xl"></div>
-                        <div class="absolute top-1/2 -right-1/2 w-full h-1/2 bg-secondary/5 rounded-full blur-3xl"></div>
-                        
-                        <!-- Verbeterd Swiper script -->
+                        <!-- Swiper script -->
                         <script>
                             document.addEventListener('DOMContentLoaded', function() {
-                                const blogSwiper = new Swiper('.hero-blog-swiper', {
-                                    slidesPerView: 1,
-                                    spaceBetween: 30,
-                                    speed: 800,
-                                    loop: true,
-                                    autoplay: {
-                                        delay: 6000,
-                                        disableOnInteraction: false,
-                                    },
-                                    effect: 'creative',
-                                    creativeEffect: {
-                                        prev: {
-                                            translate: [0, 0, -400],
-                                            opacity: 0
+                                const blogSwiperContainer = document.querySelector('.hero-blog-swiper');
+                                if (blogSwiperContainer) { // Ensure container exists
+                                    const blogSwiper = new Swiper(blogSwiperContainer, {
+                                        slidesPerView: 1,
+                                        spaceBetween: 0, // No space between slides in fade effect
+                                        speed: 600, // Slightly faster transition
+                                        loop: true,
+                                        autoplay: {
+                                            delay: 5000, // Keep delay
+                                            disableOnInteraction: true, // Stop on interaction
                                         },
-                                        next: {
-                                            translate: [0, 0, -400],
-                                            opacity: 0
+                                        effect: 'fade', // Use fade effect
+                                        fadeEffect: {
+                                            crossFade: true
                                         },
-                                    },
-                                    pagination: {
-                                        el: '.blog-pagination',
-                                        clickable: true,
-                                        bulletClass: 'w-2 h-2 mx-1 rounded-full bg-white/20 transition-all duration-300 cursor-pointer hover:bg-primary/60',
-                                        bulletActiveClass: 'w-6 bg-gradient-to-r from-primary to-secondary',
-                                        renderBullet: function (index, className) {
-                                            return '<span class="' + className + '"></span>';
+                                        pagination: {
+                                            el: '.blog-pagination',
+                                            clickable: true,
+                                            bulletClass: 'swiper-pagination-bullet', // Use classes defined in CSS
+                                            bulletActiveClass: 'swiper-pagination-bullet-active', // Use classes defined in CSS
                                         },
-                                    },
-                                    navigation: {
-                                        nextEl: '.blog-nav-next',
-                                        prevEl: '.blog-nav-prev',
-                                    }
-                                });
+                                        navigation: {
+                                            nextEl: '.blog-nav-next',
+                                            prevEl: '.blog-nav-prev',
+                                        }
+                                    });
+                                }
                             });
                         </script>
                     </div>
@@ -898,38 +1292,12 @@ require_once 'views/templates/header.php';
     </section>
     
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Hero Blog Swiper
-            const heroBlogSwiper = new Swiper('.hero-blog-swiper', {
-                slidesPerView: 1,
-                spaceBetween: 20,
-                grabCursor: true,
-                loop: true,
-                autoplay: {
-                    delay: 3000,
-                    disableOnInteraction: false,
-                },
-                effect: 'fade',
-                fadeEffect: {
-                    crossFade: true
-                },
-                navigation: {
-                    nextEl: '.hero-swiper-button-next',
-                    prevEl: '.hero-swiper-button-prev',
-                },
-                on: {
-                    slideChange: function (swiper) {
-                        // Update progress bar
-                        const progress = ((swiper.realIndex + 1) / swiper.slides.length) * 100;
-                        document.getElementById('hero-swiper-progressbar').style.width = progress + '%';
-                    },
-                    init: function(swiper) {
-                        // Set initial progress
-                        document.getElementById('hero-swiper-progressbar').style.width = (1 / swiper.slides.length) * 100 + '%';
-                    }
-                }
-            });
-        });
+        // Ensure this script runs only once and doesn't interfere with others
+        // document.addEventListener('DOMContentLoaded', function() {
+            // Hero Blog Swiper logic is now inside the HTML section above
+            // Typewriter logic is also inside the HTML section above
+        // });
+        // Remove the duplicate outer script block below if it exists
     </script>
 
         <!-- Laatste Nieuws & Blogs Sections -->
@@ -1288,7 +1656,7 @@ require_once 'views/templates/header.php';
                     <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Actuele Peilingen</span>
                 </h2>
                 <div class="w-24 h-1 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full mb-4"></div>
-                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Zetelverdeling volgens de recentste peiling van 4 april 2025</p>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Zetelverdeling volgens de recentste peiling van 14 april 2025</p>
                 <p class="text-sm text-gray-500 mt-2">Bron: Peil.nl / Maurice de Hond</p>
             </div>
             
@@ -1306,8 +1674,8 @@ require_once 'views/templates/header.php';
                                         <tr class="bg-gray-50">
                                             <th class="py-2 px-1 sm:px-3 text-left font-semibold text-gray-700">Partijen</th>
                                             <th class="py-2 px-1 sm:px-3 text-center font-semibold text-gray-700 whitespace-nowrap">
-                                                <span class="hidden sm:inline">04-04-25</span>
-                                                <span class="sm:hidden">4 Apr</span>
+                                                <span class="hidden sm:inline">14-04-25</span>
+                                                <span class="sm:hidden">14 Apr</span>
                                             </th>
                                             <th class="py-2 px-1 sm:px-3 text-center font-semibold text-gray-700 whitespace-nowrap">
                                                 <span class="hidden sm:inline">22-02-25</span>
