@@ -481,7 +481,7 @@
 /* Inner Blog Card Elements */
 .blog-card-image-wrapper {
     position: relative;
-    height: 180px; /* Fixed height for consistency */
+    aspect-ratio: 16 / 9; /* Toegevoegd voor consistente verhouding */
     overflow: hidden;
     border-radius: 10px 10px 0 0; /* Match card radius */
 }

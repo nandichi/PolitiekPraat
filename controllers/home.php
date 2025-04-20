@@ -430,11 +430,11 @@ require_once 'views/templates/header.php';
                                             <!-- Afbeelding -->
                                             <div class="blog-card-image-wrapper">
                                                 <?php if($blog->image_path): ?>
-                                                    <img src="<?php echo URLROOT . '/' . $blog->image_path; ?>" 
-                                                         alt="<?php echo htmlspecialchars($blog->title); ?>" 
-                                                         class="w-full h-full object-cover"
-                                                         width="400" height="225"  
-                                                         decoding="async"> 
+                                                    <img src="<?php echo URLROOT . '/' . $blog->image_path; ?>"
+                                                         alt="<?php echo htmlspecialchars($blog->title); ?>"
+                                                         class="w-full object-cover"
+                                                         width="400" height="225"
+                                                         decoding="async">
                                                     <div class="image-overlay"></div>
                                                 <?php else: ?>
                                                     <div class="w-full h-full no-image-fallback">
