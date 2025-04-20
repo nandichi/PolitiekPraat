@@ -1111,7 +1111,7 @@ require_once 'views/templates/header.php';
                                         "Verdiep je in actuele politieke thema's die Nederland bezighouden.",
                                         "Ontdek hoe wetsvoorstellen tot stand komen en wat de gevolgen zijn.",
                                         "Krijg inzicht in de coalitievorming en politieke samenwerking in Nederland.",
-                                        "Begrijp hoe de verkiezingen werken en waarom jouw stem belangrijk है.",
+                                        "Begrijp hoe de verkiezingen werken en waarom jouw stem belangrijk.",
                                         "Verken de geschiedenis en toekomst van de Nederlandse politiek."
                                     ];
                                     
