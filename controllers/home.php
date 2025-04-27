@@ -21,32 +21,32 @@ $partijData = $politicalDataAPI->getPartijInformatie();
 $latestPolls = $pollAPI->getLatestPolls();
 $historicalPolls = $pollAPI->getHistoricalPolls(3);
 
-// Data voor zetelverdeling peiling 14-04-2025 (Ipsos I&O)
+// Data voor zetelverdeling peiling 27-4-2025 (Peil.nl)
 $peilingData = [
-    [
-        'partij' => 'PVV',
-        'zetels' => [
-            'peiling' => 28, // Updated
-            'vorige' => 29,
-            'tkvorigepeiling' => 32,
-            'tk2023' => 37
-        ],
-        'color' => '#0078D7'
-    ],
     [
         'partij' => 'GroenLinks/PvdA',
         'zetels' => [
-            'peiling' => 27, // Updated
-            'vorige' => 28,
+            'peiling' => 29, 
+            'vorige' => 27, 
             'tkvorigepeiling' => 24,
             'tk2023' => 25
         ],
         'color' => '#008800'
     ],
     [
+        'partij' => 'PVV',
+        'zetels' => [
+            'peiling' => 28, 
+            'vorige' => 28,
+            'tkvorigepeiling' => 32,
+            'tk2023' => 37
+        ],
+        'color' => '#0078D7'
+    ],
+    [
         'partij' => 'VVD',
         'zetels' => [
-            'peiling' => 26, // Updated
+            'peiling' => 26, 
             'vorige' => 26,
             'tkvorigepeiling' => 21,
             'tk2023' => 24
@@ -56,7 +56,7 @@ $peilingData = [
     [
         'partij' => 'CDA',
         'zetels' => [
-            'peiling' => 18, // Updated
+            'peiling' => 19, 
             'vorige' => 18,
             'tkvorigepeiling' => 17,
             'tk2023' => 5
@@ -66,8 +66,8 @@ $peilingData = [
     [
         'partij' => 'D66',
         'zetels' => [
-            'peiling' => 10, // Updated
-            'vorige' => 9,
+            'peiling' => 8, 
+            'vorige' => 10,
             'tkvorigepeiling' => 12,
             'tk2023' => 9
         ],
@@ -76,8 +76,8 @@ $peilingData = [
     [
         'partij' => 'SP',
         'zetels' => [
-            'peiling' => 5, // Updated
-            'vorige' => 7,
+            'peiling' => 8, 
+            'vorige' => 5,
             'tkvorigepeiling' => 8,
             'tk2023' => 5
         ],
@@ -86,18 +86,28 @@ $peilingData = [
     [
         'partij' => 'FVD',
         'zetels' => [
-            'peiling' => 4, // Updated
-            'vorige' => 5,
+            'peiling' => 5, 
+            'vorige' => 4,
             'tkvorigepeiling' => 5,
             'tk2023' => 3
         ],
         'color' => '#8B4513'
     ],
     [
+        'partij' => 'JA21',
+        'zetels' => [
+            'peiling' => 4, 
+            'vorige' => 4,
+            'tkvorigepeiling' => 3,
+            'tk2023' => 1
+        ],
+        'color' => '#4B0082'
+    ],
+    [
         'partij' => 'PvdDieren',
         'zetels' => [
-            'peiling' => 7, // Updated
-            'vorige' => 4,
+            'peiling' => 4, 
+            'vorige' => 7,
             'tkvorigepeiling' => 5,
             'tk2023' => 3
         ],
@@ -106,8 +116,8 @@ $peilingData = [
     [
         'partij' => 'SGP',
         'zetels' => [
-            'peiling' => 3, // Updated
-            'vorige' => 4,
+            'peiling' => 4, 
+            'vorige' => 3,
             'tkvorigepeiling' => 4,
             'tk2023' => 3
         ],
@@ -116,7 +126,7 @@ $peilingData = [
     [
         'partij' => 'DENK',
         'zetels' => [
-            'peiling' => 4, // Updated
+            'peiling' => 4, 
             'vorige' => 4,
             'tkvorigepeiling' => 4,
             'tk2023' => 3
@@ -124,19 +134,9 @@ $peilingData = [
         'color' => '#00BFFF'
     ],
     [
-        'partij' => 'JA21',
-        'zetels' => [
-            'peiling' => 4, // Updated
-            'vorige' => 4,
-            'tkvorigepeiling' => 3,
-            'tk2023' => 1
-        ],
-        'color' => '#4B0082'
-    ],
-    [
         'partij' => 'Volt',
         'zetels' => [
-            'peiling' => 4, // Updated
+            'peiling' => 4, 
             'vorige' => 4,
             'tkvorigepeiling' => 4,
             'tk2023' => 2
@@ -146,7 +146,7 @@ $peilingData = [
     [
         'partij' => 'ChristenUnie',
         'zetels' => [
-            'peiling' => 3, // Updated
+            'peiling' => 3, 
             'vorige' => 3,
             'tkvorigepeiling' => 4,
             'tk2023' => 3
@@ -156,8 +156,8 @@ $peilingData = [
     [
         'partij' => 'BBB',
         'zetels' => [
-            'peiling' => 5, // Updated
-            'vorige' => 3,
+            'peiling' => 3, 
+            'vorige' => 5,
             'tkvorigepeiling' => 4,
             'tk2023' => 7
         ],
@@ -166,7 +166,7 @@ $peilingData = [
     [
         'partij' => 'Nieuw Soc.Contr.',
         'zetels' => [
-            'peiling' => 2, // Updated
+            'peiling' => 1, 
             'vorige' => 2,
             'tkvorigepeiling' => 3,
             'tk2023' => 20
@@ -180,22 +180,22 @@ $mogelijkeCoalities = [
     [
         'naam' => 'Links-progressief',
         'partijen' => ['GroenLinks/PvdA', 'D66', 'SP', 'PvdDieren', 'Volt'],
-        'zetels' => 27 + 10 + 5 + 7 + 4 // Updated: 53
+        'zetels' => 29 + 8 + 8 + 4 + 4 // Updated: 53
     ],
     [
         'naam' => 'Rechts-conservatief',
         'partijen' => ['PVV', 'VVD', 'BBB', 'JA21', 'SGP', 'FVD'],
-        'zetels' => 28 + 26 + 5 + 4 + 3 + 4 // Updated: 70
+        'zetels' => 28 + 26 + 3 + 4 + 4 + 5 // Updated: 70
     ],
     [
         'naam' => 'Centrum-breed',
         'partijen' => ['GroenLinks/PvdA', 'VVD', 'CDA', 'D66', 'ChristenUnie'],
-        'zetels' => 27 + 26 + 18 + 10 + 3 // Updated: 84
+        'zetels' => 29 + 26 + 19 + 8 + 3 // Updated: 85
     ],
     [
         'naam' => 'Huidige coalitie',
         'partijen' => ['PVV', 'VVD', 'BBB', 'Nieuw Soc.Contr.'],
-        'zetels' => 28 + 26 + 5 + 2 // Updated: 61
+        'zetels' => 28 + 26 + 3 + 1 // Updated: 58
     ]
 ];
 
@@ -852,7 +852,7 @@ require_once 'views/templates/header.php';
                     <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Actuele Peilingen</span>
                 </h2>
                 <div class="w-24 h-1 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full mb-4"></div>
-                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Zetelverdeling volgens de recentste peiling van 14 april 2025</p>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Zetelverdeling volgens de recentste peiling van 27 april 2025</p>
                 <p class="text-sm text-gray-500 mt-2">Bron: Peil.nl / Maurice de Hond</p>
             </div>
             
@@ -870,8 +870,8 @@ require_once 'views/templates/header.php';
                                         <tr class="bg-gray-50">
                                             <th class="py-2 px-1 sm:px-3 text-left font-semibold text-gray-700">Partijen</th>
                                             <th class="py-2 px-1 sm:px-3 text-center font-semibold text-gray-700 whitespace-nowrap">
-                                                <span class="hidden sm:inline">14-04-25</span>
-                                                <span class="sm:hidden">14 Apr</span>
+                                                <span class="hidden sm:inline">27-04-25</span>
+                                                <span class="sm:hidden">27 Apr</span>
                                             </th>
                                             <th class="py-2 px-1 sm:px-3 text-center font-semibold text-gray-700 whitespace-nowrap">
                                                 <span class="hidden sm:inline">22-02-25</span>
@@ -949,8 +949,8 @@ require_once 'views/templates/header.php';
                             
                             <div class="mt-6 text-xs text-gray-500 flex flex-col sm:flex-row sm:items-center sm:justify-between">
                                 <div class="mb-2 sm:mb-0">
-                                    <span class="hidden sm:inline">Peilingdatum: 4 april 2025</span>
-                                    <span class="sm:hidden">Peiling: 4 apr 2025</span>
+                                    <span class="hidden sm:inline">Peilingdatum: 27 april 2025</span>
+                                    <span class="sm:hidden">Peiling: 27 apr 2025</span>
                         </div>
                                 <div class="flex items-center">
                                     <span class="inline-block w-3 h-3 bg-green-100 rounded-full mr-1"></span>
@@ -1160,13 +1160,13 @@ require_once 'views/templates/header.php';
                                 <div class="relative w-full py-4">
                                     <?php
                                     $parties = [
-                                        ['name' => 'PVV', 'color' => '#0078D7', 'seats' => 37],
-                                        ['name' => 'GL-PvdA', 'color' => '#008800', 'seats' => 25],
-                                        ['name' => 'VVD', 'color' => '#FF9900', 'seats' => 24],
-                                        ['name' => 'NSC', 'color' => '#4D7F78', 'seats' => 20],
-                                        ['name' => 'D66', 'color' => '#00B13C', 'seats' => 9],
-                                        ['name' => 'CDA', 'color' => '#1E8449', 'seats' => 5],
-                                        ['name' => 'SP', 'color' => '#EE0000', 'seats' => 5]
+                                        ['name' => 'PVV', 'color' => '#0078D7', 'seats' => 28],
+                                        ['name' => 'GL-PvdA', 'color' => '#008800', 'seats' => 29],
+                                        ['name' => 'VVD', 'color' => '#FF9900', 'seats' => 26],
+                                        ['name' => 'NSC', 'color' => '#4D7F78', 'seats' => 1],
+                                        ['name' => 'CDA', 'color' => '#1E8449', 'seats' => 19],
+                                        ['name' => 'D66', 'color' => '#00B13C', 'seats' => 8],
+                                        ['name' => 'SP', 'color' => '#EE0000', 'seats' => 8]
                                     ];
                                     // Sorteer partijen op aantal zetels (aflopend)
                                     usort($parties, function($a, $b) {

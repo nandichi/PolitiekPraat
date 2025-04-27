@@ -74,7 +74,7 @@ $parties = [
             'Energie' => 'Open voor kernenergie als het bijdraagt aan een stabiele energiemix'
         ],
         'current_seats' => 20,
-        'polling' => ['seats' => 2, 'percentage' => 1.3, 'change' => -18],
+        'polling' => ['seats' => 1, 'percentage' => 0.7, 'change' => -19],
         'perspectives' => [
             'left' => 'NSC legt nadruk op overheidsverantwoording en transparantie, en strijdt tegen systematische onrechtvaardigheden zoals gezien in de toeslagenaffaire.',
             'right' => 'Hun evenwichtige benadering van immigratie- en asielbeleid richt zich zowel op veiligheidsaspecten als humanitaire verplichtingen zonder middelen te overschrijden.'
@@ -94,7 +94,7 @@ $parties = [
             'Energie' => 'Ziet kernenergie als betrouwbaar onderdeel van de energietransitie'
         ],
         'current_seats' => 7,
-        'polling' => ['seats' => 5, 'percentage' => 3.3, 'change' => -2],
+        'polling' => ['seats' => 3, 'percentage' => 2.0, 'change' => -4],
         'perspectives' => [
             'left' => 'BBB pleit voor het behoud van plattelandsgemeenschappen en traditionele landbouwpraktijken, waarmee cultureel erfgoed en lokale economieën tegen globalisering worden beschermd.',
             'right' => 'Ze verzetten zich tegen buitensporige milieuregels die boerenbestaan bedreigen en steunen een pragmatische balans tussen duurzaamheid en economische levensvatbaarheid.'
@@ -114,7 +114,7 @@ $parties = [
             'Energie' => 'Tegen kernenergie vanwege risico\'s en lange doorlooptijden'
         ],
         'current_seats' => 25,
-        'polling' => ['seats' => 27, 'percentage' => 18.0, 'change' => +2],
+        'polling' => ['seats' => 29, 'percentage' => 19.3, 'change' => +4],
         'perspectives' => [
             'left' => 'Dit verbond steunt ambitieus klimaatbeleid en sociale rechtvaardigheid, en strijdt voor gelijkheid en milieubescherming.',
             'right' => 'Hun focus op sociale cohesie en gemeenschapskracht helpt sociale stabiliteit te behouden, wat een beter ondernemingsklimaat schept en maatschappelijke kosten reduceert.'
@@ -134,7 +134,7 @@ $parties = [
             'Energie' => 'Kritisch over kernenergie, maar innovatie en veiligheid kunnen doorslaggevend zijn'
         ],
         'current_seats' => 9,
-        'polling' => ['seats' => 10, 'percentage' => 6.7, 'change' => +1],
+        'polling' => ['seats' => 8, 'percentage' => 5.3, 'change' => -1],
         'perspectives' => [
             'left' => 'D66 pleit voor investering in onderwijs en wetenschap, bevordert gelijke kansen en innovatieve oplossingen voor maatschappelijke problemen.',
             'right' => 'Hun nadruk op individuele vrijheid en progressief-liberale waarden stimuleert persoonlijke verantwoordelijkheid en modernisering van de economie.'
@@ -154,7 +154,7 @@ $parties = [
             'Energie' => 'Tegen investeringen in kerncentrales, liever inzetten op duurzame energie'
         ],
         'current_seats' => 5,
-        'polling' => ['seats' => 5, 'percentage' => 3.3, 'change' => 0],
+        'polling' => ['seats' => 8, 'percentage' => 5.3, 'change' => +3],
         'perspectives' => [
             'left' => 'De SP vecht consequent tegen ongelijkheid en voor een robuust sociaal vangnet, en komt op voor de rechten van werknemers en economisch kwetsbare groepen.',
             'right' => 'Hun benadering van politiek vanuit de basis en focus op het luisteren naar zorgen van gewone burgers helpt echte gemeenschapsproblemen aan te pakken.'
@@ -174,7 +174,7 @@ $parties = [
             'Energie' => 'Kernenergie is verouderd, inzetten op hernieuwbare energiebronnen'
         ],
         'current_seats' => 6,
-        'polling' => ['seats' => 7, 'percentage' => 4.7, 'change' => +1],
+        'polling' => ['seats' => 4, 'percentage' => 2.7, 'change' => -2],
         'perspectives' => [
             'left' => 'Naast dierenwelzijn pleit PvdD voor een fundamenteel ander economisch systeem dat ecologische grenzen en biodiversiteit respecteert.',
             'right' => 'Hun focus op rentmeesterschap van de natuur sluit aan bij conservatieve tradities van zorgvuldig beheer van hulpbronnen en behoud voor toekomstige generaties.'
@@ -194,7 +194,7 @@ $parties = [
             'Energie' => 'Kernenergie als onderdeel van een brede energiemix, mits goed gereguleerd'
         ],
         'current_seats' => 5,
-        'polling' => ['seats' => 18, 'percentage' => 12.0, 'change' => +13],
+        'polling' => ['seats' => 19, 'percentage' => 12.7, 'change' => +14],
         'perspectives' => [
             'left' => 'CDA\'s nadruk op gemeenschapsverantwoordelijkheid en solidariteit bevordert sociale cohesie en zorg voor kwetsbare leden van de samenleving.',
             'right' => 'Ze bevorderen familiewaarden en gemeenschapsinstellingen als essentiële fundamenten van een stabiele samenleving, waardoor minder staatsinterventie nodig is.'
@@ -234,7 +234,7 @@ $parties = [
             'Energie' => 'Kernenergie als middel om de afhankelijkheid van fossiele brandstoffen te verminderen'
         ],
         'current_seats' => 3,
-        'polling' => ['seats' => 3, 'percentage' => 2.0, 'change' => 0],
+        'polling' => ['seats' => 4, 'percentage' => 2.7, 'change' => +1],
         'perspectives' => [
             'left' => 'Hoewel traditioneel conservatief, toont SGP sterke toewijding aan rentmeesterschap en verantwoord beheer van hulpbronnen.',
             'right' => 'Hun onwankelbare toewijding aan morele waarden en gezinsgerichte beleidsmaatregelen bevordert stabiliteit en sociale orde.'
@@ -254,7 +254,7 @@ $parties = [
             'Energie' => 'Wil investeren in kernenergie als alternatief voor fossiele brandstoffen'
         ],
         'current_seats' => 2,
-        'polling' => ['seats' => 4, 'percentage' => 2.7, 'change' => +2],
+        'polling' => ['seats' => 5, 'percentage' => 3.3, 'change' => +3],
         'perspectives' => [
             'left' => 'FvD steunt afschaffing van het eigen risico in de zorg, wat de toegankelijkheid van gezondheidszorg voor alle burgers zou verbeteren, ongeacht inkomen.',
             'right' => 'Hun pleidooi voor nationale soevereiniteit en democratische hervorming is gericht op het teruggeven van macht aan burgers en het beperken van bureaucratische overreach.'
@@ -274,7 +274,7 @@ $parties = [
             'Energie' => 'Staat open voor kernenergie als het veilig en verantwoord wordt ingezet'
         ],
         'current_seats' => 3,
-        'polling' => ['seats' => 4, 'percentage' => 2.7, 'change' => 0],
+        'polling' => ['seats' => 4, 'percentage' => 2.7, 'change' => +1],
         'perspectives' => [
             'left' => 'DENK vecht consequent tegen discriminatie en voor gelijke kansen, en geeft een stem aan ondervertegenwoordigde gemeenschappen.',
             'right' => 'Hun focus op integratiebeleid erkent het belang van sociale cohesie en gedeelde waarden in een diverse samenleving.'
@@ -294,7 +294,7 @@ $parties = [
             'Energie' => 'Voorkeur voor hernieuwbare energie, maar open voor kernenergie bij strenge veiligheidseisen'
         ],
         'current_seats' => 2,
-        'polling' => ['seats' => 4, 'percentage' => 2.7, 'change' => 0],
+        'polling' => ['seats' => 4, 'percentage' => 2.7, 'change' => +2],
         'perspectives' => [
             'left' => 'Volts pan-Europese benadering pakt transnationale uitdagingen zoals klimaatverandering en ongelijkheid aan door gecoördineerde actie.',
             'right' => 'Hun nadruk op digitale transformatie en innovatie bevordert economische concurrentiekracht en modernisering.'
