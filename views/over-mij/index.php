@@ -74,7 +74,7 @@ if (!defined('URLROOT')) {
                                     <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                     </svg>
-                                    D66
+                                    Liberaal
                                 </span>
                                 <span class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium bg-secondary/10 text-secondary group-hover:bg-secondary/20 transition-colors">
                                     <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -96,38 +96,24 @@ if (!defined('URLROOT')) {
                         <div class="md:w-2/3">
                             <h2 class="text-2xl font-bold text-gray-900 mb-4 flex items-center">
                                 <span class="bg-gradient-to-r from-primary to-secondary h-6 w-1 rounded mr-3"></span>
-                                Over de Oprichter
+                                Over Mij
                             </h2>
                             
                             <div class="prose prose-slate max-w-none">
                                 <p class="text-gray-700 leading-relaxed mb-4">
-                                    Hoi! Ik ben Naoufal Andichi, 20 jaar oud. Momenteel zit ik in mijn laatste jaar 
-                                    Software Development op het MBO niveau 4. Na mijn diploma ga ik Rechten studeren 
-                                    aan de HAN.
+                                    Hoi! Ik ben Naoufal Andichi, een gepassioneerde liefhebber van technologie en politiek. Al van jongs af aan ben ik gefascineerd door de manier waarop onze samenleving functioneert en hoe technologie ons dagelijks leven beïnvloedt.
                                 </p>
                                 <p class="text-gray-700 leading-relaxed mb-4">
-                                    Ik vind het leuk om met computers te werken, maar ik wil ook graag meer leren 
-                                    over hoe onze samenleving in elkaar zit. Daarom kies ik voor deze bijzondere 
-                                    combinatie.
+                                    Mijn reis begon met een nieuwsgierigheid naar computers, maar al snel ontdekte ik de kracht van politiek om echte verandering teweeg te brengen. Deze unieke combinatie van interesses heeft me geïnspireerd om PolitiekPraat te creëren.
                                 </p>
                                 <p class="text-gray-700 leading-relaxed mb-4">
-                                    Politiek heeft mij altijd al geboeid. Als kind keek ik al naar het Jeugdjournaal 
-                                    en stelde ik veel vragen. Nu volg ik het nieuws elke dag en praat ik graag met 
-                                    anderen over wat er speelt in ons land.
+                                    Politiek is voor mij meer dan alleen een onderwerp; het is een passie. Ik volg het nieuws op de voet en geniet van gesprekken over de toekomst van ons land. Als liberaal geloof ik sterk in individuele vrijheid, persoonlijke verantwoordelijkheid en de kracht van onderwijs om de wereld te verbeteren.
                                 </p>
                                 <p class="text-gray-700 leading-relaxed mb-4">
-                                    Als lid van D66 geloof ik dat iedereen een eerlijke kans verdient en dat wij 
-                                    door goed onderwijs en nieuwe ideeën Nederland beter kunnen maken.
-                                </p>
-                                <p class="text-gray-700 leading-relaxed mb-4">
-                                    Op sociale media zie ik vaak dat mensen boos worden als ze het over politiek 
-                                    hebben. Dat vind ik jammer, want zo leren wij niet van elkaar. Daarom heb ik 
-                                    PolitiekPraat gemaakt: een plek waar je rustig kunt praten over politiek.
+                                    Met PolitiekPraat wil ik een platform bieden waar iedereen zich welkom voelt om te leren en te groeien. Het is mijn missie om een ruimte te creëren waar we samen kunnen praten, vragen kunnen stellen en van elkaar kunnen leren.
                                 </p>
                                 <p class="text-gray-700 leading-relaxed">
-                                    Met mijn kennis van computers en interesse in politiek wil ik PolitiekPraat een 
-                                    fijne plek maken voor iedereen. Een plek waar je vragen kunt stellen en kunt 
-                                    leren van anderen.
+                                    Laten we samen de wereld van de politiek verkennen en ontdekken hoe we een positieve impact kunnen maken. Jouw stem is belangrijk, en ik kijk ernaar uit om samen met jou te groeien.
                                 </p>
                             </div>
                         </div>
@@ -141,7 +127,7 @@ if (!defined('URLROOT')) {
                     
                     <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
                         <span class="bg-gradient-to-r from-secondary to-primary h-6 w-1 rounded mr-3"></span>
-                        Onze Missie
+                        Mijn Missie
                     </h2>
                     
                     <!-- Mission statement with styled quotes -->
@@ -149,24 +135,16 @@ if (!defined('URLROOT')) {
                         <div class="absolute -top-2 -left-2 text-6xl text-primary/10">"</div>
                         <div class="prose prose-slate max-w-none pl-6">
                             <p class="text-gray-700 leading-relaxed mb-5">
-                                Stel je voor: een website waar je gewoon jezelf kunt zijn en kunt praten over politiek zonder gedoe. 
-                                Dat is precies wat PolitiekPraat wil zijn! Het maakt niet uit of je links of rechts bent, of je al 
-                                jaren met politiek bezig bent of er net mee begint. Bij ons is iedereen welkom om mee te doen en 
-                                zijn of haar verhaal te delen.
+                                Welkom bij PolitiekPraat! Hier draait alles om het delen van frisse en scherpe inzichten over de politieke wereld. Met een flinke dosis enthousiasme duiken we in actuele onderwerpen en brengen we ze tot leven.
                             </p>
                             <p class="text-gray-700 leading-relaxed mb-5">
-                                Wij vinden het belangrijk dat jongeren ook hun stem laten horen in de politiek. Daarom hebben wij 
-                                PolitiekPraat zo gemaakt dat het leuk en makkelijk is om mee te doen. Je kunt hier je eigen blogs 
-                                schrijven, reageren op anderen en meedoen aan polls over actuele onderwerpen.
+                                Of het nu gaat om klimaatverandering, onderwijs of sociale rechtvaardigheid, PolitiekPraat is dé plek waar ideeën en perspectieven samenkomen. We willen je inspireren en uitdagen om mee te denken en te discussiëren.
                             </p>
                             <p class="text-gray-700 leading-relaxed mb-5">
-                                Heb jij een mening over het klimaat? Of wil je vertellen hoe jij denkt over onderwijs? 
-                                Schrijf er een blog over! Of misschien wil je juist weten wat anderen van een bepaald onderwerp vinden? 
-                                Start dan een discussie.
+                                Door het delen van krachtige analyses en meningen, streven we ernaar om een beter begrip te creëren van de complexe wereld waarin we leven. Het is een uitnodiging om samen te leren en te groeien in ons inzicht en begrip van de politiek.
                             </p>
                             <p class="text-gray-700 leading-relaxed font-medium">
-                                Doe mee en help ons om van PolitiekPraat dé plek te maken waar jongeren over politiek praten. 
-                                Jouw stem is belangrijk en verdient het om gehoord te worden!
+                                Sluit je aan bij PolitiekPraat en ontdek de energie van geïnformeerde discussie en betrokkenheid. Samen kunnen we een verschil maken!
                             </p>
                         </div>
                         <div class="absolute -bottom-6 -right-2 text-6xl text-primary/10">"</div>
@@ -176,14 +154,3 @@ if (!defined('URLROOT')) {
         </div>
     </section>
 </main>
-
-<!-- Custom animation for the subtle wave effect -->
-<style>
-.animate-tilt {
-    animation: tilt 10s infinite linear;
-}
-@keyframes tilt {
-    0%, 100% { transform: rotate(-1deg); }
-    50% { transform: rotate(1deg); }
-}
-</style> 
