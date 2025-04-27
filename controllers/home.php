@@ -326,11 +326,12 @@ require_once 'views/templates/header.php';
         <div class="container mx-auto px-4 sm:px-6 relative z-10">
             <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-20"> <!-- Increased gap -->
                 <!-- Linker kolom: Welkomstekst en CTA -->
-                <div class="w-full lg:w-1/2 text-white mb-12 lg:mb-0 text-center lg:text-left"> <!-- Centered on mobile -->
+                <div class="w-full lg:w-1/2 text-white mb-12 lg:mb-0 text-center lg:text-left animate__animated animate__fadeInLeft"> <!-- Centered on mobile, added animation -->
                     <div class="relative">
-                        <!-- Hoofdtitel met nieuwe styling -->
-                        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 hero-title"> <!-- Added hero-title class -->
-                            <span class="highlight">Politiek</span>Praat
+                        <!-- Hoofdtitel met verbeterde styling -->
+                        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 hero-title relative"> <!-- Added hero-title class, increased margin -->
+                            <span class="highlight relative inline-block">Politiek</span><span class="gradient-text">Praat</span>
+                            <div class="absolute -bottom-3 left-0 w-24 h-1 bg-gradient-to-r from-primary to-secondary rounded-full lg:mx-0 mx-auto right-0 lg:right-auto"></div>
                     </h1>
                         <span class="underline-accent mb-6 block mx-auto lg:mx-0"></span> <!-- Added underline -->
                         
