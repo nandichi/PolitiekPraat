@@ -1082,7 +1082,8 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                         </a>
                         <a href="<?php echo URLROOT; ?>/register" 
                            class="signup-btn px-4 py-2 rounded-lg font-medium transition-all duration-300 
-                                 relative overflow-hidden group hover:-translate-y-1">
+                                 relative overflow-hidden group hover:-translate-y-1"
+                           style="display: none;">
                             <span class="relative z-10">Aanmelden</span>
                         </a>
                     <?php endif; ?>
@@ -1358,7 +1359,8 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                            class="flex items-center justify-center px-4 py-2.5 bg-white text-primary font-medium 
                                   rounded-lg shadow-lg transition-all duration-300 
                                   hover:bg-secondary hover:text-white transform hover:scale-[1.02]
-                                  active:scale-[0.98]">
+                                  active:scale-[0.98]"
+                           style="display: none;">
                             <span>Aanmelden</span>
                         </a>
                     </div>

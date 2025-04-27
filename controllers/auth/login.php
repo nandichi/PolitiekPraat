@@ -71,11 +71,11 @@ require_once BASE_PATH . '/views/templates/header.php';
             </button>
         </form>
 
-        <p class="mt-4 text-center">
+        <!-- <p class="mt-4 text-center">
             Nog geen account? 
             <a href="<?php echo URLROOT; ?>/register" class="text-primary hover:underline">
                 Registreer hier
-            </a>
+            </a> -->
         </p>
     </div>
 </main>
