@@ -377,13 +377,14 @@ require_once 'views/templates/header.php';
                             });
                         </script>
                         
-                        <!-- Call-to-action knop met nieuwe styling -->
-                        <a href="<?php echo URLROOT; ?>/blogs" class="hero-cta-button">
-                            <span>Ontdek onze blogs</span>
-                            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <!-- Call-to-action knop met verbeterde styling -->
+                        <a href="<?php echo URLROOT; ?>/blogs" class="inline-flex items-center justify-center px-8 py-4 font-semibold text-white bg-gradient-to-r from-primary to-secondary rounded-xl shadow-lg transition-all duration-500 hover:scale-105 hover:shadow-xl relative overflow-hidden group">
+                            <div class="absolute inset-0 w-0 bg-gradient-to-r from-secondary to-primary transition-all duration-500 ease-out group-hover:w-full"></div>
+                            <span class="relative mr-3">Ontdek onze blogs</span>
+                            <svg class="w-5 h-5 relative transform transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
                             </svg>
-                    </a>
+                        </a>
                 </div>
                 </div>
 
