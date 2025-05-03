@@ -250,54 +250,54 @@ $latest_news = [
         'source' => 'Socialisme.nu',
         'bias' => 'links', 
         'publishedAt' => date('Y-m-d H:i:s'), // Vandaag 08:30
-        'title' => 'PVV-kabinet laat huren explosief stijgen',
-        'description' => 'Het PVV-kabinet laat de huren explosief stijgen door het afschaffen van de huurprijsbescherming en het verlagen van de huurtoeslag.',
-        'url' => 'https://socialisme.nu/pvv-kabinet-laat-huren-explosief-stijgen/'
+        'title' => 'Afbraakbeleid en vage toezeggingen: PVV-kabinet kan nog even door',
+        'description' => 'Het PVV-kabinet gaat door met afbraakbeleid terwijl het vage toezeggingen doet aan de oppositie. De bezuinigingen op sociale voorzieningen blijven doorgaan ondanks protesten.',
+        'url' => 'https://socialisme.nu/afbraakbeleid-en-vage-toezeggingen-pvv-kabinet-kan-nog-even-door/'
     ],
     [
         'orientation' => 'links',
         'source' => 'NRC',
         'bias' => 'centrum-links', 
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-2 hours')), // 2 uur geleden
-        'title' => 'Het CDA was doodverklaard, maar herrijst dankzij Henri Bontenbal weer in de peilingen: wat is er gebeurd?',
-        'description' => 'Na een historisch dieptepunt in de peilingen lijkt het CDA onder leiding van Henri Bontenbal weer op te krabbelen. De nieuwe partijleider weet met zijn inhoudelijke aanpak en focus op kernthema\'s kiezers terug te winnen.',
-        'url' => 'https://www.nrc.nl/nieuws/2025/04/12/het-cda-was-doodverklaard-maar-herrijst-dankzij-henri-bontenbal-weer-in-de-peilingen-wat-is-er-gebeurd-a4889700'
+        'title' => 'Jongeren van PvdA en GroenLinks besnuffelen elkaar',
+        'description' => 'In een poging om de krachten te bundelen, verkennen de jongerenafdelingen van PvdA en GroenLinks mogelijkheden voor samenwerking. De gesprekken zijn gericht op het versterken van progressieve standpunten en het vergroten van de invloed van jongeren in de politiek.',
+        'url' => 'https://www.nrc.nl/nieuws/2025/05/02/jongeren-van-pvda-en-groen-links-besnuffelen-elkaar-a4892005'
     ],
     [
         'orientation' => 'links',
         'source' => 'Trouw',
         'bias' => 'centrum-links', 
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-4 hours')), // 4 uur geleden
-        'title' => 'D66 pakt vrije rol in de oppositie en presenteert wilde plannen',
-        'description' => 'D66 presenteert als oppositiepartij een reeks opvallende voorstellen, waaronder het afschaffen van de monarchie en het legaliseren van harddrugs. De partij kiest voor een vrije rol in de oppositie.',
-        'url' => 'https://www.trouw.nl/politiek/d66-pakt-vrije-rol-in-de-oppositie-en-presenteert-wilde-plannen~bf16313b/'
+        'title' => 'De Nederlandse economie heeft beperkt last van de Amerikaanse heffingen',
+        'description' => 'De Nederlandse economie ondervindt slechts beperkte gevolgen van de Amerikaanse importheffingen, dankzij sterke handelsrelaties binnen de EU en een diversificatie van exportmarkten.',
+        'url' => 'https://www.trouw.nl/politiek/de-nederlandse-economie-heeft-beperkt-last-van-de-amerikaanse-heffingen~b9f66122/'
     ],
     [
         'orientation' => 'rechts',
         'source' => 'FVD',
         'bias' => 'extreem-rechts', 
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-6 hours')), // 6 uur geleden
-        'title' => 'Extinction Rebellion dreigt met stinkbommen, FVD stelt Kamervragen',
-        'description' => 'Forum voor Democratie heeft Kamervragen gesteld over de dreiging van Extinction Rebellion om stinkbommen te gebruiken bij demonstraties.',
-        'url' => 'https://fvd.nl/nieuws/extinction-rebellion-dreigt-met-stinkbommen-fvd-stelt-kamervragen'
+        'title' => 'Forum Inside: Stroomuitval in EU & Zuid-Afrika als waarschuwing en overheidsuitgaven onder de loep',
+        'description' => 'Forum voor Democratie bespreekt de recente stroomuitval in de EU en Zuid-Afrika als een waarschuwing voor energiebeleid en onderzoekt de overheidsuitgaven.',
+        'url' => 'https://fvd.nl/nieuws/forum-inside-stroomuitval-in-eu-zuid-afrika-als-waarschuwing-en-overheidsuitgaven-onder-de-loep'
     ],
     [
         'orientation' => 'rechts',
         'source' => 'De Dagelijkse Standaard',
         'bias' => 'extreem-rechts', 
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-8 hours')), // 8 uur geleden
-        'title' => 'Hypocriet: Jetten vergeet D66\'s eigen wanbeleid',
-        'description' => 'D66-minister Rob Jetten wordt beschuldigd van hypocrisie bij het bekritiseren van beleid terwijl zijn eigen partij soortgelijke maatregelen heeft gesteund.',
-        'url' => 'https://www.dagelijksestandaard.nl/politiek/hypocriet-jetten-vergeet-d66s-eigen-wanbeleid'
+        'title' => 'Ongelooflijk: Geen arrestaties in Scheveningen, wel bij vreedzame demonstratie in Uden',
+        'description' => 'In Scheveningen zijn er geen arrestaties verricht, terwijl er bij een vreedzame demonstratie in Uden wel mensen zijn opgepakt. Dit roept vragen op over de aanpak van de politie bij verschillende evenementen.',
+        'url' => 'https://www.dagelijksestandaard.nl/immigratie/ongelooflijk-geen-arrestaties-in-scheveningen-wel-bij-vreedzame-demonstratie-in-uden'
     ],
     [
         'orientation' => 'rechts',
         'source' => 'Nieuw Rechts',
         'bias' => 'rechts',
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-10 hours')), // 10 uur geleden
-        'title' => 'Onrust bij PVV: verziekte sfeer en ruzies binnen kabinetsteam Wilders',
-        'description' => 'Binnen het kabinetsteam van de PVV heerst onrust en een verziekte sfeer. Er zijn interne ruzies ontstaan die de samenwerking bemoeilijken.',
-        'url' => 'https://nieuwrechts.nl/103730-onrust-bij-pvv-verziekte-sfeer-en-ruzies-binnen-kabinetsteam-wilders'
+        'title' => 'Jetten trots op grote daden: vaccins en gasstop - critici spreken van wanbeleid',
+        'description' => 'Minister Jetten uit zijn trots over de behaalde successen met betrekking tot de vaccinatiecampagne en de gasstop, terwijl critici zijn beleid als wanbeleid bestempelen.',
+        'url' => 'https://nieuwrechts.nl/104030-jetten-trots-op-grote-daden-vaccins-en-gasstop--critici-spreken-van-wanbeleid'
     ]
 ];
 
