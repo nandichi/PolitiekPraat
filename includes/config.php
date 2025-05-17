@@ -18,8 +18,8 @@ if (!defined('CONFIG_INCLUDED')) {
         // Local development settings
         define('DB_HOST', 'localhost');
         define('DB_USER', 'root');
-        define('DB_PASS', 'Naoufal2004!');
-        define('DB_NAME', 'politiek_db');
+        define('DB_PASS', '');
+        define('DB_NAME', 'naoufal_politiekpraat_db');
         define('URLROOT', 'http://localhost:8000');
     }
 
