@@ -34,7 +34,7 @@ $parties = [
             'Energie' => 'Voorstander van kernenergie als onderdeel van de energiemix'
         ],
         'current_seats' => 37,
-        'polling' => ['seats' => 28, 'percentage' => 18.7, 'change' => -9],
+        'polling' => ['seats' => 28, 'percentage' => 18.7, 'change' => -1],
         'perspectives' => [
             'left' => 'De PVV pleit voor afschaffing van het eigen risico in de zorg, wat de gezondheidszorg toegankelijker en betaalbaarder maakt voor alle burgers, vooral voor mensen met lagere inkomens.',
             'right' => 'De PVV komt sterk op voor nationale soevereiniteit en strenger immigratiebeleid, wat aanhangers zien als bescherming van de Nederlandse cultuur en identiteit.'
@@ -54,7 +54,7 @@ $parties = [
             'Energie' => 'Voorstander van kernenergie als aanvulling op duurzame bronnen'
         ],
         'current_seats' => 24,
-        'polling' => ['seats' => 26, 'percentage' => 17.3, 'change' => +2],
+        'polling' => ['seats' => 30, 'percentage' => 20.0, 'change' => +6],
         'perspectives' => [
             'left' => 'De VVD steunt praktische klimaatmaatregelen en energietransitieplannen die de industrie niet vervreemden, waardoor een duurzamere economie mogelijk wordt zonder massaal banenverlies.',
             'right' => 'De VVD bevordert economische groei, lagere belastingen en minder bureaucratie, wat ondernemerschap stimuleert en de markteconomie versterkt.'
@@ -74,7 +74,7 @@ $parties = [
             'Energie' => 'Open voor kernenergie als het bijdraagt aan een stabiele energiemix'
         ],
         'current_seats' => 20,
-        'polling' => ['seats' => 1, 'percentage' => 0.7, 'change' => -19],
+        'polling' => ['seats' => 2, 'percentage' => 1.3, 'change' => -18],
         'perspectives' => [
             'left' => 'NSC legt nadruk op overheidsverantwoording en transparantie, en strijdt tegen systematische onrechtvaardigheden zoals gezien in de toeslagenaffaire.',
             'right' => 'Hun evenwichtige benadering van immigratie- en asielbeleid richt zich zowel op veiligheidsaspecten als humanitaire verplichtingen zonder middelen te overschrijden.'
@@ -94,7 +94,7 @@ $parties = [
             'Energie' => 'Ziet kernenergie als betrouwbaar onderdeel van de energietransitie'
         ],
         'current_seats' => 7,
-        'polling' => ['seats' => 3, 'percentage' => 2.0, 'change' => -4],
+        'polling' => ['seats' => 2, 'percentage' => 1.3, 'change' => -5],
         'perspectives' => [
             'left' => 'BBB pleit voor het behoud van plattelandsgemeenschappen en traditionele landbouwpraktijken, waarmee cultureel erfgoed en lokale economieën tegen globalisering worden beschermd.',
             'right' => 'Ze verzetten zich tegen buitensporige milieuregels die boerenbestaan bedreigen en steunen een pragmatische balans tussen duurzaamheid en economische levensvatbaarheid.'
@@ -114,7 +114,7 @@ $parties = [
             'Energie' => 'Tegen kernenergie vanwege risico\'s en lange doorlooptijden'
         ],
         'current_seats' => 25,
-        'polling' => ['seats' => 29, 'percentage' => 19.3, 'change' => +4],
+        'polling' => ['seats' => 28, 'percentage' => 18.7, 'change' => +3],
         'perspectives' => [
             'left' => 'Dit verbond steunt ambitieus klimaatbeleid en sociale rechtvaardigheid, en strijdt voor gelijkheid en milieubescherming.',
             'right' => 'Hun focus op sociale cohesie en gemeenschapskracht helpt sociale stabiliteit te behouden, wat een beter ondernemingsklimaat schept en maatschappelijke kosten reduceert.'
@@ -134,7 +134,7 @@ $parties = [
             'Energie' => 'Kritisch over kernenergie, maar innovatie en veiligheid kunnen doorslaggevend zijn'
         ],
         'current_seats' => 9,
-        'polling' => ['seats' => 8, 'percentage' => 5.3, 'change' => -1],
+        'polling' => ['seats' => 10, 'percentage' => 6.7, 'change' => +1],
         'perspectives' => [
             'left' => 'D66 pleit voor investering in onderwijs en wetenschap, bevordert gelijke kansen en innovatieve oplossingen voor maatschappelijke problemen.',
             'right' => 'Hun nadruk op individuele vrijheid en progressief-liberale waarden stimuleert persoonlijke verantwoordelijkheid en modernisering van de economie.'
@@ -154,7 +154,7 @@ $parties = [
             'Energie' => 'Tegen investeringen in kerncentrales, liever inzetten op duurzame energie'
         ],
         'current_seats' => 5,
-        'polling' => ['seats' => 8, 'percentage' => 5.3, 'change' => +3],
+        'polling' => ['seats' => 8, 'percentage' => 5.3, 'change' => +2],
         'perspectives' => [
             'left' => 'De SP vecht consequent tegen ongelijkheid en voor een robuust sociaal vangnet, en komt op voor de rechten van werknemers en economisch kwetsbare groepen.',
             'right' => 'Hun benadering van politiek vanuit de basis en focus op het luisteren naar zorgen van gewone burgers helpt echte gemeenschapsproblemen aan te pakken.'
@@ -174,7 +174,7 @@ $parties = [
             'Energie' => 'Kernenergie is verouderd, inzetten op hernieuwbare energiebronnen'
         ],
         'current_seats' => 6,
-        'polling' => ['seats' => 4, 'percentage' => 2.7, 'change' => -2],
+        'polling' => ['seats' => 5, 'percentage' => 3.3, 'change' => -1],
         'perspectives' => [
             'left' => 'Naast dierenwelzijn pleit PvdD voor een fundamenteel ander economisch systeem dat ecologische grenzen en biodiversiteit respecteert.',
             'right' => 'Hun focus op rentmeesterschap van de natuur sluit aan bij conservatieve tradities van zorgvuldig beheer van hulpbronnen en behoud voor toekomstige generaties.'
@@ -194,7 +194,7 @@ $parties = [
             'Energie' => 'Kernenergie als onderdeel van een brede energiemix, mits goed gereguleerd'
         ],
         'current_seats' => 5,
-        'polling' => ['seats' => 19, 'percentage' => 12.7, 'change' => +14],
+        'polling' => ['seats' => 18, 'percentage' => 12.0, 'change' => +13],
         'perspectives' => [
             'left' => 'CDA\'s nadruk op gemeenschapsverantwoordelijkheid en solidariteit bevordert sociale cohesie en zorg voor kwetsbare leden van de samenleving.',
             'right' => 'Ze bevorderen familiewaarden en gemeenschapsinstellingen als essentiële fundamenten van een stabiele samenleving, waardoor minder staatsinterventie nodig is.'
@@ -234,7 +234,7 @@ $parties = [
             'Energie' => 'Kernenergie als middel om de afhankelijkheid van fossiele brandstoffen te verminderen'
         ],
         'current_seats' => 3,
-        'polling' => ['seats' => 4, 'percentage' => 2.7, 'change' => +1],
+        'polling' => ['seats' => 3, 'percentage' => 2.0, 'change' => 0],
         'perspectives' => [
             'left' => 'Hoewel traditioneel conservatief, toont SGP sterke toewijding aan rentmeesterschap en verantwoord beheer van hulpbronnen.',
             'right' => 'Hun onwankelbare toewijding aan morele waarden en gezinsgerichte beleidsmaatregelen bevordert stabiliteit en sociale orde.'
@@ -254,7 +254,7 @@ $parties = [
             'Energie' => 'Wil investeren in kernenergie als alternatief voor fossiele brandstoffen'
         ],
         'current_seats' => 2,
-        'polling' => ['seats' => 5, 'percentage' => 3.3, 'change' => +3],
+        'polling' => ['seats' => 3, 'percentage' => 2.0, 'change' => +1],
         'perspectives' => [
             'left' => 'FvD steunt afschaffing van het eigen risico in de zorg, wat de toegankelijkheid van gezondheidszorg voor alle burgers zou verbeteren, ongeacht inkomen.',
             'right' => 'Hun pleidooi voor nationale soevereiniteit en democratische hervorming is gericht op het teruggeven van macht aan burgers en het beperken van bureaucratische overreach.'
@@ -294,7 +294,7 @@ $parties = [
             'Energie' => 'Voorkeur voor hernieuwbare energie, maar open voor kernenergie bij strenge veiligheidseisen'
         ],
         'current_seats' => 2,
-        'polling' => ['seats' => 4, 'percentage' => 2.7, 'change' => +2],
+        'polling' => ['seats' => 3, 'percentage' => 2.0, 'change' => +2],
         'perspectives' => [
             'left' => 'Volts pan-Europese benadering pakt transnationale uitdagingen zoals klimaatverandering en ongelijkheid aan door gecoördineerde actie.',
             'right' => 'Hun nadruk op digitale transformatie en innovatie bevordert economische concurrentiekracht en modernisering.'
@@ -314,7 +314,7 @@ $parties = [
             'Energie' => 'Inzet op duurzame energie, kritisch op kernenergie'
         ],
         'current_seats' => 3,
-        'polling' => ['seats' => 3, 'percentage' => 2.0, 'change' => 0],
+        'polling' => ['seats' => 3, 'percentage' => 2.0, 'change' => -2],
         'perspectives' => [
             'left' => 'De ChristenUnie legt sterke nadruk op sociale rechtvaardigheid, armoedebestrijding en milieubescherming, wat aansluit bij progressieve idealen.',
             'right' => 'Hun focus op gezinswaarden, gemeenschapszin en ethisch ondernemerschap ondersteunt traditionele maatschappelijke structuren.'
@@ -803,111 +803,221 @@ include_once BASE_PATH . '/views/templates/header.php';
 </div>
 
 <div class="container mx-auto px-4 py-8 mb-12">
-    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-        <div class="relative">
-            <div class="bg-gradient-to-br from-blue-500 to-red-600 p-6 text-white">
-                <h2 class="text-2xl font-bold mb-2">Coalitiemaker</h2>
-                <p class="text-white/80">Stel je eigen coalitie samen en bekijk of je een meerderheid kunt behalen</p>
-            </div>
+    <!-- Modern Coalition Maker -->
+    <div class="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100">
+        <!-- Elegant Header with Gradient -->
+        <div class="relative bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 p-8">
+            <div class="absolute inset-0 bg-black/10"></div>
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg opacity=\"0.1\"%3E%3Ccircle cx=\"30\" cy=\"30\" r=\"2\" fill=\"white\"/%3E%3Ccircle cx=\"10\" cy=\"10\" r=\"1\" fill=\"white\"/%3E%3Ccircle cx=\"50\" cy=\"10\" r=\"1\" fill=\"white\"/%3E%3Ccircle cx=\"10\" cy=\"50\" r=\"1\" fill=\"white\"/%3E%3Ccircle cx=\"50\" cy=\"50\" r=\"1\" fill=\"white\"/%3E%3C/g%3E%3C/svg%3E')] opacity-30"></div>
             
-            <!-- Decorative pattern -->
-            <div class="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml,%3Csvg width=\"30\" height=\"30\" viewBox=\"0 0 30 30\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cpath d=\"M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z\" fill=\"rgba(255,255,255,0.25)\"%3E%3C/path%3E%3C/svg%3E')]"></div>
+            <div class="relative z-10">
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <h2 class="text-4xl font-black text-white mb-2 tracking-tight">
+                            Coalitiemaker
+                        </h2>
+                        <p class="text-white/90 text-lg font-medium max-w-2xl">
+                            Bouw je ideale coalitie en ontdek welke partijen samen een meerderheid kunnen vormen
+                        </p>
+                    </div>
+                    <div class="hidden md:flex items-center space-x-2 bg-white/20 backdrop-blur-sm rounded-2xl p-4">
+                        <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                        <span class="text-white font-semibold text-sm">Live Data</span>
+                    </div>
+                </div>
+                
+                <!-- Interactive Tabs -->
+                <div class="flex space-x-2 bg-white/20 backdrop-blur-sm rounded-2xl p-2 w-fit">
+                    <button id="coalition-current-tab" class="coalition-tab-btn px-6 py-3 rounded-xl font-semibold text-white bg-white/30 backdrop-blur-sm transition-all duration-300 hover:bg-white/40">
+                        <span class="flex items-center space-x-2">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+                            </svg>
+                            <span>Huidige Zetels</span>
+                        </span>
+                    </button>
+                    <button id="coalition-polling-tab" class="coalition-tab-btn px-6 py-3 rounded-xl font-semibold text-white/70 hover:text-white hover:bg-white/20 transition-all duration-300">
+                        <span class="flex items-center space-x-2">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"/>
+                            </svg>
+                            <span>Peilingen</span>
+                        </span>
+                    </button>
+                </div>
+            </div>
         </div>
         
-        <div class="p-6">
-            <!-- Tab buttons -->
-            <div class="mb-6 border-b border-gray-200">
-                <nav class="flex -mb-px">
-                    <button id="coalition-current-tab" class="coalition-tab-btn py-3 px-6 text-primary border-b-2 border-primary font-medium">
-                        Huidige zetelverdeling
-                    </button>
-                    <button id="coalition-polling-tab" class="coalition-tab-btn py-3 px-6 text-gray-500 hover:text-gray-700 font-medium border-b-2 border-transparent">
-                        Peilingen
-                    </button>
-                </nav>
-            </div>
-            
-            <!-- Coalition maker interface -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- Left column: Available parties -->
-                <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
-                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Beschikbare partijen</h3>
-                    <div id="available-parties" class="space-y-2 max-h-[500px] overflow-y-auto pr-1">
-                        <!-- Parties will be added by JavaScript -->
-                        <div class="text-center text-gray-500 py-4">Partijen worden geladen...</div>
+        <!-- Main Content Area -->
+        <div class="p-8">
+            <!-- Coalition Builder Interface -->
+            <div class="grid grid-cols-1 xl:grid-cols-12 gap-8">
+                
+                <!-- Available Parties Section -->
+                <div class="xl:col-span-4">
+                    <div class="bg-gradient-to-br from-slate-50 to-gray-100 rounded-2xl border border-gray-200/60 shadow-lg">
+                        <div class="p-6 border-b border-gray-200/60">
+                            <div class="flex items-center justify-between">
+                                <h3 class="text-xl font-bold text-gray-900 flex items-center">
+                                    <div class="w-2 h-2 bg-blue-500 rounded-full mr-3 animate-pulse"></div>
+                                    Beschikbare Partijen
+                                </h3>
+                                <div id="available-count" class="bg-blue-100 text-blue-800 text-sm font-bold px-3 py-1 rounded-full">
+                                    0
+                                </div>
+                            </div>
+                            <p class="text-gray-600 text-sm mt-2">Sleep partijen naar je coalitie</p>
+                        </div>
+                        <div class="p-6">
+                            <div id="available-parties" class="space-y-3 max-h-[600px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+                                <div class="text-center text-gray-500 py-8">
+                                    <div class="animate-spin w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+                                    <p class="font-medium">Partijen worden geladen...</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
-                <!-- Middle column: Selected coalition -->
-                <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
-                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Jouw coalitie</h3>
-                    <div id="selected-coalition" class="space-y-2 min-h-[250px] max-h-[500px] overflow-y-auto pr-1 flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-4">
-                        <p class="text-gray-500 text-center italic">Sleep partijen hierheen om een coalitie te vormen</p>
-                    </div>
-                    
-                    <div class="mt-6">
-                        <button id="clear-coalition" class="w-full bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded-lg transition-colors">
-                            Wissen
-                        </button>
+                <!-- Coalition Builder Section -->
+                <div class="xl:col-span-4">
+                    <div class="bg-gradient-to-br from-emerald-50 to-teal-100 rounded-2xl border border-emerald-200/60 shadow-lg">
+                        <div class="p-6 border-b border-emerald-200/60">
+                            <h3 class="text-xl font-bold text-gray-900 flex items-center">
+                                <div class="w-2 h-2 bg-emerald-500 rounded-full mr-3 animate-pulse"></div>
+                                Jouw Coalitie
+                            </h3>
+                            <p class="text-gray-600 text-sm mt-2">Sleep hier je partijen naartoe</p>
+                        </div>
+                        <div class="p-6">
+                            <div id="selected-coalition" class="min-h-[400px] max-h-[600px] overflow-y-auto rounded-xl border-2 border-dashed border-emerald-300 bg-white/50 backdrop-blur-sm transition-all duration-300 hover:border-emerald-400 hover:bg-white/70">
+                                <div class="flex flex-col items-center justify-center h-full p-8 text-center">
+                                    <div class="bg-emerald-100 p-4 rounded-full mb-4">
+                                        <svg class="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                                        </svg>
+                                    </div>
+                                    <p class="text-gray-500 font-medium mb-2">Bouw je coalitie</p>
+                                    <p class="text-gray-400 text-sm">Sleep partijen hierheen om te beginnen</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Coalition Actions -->
+                            <div class="mt-6 flex space-x-3">
+                                <button id="clear-coalition" class="flex-1 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-bold py-3 px-4 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                                    <span class="flex items-center justify-center space-x-2">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                        </svg>
+                                        <span>Wissen</span>
+                                    </span>
+                                </button>
+                                <button id="shuffle-coalition" class="bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white font-bold py-3 px-4 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
-                <!-- Right column: Coalition summary -->
-                <div>
-                    <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 mb-4">
-                        <h3 class="text-lg font-semibold text-gray-800 mb-4">Coalitieoverzicht</h3>
+                <!-- Coalition Analysis Section -->
+                <div class="xl:col-span-4">
+                    <div class="space-y-6">
                         
-                        <div class="mb-4">
-                            <div class="flex justify-between items-center mb-2">
-                                <span class="text-sm font-medium text-gray-700">Coalitiezetels:</span>
-                                <span id="coalition-seats" class="font-bold text-lg">0</span>
+                        <!-- Coalition Summary -->
+                        <div class="bg-gradient-to-br from-amber-50 to-orange-100 rounded-2xl border border-amber-200/60 shadow-lg">
+                            <div class="p-6 border-b border-amber-200/60">
+                                <h3 class="text-xl font-bold text-gray-900 flex items-center">
+                                    <div class="w-2 h-2 bg-amber-500 rounded-full mr-3 animate-pulse"></div>
+                                    Analyse
+                                </h3>
                             </div>
-                            
-                            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-1">
-                                <div id="coalition-progress" class="bg-primary h-2.5 rounded-full transition-all duration-500" style="width: 0%"></div>
-                            </div>
-                            
-                            <div class="flex justify-between items-center text-xs text-gray-500">
-                                <span>0</span>
-                                <span>Benodigde meerderheid: 76</span>
-                                <span>150</span>
+                            <div class="p-6">
+                                <!-- Seats Counter -->
+                                <div class="mb-6">
+                                    <div class="flex justify-between items-center mb-3">
+                                        <span class="text-sm font-semibold text-gray-700">Coalitiezetels</span>
+                                        <div class="flex items-center space-x-2">
+                                            <span id="coalition-seats" class="text-3xl font-black text-gray-900">0</span>
+                                            <span class="text-sm text-gray-500">/150</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Progress Bar -->
+                                    <div class="relative w-full h-4 bg-gray-200 rounded-full overflow-hidden shadow-inner">
+                                        <div id="coalition-progress" class="h-full bg-gradient-to-r from-blue-500 to-purple-600 rounded-full transition-all duration-700 ease-out shadow-sm" style="width: 0%"></div>
+                                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+                                        <!-- Majority Line -->
+                                        <div class="absolute top-0 h-full w-0.5 bg-red-500" style="left: 50.67%">
+                                            <div class="absolute -top-1 -left-2 w-4 h-6 bg-red-500 rounded-sm"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex justify-between items-center text-xs text-gray-500 mt-2">
+                                        <span>0</span>
+                                        <span class="bg-red-100 text-red-700 px-2 py-1 rounded font-bold">Meerderheid: 76</span>
+                                        <span>150</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Status Badge -->
+                                <div id="coalition-status" class="text-center py-4 rounded-xl bg-gray-100 text-gray-600 font-semibold transition-all duration-300">
+                                    Geen coalitie gevormd
+                                </div>
+                                
+                                <!-- Coalition Stats -->
+                                <div id="coalition-stats" class="mt-6 space-y-4 hidden">
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <div class="bg-white/60 p-3 rounded-lg text-center">
+                                            <div id="coalition-parties-count" class="text-2xl font-bold text-gray-900">0</div>
+                                            <div class="text-xs text-gray-600">Partijen</div>
+                                        </div>
+                                        <div class="bg-white/60 p-3 rounded-lg text-center">
+                                            <div id="coalition-percentage" class="text-2xl font-bold text-gray-900">0%</div>
+                                            <div class="text-xs text-gray-600">van Kamer</div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         
-                        <div id="coalition-status" class="mt-4 text-center py-2 rounded-lg bg-gray-200 text-gray-700">
-                            Nog geen meerderheid
-                        </div>
-                    </div>
-                    
-                    <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 hidden">
-                        <h3 class="text-lg font-semibold text-gray-800 mb-4">Politieke verdeling</h3>
-                        <div id="coalition-spectrum-container" class="flex items-center justify-between h-8 bg-gradient-to-r from-blue-600 via-purple-500 to-red-600 rounded-full overflow-hidden relative mb-2">
-                            <div id="coalition-spectrum-indicator" class="absolute h-12 w-4 bg-white shadow-md opacity-80 top-0 left-50% transition-all duration-300 -mt-2 border-2 border-gray-800" style="left: 50%; transform: translateX(-50%)"></div>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <div class="flex items-center">
-                                <div class="w-4 h-4 rounded-full bg-blue-600 mr-1"></div>
-                                <span class="text-xs font-medium">Links</span>
+                        <!-- Political Spectrum -->
+                        <div class="bg-gradient-to-br from-violet-50 to-purple-100 rounded-2xl border border-violet-200/60 shadow-lg">
+                            <div class="p-6 border-b border-violet-200/60">
+                                <h3 class="text-lg font-bold text-gray-900 flex items-center">
+                                    <div class="w-2 h-2 bg-violet-500 rounded-full mr-3"></div>
+                                    Politieke Richting
+                                </h3>
                             </div>
-                            <div class="flex items-center">
-                                <div class="w-4 h-4 rounded-full bg-purple-500 mr-1"></div>
-                                <span class="text-xs font-medium">Midden</span>
-                            </div>
-                            <div class="flex items-center">
-                                <div class="w-4 h-4 rounded-full bg-red-600 mr-1"></div>
-                                <span class="text-xs font-medium">Rechts</span>
+                            <div class="p-6">
+                                <div id="coalition-spectrum-container" class="relative">
+                                    <div class="h-6 bg-gradient-to-r from-red-500 via-purple-500 to-blue-500 rounded-full shadow-inner overflow-hidden">
+                                        <div id="coalition-spectrum-indicator" class="absolute w-1 h-8 bg-white shadow-lg rounded-full -top-1 transition-all duration-500 border-2 border-gray-800" style="left: 50%; transform: translateX(-50%); display: none;"></div>
+                                    </div>
+                                    
+                                    <div class="flex justify-between items-center mt-3 text-xs">
+                                        <div class="flex items-center">
+                                            <div class="w-3 h-3 rounded-full bg-red-500 mr-2"></div>
+                                            <span class="font-medium text-gray-700">Rechts</span>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <div class="w-3 h-3 rounded-full bg-purple-500 mr-2"></div>
+                                            <span class="font-medium text-gray-700">Midden</span>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <div class="w-3 h-3 rounded-full bg-blue-500 mr-2"></div>
+                                            <span class="font-medium text-gray-700">Links</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                        
                     </div>
                 </div>
-            </div>
-            
-            <!-- Coalition combinations suggestions -->
-            <div class="mt-8">
-                <h3 class="text-lg font-semibold text-gray-800 mb-4 hidden">Suggesties</h3>
-                <div id="coalition-suggestions" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <!-- Suggestions will be added by JavaScript -->
-                </div>
+                
             </div>
         </div>
     </div>
@@ -1293,662 +1403,585 @@ function adjustColorBrightness($hex, $steps) {
 }
 ?>
 
-// Coalition Maker Functionality
+// Modern Coalition Maker JavaScript
 document.addEventListener('DOMContentLoaded', function() {
-    // Definieer de partijen direct op basis van de PHP-data om problemen met scope te vermijden
-    const coalitionParties = <?php echo json_encode($parties); ?>;
-    
-    console.log('Coalition maker geladen met', Object.keys(coalitionParties).length, 'partijen');
-    
-    // Define political spectrum positions (0 = far right, 100 = far left)
-    const partyPositions = {
-        'PVV': 15,
-        'VVD': 30,
-        'NSC': 55,
-        'BBB': 40,
-        'GL-PvdA': 85,
-        'D66': 70,
-        'SP': 90,
-        'PvdD': 80,
-        'CDA': 50,
-        'JA21': 20,
-        'SGP': 25,
-        'FvD': 10,
-        'DENK': 75,
-        'Volt': 65,
-        'CU': 60
-    };
-    
-    // Pre-defined coalition suggestions
-    const coalitionSuggestions = [
-        {
-            name: "Rechts blok",
-            parties: ["PVV", "VVD", "BBB", "JA21"],
-            description: "Conservatieve coalitie met focus op streng immigratiebeleid en economische vrijheid"
+    // Initialize Coalition Maker with enhanced features
+    const CoalitionMaker = {
+        parties: <?php echo json_encode($parties); ?>,
+        currentView: 'current',
+        coalition: [],
+        
+        // Political spectrum positions (0 = far right, 100 = far left)
+        partyPositions: {
+            'PVV': 15, 'VVD': 30, 'NSC': 55, 'BBB': 40, 'GL-PvdA': 85,
+            'D66': 70, 'SP': 90, 'PvdD': 80, 'CDA': 50, 'JA21': 20,
+            'SGP': 25, 'FvD': 10, 'DENK': 75, 'Volt': 65, 'CU': 60
         },
-        {
-            name: "Progressief links",
-            parties: ["GL-PvdA", "D66", "SP", "PvdD", "Volt"],
-            description: "Progressieve coalitie met ambitieus klimaatbeleid en focus op sociale rechtvaardigheid"
+        
+        init() {
+            this.setupEventListeners();
+            this.generateAvailableParties();
+            this.setupDragAndDrop();
+            this.updateAnalysis();
+            console.log('🚀 Modern Coalition Maker geïnitialiseerd');
         },
-        {
-            name: "Breed midden",
-            parties: ["NSC", "VVD", "CDA", "D66", "BBB"],
-            description: "Brede centrumcoalitie gericht op stabiliteit en pragmatische oplossingen"
-        },
-        {
-            name: "Motorblok",
-            parties: ["VVD", "NSC", "GL-PvdA", "D66"],
-            description: "Combinatie van progressief en behoudend met nadruk op bestuurlijke vernieuwing"
-        },
-        {
-            name: "Extraparlementair",
-            parties: ["PVV", "NSC", "VVD", "BBB", "CDA", "SGP"],
-            description: "Rechtse meerderheid met gedoogsteun van kleine christelijke partijen"
-        }
-    ];
-    
-    // Generate available party cards based on current view
-    function generateAvailableParties() {
-        const container = document.getElementById('available-parties');
-        container.innerHTML = '';
         
-        if (!coalitionParties || Object.keys(coalitionParties).length === 0) {
-            console.error('Geen partijgegevens beschikbaar om weer te geven!');
-            container.innerHTML = '<div class="text-center text-red-500 py-4">Fout bij het laden van partijen</div>';
-            return;
-        }
-        
-        console.log('Generating party cards from:', coalitionParties);
-        
-        // Sort parties by seats (descending)
-        let partiesSorted = Object.entries(coalitionParties).sort((a, b) => {
-            const aSeats = currentView === 'current' ? a[1].current_seats : a[1].polling.seats;
-            const bSeats = currentView === 'current' ? b[1].current_seats : b[1].polling.seats;
-            return bSeats - aSeats;
-        });
-        
-        // Create card for each party with seats > 0
-        partiesSorted.forEach(([partyKey, party]) => {
-            const seats = currentView === 'current' ? party.current_seats : party.polling.seats;
-            
-            console.log('Processing party:', partyKey, 'with seats:', seats);
-            
-            if (seats > 0) {
-                const card = document.createElement('div');
-                card.className = 'party-item bg-white p-3 rounded-lg border border-gray-200 shadow-sm flex items-center justify-between cursor-move transition-all hover:shadow-md mb-2';
-                card.setAttribute('draggable', 'true');
-                card.setAttribute('data-party', partyKey);
-                card.setAttribute('data-seats', seats);
-                
-                const color = getPartyColor(partyKey);
-                
-                card.innerHTML = `
-                    <div class="flex items-center">
-                        <div class="w-6 h-6 rounded-full overflow-hidden mr-2 bg-white flex items-center justify-center border" style="border-color: ${color}">
-                            <img src="${party.logo}" alt="${party.name}" class="w-5 h-5 object-contain">
-                        </div>
-                        <span class="font-medium">${partyKey}</span>
-                    </div>
-                    <span class="bg-gray-100 text-gray-800 text-xs font-bold px-2 py-1 rounded-full">${seats}</span>
-                `;
-                
-                container.appendChild(card);
-            }
-        });
-    }
-    
-    // Calculate total seats for a coalition
-    function calculateCoalitionSeats(parties, view) {
-        return parties.reduce((total, partyKey) => {
-            const seats = view === 'current' ? 
-                coalitionParties[partyKey]?.current_seats || 0 : 
-                coalitionParties[partyKey]?.polling.seats || 0;
-            return total + seats;
-        }, 0);
-    }
-    
-    // Update coalition status (seats, majority, political spectrum)
-    function updateCoalitionStatus() {
-        // Calculate total seats
-        let totalSeats = 0;
-        let totalPosition = 0;
-        
-        currentCoalition.forEach(partyKey => {
-            const seats = currentView === 'current' ? 
-                coalitionParties[partyKey].current_seats : 
-                coalitionParties[partyKey].polling.seats;
-            
-            totalSeats += seats;
-            
-            // Calculate weighted political position
-            totalPosition += partyPositions[partyKey] * seats;
-        });
-        
-        // Update seats display
-        document.getElementById('coalition-seats').textContent = totalSeats;
-        
-        // Update progress bar
-        const progressBar = document.getElementById('coalition-progress');
-        const progressPercent = Math.min(100, (totalSeats / 150) * 100);
-        progressBar.style.width = `${progressPercent}%`;
-        
-        // Update status message
-        const statusEl = document.getElementById('coalition-status');
-        if (totalSeats >= 76) {
-            statusEl.textContent = 'Meerderheid behaald!';
-            statusEl.className = 'mt-4 text-center py-2 rounded-lg bg-green-100 text-green-800 font-medium';
-        } else if (totalSeats > 0) {
-            const needed = 76 - totalSeats;
-            statusEl.textContent = `Nog ${needed} zetels nodig voor meerderheid`;
-            statusEl.className = 'mt-4 text-center py-2 rounded-lg bg-yellow-100 text-yellow-800 font-medium';
-        } else {
-            statusEl.textContent = 'Nog geen meerderheid';
-            statusEl.className = 'mt-4 text-center py-2 rounded-lg bg-gray-200 text-gray-700';
-        }
-        
-        // Update political spectrum indicator
-        const spectrumIndicator = document.getElementById('coalition-spectrum-indicator');
-        if (totalSeats > 0) {
-            // Calculate average position, weighted by seats
-            const avgPosition = totalPosition / totalSeats;
-            spectrumIndicator.style.left = `${avgPosition}%`;
-            spectrumIndicator.style.display = 'block';
-        } else {
-            spectrumIndicator.style.display = 'none';
-        }
-    }
-    
-    let currentCoalition = [];
-    let currentView = 'current'; // 'current' or 'polling'
-    
-    // Initialize the coalition maker
-    function initCoalitionMaker() {
-        console.log('Initializing coalition maker...');
-        
-        // Set up tab switching
-        document.getElementById('coalition-current-tab').addEventListener('click', function() {
-            switchCoalitionView('current');
-        });
-        
-        document.getElementById('coalition-polling-tab').addEventListener('click', function() {
-            switchCoalitionView('polling');
-        });
-        
-        // Clear coalition button
-        document.getElementById('clear-coalition').addEventListener('click', clearCoalition);
-        
-        // Generate party cards
-        generateAvailableParties();
-        
-        // Generate coalition suggestions
-        generateCoalitionSuggestions();
-        
-        // Set up drag and drop
-        setupDragAndDrop();
-        
-        console.log('Coalition maker initialization complete');
-    }
-    
-    // Switch between current seats and polling views
-    function switchCoalitionView(view) {
-        currentView = view;
-        
-        // Update tab styling
-        const currentTab = document.getElementById('coalition-current-tab');
-        const pollingTab = document.getElementById('coalition-polling-tab');
-        
-        if (view === 'current') {
-            currentTab.classList.add('text-primary', 'border-primary');
-            currentTab.classList.remove('text-gray-500', 'border-transparent');
-            
-            pollingTab.classList.remove('text-primary', 'border-primary');
-            pollingTab.classList.add('text-gray-500', 'border-transparent');
-        } else {
-            pollingTab.classList.add('text-primary', 'border-primary');
-            pollingTab.classList.remove('text-gray-500', 'border-transparent');
-            
-            currentTab.classList.remove('text-primary', 'border-primary');
-            currentTab.classList.add('text-gray-500', 'border-transparent');
-        }
-        
-        // Reset coalition and regenerate parties
-        clearCoalition();
-        generateAvailableParties();
-    }
-    
-    // Generate suggested coalition cards
-    function generateCoalitionSuggestions() {
-        const container = document.getElementById('coalition-suggestions');
-        container.innerHTML = '';
-        
-        coalitionSuggestions.forEach(suggestion => {
-            const card = document.createElement('div');
-            card.className = 'bg-white p-4 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-all';
-            
-            // Calculate current and polling seats for this suggestion
-            const currentSeats = calculateCoalitionSeats(suggestion.parties, 'current');
-            const pollingSeats = calculateCoalitionSeats(suggestion.parties, 'polling');
-            
-            // Determine if this coalition has a majority in either view
-            const currentMajority = currentSeats >= 76;
-            const pollingMajority = pollingSeats >= 76;
-            
-            const currentBadgeClass = currentMajority ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
-            const pollingBadgeClass = pollingMajority ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
-            
-            // Create party color dots
-            let partyDots = '';
-            suggestion.parties.forEach(party => {
-                const color = getPartyColor(party);
-                partyDots += `<div class="w-4 h-4 rounded-full" style="background-color: ${color}" title="${party}"></div>`;
+        setupEventListeners() {
+            // Tab switching with smooth animations
+            document.getElementById('coalition-current-tab').addEventListener('click', () => {
+                this.switchView('current');
             });
+            
+            document.getElementById('coalition-polling-tab').addEventListener('click', () => {
+                this.switchView('polling');
+            });
+            
+            // Enhanced action buttons
+            document.getElementById('clear-coalition').addEventListener('click', () => {
+                this.clearCoalition();
+            });
+            
+            document.getElementById('shuffle-coalition').addEventListener('click', () => {
+                this.shuffleRandomCoalition();
+            });
+        },
+        
+        switchView(view) {
+            this.currentView = view;
+            
+            // Update tab styling with smooth transitions
+            const currentTab = document.getElementById('coalition-current-tab');
+            const pollingTab = document.getElementById('coalition-polling-tab');
+            
+            if (view === 'current') {
+                currentTab.classList.add('bg-white/30', 'backdrop-blur-sm');
+                currentTab.classList.remove('text-white/70');
+                pollingTab.classList.remove('bg-white/30', 'backdrop-blur-sm');
+                pollingTab.classList.add('text-white/70');
+            } else {
+                pollingTab.classList.add('bg-white/30', 'backdrop-blur-sm');
+                pollingTab.classList.remove('text-white/70');
+                currentTab.classList.remove('bg-white/30', 'backdrop-blur-sm');
+                currentTab.classList.add('text-white/70');
+            }
+            
+            this.clearCoalition();
+            this.generateAvailableParties();
+        },
+        
+        generateAvailableParties() {
+            const container = document.getElementById('available-parties');
+            container.innerHTML = '';
+            
+            // Sort parties by seats
+            const sortedParties = Object.entries(this.parties).sort((a, b) => {
+                const aSeats = this.currentView === 'current' ? a[1].current_seats : a[1].polling.seats;
+                const bSeats = this.currentView === 'current' ? b[1].current_seats : b[1].polling.seats;
+                return bSeats - aSeats;
+            });
+            
+            let totalParties = 0;
+            
+            sortedParties.forEach(([partyKey, party]) => {
+                const seats = this.currentView === 'current' ? party.current_seats : party.polling.seats;
+                
+                if (seats > 0) {
+                    totalParties++;
+                    const card = this.createPartyCard(partyKey, party, seats);
+                    container.appendChild(card);
+                }
+            });
+            
+            // Update counter with animation
+            this.animateCounter('available-count', totalParties);
+        },
+        
+        createPartyCard(partyKey, party, seats) {
+            const card = document.createElement('div');
+            card.className = 'party-card group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 cursor-move border border-gray-200 hover:border-gray-300';
+            card.setAttribute('draggable', 'true');
+            card.setAttribute('data-party', partyKey);
+            card.setAttribute('data-seats', seats);
+            
+            const color = this.getPartyColor(partyKey);
+            const change = party.polling?.change || 0;
+            const changeIcon = change > 0 ? '↗' : change < 0 ? '↘' : '→';
+            const changeClass = change > 0 ? 'text-green-600' : change < 0 ? 'text-red-600' : 'text-gray-500';
             
             card.innerHTML = `
-                <h4 class="font-semibold text-gray-800 mb-2">${suggestion.name}</h4>
-                <p class="text-gray-600 text-sm mb-3">${suggestion.description}</p>
-                
-                <div class="flex items-center gap-1 mb-3">
-                    ${partyDots}
-                </div>
-                
-                <div class="flex flex-wrap gap-2 text-xs mb-3">
-                    ${suggestion.parties.map(party => `<span class="bg-gray-100 px-2 py-1 rounded-full">${party}</span>`).join('')}
-                </div>
-                
-                <div class="flex justify-between">
-                    <div class="text-xs">
-                        <span class="text-gray-500">Huidig:</span>
-                        <span class="${currentBadgeClass} text-xs px-2 py-0.5 rounded-full font-medium">${currentSeats}/76</span>
+                <div class="p-4">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="flex items-center space-x-3">
+                            <div class="relative">
+                                <div class="w-10 h-10 rounded-xl overflow-hidden bg-white shadow-sm border-2" style="border-color: ${color}">
+                                    <img src="${party.logo}" alt="${party.name}" class="w-full h-full object-contain p-1">
+                                </div>
+                                <div class="absolute -top-1 -right-1 w-4 h-4 rounded-full" style="background-color: ${color}"></div>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-900 text-sm">${partyKey}</h4>
+                                <p class="text-xs text-gray-600 truncate max-w-[100px]">${party.name}</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="bg-gray-100 group-hover:bg-gray-200 text-gray-800 text-sm font-bold px-3 py-1 rounded-lg transition-colors">
+                                ${seats}
+                            </div>
+                            ${this.currentView === 'polling' && change !== 0 ? `
+                                <div class="text-xs mt-1 ${changeClass} font-medium">
+                                    ${changeIcon} ${change > 0 ? '+' : ''}${change}
+                                </div>
+                            ` : ''}
+                        </div>
                     </div>
-                    <div class="text-xs">
-                        <span class="text-gray-500">Peiling:</span>
-                        <span class="${pollingBadgeClass} text-xs px-2 py-0.5 rounded-full font-medium">${pollingSeats}/76</span>
+                    
+                    <div class="text-xs text-gray-500 line-clamp-2 mb-3">
+                        ${party.description}
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <div class="text-xs text-gray-500">
+                            👤 ${party.leader}
+                        </div>
+                        <div class="flex space-x-1">
+                            <div class="w-2 h-2 rounded-full bg-gray-300"></div>
+                            <div class="w-2 h-2 rounded-full bg-gray-300"></div>
+                            <div class="w-2 h-2 rounded-full" style="background-color: ${color}"></div>
+                        </div>
                     </div>
                 </div>
-                
-                <button class="apply-suggestion mt-3 w-full bg-primary text-white text-sm py-1.5 rounded-lg hover:bg-primary-dark transition-colors">Toepassen</button>
             `;
             
-            // Add event listener to apply this suggestion
-            card.querySelector('.apply-suggestion').addEventListener('click', function() {
-                applySuggestion(suggestion.parties);
+            return card;
+        },
+        
+        setupDragAndDrop() {
+            // Enhanced drag and drop with visual feedback
+            document.addEventListener('dragstart', (e) => {
+                if (e.target.classList.contains('party-card')) {
+                    e.dataTransfer.setData('text/plain', e.target.getAttribute('data-party'));
+                    e.target.style.opacity = '0.5';
+                    e.target.style.transform = 'rotate(5deg)';
+                }
             });
             
-            container.appendChild(card);
-        });
-    }
-    
-    // Apply a suggested coalition
-    function applySuggestion(parties) {
-        clearCoalition();
-        
-        // Find each party in the available list and move it to coalition
-        parties.forEach(partyKey => {
-            const partyEl = document.querySelector(`.party-item[data-party="${partyKey}"]`);
-            if (partyEl) {
-                moveToCoalition(partyEl);
-            }
-        });
-    }
-    
-    // Setup drag and drop functionality
-    function setupDragAndDrop() {
-        // Drag events for party items
-        document.addEventListener('dragstart', function(e) {
-            if (e.target.classList.contains('party-item')) {
-                e.dataTransfer.setData('text/plain', e.target.getAttribute('data-party'));
-                e.target.classList.add('opacity-50');
-            }
-        });
-        
-        document.addEventListener('dragend', function(e) {
-            if (e.target.classList.contains('party-item')) {
-                e.target.classList.remove('opacity-50');
-            }
-        });
-        
-        // Drop events for coalition container
-        const coalitionContainer = document.getElementById('selected-coalition');
-        
-        coalitionContainer.addEventListener('dragover', function(e) {
-            e.preventDefault();
-            this.classList.add('bg-gray-100');
-        });
-        
-        coalitionContainer.addEventListener('dragleave', function() {
-            this.classList.remove('bg-gray-100');
-        });
-        
-        coalitionContainer.addEventListener('drop', function(e) {
-            e.preventDefault();
-            this.classList.remove('bg-gray-100');
+            document.addEventListener('dragend', (e) => {
+                if (e.target.classList.contains('party-card')) {
+                    e.target.style.opacity = '1';
+                    e.target.style.transform = 'none';
+                }
+            });
             
-            const partyKey = e.dataTransfer.getData('text/plain');
-            const partyEl = document.querySelector(`.party-item[data-party="${partyKey}"]`);
+            const coalitionContainer = document.getElementById('selected-coalition');
             
-            if (partyEl && !currentCoalition.includes(partyKey)) {
-                moveToCoalition(partyEl);
-            }
-        });
-        
-        // Make existing coalition items removable
-        document.addEventListener('click', function(e) {
-            if (e.target.classList.contains('remove-party')) {
-                const partyEl = e.target.closest('.party-item');
-                const partyKey = partyEl.getAttribute('data-party');
+            if (coalitionContainer) {
+                coalitionContainer.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    coalitionContainer.classList.add('border-emerald-500', 'bg-emerald-50');
+                    coalitionContainer.classList.remove('border-emerald-300');
+                });
                 
-                // Remove from coalition array
-                currentCoalition = currentCoalition.filter(p => p !== partyKey);
+                coalitionContainer.addEventListener('dragleave', () => {
+                    coalitionContainer.classList.remove('border-emerald-500', 'bg-emerald-50');
+                    coalitionContainer.classList.add('border-emerald-300');
+                });
                 
-                // Move back to available
-                const availableContainer = document.getElementById('available-parties');
-                
-                // Remove close button
-                partyEl.querySelector('.remove-party').remove();
-                
-                // Add back to available parties
-                availableContainer.appendChild(partyEl);
-                
-                // Update status
-                updateCoalitionStatus();
-            }
-        });
-    }
-    
-    // Move a party element to the coalition
-    function moveToCoalition(partyEl) {
-        const partyKey = partyEl.getAttribute('data-party');
-        const coalitionContainer = document.getElementById('selected-coalition');
-        
-        // Clear placeholder if it exists
-        if (currentCoalition.length === 0) {
-            coalitionContainer.innerHTML = '';
-            // Reset styling when we add the first element
-            coalitionContainer.classList.remove('flex', 'flex-col', 'items-center', 'justify-center');
-        }
-        
-        // Add to coalition array
-        if (!currentCoalition.includes(partyKey)) {
-            currentCoalition.push(partyKey);
-        }
-        
-        // Add close button to the party card
-        const closeBtn = document.createElement('button');
-        closeBtn.className = 'remove-party ml-2 text-gray-400 hover:text-gray-600';
-        closeBtn.innerHTML = `
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-        `;
-        
-        // Check if the close button already exists before adding
-        if (!partyEl.querySelector('.remove-party')) {
-            partyEl.querySelector('div').appendChild(closeBtn);
-        }
-        
-        // Move to coalition
-        coalitionContainer.appendChild(partyEl);
-        
-        // Update status
-        updateCoalitionStatus();
-    }
-    
-    // Clear the current coalition
-    function clearCoalition() {
-        const coalitionContainer = document.getElementById('selected-coalition');
-        const availableContainer = document.getElementById('available-parties');
-        
-        // Move all parties back to available
-        coalitionContainer.querySelectorAll('.party-item').forEach(item => {
-            // Remove close button
-            const closeBtn = item.querySelector('.remove-party');
-            if (closeBtn) {
-                closeBtn.remove();
+                coalitionContainer.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    coalitionContainer.classList.remove('border-emerald-500', 'bg-emerald-50');
+                    coalitionContainer.classList.add('border-emerald-300');
+                    
+                    const partyKey = e.dataTransfer.getData('text/plain');
+                    if (partyKey && !this.coalition.includes(partyKey)) {
+                        this.addToCoalition(partyKey);
+                    }
+                });
             }
             
-            // Add back to available
-            availableContainer.appendChild(item);
-        });
+            // Remove party from coalition when clicked
+            document.addEventListener('click', (e) => {
+                if (e.target.closest('.remove-party')) {
+                    const card = e.target.closest('.party-card');
+                    const partyKey = card.getAttribute('data-party');
+                    this.removeFromCoalition(partyKey);
+                }
+            });
+        },
         
-        // Reset coalition array
-        currentCoalition = [];
+        updateAnalysis() {
+            const totalSeats = this.calculateCoalitionSeats(this.coalition, this.currentView);
+            const percentage = Math.round((totalSeats / 150) * 100);
+            const hasMajority = totalSeats >= 76;
+            
+            // Update seats counter with animation
+            this.animateCounter('coalition-seats', totalSeats);
+            
+            // Update progress bar
+            const progressBar = document.getElementById('coalition-progress');
+            if (progressBar) {
+                progressBar.style.width = `${Math.min(100, (totalSeats / 150) * 100)}%`;
+            }
+            
+            // Update status
+            const statusEl = document.getElementById('coalition-status');
+            if (statusEl) {
+                if (totalSeats === 0) {
+                    statusEl.textContent = 'Geen coalitie gevormd';
+                    statusEl.className = 'text-center py-4 rounded-xl bg-gray-100 text-gray-600 font-semibold';
+                } else if (hasMajority) {
+                    statusEl.textContent = '🎉 Meerderheid behaald!';
+                    statusEl.className = 'text-center py-4 rounded-xl bg-green-100 text-green-800 font-semibold';
+                } else {
+                    const needed = 76 - totalSeats;
+                    statusEl.textContent = `⚠️ ${needed} zetels tekort`;
+                    statusEl.className = 'text-center py-4 rounded-xl bg-yellow-100 text-yellow-800 font-semibold';
+                }
+            }
+            
+            // Update coalition stats
+            const statsEl = document.getElementById('coalition-stats');
+            if (statsEl) {
+                if (totalSeats > 0) {
+                    statsEl.classList.remove('hidden');
+                    const partiesCountEl = document.getElementById('coalition-parties-count');
+                    const percentageEl = document.getElementById('coalition-percentage');
+                    if (partiesCountEl) partiesCountEl.textContent = this.coalition.length;
+                    if (percentageEl) percentageEl.textContent = `${percentage}%`;
+                } else {
+                    statsEl.classList.add('hidden');
+                }
+            }
+            
+            // Update political spectrum
+            this.updatePoliticalSpectrum();
+            
+            // Update coalition display
+            this.updateCoalitionDisplay();
+        },
         
-        // Add placeholder back
-        coalitionContainer.innerHTML = `
-            <p class="text-gray-500 text-center italic">Sleep partijen hierheen om een coalitie te vormen</p>
-        `;
+        calculateCoalitionSeats(coalition, view) {
+            return coalition.reduce((total, partyKey) => {
+                const party = this.parties[partyKey];
+                return total + (view === 'current' ? party.current_seats : party.polling.seats);
+            }, 0);
+        },
         
-        // Restore flex styling
-        coalitionContainer.classList.add('flex', 'flex-col', 'items-center', 'justify-center');
+        clearCoalition() {
+            this.coalition = [];
+            this.updateAnalysis();
+        },
         
-        // Update status
-        updateCoalitionStatus();
-    }
-    
-    // Initialize coalition maker
-    initCoalitionMaker();
-    console.log('Coalition maker init called');
-});
-
-// Direct tonen van partijen als een fallback
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('Directe debug script geladen');
-    
-    // Definieer de partijkleur functie direct als deze nog niet bestaat
-    if (typeof getPartyColor !== 'function') {
-        window.getPartyColor = function(partyKey) {
-            const partyColors = {
-                'PVV': '#0078D7',
-                'VVD': '#FF9900',
-                'NSC': '#4D7F78',
-                'BBB': '#006633',
-                'GL-PvdA': '#008800',
-                'D66': '#00B13C',
-                'SP': '#EE0000',
-                'PvdD': '#007E3A',
-                'CDA': '#1E8449',
-                'JA21': '#0066CC',
-                'SGP': '#FF6600',
-                'FvD': '#811E1E',
-                'DENK': '#00b7b2',
-                'Volt': '#502379',
-                'CU': '#00AEEF'
+        addToCoalition(partyKey) {
+            if (this.coalition.includes(partyKey)) return;
+            
+            this.coalition.push(partyKey);
+            this.updateCoalitionDisplay();
+            this.updateAnalysis();
+            this.removeFromAvailable(partyKey);
+        },
+        
+        removeFromCoalition(partyKey) {
+            this.coalition = this.coalition.filter(p => p !== partyKey);
+            this.updateCoalitionDisplay();
+            this.updateAnalysis();
+            this.generateAvailableParties(); // Refresh available parties
+        },
+        
+        updateCoalitionDisplay() {
+            const container = document.getElementById('selected-coalition');
+            if (!container) return;
+            
+            if (this.coalition.length === 0) {
+                container.innerHTML = `
+                    <div class="flex flex-col items-center justify-center h-full p-8 text-center">
+                        <div class="bg-emerald-100 p-4 rounded-full mb-4">
+                            <svg class="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                            </svg>
+                        </div>
+                        <p class="text-gray-500 font-medium mb-2">Bouw je coalitie</p>
+                        <p class="text-gray-400 text-sm">Sleep partijen hierheen om te beginnen</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = `<div class="space-y-3 p-4"></div>`;
+            const coalitionList = container.querySelector('div');
+            
+            this.coalition.forEach(partyKey => {
+                const party = this.parties[partyKey];
+                const seats = this.currentView === 'current' ? party.current_seats : party.polling.seats;
+                const card = this.createCoalitionPartyCard(partyKey, party, seats);
+                coalitionList.appendChild(card);
+            });
+        },
+        
+        createCoalitionPartyCard(partyKey, party, seats) {
+            const card = document.createElement('div');
+            const color = this.getPartyColor(partyKey);
+            
+            card.className = 'party-card bg-white rounded-lg shadow-sm border-l-4 hover:shadow-md transition-all duration-200';
+            card.style.borderLeftColor = color;
+            card.setAttribute('data-party', partyKey);
+            
+            card.innerHTML = `
+                <div class="p-3 flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 rounded-lg overflow-hidden bg-white border" style="border-color: ${color}">
+                            <img src="${party.logo}" alt="${party.name}" class="w-full h-full object-contain p-1">
+                        </div>
+                        <div>
+                            <h5 class="font-bold text-gray-900 text-sm">${partyKey}</h5>
+                            <p class="text-xs text-gray-600">${seats} zetels</p>
+                        </div>
+                    </div>
+                    <button class="remove-party text-gray-400 hover:text-red-500 transition-colors p-1 rounded-full hover:bg-red-50">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+            `;
+            
+            return card;
+        },
+        
+        updatePoliticalSpectrum() {
+            const indicator = document.getElementById('coalition-spectrum-indicator');
+            
+            if (!indicator || this.coalition.length === 0) {
+                if (indicator) indicator.style.display = 'none';
+                return;
+            }
+            
+            let totalPosition = 0;
+            let totalSeats = 0;
+            
+            this.coalition.forEach(partyKey => {
+                const seats = this.currentView === 'current' ? 
+                    this.parties[partyKey].current_seats : 
+                    this.parties[partyKey].polling.seats;
+                totalPosition += this.partyPositions[partyKey] * seats;
+                totalSeats += seats;
+            });
+            
+            const avgPosition = totalPosition / totalSeats;
+            indicator.style.left = `${avgPosition}%`;
+            indicator.style.display = 'block';
+        },
+        
+        removeFromAvailable(partyKey) {
+            const partyCard = document.querySelector(`#available-parties .party-card[data-party="${partyKey}"]`);
+            if (partyCard) {
+                partyCard.remove();
+            }
+        },
+        
+        shuffleRandomCoalition() {
+            this.clearCoalition();
+            
+            // Get available parties with seats
+            const availableParties = Object.keys(this.parties).filter(key => {
+                const seats = this.currentView === 'current' ? 
+                    this.parties[key].current_seats : 
+                    this.parties[key].polling.seats;
+                return seats > 0;
+            });
+            
+            // Shuffle and take 3-5 parties
+            const shuffled = availableParties.sort(() => Math.random() - 0.5);
+            const selectedParties = shuffled.slice(0, Math.floor(Math.random() * 3) + 3);
+            
+            selectedParties.forEach(party => this.addToCoalition(party));
+        },
+        
+        applySuggestion(parties) {
+            this.clearCoalition();
+            parties.forEach(party => this.addToCoalition(party));
+        },
+        
+        animateCounter(elementId, targetValue) {
+            const element = document.getElementById(elementId);
+            const startValue = parseInt(element.textContent) || 0;
+            const duration = 500;
+            const startTime = performance.now();
+            
+            const animate = (currentTime) => {
+                const progress = Math.min((currentTime - startTime) / duration, 1);
+                const currentValue = Math.floor(startValue + (targetValue - startValue) * progress);
+                element.textContent = currentValue;
+                
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                }
             };
             
-            return partyColors[partyKey] || '#A0A0A0';
+            requestAnimationFrame(animate);
+        },
+        
+        getPartyColor(partyKey) {
+            const colors = {
+                'PVV': '#0078D7', 'VVD': '#FF9900', 'NSC': '#4D7F78', 'BBB': '#006633',
+                'GL-PvdA': '#008800', 'D66': '#00B13C', 'SP': '#EE0000', 'PvdD': '#007E3A',
+                'CDA': '#1E8449', 'JA21': '#0066CC', 'SGP': '#FF6600', 'FvD': '#811E1E',
+                'DENK': '#00b7b2', 'Volt': '#502379', 'CU': '#00AEEF'
+            };
+            return colors[partyKey] || '#A0A0A0';
+        }
+    };
+    
+    // Initialize the Coalition Maker
+    CoalitionMaker.init();
+    
+    // Additional party functionality (existing code)
+    const partyData = <?php echo json_encode($parties); ?>;
+    
+    // Handle image errors
+    document.querySelectorAll('img').forEach(img => {
+        img.onerror = function() {
+            this.src = 'https://i.ibb.co/kXL6rQ8/placeholder-profile.jpg';
+            this.onerror = null;
         };
-        console.log('getPartyColor functie gedefinieerd in fallback');
-    }
+    });
     
-    setTimeout(function() {
-        const availableContainer = document.getElementById('available-parties');
-        
-        // Als er nog steeds geen partijen zijn, probeer ze direct toe te voegen
-        if (availableContainer && availableContainer.children.length <= 1) {
-            console.log('Geen partijen gevonden, probeer directe toevoeging');
+    // Party buttons for modals
+    document.querySelectorAll('.party-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const partyKey = this.getAttribute('data-party');
+            const party = partyData[partyKey];
             
-            const parties = <?php echo json_encode($parties); ?>;
+            // Fill modal with party data
+            document.getElementById('party-modal-title').textContent = party.name;
+            document.getElementById('party-modal-logo').src = party.logo;
+            document.getElementById('party-modal-logo').alt = `${party.name} logo`;
+            document.getElementById('party-modal-abbr').textContent = partyKey;
+            document.getElementById('party-modal-name').textContent = party.name;
+            document.getElementById('party-modal-leader').textContent = party.leader;
+            document.getElementById('party-modal-leader-photo').src = party.leader_photo;
+            document.getElementById('party-modal-leader-photo').alt = party.leader;
+            document.getElementById('party-modal-description').textContent = party.description;
+            document.getElementById('party-modal-seats').textContent = party.current_seats;
+            document.getElementById('party-modal-polling').textContent = party.polling.seats;
             
-            // Toon alle partijen
-            Object.entries(parties)
-                .sort((a, b) => b[1].current_seats - a[1].current_seats) // Sorteer op zetels
-                .forEach(([partyKey, party]) => {
-                 const card = document.createElement('div');
-                 card.className = 'party-item bg-white p-3 rounded-lg border border-gray-200 shadow-sm flex items-center justify-between cursor-move transition-all hover:shadow-md mb-2';
-                 card.setAttribute('draggable', 'true');
-                 card.setAttribute('data-party', partyKey);
-                 card.setAttribute('data-seats', party.current_seats);
-                 
-                 // Gebruik dezelfde kleurcode als in de hoofdfunctie
-                 let color = '#1a365d'; // Standaard kleur
-                 try {
-                     // Probeer de kleur te bepalen op basis van de functie getPartyColor als deze bestaat
-                     if (typeof getPartyColor === 'function') {
-                         color = getPartyColor(partyKey);
-                     }
-                 } catch(e) {
-                     console.error('Kon partijkleur niet bepalen:', e);
-                 }
-                 
-                 card.innerHTML = `
-                     <div class="flex items-center">
-                         <div class="w-6 h-6 rounded-full overflow-hidden mr-2 bg-white flex items-center justify-center border" style="border-color: ${color}">
-                             <img src="${party.logo}" alt="${party.name}" class="w-5 h-5 object-contain">
-                         </div>
-                         <span class="font-medium">${partyKey}</span>
-                     </div>
-                     <span class="bg-gray-100 text-gray-800 text-xs font-bold px-2 py-1 rounded-full">${party.current_seats}</span>
-                 `;
-                 
-                 availableContainer.appendChild(card);
-             });
+            // Fill perspectives
+            document.getElementById('party-modal-left-perspective').textContent = party.perspectives.left;
+            document.getElementById('party-modal-right-perspective').textContent = party.perspectives.right;
             
-            // Verwijder de laadmelding als die er is
-            const loadingMsg = availableContainer.querySelector('.text-gray-500');
-            if (loadingMsg) loadingMsg.remove();
+            // Display polling trend
+            const trendElement = document.getElementById('party-modal-polling-trend');
+            const change = party.polling.change;
+            const changeClass = change > 0 ? 'text-green-600' : (change < 0 ? 'text-red-600' : 'text-yellow-600');
+            const changeIcon = change > 0 ? '↑' : (change < 0 ? '↓' : '→');
+            const changeText = change > 0 ? `+${change}` : change;
             
-            // Voeg drag & drop functionaliteit toe
-            setupDragAndDropFallback();
-        }
-    }, 1000); // Controleer na 1 seconde
+            trendElement.className = `text-sm font-medium ${changeClass}`;
+            trendElement.textContent = change !== 0 ? `Trend: ${changeIcon} ${changeText}` : 'Stabiel in peilingen';
+            
+            // Fill standpoints
+            const standpointsContainer = document.getElementById('party-modal-standpoints');
+            standpointsContainer.innerHTML = '';
+            
+            for (const [topic, standpoint] of Object.entries(party.standpoints)) {
+                const standpointEl = document.createElement('div');
+                standpointEl.className = 'bg-gray-50 p-4 rounded-xl border border-gray-200';
+                standpointEl.innerHTML = `
+                    <h4 class="font-semibold text-gray-800 mb-2">${topic}</h4>
+                    <p class="text-gray-600 text-sm">${standpoint}</p>
+                `;
+                standpointsContainer.appendChild(standpointEl);
+            }
+            
+            // Show modal
+            document.getElementById('party-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        });
+    });
     
-    // Eenvoudige fallback drag & drop implementatie
-    function setupDragAndDropFallback() {
-        console.log('Setting up fallback drag & drop');
-        
-        // Drag events voor party items
-        document.addEventListener('dragstart', function(e) {
-            if (e.target.classList.contains('party-item')) {
-                e.dataTransfer.setData('text/plain', e.target.getAttribute('data-party'));
-                e.target.classList.add('opacity-50');
-            }
-        });
-        
-        document.addEventListener('dragend', function(e) {
-            if (e.target.classList.contains('party-item')) {
-                e.target.classList.remove('opacity-50');
-            }
-        });
-        
-        // Drop events voor coalitie container
-        const coalitionContainer = document.getElementById('selected-coalition');
-        if (coalitionContainer) {
-            coalitionContainer.addEventListener('dragover', function(e) {
-                e.preventDefault();
-                this.classList.add('bg-gray-100');
-            });
+    // Leader buttons for modals
+    document.querySelectorAll('.leader-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const partyKey = this.getAttribute('data-leader');
+            const party = partyData[partyKey];
             
-            coalitionContainer.addEventListener('dragleave', function() {
-                this.classList.remove('bg-gray-100');
-            });
+            // Fill modal with leader data
+            document.getElementById('leader-modal-title').textContent = party.leader;
+            document.getElementById('leader-modal-photo').src = party.leader_photo;
+            document.getElementById('leader-modal-photo').alt = `${party.leader} foto`;
+            document.getElementById('leader-modal-party-logo').src = party.logo;
+            document.getElementById('leader-modal-party-logo').alt = `${party.name} logo`;
+            document.getElementById('leader-modal-party-name').textContent = party.name;
+            document.getElementById('leader-modal-party-abbr').textContent = partyKey;
+            document.getElementById('leader-modal-info').textContent = party.leader_info;
             
-            coalitionContainer.addEventListener('drop', function(e) {
-                e.preventDefault();
-                this.classList.remove('bg-gray-100');
-                
-                const partyKey = e.dataTransfer.getData('text/plain');
-                const partyEl = document.querySelector(`.party-item[data-party="${partyKey}"]`);
-                
-                if (partyEl) {
-                    // Verwijder eerst placeholder als deze bestaat
-                    if (this.querySelector('p.italic')) {
-                        this.innerHTML = '';
-                        this.classList.remove('flex', 'flex-col', 'items-center', 'justify-center');
-                    }
-                    
-                    // Voeg sluitknop toe als deze niet bestaat
-                    if (!partyEl.querySelector('.remove-party')) {
-                        const closeBtn = document.createElement('button');
-                        closeBtn.className = 'remove-party ml-2 text-gray-400 hover:text-gray-600';
-                        closeBtn.innerHTML = `
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                        `;
-                        partyEl.querySelector('div').appendChild(closeBtn);
-                    }
-                    
-                    // Verplaats naar coalitie
-                    this.appendChild(partyEl);
-                    
-                    // Update coalitie status
-                    updateCoalitionStatusFallback();
-                }
-            });
-        }
-        
-        // Click handler voor verwijderknop
-        document.addEventListener('click', function(e) {
-            const removeBtn = e.target.closest('.remove-party');
-            if (removeBtn) {
-                const partyEl = removeBtn.closest('.party-item');
-                const availableContainer = document.getElementById('available-parties');
-                
-                // Verwijder sluitknop
-                removeBtn.remove();
-                
-                // Verplaats terug naar beschikbare partijen
-                if (availableContainer) {
-                    availableContainer.appendChild(partyEl);
-                }
-                
-                // Update status
-                updateCoalitionStatusFallback();
-                
-                // Voeg placeholder toe als er geen partijen meer zijn
-                const coalitionContainer = document.getElementById('selected-coalition');
-                if (coalitionContainer && coalitionContainer.querySelectorAll('.party-item').length === 0) {
-                    coalitionContainer.innerHTML = `<p class="text-gray-500 text-center italic">Sleep partijen hierheen om een coalitie te vormen</p>`;
-                    coalitionContainer.classList.add('flex', 'flex-col', 'items-center', 'justify-center');
-                }
-            }
+            // Show modal
+            document.getElementById('leader-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
         });
-    }
+    });
     
-    // Eenvoudige functie om coalitie status bij te werken
-    function updateCoalitionStatusFallback() {
-        const coalitionContainer = document.getElementById('selected-coalition');
-        const coalitionSeats = document.getElementById('coalition-seats');
-        const progressBar = document.getElementById('coalition-progress');
-        const statusEl = document.getElementById('coalition-status');
-        
-        if (!coalitionContainer || !coalitionSeats || !progressBar || !statusEl) {
-            console.error('Een of meer elementen voor coalitie status niet gevonden');
-            return;
-        }
-        
-        // Tel zetels
-        let totalSeats = 0;
-        coalitionContainer.querySelectorAll('.party-item').forEach(item => {
-            totalSeats += parseInt(item.getAttribute('data-seats') || 0);
+    // Close modal buttons
+    document.querySelectorAll('.close-modal').forEach(button => {
+        button.addEventListener('click', function() {
+            document.getElementById('party-modal').classList.add('hidden');
+            document.getElementById('leader-modal').classList.add('hidden');
+            document.body.style.overflow = '';
         });
+    });
+    
+    // Close modals when clicking outside
+    window.addEventListener('click', function(event) {
+        const partyModal = document.getElementById('party-modal');
+        const leaderModal = document.getElementById('leader-modal');
         
-        // Update zetels weergave
-        coalitionSeats.textContent = totalSeats;
-        
-        // Update voortgangsbalk
-        const progressPercent = Math.min(100, (totalSeats / 150) * 100);
-        progressBar.style.width = `${progressPercent}%`;
-        
-        // Update status bericht
-        if (totalSeats >= 76) {
-            statusEl.textContent = 'Meerderheid behaald!';
-            statusEl.className = 'mt-4 text-center py-2 rounded-lg bg-green-100 text-green-800 font-medium';
-        } else if (totalSeats > 0) {
-            const needed = 76 - totalSeats;
-            statusEl.textContent = `Nog ${needed} zetels nodig voor meerderheid`;
-            statusEl.className = 'mt-4 text-center py-2 rounded-lg bg-yellow-100 text-yellow-800 font-medium';
-        } else {
-            statusEl.textContent = 'Nog geen meerderheid';
-            statusEl.className = 'mt-4 text-center py-2 rounded-lg bg-gray-200 text-gray-700';
+        if (event.target === partyModal) {
+            partyModal.classList.add('hidden');
+            document.body.style.overflow = '';
         }
-    }
+        
+        if (event.target === leaderModal) {
+            leaderModal.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+    });
 });
 </script>
 
 <style>
-/* Add line clamp utility */
+/* Modern Coalition Maker Styling */
+
+/* Enhanced scrollbar styling */
+.scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: #d1d5db #f3f4f6;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+    background: #f3f4f6;
+    border-radius: 3px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 3px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af;
+}
+
+/* Text truncation utility */
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
 .line-clamp-3 {
     display: -webkit-box;
     -webkit-line-clamp: 3;
@@ -1956,284 +1989,76 @@ document.addEventListener('DOMContentLoaded', function() {
     overflow: hidden;
 }
 
-/* Define custom colors */
-:root {
-    --color-primary: #1a365d;
-    --color-primary-dark: #142b4c;
-    --color-secondary: #c41e3a;
-    --color-secondary-dark: #a51930;
-}
-
-.bg-primary {
-    background-color: var(--color-primary);
-}
-.bg-primary-dark {
-    background-color: var(--color-primary-dark);
-}
-.bg-secondary {
-    background-color: var(--color-secondary);
-}
-.bg-secondary-dark {
-    background-color: var(--color-secondary-dark);
-}
-.text-primary {
-    color: var(--color-primary);
-}
-.text-secondary {
-    color: var(--color-secondary);
-}
-.border-primary {
-    border-color: var(--color-primary);
-}
-.border-secondary {
-    border-color: var(--color-secondary);
-}
-.hover\:bg-primary:hover {
-    background-color: var(--color-primary);
-}
-.hover\:bg-primary-dark:hover {
-    background-color: var(--color-primary-dark);
-}
-.hover\:bg-secondary:hover {
-    background-color: var(--color-secondary);
-}
-.hover\:bg-secondary-dark:hover {
-    background-color: var(--color-secondary-dark);
-}
-
-/* Tweede Kamer chamber visualization styles */
-.chamber {
-    height: 300px;
-    background-color: #F9FAFB;
-    border-radius: 150px 150px 0 0;
-    position: relative;
-    border: 1px solid #E5E7EB;
-    overflow: hidden;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.chamber-grid {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding-top: 10px;
-    padding-bottom: 10px;
-}
-
-.chamber-row {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 4px;
-}
-
-.chamber-seat {
-    width: 20px;
-    height: 20px;
-    margin: 0 4px;
-    border-radius: 4px;
-    position: relative;
-    border: 1px solid rgba(0,0,0,0.1);
-    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-    transition: all 0.2s ease;
-    cursor: pointer;
-}
-
-.chamber-seat:hover {
-    transform: scale(1.5);
-    z-index: 50;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
-
-.chamber-seat.highlight {
-    transform: scale(1.2);
-    z-index: 20;
-    box-shadow: 0 0 0 2px white, 0 0 0 4px currentColor;
-}
-
-.chamber-seat.dim {
-    opacity: 0.3;
-}
-
-.seat-tooltip {
-    position: absolute;
-    bottom: 130%;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #333;
-    color: white;
-    padding: 6px 10px;
-    border-radius: 4px;
-    font-size: 12px;
-    white-space: nowrap;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.2s;
-    z-index: 100;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-
-.chamber-seat.active .seat-tooltip {
-    opacity: 1;
-}
-
-.seat-tooltip::after {
-    content: '';
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    border-width: 5px;
-    border-style: solid;
-    border-color: #333 transparent transparent transparent;
-}
-
-/* Row-specific styling to create half-circle effect */
-.chamber-row-0 { margin-top: 0; }
-.chamber-row-1 { margin-top: 2px; }
-.chamber-row-2 { margin-top: 2px; }
-.chamber-row-3 { margin-top: 2px; }
-.chamber-row-4 { margin-top: 2px; }
-.chamber-row-5 { margin-top: 3px; }
-.chamber-row-6 { margin-top: 3px; }
-.chamber-row-7 { margin-top: 3px; }
-.chamber-row-8 { margin-top: 3px; }
-.chamber-row-9 { margin-top: 4px; }
-.chamber-row-10 { margin-top: 4px; }
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .chamber {
-        height: 280px;
-        border-radius: 140px 140px 0 0;
-    }
-    
-    .chamber-seat {
-        width: 16px;
-        height: 16px;
-        margin: 0 2px;
-    }
-    
-    .chamber-grid {
-        padding-bottom: 50px;
-    }
-}
-
-@media (max-width: 540px) {
-    .chamber {
-        height: 200px;
-        border-radius: 100px 100px 0 0;
-    }
-    
-    .chamber-seat {
-        width: 10px;
-        height: 10px;
-        margin: 0 2px;
-    }
-    
-    .chamber-grid {
-        padding-bottom: 40px;
-    }
-}
-
-/* Enhanced Party Card styling */
+/* Enhanced Party Card Animation */
 .party-card {
     position: relative;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     transform-origin: center;
     will-change: transform, box-shadow;
     backface-visibility: hidden;
 }
 
-.party-card::after {
+.party-card::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    border-radius: 0.75rem;
-    pointer-events: none;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    border-radius: inherit;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0));
     opacity: 0;
-    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: -1;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.party-card:hover::before {
+    opacity: 1;
 }
 
 .party-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
-.party-card:hover::after {
-    opacity: 1;
+.party-card:active {
+    transform: translateY(-2px) scale(1.01);
 }
 
-.party-card .party-btn,
-.party-card .leader-btn {
-    position: relative;
-    overflow: hidden;
-    z-index: 1;
+/* Drag and Drop Visual Feedback */
+.party-card[draggable="true"]:active {
+    transform: rotate(5deg) scale(0.95);
+    opacity: 0.8;
+    z-index: 1000;
+}
+
+/* Coalition Drop Zone Enhanced Styling */
+#selected-coalition {
+    background-image: 
+        radial-gradient(circle at 25% 25%, rgba(16, 185, 129, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.party-card .party-btn:after,
-.party-card .leader-btn:after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 120%;
-    height: 0;
-    padding-bottom: 120%;
-    border-radius: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    opacity: 0;
-    z-index: -1;
-    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    background-color: rgba(255, 255, 255, 0.1);
+#selected-coalition.bg-emerald-50 {
+    background-color: rgba(16, 185, 129, 0.1);
+    transform: scale(1.02);
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.3), inset 0 0 20px rgba(16, 185, 129, 0.1);
 }
 
-.party-card .party-btn:hover:after,
-.party-card .leader-btn:hover:after {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 1;
+/* Progress Bar Enhanced Animation */
+#coalition-progress {
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+    background-size: 200% 100%;
+    animation: shimmer 3s ease-in-out infinite;
+    position: relative;
+    overflow: hidden;
 }
 
-.party-card .party-btn:active,
-.party-card .leader-btn:active {
-    transform: translateY(1px);
-}
-
-/* Additional styles for Coalition Maker */
-#selected-coalition.bg-gray-100 {
-    background-color: rgba(243, 244, 246, 0.7);
-    border: 2px dashed #d1d5db;
-}
-
-.party-item {
-    cursor: pointer;
-    user-select: none;
-}
-
-/* Spectrum visualization */
-#coalition-spectrum-container {
-    height: 20px;
-}
-
-#coalition-spectrum-indicator {
-    width: 4px;
-    height: 24px;
-    background-color: rgba(0, 0, 0, 0.8);
-    position: absolute;
-    top: -2px;
-    transform: translateX(-50%);
-    border-radius: 2px;
-}
 </style>
 
-
-<?php
-// Include the footer
-include_once BASE_PATH . '/views/templates/footer.php';
-?> 
+<?php include_once BASE_PATH . '/views/templates/footer.php'; ?>
+</div>
+</body>
+</html>

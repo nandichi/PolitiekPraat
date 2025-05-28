@@ -24,41 +24,41 @@ $historicalPolls = $pollAPI->getHistoricalPolls(3);
 // Data voor zetelverdeling peiling 27-4-2025 (Peil.nl)
 $peilingData = [
     [
-        'partij' => 'GroenLinks/PvdA',
+        'partij' => 'VVD',
         'zetels' => [
-            'peiling' => 29, 
-            'vorige' => 27, 
-            'tkvorigepeiling' => 24,
-            'tk2023' => 25
+            'peiling' => 30, 
+            'vorige' => 29,
+            'tkvorigepeiling' => 26,
+            'tk2023' => 24
         ],
-        'color' => '#008800'
+        'color' => '#FF9900'
     ],
     [
         'partij' => 'PVV',
         'zetels' => [
             'peiling' => 28, 
             'vorige' => 28,
-            'tkvorigepeiling' => 32,
+            'tkvorigepeiling' => 29,
             'tk2023' => 37
         ],
         'color' => '#0078D7'
     ],
     [
-        'partij' => 'VVD',
+        'partij' => 'GL/PvdA',
         'zetels' => [
             'peiling' => 26, 
             'vorige' => 26,
-            'tkvorigepeiling' => 21,
-            'tk2023' => 24
+            'tkvorigepeiling' => 25,
+            'tk2023' => 25
         ],
-        'color' => '#FF9900'
+        'color' => '#008800'
     ],
     [
         'partij' => 'CDA',
         'zetels' => [
-            'peiling' => 19, 
-            'vorige' => 18,
-            'tkvorigepeiling' => 17,
+            'peiling' => 18, 
+            'vorige' => 17,
+            'tkvorigepeiling' => 16,
             'tk2023' => 5
         ],
         'color' => '#1E8449'
@@ -67,8 +67,8 @@ $peilingData = [
         'partij' => 'D66',
         'zetels' => [
             'peiling' => 8, 
-            'vorige' => 10,
-            'tkvorigepeiling' => 12,
+            'vorige' => 8,
+            'tkvorigepeiling' => 9,
             'tk2023' => 9
         ],
         'color' => '#00B13C'
@@ -76,52 +76,22 @@ $peilingData = [
     [
         'partij' => 'SP',
         'zetels' => [
-            'peiling' => 8, 
+            'peiling' => 5, 
             'vorige' => 5,
-            'tkvorigepeiling' => 8,
+            'tkvorigepeiling' => 5,
             'tk2023' => 5
         ],
         'color' => '#EE0000'
     ],
     [
-        'partij' => 'FVD',
-        'zetels' => [
-            'peiling' => 5, 
-            'vorige' => 4,
-            'tkvorigepeiling' => 5,
-            'tk2023' => 3
-        ],
-        'color' => '#8B4513'
-    ],
-    [
-        'partij' => 'JA21',
+        'partij' => 'PvdD',
         'zetels' => [
             'peiling' => 4, 
             'vorige' => 4,
-            'tkvorigepeiling' => 3,
-            'tk2023' => 1
-        ],
-        'color' => '#4B0082'
-    ],
-    [
-        'partij' => 'PvdDieren',
-        'zetels' => [
-            'peiling' => 4, 
-            'vorige' => 7,
-            'tkvorigepeiling' => 5,
-            'tk2023' => 3
-        ],
-        'color' => '#006400'
-    ],
-    [
-        'partij' => 'SGP',
-        'zetels' => [
-            'peiling' => 4, 
-            'vorige' => 3,
             'tkvorigepeiling' => 4,
             'tk2023' => 3
         ],
-        'color' => '#ff7f00'
+        'color' => '#006400'
     ],
     [
         'partij' => 'DENK',
@@ -134,41 +104,71 @@ $peilingData = [
         'color' => '#00BFFF'
     ],
     [
-        'partij' => 'Volt',
-        'zetels' => [
-            'peiling' => 4, 
-            'vorige' => 4,
-            'tkvorigepeiling' => 4,
-            'tk2023' => 2
-        ],
-        'color' => '#800080'
-    ],
-    [
-        'partij' => 'ChristenUnie',
+        'partij' => 'CU',
         'zetels' => [
             'peiling' => 3, 
             'vorige' => 3,
-            'tkvorigepeiling' => 4,
+            'tkvorigepeiling' => 3,
             'tk2023' => 3
         ],
         'color' => '#4682B4'
     ],
     [
+        'partij' => 'SGP',
+        'zetels' => [
+            'peiling' => 3, 
+            'vorige' => 3,
+            'tkvorigepeiling' => 3,
+            'tk2023' => 3
+        ],
+        'color' => '#ff7f00'
+    ],
+    [
+        'partij' => 'JA21',
+        'zetels' => [
+            'peiling' => 3, 
+            'vorige' => 3,
+            'tkvorigepeiling' => 3,
+            'tk2023' => 1
+        ],
+        'color' => '#4B0082'
+    ],
+    [
+        'partij' => 'Volt',
+        'zetels' => [
+            'peiling' => 3, 
+            'vorige' => 3,
+            'tkvorigepeiling' => 3,
+            'tk2023' => 2
+        ],
+        'color' => '#800080'
+    ],
+    [
         'partij' => 'BBB',
         'zetels' => [
             'peiling' => 3, 
-            'vorige' => 5,
-            'tkvorigepeiling' => 4,
+            'vorige' => 3,
+            'tkvorigepeiling' => 3,
             'tk2023' => 7
         ],
         'color' => '#7CFC00'
     ],
     [
-        'partij' => 'Nieuw Soc.Contr.',
+        'partij' => 'FVD',
         'zetels' => [
-            'peiling' => 1, 
+            'peiling' => 2, 
             'vorige' => 2,
-            'tkvorigepeiling' => 3,
+            'tkvorigepeiling' => 2,
+            'tk2023' => 3
+        ],
+        'color' => '#8B4513'
+    ],
+    [
+        'partij' => 'NSC',
+        'zetels' => [
+            'peiling' => 2, 
+            'vorige' => 2,
+            'tkvorigepeiling' => 2,
             'tk2023' => 20
         ],
         'color' => '#4D7F78'

@@ -920,18 +920,18 @@
 
 /* High contrast mode support */
 @media (prefers-contrast: high) {
-    .hero-section {
-        background: #000;
-    }
-    
-    .hero-title,
-    .hero-subtitle {
-        color: #fff;
-    }
-    
-    .hero-blog-card {
-        background: rgba(255, 255, 255, 0.95);
+    .glass-effect,
+    .glass-effect-strong {
+        background: rgba(255, 255, 255, 0.9);
         border: 2px solid #000;
+    }
+    
+    .text-slate-600 {
+        color: #000;
+    }
+    
+    .text-slate-500 {
+        color: #333;
     }
 }
 
@@ -995,20 +995,6 @@
     
     .hero-section .grid-cols-3 .text-xs {
         font-size: 0.625rem;
-    }
-}
-
-/* Dark mode ondersteuning */
-@media (prefers-color-scheme: dark) {
-    .hero-section {
-        background: linear-gradient(
-            135deg, 
-            #0a0f1a 0%, 
-            #1a365d 25%, 
-            #1e4178 50%, 
-            #2a5495 75%, 
-            #1a365d 100%
-        );
     }
 }
 
@@ -1654,46 +1640,6 @@
     }
 }
 
-/* High contrast mode support */
-@media (prefers-contrast: high) {
-    .glass-effect,
-    .glass-effect-strong {
-        background: rgba(255, 255, 255, 0.9);
-        border: 2px solid #000;
-    }
-    
-    .text-slate-600 {
-        color: #000;
-    }
-    
-    .text-slate-500 {
-        color: #333;
-    }
-}
-
-/* Dark mode preparations */
-@media (prefers-color-scheme: dark) {
-    .bg-gradient-to-b.from-slate-50 {
-        background: linear-gradient(to bottom, #1e293b, #0f172a, #1e293b);
-    }
-    
-    .bg-white {
-        background-color: #1e293b;
-    }
-    
-    .text-slate-900 {
-        color: #f8fafc;
-    }
-    
-    .text-slate-600 {
-        color: #cbd5e1;
-    }
-    
-    .border-slate-200 {
-        border-color: #475569;
-    }
-}
-
 /* Premium styling voor Peiling sectie */
 .peiling-card {
     position: relative;
@@ -1930,21 +1876,4 @@
 /* Glow effecten */
 .glow-emerald {
     box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
-}
-
-/* Dark mode support */
-@media (prefers-color-scheme: dark) {
-    .peiling-card {
-        background: rgba(15, 23, 42, 0.9);
-        border-color: rgba(255, 255, 255, 0.1);
-    }
-    
-    .peiling-table-row:hover {
-        background: linear-gradient(
-            90deg,
-            rgba(59, 130, 246, 0.1) 0%,
-            rgba(15, 23, 42, 1) 50%,
-            rgba(139, 92, 246, 0.1) 100%
-        ) !important;
-    }
 } 
