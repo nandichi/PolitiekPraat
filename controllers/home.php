@@ -314,106 +314,101 @@ require_once 'views/templates/header.php';
 ?>
 
 <main class="bg-gray-50 overflow-x-hidden">
-    <!-- Hero Section - Volledig vernieuwde moderne versie -->
+    <!-- Hero Section - Volledig responsive versie -->
     <section class="hero-section">
-        <!-- Decoratieve elementen -->
+        <!-- Decoratieve achtergrond elementen -->
         <div class="hero-pattern"></div>
         <div class="hero-accent"></div>
         <div class="hero-shape hero-shape-1"></div>
         <div class="hero-shape hero-shape-2"></div>
         <div class="hero-shape hero-shape-3"></div>
         
-        <div class="container mx-auto px-4 sm:px-6 relative z-10">
-            <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-20"> <!-- Increased gap -->
-                <!-- Linker kolom: Welkomstekst en CTA -->
-                <div class="w-full lg:w-1/2 text-white mb-12 lg:mb-0 text-center lg:text-left animate__animated animate__fadeInLeft"> <!-- Centered on mobile, added animation -->
-                    <div class="relative">
-                        <!-- Hoofdtitel met verbeterde styling -->
-                        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 hero-title relative"> <!-- Added hero-title class, increased margin -->
-                            <span class="highlight relative inline-block">Politiek</span><span class="gradient-text">Praat</span>
-                            <div class="absolute -bottom-3 left-0 w-24 h-1 bg-gradient-to-r from-primary to-secondary rounded-full lg:mx-0 mx-auto right-0 lg:right-auto"></div>
-                    </h1>
-                        <span class="underline-accent mb-6 block mx-auto lg:mx-0"></span> <!-- Added underline -->
-                        
-                        <!-- Ondertitel met dynamische typewriter effect -->
-                        <div id="typewriter-container" class="text-lg sm:text-xl hero-subtitle mb-8 flex justify-center lg:justify-start"> <!-- Added hero-subtitle, typewriter-container -->
-                            <span id="typewriter"></span> <!-- Initial text set in JS -->
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-16 items-center min-h-[calc(60vh-4rem)] sm:min-h-[calc(80vh-6rem)] lg:min-h-[calc(100vh-0rem)]">
+                
+                <!-- Linker kolom: Welkomstekst en CTA - Op mobile onder de blog carousel -->
+                <div class="text-center lg:text-left space-y-4 sm:space-y-6 lg:space-y-8 order-2 lg:order-1" data-aos="fade-right" data-aos-duration="1000">
+                    <!-- Badge/Tag -->
+                    <div class="inline-flex items-center px-3 sm:px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-xs sm:text-sm font-medium text-white/90">
+                        <span class="w-2 h-2 bg-gradient-to-r from-primary to-secondary rounded-full mr-2 animate-pulse"></span>
+                        <span class="hidden sm:inline">Ontdek Nederlandse Politiek</span>
+                        <span class="sm:hidden">Nederlandse Politiek</span>
                     </div>
-                        
-                        <script>
-                            document.addEventListener('DOMContentLoaded', function() {
-                                const typewriterElement = document.getElementById('typewriter');
-                                if (typewriterElement) { // Check if element exists
-                                    const sentences = [
-                                        "Ontdek hoe de Nederlandse politiek werkt en wat dit voor jou betekent.",
-                                        "Volg de laatste ontwikkelingen in Den Haag op een toegankelijke manier.",
-                                        "Blijf op de hoogte van belangrijke debatten en beslissingen in de Tweede Kamer.",
-                                        "Leer meer over het Nederlandse democratische systeem en je rol daarin.",
-                                        "Verdiep je in actuele politieke thema's die Nederland bezighouden.",
-                                        "Ontdek hoe wetsvoorstellen tot stand komen en wat de gevolgen zijn.",
-                                        "Krijg inzicht in de coalitievorming en politieke samenwerking in Nederland.",
-                                        "Begrijp hoe de verkiezingen werken en waarom jouw stem belangrijk.",
-                                        "Verken de geschiedenis en toekomst van de Nederlandse politiek."
-                                    ];
-                                    
-                                    let currentIndex = 0;
-                                    typewriterElement.textContent = sentences[currentIndex]; // Set initial text immediately
-                                    typewriterElement.style.opacity = 1; // Ensure it's visible
-
-                                    function changeSentence() {
-                                        currentIndex = (currentIndex + 1) % sentences.length;
-                                        
-                                        typewriterElement.style.opacity = 0; // Start fade out
-                                        
-                                        setTimeout(function() {
-                                            typewriterElement.textContent = sentences[currentIndex]; // Change text when invisible
-                                            typewriterElement.style.opacity = 1; // Start fade in
-                                        }, 600); // Wait for fade out (must match CSS transition duration)
-                                    }
-                                    
-                                    // Start the sentence changing loop after an initial delay
-                                    setTimeout(() => setInterval(changeSentence, 4000), 3000); // Change every 4 seconds after initial 3s delay
-                                }
-                            });
-                        </script>
-                        
-                        <!-- Call-to-action knop met verbeterde styling -->
-                        <a href="<?php echo URLROOT; ?>/blogs" class="inline-flex items-center justify-center px-8 py-4 font-semibold text-white bg-gradient-to-r from-primary to-secondary rounded-xl shadow-lg transition-all duration-500 hover:scale-105 hover:shadow-xl relative overflow-hidden group">
-                            <div class="absolute inset-0 w-0 bg-gradient-to-r from-secondary to-primary transition-all duration-500 ease-out group-hover:w-full"></div>
-                            <span class="relative mr-3">Ontdek onze blogs</span>
-                            <svg class="w-5 h-5 relative transform transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    
+                    <!-- Hoofdtitel - Volledig responsive -->
+                    <h1 class="hero-title text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extrabold leading-tight">
+                        <span class="highlight">Politiek</span><span class="gradient-text">Praat</span>
+                    </h1>
+                    
+                    <!-- Dynamische subtitle met typewriter effect -->
+                    <div id="typewriter-container" class="hero-subtitle text-sm sm:text-base lg:text-lg xl:text-xl max-w-full lg:max-w-2xl mx-auto lg:mx-0">
+                        <span id="typewriter">Ontdek hoe de Nederlandse politiek werkt en wat dit voor jou betekent.</span>
+                    </div>
+                    
+                    <!-- CTA Buttons - Volledig responsive -->
+                    <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
+                        <a href="<?php echo URLROOT; ?>/blogs" class="hero-cta-button group w-full sm:w-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4 text-sm sm:text-base font-semibold">
+                            <span>Ontdek Blogs</span>
+                            <svg class="w-4 h-4 sm:w-5 sm:h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
                             </svg>
                         </a>
-                </div>
+                        
+                        <a href="<?php echo URLROOT; ?>/stemwijzer" class="inline-flex items-center justify-center px-4 sm:px-6 lg:px-8 py-3 sm:py-4 font-semibold text-white border-2 border-white/20 rounded-xl hover:bg-white/10 hover:border-white/30 transition-all duration-300 backdrop-blur-sm w-full sm:w-auto text-sm sm:text-base">
+                            <svg class="w-4 h-4 sm:w-5 sm:h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <span class="hidden sm:inline">Stemwijzer</span>
+                            <span class="sm:hidden">Stemwijzer</span>
+                        </a>
+                    </div>
+                    
+                    <!-- Stats/Features - Responsief aangepast -->
+                    <div class="grid grid-cols-3 gap-3 sm:gap-4 lg:gap-6 pt-4 sm:pt-6 lg:pt-8" data-aos="fade-up" data-aos-delay="300">
+                        <div class="text-center">
+                            <div class="text-lg sm:text-xl lg:text-2xl font-bold text-white mb-1">150+</div>
+                            <div class="text-xs sm:text-sm text-white/70">Artikelen</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-lg sm:text-xl lg:text-2xl font-bold text-white mb-1">20+</div>
+                            <div class="text-xs sm:text-sm text-white/70">Thema's</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-lg sm:text-xl lg:text-2xl font-bold text-white mb-1">5k+</div>
+                            <div class="text-xs sm:text-sm text-white/70">Lezers</div>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Rechter kolom: Blog slider - Professioneel design -->
-                <div class="w-full lg:w-[45%] mx-auto hero-blog-card-wrapper">
-                        <div class="hero-blog-card">
+                <!-- Rechter kolom: Premium Blog Showcase - Op mobile bovenaan -->
+                <div class="hero-blog-card-wrapper order-1 lg:order-2 mb-6 sm:mb-8 lg:mb-0" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+                    <div class="hero-blog-card">
                         
-                        <!-- Header met nieuwe styling -->
+                        <!-- Card Header -->
                         <div class="hero-blog-card-header">
                             <div class="flex items-center justify-between">
-                                    <div>
-                                    <h3 class="text-base font-semibold">
-                                        <span class="highlight-text">Uitgelichte Blogs</span>
+                                <div>
+                                    <h3 class="text-sm sm:text-base lg:text-lg font-semibold">
+                                        <span class="highlight-text">Uitgelichte Content</span>
                                     </h3>
-                                    <p class="text-xs mt-1 flex items-center">
-                                        <svg class="w-3 h-3 mr-1 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                                        Actueel
+                                    <p class="text-xs sm:text-sm mt-1 flex items-center">
+                                        <svg class="w-3 h-3 sm:w-4 sm:h-4 mr-1.5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                        <span class="hidden sm:inline">Meest Recent</span>
+                                        <span class="sm:hidden">Recent</span>
                                     </p>
-                                    </div>
+                                </div>
                                 
-                                <!-- Navigatieknoppen met nieuwe styling -->
-                                <div class="flex space-x-2">
-                                    <button class="blog-nav-prev w-8 h-8 rounded-full bg-white bg-opacity-20 text-white hover:bg-opacity-30 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50 transition-all duration-300 flex items-center justify-center">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <!-- Navigation Controls -->
+                                <div class="flex items-center space-x-2 sm:space-x-3">
+                                    <button class="blog-nav-prev blog-nav-button" aria-label="Vorige blog">
+                                        <svg class="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                                         </svg>
                                     </button>
-                                    <button class="blog-nav-next w-8 h-8 rounded-full bg-white bg-opacity-20 text-white hover:bg-opacity-30 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50 transition-all duration-300 flex items-center justify-center">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <button class="blog-nav-next blog-nav-button" aria-label="Volgende blog">
+                                        <svg class="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                         </svg>
                                     </button>
@@ -421,73 +416,91 @@ require_once 'views/templates/header.php';
                             </div>
                         </div>
                         
-                        <!-- Blog swiper container -->
-                        <div class="hero-blog-swiper relative">
+                        <!-- Blog Swiper -->
+                        <div class="hero-blog-swiper">
                             <div class="swiper-wrapper">
                                 <?php foreach($featured_blogs as $blog): ?>
                                 <div class="swiper-slide">
-                                    <a href="<?php echo URLROOT; ?>/blogs/view/<?php echo $blog->slug; ?>" class="group">
-                                        <!-- Inner structure refactored -->
+                                    <a href="<?php echo URLROOT; ?>/blogs/view/<?php echo $blog->slug; ?>" class="group block h-full">
                                         <div class="flex flex-col h-full">
-                                            <!-- Afbeelding -->
+                                            
+                                            <!-- Blog Image -->
                                             <div class="blog-card-image-wrapper">
                                                 <?php if($blog->image_path): ?>
-                                                    <img src="<?php echo URLROOT . '/' . $blog->image_path; ?>"
-                                                         alt="<?php echo htmlspecialchars($blog->title); ?>"
-                                                         class="w-full object-cover"
-                                                         width="400" height="225"
-                                                         decoding="async">
-                                                    <div class="image-overlay"></div>
+                                                    <img 
+                                                        src="<?php echo URLROOT . '/' . $blog->image_path; ?>"
+                                                        alt="<?php echo htmlspecialchars($blog->title); ?>"
+                                                        class="w-full h-full object-cover"
+                                                        loading="lazy"
+                                                    >
                                                 <?php else: ?>
-                                                    <div class="w-full h-full no-image-fallback">
+                                                    <div class="no-image-fallback">
                                                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                                                         </svg>
                                                     </div>
                                                 <?php endif; ?>
                                                 
+                                                <!-- Image Overlay -->
+                                                <div class="image-overlay"></div>
+                                                
+                                                <!-- Category Badge -->
                                                 <div class="blog-card-category">
-                                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                                    <svg class="w-2 h-2 sm:w-3 sm:h-3 mr-1 sm:mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
                                                     </svg>
                                                     Blog
                                                 </div>
                                                 
+                                                <!-- Date Badge -->
                                                 <div class="blog-card-date">
-                                                    <?php echo $blog->relative_date; ?>
+                                                    <span class="hidden sm:inline"><?php echo $blog->relative_date; ?></span>
+                                                    <span class="sm:hidden"><?php echo substr($blog->relative_date, 0, 6); ?>...</span>
                                                 </div>
                                             </div>
-                                                
-                                            <!-- Content section -->
-                                            <div class="blog-card-content min-h-[160px]"> 
-                                <div>
-                                                    <h4 class="blog-card-title line-clamp-2">
+                                            
+                                            <!-- Blog Content -->
+                                            <div class="blog-card-content p-3 sm:p-4 lg:p-6">
+                                                <div class="space-y-2 sm:space-y-3">
+                                                    <h4 class="blog-card-title text-xs sm:text-sm lg:text-base xl:text-lg font-semibold line-clamp-2">
                                                         <?php echo htmlspecialchars($blog->title); ?>
                                                     </h4>
-                                                    <p class="blog-card-summary line-clamp-3">
+                                                    <p class="blog-card-summary text-xs sm:text-sm line-clamp-2 sm:line-clamp-3">
                                                         <?php echo htmlspecialchars($blog->summary); ?>
                                                     </p>
-                                </div>
+                                                </div>
                                                 
-                                                <div class="blog-card-footer">
-                                                    <!-- Lees verder en leestijd zijn verwijderd -->
+                                                <!-- Read More Indicator -->
+                                                <div class="mt-3 sm:mt-4 lg:mt-6 flex items-center text-xs sm:text-sm text-white/60 group-hover:text-white/80 transition-colors duration-300">
+                                                    <span>Lees verder</span>
+                                                    <svg class="w-3 h-3 sm:w-4 sm:h-4 ml-1 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <?php endforeach; ?>
                             </div>
+                            
+                            <!-- Pagination -->
+                            <div class="absolute bottom-3 sm:bottom-4 lg:bottom-6 left-0 right-0 z-20 flex justify-center">
+                                <div class="swiper-pagination blog-pagination"></div>
                             </div>
                         </div>
-                                    </a>
                     </div>
-                                <?php endforeach; ?>
                 </div>
-                            
-                            <!-- Swiper paginering - Verhoogd voor betere centrering -->
-                            <div class="absolute bottom-6 left-0 right-0 z-20 flex justify-center"> 
-                                <div class="swiper-pagination blog-pagination"></div> <!-- Was: hero-swiper-pagination -->
             </div>
         </div>
-                        
-                        <!-- Verwijderd inline Swiper script -->
-                    </div>
-                </div>
+        
+        <!-- Scroll Indicator - Alleen op desktop -->
+        <div class="absolute bottom-4 sm:bottom-6 lg:bottom-8 left-1/2 transform -translate-x-1/2 z-10 hidden lg:block" data-aos="fade-up" data-aos-delay="1000">
+            <div class="flex flex-col items-center text-white/60 animate-bounce">
+                <span class="text-xs mb-2">Scroll</span>
+                <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                </svg>
             </div>
         </div>
     </section>
