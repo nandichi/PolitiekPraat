@@ -396,7 +396,7 @@ include_once BASE_PATH . '/views/templates/header.php';
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
             <?php foreach ($parties as $partyKey => $party): ?>
-                <div class="party-card bg-white rounded-xl overflow-hidden border border-gray-100 shadow-2xl group relative">
+                <div class="party-card bg-white rounded-xl overflow-hidden border border-gray-100 shadow-2xl relative">
                     <!-- Decorative accent strip matching party color -->
                     <div class="absolute top-0 left-0 right-0 h-1.5" style="background-color: <?php echo getPartyColor($partyKey); ?>"></div>
                     
@@ -795,7 +795,7 @@ include_once BASE_PATH . '/views/templates/header.php';
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600 mr-2 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
                     </svg>
-                    <span class="text-sm text-blue-700">Hover over zetels voor meer informatie. Klik op een partij in de legenda om alle zetels van die partij te markeren.</span>
+                    <span class="text-sm text-blue-700">Hover over zetels voor meer informatie.</span>
                 </div>
             </div>
         </div>
@@ -993,22 +993,22 @@ include_once BASE_PATH . '/views/templates/header.php';
                             </div>
                             <div class="p-6">
                                 <div id="coalition-spectrum-container" class="relative">
-                                    <div class="h-6 bg-gradient-to-r from-red-500 via-purple-500 to-blue-500 rounded-full shadow-inner overflow-hidden">
+                                    <div class="h-6 bg-gradient-to-r from-blue-500 via-purple-500 to-red-500 rounded-full shadow-inner overflow-hidden">
                                         <div id="coalition-spectrum-indicator" class="absolute w-1 h-8 bg-white shadow-lg rounded-full -top-1 border-2 border-gray-800" style="left: 50%; transform: translateX(-50%); display: none;"></div>
                                     </div>
                                     
                                     <div class="flex justify-between items-center mt-3 text-xs">
                                         <div class="flex items-center">
-                                            <div class="w-3 h-3 rounded-full bg-red-500 mr-2"></div>
-                                            <span class="font-medium text-gray-700">Rechts</span>
+                                            <div class="w-3 h-3 rounded-full bg-blue-500 mr-2"></div>
+                                            <span class="font-medium text-gray-700">Links</span>
                                         </div>
                                         <div class="flex items-center">
                                             <div class="w-3 h-3 rounded-full bg-purple-500 mr-2"></div>
                                             <span class="font-medium text-gray-700">Midden</span>
                                         </div>
                                         <div class="flex items-center">
-                                            <div class="w-3 h-3 rounded-full bg-blue-500 mr-2"></div>
-                                            <span class="font-medium text-gray-700">Links</span>
+                                            <div class="w-3 h-3 rounded-full bg-red-500 mr-2"></div>
+                                            <span class="font-medium text-gray-700">Rechts</span>
                                         </div>
                                     </div>
                                 </div>
@@ -1213,19 +1213,10 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Create all seats for polling distribution
         createChamberSeats(pollingSeatsContainer, chamberLayout, 'polling');
-        
-        // Add event listeners to legend items for highlighting
-        document.querySelectorAll('.bg-gray-50').forEach(legendItem => {
-            legendItem.addEventListener('mouseenter', function() {
-                const partyName = this.querySelector('span:nth-child(2)').textContent;
-                highlightPartySeats(partyName);
-            });
-            
-            legendItem.addEventListener('mouseleave', function() {
-                resetHighlights();
-            });
-        });
     }
+    
+    // Create visualization after DOM loaded
+    createChamberVisualization();
     
     function createChamberSeats(container, layout, type) {
         let seatCount = 0;
@@ -1316,25 +1307,28 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    function highlightPartySeats(partyKey) {
-        document.querySelectorAll('[data-party]').forEach(seat => {
-            if (seat.dataset.party === partyKey) {
-                // Highlight this party's seats with Tailwind classes
-                seat.classList.add('border-2', 'border-yellow-400', 'shadow-xl', 'z-20');
-                seat.classList.remove('opacity-30');
-            } else if (seat.dataset.party !== 'empty') {
-                // Dim other party seats
-                seat.classList.add('opacity-30');
-                seat.classList.remove('border-2', 'border-yellow-400', 'shadow-xl', 'z-20');
-            }
-        });
-    }
+    // REMOVED: highlightPartySeats and resetHighlights functions
+    // These functions are no longer needed since we removed the hover highlighting functionality
     
-    function resetHighlights() {
-        document.querySelectorAll('[data-party]').forEach(seat => {
-            // Remove all highlight and dim classes
-            seat.classList.remove('border-2', 'border-yellow-400', 'shadow-xl', 'z-20', 'opacity-30');
-        });
+    // Create realistic chamber visualization
+    function createChamberVisualization() {
+        const currentSeatsContainer = document.getElementById('current-seats-chamber');
+        const pollingSeatsContainer = document.getElementById('polling-seats-chamber');
+        
+        // Clear containers
+        currentSeatsContainer.innerHTML = '';
+        pollingSeatsContainer.innerHTML = '';
+        
+        // Define the seat layout (rows and seats per row) - resembling the actual Tweede Kamer
+        const chamberLayout = [
+            6, 8, 10, 12, 14, 16, 16, 17, 17, 17, 17 // 150 seats total
+        ];
+        
+        // Create all seats for current distribution
+        createChamberSeats(currentSeatsContainer, chamberLayout, 'current');
+        
+        // Create all seats for polling distribution
+        createChamberSeats(pollingSeatsContainer, chamberLayout, 'polling');
     }
     
     // Assign colors to parties
@@ -1359,9 +1353,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         return partyColors[partyKey] || '#A0A0A0';
     }
-    
-    // Create visualization after DOM loaded
-    createChamberVisualization();
 });
 
 // Helper function for PHP to use the same color mapping
