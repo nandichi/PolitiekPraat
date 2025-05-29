@@ -2012,6 +2012,11 @@ require_once 'views/templates/header.php';
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
+    <!-- Global JavaScript variables -->
+    <script>
+        window.URLROOT = '<?php echo URLROOT; ?>';
+    </script>
+
     <!-- Laad het externe home.js script -->
     <script src="<?php echo URLROOT; ?>/public/js/home.js" defer></script>
 

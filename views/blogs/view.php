@@ -13,92 +13,149 @@ $data = [
 
 require_once 'views/templates/header.php'; ?>
 
-<main class="bg-gray-50 min-h-screen py-6 sm:py-12">
-    <article class="container mx-auto px-4">
-        <div class="max-w-4xl mx-auto bg-white rounded-lg sm:rounded-2xl shadow-md sm:shadow-lg overflow-hidden">
-            <?php if ($blog->image_path): ?>
-                <div class="relative h-64 sm:h-72 md:h-96 w-full">
-                    <img src="<?php echo URLROOT . '/' . $blog->image_path; ?>" 
-                         alt="<?php echo htmlspecialchars($blog->title); ?>"
-                         class="w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                    <div class="absolute bottom-0 left-0 right-0 p-4 sm:p-6 md:p-8">
-                        <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 leading-tight"><?php echo htmlspecialchars($blog->title); ?></h1>
-                        <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 text-white/90 text-sm sm:text-base">
-                            <div class="flex items-center">
-                                <div class="w-10 h-10 rounded-full flex items-center justify-center overflow-hidden bg-white/10 backdrop-blur-sm mr-3">
-                                    <img src="https://media.licdn.com/dms/image/v2/D4E03AQFQkWCitMT1ug/profile-displayphoto-shrink_400_400/B4EZYuubOTHMAg-/0/1744540644719?e=1750291200&v=beta&t=Qs38y2l_-SWd_N2CcavekytGxrU06ixhojbHdDktfxM" 
-                                         alt="<?php echo htmlspecialchars($blog->author_name); ?>"
-                                         class="w-full h-full object-cover">
-                                </div>
-                                <span class="font-medium"><?php echo htmlspecialchars($blog->author_name); ?></span>
-                            </div>
-                            
-                            <div class="flex items-center gap-4 sm:gap-6">
-                                <span class="flex items-center">
-                                    <svg class="w-4 h-4 sm:w-5 sm:h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+<!-- Reading Progress Bar -->
+<div id="reading-progress" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-primary via-secondary to-accent z-50 transition-all duration-300 ease-out" style="width: 0%"></div>
+
+<main class="bg-gradient-to-br from-gray-50 via-blue-50/30 to-indigo-50/20 min-h-screen">
+    <!-- Hero Section met Pure Tailwind -->
+    <section class="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 min-h-[600px] flex items-center">
+        <!-- Decoratieve achtergrond -->
+        <div class="absolute inset-0 opacity-30">
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.03"%3E%3Ccircle cx="30" cy="30" r="4"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]"></div>
+            <div class="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-transparent to-red-900/20"></div>
+        </div>
+        
+        <div class="relative z-10 w-full">
+            <div class="container mx-auto px-4 py-16 lg:py-24">
+                <div class="max-w-7xl mx-auto">
+                    <!-- Breadcrumb -->
+                    <nav class="mb-8" aria-label="Breadcrumb">
+                        <ol class="flex items-center space-x-2 text-sm text-gray-300">
+                            <li><a href="<?php echo URLROOT; ?>" class="hover:text-white transition-colors duration-200">Home</a></li>
+                            <li><span class="text-gray-500">/</span></li>
+                            <li><a href="<?php echo URLROOT; ?>/blogs" class="hover:text-white transition-colors duration-200">Blogs</a></li>
+                            <li><span class="text-gray-500">/</span></li>
+                            <li class="text-gray-400 truncate max-w-xs"><?php echo htmlspecialchars($blog->title); ?></li>
+                        </ol>
+                    </nav>
+
+                    <!-- Hero Grid -->
+                    <div class="grid lg:grid-cols-5 gap-8 lg:gap-16 items-center">
+                        <!-- Content Column -->
+                        <div class="lg:col-span-3 space-y-6 sm:space-y-8 lg:space-y-10 text-center lg:text-left order-2 lg:order-1">
+                            <!-- Badges -->
+                            <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3">
+                                <span class="inline-flex items-center px-4 py-2 rounded-full bg-blue-600/20 border border-blue-500/30 text-blue-200 font-medium text-sm backdrop-blur-sm">
+                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
                                     </svg>
-                                    <?php echo date('d M Y', strtotime($blog->published_at)); ?>
+                                    Politieke Analyse
                                 </span>
                                 
-                                <span class="flex items-center">
-                                    <svg class="w-4 h-4 sm:w-5 sm:h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                <div class="inline-flex items-center text-gray-300 text-sm bg-white/10 px-4 py-2 rounded-full backdrop-blur-sm border border-white/20">
+                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg>
-                                    <span id="headerLikeCount"><?php echo $blog->likes; ?> likes</span>
-                                </span>
+                                    <span id="reading-minutes">5</span> min lezen
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            <?php else: ?>
-                <div class="p-4 sm:p-6 md:p-8">
-                    <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 leading-tight"><?php echo htmlspecialchars($blog->title); ?></h1>
-                    <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 text-gray-600 text-sm sm:text-base">
-                        <div class="flex items-center">
-                            <div class="w-10 h-10 rounded-full flex items-center justify-center overflow-hidden mr-3 bg-gradient-to-br from-primary/20 to-secondary/20">
-                                <img src="https://media.licdn.com/dms/image/v2/D4E03AQFQkWCitMT1ug/profile-displayphoto-shrink_400_400/B4EZYuubOTHMAg-/0/1744540644719?e=1750291200&v=beta&t=Qs38y2l_-SWd_N2CcavekytGxrU06ixhojbHdDktfxM" 
-                                     alt="<?php echo htmlspecialchars($blog->author_name); ?>"
-                                     class="w-full h-full object-cover">
-                            </div>
-                            <span class="font-bold"><?php echo htmlspecialchars($blog->author_name); ?></span>
-                        </div>
-                        
-                        <div class="flex items-center gap-4 sm:gap-6">
-                            <span class="flex items-center bg-gray-100 text-gray-600 px-3 py-1.5 rounded-full font-medium">
-                                <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                </svg>
-                                <?php echo date('d M Y', strtotime($blog->published_at)); ?>
-                            </span>
                             
-                            <span class="flex items-center text-gray-500">
-                                <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-                                </svg>
-                                <span id="headerLikeCount"><?php echo $blog->likes; ?> likes</span>
-                            </span>
+                            <!-- Title & Summary -->
+                            <div class="space-y-4 sm:space-y-6">
+                                <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white leading-tight tracking-tight">
+                                    <?php echo htmlspecialchars($blog->title); ?>
+                                </h1>
+                                <p class="text-base sm:text-lg lg:text-xl text-gray-300 leading-relaxed max-w-3xl mx-auto lg:mx-0">
+                                    <?php echo htmlspecialchars($blog->summary); ?>
+                                </p>
+                            </div>
+
+                            <!-- Author Info -->
+                            <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 justify-center lg:justify-start">
+                                <div class="flex items-center justify-center lg:justify-start space-x-4">
+                                    <div class="relative">
+                                        <img src="https://media.licdn.com/dms/image/v2/D4E03AQFQkWCitMT1ug/profile-displayphoto-shrink_400_400/B4EZYuubOTHMAg-/0/1744540644719?e=1750291200&v=beta&t=Qs38y2l_-SWd_N2CcavekytGxrU06ixhojbHdDktfxM" 
+                                             alt="<?php echo htmlspecialchars($blog->author_name); ?>"
+                                             class="w-12 sm:w-14 h-12 sm:h-14 rounded-full border-2 border-white/30 shadow-xl">
+                                        <div class="absolute -bottom-1 -right-1 w-4 sm:w-5 h-4 sm:h-5 bg-green-500 rounded-full border-2 border-slate-900"></div>
+                                    </div>
+                                    <div class="text-center sm:text-left">
+                                        <h3 class="text-white font-semibold text-base sm:text-lg"><?php echo htmlspecialchars($blog->author_name); ?></h3>
+                                        <p class="text-gray-300 text-xs sm:text-sm">Politiek Analist & Journalist</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center justify-center space-x-4 sm:space-x-6 text-gray-300 text-xs sm:text-sm">
+                                    <div class="flex items-center space-x-2 bg-white/5 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg">
+                                        <svg class="w-3 sm:w-4 h-3 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                        </svg>
+                                        <span class="hidden sm:inline"><?php echo date('d F Y', strtotime($blog->published_at)); ?></span>
+                                        <span class="sm:hidden"><?php echo date('d M', strtotime($blog->published_at)); ?></span>
+                                    </div>
+                                    
+                                    <button id="heroLikeButton" 
+                                            class="hero-like-btn group flex items-center space-x-2 bg-white/5 hover:bg-white/10 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg transition-all duration-300 hover:scale-105"
+                                            data-slug="<?php echo $blog->slug; ?>"
+                                            aria-label="Like deze blog">
+                                        <svg class="w-3 sm:w-4 h-3 sm:h-4 transition-all duration-300 group-hover:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                        </svg>
+                                        <span id="hero-like-count" class="group-hover:text-red-400 transition-colors"><?php echo $blog->likes; ?> likes</span>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
+
+                        <!-- Image Column -->
+                        <?php if ($blog->image_path): ?>
+                        <div class="lg:col-span-2 order-1 lg:order-2">
+                            <div class="relative group max-w-md mx-auto lg:max-w-none">
+                                <!-- Glow Effect -->
+                                <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-red-600 rounded-2xl blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-500"></div>
+                                
+                                <!-- Main Image Container -->
+                                <div class="relative aspect-[4/3] rounded-2xl overflow-hidden bg-white/5 backdrop-blur-sm border border-white/10 shadow-2xl">
+                                    <img src="<?php echo URLROOT . '/' . $blog->image_path; ?>" 
+                                         alt="<?php echo htmlspecialchars($blog->title); ?>"
+                                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                                    
+                                    <!-- Image Overlay -->
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                </div>
+                                
+                                <!-- Decorative Elements -->
+                                <div class="absolute -top-3 sm:-top-4 -right-3 sm:-right-4 w-6 sm:w-8 h-6 sm:h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full opacity-60 animate-pulse"></div>
+                                <div class="absolute -bottom-3 sm:-bottom-4 -left-3 sm:-left-4 w-4 sm:w-6 h-4 sm:h-6 bg-gradient-to-br from-red-500 to-orange-500 rounded-full opacity-40"></div>
+                            </div>
+                        </div>
+                        <?php endif; ?>
                     </div>
                 </div>
-            <?php endif; ?>
+            </div>
+        </div>
+    </section>
 
-            <!-- Content sectie aanpassen -->
-            <div class="p-4 sm:p-6 md:p-8">
-                <?php if ($blog->video_path || $blog->video_url): ?>
-                    <div class="mb-8">
+    <!-- Article Content -->
+    <article class="relative">
+        <div class="container mx-auto px-4 py-16">
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden">
+                    
+                    <!-- Video sectie (indien aanwezig) -->
+                    <?php if ($blog->video_path || $blog->video_url): ?>
+                    <div class="relative">
                         <?php if ($blog->video_path): ?>
                             <!-- Lokaal geüploade video -->
-                            <div class="relative aspect-video rounded-xl overflow-hidden bg-black">
-                                <video controls class="w-full h-full">
+                            <div class="relative aspect-video bg-black">
+                                <video controls class="w-full h-full rounded-t-3xl" poster="<?php echo $blog->image_path ? URLROOT . '/' . $blog->image_path : ''; ?>">
                                     <source src="<?php echo URLROOT . '/' . $blog->video_path; ?>" type="video/mp4">
                                     Je browser ondersteunt geen video weergave.
                                 </video>
                             </div>
                         <?php elseif ($blog->video_url): ?>
                             <!-- Embedded video (YouTube/Vimeo) -->
-                            <div class="relative aspect-video rounded-xl overflow-hidden bg-black">
+                            <div class="relative aspect-video bg-black rounded-t-3xl overflow-hidden">
                                 <?php
                                 // YouTube URL omzetten naar embed URL
                                 if (preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/', $blog->video_url, $matches)) {
@@ -120,218 +177,335 @@ require_once 'views/templates/header.php'; ?>
                             </div>
                         <?php endif; ?>
                     </div>
-                <?php endif; ?>
+                    <?php endif; ?>
 
-                <div class="prose prose-sm sm:prose lg:prose-lg max-w-none">
-                    <?php echo $blog->content; ?>
-                </div>
-            </div>
+                    <!-- Content -->
+                    <div class="p-8 lg:p-12">
+                        <!-- Main Content -->
+                        <div id="blog-content" class="prose prose-lg max-w-none">
+                            <?php echo $blog->content; ?>
+                        </div>
+                    </div>
 
-            <!-- Sociale Media Delen + Likes -->
-            <div class="p-4 sm:p-6 md:p-8 border-t border-gray-100">
-                <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4">
-                    <div class="flex items-center gap-3 sm:gap-4">
-                        <!-- Like Button -->
-                        <button id="likeButton" 
-                                class="group flex-1 sm:flex-initial inline-flex items-center justify-center px-4 sm:px-6 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 bg-gray-50 hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
-                                data-slug="<?php echo $blog->slug; ?>"
-                                aria-label="Like deze blog">
-                            <div class="relative">
-                                <div class="relative">
-                                    <svg class="w-5 h-5 sm:w-6 sm:h-6 transition-all duration-300" 
-                                         viewBox="0 0 24 24"
-                                         fill="none"
-                                         stroke="currentColor"
-                                         stroke-width="2">
-                                        <path class="transform origin-center transition-all duration-300" 
-                                              stroke-linecap="round" 
-                                              stroke-linejoin="round" 
-                                              d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
-                                        </path>
-                                    </svg>
-                                    <div class="like-particles hidden">
-                                        <i></i><i></i><i></i><i></i><i></i><i></i>
+                    <!-- Social Actions & Share -->
+                    <div class="px-8 lg:px-12 py-8 bg-gradient-to-r from-gray-50 to-blue-50/50 border-t border-gray-100">
+                        <div class="flex flex-col lg:flex-row items-center justify-between gap-6">
+                            <!-- Like & Bookmark Actions -->
+                            <div class="flex items-center gap-4">
+                                <!-- Enhanced Like Button -->
+                                <button id="likeButton" 
+                                        class="group relative flex items-center gap-3 px-6 py-3 bg-white rounded-full shadow-lg border-2 border-transparent hover:border-red-200 transition-all duration-300 transform hover:scale-105"
+                                        data-slug="<?php echo $blog->slug; ?>"
+                                        aria-label="Like deze blog">
+                                    <div class="relative">
+                                        <svg class="w-6 h-6 transition-all duration-300 group-hover:text-red-500" 
+                                             viewBox="0 0 24 24"
+                                             fill="none"
+                                             stroke="currentColor"
+                                             stroke-width="2">
+                                            <path stroke-linecap="round" 
+                                                  stroke-linejoin="round" 
+                                                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
+                                            </path>
+                                        </svg>
+                                        <!-- Heart particles voor animatie -->
+                                        <div class="like-particles absolute inset-0 pointer-events-none">
+                                            <div class="particle"></div>
+                                            <div class="particle"></div>
+                                            <div class="particle"></div>
+                                            <div class="particle"></div>
+                                            <div class="particle"></div>
+                                            <div class="particle"></div>
+                                        </div>
                                     </div>
-                                </div>
+                                    <span id="likeCount" class="font-semibold text-gray-700 group-hover:text-red-500 transition-colors"><?php echo $blog->likes; ?></span>
+                                </button>
+
+                                <!-- Bookmark Button -->
+                                <button id="bookmarkButton" 
+                                        class="group flex items-center gap-3 px-6 py-3 bg-white rounded-full shadow-lg border-2 border-transparent hover:border-amber-200 transition-all duration-300 transform hover:scale-105"
+                                        data-slug="<?php echo $blog->slug; ?>"
+                                        aria-label="Bookmark deze blog">
+                                    <svg class="w-6 h-6 transition-all duration-300 group-hover:text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path>
+                                    </svg>
+                                    <span class="font-semibold text-gray-700 group-hover:text-amber-500 transition-colors">Bewaren</span>
+                                </button>
                             </div>
-                            <span id="likeCount" class="ml-2 font-semibold min-w-[1.5rem]"><?php echo $blog->likes; ?></span>
-                        </button>
 
-                        <!-- Share Button -->
-                        <button onclick="shareBlog()" 
-                                class="flex-1 sm:flex-initial inline-flex items-center justify-center px-4 sm:px-6 py-2.5 rounded-lg text-sm font-medium bg-gray-50 text-gray-600 hover:bg-gray-100 transition-all duration-300">
-                            <svg class="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path>
-                            </svg>
-                            <span>Delen</span>
-                        </button>
-                    </div>
-
-                    <!-- Back Button -->
-                    <a href="<?php echo URLROOT; ?>/blogs" 
-                       class="flex-1 sm:flex-initial inline-flex items-center justify-center px-4 sm:px-6 py-2.5 rounded-lg text-sm font-medium bg-primary/5 text-primary hover:bg-primary/10 transition-all duration-300">
-                        <svg class="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12"></path>
-                        </svg>
-                        <span>Terug naar blogs</span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Auteur informatie toevoegen -->
-            <div class="p-4 sm:p-6 md:p-8 bg-gray-50 border-t border-gray-100">
-                <div class="flex items-start sm:items-center">
-                    <div class="w-16 h-16 rounded-full flex items-center justify-center overflow-hidden mr-4 bg-gradient-to-br from-primary/20 to-secondary/20">
-                        <img src="https://media.licdn.com/dms/image/v2/D4E03AQFQkWCitMT1ug/profile-displayphoto-shrink_400_400/B4EZYuubOTHMAg-/0/1744540644719?e=1750291200&v=beta&t=Qs38y2l_-SWd_N2CcavekytGxrU06ixhojbHdDktfxM" 
-                             alt="<?php echo htmlspecialchars($blog->author_name); ?>"
-                             class="w-full h-full object-cover">
-                    </div>
-                    <div>
-                        <h4 class="text-lg font-bold text-gray-900 mb-1"><?php echo htmlspecialchars($blog->author_name); ?></h4>
-                        <p class="text-gray-600 text-sm mb-2">Politiek Analist</p>
-                        <p class="text-gray-500 text-sm">
-                            Deelt inzichten over politieke ontwikkelingen in Nederland en Europa. Volg voor meer analyses en updates over actuele politieke thema's.
-                        </p>
+                            <!-- Share Options -->
+                            <div class="flex items-center gap-3">
+                                <span class="text-gray-600 font-medium mr-2">Delen:</span>
+                                
+                                <button onclick="shareOnTwitter()" 
+                                        class="p-3 bg-sky-500 text-white rounded-full hover:bg-sky-600 transition-colors transform hover:scale-110 shadow-lg">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                                    </svg>
+                                </button>
+                                
+                                <button onclick="shareOnLinkedIn()" 
+                                        class="p-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors transform hover:scale-110 shadow-lg">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                                    </svg>
+                                </button>
+                                
+                                <button onclick="shareOnFacebook()" 
+                                        class="p-3 bg-blue-800 text-white rounded-full hover:bg-blue-900 transition-colors transform hover:scale-110 shadow-lg">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                                    </svg>
+                                </button>
+                                
+                                <button onclick="copyToClipboard()" 
+                                        class="p-3 bg-gray-600 text-white rounded-full hover:bg-gray-700 transition-colors transform hover:scale-110 shadow-lg">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </article>
 
-        <!-- Gerelateerde Blogs Carousel -->
-        <div class="max-w-4xl mx-auto mt-16 mb-8">
-            <div class="flex items-center justify-between mb-12 px-4">
-                <div class="flex flex-col">
-                    <span class="text-sm font-medium text-primary mb-2">Blijf op de hoogte</span>
-                    <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 relative">
-                        Ontdek meer interessante blogs
-                        <span class="absolute -bottom-3 left-0 w-20 h-1 bg-primary rounded-full"></span>
-                    </h2>
-                </div>
-                <div class="flex items-center gap-3">
-                    <button class="swiper-button-prev-custom p-2.5 rounded-full bg-white shadow-md hover:shadow-lg transition-all duration-300 text-primary hover:text-primary-dark">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-                        </svg>
-                    </button>
-                    <button class="swiper-button-next-custom p-2.5 rounded-full bg-white shadow-md hover:shadow-lg transition-all duration-300 text-primary hover:text-primary-dark">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-            
-            <!-- Swiper Container -->
-            <div class="swiper blogsSwiper">
-                <div class="swiper-wrapper">
-                    <?php 
-                    // Haal andere blogs op (maximaal 10)
-                    $otherBlogs = (new BlogController())->getAll(10);
-                    foreach ($otherBlogs as $relatedBlog): 
-                        if ($relatedBlog->slug !== $blog->slug): // Skip huidige blog
-                    ?>
-                        <div class="swiper-slide px-2 pb-8">
-                            <article class="group relative bg-white rounded-2xl shadow-lg overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl border border-gray-100 h-full">
-                                <!-- Decoratieve hover accent lijn -->
-                                <div class="absolute inset-0 top-auto h-1 bg-gradient-to-r from-primary to-secondary transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 z-10"></div>
-                                
-                                <?php 
-                                // Check of de blog minder dan 12 uur oud is
-                                $published_time = strtotime($relatedBlog->published_at);
-                                $twelve_hours_ago = time() - (12 * 3600); // 12 uur in seconden
-                                
-                                if ($published_time > $twelve_hours_ago): 
-                                ?>
-                                    <!-- Nieuw Badge voor recent geplaatste blogs -->
-                                    <div class="absolute top-4 right-4 z-20">
-                                        <div class="inline-flex items-center px-3 py-1.5 rounded-full bg-gradient-to-r from-primary to-secondary text-white text-sm font-bold shadow-lg">
-                                            <span class="relative flex h-2 w-2 mr-2">
-                                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-                                                <span class="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
-                                            </span>
-                                            NIEUW
+    <!-- Enhanced Author Section -->
+    <section class="py-16 bg-gradient-to-br from-gray-50 to-blue-50/30">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
+                    <div class="relative">
+                        <!-- Background Pattern -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5"></div>
+                        <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="%23000" fill-opacity="0.02"%3E%3Cpath d="m0 40l40-40h-40z"/%3E%3C/g%3E%3C/svg%3E')] opacity-50"></div>
+                        
+                        <div class="relative z-10 p-8 lg:p-12">
+                            <div class="flex flex-col lg:flex-row items-center lg:items-start gap-8">
+                                <!-- Author Avatar & Info -->
+                                <div class="flex-shrink-0 text-center lg:text-left">
+                                    <div class="relative inline-block">
+                                        <img src="https://media.licdn.com/dms/image/v2/D4E03AQFQkWCitMT1ug/profile-displayphoto-shrink_400_400/B4EZYuubOTHMAg-/0/1744540644719?e=1750291200&v=beta&t=Qs38y2l_-SWd_N2CcavekytGxrU06ixhojbHdDktfxM" 
+                                             alt="<?php echo htmlspecialchars($blog->author_name); ?>"
+                                             class="w-24 h-24 lg:w-32 lg:h-32 rounded-full border-4 border-white shadow-2xl">
+                                        <div class="absolute -bottom-2 -right-2 w-8 h-8 bg-green-500 rounded-full border-3 border-white flex items-center justify-center">
+                                            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                            </svg>
                                         </div>
                                     </div>
-                                    <!-- Extra highlight effect voor nieuwe blogs -->
-                                    <div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5 pointer-events-none"></div>
-                                <?php endif; ?>
+                                </div>
 
-                                <a href="<?php echo URLROOT . '/blogs/view/' . $relatedBlog->slug; ?>" class="block relative">
-                                    <?php if ($relatedBlog->image_path): ?>
-                                    <div class="relative h-48 overflow-hidden">
-                                        <img src="<?php echo URLROOT . '/' . $relatedBlog->image_path; ?>" 
-                                             alt="<?php echo htmlspecialchars($relatedBlog->title); ?>"
-                                             class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110">
-                                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                <!-- Author Details -->
+                                <div class="flex-grow text-center lg:text-left">
+                                    <h3 class="text-2xl lg:text-3xl font-bold text-gray-900 mb-2"><?php echo htmlspecialchars($blog->author_name); ?></h3>
+                                    <p class="text-primary font-semibold mb-4">Politiek Analist & Journalist</p>
+                                    
+                                    <p class="text-gray-600 leading-relaxed mb-6 max-w-2xl">
+                                        Gespecialiseerd in Nederlandse politiek en maatschappelijke ontwikkelingen. Met meer dan 10 jaar ervaring in politieke analyse en journalistiek, brengt hij complexe politieke thema's op een begrijpelijke manier naar het publiek.
+                                    </p>
+
+                                    <!-- Author Stats -->
+                                    <div class="flex flex-col sm:flex-row items-center lg:items-start gap-6 mb-6">
+                                        <div class="flex items-center gap-6">
+                                            <div class="text-center">
+                                                <div class="text-2xl font-bold text-primary">127</div>
+                                                <div class="text-sm text-gray-600">Artikelen</div>
+                                            </div>
+                                            <div class="text-center">
+                                                <div class="text-2xl font-bold text-secondary">4.8K</div>
+                                                <div class="text-sm text-gray-600">Volgers</div>
+                                            </div>
+                                            <div class="text-center">
+                                                <div class="text-2xl font-bold text-accent">25.6K</div>
+                                                <div class="text-sm text-gray-600">Weergaven</div>
+                                            </div>
+                                        </div>
                                     </div>
+
+                                    <!-- Social Media Links -->
+                                    <div class="flex items-center justify-center lg:justify-start gap-4">
+                                        <a href="#" class="p-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-all duration-300 transform hover:scale-110 shadow-lg">
+                                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                                            </svg>
+                                        </a>
+                                        <a href="#" class="p-3 bg-sky-500 text-white rounded-full hover:bg-sky-600 transition-all duration-300 transform hover:scale-110 shadow-lg">
+                                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                                            </svg>
+                                        </a>
+                                        <a href="mailto:author@politiekpraat.nl" class="p-3 bg-gray-600 text-white rounded-full hover:bg-gray-700 transition-all duration-300 transform hover:scale-110 shadow-lg">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Signup Section -->
+    <section class="py-16 bg-gradient-to-r from-primary to-secondary">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center">
+                <div class="bg-white/10 backdrop-blur-lg rounded-3xl p-8 lg:p-12 border border-white/20">
+                    <h3 class="text-3xl lg:text-4xl font-bold text-white mb-4">Blijf op de hoogte</h3>
+                    <p class="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+                        Ontvang wekelijks de beste politieke analyses en updates direct in je inbox. Geen spam, alleen waardevolle content.
+                    </p>
+                    
+                    <form id="newsletter-form" class="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
+                        <input type="email" 
+                               placeholder="je@email.com" 
+                               class="flex-grow px-6 py-4 rounded-full border-2 border-white/20 bg-white/10 backdrop-blur-sm text-white placeholder-white/70 focus:outline-none focus:border-white/50 transition-all duration-300"
+                               required>
+                        <button type="submit" 
+                                class="px-8 py-4 bg-white text-primary font-semibold rounded-full hover:bg-gray-50 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                            Aanmelden
+                        </button>
+                    </form>
+                    
+                    <p class="text-sm text-white/70 mt-4">
+                        Door je aan te melden ga je akkoord met onze <a href="#" class="underline hover:text-white">privacyverklaring</a>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enhanced Related Blogs Section -->
+    <section class="py-20 bg-gradient-to-br from-gray-50 via-blue-50/30 to-indigo-50/20">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+                <!-- Section Header -->
+                <div class="text-center mb-16">
+                    <div class="inline-flex items-center px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        Gerelateerde Artikelen
+                    </div>
+                    <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+                        Meer politieke inzichten
+                    </h2>
+                    <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                        Verdiep je kennis met deze geselecteerde artikelen over actuele politieke ontwikkelingen
+                    </p>
+                </div>
+
+                <!-- Related Blogs Grid -->
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <?php 
+                    // Haal andere blogs op (maximaal 7 om er zeker van te zijn dat we 6 hebben na filtering)
+                    $otherBlogs = (new BlogController())->getAll(7);
+                    $count = 0;
+                    foreach ($otherBlogs as $relatedBlog): 
+                        if ($relatedBlog->slug !== $blog->slug && $count < 6): 
+                            $count++;
+                    ?>
+                        <article class="group bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
+                            <div class="relative">
+                                <a href="<?php echo URLROOT . '/blogs/view/' . $relatedBlog->slug; ?>" class="block">
+                                    <?php if ($relatedBlog->image_path): ?>
+                                        <div class="relative h-48 overflow-hidden">
+                                            <img src="<?php echo URLROOT . '/' . $relatedBlog->image_path; ?>" 
+                                                 alt="<?php echo htmlspecialchars($relatedBlog->title); ?>"
+                                                 class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                        </div>
                                     <?php else: ?>
-                                        <!-- Fallback voor blogs zonder afbeelding -->
-                                        <div class="h-40 bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
+                                        <div class="h-48 bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
                                             <svg class="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
                                             </svg>
                                         </div>
                                     <?php endif; ?>
+                                </a>
 
-                                    <div class="p-6">
-                                        <!-- Auteur en datum info met verbeterd design -->
-                                        <div class="flex items-center justify-between mb-5">
-                                            <div class="flex items-center space-x-3">
-                                                <div class="w-8 h-8 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full flex items-center justify-center overflow-hidden">
-                                                    <img src="https://media.licdn.com/dms/image/v2/D4E03AQFQkWCitMT1ug/profile-displayphoto-shrink_400_400/B4EZYuubOTHMAg-/0/1744540644719?e=1750291200&v=beta&t=Qs38y2l_-SWd_N2CcavekytGxrU06ixhojbHdDktfxM" 
-                                                         alt="<?php echo htmlspecialchars($relatedBlog->author_name); ?>"
-                                                         class="w-full h-full object-cover">
-                                                </div>
-                                                <span class="text-xs font-bold text-gray-800"><?php echo htmlspecialchars($relatedBlog->author_name); ?></span>
-                                            </div>
-                                            
-                                            <div class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full font-medium flex items-center">
-                                                <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                                </svg>
-                                                <?php echo date('d M Y', strtotime($relatedBlog->published_at)); ?>
-                                            </div>
-                                        </div>
-
-                                        <h3 class="text-lg font-bold text-gray-900 mb-3 group-hover:text-primary transition-colors duration-300 line-clamp-2">
-                                            <?php echo htmlspecialchars($relatedBlog->title); ?>
-                                        </h3>
-                                        
-                                        <p class="text-gray-600 text-sm line-clamp-2 mb-4">
-                                            <?php echo htmlspecialchars($relatedBlog->summary); ?>
-                                        </p>
-                                        
-                                        <div class="flex items-center justify-between pt-2">
-                                            <div class="inline-flex items-center text-primary font-medium text-sm">
-                                                <span>Lees meer</span>
-                                                <svg class="w-4 h-4 ml-1.5 transform transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                                                </svg>
-                                            </div>
-                                            
-                                            <!-- Like indicator -->
-                                            <div class="flex items-center text-gray-400 text-xs">
-                                                <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-                                                </svg>
-                                                <span><?php echo (isset($relatedBlog->likes) && $relatedBlog->likes > 0) ? $relatedBlog->likes : '0'; ?> likes</span>
-                                            </div>
-                                        </div>
+                                <!-- New Badge -->
+                                <?php 
+                                $published_time = strtotime($relatedBlog->published_at);
+                                $twelve_hours_ago = time() - (12 * 3600);
+                                if ($published_time > $twelve_hours_ago): 
+                                ?>
+                                    <div class="absolute top-4 right-4 z-10">
+                                        <span class="inline-flex items-center px-3 py-1 rounded-full bg-gradient-to-r from-primary to-secondary text-white text-xs font-bold shadow-lg">
+                                            <span class="w-2 h-2 bg-white rounded-full mr-2 animate-pulse"></span>
+                                            NIEUW
+                                        </span>
                                     </div>
+                                <?php endif; ?>
+                            </div>
+
+                            <div class="p-6">
+                                <!-- Meta Info -->
+                                <div class="flex items-center justify-between mb-4 text-sm text-gray-500">
+                                    <div class="flex items-center space-x-2">
+                                        <div class="w-6 h-6 bg-primary/10 rounded-full flex items-center justify-center">
+                                            <span class="text-xs font-semibold text-primary"><?php echo substr($relatedBlog->author_name, 0, 1); ?></span>
+                                        </div>
+                                        <span><?php echo htmlspecialchars($relatedBlog->author_name); ?></span>
+                                    </div>
+                                    <span><?php echo date('d M Y', strtotime($relatedBlog->published_at)); ?></span>
+                                </div>
+
+                                <!-- Title & Summary -->
+                                <a href="<?php echo URLROOT . '/blogs/view/' . $relatedBlog->slug; ?>" class="block">
+                                    <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary transition-colors duration-300 line-clamp-2">
+                                        <?php echo htmlspecialchars($relatedBlog->title); ?>
+                                    </h3>
                                 </a>
                                 
-                                <!-- Decoratieve hoekelementen -->
-                                <div class="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-primary/5 to-secondary/5 transform rotate-45 translate-x-8 -translate-y-8 group-hover:translate-x-6 group-hover:-translate-y-6 transition-transform duration-700"></div>
-                            </article>
-                        </div>
+                                <p class="text-gray-600 text-sm line-clamp-3 mb-4">
+                                    <?php echo htmlspecialchars($relatedBlog->summary); ?>
+                                </p>
+                                
+                                <!-- Footer -->
+                                <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+                                    <a href="<?php echo URLROOT . '/blogs/view/' . $relatedBlog->slug; ?>" 
+                                       class="inline-flex items-center text-primary font-medium text-sm hover:text-primary-dark transition-colors">
+                                        Lees verder
+                                        <svg class="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                        </svg>
+                                    </a>
+                                    
+                                    <div class="flex items-center text-gray-400 text-xs">
+                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                        </svg>
+                                        <span><?php echo (isset($relatedBlog->likes) && $relatedBlog->likes > 0) ? $relatedBlog->likes : '0'; ?></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
                     <?php 
                         endif;
                     endforeach; 
                     ?>
                 </div>
+
+                <!-- View All Button -->
+                <div class="text-center mt-12">
+                    <a href="<?php echo URLROOT; ?>/blogs" 
+                       class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-full hover:shadow-lg transition-all duration-300 transform hover:scale-105">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0l-4 4m4-4l-4-4"></path>
+                        </svg>
+                        Bekijk alle blogs
+                    </a>
+                </div>
             </div>
         </div>
-    </article>
+    </section>
 </main>
 
 <?php if (isAdmin()): ?>
@@ -342,213 +516,156 @@ require_once 'views/templates/header.php'; ?>
 </div>
 <?php endif; ?>
 
-<!-- Swiper JS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
-<!-- Swiper Initialisatie -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    new Swiper('.blogsSwiper', {
-        slidesPerView: 1.2,
-        centeredSlides: true,
-        spaceBetween: 16,
-        loop: true,
-        navigation: {
-            nextEl: '.swiper-button-next-custom',
-            prevEl: '.swiper-button-prev-custom',
-        },
-        breakpoints: {
-            640: {
-                slidesPerView: 2,
-                centeredSlides: false,
-                spaceBetween: 20,
-            },
-            1024: {
-                slidesPerView: 3,
-                centeredSlides: false,
-                spaceBetween: 24,
-            },
-        },
-        autoplay: {
-            delay: 5000,
-            disableOnInteraction: false,
-        },
-    });
-});
-</script>
-
-<!-- Share Script -->
-<script>
-async function shareBlog() {
-    const title = '<?php echo htmlspecialchars($blog->title); ?>';
-    const url = window.location.href;
-    const text = 'Lees deze interessante blog op PolitiekPraat: <?php echo htmlspecialchars($blog->summary); ?>';
-
-    if (navigator.share) {
-        try {
-            await navigator.share({
-                title: title,
-                text: text,
-                url: url
-            });
-        } catch (err) {
-            console.log('Error bij delen:', err);
-        }
-    } else {
-        navigator.clipboard.writeText(url).then(() => {
-            alert('Link gekopieerd naar klembord!');
-        }).catch(err => {
-            console.error('Kon link niet kopiëren:', err);
-        });
-    }
-}
-</script>
-
-<!-- Update de CSS voor de like animaties -->
+<!-- Enhanced CSS Styles -->
 <style>
-/* Update bestaande stijlen */
+/* Enhanced Typography and Reading Experience */
 .prose {
-    @apply text-gray-800;
+    @apply text-gray-800 leading-relaxed;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 .prose h2 {
-    @apply text-xl sm:text-2xl font-semibold mt-8 mb-4;
+    @apply text-2xl md:text-3xl font-bold mt-12 mb-6 text-gray-900;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+.prose h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 3rem;
+    height: 3px;
+    background: linear-gradient(to right, theme('colors.primary'), theme('colors.secondary'));
+    border-radius: 2px;
 }
 
 .prose h3 {
-    @apply text-lg sm:text-xl font-semibold mt-6 mb-3;
+    @apply text-xl md:text-2xl font-semibold mt-8 mb-4 text-gray-900;
+}
+
+.prose h4 {
+    @apply text-lg md:text-xl font-semibold mt-6 mb-3 text-gray-900;
 }
 
 .prose p {
-    @apply text-base sm:text-lg leading-relaxed mb-4;
+    @apply text-base md:text-lg leading-relaxed mb-6 text-gray-700;
 }
 
 .prose ul, .prose ol {
-    @apply my-4 ml-4 space-y-2;
+    @apply my-6 ml-6 space-y-2;
 }
 
 .prose li {
-    @apply text-base sm:text-lg leading-relaxed;
-}
-
-.prose img {
-    @apply rounded-lg my-6 w-full;
+    @apply text-base md:text-lg leading-relaxed text-gray-700;
 }
 
 .prose blockquote {
-    @apply border-l-4 border-gray-200 pl-4 italic my-6;
+    @apply border-l-4 border-primary/30 pl-6 italic my-8 bg-gray-50 py-4 rounded-r-lg;
+}
+
+.prose img {
+    @apply rounded-xl my-8 w-full shadow-lg;
 }
 
 .prose a {
-    @apply text-primary hover:text-primary-dark underline transition-colors duration-200;
+    @apply text-primary hover:text-primary-dark underline decoration-2 underline-offset-2 transition-colors duration-200;
 }
 
 .prose code {
-    @apply bg-gray-100 rounded px-1.5 py-0.5 text-sm font-mono;
+    @apply bg-primary/10 text-primary rounded px-2 py-1 text-sm font-mono border;
 }
 
 .prose pre {
-    @apply bg-gray-900 text-gray-100 rounded-lg p-4 overflow-x-auto my-6;
+    @apply bg-gray-900 text-gray-100 rounded-xl p-6 overflow-x-auto my-8 shadow-lg;
 }
 
 .prose pre code {
-    @apply bg-transparent text-inherit p-0;
+    @apply bg-transparent text-inherit p-0 border-0;
 }
 
-/* Like animatie stijlen behouden en verbeteren */
-.like-particles {
-    @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full pointer-events-none;
+/* Enhanced Reading Progress Bar */
+#reading-progress {
+    background: linear-gradient(90deg, #1a365d 0%, #c41e3a 50%, #00796b 100%);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.like-particles i {
-    @apply absolute block w-1 h-1 bg-red-500 rounded-full opacity-0;
+/* Enhanced Like Animation */
+.like-particles .particle {
+    @apply absolute w-1 h-1 bg-red-500 rounded-full opacity-0 pointer-events-none;
+    transform-origin: center;
 }
 
-@keyframes particle-animation {
+.liked .like-particles .particle {
+    animation: particle-burst 0.8s ease-out forwards;
+}
+
+.liked .like-particles .particle:nth-child(1) { animation-delay: 0ms; --direction: 45deg; }
+.liked .like-particles .particle:nth-child(2) { animation-delay: 100ms; --direction: 90deg; }
+.liked .like-particles .particle:nth-child(3) { animation-delay: 200ms; --direction: 135deg; }
+.liked .like-particles .particle:nth-child(4) { animation-delay: 300ms; --direction: 225deg; }
+.liked .like-particles .particle:nth-child(5) { animation-delay: 400ms; --direction: 270deg; }
+.liked .like-particles .particle:nth-child(6) { animation-delay: 500ms; --direction: 315deg; }
+
+@keyframes particle-burst {
     0% {
-        transform: translate(0, 0) scale(1);
-        opacity: 0;
-    }
-    25% {
         opacity: 1;
+        transform: translate(0, 0) scale(1);
     }
     100% {
-        transform: translate(var(--tx), var(--ty)) scale(0);
         opacity: 0;
+        transform: translate(
+            calc(cos(var(--direction)) * 30px),
+            calc(sin(var(--direction)) * 30px)
+        ) scale(0);
     }
 }
 
-@keyframes heart-beat {
-    0% { transform: scale(1); }
-    25% { transform: scale(1.2); }
-    50% { transform: scale(1); }
-    75% { transform: scale(1.2); }
-    100% { transform: scale(1); }
-}
-
-.liked .like-particles {
-    @apply block;
-}
-
-.liked .like-particles i {
-    animation: particle-animation 0.8s ease-out forwards;
-}
-
+/* Like Button States */
 #likeButton.liked {
-    @apply bg-red-50 text-red-500 border-red-200;
-}
-
-#likeButton svg {
-    @apply transition-all duration-300;
+    @apply bg-red-50 border-red-300 text-red-600;
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
 }
 
 #likeButton.liked svg {
-    @apply text-red-500 scale-110;
+    fill: currentColor;
+    animation: heartbeat 0.6s ease-in-out;
+}
+
+/* Hero Like Button States */
+#heroLikeButton.liked {
+    @apply bg-red-500/20 text-red-300;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+#heroLikeButton.liked svg {
+    fill: currentColor;
+    color: #fca5a5;
+    animation: heartbeat 0.6s ease-in-out;
+}
+
+#heroLikeButton.liked span {
+    color: #fca5a5;
+}
+
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    25% { transform: scale(1.2); }
+    50% { transform: scale(1); }
+    75% { transform: scale(1.1); }
+}
+
+/* Bookmark Button States */
+#bookmarkButton.bookmarked {
+    @apply bg-amber-50 border-amber-300 text-amber-600;
+}
+
+#bookmarkButton.bookmarked svg {
     fill: currentColor;
 }
 
-#likeButton:hover:not(.liked) svg {
-    @apply text-red-400 scale-105;
-}
-
-/* Verbeterde button hover states */
-button, a {
-    @apply transform transition-all duration-200 hover:shadow-md active:scale-95;
-}
-
-/* Verbeterde focus states voor toegankelijkheid */
-button:focus, a:focus {
-    @apply outline-none ring-2 ring-offset-2 ring-primary/50;
-}
-
-/* Swiper styling */
-.blogsSwiper {
-    @apply pb-8;
-    margin: 0 -1rem;
-}
-
-@media (min-width: 640px) {
-    .blogsSwiper {
-        margin: 0;
-    }
-}
-
-.swiper-slide {
-    height: auto !important;
-    @apply transition-all duration-300;
-}
-
-.swiper-slide:not(.swiper-slide-active) {
-    @apply opacity-60;
-}
-
-@media (min-width: 640px) {
-    .swiper-slide:not(.swiper-slide-active) {
-        @apply opacity-100;
-    }
-}
-
+/* Utility Classes */
 .line-clamp-2 {
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -556,128 +673,303 @@ button:focus, a:focus {
     overflow: hidden;
 }
 
-/* Verbeterde hover effecten voor kaarten */
-.group:hover .group-hover\:scale-105 {
-    transform: scale(1.05);
+.line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Enhanced hover effects */
+.group:hover .group-hover\:scale-110 {
+    transform: scale(1.1);
 }
 
 .group:hover .group-hover\:translate-x-1 {
     transform: translateX(0.25rem);
 }
 
-/* Verbeterde schaduw effecten */
-.shadow-sm {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .prose {
+        @apply text-base;
+    }
+    
+    .prose h2 {
+        @apply text-xl mt-8 mb-4;
+    }
+    
+    .prose h3 {
+        @apply text-lg mt-6 mb-3;
+    }
+    
+    .prose p {
+        @apply text-base mb-4;
+    }
 }
 
-.hover\:shadow-xl:hover {
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-}
-
-/* Verbeterde navigatie knoppen */
-.swiper-button-prev-custom,
-.swiper-button-next-custom {
-    @apply transition-all duration-300 ease-out shadow-[0_2px_8px_rgba(0,0,0,0.08)];
-}
-
-.swiper-button-prev-custom:hover,
-.swiper-button-next-custom:hover {
-    @apply transform scale-110 bg-primary text-white shadow-[0_4px_12px_rgba(0,0,0,0.12)];
-}
-
-.swiper-button-prev-custom:active,
-.swiper-button-next-custom:active {
-    @apply transform scale-95;
-}
-
-/* Sectie titel styling */
-h2.relative span.absolute {
-    @apply transition-all duration-300;
-}
-
-h2.relative:hover span.absolute {
-    @apply w-32;
-}
-
-@media (prefers-reduced-motion: reduce) {
-    h2.relative:hover span.absolute {
-        @apply w-20;
+/* Print styles */
+@media print {
+    #reading-progress,
+    .social-actions,
+    .related-blogs,
+    .newsletter-signup {
+        display: none !important;
+    }
+    
+    .prose {
+        @apply text-black;
     }
 }
 </style>
 
-<!-- Update het JavaScript voor betere animaties -->
+<!-- Enhanced JavaScript -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Reading Progress Bar
+    function updateReadingProgress() {
+        const article = document.getElementById('blog-content');
+        if (!article) return;
+        
+        const articleHeight = article.offsetHeight;
+        const articleTop = article.offsetTop;
+        const scrollPosition = window.scrollY;
+        const windowHeight = window.innerHeight;
+        
+        const progress = Math.max(0, Math.min(100, 
+            ((scrollPosition + windowHeight - articleTop) / articleHeight) * 100
+        ));
+        
+        document.getElementById('reading-progress').style.width = progress + '%';
+    }
+    
+    // Reading Time Calculation
+    function calculateReadingTime() {
+        const content = document.getElementById('blog-content');
+        if (!content) return;
+        
+        const text = content.textContent || content.innerText;
+        const words = text.trim().split(/\s+/).length;
+        const wordsPerMinute = 200;
+        const minutes = Math.ceil(words / wordsPerMinute);
+        
+        const readingTimeElement = document.getElementById('reading-minutes');
+        if (readingTimeElement) {
+            readingTimeElement.textContent = minutes;
+        }
+    }
+    
+    // Like functionality
     const likeButton = document.getElementById('likeButton');
+    const heroLikeButton = document.getElementById('heroLikeButton');
     const likeCount = document.getElementById('likeCount');
-    const slug = likeButton.dataset.slug;
+    const heroLikeCount = document.getElementById('hero-like-count');
+    const slug = likeButton?.dataset.slug || heroLikeButton?.dataset.slug;
     let isProcessing = false;
     
     const likedBlogs = JSON.parse(localStorage.getItem('likedBlogs') || '{}');
     
-    // Update initiële status
-    updateLikeButtonState(likedBlogs[slug]);
-    
     function updateLikeButtonState(isLiked) {
-        if (isLiked) {
-            likeButton.classList.add('liked');
-        } else {
-            likeButton.classList.remove('liked');
+        if (likeButton) {
+            if (isLiked) {
+                likeButton.classList.add('liked');
+            } else {
+                likeButton.classList.remove('liked');
+            }
+        }
+        
+        if (heroLikeButton) {
+            if (isLiked) {
+                heroLikeButton.classList.add('liked');
+            } else {
+                heroLikeButton.classList.remove('liked');
+            }
         }
     }
     
-    function animateLike() {
-        likeButton.classList.add('liked');
-        const heart = likeButton.querySelector('svg');
-        heart.style.animation = 'heart-beat 0.8s ease-in-out';
-        setTimeout(() => {
-            heart.style.animation = '';
-        }, 800);
-    }
-    
-    likeButton.addEventListener('click', async function() {
+    async function handleLike(button) {
         if (isProcessing) return;
         
         const action = likedBlogs[slug] ? 'unlike' : 'like';
         isProcessing = true;
-        likeButton.disabled = true;
         
-        if (action === 'like') {
-            animateLike();
-        }
+        // Disable both buttons
+        if (likeButton) likeButton.disabled = true;
+        if (heroLikeButton) heroLikeButton.disabled = true;
         
         try {
             const response = await fetch(`<?php echo URLROOT; ?>/blogs/like/${slug}`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ action })
             });
             
             const data = await response.json();
             
             if (data.success) {
-                likeCount.textContent = data.likes;
+                // Update both counters
+                if (likeCount) likeCount.textContent = data.likes;
+                if (heroLikeCount) heroLikeCount.textContent = data.likes + ' likes';
                 
                 if (action === 'like') {
                     likedBlogs[slug] = true;
+                    updateLikeButtonState(true);
                 } else {
                     delete likedBlogs[slug];
+                    updateLikeButtonState(false);
                 }
                 
-                updateLikeButtonState(likedBlogs[slug]);
                 localStorage.setItem('likedBlogs', JSON.stringify(likedBlogs));
             }
         } catch (error) {
             console.error('Error:', error);
         } finally {
             isProcessing = false;
-            likeButton.disabled = false;
+            if (likeButton) likeButton.disabled = false;
+            if (heroLikeButton) heroLikeButton.disabled = false;
         }
+    }
+    
+    // Initialize like state
+    if (slug) {
+        updateLikeButtonState(likedBlogs[slug]);
+    }
+    
+    // Add event listeners to both like buttons
+    likeButton?.addEventListener('click', () => handleLike(likeButton));
+    heroLikeButton?.addEventListener('click', () => handleLike(heroLikeButton));
+    
+    // Bookmark functionality
+    const bookmarkButton = document.getElementById('bookmarkButton');
+    const bookmarkedBlogs = JSON.parse(localStorage.getItem('bookmarkedBlogs') || '{}');
+    
+    function updateBookmarkState(isBookmarked) {
+        if (!bookmarkButton) return;
+        
+        if (isBookmarked) {
+            bookmarkButton.classList.add('bookmarked');
+        } else {
+            bookmarkButton.classList.remove('bookmarked');
+        }
+    }
+    
+    // Initialize bookmark state
+    if (slug) {
+        updateBookmarkState(bookmarkedBlogs[slug]);
+    }
+    
+    bookmarkButton?.addEventListener('click', function() {
+        if (bookmarkedBlogs[slug]) {
+            delete bookmarkedBlogs[slug];
+            updateBookmarkState(false);
+            showNotification('Bookmark verwijderd', 'info');
+        } else {
+            bookmarkedBlogs[slug] = {
+                title: '<?php echo addslashes($blog->title); ?>',
+                url: window.location.href,
+                date: new Date().toISOString()
+            };
+            updateBookmarkState(true);
+            showNotification('Blog opgeslagen in bookmarks', 'success');
+        }
+        
+        localStorage.setItem('bookmarkedBlogs', JSON.stringify(bookmarkedBlogs));
     });
+    
+    // Newsletter Form
+    const newsletterForm = document.getElementById('newsletter-form');
+    newsletterForm?.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const email = this.querySelector('input[type="email"]').value;
+        
+        // Simulate newsletter signup
+        showNotification('Bedankt voor je aanmelding! Je ontvangt een bevestigingsmail.', 'success');
+        this.reset();
+    });
+    
+    // Initialize all functions
+    calculateReadingTime();
+    
+    // Add scroll listeners
+    window.addEventListener('scroll', updateReadingProgress);
+    window.addEventListener('resize', updateReadingProgress);
+    
+    // Initial progress update
+    updateReadingProgress();
 });
-</script>
 
-<?php require_once 'views/templates/footer.php'; ?> 
+// Notification System
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg max-w-sm transform transition-all duration-300 translate-x-full`;
+    
+    const bgColors = {
+        success: 'bg-green-500',
+        error: 'bg-red-500',
+        info: 'bg-blue-500'
+    };
+    
+    notification.className += ` ${bgColors[type] || bgColors.info} text-white`;
+    notification.textContent = message;
+    
+    document.body.appendChild(notification);
+    
+    // Animate in
+    setTimeout(() => {
+        notification.classList.remove('translate-x-full');
+    }, 10);
+    
+    // Auto remove
+    setTimeout(() => {
+        notification.classList.add('translate-x-full');
+        setTimeout(() => {
+            document.body.removeChild(notification);
+        }, 300);
+    }, 4000);
+}
+
+// Enhanced Share Functions
+function shareOnTwitter() {
+    const title = '<?php echo addslashes($blog->title); ?>';
+    const url = window.location.href;
+    const text = `${title} via @PolitiekPraat`;
+    
+    window.open(
+        `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`,
+        '_blank',
+        'width=600,height=400'
+    );
+}
+
+function shareOnLinkedIn() {
+    const title = '<?php echo addslashes($blog->title); ?>';
+    const url = window.location.href;
+    const summary = '<?php echo addslashes($blog->summary); ?>';
+    
+    window.open(
+        `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}&summary=${encodeURIComponent(summary)}`,
+        '_blank',
+        'width=600,height=400'
+    );
+}
+
+function shareOnFacebook() {
+    const url = window.location.href;
+    
+    window.open(
+        `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
+        '_blank',
+        'width=600,height=400'
+    );
+}
+
+async function copyToClipboard() {
+    try {
+        await navigator.clipboard.writeText(window.location.href);
+        showNotification('Link gekopieerd naar klembord!', 'success');
+    } catch (err) {
+        console.error('Kon link niet kopiëren:', err);
+        showNotification('Kon link niet kopiëren', 'error');
+    }
+}
+</script>
