@@ -257,7 +257,7 @@ $latest_news = [
     [
         'orientation' => 'links',
         'source' => 'NRC',
-        'bias' => 'centrum-links', 
+        'bias' => 'links', 
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-2 hours')), // 2 uur geleden
         'title' => 'Jongeren van PvdA en GroenLinks besnuffelen elkaar',
         'description' => 'In een poging om de krachten te bundelen, verkennen de jongerenafdelingen van PvdA en GroenLinks mogelijkheden voor samenwerking. De gesprekken zijn gericht op het versterken van progressieve standpunten en het vergroten van de invloed van jongeren in de politiek.',
@@ -266,7 +266,7 @@ $latest_news = [
     [
         'orientation' => 'links',
         'source' => 'Trouw',
-        'bias' => 'centrum-links', 
+        'bias' => 'links', 
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-4 hours')), // 4 uur geleden
         'title' => 'De Nederlandse economie heeft beperkt last van de Amerikaanse heffingen',
         'description' => 'De Nederlandse economie ondervindt slechts beperkte gevolgen van de Amerikaanse importheffingen, dankzij sterke handelsrelaties binnen de EU en een diversificatie van exportmarkten.',
@@ -275,7 +275,7 @@ $latest_news = [
     [
         'orientation' => 'rechts',
         'source' => 'FVD',
-        'bias' => 'extreem-rechts', 
+        'bias' => 'rechts', 
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-6 hours')), // 6 uur geleden
         'title' => 'Forum Inside: Stroomuitval in EU & Zuid-Afrika als waarschuwing en overheidsuitgaven onder de loep',
         'description' => 'Forum voor Democratie bespreekt de recente stroomuitval in de EU en Zuid-Afrika als een waarschuwing voor energiebeleid en onderzoekt de overheidsuitgaven.',
@@ -284,7 +284,7 @@ $latest_news = [
     [
         'orientation' => 'rechts',
         'source' => 'De Dagelijkse Standaard',
-        'bias' => 'extreem-rechts', 
+        'bias' => 'rechts', 
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-8 hours')), // 8 uur geleden
         'title' => 'Ongelooflijk: Geen arrestaties in Scheveningen, wel bij vreedzame demonstratie in Uden',
         'description' => 'In Scheveningen zijn er geen arrestaties verricht, terwijl er bij een vreedzame demonstratie in Uden wel mensen zijn opgepakt. Dit roept vragen op over de aanpak van de politie bij verschillende evenementen.',
