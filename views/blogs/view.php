@@ -525,7 +525,7 @@ require_once 'views/templates/header.php'; ?>
 }
 
 .prose h2 {
-    @apply text-2xl md:text-3xl font-bold mt-12 mb-6 text-gray-900;
+    @apply text-base md:text-2xl lg:text-3xl font-bold mt-6 md:mt-12 mb-3 md:mb-6 text-gray-900;
     position: relative;
     padding-bottom: 0.5rem;
 }
@@ -542,23 +542,23 @@ require_once 'views/templates/header.php'; ?>
 }
 
 .prose h3 {
-    @apply text-xl md:text-2xl font-semibold mt-8 mb-4 text-gray-900;
+    @apply text-sm md:text-xl lg:text-2xl font-semibold mt-4 md:mt-8 mb-2 md:mb-4 text-gray-900;
 }
 
 .prose h4 {
-    @apply text-lg md:text-xl font-semibold mt-6 mb-3 text-gray-900;
+    @apply text-sm md:text-lg lg:text-xl font-semibold mt-3 md:mt-6 mb-1 md:mb-3 text-gray-900;
 }
 
 .prose p {
-    @apply text-base md:text-lg leading-relaxed mb-6 text-gray-700;
+    @apply text-xs md:text-base lg:text-lg leading-relaxed mb-3 md:mb-6 text-gray-700;
 }
 
 .prose ul, .prose ol {
-    @apply my-6 ml-6 space-y-2;
+    @apply my-3 md:my-6 ml-3 md:ml-6 space-y-1 md:space-y-2;
 }
 
 .prose li {
-    @apply text-base md:text-lg leading-relaxed text-gray-700;
+    @apply text-xs md:text-base lg:text-lg leading-relaxed text-gray-700;
 }
 
 .prose blockquote {
@@ -687,25 +687,6 @@ require_once 'views/templates/header.php'; ?>
 
 .group:hover .group-hover\:translate-x-1 {
     transform: translateX(0.25rem);
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .prose {
-        @apply text-base;
-    }
-    
-    .prose h2 {
-        @apply text-xl mt-8 mb-4;
-    }
-    
-    .prose h3 {
-        @apply text-lg mt-6 mb-3;
-    }
-    
-    .prose p {
-        @apply text-base mb-4;
-    }
 }
 
 /* Print styles */
