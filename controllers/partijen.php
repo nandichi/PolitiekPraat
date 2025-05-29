@@ -396,7 +396,7 @@ include_once BASE_PATH . '/views/templates/header.php';
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
             <?php foreach ($parties as $partyKey => $party): ?>
-                <div class="party-card bg-white rounded-xl overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-300 group relative">
+                <div class="party-card bg-white rounded-xl overflow-hidden border border-gray-100 shadow-2xl group relative">
                     <!-- Decorative accent strip matching party color -->
                     <div class="absolute top-0 left-0 right-0 h-1.5" style="background-color: <?php echo getPartyColor($partyKey); ?>"></div>
                     
@@ -508,9 +508,9 @@ include_once BASE_PATH . '/views/templates/header.php';
                             </div>
                         </div>
                         
-                        <!-- Action buttons with hover effects -->
+                        <!-- Action buttons -->
                         <div class="flex gap-3">
-                            <button class="party-btn flex-1 text-white text-sm px-4 py-2.5 rounded-lg transition-all duration-200 flex items-center justify-center font-medium shadow-sm hover:shadow-md" 
+                            <button class="party-btn flex-1 text-white text-sm px-4 py-2.5 rounded-lg flex items-center justify-center font-medium shadow-md" 
                                     style="background-color: <?php echo getPartyColor($partyKey); ?>; 
                                            box-shadow: 0 2px 0 <?php echo adjustColorBrightness(getPartyColor($partyKey), -30); ?>;"
                                     data-party="<?php echo htmlspecialchars($partyKey); ?>">
@@ -519,7 +519,7 @@ include_once BASE_PATH . '/views/templates/header.php';
                                 </svg>
                                 Partij
                             </button>
-                            <button class="leader-btn flex-1 bg-white border border-gray-200 text-gray-700 text-sm px-4 py-2.5 rounded-lg transition-all duration-200 flex items-center justify-center font-medium hover:bg-gray-50 shadow-sm hover:shadow-md"
+                            <button class="leader-btn flex-1 bg-white border border-gray-200 text-gray-700 text-sm px-4 py-2.5 rounded-lg flex items-center justify-center font-medium bg-gray-50 shadow-md"
                                     data-leader="<?php echo htmlspecialchars($partyKey); ?>">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -539,7 +539,7 @@ include_once BASE_PATH . '/views/templates/header.php';
     <div class="bg-white rounded-2xl p-6 max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl mx-4">
         <div class="flex justify-between items-center mb-6">
             <h2 id="party-modal-title" class="text-2xl font-bold text-gray-800"></h2>
-            <button class="close-modal text-gray-500 hover:text-gray-800 transition-colors">
+            <button class="close-modal text-gray-500 text-gray-800">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
@@ -638,7 +638,7 @@ include_once BASE_PATH . '/views/templates/header.php';
         </div>
         
         <div class="text-center">
-            <button class="close-modal bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium px-5 py-2.5 rounded-lg transition-colors">
+            <button class="close-modal bg-gray-200 bg-gray-300 text-gray-800 font-medium px-5 py-2.5 rounded-lg">
                 Sluiten
             </button>
         </div>
@@ -649,7 +649,7 @@ include_once BASE_PATH . '/views/templates/header.php';
     <div class="bg-white rounded-2xl p-6 max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl mx-4">
         <div class="flex justify-between items-center mb-6">
             <h2 id="leader-modal-title" class="text-2xl font-bold text-gray-800"></h2>
-            <button class="close-modal text-gray-500 hover:text-gray-800 transition-colors">
+            <button class="close-modal text-gray-500 text-gray-800">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
@@ -675,7 +675,7 @@ include_once BASE_PATH . '/views/templates/header.php';
         </div>
         
         <div class="text-center">
-            <button class="close-modal bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium px-5 py-2.5 rounded-lg transition-colors">
+            <button class="close-modal bg-gray-200 bg-gray-300 text-gray-800 font-medium px-5 py-2.5 rounded-lg">
                 Sluiten
             </button>
         </div>
@@ -694,7 +694,7 @@ include_once BASE_PATH . '/views/templates/header.php';
                     <button id="current-tab" class="tab-btn py-3 px-6 text-primary border-b-2 border-primary font-medium">
                         Huidige zetelverdeling
                     </button>
-                    <button id="polling-tab" class="tab-btn py-3 px-6 text-gray-500 hover:text-gray-700 font-medium border-b-2 border-transparent">
+                    <button id="polling-tab" class="tab-btn py-3 px-6 text-gray-500 text-gray-700 font-medium border-b-2 border-transparent">
                         Peilingen
                     </button>
                 </nav>
@@ -706,8 +706,8 @@ include_once BASE_PATH . '/views/templates/header.php';
             <!-- Chamber visualization -->
             <div class="relative flex justify-center mb-8">
                 <!-- Half-circle chamber -->
-                <div class="chamber relative w-full max-w-4xl">
-                    <div class="absolute inset-0 chamber-grid" id="current-seats-chamber">
+                <div class="chamber-semicircle relative w-full max-w-4xl h-72 md:h-80 border-3 border-slate-300 overflow-hidden shadow-inner">
+                    <div class="absolute inset-0 flex flex-col justify-end items-center p-5 md:p-8" id="current-seats-chamber">
                         <!-- Seats will be filled by JavaScript -->
                     </div>
                 </div>
@@ -727,7 +727,7 @@ include_once BASE_PATH . '/views/templates/header.php';
                     foreach ($seatsSorted as $partyKey => $party) {
                         if ($party['current_seats'] > 0) {
                             $color = getPartyColor($partyKey);
-                            echo '<div class="flex items-center bg-gray-50 p-2 rounded-lg">';
+                            echo '<div class="flex items-center bg-gray-50 p-2 rounded-lg bg-gray-100 cursor-pointer">';
                             echo '<div class="w-4 h-4 rounded-md mr-2" style="background-color: ' . $color . '"></div>';
                             echo '<span class="text-sm font-medium">' . htmlspecialchars($partyKey) . '</span>';
                             echo '<span class="ml-auto text-sm font-bold">' . $party['current_seats'] . '</span>';
@@ -744,8 +744,8 @@ include_once BASE_PATH . '/views/templates/header.php';
             <!-- Chamber visualization -->
             <div class="relative flex justify-center mb-8">
                 <!-- Half-circle chamber -->
-                <div class="chamber relative w-full max-w-4xl">
-                    <div class="absolute inset-0 chamber-grid" id="polling-seats-chamber">
+                <div class="chamber-semicircle relative w-full max-w-4xl h-72 md:h-80 border-3 border-slate-300 overflow-hidden shadow-inner">
+                    <div class="absolute inset-0 flex flex-col justify-end items-center p-5 md:p-8" id="polling-seats-chamber">
                         <!-- Polling seats will be filled by JavaScript -->
                     </div>
                 </div>
@@ -774,7 +774,7 @@ include_once BASE_PATH . '/views/templates/header.php';
                             $changeClass = $change > 0 ? 'text-green-600' : ($change < 0 ? 'text-red-600' : 'text-gray-600');
                             $changeText = $change > 0 ? '+' . $change : ($change < 0 ? $change : '');
                             
-                            echo '<div class="flex items-center bg-gray-50 p-2 rounded-lg">';
+                            echo '<div class="flex items-center bg-gray-50 p-2 rounded-lg bg-gray-100 cursor-pointer">';
                             echo '<div class="w-4 h-4 rounded-md mr-2" style="background-color: ' . $color . '"></div>';
                             echo '<span class="text-sm font-medium">' . htmlspecialchars($partyKey) . '</span>';
                             echo '<span class="ml-auto flex items-center">';
@@ -828,7 +828,7 @@ include_once BASE_PATH . '/views/templates/header.php';
                 
                 <!-- Interactive Tabs -->
                 <div class="flex space-x-2 bg-white/20 backdrop-blur-sm rounded-2xl p-2 w-fit">
-                    <button id="coalition-current-tab" class="coalition-tab-btn px-6 py-3 rounded-xl font-semibold text-white bg-white/30 backdrop-blur-sm transition-all duration-300 hover:bg-white/40">
+                    <button id="coalition-current-tab" class="coalition-tab-btn px-6 py-3 rounded-xl font-semibold text-white bg-white/30 backdrop-blur-sm bg-white/40">
                         <span class="flex items-center space-x-2">
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
@@ -836,7 +836,7 @@ include_once BASE_PATH . '/views/templates/header.php';
                             <span>Huidige Zetels</span>
                         </span>
                     </button>
-                    <button id="coalition-polling-tab" class="coalition-tab-btn px-6 py-3 rounded-xl font-semibold text-white/70 hover:text-white hover:bg-white/20 transition-all duration-300">
+                    <button id="coalition-polling-tab" class="coalition-tab-btn px-6 py-3 rounded-xl font-semibold text-white/70 text-white bg-white/20">
                         <span class="flex items-center space-x-2">
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"/>
@@ -890,7 +890,7 @@ include_once BASE_PATH . '/views/templates/header.php';
                             <p class="text-gray-600 text-sm mt-2">Sleep hier je partijen naartoe</p>
                         </div>
                         <div class="p-6">
-                            <div id="selected-coalition" class="min-h-[400px] max-h-[600px] overflow-y-auto rounded-xl border-2 border-dashed border-emerald-300 bg-white/50 backdrop-blur-sm transition-all duration-300 hover:border-emerald-400 hover:bg-white/70">
+                            <div id="selected-coalition" class="min-h-[400px] max-h-[600px] overflow-y-auto rounded-xl border-2 border-dashed border-emerald-300 bg-white/50 backdrop-blur-sm border-emerald-400 bg-white/70">
                                 <div class="flex flex-col items-center justify-center h-full p-8 text-center">
                                     <div class="bg-emerald-100 p-4 rounded-full mb-4">
                                         <svg class="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -904,7 +904,7 @@ include_once BASE_PATH . '/views/templates/header.php';
                             
                             <!-- Coalition Actions -->
                             <div class="mt-6 flex space-x-3">
-                                <button id="clear-coalition" class="flex-1 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-bold py-3 px-4 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                                <button id="clear-coalition" class="flex-1 bg-gradient-to-r from-red-600 to-red-700 text-white font-bold py-3 px-4 rounded-xl shadow-xl">
                                     <span class="flex items-center justify-center space-x-2">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
@@ -912,7 +912,7 @@ include_once BASE_PATH . '/views/templates/header.php';
                                         <span>Wissen</span>
                                     </span>
                                 </button>
-                                <button id="shuffle-coalition" class="bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white font-bold py-3 px-4 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                                <button id="shuffle-coalition" class="bg-gradient-to-r from-purple-600 to-purple-700 text-white font-bold py-3 px-4 rounded-xl shadow-xl">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
                                     </svg>
@@ -947,7 +947,7 @@ include_once BASE_PATH . '/views/templates/header.php';
                                     
                                     <!-- Progress Bar -->
                                     <div class="relative w-full h-4 bg-gray-200 rounded-full overflow-hidden shadow-inner">
-                                        <div id="coalition-progress" class="h-full bg-gradient-to-r from-blue-500 to-purple-600 rounded-full transition-all duration-700 ease-out shadow-sm" style="width: 0%"></div>
+                                        <div id="coalition-progress" class="h-full bg-shimmer rounded-full shadow-sm" style="width: 0%"></div>
                                         <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
                                         <!-- Majority Line -->
                                         <div class="absolute top-0 h-full w-0.5 bg-red-500" style="left: 50.67%">
@@ -963,7 +963,7 @@ include_once BASE_PATH . '/views/templates/header.php';
                                 </div>
                                 
                                 <!-- Status Badge -->
-                                <div id="coalition-status" class="text-center py-4 rounded-xl bg-gray-100 text-gray-600 font-semibold transition-all duration-300">
+                                <div id="coalition-status" class="text-center py-4 rounded-xl bg-gray-100 text-gray-600 font-semibold">
                                     Geen coalitie gevormd
                                 </div>
                                 
@@ -994,7 +994,7 @@ include_once BASE_PATH . '/views/templates/header.php';
                             <div class="p-6">
                                 <div id="coalition-spectrum-container" class="relative">
                                     <div class="h-6 bg-gradient-to-r from-red-500 via-purple-500 to-blue-500 rounded-full shadow-inner overflow-hidden">
-                                        <div id="coalition-spectrum-indicator" class="absolute w-1 h-8 bg-white shadow-lg rounded-full -top-1 transition-all duration-500 border-2 border-gray-800" style="left: 50%; transform: translateX(-50%); display: none;"></div>
+                                        <div id="coalition-spectrum-indicator" class="absolute w-1 h-8 bg-white shadow-lg rounded-full -top-1 border-2 border-gray-800" style="left: 50%; transform: translateX(-50%); display: none;"></div>
                                     </div>
                                     
                                     <div class="flex justify-between items-center mt-3 text-xs">
@@ -1271,14 +1271,14 @@ document.addEventListener('DOMContentLoaded', function() {
         // Create rows of seats
         layout.forEach((seatsInRow, rowIndex) => {
             const row = document.createElement('div');
-            row.className = `chamber-row chamber-row-${rowIndex}`;
+            row.className = 'flex justify-center items-center mb-1 gap-1 md:gap-1.5';
             
             for (let i = 0; i < seatsInRow; i++) {
                 if (seatCount < totalSeats) {
                     const seat = document.createElement('div');
                     const seatData = allSeats[seatCount];
                     
-                    seat.className = 'chamber-seat';
+                    seat.className = 'w-2.5 h-2.5 md:w-3 md:h-3 lg:w-3.5 lg:h-3.5 rounded-full border-2 border-white cursor-pointer relative shadow-lg z-10';
                     seat.style.backgroundColor = seatData.color;
                     seat.dataset.party = seatData.party;
                     
@@ -1286,22 +1286,24 @@ document.addEventListener('DOMContentLoaded', function() {
                         const partyInfo = partyData[seatData.party];
                         seat.setAttribute('title', `${seatData.party}: ${partyInfo.name}`);
                         
-                        // Add tooltip content
+                        // Add tooltip content with Tailwind classes
                         const tooltip = document.createElement('div');
-                        tooltip.className = 'seat-tooltip';
+                        tooltip.className = 'chamber-seat-tooltip absolute bg-black bg-opacity-90 text-white px-3 py-2 rounded-lg text-xs whitespace-nowrap opacity-0 pointer-events-none z-50';
                         tooltip.innerHTML = `
                             <div class="font-bold">${seatData.party}</div>
-                            <div>${partyInfo.name}</div>
+                            <div class="text-xs">${partyInfo.name}</div>
                         `;
                         seat.appendChild(tooltip);
                         
-                        // Event listeners for tooltip
+                        // Event listeners for tooltip with Tailwind state classes
                         seat.addEventListener('mouseenter', function() {
-                            this.classList.add('active');
+                            this.querySelector('.chamber-seat-tooltip').classList.remove('opacity-0');
+                            this.querySelector('.chamber-seat-tooltip').classList.add('opacity-100');
                         });
                         
                         seat.addEventListener('mouseleave', function() {
-                            this.classList.remove('active');
+                            this.querySelector('.chamber-seat-tooltip').classList.remove('opacity-100');
+                            this.querySelector('.chamber-seat-tooltip').classList.add('opacity-0');
                         });
                     }
                     
@@ -1315,18 +1317,23 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function highlightPartySeats(partyKey) {
-        document.querySelectorAll('.chamber-seat').forEach(seat => {
+        document.querySelectorAll('[data-party]').forEach(seat => {
             if (seat.dataset.party === partyKey) {
-                seat.classList.add('highlight');
-            } else {
-                seat.classList.add('dim');
+                // Highlight this party's seats with Tailwind classes
+                seat.classList.add('border-2', 'border-yellow-400', 'shadow-xl', 'z-20');
+                seat.classList.remove('opacity-30');
+            } else if (seat.dataset.party !== 'empty') {
+                // Dim other party seats
+                seat.classList.add('opacity-30');
+                seat.classList.remove('border-2', 'border-yellow-400', 'shadow-xl', 'z-20');
             }
         });
     }
     
     function resetHighlights() {
-        document.querySelectorAll('.chamber-seat').forEach(seat => {
-            seat.classList.remove('highlight', 'dim');
+        document.querySelectorAll('[data-party]').forEach(seat => {
+            // Remove all highlight and dim classes
+            seat.classList.remove('border-2', 'border-yellow-400', 'shadow-xl', 'z-20', 'opacity-30');
         });
     }
     
@@ -1345,7 +1352,7 @@ document.addEventListener('DOMContentLoaded', function() {
             'JA21': '#0066CC',
             'SGP': '#FF6600', 
             'FvD': '#811E1E',
-            'DENK': '#39A935',
+            'DENK': '#00b7b2',
             'Volt': '#502379',
             'CU': '#00AEEF'
         };
@@ -1498,7 +1505,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         createPartyCard(partyKey, party, seats) {
             const card = document.createElement('div');
-            card.className = 'party-card group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 cursor-move border border-gray-200 hover:border-gray-300';
+            card.className = 'party-card group bg-white rounded-xl shadow-xl cursor-move border border-gray-300';
             card.setAttribute('draggable', 'true');
             card.setAttribute('data-party', partyKey);
             card.setAttribute('data-seats', seats);
@@ -1524,7 +1531,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             </div>
                         </div>
                         <div class="text-right">
-                            <div class="bg-gray-100 group-hover:bg-gray-200 text-gray-800 text-sm font-bold px-3 py-1 rounded-lg transition-colors">
+                            <div class="bg-gray-200 text-gray-800 text-sm font-bold px-3 py-1 rounded-lg">
                                 ${seats}
                             </div>
                             ${this.currentView === 'polling' && change !== 0 ? `
@@ -1721,7 +1728,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const card = document.createElement('div');
             const color = this.getPartyColor(partyKey);
             
-            card.className = 'party-card bg-white rounded-lg shadow-sm border-l-4 hover:shadow-md transition-all duration-200';
+            card.className = 'party-card bg-white rounded-lg shadow-md border-l-4';
             card.style.borderLeftColor = color;
             card.setAttribute('data-party', partyKey);
             
@@ -1736,7 +1743,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             <p class="text-xs text-gray-600">${seats} zetels</p>
                         </div>
                     </div>
-                    <button class="remove-party text-gray-400 hover:text-red-500 transition-colors p-1 rounded-full hover:bg-red-50">
+                    <button class="remove-party text-red-500 p-1 rounded-full bg-red-50">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                         </svg>
@@ -1970,10 +1977,6 @@ document.addEventListener('DOMContentLoaded', function() {
     border-radius: 3px;
 }
 
-.scrollbar-thin::-webkit-scrollbar-thumb:hover {
-    background: #9ca3af;
-}
-
 /* Text truncation utility */
 .line-clamp-2 {
     display: -webkit-box;
@@ -1992,9 +1995,6 @@ document.addEventListener('DOMContentLoaded', function() {
 /* Enhanced Party Card Animation */
 .party-card {
     position: relative;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    transform-origin: center;
-    will-change: transform, box-shadow;
     backface-visibility: hidden;
 }
 
@@ -2008,27 +2008,16 @@ document.addEventListener('DOMContentLoaded', function() {
     border-radius: inherit;
     background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0));
     opacity: 0;
-    transition: opacity 0.3s ease;
     pointer-events: none;
     z-index: 1;
 }
 
-.party-card:hover::before {
-    opacity: 1;
-}
-
-.party-card:hover {
-    transform: translateY(-4px) scale(1.02);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-}
-
 .party-card:active {
-    transform: translateY(-2px) scale(1.01);
+    
 }
 
 /* Drag and Drop Visual Feedback */
 .party-card[draggable="true"]:active {
-    transform: rotate(5deg) scale(0.95);
     opacity: 0.8;
     z-index: 1000;
 }
@@ -2038,12 +2027,10 @@ document.addEventListener('DOMContentLoaded', function() {
     background-image: 
         radial-gradient(circle at 25% 25%, rgba(16, 185, 129, 0.1) 0%, transparent 50%),
         radial-gradient(circle at 75% 75%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 #selected-coalition.bg-emerald-50 {
     background-color: rgba(16, 185, 129, 0.1);
-    transform: scale(1.02);
     box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.3), inset 0 0 20px rgba(16, 185, 129, 0.1);
 }
 
@@ -2051,11 +2038,186 @@ document.addEventListener('DOMContentLoaded', function() {
 #coalition-progress {
     background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
     background-size: 200% 100%;
-    animation: shimmer 3s ease-in-out infinite;
     position: relative;
     overflow: hidden;
 }
 
+/* Chamber Visualization Styling */
+.chamber {
+    width: 100%;
+    height: 300px;
+    position: relative;
+    background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+    border-radius: 50% 50% 0 0;
+    overflow: hidden;
+    border: 3px solid #cbd5e1;
+    box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.chamber-grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 20px;
+}
+
+.chamber-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 4px;
+    gap: 3px;
+}
+
+.chamber-seat {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+    position: relative;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.chamber-seat.highlight {
+    border: 2px solid #fbbf24;
+    box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.3), 0 4px 12px rgba(0, 0, 0, 0.4);
+    z-index: 20;
+}
+
+.chamber-seat.dim {
+    opacity: 0.3;
+}
+
+.seat-tooltip {
+    position: absolute;
+    bottom: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 100;
+}
+
+.seat-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: rgba(0, 0, 0, 0.9);
+}
+
+.chamber-seat.active .seat-tooltip {
+    opacity: 1;
+}
+
+/* Responsive adjustments for chamber */
+@media (max-width: 768px) {
+    .chamber {
+        height: 200px;
+    }
+    
+    .chamber-seat {
+        width: 8px;
+        height: 8px;
+    }
+    
+    .chamber-row {
+        gap: 2px;
+        margin-bottom: 2px;
+    }
+    
+    .chamber-grid {
+        padding: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .chamber {
+        height: 150px;
+    }
+    
+    .chamber-seat {
+        width: 6px;
+        height: 6px;
+    }
+    
+    .chamber-row {
+        gap: 1px;
+        margin-bottom: 1px;
+    }
+}
+
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+/* Alleen essentiële custom CSS die niet door Tailwind wordt gedekt */
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+.bg-shimmer {
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+    background-size: 200% 100%;
+    animation: shimmer 3s ease-in-out infinite;
+}
+
+.chamber-semicircle {
+    border-radius: 50% 50% 0 0;
+    background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
+.chamber-seat-tooltip {
+    bottom: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.chamber-seat-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: rgba(0, 0, 0, 0.9);
+}
+
+.scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: #d1d5db #f3f4f6;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+    background: #f3f4f6;
+    border-radius: 3px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 3px;
+}
 </style>
 
 <?php include_once BASE_PATH . '/views/templates/footer.php'; ?>
