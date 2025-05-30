@@ -149,21 +149,32 @@ class StemwijzerController {
             ");
         } else {
             // Nieuwe schema (beide varianten)
-            $joinCondition = $this->schemaType === 'new_without_active' ? 
-                "sp ON spos.party_id = sp.id" :
-                "sp ON spos.party_id = sp.id WHERE sp.is_active = 1";
-                
-            $this->db->query("
-                SELECT 
-                    sp.name as party_name,
-                    sp.short_name,
-                    spos.position,
-                    spos.explanation
-                FROM stemwijzer_positions spos
-                JOIN stemwijzer_parties $joinCondition
-                AND spos.question_id = :question_id 
-                ORDER BY sp.name ASC
-            ");
+            if ($this->schemaType === 'new_without_active') {
+                $this->db->query("
+                    SELECT 
+                        sp.name as party_name,
+                        sp.short_name,
+                        spos.position,
+                        spos.explanation
+                    FROM stemwijzer_positions spos
+                    JOIN stemwijzer_parties sp ON spos.party_id = sp.id
+                    WHERE spos.question_id = :question_id 
+                    ORDER BY sp.name ASC
+                ");
+            } else {
+                $this->db->query("
+                    SELECT 
+                        sp.name as party_name,
+                        sp.short_name,
+                        spos.position,
+                        spos.explanation
+                    FROM stemwijzer_positions spos
+                    JOIN stemwijzer_parties sp ON spos.party_id = sp.id
+                    WHERE spos.question_id = :question_id 
+                    AND sp.is_active = 1
+                    ORDER BY sp.name ASC
+                ");
+            }
         }
         
         $this->db->bind(':question_id', $questionId);
