@@ -3,14 +3,43 @@ require_once 'includes/config.php';
 require_once 'includes/Database.php';
 require_once 'includes/StemwijzerController.php';
 
+// Debug mode - zet op true voor live debugging
+$debugMode = false;
+
+if ($debugMode) {
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+}
+
 // Initialize de stemwijzer controller
 $stemwijzerController = new StemwijzerController();
 
 // Haal stemwijzer data op uit de database
 try {
+    if ($debugMode) {
+        echo "<!-- DEBUG: Probeer stemwijzer data te laden -->\n";
+    }
+    
     $stemwijzerData = $stemwijzerController->getStemwijzerData();
     $totalQuestions = count($stemwijzerData['questions']);
+    
+    if ($debugMode) {
+        echo "<!-- DEBUG: Stemwijzer data succesvol geladen -->\n";
+        echo "<!-- DEBUG: Aantal vragen: $totalQuestions -->\n";
+        echo "<!-- DEBUG: Aantal partijen: " . count($stemwijzerData['parties']) . " -->\n";
+        echo "<!-- DEBUG: Aantal party logos: " . count($stemwijzerData['partyLogos']) . " -->\n";
+        
+        if (empty($stemwijzerData['questions'])) {
+            echo "<!-- DEBUG: WAARSCHUWING - Geen vragen gevonden! -->\n";
+        }
+    }
+    
 } catch (Exception $e) {
+    if ($debugMode) {
+        echo "<!-- DEBUG: FOUT bij laden stemwijzer data: " . $e->getMessage() . " -->\n";
+        echo "<!-- DEBUG: Stack trace: " . $e->getTraceAsString() . " -->\n";
+    }
+    
     // Fallback naar hardcoded data als database faalt
     $stemwijzerData = ['questions' => [], 'parties' => [], 'partyLogos' => []];
     $totalQuestions = 0;
@@ -921,8 +950,18 @@ function stemwijzer() {
         isLoading: false,
         
         init() {
+            // Debug informatie loggen
+            console.log('=== STEMWIJZER DEBUG INFO ===');
+            console.log('Data loaded from PHP:', this.dataLoaded);
+            console.log('Total questions from PHP:', this.totalSteps);
+            console.log('Questions array length:', this.questions.length);
+            console.log('Questions array:', this.questions);
+            console.log('Party logos:', this.partyLogos);
+            console.log('===============================');
+            
             // Als er geen data uit de database komt, probeer dan de API
             if (!this.dataLoaded) {
+                console.warn('Geen data uit database - probeer API');
                 this.loadDataFromAPI();
             } else {
                 // Update totalSteps gebaseerd op geladen data
@@ -932,12 +971,18 @@ function stemwijzer() {
         },
         
         async loadDataFromAPI() {
+            console.log('=== API LOAD ATTEMPT ===');
             this.isLoading = true;
             document.getElementById('loading-indicator').style.display = 'flex';
             
             try {
+                console.log('Fetching from: /api/stemwijzer.php?action=data');
                 const response = await fetch('/api/stemwijzer.php?action=data');
+                console.log('Response status:', response.status);
+                console.log('Response ok:', response.ok);
+                
                 const result = await response.json();
+                console.log('API Response:', result);
                 
                 if (result.success && result.data) {
                     this.questions = result.data.questions;
@@ -947,6 +992,7 @@ function stemwijzer() {
                     
                     console.log('Stemwijzer data succesvol geladen uit API:', result.data);
                 } else {
+                    console.error('API response not successful:', result);
                     throw new Error('API response was not successful');
                 }
             } catch (error) {
@@ -962,6 +1008,7 @@ function stemwijzer() {
             } finally {
                 this.isLoading = false;
                 document.getElementById('loading-indicator').style.display = 'none';
+                console.log('=== API LOAD FINISHED ===');
             }
         },
         
