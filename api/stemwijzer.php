@@ -24,10 +24,22 @@ try {
                 case 'data':
                     // Haal alle stemwijzer data op
                     $data = $stemwijzerController->getStemwijzerData();
+                    
+                    // Debug informatie toevoegen
+                    $debug = [
+                        'schema_type' => $stemwijzerController->getSchemaType(),
+                        'questions_count' => count($data['questions']),
+                        'parties_count' => count($data['parties']),
+                        'party_logos_count' => count($data['partyLogos']),
+                        'has_positions' => !empty($data['questions']) && isset($data['questions'][0]->positions),
+                        'has_explanations' => !empty($data['questions']) && isset($data['questions'][0]->explanations)
+                    ];
+                    
                     echo json_encode([
                         'success' => true,
                         'data' => $data,
-                        'total_questions' => count($data['questions'])
+                        'total_questions' => count($data['questions']),
+                        'debug' => $debug
                     ]);
                     break;
                     

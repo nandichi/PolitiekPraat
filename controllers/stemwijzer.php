@@ -960,14 +960,54 @@ function stemwijzer() {
             console.log('===============================');
             
             // Als er geen data uit de database komt, probeer dan de API
-            if (!this.dataLoaded) {
+            if (!this.dataLoaded || this.questions.length === 0) {
                 console.warn('Geen data uit database - probeer API');
                 this.loadDataFromAPI();
             } else {
                 // Update totalSteps gebaseerd op geladen data
                 this.totalSteps = this.questions.length;
                 console.log('Stemwijzer data geladen uit database:', this.questions.length, 'vragen');
+                
+                // Valideer dat alle vragen de juiste properties hebben
+                this.validateQuestionsData();
             }
+        },
+        
+        validateQuestionsData() {
+            console.log('=== VALIDATING QUESTIONS DATA ===');
+            const requiredProps = ['id', 'title', 'description', 'context', 'left_view', 'right_view', 'positions', 'explanations'];
+            
+            for (let i = 0; i < this.questions.length; i++) {
+                const question = this.questions[i];
+                
+                for (const prop of requiredProps) {
+                    if (!question.hasOwnProperty(prop) || question[prop] === undefined || question[prop] === null) {
+                        console.warn(`Question ${i} missing property: ${prop}`);
+                        
+                        // Voeg default waarden toe voor ontbrekende properties
+                        if (prop === 'positions') {
+                            question[prop] = {};
+                        } else if (prop === 'explanations') {
+                            question[prop] = {};
+                        } else {
+                            question[prop] = `Ontbrekende data voor ${prop}`;
+                        }
+                    }
+                }
+                
+                // Controleer of positions en explanations objecten zijn
+                if (typeof question.positions !== 'object') {
+                    console.warn(`Question ${i} positions is not an object:`, question.positions);
+                    question.positions = {};
+                }
+                
+                if (typeof question.explanations !== 'object') {
+                    console.warn(`Question ${i} explanations is not an object:`, question.explanations);
+                    question.explanations = {};
+                }
+            }
+            
+            console.log('=== VALIDATION COMPLETE ===');
         },
         
         async loadDataFromAPI() {
@@ -1091,21 +1131,41 @@ function stemwijzer() {
         },
         
         updatePartyGroups() {
-            if (!this.questions[this.currentStep]) return;
+            if (!this.questions[this.currentStep]) {
+                console.warn('updatePartyGroups: No question at step', this.currentStep);
+                return;
+            }
             
-            const positions = this.questions[this.currentStep].positions;
+            const question = this.questions[this.currentStep];
+            if (!question.positions || typeof question.positions !== 'object') {
+                console.warn('updatePartyGroups: No positions for question', this.currentStep);
+                this.eensParties = [];
+                this.neutraalParties = [];
+                this.oneensParties = [];
+                return;
+            }
+            
+            const positions = question.positions;
             this.eensParties = [];
             this.neutraalParties = [];
             this.oneensParties = [];
             
             Object.keys(positions).forEach(party => {
-                if (positions[party] === 'eens') {
+                const position = positions[party];
+                
+                if (position === 'eens') {
                     this.eensParties.push(party);
-                } else if (positions[party] === 'neutraal') {
+                } else if (position === 'neutraal') {
                     this.neutraalParties.push(party);
-                } else if (positions[party] === 'oneens') {
+                } else if (position === 'oneens') {
                     this.oneensParties.push(party);
                 }
+            });
+            
+            console.log('Party groups updated:', {
+                eens: this.eensParties.length,
+                neutraal: this.neutraalParties.length,
+                oneens: this.oneensParties.length
             });
         },
         
