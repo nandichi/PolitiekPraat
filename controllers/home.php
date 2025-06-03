@@ -667,7 +667,8 @@ require_once 'views/templates/header.php';
                                 <!-- Author info -->
                                 <div class="flex items-center space-x-3 lg:space-x-4">
                                     <div class="w-10 h-10 lg:w-14 lg:h-14 rounded-full overflow-hidden ring-2 ring-blue-200 group-hover:ring-blue-400 transition-all duration-300">
-                                        <img src="https://media.licdn.com/dms/image/v2/D4E03AQFQkWCitMT1ug/profile-displayphoto-shrink_400_400/B4EZYuubOTHMAg-/0/1744540644719?e=1750291200&v=beta&t=Qs38y2l_-SWd_N2CcavekytGxrU06ixhojbHdDktfxM" 
+                                        <img src="<?php echo URLROOT; ?>/public/images/naoufal-foto.jpg" 
+                                             onerror="if(this.src !== '<?php echo URLROOT; ?>/images/naoufal-foto.jpg') this.src='<?php echo URLROOT; ?>/images/naoufal-foto.jpg'; else if(this.src !== '<?php echo URLROOT; ?>/public/images/profiles/naoufal-foto.jpg') this.src='<?php echo URLROOT; ?>/public/images/profiles/naoufal-foto.jpg';"
                                              alt="<?php echo htmlspecialchars($breaking_blog->author_name); ?>"
                                              class="w-full h-full object-cover">
                                     </div>
@@ -751,7 +752,7 @@ require_once 'views/templates/header.php';
                     <div class="text-center mb-20 relative" data-aos="fade-up" data-aos-once="true">
                         <!-- Achtergrond tekst -->
                         <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-                            <span class="text-[120px] sm:text-[160px] lg:text-[200px] font-black text-gray-50 select-none opacity-40 tracking-wider">BLOGS</span>
+                            <span class="text-[120px] sm:text-[160px] lg:text-[200px] xl:text-[250px] font-black text-gray-50 select-none opacity-40 tracking-wider">BLOGS</span>
                         </div>
                         
                         <!-- Main content -->
@@ -894,10 +895,10 @@ require_once 'views/templates/header.php';
                                             <div class="flex items-center space-x-3">
                                                 <div class="relative">
                                                     <div class="w-12 h-12 rounded-full overflow-hidden ring-2 ring-primary/20 group-hover:ring-primary/40 transition-all duration-300">
-                                                        <img src="https://media.licdn.com/dms/image/v2/D4E03AQFQkWCitMT1ug/profile-displayphoto-shrink_400_400/B4EZYuubOTHMAg-/0/1744540644719?e=1750291200&v=beta&t=Qs38y2l_-SWd_N2CcavekytGxrU06ixhojbHdDktfxM" 
+                                                        <img src="<?php echo URLROOT; ?>/public/images/naoufal-foto.jpg" 
+                                                             onerror="if(this.src !== '<?php echo URLROOT; ?>/images/naoufal-foto.jpg') this.src='<?php echo URLROOT; ?>/images/naoufal-foto.jpg'; else if(this.src !== '<?php echo URLROOT; ?>/public/images/profiles/naoufal-foto.jpg') this.src='<?php echo URLROOT; ?>/public/images/profiles/naoufal-foto.jpg';"
                                                              alt="<?php echo htmlspecialchars($blog->author_name); ?>"
-                                                             class="w-full h-full object-cover"
-                                                             loading="lazy" decoding="async">
+                                                             class="w-full h-full object-cover">
                                                     </div>
                                                     <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
                                                 </div>

@@ -74,9 +74,10 @@ require_once 'views/templates/header.php'; ?>
                             <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 lg:gap-6 justify-center lg:justify-start px-2 sm:px-0">
                                 <div class="flex items-center justify-center lg:justify-start space-x-3 sm:space-x-4">
                                     <div class="relative">
-                                        <img src="https://media.licdn.com/dms/image/v2/D4E03AQFQkWCitMT1ug/profile-displayphoto-shrink_400_400/B4EZYuubOTHMAg-/0/1744540644719?e=1750291200&v=beta&t=Qs38y2l_-SWd_N2CcavekytGxrU06ixhojbHdDktfxM" 
+                                        <img src="<?php echo URLROOT; ?>/public/images/naoufal-foto.jpg" 
+                                             onerror="if(this.src !== '<?php echo URLROOT; ?>/images/naoufal-foto.jpg') this.src='<?php echo URLROOT; ?>/images/naoufal-foto.jpg'; else if(this.src !== '<?php echo URLROOT; ?>/public/images/profiles/naoufal-foto.jpg') this.src='<?php echo URLROOT; ?>/public/images/profiles/naoufal-foto.jpg';"
                                              alt="<?php echo htmlspecialchars($blog->author_name); ?>"
-                                             class="w-10 sm:w-12 lg:w-14 h-10 sm:h-12 lg:h-14 rounded-full border-2 border-white/30 shadow-xl">
+                                             class="w-10 sm:w-12 lg:w-14 h-10 sm:h-12 lg:h-14 rounded-full border-2 border-white/30 shadow-xl object-cover">
                                         <div class="absolute -bottom-0.5 sm:-bottom-1 -right-0.5 sm:-right-1 w-3 sm:w-4 lg:w-5 h-3 sm:h-4 lg:h-5 bg-green-500 rounded-full border-2 border-slate-900"></div>
                                     </div>
                                     <div class="text-center sm:text-left">
@@ -287,9 +288,10 @@ require_once 'views/templates/header.php'; ?>
                                 <!-- Author Avatar & Info -->
                                 <div class="flex-shrink-0 text-center lg:text-left">
                                     <div class="relative inline-block">
-                                        <img src="https://media.licdn.com/dms/image/v2/D4E03AQFQkWCitMT1ug/profile-displayphoto-shrink_400_400/B4EZYuubOTHMAg-/0/1744540644719?e=1750291200&v=beta&t=Qs38y2l_-SWd_N2CcavekytGxrU06ixhojbHdDktfxM" 
+                                        <img src="<?php echo URLROOT; ?>/public/images/naoufal-foto.jpg" 
+                                             onerror="if(this.src !== '<?php echo URLROOT; ?>/images/naoufal-foto.jpg') this.src='<?php echo URLROOT; ?>/images/naoufal-foto.jpg'; else if(this.src !== '<?php echo URLROOT; ?>/public/images/profiles/naoufal-foto.jpg') this.src='<?php echo URLROOT; ?>/public/images/profiles/naoufal-foto.jpg';"
                                              alt="<?php echo htmlspecialchars($blog->author_name); ?>"
-                                             class="w-20 h-20 sm:w-24 sm:h-24 lg:w-32 lg:h-32 rounded-full border-4 border-white shadow-2xl">
+                                             class="w-20 h-20 sm:w-24 sm:h-24 lg:w-32 lg:h-32 rounded-full border-4 border-white shadow-2xl object-cover">
                                         <div class="absolute -bottom-1 sm:-bottom-2 -right-1 sm:-right-2 w-6 sm:w-8 h-6 sm:h-8 bg-green-500 rounded-full border-2 sm:border-3 border-white flex items-center justify-center">
                                             <svg class="w-3 sm:w-4 h-3 sm:h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
                                                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
