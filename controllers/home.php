@@ -505,7 +505,199 @@ require_once 'views/templates/header.php';
         </div>
     </section>
 
-    <!-- Verwijderd leeg script blok -->
+    <!-- Breaking News Section - Nieuwe sectie -->
+    <section class="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-red-900 via-red-800 to-orange-900 relative overflow-hidden">
+        <!-- Animatie achtergrond elementen -->
+        <div class="absolute inset-0">
+            <!-- Pulserende orbs -->
+            <div class="absolute top-10 left-10 w-32 h-32 bg-red-500/20 rounded-full blur-2xl animate-pulse"></div>
+            <div class="absolute top-20 right-20 w-24 h-24 bg-orange-500/20 rounded-full blur-xl animate-pulse animation-delay-75"></div>
+            <div class="absolute bottom-20 left-1/3 w-40 h-40 bg-yellow-500/10 rounded-full blur-3xl animate-pulse animation-delay-150"></div>
+            
+            <!-- Bewegende deeltjes -->
+            <div class="absolute top-1/4 left-1/4 w-2 h-2 bg-red-400/40 rounded-full animate-bounce"></div>
+            <div class="absolute top-1/3 right-1/3 w-1 h-1 bg-orange-400/40 rounded-full animate-bounce animation-delay-75"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-3 h-3 bg-yellow-400/30 rounded-full animate-bounce animation-delay-150"></div>
+            
+            <!-- Gradient overlay -->
+            <div class="absolute inset-0 bg-gradient-to-r from-red-900/50 via-transparent to-orange-900/50"></div>
+        </div>
+
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <!-- Breaking news indicator -->
+            <div class="text-center mb-8 lg:mb-12" data-aos="fade-down" data-aos-duration="800">
+                <div class="inline-flex items-center justify-center mb-4 lg:mb-6">
+                    <div class="relative">
+                        <!-- Glow effect -->
+                        <div class="absolute -inset-2 lg:-inset-3 bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500 rounded-full blur-md lg:blur-lg opacity-70 animate-pulse"></div>
+                        
+                        <!-- Main badge -->
+                        <div class="relative bg-white px-4 sm:px-6 lg:px-8 py-2 lg:py-4 rounded-full shadow-2xl border border-red-200 lg:border-2">
+                            <div class="flex items-center space-x-2 lg:space-x-4">
+                                <!-- Animated icon -->
+                                <div class="relative">
+                                    <div class="w-3 h-3 lg:w-4 lg:h-4 bg-red-500 rounded-full animate-pulse"></div>
+                                    <div class="absolute inset-0 w-3 h-3 lg:w-4 lg:h-4 bg-red-500 rounded-full animate-ping opacity-75"></div>
+                                </div>
+                                <span class="text-sm sm:text-lg lg:text-xl font-black text-red-600 tracking-wide uppercase">BREAKING NEWS</span>
+                                <div class="relative">
+                                    <div class="w-3 h-3 lg:w-4 lg:h-4 bg-orange-500 rounded-full animate-pulse animation-delay-75"></div>
+                                    <div class="absolute inset-0 w-3 h-3 lg:w-4 lg:h-4 bg-orange-500 rounded-full animate-ping opacity-75 animation-delay-75"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-black text-white mb-3 lg:mb-4 leading-tight">
+                    <span class="block">Meest Recente</span>
+                    <span class="bg-gradient-to-r from-yellow-300 via-orange-300 to-red-300 bg-clip-text text-transparent">
+                        Politieke Update
+                    </span>
+                </h2>
+                
+                <p class="text-base sm:text-lg lg:text-xl text-red-100 max-w-3xl mx-auto px-4">
+                    Het laatste nieuws uit de Nederlandse politiek
+                </p>
+            </div>
+
+            <!-- Breaking news artikel -->
+            <?php if (!empty($latest_blogs)): 
+                $breaking_blog = $latest_blogs[0]; // Neem de meest recente blog
+            ?>
+            <div class="max-w-6xl mx-auto" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+                <div class="group relative bg-white/95 backdrop-blur-sm rounded-2xl lg:rounded-3xl shadow-2xl overflow-hidden transform transition-all duration-700 hover:-translate-y-3 hover:shadow-3xl border border-white/20">
+                    <!-- Top accent lijn -->
+                    <div class="absolute top-0 left-0 right-0 h-1 lg:h-2 bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500"></div>
+                    
+                    <!-- Hover effect overlay -->
+                    <div class="absolute inset-0 bg-gradient-to-br from-red-50/50 to-orange-50/30 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+                    
+                    <a href="<?php echo URLROOT . '/blogs/view/' . $breaking_blog->slug; ?>" class="block">
+                        <!-- Mobile layout: single column, Desktop: 3 columns -->
+                        <div class="flex flex-col lg:grid lg:grid-cols-3 gap-4 lg:gap-8 p-4 sm:p-6 lg:p-12">
+                            <!-- Image sectie -->
+                            <div class="lg:col-span-1 relative order-1">
+                                <div class="relative h-48 sm:h-56 lg:h-80 overflow-hidden rounded-xl lg:rounded-3xl group-hover:scale-105 transition-transform duration-700 lg:transform lg:rotate-1 lg:hover:rotate-0 lg:shadow-2xl lg:hover:shadow-3xl">
+                                    <?php if ($breaking_blog->image_path): ?>
+                                        <img src="<?php echo URLROOT . '/' . $breaking_blog->image_path; ?>" 
+                                             alt="<?php echo htmlspecialchars($breaking_blog->title); ?>"
+                                             class="w-full h-full object-cover"
+                                             loading="lazy">
+                                    <?php else: ?>
+                                        <div class="w-full h-full bg-gradient-to-br from-red-500/20 via-orange-500/20 to-yellow-500/30 flex items-center justify-center">
+                                            <div class="text-center">
+                                                <svg class="w-12 sm:w-16 lg:w-20 h-12 sm:h-16 lg:h-20 text-red-400 mx-auto mb-2 lg:mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
+                                                </svg>
+                                                <p class="text-red-500 font-medium text-sm lg:text-base">Breaking News</p>
+                                            </div>
+                                        </div>
+                                    <?php endif; ?>
+                                    
+                                    <!-- Gradient overlay -->
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                                    
+                                    <!-- Live badge -->
+                                    <div class="absolute top-3 lg:top-4 left-3 lg:left-4">
+                                        <div class="relative">
+                                            <div class="absolute inset-0 bg-red-600 rounded-lg lg:rounded-xl blur-sm animate-pulse"></div>
+                                            <div class="relative bg-red-600 text-white px-3 lg:px-4 py-1.5 lg:py-2 rounded-lg lg:rounded-xl shadow-lg backdrop-blur-sm">
+                                                <div class="flex items-center space-x-1.5 lg:space-x-2">
+                                                    <div class="relative flex h-1.5 w-1.5 lg:h-2 lg:w-2">
+                                                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                                                        <span class="relative inline-flex rounded-full h-full w-full bg-white"></span>
+                                                    </div>
+                                                    <span class="text-xs lg:text-sm font-bold uppercase tracking-wide">LIVE</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Time badge -->
+                                    <div class="absolute bottom-3 lg:bottom-4 right-3 lg:right-4">
+                                        <div class="bg-black/70 backdrop-blur-sm text-white px-2.5 lg:px-3 py-1.5 lg:py-2 rounded-lg lg:rounded-xl shadow-lg">
+                                            <div class="flex items-center space-x-1.5 lg:space-x-2">
+                                                <svg class="w-2.5 h-2.5 lg:w-3 lg:h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                                </svg>
+                                                <span class="text-xs lg:text-sm font-medium"><?php echo getRelativeTime($breaking_blog->published_at); ?></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Decoratieve border glow voor desktop -->
+                                    <div class="hidden lg:block absolute inset-0 rounded-3xl border-2 border-white/20 group-hover:border-white/40 transition-all duration-700 pointer-events-none"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Content sectie -->
+                            <div class="lg:col-span-2 space-y-4 lg:space-y-6 flex flex-col justify-center order-2">
+                                <!-- Author info -->
+                                <div class="flex items-center space-x-3 lg:space-x-4">
+                                    <div class="w-10 h-10 lg:w-14 lg:h-14 rounded-full overflow-hidden ring-2 ring-red-200 group-hover:ring-red-400 transition-all duration-300">
+                                        <img src="https://media.licdn.com/dms/image/v2/D4E03AQFQkWCitMT1ug/profile-displayphoto-shrink_400_400/B4EZYuubOTHMAg-/0/1744540644719?e=1750291200&v=beta&t=Qs38y2l_-SWd_N2CcavekytGxrU06ixhojbHdDktfxM" 
+                                             alt="<?php echo htmlspecialchars($breaking_blog->author_name); ?>"
+                                             class="w-full h-full object-cover">
+                                    </div>
+                                    <div>
+                                        <p class="text-sm lg:text-lg font-bold text-gray-900"><?php echo htmlspecialchars($breaking_blog->author_name); ?></p>
+                                        <p class="text-xs lg:text-sm text-gray-600">Politiek Analist</p>
+                                    </div>
+                                </div>
+
+                                <!-- Titel -->
+                                <h3 class="text-xl sm:text-2xl lg:text-4xl xl:text-5xl font-black text-gray-900 leading-tight group-hover:text-red-600 transition-colors duration-300">
+                                    <?php echo htmlspecialchars($breaking_blog->title); ?>
+                                </h3>
+
+                                <!-- Summary -->
+                                <p class="text-sm sm:text-base lg:text-lg xl:text-xl text-gray-600 leading-relaxed line-clamp-3">
+                                    <?php echo htmlspecialchars($breaking_blog->summary); ?>
+                                </p>
+
+                                <!-- Footer met statistieken -->
+                                <div class="flex flex-col space-y-4 lg:flex-row lg:items-center lg:justify-between lg:space-y-0 pt-4 lg:pt-6 border-t border-gray-200/50">
+                                    <div class="flex items-center space-x-4 lg:space-x-6 text-xs lg:text-sm text-gray-500">
+                                        <div class="flex items-center space-x-1.5 lg:space-x-2">
+                                            <svg class="w-3.5 h-3.5 lg:w-4 lg:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                            </svg>
+                                            <span>
+                                                <?php 
+                                                    $wordCount = str_word_count(strip_tags($breaking_blog->content ?? ''));
+                                                    $readingTime = max(1, round($wordCount / 200));
+                                                    echo $readingTime . ' min leestijd';
+                                                ?>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- CTA Button -->
+                                    <div class="relative w-full lg:w-auto">
+                                        <div class="absolute inset-0 bg-gradient-to-r from-red-500 to-orange-500 rounded-lg lg:rounded-xl blur opacity-0 group-hover:opacity-50 transition-opacity duration-300"></div>
+                                        <div class="relative bg-gradient-to-r from-red-500 to-orange-500 px-4 lg:px-6 py-2.5 lg:py-3 rounded-lg lg:rounded-xl text-white font-bold transition-all duration-300 hover:scale-105 shadow-lg">
+                                            <div class="flex items-center justify-center space-x-2">
+                                                <span class="text-sm lg:text-base">Lees Breaking News</span>
+                                                <svg class="w-4 h-4 lg:w-5 lg:h-5 transform transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    <!-- Decoratieve hoek elementen - alleen op desktop -->
+                    <div class="hidden lg:block absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-red-500/20 to-orange-500/20 transform rotate-45 translate-x-10 -translate-y-10 group-hover:translate-x-8 group-hover:-translate-y-8 transition-transform duration-700 opacity-0 group-hover:opacity-100"></div>
+                    <div class="hidden lg:block absolute bottom-0 left-0 w-16 h-16 bg-gradient-to-tr from-orange-500/20 to-yellow-500/20 transform rotate-45 -translate-x-8 translate-y-8 group-hover:-translate-x-6 group-hover:translate-y-6 transition-transform duration-700 opacity-0 group-hover:opacity-100"></div>
+                </div>
+            </div>
+            <?php endif; ?>
+        </div>
+    </section>
 
         <!-- Laatste Nieuws & Blogs Sections -->
         <section class="py-24 bg-gradient-to-b from-gray-50 via-white to-gray-50 relative overflow-hidden">
