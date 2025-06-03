@@ -4,22 +4,18 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST');
 header('Access-Control-Allow-Headers: Content-Type');
 
-// Error logging voor debugging
-error_reporting(E_ALL);
-ini_set('log_errors', 1);
-
 // Include necessary files
 require_once '../includes/config.php';
 require_once '../includes/Database.php';
 require_once '../includes/StemwijzerController.php';
 
+// Initialize controller
+$stemwijzerController = new StemwijzerController();
+
+// Get the request method
+$method = $_SERVER['REQUEST_METHOD'];
+
 try {
-    // Initialize controller
-    $stemwijzerController = new StemwijzerController();
-
-    // Get the request method
-    $method = $_SERVER['REQUEST_METHOD'];
-
     switch ($method) {
         case 'GET':
             $action = $_GET['action'] ?? 'data';
@@ -28,21 +24,11 @@ try {
                 case 'data':
                     // Haal alle stemwijzer data op
                     $data = $stemwijzerController->getStemwijzerData();
-                    
-                    // Debug info toevoegen
-                    $response = [
+                    echo json_encode([
                         'success' => true,
                         'data' => $data,
-                        'total_questions' => count($data['questions']),
-                        'debug' => [
-                            'schema_type' => $data['schema_type'] ?? 'unknown',
-                            'questions_count' => count($data['questions']),
-                            'parties_count' => count($data['parties']),
-                            'logos_count' => count($data['partyLogos'])
-                        ]
-                    ];
-                    
-                    echo json_encode($response);
+                        'total_questions' => count($data['questions'])
+                    ]);
                     break;
                     
                 case 'questions':
@@ -78,7 +64,7 @@ try {
                     http_response_code(400);
                     echo json_encode([
                         'success' => false,
-                        'error' => 'Invalid action parameter: ' . $action
+                        'error' => 'Invalid action parameter'
                     ]);
             }
             break;
@@ -117,7 +103,7 @@ try {
                     http_response_code(400);
                     echo json_encode([
                         'success' => false,
-                        'error' => 'Invalid action for POST request: ' . $action
+                        'error' => 'Invalid action for POST request'
                     ]);
             }
             break;
@@ -126,23 +112,14 @@ try {
             http_response_code(405);
             echo json_encode([
                 'success' => false,
-                'error' => 'Method not allowed: ' . $method
+                'error' => 'Method not allowed'
             ]);
     }
     
 } catch (Exception $e) {
-    // Log the error for debugging
-    error_log('Stemwijzer API Error: ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
-    error_log('Stack trace: ' . $e->getTraceAsString());
-    
     http_response_code(500);
     echo json_encode([
         'success' => false,
-        'error' => 'Server error: ' . $e->getMessage(),
-        'debug' => [
-            'file' => $e->getFile(),
-            'line' => $e->getLine(),
-            'trace' => $e->getTraceAsString()
-        ]
+        'error' => 'Server error: ' . $e->getMessage()
     ]);
 } 

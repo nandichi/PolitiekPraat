@@ -4,7 +4,7 @@ require_once 'includes/Database.php';
 require_once 'includes/StemwijzerController.php';
 
 // Debug mode - zet op true voor live debugging
-$debugMode = true;
+$debugMode = false;
 
 if ($debugMode) {
     error_reporting(E_ALL);
@@ -419,7 +419,7 @@ require_once 'views/templates/header.php';
                                             </svg>
                                             Linkse partijen vinden:
                                         </h4>
-                                        <p x-text="questions[currentStep].left_view" 
+                                        <p x-text="questions[currentStep].leftView" 
                                            class="text-blue-800 leading-relaxed"></p>
                                     </div>
                                     <div class="bg-red-50 p-5">
@@ -430,7 +430,7 @@ require_once 'views/templates/header.php';
                                             </svg>
                                             Rechtse partijen vinden:
                                         </h4>
-                                        <p x-text="questions[currentStep].right_view" 
+                                        <p x-text="questions[currentStep].rightView" 
                                            class="text-red-800 leading-relaxed"></p>
                                     </div>
                                 </div>
@@ -1015,30 +1015,28 @@ function stemwijzer() {
         getFallbackQuestions() {
             return [
                 {
-                    id: 1,
                     title: "Asielbeleid",
                     description: "Nederland moet een strenger asielbeleid voeren met een asielstop en lagere immigratiecijfers.",
                     context: "Bij deze stelling gaat het erom hoe Nederland omgaat met mensen die asiel aanvragen.",
                     left_view: "Vinden dat Nederland humaan moet blijven en vluchtelingen moet opvangen.",
                     right_view: "Willen de instroom van asielzoekers beperken omdat zij vinden dat dit de druk op de samenleving verlaagt.",
-                    order_number: 1,
-                    positions: {
-                        'PVV': 'eens',
-                        'VVD': 'eens',
-                        'NSC': 'eens',
-                        'BBB': 'eens',
-                        'GL-PvdA': 'oneens',
-                        'D66': 'oneens',
-                        'SP': 'neutraal',
-                        'PvdD': 'oneens',
-                        'CDA': 'neutraal',
-                        'JA21': 'eens',
-                        'SGP': 'eens',
-                        'FvD': 'eens',
-                        'DENK': 'oneens',
-                        'Volt': 'oneens'
-                    },
-                    explanations: {
+                positions: {
+                    'PVV': 'eens',
+                    'VVD': 'eens',
+                    'NSC': 'eens',
+                    'BBB': 'eens',
+                    'GL-PvdA': 'oneens',
+                    'D66': 'oneens',
+                    'SP': 'neutraal',
+                    'PvdD': 'oneens',
+                    'CDA': 'neutraal',
+                    'JA21': 'eens',
+                    'SGP': 'eens',
+                    'FvD': 'eens',
+                    'DENK': 'oneens',
+                    'Volt': 'oneens'
+                },
+                explanations: {
                         'PVV': "PVV steunt een strenger asielbeleid met een volledige asielstop.",
                         'VVD': "VVD pleit voor een strengere selectie van asielaanvragen.",
                         'NSC': "NSC benadrukt een doordacht asielbeleid.",
