@@ -36,12 +36,14 @@ class StemwijzerController {
                 $hasIsActive = $this->db->single();
                 
                 $this->schemaType = $hasIsActive ? 'new' : 'new_without_active';
+                error_log("StemwijzerController: Detected schema type: " . $this->schemaType);
             } else {
                 // Probeer oude schema tabel
                 $this->db->query("SHOW TABLES LIKE 'questions'");
                 $oldSchema = $this->db->single();
                 
                 $this->schemaType = $oldSchema ? 'old' : 'fallback';
+                error_log("StemwijzerController: Detected schema type: " . $this->schemaType);
             }
         } catch (Exception $e) {
             error_log("StemwijzerController: Schema detection failed - " . $e->getMessage());
@@ -54,6 +56,7 @@ class StemwijzerController {
      */
     public function getQuestions() {
         if (!$this->hasValidConnection || $this->schemaType === 'fallback') {
+            error_log("StemwijzerController: Using fallback questions - no DB connection or fallback schema");
             return $this->getFallbackQuestions();
         }
         
@@ -87,7 +90,7 @@ class StemwijzerController {
                     ORDER BY order_number ASC
                 ");
             } else {
-                // Nieuwe schema met is_active kolom
+                // Nieuwe schema met is_active kolom (dit is wat we verwachten)
                 $this->db->query("
                     SELECT 
                         id,
@@ -105,8 +108,11 @@ class StemwijzerController {
             
             $result = $this->db->resultSet();
             
+            error_log("StemwijzerController: Found " . count($result) . " questions from database");
+            
             // Als geen vragen gevonden, gebruik fallback
             if (empty($result)) {
+                error_log("StemwijzerController: No questions found in database, using fallback");
                 return $this->getFallbackQuestions();
             }
             
@@ -123,6 +129,7 @@ class StemwijzerController {
      */
     public function getParties() {
         if (!$this->hasValidConnection || $this->schemaType === 'fallback') {
+            error_log("StemwijzerController: Using fallback parties - no DB connection or fallback schema");
             return $this->getFallbackParties();
         }
         
@@ -138,19 +145,8 @@ class StemwijzerController {
                     FROM parties 
                     ORDER BY party_name ASC
                 ");
-            } else if ($this->schemaType === 'new_without_active') {
-                // Nieuwe schema zonder is_active kolom
-                $this->db->query("
-                    SELECT 
-                        id,
-                        name,
-                        short_name,
-                        logo_url
-                    FROM stemwijzer_parties 
-                    ORDER BY name ASC
-                ");
             } else {
-                // Nieuwe schema met is_active kolom
+                // Nieuwe schema (beide varianten) - geen is_active kolom voor partijen volgens screenshot
                 $this->db->query("
                     SELECT 
                         id,
@@ -158,15 +154,17 @@ class StemwijzerController {
                         short_name,
                         logo_url
                     FROM stemwijzer_parties 
-                    WHERE is_active = 1 
                     ORDER BY name ASC
                 ");
             }
             
             $result = $this->db->resultSet();
             
+            error_log("StemwijzerController: Found " . count($result) . " parties from database");
+            
             // Als geen partijen gevonden, gebruik fallback
             if (empty($result)) {
+                error_log("StemwijzerController: No parties found in database, using fallback");
                 return $this->getFallbackParties();
             }
             
@@ -183,6 +181,7 @@ class StemwijzerController {
      */
     public function getPositionsForQuestion($questionId) {
         if (!$this->hasValidConnection || $this->schemaType === 'fallback') {
+            error_log("StemwijzerController: Using fallback positions for question $questionId - no DB connection or fallback schema");
             return $this->getFallbackPositionsForQuestion($questionId);
         }
         
@@ -201,38 +200,23 @@ class StemwijzerController {
                     ORDER BY p.party_name ASC
                 ");
             } else {
-                // Nieuwe schema (beide varianten)
-                if ($this->schemaType === 'new_without_active') {
-                    $this->db->query("
-                        SELECT 
-                            sp.name as party_name,
-                            sp.short_name,
-                            spos.position,
-                            spos.explanation
-                        FROM stemwijzer_positions spos
-                        JOIN stemwijzer_parties sp ON spos.party_id = sp.id
-                        WHERE spos.question_id = :question_id 
-                        ORDER BY sp.name ASC
-                    ");
-                } else {
-                    $this->db->query("
-                        SELECT 
-                            sp.name as party_name,
-                            sp.short_name,
-                            spos.position,
-                            spos.explanation
-                        FROM stemwijzer_positions spos
-                        JOIN stemwijzer_parties sp ON spos.party_id = sp.id
-                        WHERE sp.is_active = 1 AND spos.question_id = :question_id 
-                        ORDER BY sp.name ASC
-                    ");
-                }
+                // Nieuwe schema - gebaseerd op de screenshots
+                $this->db->query("
+                    SELECT 
+                        sp.name as party_name,
+                        sp.short_name,
+                        spos.position,
+                        spos.explanation
+                    FROM stemwijzer_positions spos
+                    INNER JOIN stemwijzer_parties sp ON spos.party_id = sp.id
+                    WHERE spos.question_id = :question_id 
+                    ORDER BY sp.name ASC
+                ");
             }
             
             $this->db->bind(':question_id', $questionId);
             $results = $this->db->resultSet();
             
-            // Debug logging
             error_log("StemwijzerController: Loading positions for question $questionId, found " . count($results) . " results");
             
             // Converteer naar associatieve array voor gemakkelijke toegang
@@ -244,7 +228,6 @@ class StemwijzerController {
                 $positions[$shortName] = $result->position;
                 $explanations[$shortName] = $result->explanation;
                 
-                // Debug logging
                 error_log("StemwijzerController: Position for $shortName: {$result->position}");
             }
             
