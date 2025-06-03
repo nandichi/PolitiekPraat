@@ -5,6 +5,31 @@ require_once 'includes/OpenDataAPI.php';
 require_once 'includes/PoliticalDataAPI.php';
 require_once 'includes/PollAPI.php';
 
+// Helper functie om Markdown syntax te strippen
+function stripMarkdown($text) {
+    if (empty($text)) {
+        return $text;
+    }
+    
+    // Strip verschillende Markdown elementen
+    $text = preg_replace('/^#{1,6}\s+/m', '', $text); // Headers (# ## ###)
+    $text = preg_replace('/\*\*(.*?)\*\*/', '$1', $text); // Bold **text**
+    $text = preg_replace('/\*(.*?)\*/', '$1', $text); // Italic *text*
+    $text = preg_replace('/`(.*?)`/', '$1', $text); // Inline code `code`
+    $text = preg_replace('/\[(.*?)\]\(.*?\)/', '$1', $text); // Links [text](url)
+    $text = preg_replace('/^\s*[-*+]\s+/m', '', $text); // Unordered lists
+    $text = preg_replace('/^\s*\d+\.\s+/m', '', $text); // Ordered lists
+    $text = preg_replace('/^>\s+/m', '', $text); // Blockquotes
+    $text = preg_replace('/^\s*```.*?```\s*$/ms', '', $text); // Code blocks
+    $text = preg_replace('/^\s*---+\s*$/m', '', $text); // Horizontal rules
+    
+    // Verwijder extra witruimte
+    $text = preg_replace('/\n\s*\n/', "\n", $text);
+    $text = trim($text);
+    
+    return $text;
+}
+
 // PERFORMANCE TODO: Implement server-side caching (e.g., Redis, Memcached) for database queries and API responses to significantly improve TTFB (Time To First Byte).
 $db = new Database();
 $newsAPI = new NewsAPI();
@@ -223,9 +248,15 @@ $featured_blogs = $db->resultSet();
 // Berekenen van relatieve publicatiedatum voor blogs
 foreach ($latest_blogs as $blog) {
     $blog->relative_date = getRelativeTime($blog->published_at);
+    // Strip Markdown van titel en summary
+    $blog->title = stripMarkdown($blog->title);
+    $blog->summary = stripMarkdown($blog->summary);
 }
 foreach ($featured_blogs as $blog) {
     $blog->relative_date = getRelativeTime($blog->published_at);
+    // Strip Markdown van titel en summary
+    $blog->title = stripMarkdown($blog->title);
+    $blog->summary = stripMarkdown($blog->summary);
 }
 
 // Haal het laatste nieuws op
