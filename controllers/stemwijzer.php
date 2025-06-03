@@ -18,7 +18,6 @@ $stemwijzerController = new StemwijzerController();
 try {
     if ($debugMode) {
         echo "<!-- DEBUG: Probeer stemwijzer data te laden -->\n";
-        echo "<!-- DEBUG: Schema type: " . $stemwijzerController->getSchemaType() . " -->\n";
     }
     
     $stemwijzerData = $stemwijzerController->getStemwijzerData();
