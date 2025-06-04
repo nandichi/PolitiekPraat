@@ -752,8 +752,9 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
     <div class="flex-grow relative z-10">
     </div>
 
-    <!-- Breaking News Banner - Added above navigation -->
-    <div class="relative z-60 bg-gradient-to-r from-red-600 via-red-500 to-red-600 shadow-lg border-b border-red-400">
+    <!-- Breaking News Banner - Fixed mobile layout -->
+    <div class="relative z-50 bg-gradient-to-r from-red-600 via-red-500 to-red-600 shadow-lg border-b border-red-400 transition-transform duration-300" 
+         id="breaking-news-banner">
         <!-- Animated background pattern -->
         <div class="absolute inset-0 bg-gradient-to-r from-transparent via-red-400/20 to-transparent animate-marquee"></div>
         
@@ -801,51 +802,47 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                 </div>
             </div>
 
-            <!-- Mobile Layout - Completely redesigned -->
-            <div class="md:hidden py-3">
-                <!-- Top row: Breaking News label and close button -->
-                <div class="flex items-center justify-between mb-2">
+            <!-- Mobile Layout - Simplified and fixed -->
+            <div class="md:hidden py-2">
+                <div class="flex items-center justify-between">
+                    <!-- Breaking News Label -->
                     <div class="flex items-center space-x-2">
                         <div class="w-2 h-2 bg-white rounded-full animate-pulse"></div>
                         <span class="text-white font-bold text-xs uppercase tracking-wider">Breaking News</span>
-                        <div class="animate-pulse">
-                            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                            </svg>
-                        </div>
                     </div>
                     
-                    <button onclick="this.closest('.relative.z-60').style.display='none'" 
-                            class="p-1.5 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-200">
+                    <!-- Close button -->
+                    <button onclick="this.closest('#breaking-news-banner').style.display='none'" 
+                            class="p-1 text-white/80 hover:text-white hover:bg-white/10 rounded transition-colors">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                         </svg>
                     </button>
                 </div>
 
-                <!-- Mobile News Content - Large and readable -->
-                <a href="https://politiekpraat.nl/blogs/view/pvv-stapt-uit-de-coalitie-een-kritisch-overzicht-van-een-mislukt-experiment" 
-                   class="block">
-                    <div class="bg-white/10 backdrop-blur-sm rounded-lg p-3 border border-white/20 hover:bg-white/15 transition-all duration-300">
+                <!-- Mobile News Content -->
+                <div class="mt-2">
+                    <a href="https://politiekpraat.nl/blogs/view/pvv-stapt-uit-de-coalitie-een-kritisch-overzicht-van-een-mislukt-experiment" 
+                       class="block bg-white/10 backdrop-blur-sm rounded-lg p-3 border border-white/20 hover:bg-white/15 transition-all duration-300">
                         <div class="flex items-start space-x-2">
-                            <span class="text-lg">🚨</span>
-                            <div class="flex-1">
-                                <h3 class="text-white font-bold text-base leading-tight mb-1">
+                            <span class="text-lg flex-shrink-0">🚨</span>
+                            <div class="flex-1 min-w-0">
+                                <h3 class="text-white font-bold text-sm leading-tight mb-1">
                                     KABINET SCHOOF-I GEVALLEN
                                 </h3>
-                                <p class="text-white/90 text-sm leading-relaxed">
+                                <p class="text-white/90 text-xs leading-relaxed">
                                     PVV trekt zich terug uit coalitie na onenigheid over asielbeleid
                                 </p>
                                 <div class="flex items-center mt-2 text-yellow-200 text-xs font-medium">
-                                    <span>Lees het volledige verhaal</span>
+                                    <span>Lees meer</span>
                                     <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
                                     </svg>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </a>
+                    </a>
+                </div>
             </div>
         </div>
         
@@ -853,8 +850,8 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
         <div class="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-white/50 to-transparent"></div>
     </div>
 
-    <!-- Main Navigation - Modernized -->
-    <nav class="relative z-50 sticky top-0 header-container">
+    <!-- Main Navigation - Fixed z-index and mobile layout -->
+    <nav class="relative z-20 sticky top-0 header-container">
         <!-- Subtle top reflection line -->
         <div aria-hidden="true" class="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
         
@@ -867,52 +864,37 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
         <!-- Navigation content -->
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6">
             <div class="flex justify-between items-center h-16 md:h-20">
-                <!-- Logo - Modern & Elegant -->
-                <a href="<?php echo URLROOT; ?>" class="flex items-center space-x-3 group relative z-10">
-                    <div class="relative overflow-hidden flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-xl 
+                <!-- Logo - Fixed mobile layout -->
+                <a href="<?php echo URLROOT; ?>" class="flex items-center space-x-2 md:space-x-3 group relative z-10">
+                    <div class="relative overflow-hidden flex items-center justify-center w-8 h-8 md:w-12 md:h-12 rounded-xl 
                                 bg-gradient-to-br from-primary to-primary/80 
                                 backdrop-blur-sm shadow-lg transition-all duration-500 
                                 group-hover:from-primary/90 group-hover:to-secondary/80 group-hover:scale-105 
                                 group-hover:shadow-secondary/20 group-hover:shadow-xl border border-white/10 
                                 group-hover:border-white/20">
                         
-                        <!-- PolitiekPraat Logo met verbeterde effecten -->
                         <img src="<?php echo URLROOT; ?>/images/favicon-512x512.png" 
                              alt="PolitiekPraat Logo" 
-                             class="w-8 h-8 md:w-9 md:h-9 object-contain transition-all duration-500
+                             class="w-6 h-6 md:w-9 md:h-9 object-contain transition-all duration-500
                                     group-hover:scale-110 group-hover:rotate-3 group-hover:brightness-110">
                         
                         <!-- Dynamic glow effect -->
                         <div class="absolute inset-0 rounded-xl bg-white/10 opacity-0 blur-md group-hover:opacity-80 
                                     transition-all duration-500 animate-pulse-slow"></div>
-                        
-                        <!-- Animated particles for decoration -->
-                        <div class="absolute h-1 w-1 rounded-full bg-white/40 top-1 left-1 opacity-0 
-                                    group-hover:opacity-100 group-hover:animate-ping"></div>
-                        <div class="absolute h-1 w-1 rounded-full bg-white/40 bottom-2 right-1 opacity-0 
-                                    group-hover:opacity-100 group-hover:animate-ping" style="animation-delay: 0.5s"></div>
                     </div>
                     
-                    <!-- Text with enhanced styling and animations -->
+                    <!-- Text with mobile-friendly sizing -->
                     <div class="flex flex-col">
-                        <div class="relative overflow-hidden">
-                            <span class="text-lg md:text-xl font-bold text-white tracking-tight relative 
-                                         transition-all duration-500 group-hover:text-transparent 
-                                         group-hover:bg-clip-text group-hover:bg-gradient-to-r 
-                                         group-hover:from-white group-hover:to-white/80">
-                                <?php echo SITENAME; ?>
-                            </span>
-                            <!-- Enhanced underline animation -->
-                            <span class="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-secondary via-secondary/80 to-white/70 
-                                        group-hover:w-full transition-all duration-700 ease-out"></span>
-                        </div>
-                        <!-- Tagline with improved styling -->
+                        <span class="text-base md:text-xl font-bold text-white tracking-tight relative 
+                                     transition-all duration-500 group-hover:text-transparent 
+                                     group-hover:bg-clip-text group-hover:bg-gradient-to-r 
+                                     group-hover:from-white group-hover:to-white/80">
+                            <?php echo SITENAME; ?>
+                        </span>
                         <span class="text-xs md:text-sm text-white/70 font-medium transition-all duration-500 
-                                    group-hover:text-white/90 italic">
+                                    group-hover:text-white/90 italic hidden sm:block">
                             <span class="hidden md:inline">Samen</span> bouwen aan democratie
-                            <!-- Subtle dot indicator -->
-                            <span class="inline-block w-1.5 h-1.5 ml-1 bg-secondary rounded-full 
-                                        animate-pulse-slow"></span>
+                            <span class="inline-block w-1.5 h-1.5 ml-1 bg-secondary rounded-full animate-pulse-slow"></span>
                         </span>
                     </div>
                 </a>
@@ -1190,10 +1172,10 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                     <?php endif; ?>
                 </div>
 
-                <!-- Mobile Menu Button - Elegant & Modern -->
-                <button class="md:hidden relative z-50 p-1.5 text-white hover:bg-white/15 rounded-lg border border-white/20 
+                <!-- Mobile Menu Button - Fixed styling -->
+                <button class="md:hidden relative z-10 p-2 text-white hover:bg-white/15 rounded-lg border border-white/20 
                             transition-all duration-300 hover:border-white/30 group" 
-                        id="mobile-menu-button">
+                        id="mobile-menu-button" aria-label="Menu openen">
                     <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:scale-110" 
                          fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
@@ -1203,22 +1185,25 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
         </div>
     </nav>
 
-    <!-- Mobile Menu - Enhanced -->
-    <div class="md:hidden hidden fixed inset-0 z-40 glass-dark" id="mobile-menu-overlay">
-        <!-- Backdrop with blur effect -->
-        <div class="absolute inset-0 bg-primary/90 backdrop-blur-md"
+    <!-- Mobile Menu - Fixed overlay and animations -->
+    <div class="md:hidden fixed inset-0 z-50 transition-all duration-300 opacity-0 invisible pointer-events-none" 
+         id="mobile-menu-overlay">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-primary/90 backdrop-blur-md transition-opacity duration-300"
              onclick="closeMobileMenu()"></div>
         
-        <!-- Menu Content -->
-        <div class="relative h-full w-full max-w-xs ml-auto bg-gradient-to-b from-primary to-primary/95 
-                    shadow-2xl overflow-y-auto transform transition-all duration-500 ease-in-out">
+        <!-- Menu Content - Fixed positioning and animations -->
+        <div class="absolute right-0 top-0 h-full w-full max-w-xs bg-gradient-to-b from-primary to-primary/95 
+                    shadow-2xl overflow-y-auto transform translate-x-full transition-transform duration-300 ease-out"
+             id="mobile-menu-content">
+            
             <!-- Mobile menu content -->
-            <div class="p-5 space-y-5">
+            <div class="p-4 space-y-4">
                 <!-- Close Button -->
                 <div class="flex justify-end">
                     <button class="p-2 text-white/80 hover:text-white hover:bg-white/10 rounded-lg 
                                 transition-all duration-300 group" 
-                            onclick="closeMobileMenu()">
+                            onclick="closeMobileMenu()" aria-label="Menu sluiten">
                         <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:rotate-90" 
                              fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -1226,24 +1211,25 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                     </button>
                 </div>
 
-                <!-- Mobile Navigation Links - Enhanced and Modernized -->
-                <nav class="space-y-3">
+                <!-- Mobile Navigation Links - Simplified -->
+                <nav class="space-y-2">
                     <a href="<?php echo URLROOT; ?>/" 
-                       class="flex items-center text-white/90 hover:text-white p-2 rounded-lg transition-all duration-300 
-                              hover:bg-white/5 hover:pl-3 group">
-                        <div class="mr-3 p-1.5 bg-white/10 rounded-lg transition-all duration-300 
+                       class="flex items-center text-white/90 hover:text-white p-3 rounded-lg transition-all duration-300 
+                              hover:bg-white/10 group">
+                        <div class="mr-3 p-2 bg-white/10 rounded-lg transition-all duration-300 
                                     group-hover:bg-white/15 group-hover:scale-110">
-                            <img src="<?php echo URLROOT; ?>/images/favicon-512x512.png" 
-                                 alt="PolitiekPraat Logo" 
-                                 class="w-7 h-7 object-contain">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                      d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                            </svg>
                         </div>
                         <span class="font-medium">Home</span>
                     </a>
 
                     <a href="<?php echo URLROOT; ?>/blogs" 
-                       class="flex items-center text-white/90 hover:text-white p-2 rounded-lg transition-all duration-300 
-                              hover:bg-white/5 hover:pl-3 group">
-                        <div class="mr-3 p-1.5 bg-white/10 rounded-lg transition-all duration-300 
+                       class="flex items-center text-white/90 hover:text-white p-3 rounded-lg transition-all duration-300 
+                              hover:bg-white/10 group">
+                        <div class="mr-3 p-2 bg-white/10 rounded-lg transition-all duration-300 
                                     group-hover:bg-white/15 group-hover:scale-110">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
@@ -1254,9 +1240,9 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                     </a>
 
                     <a href="<?php echo URLROOT; ?>/nieuws" 
-                       class="flex items-center text-white/90 hover:text-white p-2 rounded-lg transition-all duration-300 
-                              hover:bg-white/5 hover:pl-3 group">
-                        <div class="mr-3 p-1.5 bg-white/10 rounded-lg transition-all duration-300 
+                       class="flex items-center text-white/90 hover:text-white p-3 rounded-lg transition-all duration-300 
+                              hover:bg-white/10 group">
+                        <div class="mr-3 p-2 bg-white/10 rounded-lg transition-all duration-300 
                                     group-hover:bg-white/15 group-hover:scale-110">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
@@ -1267,9 +1253,9 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                     </a>
 
                     <a href="<?php echo URLROOT; ?>/stemwijzer" 
-                       class="flex items-center text-white/90 hover:text-white p-2 rounded-lg transition-all duration-300 
-                              hover:bg-white/5 hover:pl-3 group">
-                        <div class="mr-3 p-1.5 bg-white/10 rounded-lg transition-all duration-300 
+                       class="flex items-center text-white/90 hover:text-white p-3 rounded-lg transition-all duration-300 
+                              hover:bg-white/10 group">
+                        <div class="mr-3 p-2 bg-white/10 rounded-lg transition-all duration-300 
                                     group-hover:bg-white/15 group-hover:scale-110">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
@@ -1278,18 +1264,17 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                         </div>
                         <span class="font-medium flex items-center">
                             Stemwijzer
-                            <span class="ml-2 inline-flex items-center px-1.5 py-0.5 text-[10px] font-medium 
-                                        bg-secondary/20 border border-secondary/40 text-white rounded-full
-                                        shadow-[0_0_8px_rgba(196,30,58,0.3)]">
+                            <span class="ml-2 inline-flex items-center px-2 py-0.5 text-xs font-medium 
+                                        bg-secondary/20 border border-secondary/40 text-white rounded-full">
                                 Nieuw
                             </span>
                         </span>
                     </a>
 
                     <a href="<?php echo URLROOT; ?>/partijen" 
-                       class="flex items-center text-white/90 hover:text-white p-2 rounded-lg transition-all duration-300 
-                              hover:bg-white/5 hover:pl-3 group">
-                        <div class="mr-3 p-1.5 bg-white/10 rounded-lg transition-all duration-300 
+                       class="flex items-center text-white/90 hover:text-white p-3 rounded-lg transition-all duration-300 
+                              hover:bg-white/10 group">
+                        <div class="mr-3 p-2 bg-white/10 rounded-lg transition-all duration-300 
                                     group-hover:bg-white/15 group-hover:scale-110">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -1299,100 +1284,72 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                         <span class="font-medium">Partijen</span>
                     </a>
 
-                    <!-- Forum Section - Improved -->
-                    <div class="space-y-2" style="display: none;">
-                        <button class="w-full flex items-center justify-between text-white/90 hover:text-white 
-                                     p-2 rounded-lg transition-all duration-300 hover:bg-white/5 group" 
-                                onclick="toggleMobileSubmenu('forum-submenu')">
-                            <div class="flex items-center">
-                                <div class="mr-3 p-1.5 bg-white/10 rounded-lg transition-all duration-300 
-                                            group-hover:bg-white/15 group-hover:scale-110">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                              d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/>
-                                    </svg>
-                                </div>
-                                <span class="font-medium">Forum</span>
-                            </div>
-                            <svg class="w-4 h-4 transform transition-transform duration-300" 
-                                 id="forum-submenu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <a href="<?php echo URLROOT; ?>/contact" 
+                       class="flex items-center text-white/90 hover:text-white p-3 rounded-lg transition-all duration-300 
+                              hover:bg-white/10 group">
+                        <div class="mr-3 p-2 bg-white/10 rounded-lg transition-all duration-300 
+                                    group-hover:bg-white/15 group-hover:scale-110">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                      d="M19 9l-7 7-7-7"/>
+                                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                             </svg>
-                        </button>
-                        <div class="hidden pl-10 space-y-2 border-l border-white/15" id="forum-submenu">
-                            <a href="<?php echo URLROOT; ?>/forum" 
-                               class="flex items-center text-white/80 hover:text-white p-2 rounded-lg transition-all duration-300 
-                                      hover:bg-white/5 hover:pl-3">
-                                <span class="font-medium">Alle discussies</span>
-                            </a>
-                            <?php if(isset($_SESSION['user_id'])): ?>
-                            <a href="<?php echo URLROOT; ?>/forum/create" 
-                               class="flex items-center text-white/80 hover:text-white p-2 rounded-lg transition-all duration-300 
-                                      hover:bg-white/5 hover:pl-3">
-                                <span class="font-medium">Start discussie</span>
-                            </a>
-                            <?php endif; ?>
                         </div>
-                    </div>
+                        <span class="font-medium">Contact</span>
+                    </a>
 
-                    <!-- Contact Section - Improved -->
-                    <div class="space-y-2">
-                        <button class="w-full flex items-center justify-between text-white/90 hover:text-white 
-                                     p-2 rounded-lg transition-all duration-300 hover:bg-white/5 group" 
-                                onclick="toggleMobileSubmenu('contact-submenu')">
-                            <div class="flex items-center">
-                                <div class="mr-3 p-1.5 bg-white/10 rounded-lg transition-all duration-300 
-                                            group-hover:bg-white/15 group-hover:scale-110">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                              d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                                    </svg>
-                                </div>
-                                <span class="font-medium">Contact</span>
-                            </div>
-                            <svg class="w-4 h-4 transform transition-transform duration-300" 
-                                 id="contact-submenu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <a href="<?php echo URLROOT; ?>/over-mij" 
+                       class="flex items-center text-white/90 hover:text-white p-3 rounded-lg transition-all duration-300 
+                              hover:bg-white/10 group">
+                        <div class="mr-3 p-2 bg-white/10 rounded-lg transition-all duration-300 
+                                    group-hover:bg-white/15 group-hover:scale-110">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                      d="M19 9l-7 7-7-7"/>
+                                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                             </svg>
-                        </button>
-                        <div class="hidden pl-10 space-y-2 border-l border-white/15" id="contact-submenu">
-                            <a href="<?php echo URLROOT; ?>/contact" 
-                               class="flex items-center text-white/80 hover:text-white p-2 rounded-lg transition-all duration-300 
-                                      hover:bg-white/5 hover:pl-3">
-                                <span class="font-medium">Contact opnemen</span>
-                            </a>
-                            <a href="<?php echo URLROOT; ?>/over-mij" 
-                               class="flex items-center text-white/80 hover:text-white p-2 rounded-lg transition-all duration-300 
-                                     hover:bg-white/5 hover:pl-3">
-                                <span class="font-medium">Over ons</span>
-                            </a>
                         </div>
-                    </div>
+                        <span class="font-medium">Over ons</span>
+                    </a>
                 </nav>
 
-                <!-- Mobile Auth Section - Improved -->
+                <!-- Mobile Auth Section - Simplified -->
                 <?php if(isset($_SESSION['user_id'])): ?>
-                    <div class="pt-5 mt-5 border-t border-white/15">
-                        <div class="flex items-center space-x-3 mb-4 bg-white/5 p-2.5 rounded-lg">
+                    <div class="pt-4 mt-4 border-t border-white/15">
+                        <div class="flex items-center space-x-3 mb-4 bg-white/5 p-3 rounded-lg">
                             <div class="w-10 h-10 bg-gradient-to-br from-secondary to-primary/80 rounded-lg 
                                       flex items-center justify-center shadow-lg">
-                                <span class="text-white text-lg font-bold">
-                                    <?php echo strtoupper(substr($_SESSION['username'], 0, 1)); ?>
-                                </span>
+                                <?php
+                                if (isset($_SESSION['username']) && $_SESSION['username'] === 'Naoufal') {
+                                    $profilePhotoUrl = "https://media.licdn.com/dms/image/v2/D4E03AQFQkWCitMT1ug/profile-displayphoto-shrink_400_400/B4EZYuubOTHMAg-/0/1744540644719?e=1750291200&v=beta&t=Qs38y2l_-SWd_N2CcavekytGxrU06ixhojbHdDktfxM";
+                                    ?>
+                                    <img src="<?php echo $profilePhotoUrl; ?>" 
+                                         alt="Profile" class="w-full h-full object-cover rounded-lg">
+                                <?php
+                                } else {
+                                    $profilePhoto = getProfilePhotoUrl($_SESSION['profile_photo'] ?? '', $_SESSION['username']);
+                                    if ($profilePhoto['type'] === 'img'): 
+                                    ?>
+                                        <img src="<?php echo $profilePhoto['value']; ?>" 
+                                             alt="Profile" class="w-full h-full object-cover rounded-lg">
+                                    <?php else: ?>
+                                        <span class="text-white font-bold text-lg">
+                                            <?php echo $profilePhoto['value']; ?>
+                                        </span>
+                                    <?php endif;
+                                }
+                                ?>
                             </div>
                             <div>
                                 <p class="text-white font-medium"><?php echo htmlspecialchars($_SESSION['username']); ?></p>
                                 <p class="text-xs text-white/70">Actief lid</p>
                             </div>
                         </div>
+                        
                         <div class="space-y-2">
                             <?php if($_SESSION['is_admin']): ?>
                                 <a href="<?php echo URLROOT; ?>/admin" 
-                                   class="flex items-center text-white/90 hover:text-white p-2 rounded-lg transition-all duration-300 
-                                          hover:bg-white/5 hover:pl-3 group">
-                                    <div class="mr-3 p-1.5 bg-white/10 rounded-lg transition-all duration-300 
+                                   class="flex items-center text-white/90 hover:text-white p-3 rounded-lg transition-all duration-300 
+                                          hover:bg-white/10 group">
+                                    <div class="mr-3 p-2 bg-white/10 rounded-lg transition-all duration-300 
                                                 group-hover:bg-white/15 group-hover:scale-110">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
@@ -1404,10 +1361,11 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                                     <span class="font-medium">Dashboard</span>
                                 </a>
                             <?php endif; ?>
+                            
                             <a href="<?php echo URLROOT; ?>/blogs/manage" 
-                               class="flex items-center text-white/90 hover:text-white p-2 rounded-lg transition-all duration-300 
-                                      hover:bg-white/5 hover:pl-3 group">
-                                <div class="mr-3 p-1.5 bg-white/10 rounded-lg transition-all duration-300 
+                               class="flex items-center text-white/90 hover:text-white p-3 rounded-lg transition-all duration-300 
+                                      hover:bg-white/10 group">
+                                <div class="mr-3 p-2 bg-white/10 rounded-lg transition-all duration-300 
                                             group-hover:bg-white/15 group-hover:scale-110">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
@@ -1416,10 +1374,11 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                                 </div>
                                 <span class="font-medium">Mijn Blogs</span>
                             </a>
+                            
                             <a href="<?php echo URLROOT; ?>/profile" 
-                               class="flex items-center text-white/90 hover:text-white p-2 rounded-lg transition-all duration-300 
-                                      hover:bg-white/5 hover:pl-3 group">
-                                <div class="mr-3 p-1.5 bg-white/10 rounded-lg transition-all duration-300 
+                               class="flex items-center text-white/90 hover:text-white p-3 rounded-lg transition-all duration-300 
+                                      hover:bg-white/10 group">
+                                <div class="mr-3 p-2 bg-white/10 rounded-lg transition-all duration-300 
                                             group-hover:bg-white/15 group-hover:scale-110">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
@@ -1428,10 +1387,11 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                                 </div>
                                 <span class="font-medium">Profiel</span>
                             </a>
+                            
                             <a href="<?php echo URLROOT; ?>/logout" 
-                               class="flex items-center text-red-300 hover:text-red-200 p-2 rounded-lg transition-all duration-300 
-                                     hover:bg-red-500/10 hover:pl-3 group">
-                                <div class="mr-3 p-1.5 bg-red-500/10 rounded-lg transition-all duration-300 
+                               class="flex items-center text-red-300 hover:text-red-200 p-3 rounded-lg transition-all duration-300 
+                                     hover:bg-red-500/10 group">
+                                <div class="mr-3 p-2 bg-red-500/10 rounded-lg transition-all duration-300 
                                             group-hover:bg-red-500/20 group-hover:scale-110">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
@@ -1443,11 +1403,11 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                         </div>
                     </div>
                 <?php else: ?>
-                    <div class="pt-5 mt-5 border-t border-white/15 space-y-4">
+                    <div class="pt-4 mt-4 border-t border-white/15 space-y-3">
                         <a href="<?php echo URLROOT; ?>/login" 
-                           class="flex items-center text-white/90 hover:text-white p-2 rounded-lg transition-all duration-300 
-                                  hover:bg-white/5 hover:pl-3 group">
-                            <div class="mr-3 p-1.5 bg-white/10 rounded-lg transition-all duration-300 
+                           class="flex items-center text-white/90 hover:text-white p-3 rounded-lg transition-all duration-300 
+                                  hover:bg-white/10 group">
+                            <div class="mr-3 p-2 bg-white/10 rounded-lg transition-all duration-300 
                                         group-hover:bg-white/15 group-hover:scale-110">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
@@ -1456,8 +1416,9 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                             </div>
                             <span class="font-medium">Inloggen</span>
                         </a>
+                        
                         <a href="<?php echo URLROOT; ?>/register" 
-                           class="flex items-center justify-center px-4 py-2.5 bg-white text-primary font-medium 
+                           class="flex items-center justify-center px-4 py-3 bg-white text-primary font-medium 
                                   rounded-lg shadow-lg transition-all duration-300 
                                   hover:bg-secondary hover:text-white transform hover:scale-[1.02]
                                   active:scale-[0.98]"
@@ -1470,17 +1431,88 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
         </div>
     </div>
 
-    <!-- Enhanced Mobile Menu Toggle Script -->
+    <!-- Fixed Mobile Menu Toggle Script -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('Initializing mobile menu...');
-            
             const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu-overlay');
-            const mobileMenuContent = mobileMenu.querySelector('.max-w-xs');
+            const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+            const mobileMenuContent = document.getElementById('mobile-menu-content');
+            const breakingNewsBanner = document.getElementById('breaking-news-banner');
+            
+            // Ensure elements exist
+            if (!mobileMenuButton || !mobileMenuOverlay || !mobileMenuContent) {
+                console.error('Mobile menu elements not found');
+                return;
+            }
 
-            // Ensure mobile menu is properly initialized
-            mobileMenuContent.classList.add('mobile-menu-enter');
+            // Global function to close mobile menu
+            window.closeMobileMenu = function() {
+                document.body.classList.remove('overflow-hidden');
+                mobileMenuOverlay.classList.remove('opacity-100', 'visible', 'pointer-events-auto');
+                mobileMenuOverlay.classList.add('opacity-0', 'invisible', 'pointer-events-none');
+                mobileMenuContent.classList.remove('translate-x-0');
+                mobileMenuContent.classList.add('translate-x-full');
+                
+                // Show breaking news banner again
+                if (breakingNewsBanner && breakingNewsBanner.style.display !== 'none') {
+                    breakingNewsBanner.style.transform = 'translateY(0)';
+                    breakingNewsBanner.style.visibility = 'visible';
+                }
+            };
+
+            // Open mobile menu function
+            function openMobileMenu() {
+                document.body.classList.add('overflow-hidden');
+                mobileMenuOverlay.classList.remove('opacity-0', 'invisible', 'pointer-events-none');
+                mobileMenuOverlay.classList.add('opacity-100', 'visible', 'pointer-events-auto');
+                mobileMenuContent.classList.remove('translate-x-full');
+                mobileMenuContent.classList.add('translate-x-0');
+                
+                // Hide breaking news banner on mobile only
+                if (breakingNewsBanner && window.innerWidth < 768) {
+                    breakingNewsBanner.style.transform = 'translateY(-100%)';
+                    breakingNewsBanner.style.visibility = 'hidden';
+                }
+            }
+
+            // Toggle mobile menu
+            mobileMenuButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                if (mobileMenuOverlay.classList.contains('invisible')) {
+                    openMobileMenu();
+                } else {
+                    closeMobileMenu();
+                }
+            });
+
+            // Close menu when clicking backdrop
+            mobileMenuOverlay.addEventListener('click', function(e) {
+                if (e.target === mobileMenuOverlay) {
+                    closeMobileMenu();
+                }
+            });
+
+            // Handle escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && !mobileMenuOverlay.classList.contains('invisible')) {
+                    closeMobileMenu();
+                }
+            });
+
+            // Handle window resize to show/hide breaking news banner appropriately
+            window.addEventListener('resize', function() {
+                if (window.innerWidth >= 768 && breakingNewsBanner) {
+                    // On desktop, always show the banner
+                    breakingNewsBanner.style.transform = 'translateY(0)';
+                    breakingNewsBanner.style.visibility = 'visible';
+                } else if (window.innerWidth < 768 && !mobileMenuOverlay.classList.contains('invisible')) {
+                    // On mobile with menu open, hide the banner
+                    breakingNewsBanner.style.transform = 'translateY(-100%)';
+                    breakingNewsBanner.style.visibility = 'hidden';
+                }
+            });
 
             // Handle desktop dropdowns
             const dropdownGroups = document.querySelectorAll('.group');
@@ -1491,7 +1523,6 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                 if (button && dropdown) {
                     let timeoutId;
                     
-                    // Show dropdown on hover or focus
                     group.addEventListener('mouseenter', () => {
                         clearTimeout(timeoutId);
                         dropdown.classList.add('dropdown-active');
@@ -1501,7 +1532,6 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                         dropdown.style.pointerEvents = 'auto';
                     });
                     
-                    // Hide dropdown when mouse leaves the group
                     group.addEventListener('mouseleave', () => {
                         timeoutId = setTimeout(() => {
                             dropdown.classList.remove('dropdown-active');
@@ -1509,168 +1539,10 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                             dropdown.style.visibility = 'hidden';
                             dropdown.style.transform = 'translateY(-10px) scale(0.97)';
                             dropdown.style.pointerEvents = 'none';
-                        }, 100); // Small delay to prevent flickering
-                    });
-                    
-                    // Ensure dropdown stays visible when focused
-                    button.addEventListener('focus', () => {
-                        clearTimeout(timeoutId);
-                        dropdown.classList.add('dropdown-active');
-                        dropdown.style.opacity = '1';
-                        dropdown.style.visibility = 'visible';
-                        dropdown.style.transform = 'translateY(0) scale(1)';
-                        dropdown.style.pointerEvents = 'auto';
-                    });
-                    
-                    // Handle keyboard navigation
-                    button.addEventListener('keydown', (e) => {
-                        if (e.key === 'Escape') {
-                            dropdown.classList.remove('dropdown-active');
-                            dropdown.style.opacity = '0';
-                            dropdown.style.visibility = 'hidden';
-                            dropdown.style.transform = 'translateY(-10px) scale(0.97)';
-                            dropdown.style.pointerEvents = 'none';
-                            button.blur();
-                        } else if (e.key === 'ArrowDown' || e.key === 'Enter') {
-                            e.preventDefault();
-                            dropdown.classList.add('dropdown-active');
-                            dropdown.style.opacity = '1';
-                            dropdown.style.visibility = 'visible';
-                            dropdown.style.transform = 'translateY(0) scale(1)';
-                            dropdown.style.pointerEvents = 'auto';
-                            
-                            // Focus the first link in the dropdown
-                            const firstLink = dropdown.querySelector('a');
-                            if (firstLink) {
-                                firstLink.focus();
-                            }
-                        }
-                    });
-                    
-                    // Handle keyboard navigation within dropdown
-                    const links = dropdown.querySelectorAll('a');
-                    links.forEach((link, index) => {
-                        link.addEventListener('keydown', (e) => {
-                            if (e.key === 'Escape') {
-                                dropdown.classList.remove('dropdown-active');
-                                dropdown.style.opacity = '0';
-                                dropdown.style.visibility = 'hidden';
-                                dropdown.style.transform = 'translateY(-10px) scale(0.97)';
-                                dropdown.style.pointerEvents = 'none';
-                                button.focus();
-                            } else if (e.key === 'ArrowDown') {
-                                e.preventDefault();
-                                const nextLink = links[index + 1] || links[0];
-                                if (nextLink) {
-                                    nextLink.focus();
-                                }
-                            } else if (e.key === 'ArrowUp') {
-                                e.preventDefault();
-                                const prevLink = links[index - 1] || links[links.length - 1];
-                                if (prevLink) {
-                                    prevLink.focus();
-                                }
-                            }
-                        });
+                        }, 100);
                     });
                 }
             });
-
-            function toggleMobileMenu() {
-                console.log('Toggle mobile menu');
-                if (mobileMenu.classList.contains('hidden')) {
-                    // Open menu with animations
-                    mobileMenu.classList.remove('hidden');
-                    document.body.classList.add('overflow-hidden');
-                    
-                    // Animate menu sliding in
-                    mobileMenuContent.classList.remove('mobile-menu-enter');
-                    mobileMenuContent.classList.add('mobile-menu-enter-active');
-                } else {
-                    // Close menu with animations
-                    mobileMenuContent.classList.remove('mobile-menu-enter-active');
-                    mobileMenuContent.classList.add('mobile-menu-exit');
-                    
-                    requestAnimationFrame(() => {
-                        mobileMenuContent.classList.remove('mobile-menu-exit');
-                        mobileMenuContent.classList.add('mobile-menu-exit-active');
-                    
-                        // Hide completely after animation
-                        setTimeout(() => {
-                            mobileMenu.classList.add('hidden');
-                            document.body.classList.remove('overflow-hidden');
-                            mobileMenuContent.classList.remove('mobile-menu-exit-active');
-                            mobileMenuContent.classList.add('mobile-menu-enter');
-                        }, 300);
-                    });
-                }
-            }
-
-            function closeMobileMenu() {
-                console.log('Close mobile menu');
-                // Close menu with animations
-                mobileMenuContent.classList.remove('mobile-menu-enter-active');
-                mobileMenuContent.classList.add('mobile-menu-exit');
-                
-                requestAnimationFrame(() => {
-                    mobileMenuContent.classList.remove('mobile-menu-exit');
-                    mobileMenuContent.classList.add('mobile-menu-exit-active');
-                
-                    // Hide completely after animation
-                    setTimeout(() => {
-                        mobileMenu.classList.add('hidden');
-                        document.body.classList.remove('overflow-hidden');
-                        mobileMenuContent.classList.remove('mobile-menu-exit-active');
-                        mobileMenuContent.classList.add('mobile-menu-enter');
-                    }, 300);
-                });
-            }
-
-            // Making the closeMobileMenu function globally available
-            window.closeMobileMenu = closeMobileMenu;
-
-            mobileMenuButton.addEventListener('click', toggleMobileMenu);
-
-            // Close mobile menu when clicking outside
-            mobileMenu.addEventListener('click', (e) => {
-                if (e.target === mobileMenu) {
-                    closeMobileMenu();
-                }
-            });
-
-            // Mobile submenu toggle functionality with enhanced animations
-            window.toggleMobileSubmenu = function(submenuId) {
-                console.log('Toggle submenu:', submenuId);
-                const submenu = document.getElementById(submenuId);
-                const icon = document.getElementById(submenuId + '-icon');
-                
-                if (submenu.classList.contains('hidden')) {
-                    // First add the display style but keep it invisible for animation
-                    submenu.classList.remove('hidden');
-                    submenu.style.opacity = '0';
-                    submenu.style.maxHeight = '0';
-                    
-                    // Force a reflow to enable transition
-                    void submenu.offsetWidth;
-                    
-                    // Then animate in
-                    submenu.style.opacity = '1';
-                    submenu.style.maxHeight = submenu.scrollHeight + 'px';
-                    icon.classList.add('rotate-180');
-                } else {
-                    // Animate out
-                    submenu.style.opacity = '0';
-                    submenu.style.maxHeight = '0';
-                    icon.classList.remove('rotate-180');
-                    
-                    // Hide completely after animation
-                    setTimeout(() => {
-                        submenu.classList.add('hidden');
-                        submenu.style.removeProperty('opacity');
-                        submenu.style.removeProperty('max-height');
-                    }, 300);
-                }
-            }
         });
     </script>
 
