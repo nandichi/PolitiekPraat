@@ -145,23 +145,25 @@ require_once 'views/templates/header.php';
             <div class="max-w-4xl mx-auto">
                 <!-- Badge -->
                 <div class="inline-flex items-center px-3 sm:px-4 py-2 rounded-full glass-effect text-white/90 text-xs sm:text-sm font-medium mb-6 sm:mb-8 slide-in-bottom">
-                    <svg class="w-3 sm:w-4 h-3 sm:h-4 mr-2 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    <svg class="w-3 sm:w-4 h-3 sm:h-4 mr-2 text-red-300 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"/>
                     </svg>
-                    Politieke Stemwijzer 2025
+                    🚨 Coalitie Gevallen - Nieuwe Verkiezingen 2025
                 </div>
                 
                 <!-- Main Title -->
                 <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-4 sm:mb-6 leading-tight slide-in-bottom" style="animation-delay: 0.2s;">
-                    Ontdek Jouw
+                    Na de 
+                    <span class="text-red-300">Politieke Crisis:</span>
                     <span class="block text-gradient bg-gradient-to-r from-blue-300 via-purple-300 to-pink-300 bg-clip-text text-transparent">
-                        Politieke Match
+                        Vind Jouw Stem
                     </span>
                 </h1>
                 
                 <!-- Subtitle -->
-                <p class="text-base sm:text-lg md:text-xl lg:text-2xl text-blue-100/80 mb-8 sm:mb-12 max-w-3xl mx-auto leading-relaxed font-light slide-in-bottom px-2 sm:px-0" style="animation-delay: 0.4s;">
-                    Beantwoord <?= $totalQuestions ?: 25 ?> stellingen en zie welke partijen het beste bij jouw standpunten passen
+                <p class="text-base sm:text-lg md:text-xl lg:text-2xl text-blue-100/80 mb-6 sm:mb-8 max-w-4xl mx-auto leading-relaxed font-light slide-in-bottom px-2 sm:px-0" style="animation-delay: 0.4s;">
+                    De coalitie is gevallen en Nederland staat voor cruciale keuzes. <strong class="text-blue-200 font-semibold">Welke partij vertegenwoordigt echt jouw visie?</strong> 
+                    Ontdek het met onze uitgebreide politieke match-test.
                 </p>
             </div>
         </div>
@@ -455,7 +457,7 @@ require_once 'views/templates/header.php';
                                                 <div class="bg-emerald-50 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-emerald-200/50">
                                                     <h4 class="font-semibold text-emerald-800 mb-2 flex items-center text-sm sm:text-base">
                                                         <div class="w-2 h-2 rounded-full bg-emerald-500 mr-2"></div>
-                                                        Voor-standpunt
+                                                        Links
                                                     </h4>
                                                     <p class="text-emerald-700 text-xs sm:text-sm leading-relaxed" x-text="questions[currentStep].left_view"></p>
                                                 </div>
@@ -463,7 +465,7 @@ require_once 'views/templates/header.php';
                                                 <div class="bg-red-50 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-red-200/50">
                                                     <h4 class="font-semibold text-red-800 mb-2 flex items-center text-sm sm:text-base">
                                                         <div class="w-2 h-2 rounded-full bg-red-500 mr-2"></div>
-                                                        Tegen-standpunt
+                                                        Rechts
                                                     </h4>
                                                     <p class="text-red-700 text-xs sm:text-sm leading-relaxed" x-text="questions[currentStep].right_view"></p>
                                                 </div>
@@ -588,16 +590,39 @@ require_once 'views/templates/header.php';
                             <div class="absolute inset-0 bg-gradient-to-br from-indigo-50/30 to-blue-50/30"></div>
                             
                             <div class="relative z-10">
-                                <div class="flex items-center space-x-3 mb-6">
-                                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-blue-600 flex items-center justify-center">
-                                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                                <!-- Collapsible Header -->
+                                <button @click="showPartyPositions = !showPartyPositions" 
+                                        class="w-full flex items-center justify-between p-0 bg-transparent border-none cursor-pointer group">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-blue-600 flex items-center justify-center">
+                                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                                            </svg>
+                                        </div>
+                                        <h3 class="text-lg font-semibold text-gray-800 group-hover:text-indigo-600 transition-colors">Partij Standpunten</h3>
+                                    </div>
+                                    
+                                    <!-- Toggle Icon -->
+                                    <div class="flex items-center space-x-2">
+                                        <span class="text-xs text-gray-500" x-show="!showPartyPositions">Klik om te bekijken</span>
+                                        <svg class="w-5 h-5 text-gray-400 group-hover:text-indigo-500 transition-all duration-200" 
+                                             :class="showPartyPositions ? 'rotate-180' : ''" 
+                                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                                         </svg>
                                     </div>
-                                    <h3 class="text-lg font-semibold text-gray-800">Partij Standpunten</h3>
-                                </div>
+                                </button>
                                 
-                                <div class="space-y-4" x-init="updatePartyGroups()">
+                                <!-- Collapsible Content -->
+                                <div x-show="showPartyPositions" 
+                                     x-transition:enter="transition ease-out duration-300"
+                                     x-transition:enter-start="opacity-0 transform -translate-y-4"
+                                     x-transition:enter-end="opacity-100 transform translate-y-0"
+                                     x-transition:leave="transition ease-in duration-200"
+                                     x-transition:leave-start="opacity-100 transform translate-y-0"
+                                     x-transition:leave-end="opacity-0 transform -translate-y-4"
+                                     class="mt-6 space-y-4" 
+                                     x-init="updatePartyGroups()">
                                     <!-- Eens partijen -->
                                     <div x-show="eensParties.length > 0">
                                         <h4 class="text-sm font-semibold text-emerald-700 mb-3 flex items-center">
@@ -1087,6 +1112,7 @@ function stemwijzer() {
         currentStep: 0,
         totalSteps: <?= $totalQuestions ?: 25 ?>,
         showExplanation: false,
+        showPartyPositions: false,
         selectedParty: null,
         answers: {},
         eensParties: [],
@@ -1489,6 +1515,7 @@ function stemwijzer() {
                 this.results = {};
                 this.finalResults = [];
                 this.showExplanation = false;
+                this.showPartyPositions = false;
                 this.selectedParty = null;
                 this.showPartyDetails = false;
                 this.detailedParty = null;
