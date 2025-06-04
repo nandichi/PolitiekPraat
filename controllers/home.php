@@ -281,54 +281,54 @@ $latest_news = [
         'source' => 'Socialisme.nu',
         'bias' => 'links', 
         'publishedAt' => date('Y-m-d H:i:s'), // Vandaag 08:30
-        'title' => 'Afbraakbeleid en vage toezeggingen: PVV-kabinet kan nog even door',
-        'description' => 'Het PVV-kabinet gaat door met afbraakbeleid terwijl het vage toezeggingen doet aan de oppositie. De bezuinigingen op sociale voorzieningen blijven doorgaan ondanks protesten.',
-        'url' => 'https://socialisme.nu/afbraakbeleid-en-vage-toezeggingen-pvv-kabinet-kan-nog-even-door/'
+        'title' => 'Verzet tegen kabinet groeit, maar gevaar van extreemrechts ook',
+        'description' => 'Het verzet tegen het kabinet groeit, maar tegelijkertijd neemt ook het gevaar van extreemrechts toe. Een analyse van de huidige politieke situatie en de groeiende polarisatie in Nederland.',
+        'url' => 'https://socialisme.nu/verzet-tegen-kabinet-groeit-maar-gevaar-van-extreemrechts-ook/'
     ],
     [
         'orientation' => 'links',
         'source' => 'NRC',
         'bias' => 'links', 
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-2 hours')), // 2 uur geleden
-        'title' => 'Jongeren van PvdA en GroenLinks besnuffelen elkaar',
-        'description' => 'In een poging om de krachten te bundelen, verkennen de jongerenafdelingen van PvdA en GroenLinks mogelijkheden voor samenwerking. De gesprekken zijn gericht op het versterken van progressieve standpunten en het vergroten van de invloed van jongeren in de politiek.',
-        'url' => 'https://www.nrc.nl/nieuws/2025/05/02/jongeren-van-pvda-en-groen-links-besnuffelen-elkaar-a4892005'
+        'title' => 'De meeste plannen van kabinet Schoof stuitten op juridische bezwaren en praktische problemen',
+        'description' => 'Een analyse van de plannen van het kabinet Schoof laat zien dat veel voorstellen vastliepen op juridische obstakels en uitvoeringsproblemen. Dit heeft geleid tot vertraging en herziening van belangrijke beleidsvoornemens.',
+        'url' => 'https://www.nrc.nl/nieuws/2025/06/03/de-meeste-plannen-van-kabinet-schoof-stuitten-op-juridische-bezwaren-en-praktische-problemen-a4895665'
     ],
     [
         'orientation' => 'links',
         'source' => 'Trouw',
         'bias' => 'links', 
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-4 hours')), // 4 uur geleden
-        'title' => 'De Nederlandse economie heeft beperkt last van de Amerikaanse heffingen',
-        'description' => 'De Nederlandse economie ondervindt slechts beperkte gevolgen van de Amerikaanse importheffingen, dankzij sterke handelsrelaties binnen de EU en een diversificatie van exportmarkten.',
-        'url' => 'https://www.trouw.nl/politiek/de-nederlandse-economie-heeft-beperkt-last-van-de-amerikaanse-heffingen~b9f66122/'
+        'title' => 'VVD wil rechts beleid blijven voeren, maar heeft de oppositie de komende tijd hard nodig',
+        'description' => 'De VVD wil vasthouden aan een rechtse koers, maar zal voor het uitvoeren van beleid steun nodig hebben van de oppositie. Dit zorgt voor een complexe politieke situatie waarin compromissen onvermijdelijk zijn.',
+        'url' => 'https://www.trouw.nl/politiek/vvd-wil-rechts-beleid-blijven-voeren-maar-heeft-de-oppositie-de-komende-tijd-hard-nodig~b7f31232/'
     ],
     [
         'orientation' => 'rechts',
         'source' => 'FVD',
-        'bias' => 'rechts', 
+        'bias' => 'rechts',
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-6 hours')), // 6 uur geleden
-        'title' => 'Forum Inside: Stroomuitval in EU & Zuid-Afrika als waarschuwing en overheidsuitgaven onder de loep',
-        'description' => 'Forum voor Democratie bespreekt de recente stroomuitval in de EU en Zuid-Afrika als een waarschuwing voor energiebeleid en onderzoekt de overheidsuitgaven.',
-        'url' => 'https://fvd.nl/nieuws/forum-inside-stroomuitval-in-eu-zuid-afrika-als-waarschuwing-en-overheidsuitgaven-onder-de-loep'
+        'title' => 'Reactie FVD op val kabinet',
+        'description' => 'Forum voor Democratie reageert op de val van het kabinet en roept op tot nieuwe verkiezingen om het vertrouwen in de politiek te herstellen.',
+        'url' => 'https://fvd.nl/nieuws/reactie-fvd-op-val-kabinet'
     ],
     [
         'orientation' => 'rechts',
         'source' => 'De Dagelijkse Standaard',
         'bias' => 'rechts', 
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-8 hours')), // 8 uur geleden
-        'title' => 'Ongelooflijk: Geen arrestaties in Scheveningen, wel bij vreedzame demonstratie in Uden',
-        'description' => 'In Scheveningen zijn er geen arrestaties verricht, terwijl er bij een vreedzame demonstratie in Uden wel mensen zijn opgepakt. Dit roept vragen op over de aanpak van de politie bij verschillende evenementen.',
-        'url' => 'https://www.dagelijksestandaard.nl/immigratie/ongelooflijk-geen-arrestaties-in-scheveningen-wel-bij-vreedzame-demonstratie-in-uden'
+        'title' => 'Wilders krijgt hoon na breuk: "Bokito" en "verrader", maar blijft strijdbaar',
+        'description' => 'Geert Wilders krijgt veel kritiek na het mislukken van de formatie, maar laat zich niet uit het veld slaan. De PVV-leider wordt onder andere uitgemaakt voor "Bokito" en "verrader".',
+        'url' => 'https://www.dagelijksestandaard.nl/politiek/wilders-krijgt-hoon-na-breuk-bokito-en-verrader-maar-blijft-strijdbaar'
     ],
     [
         'orientation' => 'rechts',
-        'source' => 'Nieuw Rechts',
+        'source' => 'Nieuw Rechts', 
         'bias' => 'rechts',
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-10 hours')), // 10 uur geleden
-        'title' => 'Jetten trots op grote daden: vaccins en gasstop - critici spreken van wanbeleid',
-        'description' => 'Minister Jetten uit zijn trots over de behaalde successen met betrekking tot de vaccinatiecampagne en de gasstop, terwijl critici zijn beleid als wanbeleid bestempelen.',
-        'url' => 'https://nieuwrechts.nl/104030-jetten-trots-op-grote-daden-vaccins-en-gasstop--critici-spreken-van-wanbeleid'
+        'title' => 'Premier Schoof meldt officiële val van kabinet: weg vrij voor nieuwe verkiezingen',
+        'description' => 'Premier Schoof heeft zojuist de officiële val van het kabinet bekendgemaakt. Dit betekent dat er nieuwe verkiezingen zullen komen.',
+        'url' => 'https://nieuwrechts.nl/104641-premier-schoof-meldt-officile-val-van-kabinet-weg-vrij-voor-nieuwe-verkiezingen'
     ]
 ];
 
