@@ -145,25 +145,24 @@ require_once 'views/templates/header.php';
             <div class="max-w-4xl mx-auto">
                 <!-- Badge -->
                 <div class="inline-flex items-center px-3 sm:px-4 py-2 rounded-full glass-effect text-white/90 text-xs sm:text-sm font-medium mb-6 sm:mb-8 slide-in-bottom">
-                    <svg class="w-3 sm:w-4 h-3 sm:h-4 mr-2 text-red-300 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"/>
+                    <svg class="w-3 sm:w-4 h-3 sm:h-4 mr-2 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                     </svg>
-                    🚨 Coalitie Gevallen - Nieuwe Verkiezingen 2025
+                    Verkiezingen 2025 - Jouw Stem Telt
                 </div>
                 
                 <!-- Main Title -->
                 <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-4 sm:mb-6 leading-tight slide-in-bottom" style="animation-delay: 0.2s;">
-                    Na de 
-                    <span class="text-red-300">Politieke Crisis:</span>
                     <span class="block text-gradient bg-gradient-to-r from-blue-300 via-purple-300 to-pink-300 bg-clip-text text-transparent">
-                        Vind Jouw Stem
+                        Vind Jouw Perfecte
                     </span>
+                    <span class="text-white">Politieke Match</span>
                 </h1>
                 
                 <!-- Subtitle -->
                 <p class="text-base sm:text-lg md:text-xl lg:text-2xl text-blue-100/80 mb-6 sm:mb-8 max-w-4xl mx-auto leading-relaxed font-light slide-in-bottom px-2 sm:px-0" style="animation-delay: 0.4s;">
-                    De coalitie is gevallen en Nederland staat voor cruciale keuzes. <strong class="text-blue-200 font-semibold">Welke partij vertegenwoordigt echt jouw visie?</strong> 
-                    Ontdek het met onze uitgebreide politieke match-test.
+                    Ontdek welke partij het beste aansluit bij jouw standpunten. <strong class="text-blue-200 font-semibold">Maak een weloverwogen keuze</strong> 
+                    met onze uitgebreide stemwijzer voor de Nederlandse verkiezingen.
                 </p>
             </div>
         </div>
