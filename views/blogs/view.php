@@ -17,121 +17,74 @@ require_once 'views/templates/header.php'; ?>
 <div id="reading-progress" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-primary via-secondary to-accent z-50 transition-all duration-300 ease-out" style="width: 0%"></div>
 
 <main class="bg-gradient-to-br from-gray-50 via-blue-50/30 to-indigo-50/20 min-h-screen">
-    <!-- Hero Section met Pure Tailwind -->
-    <section class="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 min-h-[400px] md:min-h-[600px] flex items-center">
-        <!-- Decoratieve achtergrond -->
-        <div class="absolute inset-0 opacity-30">
-            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.03"%3E%3Ccircle cx="30" cy="30" r="4"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]"></div>
-            <div class="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-transparent to-red-900/20"></div>
+    <!-- Professionele Hero Section -->
+    <section class="relative text-white <?php echo $blog->image_path ? 'bg-cover bg-center' : 'bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900'; ?>" style="<?php echo $blog->image_path ? 'background-image: url(\'' . URLROOT . '/' . $blog->image_path . '\');' : ''; ?>">
+        <!-- Overlay -->
+        <div class="absolute inset-0 <?php echo $blog->image_path ? 'bg-black/60' : ''; ?>">
+            <?php if (!$blog->image_path): ?>
+                <div class="absolute inset-0 opacity-30 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.03"%3E%3Ccircle cx="30" cy="30" r="4"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]"></div>
+                <div class="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-transparent to-red-900/20"></div>
+            <?php endif; ?>
         </div>
         
-        <div class="relative z-10 w-full">
-            <div class="container mx-auto px-3 sm:px-4 py-8 sm:py-16 lg:py-24">
-                <div class="max-w-7xl mx-auto">
-                    <!-- Breadcrumb -->
-                    <nav class="mb-4 sm:mb-8" aria-label="Breadcrumb">
-                        <ol class="flex items-center space-x-1 sm:space-x-2 text-xs sm:text-sm text-gray-300">
-                            <li><a href="<?php echo URLROOT; ?>" class="hover:text-white transition-colors duration-200">Home</a></li>
-                            <li><span class="text-gray-500">/</span></li>
-                            <li><a href="<?php echo URLROOT; ?>/blogs" class="hover:text-white transition-colors duration-200">Blogs</a></li>
-                            <li><span class="text-gray-500">/</span></li>
-                            <li class="text-gray-400 truncate max-w-[120px] sm:max-w-xs"><?php echo htmlspecialchars($blog->title); ?></li>
-                        </ol>
-                    </nav>
+        <div class="relative z-10 container mx-auto px-4">
+            <div class="max-w-4xl mx-auto flex flex-col items-center justify-center min-h-[50vh] md:min-h-[60vh] py-16 text-center">
+                
+                <!-- Breadcrumb -->
+                <nav class="w-full mb-6" aria-label="Breadcrumb">
+                    <ol class="flex justify-center items-center space-x-2 text-sm text-gray-300">
+                        <li><a href="<?php echo URLROOT; ?>" class="hover:text-white transition-colors duration-200">Home</a></li>
+                        <li><span class="text-gray-500">/</span></li>
+                        <li><a href="<?php echo URLROOT; ?>/blogs" class="hover:text-white transition-colors duration-200">Blogs</a></li>
+                        <li><span class="text-gray-500">/</span></li>
+                        <li class="text-gray-400 truncate max-w-xs"><?php echo htmlspecialchars($blog->title); ?></li>
+                    </ol>
+                </nav>
 
-                    <!-- Hero Grid -->
-                    <div class="grid lg:grid-cols-5 gap-6 lg:gap-16 items-center">
-                        <!-- Content Column -->
-                        <div class="lg:col-span-3 space-y-4 sm:space-y-6 lg:space-y-10 text-center lg:text-left order-2 lg:order-1">
-                            <!-- Badges -->
-                            <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-2 sm:gap-3">
-                                <span class="inline-flex items-center px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-blue-600/20 border border-blue-500/30 text-blue-200 font-medium text-xs sm:text-sm backdrop-blur-sm">
-                                    <svg class="w-3 sm:w-4 h-3 sm:h-4 mr-1.5 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
-                                    </svg>
-                                    Politieke Analyse
-                                </span>
-                                
-                                <div class="inline-flex items-center text-gray-300 text-xs sm:text-sm bg-white/10 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full backdrop-blur-sm border border-white/20">
-                                    <svg class="w-3 sm:w-4 h-3 sm:h-4 mr-1.5 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                    </svg>
-                                    <span id="reading-minutes">5</span> min lezen
-                                </div>
-                            </div>
-                            
-                            <!-- Title & Summary -->
-                            <div class="space-y-3 sm:space-y-4 lg:space-y-6">
-                                <h1 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white leading-tight tracking-tight px-2 sm:px-0">
-                                    <?php echo htmlspecialchars($blog->title); ?>
-                                </h1>
-                                <p class="text-sm sm:text-base lg:text-xl text-gray-300 leading-relaxed max-w-3xl mx-auto lg:mx-0 px-2 sm:px-0">
-                                    <?php echo htmlspecialchars($blog->summary); ?>
-                                </p>
-                            </div>
-
-                            <!-- Author Info -->
-                            <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 lg:gap-6 justify-center lg:justify-start px-2 sm:px-0">
-                                <div class="flex items-center justify-center lg:justify-start space-x-3 sm:space-x-4">
-                                    <div class="relative">
-                                        <img src="<?php echo URLROOT; ?>/public/images/naoufal-foto.jpg" 
-                                             onerror="if(this.src !== '<?php echo URLROOT; ?>/images/naoufal-foto.jpg') this.src='<?php echo URLROOT; ?>/images/naoufal-foto.jpg'; else if(this.src !== '<?php echo URLROOT; ?>/public/images/profiles/naoufal-foto.jpg') this.src='<?php echo URLROOT; ?>/public/images/profiles/naoufal-foto.jpg';"
-                                             alt="<?php echo htmlspecialchars($blog->author_name); ?>"
-                                             class="w-10 sm:w-12 lg:w-14 h-10 sm:h-12 lg:h-14 rounded-full border-2 border-white/30 shadow-xl object-cover">
-                                        <div class="absolute -bottom-0.5 sm:-bottom-1 -right-0.5 sm:-right-1 w-3 sm:w-4 lg:w-5 h-3 sm:h-4 lg:h-5 bg-green-500 rounded-full border-2 border-slate-900"></div>
-                                    </div>
-                                    <div class="text-center sm:text-left">
-                                        <h3 class="text-white font-semibold text-sm sm:text-base lg:text-lg"><?php echo htmlspecialchars($blog->author_name); ?></h3>
-                                        <p class="text-gray-300 text-xs sm:text-sm">Politiek Analist & Journalist</p>
-                                    </div>
-                                </div>
-                                
-                                <div class="flex items-center justify-center space-x-3 sm:space-x-4 lg:space-x-6 text-gray-300 text-xs sm:text-sm">
-                                    <div class="flex items-center space-x-1.5 sm:space-x-2 bg-white/5 px-2 sm:px-3 py-1 sm:py-1.5 lg:py-2 rounded-lg">
-                                        <svg class="w-3 sm:w-4 h-3 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                        </svg>
-                                        <span class="hidden sm:inline"><?php echo date('d F Y', strtotime($blog->published_at)); ?></span>
-                                        <span class="sm:hidden"><?php echo date('d M', strtotime($blog->published_at)); ?></span>
-                                    </div>
-                                    
-                                    <button id="heroLikeButton" 
-                                            class="hero-like-btn group flex items-center space-x-1.5 sm:space-x-2 bg-white/5 hover:bg-white/10 px-2 sm:px-3 py-1 sm:py-1.5 lg:py-2 rounded-lg transition-all duration-300 hover:scale-105"
-                                            data-slug="<?php echo $blog->slug; ?>"
-                                            aria-label="Like deze blog">
-                                        <svg class="w-3 sm:w-4 h-3 sm:h-4 transition-all duration-300 group-hover:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-                                        </svg>
-                                        <span id="hero-like-count" class="group-hover:text-red-400 transition-colors text-xs sm:text-sm"><?php echo $blog->likes; ?> likes</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Image Column -->
-                        <?php if ($blog->image_path): ?>
-                        <div class="lg:col-span-2 order-1 lg:order-2">
-                            <div class="relative group max-w-sm sm:max-w-md mx-auto lg:max-w-none">
-                                <!-- Glow Effect -->
-                                <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-red-600 rounded-2xl blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-500"></div>
-                                
-                                <!-- Main Image Container -->
-                                <div class="relative aspect-[4/3] rounded-2xl overflow-hidden bg-white/5 backdrop-blur-sm border border-white/10 shadow-2xl">
-                                    <img src="<?php echo URLROOT . '/' . $blog->image_path; ?>" 
-                                         alt="<?php echo htmlspecialchars($blog->title); ?>"
-                                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
-                                    
-                                    <!-- Image Overlay -->
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                                </div>
-                                
-                                <!-- Decorative Elements -->
-                                <div class="absolute -top-2 sm:-top-3 lg:-top-4 -right-2 sm:-right-3 lg:-right-4 w-4 sm:w-6 lg:w-8 h-4 sm:h-6 lg:h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full opacity-60 animate-pulse"></div>
-                                <div class="absolute -bottom-2 sm:-bottom-3 lg:-bottom-4 -left-2 sm:-left-3 lg:-left-4 w-3 sm:w-4 lg:w-6 h-3 sm:h-4 lg:h-6 bg-gradient-to-br from-red-500 to-orange-500 rounded-full opacity-40"></div>
-                            </div>
-                        </div>
-                        <?php endif; ?>
+                <!-- Badges -->
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="inline-flex items-center px-4 py-1.5 rounded-full bg-blue-600/20 border border-blue-500/30 text-blue-200 font-medium text-sm backdrop-blur-sm">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+                        </svg>
+                        Politieke Analyse
+                    </span>
+                    
+                    <div class="inline-flex items-center text-gray-300 text-sm bg-white/10 px-4 py-1.5 rounded-full backdrop-blur-sm border border-white/20">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <span id="reading-minutes">5</span> min lezen
                     </div>
+                </div>
+                
+                <!-- Title -->
+                <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight tracking-tight mb-8 [text-shadow:_0_2px_4px_rgb(0_0_0_/_50%)]">
+                    <?php echo htmlspecialchars($blog->title); ?>
+                </h1>
+
+                <!-- Author Info & Actions -->
+                <div class="flex flex-col sm:flex-row items-center gap-6">
+                    <div class="flex items-center space-x-4">
+                        <img src="<?php echo URLROOT; ?>/public/images/naoufal-foto.jpg" 
+                             onerror="if(this.src !== '<?php echo URLROOT; ?>/images/naoufal-foto.jpg') this.src='<?php echo URLROOT; ?>/images/naoufal-foto.jpg'; else if(this.src !== '<?php echo URLROOT; ?>/public/images/profiles/naoufal-foto.jpg') this.src='<?php echo URLROOT; ?>/public/images/profiles/naoufal-foto.jpg';"
+                             alt="<?php echo htmlspecialchars($blog->author_name); ?>"
+                             class="w-14 h-14 rounded-full border-2 border-white/30 shadow-xl object-cover">
+                        <div class="text-left">
+                            <h3 class="text-white font-semibold text-lg"><?php echo htmlspecialchars($blog->author_name); ?></h3>
+                            <p class="text-gray-300 text-sm"><?php echo date('d F Y', strtotime($blog->published_at)); ?></p>
+                        </div>
+                    </div>
+                    
+                    <button id="heroLikeButton" 
+                            class="hero-like-btn group flex items-center space-x-2 bg-white/5 hover:bg-white/10 px-4 py-2 rounded-full transition-all duration-300 hover:scale-105 border border-white/20"
+                            data-slug="<?php echo $blog->slug; ?>"
+                            aria-label="Like deze blog">
+                        <svg class="w-5 h-5 transition-all duration-300 group-hover:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                        </svg>
+                        <span id="hero-like-count" class="group-hover:text-red-400 transition-colors text-sm font-semibold"><?php echo $blog->likes; ?> likes</span>
+                    </button>
                 </div>
             </div>
         </div>
