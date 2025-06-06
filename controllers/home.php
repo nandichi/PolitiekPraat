@@ -338,8 +338,8 @@ $debatten = $openDataAPI->getPolitiekeDebatten();
 $agenda_items = $openDataAPI->getPolitiekeAgenda();
 
 ?>
-<!-- Link to external CSS file -->
-<link rel="stylesheet" href="<?php echo URLROOT; ?>/public/css/home.css">
+<!-- Link to external CSS file with cache busting -->
+<link rel="stylesheet" href="<?php echo URLROOT; ?>/public/css/home.css?v=<?php echo filemtime(__DIR__ . '/../public/css/home.css'); ?>">
 <?php
 require_once 'views/templates/header.php';
 ?>
@@ -490,16 +490,69 @@ require_once 'views/templates/header.php';
                         PolitiekPraat maakt complexe politieke onderwerpen begrijpelijk. Ontdek analyses, volg het laatste nieuws en vorm je eigen mening.
                     </p>
                     
+                    <!-- Inline CSS voor kritieke button styling als fallback -->
+                    <style>
+                        .hero-btn-primary {
+                            display: inline-flex;
+                            align-items: center;
+                            padding: 1rem 2rem;
+                            background: linear-gradient(to right, #1a56db, #c41e3a);
+                            color: white;
+                            font-weight: 700;
+                            font-size: 1.125rem;
+                            border-radius: 0.75rem;
+                            transition: all 0.3s ease;
+                            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+                            transform: scale(1);
+                            position: relative;
+                            overflow: hidden;
+                            text-decoration: none;
+                        }
+                        .hero-btn-primary:hover {
+                            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+                            transform: scale(1.05);
+                        }
+                        .hero-btn-secondary {
+                            display: inline-flex;
+                            align-items: center;
+                            padding: 1rem 2rem;
+                            background: white;
+                            color: #111827;
+                            font-weight: 700;
+                            font-size: 1.125rem;
+                            border-radius: 0.75rem;
+                            border: 2px solid #e5e7eb;
+                            transition: all 0.3s ease;
+                            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+                            transform: scale(1);
+                            position: relative;
+                            overflow: hidden;
+                            text-decoration: none;
+                        }
+                        .hero-btn-secondary:hover {
+                            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+                            transform: scale(1.05);
+                            border-color: #1a56db;
+                            color: #1a56db;
+                        }
+                        @media (max-width: 640px) {
+                            .hero-btn-primary, .hero-btn-secondary {
+                                padding: 0.875rem 1.5rem;
+                                font-size: 1rem;
+                            }
+                        }
+                    </style>
+
                     <div class="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-                        <a href="<?php echo URLROOT; ?>/blogs" class="new-hero-cta-primary group">
+                        <a href="<?php echo URLROOT; ?>/blogs" class="new-hero-cta-primary hero-btn-primary group">
                             <span>Bekijk onze Blogs</span>
                             <svg class="w-5 h-5 ml-2 transform group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-                    </a>
-                    <a href="<?php echo URLROOT; ?>/stemwijzer" class="new-hero-cta-secondary group">
-                        <span>Start de Stemwijzer</span>
-                        <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
-                    </a>
-                </div>
+                        </a>
+                        <a href="<?php echo URLROOT; ?>/stemwijzer" class="new-hero-cta-secondary hero-btn-secondary group">
+                            <span>Start de Stemwijzer</span>
+                            <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
+                        </a>
+                    </div>
 
                 <!-- Stats/Features - Toegevoegd voor meer visuele interesse -->
                 <div class="grid grid-cols-3 gap-6 pt-12" data-aos="fade-up" data-aos-delay="300">
