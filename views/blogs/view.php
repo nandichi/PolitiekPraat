@@ -72,7 +72,10 @@ require_once 'views/templates/header.php'; ?>
                              class="w-14 h-14 rounded-full border-2 border-white/30 shadow-xl object-cover">
                         <div class="text-left">
                             <h3 class="text-white font-semibold text-lg"><?php echo htmlspecialchars($blog->author_name); ?></h3>
-                            <p class="text-gray-300 text-sm"><?php echo date('d F Y', strtotime($blog->published_at)); ?></p>
+                            <p class="text-gray-300 text-sm"><?php 
+                                $formatter = new IntlDateFormatter('nl_NL', IntlDateFormatter::LONG, IntlDateFormatter::NONE);
+                                echo $formatter->format(strtotime($blog->published_at)); 
+                            ?></p>
                         </div>
                     </div>
                     
@@ -409,7 +412,10 @@ require_once 'views/templates/header.php'; ?>
                                         </div>
                                         <span class="truncate"><?php echo htmlspecialchars($relatedBlog->author_name); ?></span>
                                     </div>
-                                    <span><?php echo date('d M Y', strtotime($relatedBlog->published_at)); ?></span>
+                                    <span><?php 
+                                        $formatter = new IntlDateFormatter('nl_NL', IntlDateFormatter::MEDIUM, IntlDateFormatter::NONE);
+                                        echo str_replace('.', '', $formatter->format(strtotime($relatedBlog->published_at))); 
+                                    ?></span>
                                 </div>
 
                                 <!-- Title & Summary -->
