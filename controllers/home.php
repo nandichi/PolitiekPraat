@@ -346,192 +346,55 @@ require_once 'views/templates/header.php';
 
 <main class="bg-gray-50 overflow-x-hidden">
     <!-- Hero Section - Volledig responsive versie -->
-    <section class="hero-section">
-        <!-- Decoratieve achtergrond elementen -->
-        <div class="hero-pattern"></div>
-        <div class="hero-accent"></div>
-        <div class="hero-shape hero-shape-1"></div>
-        <div class="hero-shape hero-shape-2"></div>
-        <div class="hero-shape hero-shape-3"></div>
-        
+    <section class="new-hero-section bg-gray-50 font-sans">
+        <div class="absolute inset-0 z-0 opacity-50">
+            <div class="absolute inset-0 bg-gradient-to-r from-blue-50 to-indigo-50"></div>
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%22100%22%20height%3D%22100%22%20viewBox%3D%220%200%20100%20100%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M11%2018c3.866%200%207-3.134%207-7s-3.134-7-7-7-7%203.134-7%207%203.134%207%207%207zm48%2025c3.866%200%207-3.134%207-7s-3.134-7-7-7-7%203.134-7%207%203.134%207%207%207zM%2073%2077c3.866%200%207-3.134%207-7s-3.134-7-7-7-7%203.134-7%207%203.134%207%207%207z%22%20fill%3D%22%23e0e7ff%22%2F%3E%3C%2Fsvg%3E')] bg-repeat"></div>
+        </div>
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-16 items-center min-h-[calc(60vh-4rem)] sm:min-h-[calc(80vh-6rem)] lg:min-h-[calc(100vh-0rem)]">
+            <div class="flex items-center justify-center min-h-screen lg:min-h-[calc(100vh-80px)] py-24">
                 
-                <!-- Linker kolom: Welkomstekst en CTA - Op mobile onder de blog carousel -->
-                <div class="text-center lg:text-left space-y-4 sm:space-y-6 lg:space-y-8 order-2 lg:order-1" data-aos="fade-right" data-aos-duration="1000">
-                    <!-- Badge/Tag -->
-                    <div class="inline-flex items-center px-3 sm:px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-xs sm:text-sm font-medium text-white/90">
-                        <span class="w-2 h-2 bg-gradient-to-r from-primary to-secondary rounded-full mr-2 animate-pulse"></span>
-                        <span class="hidden sm:inline">Ontdek Nederlandse Politiek</span>
-                        <span class="sm:hidden">Nederlandse Politiek</span>
+                <!-- Gecentraliseerde content -->
+                <div class="text-center space-y-8 max-w-4xl mx-auto" data-aos="fade-up" data-aos-duration="1000">
+                    <div class="inline-flex items-center px-4 py-2 rounded-full bg-white/60 backdrop-blur-sm border border-gray-200/80 shadow-sm">
+                        <span class="w-2.5 h-2.5 bg-gradient-to-r from-primary to-secondary rounded-full mr-2.5"></span>
+                        <span class="text-sm font-medium text-gray-700">Jouw Gids in de Nederlandse Politiek</span>
                     </div>
                     
-                    <!-- Hoofdtitel - Volledig responsive -->
-                    <h1 class="hero-title text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extrabold leading-tight">
-                        <span class="highlight">Politiek</span><span class="gradient-text">Praat</span>
+                    <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold text-gray-900 leading-tight tracking-tight">
+                        <span class="block">Politiek<span class="bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent">Praat</span></span>
                     </h1>
                     
-                    <!-- Dynamische subtitle met typewriter effect -->
-                    <div id="typewriter-container" class="hero-subtitle text-sm sm:text-base lg:text-lg xl:text-xl max-w-full lg:max-w-2xl mx-auto lg:mx-0">
-                        <span id="typewriter">Ontdek hoe de Nederlandse politiek werkt en wat dit voor jou betekent.</span>
-                    </div>
+                    <p class="text-xl sm:text-2xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                        PolitiekPraat maakt complexe politieke onderwerpen begrijpelijk. Ontdek analyses, volg het laatste nieuws en vorm je eigen mening.
+                    </p>
                     
-                    <!-- CTA Buttons - Volledig responsive -->
-                    <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
-                        <a href="<?php echo URLROOT; ?>/blogs" class="hero-cta-button group w-full sm:w-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4 text-sm sm:text-base font-semibold">
-                            <span>Ontdek Blogs</span>
-                            <svg class="w-4 h-4 sm:w-5 sm:h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-                            </svg>
-                        </a>
-                        
-                        <a href="<?php echo URLROOT; ?>/stemwijzer" class="inline-flex items-center justify-center px-4 sm:px-6 lg:px-8 py-3 sm:py-4 font-semibold text-white border-2 border-white/20 rounded-xl hover:bg-white/10 hover:border-white/30 transition-all duration-300 backdrop-blur-sm w-full sm:w-auto text-sm sm:text-base">
-                            <svg class="w-4 h-4 sm:w-5 sm:h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                            <span class="hidden sm:inline">Stemwijzer</span>
-                            <span class="sm:hidden">Stemwijzer</span>
-                        </a>
-                    </div>
-                    
-                    <!-- Stats/Features - Responsief aangepast -->
-                    <div class="grid grid-cols-3 gap-3 sm:gap-4 lg:gap-6 pt-4 sm:pt-6 lg:pt-8" data-aos="fade-up" data-aos-delay="300">
-                        <div class="text-center">
-                            <div class="text-lg sm:text-xl lg:text-2xl font-bold text-white mb-1">150+</div>
-                            <div class="text-xs sm:text-sm text-white/70">Artikelen</div>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-lg sm:text-xl lg:text-2xl font-bold text-white mb-1">20+</div>
-                            <div class="text-xs sm:text-sm text-white/70">Thema's</div>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-lg sm:text-xl lg:text-2xl font-bold text-white mb-1">5k+</div>
-                            <div class="text-xs sm:text-sm text-white/70">Lezers</div>
-                        </div>
-                    </div>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+                        <a href="<?php echo URLROOT; ?>/blogs" class="new-hero-cta-primary group">
+                            <span>Bekijk onze Blogs</span>
+                            <svg class="w-5 h-5 ml-2 transform group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                    </a>
+                    <a href="<?php echo URLROOT; ?>/stemwijzer" class="new-hero-cta-secondary group">
+                        <span>Start de Stemwijzer</span>
+                        <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
+                    </a>
                 </div>
 
-                <!-- Rechter kolom: Premium Blog Showcase - Op mobile bovenaan -->
-                <div class="hero-blog-card-wrapper order-1 lg:order-2 mb-6 sm:mb-8 lg:mb-0" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
-                    <div class="hero-blog-card">
-                        
-                        <!-- Card Header -->
-                        <div class="hero-blog-card-header">
-                            <div class="flex items-center justify-between">
-                                <div>
-                                    <h3 class="text-sm sm:text-base lg:text-lg font-semibold">
-                                        <span class="highlight-text">Uitgelichte Content</span>
-                                    </h3>
-                                    <p class="text-xs sm:text-sm mt-1 flex items-center">
-                                        <svg class="w-3 h-3 sm:w-4 sm:h-4 mr-1.5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                        </svg>
-                                        <span class="hidden sm:inline">Meest Recent</span>
-                                        <span class="sm:hidden">Recent</span>
-                                    </p>
-                                </div>
-                                
-                                <!-- Navigation Controls -->
-                                <div class="flex items-center space-x-2 sm:space-x-3">
-                                    <button class="blog-nav-prev blog-nav-button" aria-label="Vorige blog">
-                                        <svg class="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-                                        </svg>
-                                    </button>
-                                    <button class="blog-nav-next blog-nav-button" aria-label="Volgende blog">
-                                        <svg class="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Blog Swiper -->
-                        <div class="hero-blog-swiper">
-                            <div class="swiper-wrapper">
-                                <?php foreach($featured_blogs as $blog): ?>
-                                <div class="swiper-slide">
-                                    <a href="<?php echo URLROOT; ?>/blogs/view/<?php echo $blog->slug; ?>" class="group block h-full">
-                                        <div class="flex flex-col h-full">
-                                            
-                                            <!-- Blog Image -->
-                                            <div class="blog-card-image-wrapper">
-                                                <?php if($blog->image_path): ?>
-                                                    <img 
-                                                        src="<?php echo URLROOT . '/' . $blog->image_path; ?>"
-                                                        alt="<?php echo htmlspecialchars($blog->title); ?>"
-                                                        class="w-full h-full object-cover"
-                                                        loading="lazy"
-                                                    >
-                                                <?php else: ?>
-                                                    <div class="no-image-fallback">
-                                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                                        </svg>
-                                                    </div>
-                                                <?php endif; ?>
-                                                
-                                                <!-- Image Overlay -->
-                                                <div class="image-overlay"></div>
-                                                
-                                                <!-- Category Badge -->
-                                                <div class="blog-card-category">
-                                                    <svg class="w-2 h-2 sm:w-3 sm:h-3 mr-1 sm:mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
-                                                    </svg>
-                                                    Blog
-                                                </div>
-                                                
-                                                <!-- Date Badge -->
-                                                <div class="blog-card-date">
-                                                    <span class="hidden sm:inline"><?php echo $blog->relative_date; ?></span>
-                                                    <span class="sm:hidden"><?php echo substr($blog->relative_date, 0, 6); ?>...</span>
-                                                </div>
-                                            </div>
-                                            
-                                            <!-- Blog Content -->
-                                            <div class="blog-card-content p-3 sm:p-4 lg:p-6">
-                                                <div class="space-y-2 sm:space-y-3">
-                                                    <h4 class="blog-card-title text-xs sm:text-sm lg:text-base xl:text-lg font-semibold line-clamp-2">
-                                                        <?php echo htmlspecialchars($blog->title); ?>
-                                                    </h4>
-                                                    <p class="blog-card-summary text-xs sm:text-sm line-clamp-2 sm:line-clamp-3">
-                                                        <?php echo htmlspecialchars($blog->summary); ?>
-                                                    </p>
-                                                </div>
-                                                
-                                                <!-- Read More Indicator -->
-                                                <div class="mt-3 sm:mt-4 lg:mt-6 flex items-center text-xs sm:text-sm text-white/60 group-hover:text-white/80 transition-colors duration-300">
-                                                    <span>Lees verder</span>
-                                                    <svg class="w-3 h-3 sm:w-4 sm:h-4 ml-1 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <?php endforeach; ?>
-                            </div>
-                            
-                            <!-- Pagination -->
-                            <div class="absolute bottom-3 sm:bottom-4 lg:bottom-6 left-0 right-0 z-20 flex justify-center">
-                                <div class="swiper-pagination blog-pagination"></div>
-                            </div>
-                        </div>
+                <!-- Stats/Features - Toegevoegd voor meer visuele interesse -->
+                <div class="grid grid-cols-3 gap-6 pt-12" data-aos="fade-up" data-aos-delay="300">
+                    <div class="text-center">
+                        <div class="text-3xl lg:text-4xl font-bold text-gray-900 mb-2">150+</div>
+                        <div class="text-sm text-gray-600">Artikelen</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl lg:text-4xl font-bold text-gray-900 mb-2">20+</div>
+                        <div class="text-sm text-gray-600">Thema's</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl lg:text-4xl font-bold text-gray-900 mb-2">5k+</div>
+                        <div class="text-sm text-gray-600">Lezers</div>
                     </div>
                 </div>
-            </div>
-        </div>
-        
-        <!-- Scroll Indicator - Alleen op desktop -->
-        <div class="absolute bottom-4 sm:bottom-6 lg:bottom-8 left-1/2 transform -translate-x-1/2 z-10 hidden lg:block" data-aos="fade-up" data-aos-delay="1000">
-            <div class="flex flex-col items-center text-white/60 animate-bounce">
-                <span class="text-xs mb-2">Scroll</span>
-                <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-                </svg>
             </div>
         </div>
     </section>
@@ -552,48 +415,44 @@ require_once 'views/templates/header.php';
             <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative">
                 <!-- Laatste Blogs -->
                 <div class="mb-32 relative">
-                    <!-- Header sectie met verbeterd design -->
+                    <!-- Uniforme header sectie -->
                     <div class="text-center mb-20 relative" data-aos="fade-up" data-aos-once="true">
                         <!-- Achtergrond tekst -->
-                        <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-                            <span class="text-[120px] sm:text-[160px] lg:text-[200px] xl:text-[250px] font-black text-gray-50 select-none opacity-40 tracking-wider">BLOGS</span>
+                        <div class="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
+                            <span class="text-[120px] sm:text-[160px] lg:text-[200px] xl:text-[280px] font-black text-slate-100/30 select-none tracking-wider transform -rotate-2">BLOGS</span>
                         </div>
                         
-                        <!-- Main content -->
-                        <div class="relative z-10 space-y-6">
-                            <!-- Badge -->
-                            <div class="inline-flex items-center justify-center">
-                                <div class="relative">
-                                    <div class="absolute inset-0 bg-gradient-to-r from-primary to-secondary rounded-full blur opacity-75"></div>
-                                    <div class="relative bg-white px-6 py-2 rounded-full border border-gray-200 shadow-sm">
-                                        <div class="flex items-center space-x-2">
-                                            <div class="w-2 h-2 bg-gradient-to-r from-primary to-secondary rounded-full animate-pulse"></div>
-                                            <span class="text-sm font-semibold text-gray-700">Nieuwste Content</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Titel -->
-                            <h2 class="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-black text-gray-900 leading-tight">
-                                <span class="block">Laatste</span>
-                                <span class="bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent animate-gradient">
+                                                <!-- Main content -->
+                        <div class="relative z-10 space-y-8">
+                            <!-- Hoofdtitel -->
+                            <div class="space-y-6">
+                                                            <h2 class="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black text-slate-900 leading-tight tracking-tight">
+                                <span class="block mb-2">Laatste</span>
+                                <span class="bg-gradient-to-r from-blue-600 via-red-600 to-blue-800 bg-clip-text text-transparent animate-gradient bg-size-200">
                                     Blogs
                                 </span>
                             </h2>
                             
-                            <!-- Decoratieve lijn -->
-                            <div class="flex items-center justify-center space-x-4">
-                                <div class="w-12 h-0.5 bg-gradient-to-r from-transparent to-primary"></div>
-                                <div class="w-3 h-3 bg-primary rounded-full animate-ping"></div>
-                                <div class="w-24 h-0.5 bg-gradient-to-r from-primary to-secondary"></div>
-                                <div class="w-3 h-3 bg-secondary rounded-full animate-ping animation-delay-75"></div>
-                                <div class="w-12 h-0.5 bg-gradient-to-r from-secondary to-transparent"></div>
+                                <!-- Decoratieve lijn systeem -->
+                                <div class="flex items-center justify-center space-x-6 mt-8">
+                                    <div class="w-16 h-0.5 bg-gradient-to-r from-transparent via-blue-500 to-blue-600"></div>
+                                    <div class="relative">
+                                        <div class="w-4 h-4 bg-blue-600 rounded-full animate-pulse"></div>
+                                        <div class="absolute inset-0 w-4 h-4 bg-blue-600 rounded-full animate-ping opacity-30"></div>
+                                        <div class="absolute inset-0 w-4 h-4 bg-blue-600 rounded-full animate-ping opacity-30"></div>
+                                    </div>
+                                    <div class="w-32 h-0.5 bg-gradient-to-r from-blue-600 via-red-600 to-blue-800"></div>
+                                    <div class="relative">
+                                        <div class="w-4 h-4 bg-red-600 rounded-full animate-pulse animation-delay-300"></div>
+                                        <div class="absolute inset-0 w-4 h-4 bg-red-600 rounded-full animate-ping opacity-30 animation-delay-300"></div>
+                                    </div>
+                                    <div class="w-16 h-0.5 bg-gradient-to-r from-red-600 via-red-500 to-transparent"></div>
+                                </div>
                             </div>
                             
-                            <!-- Beschrijving -->
-                            <p class="text-lg sm:text-xl lg:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed font-light">
-                                Ontdek mijn meest recente <span class="font-semibold text-primary">politieke analyses</span> en <span class="font-semibold text-secondary">diepgaande inzichten</span> over de Nederlandse politiek
+                            <!-- Subtitel -->
+                            <p class="text-xl sm:text-2xl lg:text-3xl text-slate-600 max-w-4xl mx-auto leading-relaxed font-light">
+                                Ontdek mijn meest recente <span class="font-semibold text-blue-600">politieke analyses</span> en <span class="font-semibold text-red-600">diepgaande inzichten</span> over de Nederlandse politiek
                             </p>
                         </div>
                     </div>
@@ -799,8 +658,8 @@ require_once 'views/templates/header.php';
                             
                             <!-- Supporting text -->
                             <p class="mt-6 text-gray-600 text-sm">
-                                <span class="font-semibold text-primary"><?php echo count($latest_blogs); ?></span> artikelen weergegeven • 
-                                <span class="font-semibold text-secondary">150+</span> totaal beschikbaar
+                                <span class="font-semibold text-blue-600"><?php echo count($latest_blogs); ?></span> artikelen weergegeven • 
+                                <span class="font-semibold text-red-600">150+</span> totaal beschikbaar
                             </p>
                         </div>
                     </div>
@@ -825,57 +684,37 @@ require_once 'views/templates/header.php';
             </div>
 
             <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <!-- Premium header section -->
+                <!-- Uniforme header sectie -->
                 <div class="text-center mb-24 relative" data-aos="fade-up" data-aos-once="true">
                     <!-- Achtergrond tekst -->
                     <div class="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
-                        <span class="text-[140px] sm:text-[180px] lg:text-[220px] xl:text-[280px] font-black text-slate-100/40 select-none tracking-wider transform -rotate-2">NIEUWS</span>
+                        <span class="text-[120px] sm:text-[160px] lg:text-[200px] xl:text-[280px] font-black text-slate-100/30 select-none tracking-wider transform -rotate-2">NIEUWS</span>
                     </div>
                     
                     <!-- Main content -->
                     <div class="relative z-10 space-y-8">
-                        <!-- Premium badge -->
-                        <div class="inline-flex items-center justify-center">
-                            <div class="relative group cursor-pointer">
-                                <!-- Glow effect -->
-                                <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 via-purple-600 to-red-600 rounded-full blur-sm opacity-70 group-hover:opacity-100 transition duration-300 animate-pulse"></div>
-                                
-                                <!-- Badge content -->
-                                <div class="relative bg-white px-8 py-3 rounded-full border border-slate-200/50 shadow-lg backdrop-blur-sm">
-                                    <div class="flex items-center space-x-3">
-                                        <div class="relative">
-                                            <div class="w-2.5 h-2.5 bg-gradient-to-r from-blue-500 to-red-500 rounded-full animate-pulse"></div>
-                                            <div class="absolute inset-0 w-2.5 h-2.5 bg-gradient-to-r from-blue-500 to-red-500 rounded-full animate-ping opacity-75"></div>
-                                        </div>
-                                        <span class="text-sm font-bold text-slate-700 tracking-wide">LIVE POLITIEK NIEUWS</span>
-                                        <div class="w-2.5 h-2.5 bg-gradient-to-r from-red-500 to-blue-500 rounded-full animate-pulse"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
                         <!-- Hoofdtitel -->
-                        <div class="space-y-4">
-                            <h2 class="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black text-slate-900 leading-tight tracking-tight">
-                                <span class="block mb-2">Laatste</span>
-                                <span class="bg-gradient-to-r from-blue-600 via-purple-600 to-red-600 bg-clip-text text-transparent animate-gradient bg-size-200">
-                                    Politiek Nieuws
-                                </span>
-                            </h2>
+                        <div class="space-y-6">
+                                                    <h2 class="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black text-slate-900 leading-tight tracking-tight">
+                            <span class="block mb-2">Laatste</span>
+                            <span class="bg-gradient-to-r from-blue-600 via-red-600 to-blue-800 bg-clip-text text-transparent animate-gradient bg-size-200">
+                                Politiek Nieuws
+                            </span>
+                        </h2>
                             
-                            <!-- Decoratieve accenten -->
+                            <!-- Decoratieve lijn systeem -->
                             <div class="flex items-center justify-center space-x-6 mt-8">
                                 <div class="w-16 h-0.5 bg-gradient-to-r from-transparent via-blue-500 to-blue-600"></div>
                                 <div class="relative">
                                     <div class="w-4 h-4 bg-blue-600 rounded-full animate-pulse"></div>
                                     <div class="absolute inset-0 w-4 h-4 bg-blue-600 rounded-full animate-ping opacity-30"></div>
                                 </div>
-                                <div class="w-32 h-0.5 bg-gradient-to-r from-blue-600 via-purple-600 to-red-600"></div>
+                                <div class="w-32 h-0.5 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600"></div>
                                 <div class="relative">
-                                    <div class="w-4 h-4 bg-red-600 rounded-full animate-pulse animation-delay-300"></div>
-                                    <div class="absolute inset-0 w-4 h-4 bg-red-600 rounded-full animate-ping opacity-30 animation-delay-300"></div>
+                                    <div class="w-4 h-4 bg-indigo-600 rounded-full animate-pulse animation-delay-300"></div>
+                                    <div class="absolute inset-0 w-4 h-4 bg-indigo-600 rounded-full animate-ping opacity-30 animation-delay-300"></div>
                                 </div>
-                                <div class="w-16 h-0.5 bg-gradient-to-r from-red-600 via-red-500 to-transparent"></div>
+                                <div class="w-16 h-0.5 bg-gradient-to-r from-indigo-600 via-indigo-500 to-transparent"></div>
                             </div>
                         </div>
                         
@@ -884,7 +723,7 @@ require_once 'views/templates/header.php';
                             Vergelijk <span class="font-semibold text-blue-600">progressieve</span> en <span class="font-semibold text-red-600">conservatieve</span> perspectieven op de laatste ontwikkelingen
                         </p>
                         
-                        <!-- Live indicator -->
+                        <!-- Status indicator -->
                         <div class="inline-flex items-center px-6 py-3 bg-slate-900/5 backdrop-blur-sm rounded-full border border-slate-200/50 shadow-sm">
                             <div class="flex items-center space-x-3">
                                 <div class="relative">
@@ -1154,8 +993,8 @@ require_once 'views/templates/header.php';
                 <div class="text-center mt-24" data-aos="zoom-in" data-aos-delay="400" data-aos-once="true">
                     <div class="relative inline-block">
                         <!-- Multi-layered glow effect -->
-                        <div class="absolute -inset-8 bg-gradient-to-r from-blue-600 via-purple-600 to-red-600 rounded-3xl blur-2xl opacity-20 animate-pulse"></div>
-                        <div class="absolute -inset-4 bg-gradient-to-r from-blue-500 via-purple-500 to-red-500 rounded-2xl blur-xl opacity-30"></div>
+                        <div class="absolute -inset-8 bg-gradient-to-r from-blue-600 via-red-600 to-blue-800 rounded-3xl blur-2xl opacity-20 animate-pulse"></div>
+                        <div class="absolute -inset-4 bg-gradient-to-r from-blue-500 via-red-500 to-blue-700 rounded-2xl blur-xl opacity-30"></div>
                         
                         <!-- Main button container -->
                         <div class="relative bg-white rounded-2xl p-8 shadow-2xl border border-slate-200/50 backdrop-blur-sm">
@@ -1174,21 +1013,21 @@ require_once 'views/templates/header.php';
                                         <div class="text-sm text-slate-500">Nieuwsbronnen</div>
                                     </div>
                                     <div class="text-center">
-                                        <div class="text-2xl font-bold text-purple-600">2</div>
+                                        <div class="text-2xl font-bold text-red-600">2</div>
                                         <div class="text-sm text-slate-500">Perspectieven</div>
                                     </div>
                                     <div class="text-center">
-                                        <div class="text-2xl font-bold text-red-600">24/7</div>
+                                        <div class="text-2xl font-bold text-blue-800">24/7</div>
                                         <div class="text-sm text-slate-500">Updates</div>
                                     </div>
                                 </div>
                                 
                                 <!-- CTA Button -->
                                 <a href="<?php echo URLROOT; ?>/nieuws" 
-                                   class="group relative inline-flex items-center justify-center px-12 py-5 bg-gradient-to-r from-blue-600 via-purple-600 to-red-600 text-white font-bold text-xl rounded-2xl transition-all duration-500 transform hover:scale-105 shadow-2xl hover:shadow-3xl overflow-hidden">
+                                   class="group relative inline-flex items-center justify-center px-12 py-5 bg-gradient-to-r from-blue-600 via-red-600 to-blue-800 text-white font-bold text-xl rounded-2xl transition-all duration-500 transform hover:scale-105 shadow-2xl hover:shadow-3xl overflow-hidden">
                                     
                                     <!-- Animated background -->
-                                    <div class="absolute inset-0 bg-gradient-to-r from-red-600 via-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                    <div class="absolute inset-0 bg-gradient-to-r from-red-600 via-blue-600 to-red-800 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                                     
                                     <!-- Button content -->
                                     <div class="relative z-10 flex items-center">
@@ -1211,8 +1050,8 @@ require_once 'views/templates/header.php';
                                 <!-- Supporting text -->
                                 <p class="text-sm text-slate-500">
                                     <span class="font-semibold text-blue-600"><?php echo count($latest_news); ?></span> artikelen weergegeven • 
-                                    <span class="font-semibold text-purple-600">Dagelijks</span> nieuwe updates • 
-                                    <span class="font-semibold text-red-600">Gratis</span> toegang
+                                    <span class="font-semibold text-red-600">Dagelijks</span> nieuwe updates • 
+                                    <span class="font-semibold text-blue-800">Gratis</span> toegang
                                 </p>
                             </div>
                         </div>
@@ -1220,7 +1059,6 @@ require_once 'views/templates/header.php';
                 </div>
             </div>
         </section>
-
         <!-- Peiling Section - Volledig herbouwde professionele versie -->
         <section class="py-32 bg-gradient-to-b from-white via-slate-50 to-white relative overflow-hidden">
             <!-- Premium decoratieve achtergrond -->
@@ -1240,44 +1078,20 @@ require_once 'views/templates/header.php';
             </div>
 
             <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <!-- Premium header sectie -->
+                <!-- Uniforme header sectie -->
                 <div class="text-center mb-24 relative" data-aos="fade-up" data-aos-once="true">
                     <!-- Achtergrond tekst -->
                     <div class="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
-                        <span class="text-[120px] sm:text-[160px] lg:text-[200px] xl:text-[250px] font-black text-slate-100/30 select-none tracking-wider transform -rotate-2">POLLS</span>
+                        <span class="text-[120px] sm:text-[160px] lg:text-[200px] xl:text-[280px] font-black text-slate-100/30 select-none tracking-wider transform -rotate-2">POLLS</span>
                     </div>
                     
                     <!-- Main content -->
                     <div class="relative z-10 space-y-8">
-                        <!-- Premium badge -->
-                        <div class="inline-flex items-center justify-center">
-                            <div class="relative group cursor-pointer">
-                                <!-- Multi-layered glow effect -->
-                                <div class="absolute -inset-2 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 rounded-full blur-lg opacity-30 group-hover:opacity-50 transition duration-500 animate-pulse"></div>
-                                <div class="absolute -inset-1 bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-500 rounded-full blur-md opacity-40 group-hover:opacity-60 transition duration-300"></div>
-                                
-                                <!-- Badge content -->
-                                <div class="relative bg-white px-8 py-4 rounded-full border border-slate-200/50 shadow-xl backdrop-blur-sm group-hover:shadow-2xl transition-all duration-300">
-                                    <div class="flex items-center space-x-4">
-                                        <div class="relative">
-                                            <div class="w-3 h-3 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full animate-pulse"></div>
-                                            <div class="absolute inset-0 w-3 h-3 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full animate-ping opacity-75"></div>
-                                        </div>
-                                        <span class="text-sm font-bold text-slate-700 tracking-wide">ACTUELE PEILINGEN</span>
-                                        <div class="relative">
-                                            <div class="w-3 h-3 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-full animate-pulse animation-delay-75"></div>
-                                            <div class="absolute inset-0 w-3 h-3 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-full animate-ping opacity-75 animation-delay-75"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
                         <!-- Hoofdtitel -->
                         <div class="space-y-6">
                             <h2 class="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black text-slate-900 leading-tight tracking-tight">
                                 <span class="block mb-2">Politieke</span>
-                                <span class="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent animate-gradient bg-size-200">
+                                <span class="bg-gradient-to-r from-blue-600 via-red-600 to-blue-800 bg-clip-text text-transparent animate-gradient bg-size-200">
                                     Peilingen
                                 </span>
                     </h2>
@@ -1300,10 +1114,10 @@ require_once 'views/templates/header.php';
                 
                         <!-- Subtitel -->
                         <p class="text-xl sm:text-2xl lg:text-3xl text-slate-600 max-w-4xl mx-auto leading-relaxed font-light">
-                            De nieuwste <span class="font-semibold text-blue-600">zetelverdeling</span> volgens recente peilingen van <span class="font-semibold text-purple-600">27 april 2025</span>
+                            De nieuwste <span class="font-semibold text-blue-600">zetelverdeling</span> volgens recente peilingen van <span class="font-semibold text-red-600">27 april 2025</span>
                         </p>
                         
-                        <!-- Bron informatie -->
+                        <!-- Status indicator -->
                         <div class="inline-flex items-center px-6 py-3 bg-slate-900/5 backdrop-blur-sm rounded-full border border-slate-200/50 shadow-sm">
                             <div class="flex items-center space-x-3">
                                 <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1633,8 +1447,6 @@ require_once 'views/templates/header.php';
         </div>
     </section>
 
-    <!-- Uitgelichte Nieuwste Blog Section -->
-    <section class="py-16 bg-white relative overflow-hidden">
     <!-- Partijen Highlight Section -->
     <section class="py-16 bg-gradient-to-br from-blue-50 to-white relative overflow-hidden">
         <!-- Decorative elements -->
@@ -1738,16 +1550,44 @@ require_once 'views/templates/header.php';
                     
                     <!-- Left column: Content (now on right) -->
                     <div class="space-y-8" data-aos="fade-left">
-                        <div class="space-y-6">
-                            <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
-                                <span class="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                        <!-- Uniforme header sectie -->
+                        <div class="text-center mb-16 relative" data-aos="fade-up" data-aos-once="true">
+                            <!-- Achtergrond tekst -->
+                            <div class="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
+                                <span class="text-[80px] sm:text-[100px] lg:text-[120px] xl:text-[160px] font-black text-slate-100/30 select-none tracking-wider transform -rotate-2">PARTIJEN</span>
+                            </div>
+                            
+                            <!-- Main content -->
+                            <div class="relative z-10 space-y-6">
+                                <!-- Hoofdtitel -->
+                                <div class="space-y-4">
+                                    <h2 class="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black text-slate-900 leading-tight tracking-tight">
+                                        <span class="bg-gradient-to-r from-blue-600 via-red-600 to-blue-800 bg-clip-text text-transparent animate-gradient bg-size-200">
                                     Politieke Partijen
                                 </span>
                             </h2>
-                            <p class="text-xl text-gray-600 leading-relaxed">
-                                Verken alle politieke partijen in Nederland en hun standpunten op één overzichtelijke plek. 
-                                Leer meer over hun leiders, geschiedenis en waar ze voor staan in het huidige politieke landschap.
-                            </p>
+                                    
+                                    <!-- Decoratieve lijn systeem -->
+                                    <div class="flex items-center justify-center space-x-4 mt-6">
+                                        <div class="w-12 h-0.5 bg-gradient-to-r from-transparent via-blue-500 to-blue-600"></div>
+                                        <div class="relative">
+                                            <div class="w-3 h-3 bg-blue-600 rounded-full animate-pulse"></div>
+                                            <div class="absolute inset-0 w-3 h-3 bg-blue-600 rounded-full animate-ping opacity-30"></div>
+                                        </div>
+                                        <div class="w-24 h-0.5 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600"></div>
+                                        <div class="relative">
+                                            <div class="w-3 h-3 bg-indigo-600 rounded-full animate-pulse animation-delay-300"></div>
+                                            <div class="absolute inset-0 w-3 h-3 bg-indigo-600 rounded-full animate-ping opacity-30 animation-delay-300"></div>
+                                        </div>
+                                        <div class="w-12 h-0.5 bg-gradient-to-r from-indigo-600 via-indigo-500 to-transparent"></div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Subtitel -->
+                                <p class="text-lg sm:text-xl lg:text-2xl text-slate-600 max-w-3xl mx-auto leading-relaxed font-light">
+                                    Verken alle <span class="font-semibold text-blue-600">politieke partijen</span> en hun <span class="font-semibold text-red-600">standpunten</span> op één overzichtelijke plek
+                                </p>
+                            </div>
                         </div>
 
                         <!-- Features Grid -->
@@ -1827,16 +1667,44 @@ require_once 'views/templates/header.php';
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                     <!-- Linker kolom: Content -->
                     <div class="space-y-8" data-aos="fade-right">
-                        <div class="space-y-6">
-                            <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
-                                <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                        <!-- Uniforme header sectie -->
+                        <div class="text-center mb-16 relative" data-aos="fade-up" data-aos-once="true">
+                            <!-- Achtergrond tekst -->
+                            <div class="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
+                                <span class="text-[80px] sm:text-[100px] lg:text-[120px] xl:text-[160px] font-black text-slate-100/30 select-none tracking-wider transform -rotate-2">QUIZ</span>
+                            </div>
+                            
+                            <!-- Main content -->
+                            <div class="relative z-10 space-y-6">
+                                <!-- Hoofdtitel -->
+                                <div class="space-y-4">
+                                    <h2 class="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black text-slate-900 leading-tight tracking-tight">
+                                        <span class="bg-gradient-to-r from-blue-600 via-red-600 to-blue-800 bg-clip-text text-transparent animate-gradient bg-size-200">
                                     Stemwijzer 2025
                                 </span>
                             </h2>
-                            <p class="text-xl text-gray-600 leading-relaxed">
-                                Vind de partij die het beste bij jouw standpunten past met onze gloednieuwe stemwijzer. 
-                                Beantwoord 25 belangrijke stellingen en krijg direct inzicht in jouw politieke voorkeuren.
-                            </p>
+                                    
+                                    <!-- Decoratieve lijn systeem -->
+                                    <div class="flex items-center justify-center space-x-4 mt-6">
+                                        <div class="w-12 h-0.5 bg-gradient-to-r from-transparent via-blue-500 to-blue-600"></div>
+                                        <div class="relative">
+                                            <div class="w-3 h-3 bg-blue-600 rounded-full animate-pulse"></div>
+                                            <div class="absolute inset-0 w-3 h-3 bg-blue-600 rounded-full animate-ping opacity-30"></div>
+                                        </div>
+                                        <div class="w-24 h-0.5 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600"></div>
+                                        <div class="relative">
+                                            <div class="w-3 h-3 bg-indigo-600 rounded-full animate-pulse animation-delay-300"></div>
+                                            <div class="absolute inset-0 w-3 h-3 bg-indigo-600 rounded-full animate-ping opacity-30 animation-delay-300"></div>
+                                        </div>
+                                        <div class="w-12 h-0.5 bg-gradient-to-r from-indigo-600 via-indigo-500 to-transparent"></div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Subtitel -->
+                                <p class="text-lg sm:text-xl lg:text-2xl text-slate-600 max-w-3xl mx-auto leading-relaxed font-light">
+                                    Vind de partij die het beste bij jouw <span class="font-semibold text-blue-600">standpunten</span> past met onze <span class="font-semibold text-red-600">stemwijzer</span>
+                                </p>
+                            </div>
                         </div>
 
                         <!-- Features Grid -->
@@ -1980,22 +1848,46 @@ require_once 'views/templates/header.php';
         
         <div class="container mx-auto px-4 relative z-10">
             <div class="max-w-3xl mx-auto text-center">
-                <!-- Icon met verfijnde styling -->
-                <div class="inline-block p-4 bg-gradient-to-br from-primary to-secondary rounded-2xl shadow-lg mb-8 transform transition-transform hover:scale-110 duration-300" data-aos="zoom-in">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                    </svg>
+                <!-- Uniforme header sectie -->
+                <div class="text-center mb-16 relative" data-aos="fade-up" data-aos-once="true">
+                    <!-- Achtergrond tekst -->
+                    <div class="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
+                        <span class="text-[80px] sm:text-[100px] lg:text-[120px] xl:text-[160px] font-black text-slate-100/30 select-none tracking-wider transform -rotate-2">NEWS</span>
                 </div>
                 
-                <!-- Titel met verbeterde typografie -->
-                <h2 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-5 leading-tight" data-aos="fade-up">
-                    Mis nooit meer <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">politiek nieuws</span>
+                    <!-- Main content -->
+                    <div class="relative z-10 space-y-6">
+                        <!-- Hoofdtitel -->
+                        <div class="space-y-4">
+                            <h2 class="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black text-slate-900 leading-tight tracking-tight">
+                                <span class="block mb-2">Mis nooit meer</span>
+                                <span class="bg-gradient-to-r from-blue-600 via-red-600 to-blue-800 bg-clip-text text-transparent animate-gradient bg-size-200">
+                                    Politiek Nieuws
+                                </span>
                 </h2>
                 
-                <!-- Beschrijving met verbeterde leesbaarheid -->
-                <p class="text-lg text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed" data-aos="fade-up" data-aos-delay="100">
-                    Schrijf je in voor onze nieuwsbrief en ontvang direct een melding bij nieuwe blogs, analyses en belangrijke politieke updates. Blijf voorop lopen!
-                </p>
+                            <!-- Decoratieve lijn systeem -->
+                            <div class="flex items-center justify-center space-x-4 mt-6">
+                                <div class="w-12 h-0.5 bg-gradient-to-r from-transparent via-blue-500 to-blue-600"></div>
+                                <div class="relative">
+                                    <div class="w-3 h-3 bg-blue-600 rounded-full animate-pulse"></div>
+                                    <div class="absolute inset-0 w-3 h-3 bg-blue-600 rounded-full animate-ping opacity-30"></div>
+                                </div>
+                                <div class="w-24 h-0.5 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600"></div>
+                                <div class="relative">
+                                    <div class="w-3 h-3 bg-indigo-600 rounded-full animate-pulse animation-delay-300"></div>
+                                    <div class="absolute inset-0 w-3 h-3 bg-indigo-600 rounded-full animate-ping opacity-30 animation-delay-300"></div>
+                                </div>
+                                <div class="w-12 h-0.5 bg-gradient-to-r from-indigo-600 via-indigo-500 to-transparent"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Subtitel -->
+                        <p class="text-lg sm:text-xl lg:text-2xl text-slate-600 max-w-3xl mx-auto leading-relaxed font-light">
+                            Ontvang direct een melding bij nieuwe <span class="font-semibold text-blue-600">blogs</span> en <span class="font-semibold text-red-600">politieke updates</span>
+                        </p>
+                    </div>
+                </div>
                 
                 <!-- Inschrijfformulier met verbeterde styling -->
                 <div class="max-w-lg mx-auto" data-aos="fade-up" data-aos-delay="200">
@@ -2056,3 +1948,4 @@ function getRelativeTime($date) {
         return $formatter->format($timestamp);
     }
 }
+

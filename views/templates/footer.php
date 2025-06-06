@@ -1,5 +1,5 @@
     </div>
-    <footer class="relative mt-auto">
+    <footer class="relative">
         <!-- Decoratieve top border met gradient -->
         <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-secondary to-accent"></div>
         
@@ -11,18 +11,18 @@
         </div>
 
         <!-- Main Footer Content met verbeterde structuur -->
-        <div class="bg-primary/95 text-white">
+        <div class="bg-white text-gray-700">
             <div class="container mx-auto px-4 py-16">
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-12">
                     <!-- Over PolitiekPraat Sectie -->
                     <div class="md:col-span-4">
                         <div class="flex items-center space-x-3 mb-6 group">
                             <div class="relative">
-                                <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center group-hover:bg-white/20 transition-all duration-300">
+                                <div class="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center group-hover:bg-gray-200 transition-all duration-300">
                                     <!-- Logo met verbeterde styling -->
-                                    <img src="<?php echo URLROOT; ?>/images/favicon-512x512.png" 
+                                    <img src="<?php echo URLROOT; ?>/favicon.jpeg" 
                                          alt="PolitiekPraat Logo" 
-                                         class="w-8 h-8 object-contain transition-all duration-300 group-hover:scale-110">
+                                         class="w-8 h-8 object-cover rounded-lg transition-all duration-300 group-hover:scale-110">
                                 </div>
                                 <div class="absolute -top-1 -right-1 w-6 h-6 bg-secondary rounded-full flex items-center justify-center shadow-lg animate-float">
                                     <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -33,33 +33,33 @@
                                 </div>
                             </div>
                             <div class="flex flex-col">
-                                <span class="text-2xl font-bold group-hover:text-secondary transition-colors duration-300">
+                                <span class="text-2xl font-bold group-hover:text-primary transition-colors duration-300 text-gray-800">
                                     <?php echo SITENAME; ?>
                                 </span>
-                                <span class="text-sm text-white/70">
+                                <span class="text-sm text-gray-500">
                                     Samen bouwen aan democratie
                                 </span>
                             </div>
                         </div>
-                        <p class="text-white/80 leading-relaxed mb-8">
+                        <p class="text-gray-600 leading-relaxed mb-8">
                             PolitiekPraat is het toonaangevende platform voor open en constructieve discussie over 
                             politieke onderwerpen in Nederland. Samen werken we aan een geïnformeerd politiek debat.
                         </p>
 
                         <!-- Social Media Links -->
                         <div class="flex space-x-4">
-                            <a href="#" class="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center hover:bg-secondary hover:text-white transition-all duration-300 group">
-                                <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:scale-110" fill="currentColor" viewBox="0 0 24 24">
+                            <a href="#" class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center hover:bg-primary hover:text-white transition-all duration-300 group">
+                                <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:scale-110 text-gray-600 group-hover:text-white" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                                 </svg>
                             </a>
-                            <a href="#" class="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center hover:bg-secondary hover:text-white transition-all duration-300 group">
-                                <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:scale-110" fill="currentColor" viewBox="0 0 24 24">
+                            <a href="#" class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center hover:bg-primary hover:text-white transition-all duration-300 group">
+                                <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:scale-110 text-gray-600 group-hover:text-white" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
                                 </svg>
                             </a>
-                            <a href="https://www.linkedin.com/in/naoufalandichi/" class="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center hover:bg-secondary hover:text-white transition-all duration-300 group" target="_blank" rel="noopener noreferrer">
-                                <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:scale-110" fill="currentColor" viewBox="0 0 24 24">
+                            <a href="https://www.linkedin.com/in/naoufalandichi/" class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center hover:bg-primary hover:text-white transition-all duration-300 group" target="_blank" rel="noopener noreferrer">
+                                <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:scale-110 text-gray-600 group-hover:text-white" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.016 18.6h-2.472v-3.9c0-.923-.018-2.11-1.287-2.11-1.29 0-1.487 1.005-1.487 2.044v3.966H9.297V9.6h2.376v1.09h.033c.33-.627 1.14-1.29 2.347-1.29 2.51 0 2.97 1.653 2.97 3.803v5.397zM7.031 8.51a1.434 1.434 0 11.001-2.868 1.434 1.434 0 01-.001 2.868zm1.235 10.09H5.795V9.6h2.471v8.999z"/>
                                 </svg>
                             </a>
@@ -78,35 +78,35 @@
                         <ul class="space-y-4">
                             <li>
                                 <a href="<?php echo URLROOT; ?>/" 
-                                   class="group flex items-center text-white/80 hover:text-white transition-colors duration-300">
+                                   class="group flex items-center text-gray-600 hover:text-primary transition-colors duration-300">
                                     <span class="w-2 h-2 bg-secondary rounded-full mr-3 transform scale-0 group-hover:scale-100 transition-transform duration-300"></span>
                                     Home
                                 </a>
                             </li>
                             <li>
                                 <a href="<?php echo URLROOT; ?>/blogs" 
-                                   class="group flex items-center text-white/80 hover:text-white transition-colors duration-300">
+                                   class="group flex items-center text-gray-600 hover:text-primary transition-colors duration-300">
                                     <span class="w-2 h-2 bg-secondary rounded-full mr-3 transform scale-0 group-hover:scale-100 transition-transform duration-300"></span>
                                     Blogs
                                 </a>
                             </li>
                             <li>
                                 <a href="<?php echo URLROOT; ?>/nieuws" 
-                                   class="group flex items-center text-white/80 hover:text-white transition-colors duration-300">
+                                   class="group flex items-center text-gray-600 hover:text-primary transition-colors duration-300">
                                     <span class="w-2 h-2 bg-secondary rounded-full mr-3 transform scale-0 group-hover:scale-100 transition-transform duration-300"></span>
                                     Nieuws
                                 </a>
                             </li>
                             <li>
                                 <a href="<?php echo URLROOT; ?>/stemwijzer" 
-                                   class="group flex items-center text-white/80 hover:text-white transition-colors duration-300">
+                                   class="group flex items-center text-gray-600 hover:text-primary transition-colors duration-300">
                                     <span class="w-2 h-2 bg-secondary rounded-full mr-3 transform scale-0 group-hover:scale-100 transition-transform duration-300"></span>
                                     Stemwijzer
                                 </a>
                             </li>
                             <li>
                                 <a href="<?php echo URLROOT; ?>/partijen" 
-                                   class="group flex items-center text-white/80 hover:text-white transition-colors duration-300">
+                                   class="group flex items-center text-gray-600 hover:text-primary transition-colors duration-300">
                                     <span class="w-2 h-2 bg-secondary rounded-full mr-3 transform scale-0 group-hover:scale-100 transition-transform duration-300"></span>
                                     Partijen
                                 </a>
@@ -126,28 +126,28 @@
                         <ul class="space-y-4">
                             <li>
                                 <a href="<?php echo URLROOT; ?>/contact" 
-                                   class="group flex items-center text-white/80 hover:text-white transition-colors duration-300">
+                                   class="group flex items-center text-gray-600 hover:text-primary transition-colors duration-300">
                                     <span class="w-2 h-2 bg-secondary rounded-full mr-3 transform scale-0 group-hover:scale-100 transition-transform duration-300"></span>
                                     Contact
                                 </a>
                             </li>
                             <li>
                                 <a href="<?php echo URLROOT; ?>/over-mij" 
-                                   class="group flex items-center text-white/80 hover:text-white transition-colors duration-300">
+                                   class="group flex items-center text-gray-600 hover:text-primary transition-colors duration-300">
                                     <span class="w-2 h-2 bg-secondary rounded-full mr-3 transform scale-0 group-hover:scale-100 transition-transform duration-300"></span>
                                     Over ons
                                 </a>
                             </li>
                             <li>
                                 <a href="#" 
-                                   class="group flex items-center text-white/80 hover:text-white transition-colors duration-300">
+                                   class="group flex items-center text-gray-600 hover:text-primary transition-colors duration-300">
                                     <span class="w-2 h-2 bg-secondary rounded-full mr-3 transform scale-0 group-hover:scale-100 transition-transform duration-300"></span>
                                     Privacybeleid
                                 </a>
                             </li>
                             <li>
                                 <a href="#" 
-                                   class="group flex items-center text-white/80 hover:text-white transition-colors duration-300">
+                                   class="group flex items-center text-gray-600 hover:text-primary transition-colors duration-300">
                                     <span class="w-2 h-2 bg-secondary rounded-full mr-3 transform scale-0 group-hover:scale-100 transition-transform duration-300"></span>
                                     Voorwaarden
                                 </a>
@@ -165,28 +165,28 @@
                             Contact
                         </h4>
                         <ul class="space-y-4">
-                            <li class="flex items-center text-white/80 hover:text-white transition-colors duration-300 group">
-                                <div class="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center mr-4 group-hover:bg-secondary group-hover:text-white transition-all duration-300">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <li class="flex items-center text-gray-600 hover:text-primary transition-colors duration-300 group">
+                                <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center mr-4 group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                                    <svg class="w-5 h-5 text-gray-600 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                               d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                                     </svg>
                                 </div>
                                 <div>
-                                    <span class="block font-medium">E-mail</span>
-                                    <span class="text-sm text-white/60">info@politiekpraat.nl</span>
+                                    <span class="block font-medium text-gray-800">E-mail</span>
+                                    <span class="text-sm text-gray-500">info@politiekpraat.nl</span>
                                 </div>
                             </li>
-                            <li class="flex items-center text-white/80 hover:text-white transition-colors duration-300 group">
-                                <div class="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center mr-4 group-hover:bg-secondary group-hover:text-white transition-all duration-300">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <li class="flex items-center text-gray-600 hover:text-primary transition-colors duration-300 group">
+                                <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center mr-4 group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                                    <svg class="w-5 h-5 text-gray-600 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                               d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
                                     </svg>
                                 </div>
                                 <div>
-                                    <span class="block font-medium">Telefoon</span>
-                                    <span class="text-sm text-white/60">+31 6 38107271</span>
+                                    <span class="block font-medium text-gray-800">Telefoon</span>
+                                    <span class="text-sm text-gray-500">+31 6 38107271</span>
                                 </div>
                             </li>
                         </ul>
@@ -200,17 +200,17 @@
                                 </svg>
                                 Nieuwsbrief
                             </h5>
-                            <p class="text-sm text-white/70 mb-4">Blijf op de hoogte van het laatste nieuws en updates.</p>
+                            <p class="text-sm text-gray-500 mb-4">Blijf op de hoogte van het laatste nieuws en updates.</p>
                             
                             <form id="newsletterForm" class="space-y-3">
                                 <div class="relative">
                                     <input type="email" name="email" required 
-                                           class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/50 
-                                                focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent transition-all duration-300"
+                                           class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 text-gray-700 placeholder-gray-400 
+                                                focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300"
                                            placeholder="Jouw e-mailadres">
                                     <button type="submit" 
-                                            class="absolute right-2 top-2 bg-secondary text-white p-1.5 rounded-md 
-                                                 hover:bg-secondary/90 transition-all duration-300 transform hover:scale-105">
+                                            class="absolute right-2 top-2 bg-primary text-white p-1.5 rounded-md 
+                                                 hover:bg-primary/90 transition-all duration-300 transform hover:scale-105">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
                                         </svg>
@@ -227,14 +227,14 @@
         </div>
 
         <!-- Copyright Sectie -->
-        <div class="bg-primary/90 border-t border-white/10">
+        <div class="bg-gray-50 border-t border-gray-200">
             <div class="container mx-auto px-4 py-6">
-                <div class="flex flex-col md:flex-row justify-between items-center text-white/60 text-sm">
+                <div class="flex flex-col md:flex-row justify-between items-center text-gray-500 text-sm">
                     <p>&copy; <?php echo date('Y'); ?> PolitiekPraat. Alle rechten voorbehouden.</p>
                     <div class="flex space-x-8 mt-4 md:mt-0">
-                        <a href="#" class="hover:text-white transition-colors duration-300">Privacy Policy</a>
-                        <a href="#" class="hover:text-white transition-colors duration-300">Gebruiksvoorwaarden</a>
-                        <a href="#" class="hover:text-white transition-colors duration-300">Cookie Policy</a>
+                        <a href="#" class="hover:text-primary transition-colors duration-300">Privacy Policy</a>
+                        <a href="#" class="hover:text-primary transition-colors duration-300">Gebruiksvoorwaarden</a>
+                        <a href="#" class="hover:text-primary transition-colors duration-300">Cookie Policy</a>
                     </div>
                 </div>
             </div>

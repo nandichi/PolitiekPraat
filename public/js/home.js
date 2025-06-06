@@ -1,4 +1,29 @@
 document.addEventListener("DOMContentLoaded", function () {
+  // Parliament seat distribution interaction
+  const seats = document.querySelectorAll(".parliament-seat");
+  const partyNameEl = document.getElementById("parliament-party-name");
+  const partySeatsEl = document.getElementById("parliament-party-seats");
+  const parliamentContainer = document.querySelector(".parliament-semicircle");
+
+  if (seats.length > 0 && partyNameEl && partySeatsEl && parliamentContainer) {
+    const defaultName = partyNameEl.textContent;
+
+    seats.forEach((seat) => {
+      seat.addEventListener("mouseenter", function () {
+        const partij = this.dataset.partij;
+        const zetels = this.dataset.zetels;
+
+        partyNameEl.textContent = partij;
+        partySeatsEl.textContent = `${zetels} zetels`;
+      });
+    });
+
+    parliamentContainer.addEventListener("mouseleave", function () {
+      partyNameEl.textContent = defaultName;
+      partySeatsEl.textContent = "";
+    });
+  }
+
   // Initialize AOS (Animate On Scroll) if available
   if (typeof AOS !== "undefined") {
     AOS.init({

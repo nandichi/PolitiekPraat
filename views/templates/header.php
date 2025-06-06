@@ -741,7 +741,7 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
         }
     </style>
 </head>
-<body class="bg-gray-50 flex flex-col min-h-screen overflow-x-hidden">
+<body class="bg-gray-50 overflow-x-hidden">
     <!-- Background blobs for decoration -->
     <div aria-hidden="true" class="fixed inset-0 overflow-hidden z-0 pointer-events-none">
         <div class="blob bg-primary/20 w-[500px] h-[500px] -top-[250px] -left-[250px] animate-pulse-slow"></div>
@@ -749,160 +749,122 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
         <div class="blob bg-accent/10 w-[400px] h-[400px] -bottom-[200px] left-[10%] animate-pulse-slow" style="animation-delay: 2s;"></div>
     </div>
     
-    <div class="flex-grow relative z-10">    <!-- Bottom gradient line -->
-        <div class="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-white/50 to-transparent"></div>
-    </div> 
+ 
 
-    <!-- Main Navigation - Fixed z-index and mobile layout -->
-    <nav class="relative z-20 sticky top-0 header-container">
-        <!-- Subtle top reflection line -->
-        <div aria-hidden="true" class="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
-        
-        <!-- Animated gradient background -->
-        <div class="absolute inset-0 fancy-gradient opacity-95"></div>
-        
-        <!-- Glassmorphism overlay -->
-        <div class="absolute inset-0 backdrop-blur-md bg-primary/10"></div>
-        
-        <!-- Navigation content -->
-        <div class="relative max-w-7xl mx-auto px-4 sm:px-6">
-            <div class="flex justify-between items-center h-16 md:h-20">
-                <!-- Logo - Fixed mobile layout -->
-                <a href="<?php echo URLROOT; ?>" class="flex items-center space-x-2 md:space-x-3 group relative z-10">
-                    <div class="relative overflow-hidden flex items-center justify-center w-8 h-8 md:w-12 md:h-12 rounded-xl 
-                                bg-gradient-to-br from-primary to-primary/80 
-                                backdrop-blur-sm shadow-lg transition-all duration-500 
-                                group-hover:from-primary/90 group-hover:to-secondary/80 group-hover:scale-105 
-                                group-hover:shadow-secondary/20 group-hover:shadow-xl border border-white/10 
-                                group-hover:border-white/20">
+    <!-- Main Navigation - Completely redesigned -->
+    <nav class="relative z-20 sticky top-0">
+        <!-- Modern header with clean design -->
+        <div class="bg-white shadow-lg border-b-2 border-primary/10">
+            <!-- Top accent bar -->
+            <div class="h-1 bg-gradient-to-r from-primary via-secondary to-accent"></div>
+            
+            <!-- Navigation content -->
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center h-16 md:h-20">
+                    <!-- New Logo Design - Text based with icon -->
+                    <a href="<?php echo URLROOT; ?>" class="flex items-center space-x-3 group">
+                        <!-- Favicon Logo -->
+                        <div class="relative">
+                            <div class="w-10 h-10 md:w-12 md:h-12 rounded-lg overflow-hidden shadow-lg 
+                                        transition-all duration-300 group-hover:shadow-xl 
+                                        group-hover:scale-105 group-hover:rotate-3
+                                        border-2 border-primary/20 group-hover:border-primary/40
+                                        shadow-[0_0_15px_rgba(26,54,93,0.3)] group-hover:shadow-[0_0_25px_rgba(196,30,58,0.5)]">
+                                <img src="<?php echo URLROOT; ?>/favicon.jpeg" 
+                                     alt="<?php echo SITENAME; ?> Logo" 
+                                     class="w-full h-full object-cover">
+                            </div>
+                        </div>
                         
-                        <img src="<?php echo URLROOT; ?>/images/favicon-512x512.png" 
-                             alt="PolitiekPraat Logo" 
-                             class="w-6 h-6 md:w-9 md:h-9 object-contain transition-all duration-500
-                                    group-hover:scale-110 group-hover:rotate-3 group-hover:brightness-110">
-                        
-                        <!-- Dynamic glow effect -->
-                        <div class="absolute inset-0 rounded-xl bg-white/10 opacity-0 blur-md group-hover:opacity-80 
-                                    transition-all duration-500 animate-pulse-slow"></div>
-                    </div>
-                    
-                    <!-- Text with mobile-friendly sizing -->
-                    <div class="flex flex-col">
-                        <span class="text-base md:text-xl font-bold text-white tracking-tight relative 
-                                     transition-all duration-500 group-hover:text-transparent 
-                                     group-hover:bg-clip-text group-hover:bg-gradient-to-r 
-                                     group-hover:from-white group-hover:to-white/80">
-                            <?php echo SITENAME; ?>
-                        </span>
-                        <span class="text-xs md:text-sm text-white/70 font-medium transition-all duration-500 
-                                    group-hover:text-white/90 italic hidden sm:block">
-                            <span class="hidden md:inline">Samen</span> bouwen aan democratie
-                            <span class="inline-block w-1.5 h-1.5 ml-1 bg-secondary rounded-full animate-pulse-slow"></span>
-                        </span>
-                    </div>
-                </a>
+                        <!-- Brand text -->
+                        <div class="flex flex-col">
+                            <span class="text-lg md:text-2xl font-bold bg-gradient-to-r 
+                                        from-primary via-secondary to-accent bg-clip-text text-transparent
+                                        transition-all duration-300 group-hover:from-secondary 
+                                        group-hover:to-primary tracking-tight">
+                                <?php echo SITENAME; ?>
+                            </span>
+                            <span class="text-xs md:text-sm text-gray-600 font-medium 
+                                        transition-all duration-300 group-hover:text-primary
+                                        hidden sm:block">
+                                Jouw politieke platform
+                            </span>
+                        </div>
+                    </a>
 
-                <!-- Desktop Navigation Links - Enhanced -->
+                <!-- Desktop Navigation Links - Modern redesign -->
                 <div class="hidden md:flex items-center space-x-1 lg:space-x-2">
                     <a href="<?php echo URLROOT; ?>/" 
-                       class="nav-link px-2.5 lg:px-3 py-2 text-white/95 font-medium rounded-lg">
-                        <span class="relative">Home</span>
+                       class="relative px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg 
+                              transition-all duration-300 hover:text-primary hover:bg-primary/5
+                              group">
+                        <span class="relative z-10">Home</span>
+                        <div class="absolute inset-0 bg-primary/10 rounded-lg scale-0 
+                                    group-hover:scale-100 transition-transform duration-300"></div>
                     </a>
 
                     <a href="<?php echo URLROOT; ?>/blogs" 
-                       class="nav-link px-2.5 lg:px-3 py-2 text-white/95 font-medium rounded-lg">
-                        <span class="relative">Blogs</span>
+                       class="relative px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg 
+                              transition-all duration-300 hover:text-primary hover:bg-primary/5
+                              group">
+                        <span class="relative z-10">Blogs</span>
+                        <div class="absolute inset-0 bg-primary/10 rounded-lg scale-0 
+                                    group-hover:scale-100 transition-transform duration-300"></div>
                     </a>
 
                     <a href="<?php echo URLROOT; ?>/nieuws" 
-                       class="nav-link px-2.5 lg:px-3 py-2 text-white/95 font-medium rounded-lg">
-                        <span class="relative">Nieuws</span>
+                       class="relative px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg 
+                              transition-all duration-300 hover:text-primary hover:bg-primary/5
+                              group">
+                        <span class="relative z-10">Nieuws</span>
+                        <div class="absolute inset-0 bg-primary/10 rounded-lg scale-0 
+                                    group-hover:scale-100 transition-transform duration-300"></div>
                     </a>
 
                     <a href="<?php echo URLROOT; ?>/stemwijzer" 
-                       class="flex items-center nav-link px-2.5 lg:px-3 py-2 text-white/95 font-medium rounded-lg">
-                        <span class="relative">Stemwijzer</span>
+                       class="relative px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg 
+                              transition-all duration-300 hover:text-primary hover:bg-primary/5
+                              group flex items-center">
+                        <span class="relative z-10">Stemwijzer</span>
+                        <span class="ml-2 px-1.5 py-0.5 text-xs font-bold bg-secondary text-white 
+                                    rounded-full shadow-sm">2025</span>
+                        <div class="absolute inset-0 bg-primary/10 rounded-lg scale-0 
+                                    group-hover:scale-100 transition-transform duration-300"></div>
                     </a>
 
                     <a href="<?php echo URLROOT; ?>/partijen" 
-                       class="flex items-center nav-link px-2.5 lg:px-3 py-2 text-white/95 font-medium rounded-lg">
-                        <span class="relative">Partijen</span>
+                       class="relative px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg 
+                              transition-all duration-300 hover:text-primary hover:bg-primary/5
+                              group">
+                        <span class="relative z-10">Partijen</span>
+                        <div class="absolute inset-0 bg-primary/10 rounded-lg scale-0 
+                                    group-hover:scale-100 transition-transform duration-300"></div>
                     </a>
 
-                    <!-- Forum Dropdown - Elegant implementation -->
-                    <div class="relative group" style="display: none;">
-                        <button class="nav-link px-2.5 lg:px-3 py-2 text-white/95 font-medium flex items-center rounded-lg">
-                            <span class="relative">Forum</span>
-                            <svg class="w-4 h-4 ml-1.5 transform transition-transform duration-300 group-hover:rotate-180" 
-                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                            </svg>
-                        </button>
-
-                        <div class="absolute left-0 mt-2 w-56 dropdown-content z-50" style="margin-top: -5px; padding-top: 15px;">
-                            <div class="p-2 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden">
-                                <!-- Subtle top accent -->
-                                <div class="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-primary/30 via-secondary/30 to-primary/30"></div>
-                                
-                                <a href="<?php echo URLROOT; ?>/forum" 
-                                   class="flex items-center px-3 py-2.5 rounded-lg transition-all duration-200
-                                          hover:bg-gray-50 group/item">
-                                    <div class="flex items-center justify-center w-9 h-9 rounded-lg bg-primary/5
-                                              transition-transform duration-200 group-hover/item:scale-110">
-                                        <svg class="w-5 h-5 text-primary transition-all duration-200 
-                                                  group-hover/item:text-primary/90" 
-                                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                                  d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/>
-                                        </svg>
-                                    </div>
-                                    <div class="ml-3">
-                                        <p class="text-sm font-medium text-gray-800">Alle discussies</p>
-                                        <p class="text-xs text-gray-500">Bekijk het forum</p>
-                                    </div>
-                                </a>
-
-                                <?php if(isset($_SESSION['user_id'])): ?>
-                                    <a href="<?php echo URLROOT; ?>/forum/create" 
-                                       class="flex items-center px-3 py-2.5 mt-1 rounded-lg transition-all duration-200
-                                              hover:bg-gray-50 group/item">
-                                        <div class="flex items-center justify-center w-9 h-9 rounded-lg bg-secondary/5
-                                                  transition-transform duration-200 group-hover/item:scale-110">
-                                            <svg class="w-5 h-5 text-secondary transition-all duration-200" 
-                                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                                            </svg>
-                                        </div>
-                                        <div class="ml-3">
-                                            <p class="text-sm font-medium text-gray-800">Start discussie</p>
-                                            <p class="text-xs text-gray-500">Nieuw onderwerp</p>
-                                        </div>
-                                    </a>
-                                <?php endif; ?>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Contact Dropdown - Elegant implementation -->
+                    <!-- Contact Dropdown - Modern redesign -->
                     <div class="relative group">
-                        <button class="nav-link px-2.5 lg:px-3 py-2 text-white/95 font-medium flex items-center rounded-lg">
-                            <span class="relative">Contact</span>
-                            <svg class="w-4 h-4 ml-1.5 transform transition-transform duration-300 group-hover:rotate-180" 
+                        <button class="relative px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg 
+                                      transition-all duration-300 hover:text-primary hover:bg-primary/5
+                                      flex items-center">
+                            <span class="relative z-10">Contact</span>
+                            <svg class="w-4 h-4 ml-2 transform transition-transform duration-300 group-hover:rotate-180" 
                                  fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                             </svg>
+                            <div class="absolute inset-0 bg-primary/10 rounded-lg scale-0 
+                                        group-hover:scale-100 transition-transform duration-300"></div>
                         </button>
 
-                        <div class="absolute left-0 mt-2 w-56 dropdown-content z-50" style="margin-top: -5px; padding-top: 15px;">
+                        <div class="absolute left-0 mt-3 w-56 dropdown-content z-50" style="margin-top: -5px; padding-top: 15px;">
                             <div class="p-2 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden">
                                 <!-- Subtle top accent -->
-                                <div class="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-primary/30 via-secondary/30 to-primary/30"></div>
+                                <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-secondary to-accent"></div>
                                 
                                 <a href="<?php echo URLROOT; ?>/contact" 
-                                   class="flex items-center px-3 py-2.5 rounded-lg transition-all duration-200
+                                   class="flex items-center px-3 py-3 rounded-lg transition-all duration-200
                                           hover:bg-gray-50 group/item">
-                                    <div class="flex items-center justify-center w-9 h-9 rounded-lg bg-primary/5
-                                              transition-transform duration-200 group-hover/item:scale-110">
+                                    <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-primary/10
+                                              transition-all duration-200 group-hover/item:scale-110 group-hover/item:bg-primary/20">
                                         <svg class="w-5 h-5 text-primary transition-all duration-200" 
                                              fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
@@ -910,16 +872,16 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                                         </svg>
                                     </div>
                                     <div class="ml-3">
-                                        <p class="text-sm font-medium text-gray-800">Contact</p>
+                                        <p class="text-sm font-semibold text-gray-800">Contact</p>
                                         <p class="text-xs text-gray-500">Neem contact op</p>
                                     </div>
                                 </a>
 
                                 <a href="<?php echo URLROOT; ?>/over-mij" 
-                                   class="flex items-center px-3 py-2.5 mt-1 rounded-lg transition-all duration-200
+                                   class="flex items-center px-3 py-3 mt-1 rounded-lg transition-all duration-200
                                           hover:bg-gray-50 group/item">
-                                    <div class="flex items-center justify-center w-9 h-9 rounded-lg bg-secondary/5
-                                              transition-transform duration-200 group-hover/item:scale-110">
+                                    <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-secondary/10
+                                              transition-all duration-200 group-hover/item:scale-110 group-hover/item:bg-secondary/20">
                                         <svg class="w-5 h-5 text-secondary transition-all duration-200" 
                                              fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
@@ -927,7 +889,7 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                                         </svg>
                                     </div>
                                     <div class="ml-3">
-                                        <p class="text-sm font-medium text-gray-800">Over ons</p>
+                                        <p class="text-sm font-semibold text-gray-800">Over ons</p>
                                         <p class="text-xs text-gray-500">Leer ons kennen</p>
                                     </div>
                                 </a>
@@ -936,26 +898,24 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                     </div>
                 </div>
 
-                <!-- Auth Buttons - Elegant & Modern -->
+                <!-- Auth Buttons - Modern clean design -->
                 <div class="hidden md:flex items-center space-x-4">
                     <?php if(isset($_SESSION['user_id'])): ?>
                         <div class="relative group">
-                            <button class="flex items-center space-x-2 bg-white/10 px-3 py-2 rounded-lg
-                                         border border-white/20 backdrop-blur-sm
-                                         transition-all duration-300
-                                         hover:bg-white/15 hover:border-secondary/30 hover:shadow-lg 
-                                         hover:shadow-secondary/5 group-hover:scale-[1.02] group-hover:pr-4">
-                                <div class="w-7 h-7 bg-gradient-to-br from-secondary to-primary/80
+                            <button class="flex items-center space-x-3 bg-gray-100 hover:bg-gray-200 px-4 py-2.5 rounded-lg
+                                         border border-gray-200 hover:border-primary/30
+                                         transition-all duration-300 hover:shadow-md group-hover:scale-[1.02]">
+                                <div class="w-8 h-8 bg-gradient-to-br from-primary to-secondary
                                          rounded-lg flex items-center justify-center
-                                         ring-1 ring-white/30 transition-all duration-300
-                                         group-hover:ring-white/50 group-hover:scale-110 overflow-hidden">
+                                         shadow-sm transition-all duration-300
+                                         group-hover:shadow-md group-hover:scale-110 overflow-hidden">
                                     <?php
                                     if (isset($_SESSION['username']) && $_SESSION['username'] === 'Naoufal') {
                                         // Special profile photo for Naoufal
                                         $profilePhotoUrl = "https://media.licdn.com/dms/image/v2/D4E03AQFQkWCitMT1ug/profile-displayphoto-shrink_400_400/B4EZYuubOTHMAg-/0/1744540644719?e=1750291200&v=beta&t=Qs38y2l_-SWd_N2CcavekytGxrU06ixhojbHdDktfxM";
                                         ?>
                                         <img src="<?php echo $profilePhotoUrl; ?>" 
-                                             alt="Profile" class="w-full h-full object-cover">
+                                             alt="Profile" class="w-full h-full object-cover rounded-lg">
                                     <?php
                                     } else {
                                         // Normal profile photo handling for other users
@@ -963,7 +923,7 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                                         if ($profilePhoto['type'] === 'img'): 
                                         ?>
                                             <img src="<?php echo $profilePhoto['value']; ?>" 
-                                                 alt="Profile" class="w-full h-full object-cover">
+                                                 alt="Profile" class="w-full h-full object-cover rounded-lg">
                                         <?php else: ?>
                                             <span class="text-white font-bold text-sm">
                                                 <?php echo $profilePhoto['value']; ?>
@@ -972,8 +932,8 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                                     }
                                     ?>
                                 </div>
-                                <span class="font-medium text-white text-sm"><?php echo htmlspecialchars($_SESSION['username']); ?></span>
-                                <svg class="w-4 h-4 text-white transition-transform duration-300 group-hover:rotate-180" 
+                                <span class="font-medium text-gray-700 text-sm"><?php echo htmlspecialchars($_SESSION['username']); ?></span>
+                                <svg class="w-4 h-4 text-gray-500 transition-transform duration-300 group-hover:rotate-180" 
                                      fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                                 </svg>
@@ -1062,22 +1022,25 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                         </div>
                     <?php else: ?>
                         <a href="<?php echo URLROOT; ?>/login" 
-                           class="magic-link text-white/90 hover:text-white transition-all duration-300 font-medium 
-                                 py-2 px-3.5 rounded-lg border border-white/10 hover:border-white/30 hover:bg-white/5">
+                           class="text-gray-700 hover:text-primary transition-all duration-300 font-medium 
+                                 py-2 px-4 rounded-lg border border-gray-200 hover:border-primary/30 hover:bg-gray-50">
                             <span>Inloggen</span>
                         </a>
                         <a href="<?php echo URLROOT; ?>/register" 
-                           class="signup-btn px-4 py-2 rounded-lg font-medium transition-all duration-300 
-                                 relative overflow-hidden group hover:-translate-y-1"
+                           class="bg-gradient-to-r from-primary to-secondary text-white px-4 py-2 rounded-lg 
+                                 font-medium transition-all duration-300 hover:shadow-lg hover:scale-105
+                                 relative overflow-hidden group"
                            style="display: none;">
                             <span class="relative z-10">Aanmelden</span>
+                            <div class="absolute inset-0 bg-gradient-to-r from-secondary to-primary 
+                                       opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                         </a>
                     <?php endif; ?>
                 </div>
 
                 <!-- Mobile Menu Button - Fixed styling -->
-                <button class="md:hidden relative z-10 p-2 text-white hover:bg-white/15 rounded-lg border border-white/20 
-                            transition-all duration-300 hover:border-white/30 group" 
+                <button class="md:hidden relative z-10 p-2 text-gray-700 hover:text-primary hover:bg-gray-100 rounded-lg border border-gray-200 
+                            transition-all duration-300 hover:border-primary/30 group" 
                         id="mobile-menu-button" aria-label="Menu openen">
                     <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:scale-110" 
                          fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1092,19 +1055,20 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
     <div class="md:hidden fixed inset-0 z-50 transition-all duration-300 opacity-0 invisible pointer-events-none" 
          id="mobile-menu-overlay">
         <!-- Backdrop -->
-        <div class="absolute inset-0 bg-primary/90 backdrop-blur-md transition-opacity duration-300"
+        <div class="absolute inset-0 bg-black/50 backdrop-blur-md transition-opacity duration-300"
              onclick="closeMobileMenu()"></div>
         
         <!-- Menu Content - Fixed positioning and animations -->
-        <div class="absolute right-0 top-0 h-full w-full max-w-xs bg-gradient-to-b from-primary to-primary/95 
-                    shadow-2xl overflow-y-auto transform translate-x-full transition-transform duration-300 ease-out"
+        <div class="absolute right-0 top-0 h-full w-full max-w-xs bg-white 
+                    shadow-2xl overflow-y-auto transform translate-x-full transition-transform duration-300 ease-out
+                    border-l border-gray-200"
              id="mobile-menu-content">
             
             <!-- Mobile menu content -->
             <div class="p-4 space-y-4">
                 <!-- Close Button -->
                 <div class="flex justify-end">
-                    <button class="p-2 text-white/80 hover:text-white hover:bg-white/10 rounded-lg 
+                    <button class="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg 
                                 transition-all duration-300 group" 
                             onclick="closeMobileMenu()" aria-label="Menu sluiten">
                         <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:rotate-90" 
@@ -1117,11 +1081,11 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                 <!-- Mobile Navigation Links - Simplified -->
                 <nav class="space-y-2">
                     <a href="<?php echo URLROOT; ?>/" 
-                       class="flex items-center text-white/90 hover:text-white p-3 rounded-lg transition-all duration-300 
-                              hover:bg-white/10 group">
-                        <div class="mr-3 p-2 bg-white/10 rounded-lg transition-all duration-300 
-                                    group-hover:bg-white/15 group-hover:scale-110">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                       class="flex items-center text-gray-700 hover:text-primary p-3 rounded-lg transition-all duration-300 
+                              hover:bg-primary/5 group">
+                        <div class="mr-3 p-2 bg-primary/10 rounded-lg transition-all duration-300 
+                                    group-hover:bg-primary/20 group-hover:scale-110">
+                            <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                       d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
                             </svg>
@@ -1130,11 +1094,11 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                     </a>
 
                     <a href="<?php echo URLROOT; ?>/blogs" 
-                       class="flex items-center text-white/90 hover:text-white p-3 rounded-lg transition-all duration-300 
-                              hover:bg-white/10 group">
-                        <div class="mr-3 p-2 bg-white/10 rounded-lg transition-all duration-300 
-                                    group-hover:bg-white/15 group-hover:scale-110">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                       class="flex items-center text-gray-700 hover:text-primary p-3 rounded-lg transition-all duration-300 
+                              hover:bg-primary/5 group">
+                        <div class="mr-3 p-2 bg-primary/10 rounded-lg transition-all duration-300 
+                                    group-hover:bg-primary/20 group-hover:scale-110">
+                            <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                       d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1M19 20a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0h4"/>
                             </svg>
@@ -1143,11 +1107,11 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                     </a>
 
                     <a href="<?php echo URLROOT; ?>/nieuws" 
-                       class="flex items-center text-white/90 hover:text-white p-3 rounded-lg transition-all duration-300 
-                              hover:bg-white/10 group">
-                        <div class="mr-3 p-2 bg-white/10 rounded-lg transition-all duration-300 
-                                    group-hover:bg-white/15 group-hover:scale-110">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                       class="flex items-center text-gray-700 hover:text-primary p-3 rounded-lg transition-all duration-300 
+                              hover:bg-primary/5 group">
+                        <div class="mr-3 p-2 bg-primary/10 rounded-lg transition-all duration-300 
+                                    group-hover:bg-primary/20 group-hover:scale-110">
+                            <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                       d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v12a2 2 0 01-2 2z"/>
                             </svg>
@@ -1156,11 +1120,11 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                     </a>
 
                     <a href="<?php echo URLROOT; ?>/stemwijzer" 
-                       class="flex items-center text-white/90 hover:text-white p-3 rounded-lg transition-all duration-300 
-                              hover:bg-white/10 group">
-                        <div class="mr-3 p-2 bg-white/10 rounded-lg transition-all duration-300 
-                                    group-hover:bg-white/15 group-hover:scale-110">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                       class="flex items-center text-gray-700 hover:text-primary p-3 rounded-lg transition-all duration-300 
+                              hover:bg-primary/5 group">
+                        <div class="mr-3 p-2 bg-primary/10 rounded-lg transition-all duration-300 
+                                    group-hover:bg-primary/20 group-hover:scale-110">
+                            <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                       d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
                             </svg>
@@ -1168,18 +1132,18 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                         <span class="font-medium flex items-center">
                             Stemwijzer
                             <span class="ml-2 inline-flex items-center px-2 py-0.5 text-xs font-medium 
-                                        bg-secondary/20 border border-secondary/40 text-white rounded-full">
+                                        bg-secondary text-white rounded-full">
                                 Nieuw
                             </span>
                         </span>
                     </a>
 
                     <a href="<?php echo URLROOT; ?>/partijen" 
-                       class="flex items-center text-white/90 hover:text-white p-3 rounded-lg transition-all duration-300 
-                              hover:bg-white/10 group">
-                        <div class="mr-3 p-2 bg-white/10 rounded-lg transition-all duration-300 
-                                    group-hover:bg-white/15 group-hover:scale-110">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                       class="flex items-center text-gray-700 hover:text-primary p-3 rounded-lg transition-all duration-300 
+                              hover:bg-primary/5 group">
+                        <div class="mr-3 p-2 bg-primary/10 rounded-lg transition-all duration-300 
+                                    group-hover:bg-primary/20 group-hover:scale-110">
+                            <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                       d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
                             </svg>
@@ -1188,11 +1152,11 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                     </a>
 
                     <a href="<?php echo URLROOT; ?>/contact" 
-                       class="flex items-center text-white/90 hover:text-white p-3 rounded-lg transition-all duration-300 
-                              hover:bg-white/10 group">
-                        <div class="mr-3 p-2 bg-white/10 rounded-lg transition-all duration-300 
-                                    group-hover:bg-white/15 group-hover:scale-110">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                       class="flex items-center text-gray-700 hover:text-primary p-3 rounded-lg transition-all duration-300 
+                              hover:bg-primary/5 group">
+                        <div class="mr-3 p-2 bg-primary/10 rounded-lg transition-all duration-300 
+                                    group-hover:bg-primary/20 group-hover:scale-110">
+                            <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                       d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                             </svg>
@@ -1201,11 +1165,11 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                     </a>
 
                     <a href="<?php echo URLROOT; ?>/over-mij" 
-                       class="flex items-center text-white/90 hover:text-white p-3 rounded-lg transition-all duration-300 
-                              hover:bg-white/10 group">
-                        <div class="mr-3 p-2 bg-white/10 rounded-lg transition-all duration-300 
-                                    group-hover:bg-white/15 group-hover:scale-110">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                       class="flex items-center text-gray-700 hover:text-primary p-3 rounded-lg transition-all duration-300 
+                              hover:bg-primary/5 group">
+                        <div class="mr-3 p-2 bg-primary/10 rounded-lg transition-all duration-300 
+                                    group-hover:bg-primary/20 group-hover:scale-110">
+                            <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                       d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                             </svg>
@@ -1216,8 +1180,8 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
 
                 <!-- Mobile Auth Section - Simplified -->
                 <?php if(isset($_SESSION['user_id'])): ?>
-                    <div class="pt-4 mt-4 border-t border-white/15">
-                        <div class="flex items-center space-x-3 mb-4 bg-white/5 p-3 rounded-lg">
+                    <div class="pt-4 mt-4 border-t border-gray-200">
+                        <div class="flex items-center space-x-3 mb-4 bg-gray-50 p-3 rounded-lg border border-gray-100">
                             <div class="w-10 h-10 bg-gradient-to-br from-secondary to-primary/80 rounded-lg 
                                       flex items-center justify-center shadow-lg">
                                 <?php
@@ -1242,19 +1206,19 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                                 ?>
                             </div>
                             <div>
-                                <p class="text-white font-medium"><?php echo htmlspecialchars($_SESSION['username']); ?></p>
-                                <p class="text-xs text-white/70">Actief lid</p>
+                                <p class="text-gray-800 font-medium"><?php echo htmlspecialchars($_SESSION['username']); ?></p>
+                                <p class="text-xs text-gray-500">Actief lid</p>
                             </div>
                         </div>
                         
                         <div class="space-y-2">
                             <?php if($_SESSION['is_admin']): ?>
                                 <a href="<?php echo URLROOT; ?>/admin" 
-                                   class="flex items-center text-white/90 hover:text-white p-3 rounded-lg transition-all duration-300 
-                                          hover:bg-white/10 group">
-                                    <div class="mr-3 p-2 bg-white/10 rounded-lg transition-all duration-300 
-                                                group-hover:bg-white/15 group-hover:scale-110">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                   class="flex items-center text-gray-700 hover:text-primary p-3 rounded-lg transition-all duration-300 
+                                          hover:bg-primary/5 group">
+                                    <div class="mr-3 p-2 bg-primary/10 rounded-lg transition-all duration-300 
+                                                group-hover:bg-primary/20 group-hover:scale-110">
+                                        <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                                   d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
@@ -1266,11 +1230,11 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                             <?php endif; ?>
                             
                             <a href="<?php echo URLROOT; ?>/blogs/manage" 
-                               class="flex items-center text-white/90 hover:text-white p-3 rounded-lg transition-all duration-300 
-                                      hover:bg-white/10 group">
-                                <div class="mr-3 p-2 bg-white/10 rounded-lg transition-all duration-300 
-                                            group-hover:bg-white/15 group-hover:scale-110">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                               class="flex items-center text-gray-700 hover:text-primary p-3 rounded-lg transition-all duration-300 
+                                      hover:bg-primary/5 group">
+                                <div class="mr-3 p-2 bg-primary/10 rounded-lg transition-all duration-300 
+                                            group-hover:bg-primary/20 group-hover:scale-110">
+                                    <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                               d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                                     </svg>
@@ -1279,11 +1243,11 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                             </a>
                             
                             <a href="<?php echo URLROOT; ?>/profile" 
-                               class="flex items-center text-white/90 hover:text-white p-3 rounded-lg transition-all duration-300 
-                                      hover:bg-white/10 group">
-                                <div class="mr-3 p-2 bg-white/10 rounded-lg transition-all duration-300 
-                                            group-hover:bg-white/15 group-hover:scale-110">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                               class="flex items-center text-gray-700 hover:text-primary p-3 rounded-lg transition-all duration-300 
+                                      hover:bg-primary/5 group">
+                                <div class="mr-3 p-2 bg-primary/10 rounded-lg transition-all duration-300 
+                                            group-hover:bg-primary/20 group-hover:scale-110">
+                                    <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                               d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                                     </svg>
@@ -1292,11 +1256,11 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                             </a>
                             
                             <a href="<?php echo URLROOT; ?>/logout" 
-                               class="flex items-center text-red-300 hover:text-red-200 p-3 rounded-lg transition-all duration-300 
-                                     hover:bg-red-500/10 group">
-                                <div class="mr-3 p-2 bg-red-500/10 rounded-lg transition-all duration-300 
-                                            group-hover:bg-red-500/20 group-hover:scale-110">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                               class="flex items-center text-red-600 hover:text-red-700 p-3 rounded-lg transition-all duration-300 
+                                     hover:bg-red-50 group">
+                                <div class="mr-3 p-2 bg-red-50 rounded-lg transition-all duration-300 
+                                            group-hover:bg-red-100 group-hover:scale-110">
+                                    <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                               d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
                                     </svg>
@@ -1306,13 +1270,13 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                         </div>
                     </div>
                 <?php else: ?>
-                    <div class="pt-4 mt-4 border-t border-white/15 space-y-3">
+                    <div class="pt-4 mt-4 border-t border-gray-200 space-y-3">
                         <a href="<?php echo URLROOT; ?>/login" 
-                           class="flex items-center text-white/90 hover:text-white p-3 rounded-lg transition-all duration-300 
-                                  hover:bg-white/10 group">
-                            <div class="mr-3 p-2 bg-white/10 rounded-lg transition-all duration-300 
-                                        group-hover:bg-white/15 group-hover:scale-110">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                           class="flex items-center text-gray-700 hover:text-primary p-3 rounded-lg transition-all duration-300 
+                                  hover:bg-primary/5 group">
+                            <div class="mr-3 p-2 bg-primary/10 rounded-lg transition-all duration-300 
+                                        group-hover:bg-primary/20 group-hover:scale-110">
+                                <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                           d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
                                 </svg>
@@ -1321,9 +1285,9 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                         </a>
                         
                         <a href="<?php echo URLROOT; ?>/register" 
-                           class="flex items-center justify-center px-4 py-3 bg-white text-primary font-medium 
+                           class="flex items-center justify-center px-4 py-3 bg-gradient-to-r from-primary to-secondary text-white font-medium 
                                   rounded-lg shadow-lg transition-all duration-300 
-                                  hover:bg-secondary hover:text-white transform hover:scale-[1.02]
+                                  hover:shadow-xl transform hover:scale-[1.02]
                                   active:scale-[0.98]"
                            style="display: none;">
                             <span>Aanmelden</span>
@@ -1449,7 +1413,6 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
         });
     </script>
 
-    <div class="flex-grow">
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             AOS.init({
