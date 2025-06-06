@@ -490,116 +490,56 @@ require_once 'views/templates/header.php';
                         PolitiekPraat maakt complexe politieke onderwerpen begrijpelijk. Ontdek analyses, volg het laatste nieuws en vorm je eigen mening.
                     </p>
                     
-                    <!-- Kritieke button styling met !important voor live site -->
+                    <!-- Inline CSS voor kritieke button styling als fallback -->
                     <style>
                         .hero-btn-primary {
-                            display: inline-flex !important;
-                            align-items: center !important;
-                            justify-content: center !important;
-                            padding: 1rem 2rem !important;
-                            background: linear-gradient(to right, #1a56db, #c41e3a) !important;
-                            color: white !important;
-                            font-weight: 700 !important;
-                            font-size: 1.125rem !important;
-                            border-radius: 0.75rem !important;
-                            border: none !important;
-                            outline: none !important;
-                            transition: all 0.3s ease !important;
-                            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
-                            transform: scale(1) !important;
-                            position: relative !important;
-                            overflow: hidden !important;
-                            text-decoration: none !important;
-                            cursor: pointer !important;
-                            white-space: nowrap !important;
-                            min-width: auto !important;
-                            width: auto !important;
+                            display: inline-flex;
+                            align-items: center;
+                            padding: 1rem 2rem;
+                            background: linear-gradient(to right, #1a56db, #c41e3a);
+                            color: white;
+                            font-weight: 700;
+                            font-size: 1.125rem;
+                            border-radius: 0.75rem;
+                            transition: all 0.3s ease;
+                            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+                            transform: scale(1);
+                            position: relative;
+                            overflow: hidden;
+                            text-decoration: none;
                         }
                         .hero-btn-primary:hover {
-                            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
-                            transform: scale(1.05) !important;
-                            color: white !important;
-                            background: linear-gradient(to right, #1a56db, #c41e3a) !important;
-                        }
-                        .hero-btn-primary:focus {
-                            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04), 0 0 0 3px rgba(26, 86, 219, 0.3) !important;
-                            transform: scale(1.05) !important;
-                            color: white !important;
+                            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+                            transform: scale(1.05);
                         }
                         .hero-btn-secondary {
-                            display: inline-flex !important;
-                            align-items: center !important;
-                            justify-content: center !important;
-                            padding: 1rem 2rem !important;
-                            background: white !important;
-                            color: #111827 !important;
-                            font-weight: 700 !important;
-                            font-size: 1.125rem !important;
-                            border-radius: 0.75rem !important;
-                            border: 2px solid #e5e7eb !important;
-                            outline: none !important;
-                            transition: all 0.3s ease !important;
-                            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
-                            transform: scale(1) !important;
-                            position: relative !important;
-                            overflow: hidden !important;
-                            text-decoration: none !important;
-                            cursor: pointer !important;
-                            white-space: nowrap !important;
-                            min-width: auto !important;
-                            width: auto !important;
+                            display: inline-flex;
+                            align-items: center;
+                            padding: 1rem 2rem;
+                            background: white;
+                            color: #111827;
+                            font-weight: 700;
+                            font-size: 1.125rem;
+                            border-radius: 0.75rem;
+                            border: 2px solid #e5e7eb;
+                            transition: all 0.3s ease;
+                            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+                            transform: scale(1);
+                            position: relative;
+                            overflow: hidden;
+                            text-decoration: none;
                         }
                         .hero-btn-secondary:hover {
-                            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
-                            transform: scale(1.05) !important;
-                            border-color: #1a56db !important;
-                            color: #1a56db !important;
-                            background: white !important;
+                            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+                            transform: scale(1.05);
+                            border-color: #1a56db;
+                            color: #1a56db;
                         }
-                        .hero-btn-secondary:focus {
-                            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04), 0 0 0 3px rgba(26, 86, 219, 0.3) !important;
-                            transform: scale(1.05) !important;
-                            border-color: #1a56db !important;
-                            color: #1a56db !important;
-                        }
-                        
-                        /* Reset alle mogelijke conflicterende styles */
-                        .hero-btn-primary *,
-                        .hero-btn-secondary * {
-                            pointer-events: none !important;
-                        }
-                        
-                        /* Mobile responsive */
                         @media (max-width: 640px) {
                             .hero-btn-primary, .hero-btn-secondary {
-                                padding: 0.875rem 1.5rem !important;
-                                font-size: 1rem !important;
-                                width: 100% !important;
-                                justify-content: center !important;
+                                padding: 0.875rem 1.5rem;
+                                font-size: 1rem;
                             }
-                        }
-                        
-                        /* Extra specificiteit voor live site */
-                        .new-hero-section .hero-btn-primary {
-                            display: inline-flex !important;
-                            background: linear-gradient(to right, #1a56db, #c41e3a) !important;
-                            color: white !important;
-                        }
-                        
-                        .new-hero-section .hero-btn-secondary {
-                            display: inline-flex !important;
-                            background: white !important;
-                            color: #111827 !important;
-                            border: 2px solid #e5e7eb !important;
-                        }
-                        
-                        /* Zorg ervoor dat SVG iconen goed werken */
-                        .hero-btn-primary svg,
-                        .hero-btn-secondary svg {
-                            width: 1.25rem !important;
-                            height: 1.25rem !important;
-                            margin-left: 0.5rem !important;
-                            flex-shrink: 0 !important;
                         }
                     </style>
 
