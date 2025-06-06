@@ -351,16 +351,137 @@ require_once 'views/templates/header.php';
             <div class="absolute inset-0 bg-gradient-to-r from-blue-50 to-indigo-50"></div>
             <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%22100%22%20height%3D%22100%22%20viewBox%3D%220%200%20100%20100%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M11%2018c3.866%200%207-3.134%207-7s-3.134-7-7-7-7%203.134-7%207%203.134%207%207%207zm48%2025c3.866%200%207-3.134%207-7s-3.134-7-7-7-7%203.134-7%207%203.134%207%207%207zM%2073%2077c3.866%200%207-3.134%207-7s-3.134-7-7-7-7%203.134-7%207%203.134%207%207%207z%22%20fill%3D%22%23e0e7ff%22%2F%3E%3C%2Fsvg%3E')] bg-repeat"></div>
         </div>
+        
+        <!-- Floating Partij Logo's -->
+        <div class="absolute inset-0 z-5 pointer-events-none overflow-hidden">
+            <?php
+            // Database van partij logo's
+            $partyLogos = [
+                'PVV' => 'https://i.ibb.co/DfR8pS2Y/403880390-713625330344634-198487231923339026-n.jpg',
+                'VVD' => 'https://logo.clearbit.com/vvd.nl',
+                'NSC' => 'https://i.ibb.co/YT2fJZb4/nsc.png',
+                'BBB' => 'https://i.ibb.co/qMjw7jDV/bbb.png',
+                'GL-PvdA' => 'https://i.ibb.co/67hkc5Hv/gl-pvda.png',
+                'D66' => 'https://logo.clearbit.com/d66.nl',
+                'SP' => 'https://logo.clearbit.com/sp.nl',
+                'PvdD' => 'https://logo.clearbit.com/partijvoordedieren.nl',
+                'CDA' => 'https://logo.clearbit.com/cda.nl',
+                'JA21' => 'https://logo.clearbit.com/ja21.nl',
+                'SGP' => 'https://logo.clearbit.com/sgp.nl',
+                'FvD' => 'https://logo.clearbit.com/fvd.nl',
+                'DENK' => 'https://logo.clearbit.com/bewegingdenk.nl',
+                'Volt' => 'https://logo.clearbit.com/voltnederland.org'
+            ];
+            
+            // Selecteer de belangrijkste partijen voor de floating logos
+            $floatingPartijen = [
+                ['naam' => 'VVD', 'kleur' => '#FF9900', 'logo' => $partyLogos['VVD'], 'positie' => 'top-20 left-4 sm:left-16', 'delay' => '0s', 'duration' => '15s'],
+                ['naam' => 'PVV', 'kleur' => '#0078D7', 'logo' => $partyLogos['PVV'], 'positie' => 'top-32 right-4 sm:right-20', 'delay' => '2s', 'duration' => '18s'],
+                ['naam' => 'GL-PvdA', 'kleur' => '#008800', 'logo' => $partyLogos['GL-PvdA'], 'positie' => 'top-1/3 left-6 sm:left-24', 'delay' => '4s', 'duration' => '20s'],
+                ['naam' => 'CDA', 'kleur' => '#1E8449', 'logo' => $partyLogos['CDA'], 'positie' => 'bottom-1/3 right-6 sm:right-16', 'delay' => '1s', 'duration' => '16s'],
+                ['naam' => 'D66', 'kleur' => '#00B13C', 'logo' => $partyLogos['D66'], 'positie' => 'bottom-40 left-4 sm:left-20', 'delay' => '3s', 'duration' => '22s'],
+                ['naam' => 'SP', 'kleur' => '#EE0000', 'logo' => $partyLogos['SP'], 'positie' => 'top-40 right-8 sm:right-32', 'delay' => '5s', 'duration' => '17s'],
+                ['naam' => 'PvdD', 'kleur' => '#006400', 'logo' => $partyLogos['PvdD'], 'positie' => 'bottom-20 right-12 sm:right-40', 'delay' => '6s', 'duration' => '19s'],
+                ['naam' => 'Volt', 'kleur' => '#800080', 'logo' => $partyLogos['Volt'], 'positie' => 'top-48 left-12 sm:left-40', 'delay' => '7s', 'duration' => '21s'],
+                ['naam' => 'JA21', 'kleur' => '#000000', 'logo' => $partyLogos['JA21'], 'positie' => 'bottom-20 left-12 sm:left-40', 'delay' => '8s', 'duration' => '23s'],
+                ['naam' => 'SGP', 'kleur' => '#000000', 'logo' => $partyLogos['SGP'], 'positie' => 'top-48 right-12 sm:right-40', 'delay' => '9s', 'duration' => '25s'],
+                ['naam' => 'FvD', 'kleur' => '#000000', 'logo' => $partyLogos['FvD'], 'positie' => 'bottom-20 right-12 sm:right-40', 'delay' => '10s', 'duration' => '27s'],
+                ['naam' => 'DENK', 'kleur' => '#000000', 'logo' => $partyLogos['DENK'], 'positie' => 'top-48 left-12 sm:left-40', 'delay' => '11s', 'duration' => '29s']
+            ];
+            
+            foreach($floatingPartijen as $index => $partij):
+            ?>
+                         <div class="absolute <?php echo $partij['positie']; ?> opacity-20 party-float-<?php echo $index; ?>" 
+                  style="animation: floating-<?php echo $index; ?> <?php echo $partij['duration']; ?> infinite linear; animation-delay: <?php echo $partij['delay']; ?>;">
+                 <!-- Partij logo container -->
+                 <div class="relative group">
+                     <!-- Glow effect -->
+                     <div class="absolute inset-0 w-12 h-12 sm:w-16 sm:h-16 rounded-2xl blur-md transform scale-110 group-hover:scale-125 transition-transform duration-500"
+                          style="background: <?php echo $partij['kleur']; ?>; opacity: 0.3;"></div>
+                     
+                     <!-- Main logo -->
+                     <div class="relative w-12 h-12 sm:w-16 sm:h-16 bg-white/95 backdrop-blur-sm rounded-2xl shadow-lg border border-white/30 flex items-center justify-center transform group-hover:rotate-12 transition-all duration-500 overflow-hidden">
+                                                 <!-- Logo afbeelding -->
+                         <div class="w-8 h-8 sm:w-12 sm:h-12 rounded-lg overflow-hidden transform group-hover:scale-110 transition-transform duration-300 flex items-center justify-center">
+                            <img src="<?php echo $partij['logo']; ?>" 
+                                 alt="<?php echo $partij['naam']; ?> logo"
+                                 class="w-full h-full object-contain transition-all duration-300 group-hover:brightness-110"
+                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                                 loading="lazy">
+                            <!-- Fallback tekst als afbeelding niet laadt -->
+                            <div class="hidden w-full h-full rounded-lg font-black text-xs text-white items-center justify-center transform group-hover:scale-110 transition-transform duration-300"
+                                 style="background: linear-gradient(135deg, <?php echo $partij['kleur']; ?>, <?php echo $partij['kleur']; ?>88); text-shadow: 0 1px 2px rgba(0,0,0,0.3);">
+                                <?php 
+                                // Fallback afkorting
+                                $afkorting = $partij['naam'];
+                                if (strpos($afkorting, '/') !== false) {
+                                    $delen = explode('/', $afkorting);
+                                    echo substr($delen[0], 0, 2);
+                                } else {
+                                    echo substr($afkorting, 0, min(3, strlen($afkorting)));
+                                }
+                                ?>
+                            </div>
+                        </div>
+                        
+                        <!-- Floating particles -->
+                        <div class="absolute -top-1 -right-1 w-2 h-2 rounded-full animate-ping opacity-40"
+                             style="background: <?php echo $partij['kleur']; ?>;"></div>
+                    </div>
+                    
+                    <!-- Tooltip -->
+                    <div class="absolute -bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                        <div class="bg-slate-900 text-white text-xs px-2 py-1 rounded shadow-lg whitespace-nowrap">
+                            <?php echo $partij['naam']; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?php endforeach; ?>
+            
+                         <!-- Extra decoratieve politieke symbolen -->
+             <div class="absolute top-24 left-1/4 sm:left-1/3 opacity-8 sm:opacity-10 animate-spin-slow">
+                 <svg class="w-8 h-8 sm:w-12 sm:h-12 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
+                     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                 </svg>
+             </div>
+        </div>
+
+        <!-- CSS voor floating animaties -->
+        <style>
+        <?php foreach($floatingPartijen as $index => $partij): ?>
+        @keyframes floating-<?php echo $index; ?> {
+            0% { transform: translateX(0px) translateY(0px) rotate(0deg); }
+            25% { transform: translateX(<?php echo 20 + ($index * 5); ?>px) translateY(-<?php echo 15 + ($index * 3); ?>px) rotate(<?php echo 2 + $index; ?>deg); }
+            50% { transform: translateX(-<?php echo 15 + ($index * 4); ?>px) translateY(<?php echo 20 + ($index * 2); ?>px) rotate(-<?php echo 3 + $index; ?>deg); }
+            75% { transform: translateX(<?php echo 25 + ($index * 3); ?>px) translateY(<?php echo 10 + ($index * 4); ?>px) rotate(<?php echo 1 + $index; ?>deg); }
+            100% { transform: translateX(0px) translateY(0px) rotate(0deg); }
+        }
+        <?php endforeach; ?>
+        
+        @keyframes floating-extra {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+            100% { transform: translateY(0px) rotate(360deg); }
+        }
+        
+        .animate-spin-slow {
+            animation: spin 8s linear infinite;
+        }
+        
+        .party-float-container {
+            animation-play-state: running;
+        }
+        
+        .party-float-container:hover {
+            animation-play-state: paused;
+        }
+        </style>
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="flex items-center justify-center min-h-screen lg:min-h-[calc(100vh-80px)] py-24">
                 
                 <!-- Gecentraliseerde content -->
                 <div class="text-center space-y-8 max-w-4xl mx-auto" data-aos="fade-up" data-aos-duration="1000">
-                    <div class="inline-flex items-center px-4 py-2 rounded-full bg-white/60 backdrop-blur-sm border border-gray-200/80 shadow-sm">
-                        <span class="w-2.5 h-2.5 bg-gradient-to-r from-primary to-secondary rounded-full mr-2.5"></span>
-                        <span class="text-sm font-medium text-gray-700">Jouw Gids in de Nederlandse Politiek</span>
-                    </div>
-                    
                     <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold text-gray-900 leading-tight tracking-tight">
                         <span class="block">Politiek<span class="bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent">Praat</span></span>
                     </h1>
