@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $errors[] = 'Volgorde nummer ' . $orderNumber . ' is al in gebruik';
             } else {
                 // Start transactie
-                $db->beginTransaction();
+                $db->getConnection()->beginTransaction();
                 
                 // Vraag toevoegen
                 $db->query("INSERT INTO stemwijzer_questions (title, description, context, left_view, right_view, order_number, is_active, created_at, updated_at) VALUES (:title, :description, :context, :left_view, :right_view, :order_number, :is_active, NOW(), NOW())");
@@ -87,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
                 
                 // Commit transactie
-                $db->commit();
+                $db->getConnection()->commit();
                 
                 $message = 'Vraag en standpunten succesvol toegevoegd';
                 $messageType = 'success';
@@ -96,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 header("refresh:2;url=stemwijzer-vraag-beheer.php");
             }
         } catch (Exception $e) {
-            $db->rollback();
+            $db->getConnection()->rollback();
             $errors[] = 'Fout bij toevoegen vraag: ' . $e->getMessage();
         }
     }
