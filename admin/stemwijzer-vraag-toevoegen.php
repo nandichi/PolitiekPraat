@@ -22,6 +22,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $orderNumber = intval($_POST['order_number'] ?? 0);
     $isActive = isset($_POST['is_active']) ? 1 : 0;
     
+    // Haal partijstandpunten op
+    $partyPositions = [];
+    if (isset($_POST['party_positions']) && is_array($_POST['party_positions'])) {
+        foreach ($_POST['party_positions'] as $partyId => $positionData) {
+            $position = trim($positionData['position'] ?? 'neutraal');
+            $explanation = trim($positionData['explanation'] ?? '');
+            
+            if (!empty($position) && in_array($position, ['eens', 'neutraal', 'oneens'])) {
+                $partyPositions[$partyId] = [
+                    'position' => $position,
+                    'explanation' => $explanation
+                ];
+            }
+        }
+    }
+    
     // Validatie
     $errors = [];
     if (empty($title)) $errors[] = 'Titel is verplicht';
@@ -41,6 +57,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($existing->count > 0) {
                 $errors[] = 'Volgorde nummer ' . $orderNumber . ' is al in gebruik';
             } else {
+                // Start transactie
+                $db->beginTransaction();
+                
                 // Vraag toevoegen
                 $db->query("INSERT INTO stemwijzer_questions (title, description, context, left_view, right_view, order_number, is_active, created_at, updated_at) VALUES (:title, :description, :context, :left_view, :right_view, :order_number, :is_active, NOW(), NOW())");
                 
@@ -54,13 +73,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 
                 $db->execute();
                 
-                $message = 'Vraag succesvol toegevoegd';
+                // Haal het ID van de nieuwe vraag op
+                $questionId = $db->lastInsertId();
+                
+                // Voeg partijstandpunten toe
+                foreach ($partyPositions as $partyId => $positionData) {
+                    $db->query("INSERT INTO stemwijzer_positions (question_id, party_id, position, explanation, created_at, updated_at) VALUES (:question_id, :party_id, :position, :explanation, NOW(), NOW())");
+                    $db->bind(':question_id', $questionId);
+                    $db->bind(':party_id', $partyId);
+                    $db->bind(':position', $positionData['position']);
+                    $db->bind(':explanation', $positionData['explanation']);
+                    $db->execute();
+                }
+                
+                // Commit transactie
+                $db->commit();
+                
+                $message = 'Vraag en standpunten succesvol toegevoegd';
                 $messageType = 'success';
                 
                 // Redirect naar vraag beheer na 2 seconden
                 header("refresh:2;url=stemwijzer-vraag-beheer.php");
             }
         } catch (Exception $e) {
+            $db->rollback();
             $errors[] = 'Fout bij toevoegen vraag: ' . $e->getMessage();
         }
     }
@@ -78,6 +114,14 @@ try {
     $nextOrderNumber = ($result->max_order ?? 0) + 1;
 } catch (Exception $e) {
     $nextOrderNumber = 1;
+}
+
+// Haal alle partijen op
+try {
+    $db->query("SELECT id, name, short_name, logo_url FROM stemwijzer_parties ORDER BY name ASC");
+    $parties = $db->resultSet();
+} catch (Exception $e) {
+    $parties = [];
 }
 
 require_once '../views/templates/header.php';
@@ -291,6 +335,115 @@ require_once '../views/templates/header.php';
                     </div>
                 </div>
                 
+                <!-- Partijstandpunten -->
+                <?php if (!empty($parties)): ?>
+                <div class="space-y-6">
+                    <div class="bg-gradient-to-r from-purple-50 to-indigo-50 rounded-lg p-6 border border-purple-200">
+                        <h3 class="font-semibold text-purple-800 mb-3 flex items-center">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857m0 0a5.002 5.002 0 009.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                            </svg>
+                            Partijstandpunten
+                        </h3>
+                        <p class="text-purple-700 text-sm mb-4">Stel voor elke partij het standpunt in bij deze vraag. Laat leeg voor automatische 'neutraal' standpunt.</p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <?php foreach ($parties as $party): ?>
+                                <div class="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow">
+                                    <div class="flex items-center space-x-3 mb-3">
+                                        <?php if ($party->logo_url): ?>
+                                            <img src="<?= htmlspecialchars($party->logo_url) ?>" 
+                                                 alt="<?= htmlspecialchars($party->name) ?>" 
+                                                 class="w-8 h-8 rounded-lg object-contain bg-gray-50 p-1">
+                                        <?php else: ?>
+                                            <div class="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
+                                                <span class="text-xs font-bold text-gray-500"><?= htmlspecialchars(substr($party->short_name, 0, 2)) ?></span>
+                                            </div>
+                                        <?php endif; ?>
+                                        <div>
+                                            <h4 class="font-semibold text-gray-800 text-sm"><?= htmlspecialchars($party->short_name) ?></h4>
+                                            <p class="text-xs text-gray-500"><?= htmlspecialchars($party->name) ?></p>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Standpunt selectie -->
+                                    <div class="space-y-3">
+                                        <div>
+                                            <label class="text-xs font-medium text-gray-700 mb-2 block">Standpunt</label>
+                                            <div class="flex space-x-2">
+                                                <label class="flex-1">
+                                                    <input type="radio" 
+                                                           name="party_positions[<?= $party->id ?>][position]" 
+                                                           value="eens" 
+                                                           <?= (($_POST['party_positions'][$party->id]['position'] ?? '') === 'eens') ? 'checked' : '' ?>
+                                                           class="sr-only peer">
+                                                    <div class="text-center py-2 px-3 bg-green-50 border border-green-200 rounded-lg cursor-pointer peer-checked:bg-green-500 peer-checked:text-white peer-checked:border-green-500 text-green-700 text-xs font-medium transition-colors">
+                                                        Eens
+                                                    </div>
+                                                </label>
+                                                <label class="flex-1">
+                                                    <input type="radio" 
+                                                           name="party_positions[<?= $party->id ?>][position]" 
+                                                           value="neutraal" 
+                                                           <?= (($_POST['party_positions'][$party->id]['position'] ?? 'neutraal') === 'neutraal') ? 'checked' : '' ?>
+                                                           class="sr-only peer">
+                                                    <div class="text-center py-2 px-3 bg-blue-50 border border-blue-200 rounded-lg cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white peer-checked:border-blue-500 text-blue-700 text-xs font-medium transition-colors">
+                                                        Neutraal
+                                                    </div>
+                                                </label>
+                                                <label class="flex-1">
+                                                    <input type="radio" 
+                                                           name="party_positions[<?= $party->id ?>][position]" 
+                                                           value="oneens" 
+                                                           <?= (($_POST['party_positions'][$party->id]['position'] ?? '') === 'oneens') ? 'checked' : '' ?>
+                                                           class="sr-only peer">
+                                                    <div class="text-center py-2 px-3 bg-red-50 border border-red-200 rounded-lg cursor-pointer peer-checked:bg-red-500 peer-checked:text-white peer-checked:border-red-500 text-red-700 text-xs font-medium transition-colors">
+                                                        Oneens
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Uitleg -->
+                                        <div>
+                                            <label for="party_explanation_<?= $party->id ?>" class="text-xs font-medium text-gray-700 mb-1 block">
+                                                Uitleg (optioneel)
+                                            </label>
+                                            <textarea name="party_positions[<?= $party->id ?>][explanation]" 
+                                                      id="party_explanation_<?= $party->id ?>"
+                                                      rows="2"
+                                                      maxlength="200"
+                                                      placeholder="Waarom neemt <?= htmlspecialchars($party->short_name) ?> dit standpunt?"
+                                                      class="w-full text-xs px-2 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 resize-none"><?= htmlspecialchars($_POST['party_positions'][$party->id]['explanation'] ?? '') ?></textarea>
+                                            <div class="flex justify-between items-center mt-1">
+                                                <span class="text-xs text-gray-400">Max 200 tekens</span>
+                                                <span class="character-counter-small text-xs text-gray-400" data-max="200" data-target="party_explanation_<?= $party->id ?>">0/200</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                        
+                        <div class="mt-4 bg-purple-100 border border-purple-200 rounded-lg p-3">
+                            <div class="flex items-start space-x-2">
+                                <svg class="w-4 h-4 text-purple-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                <div class="text-xs text-purple-700">
+                                    <p class="font-medium mb-1">Tips voor standpunten:</p>
+                                    <ul class="space-y-1">
+                                        <li>• Standpunten die leeg blijven krijgen automatisch 'neutraal'</li>
+                                        <li>• Houd uitleg kort en objectief</li>
+                                        <li>• Standpunten kunnen later nog aangepast worden</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php endif; ?>
+
                 <!-- Settings -->
                 <div class="bg-gray-50 rounded-lg p-4">
                     <h3 class="font-semibold text-gray-800 mb-3">Instellingen</h3>
@@ -384,6 +537,33 @@ document.addEventListener('DOMContentLoaded', function() {
         updateCounter(); // Initial count
     });
     
+    // Character counters voor partijuitleg (kleine versie)
+    const smallCounters = document.querySelectorAll('.character-counter-small');
+    smallCounters.forEach(counter => {
+        const target = counter.dataset.target;
+        const max = parseInt(counter.dataset.max);
+        const input = document.getElementById(target);
+        
+        function updateSmallCounter() {
+            const length = input.value.length;
+            counter.textContent = `${length}/${max}`;
+            
+            if (length > max * 0.9) {
+                counter.classList.add('text-red-500');
+                counter.classList.remove('text-gray-400');
+            } else if (length > max * 0.8) {
+                counter.classList.add('text-yellow-500');
+                counter.classList.remove('text-gray-400', 'text-red-500');
+            } else {
+                counter.classList.remove('text-red-500', 'text-yellow-500');
+                counter.classList.add('text-gray-400');
+            }
+        }
+        
+        input.addEventListener('input', updateSmallCounter);
+        updateSmallCounter(); // Initial count
+    });
+    
     // Form validation feedback
     const form = document.querySelector('form');
     const inputs = form.querySelectorAll('input[required], textarea[required]');
@@ -399,7 +579,63 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+    
+    // Quick fill functionality voor partijstandpunten
+    const quickFillButtons = document.createElement('div');
+    quickFillButtons.className = 'mb-4 flex flex-wrap gap-2';
+    quickFillButtons.innerHTML = `
+        <button type="button" onclick="setAllPartyPositions('eens')" class="px-3 py-1 bg-green-100 text-green-700 rounded-lg hover:bg-green-200 text-sm font-medium transition-colors">
+            Alle partijen: Eens
+        </button>
+        <button type="button" onclick="setAllPartyPositions('neutraal')" class="px-3 py-1 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 text-sm font-medium transition-colors">
+            Alle partijen: Neutraal
+        </button>
+        <button type="button" onclick="setAllPartyPositions('oneens')" class="px-3 py-1 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 text-sm font-medium transition-colors">
+            Alle partijen: Oneens
+        </button>
+        <button type="button" onclick="clearAllPartyPositions()" class="px-3 py-1 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 text-sm font-medium transition-colors">
+            Wis alle standpunten
+        </button>
+    `;
+    
+    // Voeg quick fill buttons toe als er partijen zijn
+    const partySection = document.querySelector('.bg-gradient-to-r.from-purple-50');
+    if (partySection) {
+        const partyGrid = partySection.querySelector('.grid');
+        partyGrid.parentNode.insertBefore(quickFillButtons, partyGrid);
+    }
 });
+
+// Helper functie voor snel invullen van alle partijstandpunten
+function setAllPartyPositions(position) {
+    const radios = document.querySelectorAll(`input[type="radio"][value="${position}"]`);
+    radios.forEach(radio => {
+        if (radio.name.includes('party_positions') && radio.name.includes('[position]')) {
+            radio.checked = true;
+        }
+    });
+}
+
+// Helper functie voor wissen van alle partijstandpunten
+function clearAllPartyPositions() {
+    const radios = document.querySelectorAll('input[type="radio"][name*="party_positions"][name*="[position]"]');
+    radios.forEach(radio => {
+        radio.checked = false;
+    });
+    
+    const textareas = document.querySelectorAll('textarea[name*="party_positions"][name*="[explanation]"]');
+    textareas.forEach(textarea => {
+        textarea.value = '';
+        // Trigger update counter
+        const event = new Event('input');
+        textarea.dispatchEvent(event);
+    });
+    
+    // Set all positions to neutraal by default
+    setTimeout(() => {
+        setAllPartyPositions('neutraal');
+    }, 100);
+}
 </script>
 
 <?php require_once '../views/templates/footer.php'; ?> 
