@@ -911,11 +911,15 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                                          group-hover:shadow-md group-hover:scale-110 overflow-hidden">
                                     <?php
                                     if (isset($_SESSION['username']) && $_SESSION['username'] === 'Naoufal') {
-                                        // Special profile photo for Naoufal
-                                        $profilePhotoUrl = "https://media.licdn.com/dms/image/v2/D4E03AQFQkWCitMT1ug/profile-displayphoto-shrink_400_400/B4EZYuubOTHMAg-/0/1744540644719?e=1750291200&v=beta&t=Qs38y2l_-SWd_N2CcavekytGxrU06ixhojbHdDktfxM";
+                                        // Special profile photo for Naoufal - using same paths as over-mij page
+                                        $imagePath = URLROOT . '/images/naoufal-foto.jpg';
+                                        $imagePath2 = URLROOT . '/public/images/naoufal-foto.jpg';
+                                        $imagePath3 = URLROOT . '/public/images/profiles/naoufal-foto.jpg';
+                                        $imagePath4 = '/img/naoufal-foto.jpg';
                                         ?>
-                                        <img src="<?php echo $profilePhotoUrl; ?>" 
-                                             alt="Profile" class="w-full h-full object-cover rounded-lg">
+                                        <img src="<?php echo $imagePath; ?>" 
+                                             onerror="if(this.src !== '<?php echo $imagePath2; ?>') this.src='<?php echo $imagePath2; ?>'; else if(this.src !== '<?php echo $imagePath3; ?>') this.src='<?php echo $imagePath3; ?>'; else if(this.src !== '<?php echo $imagePath4; ?>') this.src='<?php echo $imagePath4; ?>';"
+                                             alt="Foto van Naoufal Andichi" class="w-full h-full object-cover rounded-lg">
                                     <?php
                                     } else {
                                         // Normal profile photo handling for other users
@@ -1186,10 +1190,15 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                                       flex items-center justify-center shadow-lg">
                                 <?php
                                 if (isset($_SESSION['username']) && $_SESSION['username'] === 'Naoufal') {
-                                    $profilePhotoUrl = "https://media.licdn.com/dms/image/v2/D4E03AQFQkWCitMT1ug/profile-displayphoto-shrink_400_400/B4EZYuubOTHMAg-/0/1744540644719?e=1750291200&v=beta&t=Qs38y2l_-SWd_N2CcavekytGxrU06ixhojbHdDktfxM";
+                                    // Using same paths as over-mij page and desktop header
+                                    $imagePath = URLROOT . '/images/naoufal-foto.jpg';
+                                    $imagePath2 = URLROOT . '/public/images/naoufal-foto.jpg';
+                                    $imagePath3 = URLROOT . '/public/images/profiles/naoufal-foto.jpg';
+                                    $imagePath4 = '/img/naoufal-foto.jpg';
                                     ?>
-                                    <img src="<?php echo $profilePhotoUrl; ?>" 
-                                         alt="Profile" class="w-full h-full object-cover rounded-lg">
+                                    <img src="<?php echo $imagePath; ?>" 
+                                         onerror="if(this.src !== '<?php echo $imagePath2; ?>') this.src='<?php echo $imagePath2; ?>'; else if(this.src !== '<?php echo $imagePath3; ?>') this.src='<?php echo $imagePath3; ?>'; else if(this.src !== '<?php echo $imagePath4; ?>') this.src='<?php echo $imagePath4; ?>';"
+                                         alt="Foto van Naoufal Andichi" class="w-full h-full object-cover rounded-lg">
                                 <?php
                                 } else {
                                     $profilePhoto = getProfilePhotoUrl($_SESSION['profile_photo'] ?? '', $_SESSION['username']);
