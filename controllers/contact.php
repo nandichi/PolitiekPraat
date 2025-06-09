@@ -4,11 +4,40 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
+// Start sessie als die nog niet gestart is
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 $error = '';
 $success = '';
+$name = '';
+$email = '';
+$subject = '';
+$message = '';
 
 // Laad mail configuratie
 $mail_config = require_once BASE_PATH . '/includes/mail_config.php';
+
+// Controleer voor success/error berichten uit sessie
+if (isset($_SESSION['contact_success'])) {
+    $success = $_SESSION['contact_success'];
+    unset($_SESSION['contact_success']);
+}
+
+if (isset($_SESSION['contact_error'])) {
+    $error = $_SESSION['contact_error'];
+    unset($_SESSION['contact_error']);
+    
+    // Bij een error, herstel de form velden
+    $name = isset($_SESSION['form_data']['name']) ? $_SESSION['form_data']['name'] : '';
+    $email = isset($_SESSION['form_data']['email']) ? $_SESSION['form_data']['email'] : '';
+    $subject = isset($_SESSION['form_data']['subject']) ? $_SESSION['form_data']['subject'] : '';
+    $message = isset($_SESSION['form_data']['message']) ? $_SESSION['form_data']['message'] : '';
+    
+    // Verwijder form data uit sessie
+    unset($_SESSION['form_data']);
+}
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_SPECIAL_CHARS);
@@ -18,9 +47,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
     // Validatie
     if (empty($name) || empty($email) || empty($subject) || empty($message)) {
-        $error = 'Vul alle velden in';
+        $_SESSION['contact_error'] = 'Vul alle velden in';
+        $_SESSION['form_data'] = compact('name', 'email', 'subject', 'message');
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $error = 'Ongeldig e-mailadres';
+        $_SESSION['contact_error'] = 'Ongeldig e-mailadres';
+        $_SESSION['form_data'] = compact('name', 'email', 'subject', 'message');
     } else {
         // E-mail versturen met PHPMailer
         $mail = new PHPMailer(true);
@@ -386,200 +417,353 @@ HTML;
                             "Dit bericht is verzonden via het contactformulier op PolitiekPraat.";
 
             $mail->send();
-            $success = 'Je bericht is verzonden! We nemen zo snel mogelijk contact met je op.';
+            $_SESSION['contact_success'] = 'Je bericht is verzonden! We nemen zo snel mogelijk contact met je op.';
+            
+            // Redirect naar zelfde pagina om POST-Redirect-GET pattern te implementeren
+            header('Location: ' . URLROOT . '/contact');
+            exit();
         } catch (Exception $e) {
-            $error = "Er is een fout opgetreden bij het verzenden van je bericht. Probeer het later opnieuw. Foutmelding: {$mail->ErrorInfo}";
+            $_SESSION['contact_error'] = "Er is een fout opgetreden bij het verzenden van je bericht. Probeer het later opnieuw. Foutmelding: {$mail->ErrorInfo}";
+            $_SESSION['form_data'] = compact('name', 'email', 'subject', 'message');
         }
     }
+    
+    // Redirect na POST om dubbele submissie te voorkomen
+    header('Location: ' . URLROOT . '/contact');
+    exit();
 }
 
 require_once BASE_PATH . '/views/templates/header.php';
 ?>
 
-<main class="relative min-h-screen py-16">
-    <!-- Enhanced background with subtle pattern -->
-    <div class="absolute inset-0 bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden">
-        <div class="absolute inset-0 opacity-[0.03]" style="background-image: url('data:image/svg+xml,%3Csvg width=\'100\' height=\'100\' viewBox=\'0 0 100 100\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z\' fill=\'%231e40af\' fill-rule=\'evenodd\'/%3E%3C/svg%3E'); background-size: 100px 100px;">
+<main class="bg-gray-50 min-h-screen">
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-br from-gray-900 via-primary to-blue-600 overflow-hidden py-20">
+        <!-- Decoratieve top lijn -->
+        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-secondary via-white to-blue-400"></div>
+        
+        <!-- Decoratieve elementen -->
+        <div class="absolute inset-0">
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"30\" height=\"30\" viewBox=\"0 0 30 30\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cpath d=\"M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z\" fill=\"rgba(255,255,255,0.05)\"%3E%3C/path%3E%3C/svg%3E')] opacity-20"></div>
         </div>
-        <!-- Decorative elements -->
-        <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-red-600 via-white to-blue-700 opacity-60"></div>
-        <div class="absolute top-2 left-0 w-full h-2 bg-primary opacity-30"></div>
-    </div>
 
-    <div class="container mx-auto px-4 relative">
-        <div class="max-w-4xl mx-auto">
-            <!-- Enhanced header section -->
-            <div class="mb-16 text-center relative">
-                <span class="inline-block px-4 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4 animate-fadeIn">Neem contact op</span>
-                <h1 class="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-primary mb-4">Contact</h1>
-                <div class="h-1 w-20 bg-primary mx-auto mb-8 rounded-full"></div>
+        <div class="container mx-auto px-4 relative">
+            <div class="max-w-4xl mx-auto text-center">
+                <!-- Contact Icon -->
+                <div class="inline-block p-6 rounded-2xl bg-white/10 backdrop-blur-lg mb-8">
+                    <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                    </svg>
+                </div>
                 
-                <div class="max-w-2xl mx-auto mt-8 space-y-6">
-                    <p class="text-xl text-gray-700 leading-relaxed">
-                        Heb je een vraag of wil je iets met ons delen? We horen graag van je!
-                    </p>
-                    <p class="text-lg text-gray-600 leading-relaxed">
-                        Misschien heb je een tof idee voor de website, zie je iets wat beter kan, of wil je gewoon je mening delen over de Nederlandse politiek - we staan open voor alles!
-                    </p>
-                    <div class="flex items-center justify-center mt-8 text-gray-500">
-                        <svg class="w-5 h-5 mr-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">Contact</h1>
+                <p class="text-xl text-gray-300 max-w-2xl mx-auto mb-8">
+                    Heb je een vraag, suggestie of wil je je mening delen? 
+                    We staan open voor je feedback en ideeën!
+                </p>
+                
+                <!-- Quick Info Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+                    <div class="bg-white/10 backdrop-blur-lg rounded-xl p-6 text-white">
+                        <svg class="w-8 h-8 mb-4 mx-auto text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
-                        <p class="text-base">Je hoort meestal binnen 2 werkdagen van ons terug</p>
+                        <h3 class="font-semibold mb-2">Snelle Reactie</h3>
+                        <p class="text-gray-300 text-sm">Meestal binnen 2 werkdagen</p>
+                    </div>
+                    
+                    <div class="bg-white/10 backdrop-blur-lg rounded-xl p-6 text-white">
+                        <svg class="w-8 h-8 mb-4 mx-auto text-green-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <h3 class="font-semibold mb-2">Betrouwbaar</h3>
+                        <p class="text-gray-300 text-sm">Veilige behandeling van je gegevens</p>
+                    </div>
+                    
+                    <div class="bg-white/10 backdrop-blur-lg rounded-xl p-6 text-white">
+                        <svg class="w-8 h-8 mb-4 mx-auto text-yellow-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4z"></path>
+                        </svg>
+                        <h3 class="font-semibold mb-2">Open Dialoog</h3>
+                        <p class="text-gray-300 text-sm">Constructieve gesprekken</p>
                     </div>
                 </div>
             </div>
-            
-            <!-- Enhanced form card with improved styling -->
-            <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12 relative overflow-hidden border border-gray-100 backdrop-blur-sm transform transition-all duration-300 hover:shadow-2xl">
-                <!-- Decorative elements -->
-                <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-primary/5 to-primary/10 rounded-bl-full -z-10"></div>
-                <div class="absolute bottom-0 left-0 w-40 h-40 bg-gradient-to-tr from-primary/5 to-primary/10 rounded-tr-full -z-10"></div>
+        </div>
+
+        <!-- Wave Separator -->
+        <div class="absolute bottom-0 left-0 right-0">
+            <svg class="w-full h-auto" viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 120L60 110C120 100 240 80 360 70C480 60 600 60 720 65C840 70 960 80 1080 85C1200 90 1320 90 1380 90L1440 90V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0V120Z" fill="rgb(249 250 251)"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Contact Form Section -->
+    <section class="py-16 relative">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
                 
-                <?php if ($error): ?>
-                    <div class="bg-red-50 border-l-4 border-red-500 text-red-700 p-5 rounded-lg mb-8 shadow-sm animate-fadeIn">
-                        <div class="flex items-center">
-                            <svg class="w-6 h-6 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                            <span class="text-sm md:text-base"><?php echo $error; ?></span>
+                <!-- Contact Form Card -->
+                <div class="bg-white rounded-2xl shadow-2xl overflow-hidden relative">
+                    <!-- Decoratieve accent -->
+                    <div class="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-primary via-secondary to-accent"></div>
+                    
+                    <div class="p-8 md:p-12">
+                        <!-- Form Header -->
+                        <div class="text-center mb-12">
+                            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                                <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                                    Stuur ons een bericht
+                                </span>
+                            </h2>
+                            <div class="w-24 h-1 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full mb-6"></div>
+                            <p class="text-gray-600 text-lg">
+                                We waarderen je feedback en staan klaar om je te helpen
+                            </p>
                         </div>
-                    </div>
-                <?php endif; ?>
 
-                <?php if ($success): ?>
-                    <div class="bg-green-50 border-l-4 border-green-500 text-green-700 p-5 rounded-lg mb-8 shadow-sm animate-fadeIn">
-                        <div class="flex items-center">
-                            <svg class="w-6 h-6 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            <span class="text-sm md:text-base"><?php echo $success; ?></span>
-                        </div>
-                    </div>
-                <?php endif; ?>
-
-                <form method="POST" action="<?php echo URLROOT; ?>/contact" class="space-y-8">
-                    <div class="grid md:grid-cols-2 gap-x-8 gap-y-6">
-                        <div class="relative group">
-                            <label for="name" class="block text-sm font-medium text-gray-700 mb-2 transition-all duration-200 group-focus-within:text-primary">Naam</label>
-                            <div class="relative">
-                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <svg class="h-5 w-5 text-gray-400 group-focus-within:text-primary transition-colors duration-200" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        <!-- Success/Error Messages -->
+                        <?php if ($error): ?>
+                            <div class="mb-8 p-6 bg-red-50 border-l-4 border-red-500 rounded-lg animate-fade-in">
+                                <div class="flex items-center">
+                                    <svg class="w-6 h-6 text-red-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg>
+                                    <div>
+                                        <h3 class="text-red-800 font-medium">Er ging iets mis</h3>
+                                        <p class="text-red-700 mt-1"><?php echo $error; ?></p>
+                                    </div>
                                 </div>
-                                <input type="text" 
-                                       name="name" 
-                                       id="name" 
-                                       class="block w-full pl-10 px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200 bg-gray-50 focus:bg-white"
-                                       value="<?php echo isset($name) ? htmlspecialchars($name) : ''; ?>"
-                                       required>
-                                <div class="absolute bottom-0 left-0 h-0.5 bg-primary transform scale-x-0 group-focus-within:scale-x-100 transition-transform duration-300 origin-left"></div>
                             </div>
-                        </div>
+                        <?php endif; ?>
 
-                        <div class="relative group">
-                            <label for="email" class="block text-sm font-medium text-gray-700 mb-2 transition-all duration-200 group-focus-within:text-primary">E-mailadres</label>
-                            <div class="relative">
-                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <svg class="h-5 w-5 text-gray-400 group-focus-within:text-primary transition-colors duration-200" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        <?php if ($success): ?>
+                            <div class="mb-8 p-6 bg-green-50 border-l-4 border-green-500 rounded-lg animate-fade-in">
+                                <div class="flex items-center">
+                                    <svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg>
+                                    <div>
+                                        <h3 class="text-green-800 font-medium">Bericht verzonden!</h3>
+                                        <p class="text-green-700 mt-1"><?php echo $success; ?></p>
+                                    </div>
                                 </div>
-                                <input type="email" 
-                                       name="email" 
-                                       id="email" 
-                                       class="block w-full pl-10 px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200 bg-gray-50 focus:bg-white"
-                                       value="<?php echo isset($email) ? htmlspecialchars($email) : ''; ?>"
-                                       required>
-                                <div class="absolute bottom-0 left-0 h-0.5 bg-primary transform scale-x-0 group-focus-within:scale-x-100 transition-transform duration-300 origin-left"></div>
                             </div>
-                        </div>
-                    </div>
+                        <?php endif; ?>
 
-                    <div class="relative group">
-                        <label for="subject" class="block text-sm font-medium text-gray-700 mb-2 transition-all duration-200 group-focus-within:text-primary">Onderwerp</label>
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <svg class="h-5 w-5 text-gray-400 group-focus-within:text-primary transition-colors duration-200" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
-                                </svg>
+                        <!-- Contact Form -->
+                        <form method="POST" action="<?php echo URLROOT; ?>/contact" class="space-y-8">
+                            <!-- Name and Email Row -->
+                            <div class="grid md:grid-cols-2 gap-8">
+                                <div class="space-y-2">
+                                    <label for="name" class="block text-sm font-semibold text-gray-700 mb-2">
+                                        Naam <span class="text-red-500">*</span>
+                                    </label>
+                                    <div class="relative group">
+                                                                                 <input type="text" 
+                                                name="name" 
+                                                id="name" 
+                                                class="w-full px-4 py-4 bg-gray-50 border border-gray-300 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200 group-hover:border-gray-400"
+                                                value="<?php echo htmlspecialchars($name); ?>"
+                                                placeholder="Je volledige naam"
+                                                required>
+                                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                            <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="space-y-2">
+                                    <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">
+                                        E-mailadres <span class="text-red-500">*</span>
+                                    </label>
+                                    <div class="relative group">
+                                                                                 <input type="email" 
+                                                name="email" 
+                                                id="email" 
+                                                class="w-full px-4 py-4 bg-gray-50 border border-gray-300 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200 group-hover:border-gray-400"
+                                                value="<?php echo htmlspecialchars($email); ?>"
+                                                placeholder="je@email.nl"
+                                                required>
+                                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                            <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <input type="text" 
-                                   name="subject" 
-                                   id="subject" 
-                                   class="block w-full pl-10 px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200 bg-gray-50 focus:bg-white"
-                                   value="<?php echo isset($subject) ? htmlspecialchars($subject) : ''; ?>"
-                                   required>
-                            <div class="absolute bottom-0 left-0 h-0.5 bg-primary transform scale-x-0 group-focus-within:scale-x-100 transition-transform duration-300 origin-left"></div>
-                        </div>
-                    </div>
 
-                    <div class="relative group">
-                        <label for="message" class="block text-sm font-medium text-gray-700 mb-2 transition-all duration-200 group-focus-within:text-primary">Bericht</label>
-                        <div class="relative">
-                            <div class="absolute top-3 left-3 flex items-start pointer-events-none">
-                                <svg class="h-5 w-5 text-gray-400 group-focus-within:text-primary transition-colors duration-200" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-                                </svg>
+                            <!-- Subject -->
+                            <div class="space-y-2">
+                                <label for="subject" class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Onderwerp <span class="text-red-500">*</span>
+                                </label>
+                                <div class="relative group">
+                                                                         <input type="text" 
+                                            name="subject" 
+                                            id="subject" 
+                                            class="w-full px-4 py-4 bg-gray-50 border border-gray-300 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200 group-hover:border-gray-400"
+                                            value="<?php echo htmlspecialchars($subject); ?>"
+                                            placeholder="Waar gaat je bericht over?"
+                                            required>
+                                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+                                        </svg>
+                                    </div>
+                                </div>
                             </div>
-                            <textarea name="message" 
-                                      id="message" 
-                                      rows="6"
-                                      class="block w-full pl-10 px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200 bg-gray-50 focus:bg-white resize-none"
-                                      required><?php echo isset($message) ? htmlspecialchars($message) : ''; ?></textarea>
-                            <div class="absolute bottom-0 left-0 h-0.5 bg-primary transform scale-x-0 group-focus-within:scale-x-100 transition-transform duration-300 origin-left"></div>
-                        </div>
-                    </div>
 
-                    <div class="relative pt-4">
-                        <button type="submit" 
-                                class="w-full group bg-primary text-white font-semibold py-4 px-6 rounded-lg hover:bg-primary-dark transform hover:-translate-y-0.5 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 active:scale-98 shadow-md hover:shadow-lg overflow-hidden">
-                            <div class="absolute inset-0 w-3/12 bg-white/10 skew-x-[-20deg] transform -translate-x-full group-hover:animate-shimmer"></div>
-                            <div class="flex items-center justify-center space-x-2">
-                                <span>Verstuur Bericht</span>
-                                <svg class="w-5 h-5 transition-transform duration-200 transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                                </svg>
+                            <!-- Message -->
+                            <div class="space-y-2">
+                                <label for="message" class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Bericht <span class="text-red-500">*</span>
+                                </label>
+                                <div class="relative group">
+                                                                         <textarea name="message" 
+                                              id="message" 
+                                              rows="6"
+                                              class="w-full px-4 py-4 bg-gray-50 border border-gray-300 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200 group-hover:border-gray-400 resize-none"
+                                              placeholder="Vertel ons wat je op het hart hebt. We horen graag van je!"
+                                              required><?php echo htmlspecialchars($message); ?></textarea>
+                                    <div class="absolute top-4 right-3 pointer-events-none">
+                                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
+                                        </svg>
+                                    </div>
+                                </div>
                             </div>
-                        </button>
-                    </div>
 
-                    <div class="text-center mt-6 text-gray-500 text-sm">
-                        <div class="flex items-center justify-center">
-                            <svg class="w-4 h-4 mr-2 text-primary/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                            <!-- Submit Button -->
+                            <div class="pt-6">
+                                <button type="submit" 
+                                        class="w-full group relative overflow-hidden bg-gradient-to-r from-primary to-secondary text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-[1.02] hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
+                                    <div class="absolute inset-0 w-full h-full bg-gradient-to-r from-primary-dark to-secondary-dark opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                    <div class="relative flex items-center justify-center space-x-3">
+                                        <span class="text-lg">Verstuur Bericht</span>
+                                        <svg class="w-5 h-5 transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                                        </svg>
+                                    </div>
+                                </button>
+                            </div>
+
+                            <!-- Privacy Notice -->
+                            <div class="text-center pt-4">
+                                <p class="text-sm text-gray-500 flex items-center justify-center">
+                                    <svg class="w-4 h-4 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                                    </svg>
+                                    Je gegevens worden vertrouwelijk behandeld
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Additional Info Section -->
+                <div class="mt-16 grid md:grid-cols-3 gap-8">
+                    <div class="text-center group">
+                        <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-100 to-blue-200 rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
                             </svg>
-                            <span>Je gegevens worden vertrouwelijk behandeld</span>
                         </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Feedback & Suggesties</h3>
+                        <p class="text-gray-600">
+                            Heb je ideeën om PolitiekPraat te verbeteren? Deel ze met ons!
+                        </p>
                     </div>
-                </form>
+
+                    <div class="text-center group">
+                        <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-green-100 to-green-200 rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Hulp & Ondersteuning</h3>
+                        <p class="text-gray-600">
+                            Heb je een vraag over de website of ondervind je problemen?
+                        </p>
+                    </div>
+
+                    <div class="text-center group">
+                        <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-purple-100 to-purple-200 rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Politieke Discussie</h3>
+                        <p class="text-gray-600">
+                            Wil je meepraten over politieke onderwerpen? Start het gesprek!
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 </main>
 
 <style>
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
+@keyframes fade-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+    animation: fade-in 0.5s ease-out forwards;
+}
+
+.primary-dark {
+    color: #0f172a;
+}
+
+.secondary-dark {
+    color: #991b1b;
+}
+
+/* Custom gradient effects */
+.bg-gradient-to-r.from-primary-dark.to-secondary-dark {
+    background: linear-gradient(to right, #0f172a, #991b1b);
+}
+
+/* Input focus effects */
+input:focus, textarea:focus {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 25px -5px rgba(26, 54, 93, 0.1), 0 10px 10px -5px rgba(26, 54, 93, 0.04);
+}
+
+/* Hover effects for form elements */
+.group:hover input, .group:hover textarea {
+    background-color: #ffffff;
+    border-color: #9ca3af;
+}
+
+/* Button hover animation */
+button[type="submit"] {
+    position: relative;
+    overflow: hidden;
+}
+
+button[type="submit"]:hover {
+    box-shadow: 0 20px 25px -5px rgba(26, 54, 93, 0.2), 0 10px 10px -5px rgba(26, 54, 93, 0.1);
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
     }
     
-    @keyframes shimmer {
-        100% { transform: translateX(250%); }
+    input, textarea {
+        font-size: 16px; /* Prevents zoom on iOS */
     }
-    
-    .animate-fadeIn {
-        animation: fadeIn 0.5s ease-out forwards;
-    }
-    
-    .animate-shimmer {
-        animation: shimmer 1.5s infinite;
-    }
-    
-    .active\:scale-98:active {
-        transform: scale(0.98);
-    }
+}
 </style>
 
 <?php require_once BASE_PATH . '/views/templates/footer.php'; ?> 

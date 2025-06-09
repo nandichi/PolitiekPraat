@@ -282,7 +282,7 @@ require_once 'views/templates/header.php';
                         <!-- Header Section -->
                         <div class="text-center mb-8 sm:mb-10 md:mb-12">
                             <!-- Icon -->
-                            <div class="inline-flex items-center justify-center w-16 sm:w-18 md:w-20 h-16 sm:h-18 md:h-20 rounded-xl sm:rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 shadow-lg shadow-indigo-500/25 mb-4 sm:mb-5 md:mb-6">
+                            <div class="inline-flex items-center justify-center w-16 sm:w-18 md:w-20 h-16 sm:h-18 md:h-20 rounded-xl sm:rounded-2xl bg-gradient-to-br from-blue-500 to-red-600 shadow-lg shadow-blue-500/25 mb-4 sm:mb-5 md:mb-6">
                                 <svg class="w-8 sm:w-9 md:w-10 h-8 sm:h-9 md:h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
                                 </svg>

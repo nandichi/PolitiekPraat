@@ -5,152 +5,601 @@ if (!defined('URLROOT')) {
 }
 ?>
 
-<main class="bg-white min-h-screen">
+<!-- Link naar AOS (Animate On Scroll) library -->
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<style>
+/* Custom CSS voor over-mij pagina */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+.over-mij-hero {
+    background: linear-gradient(135deg, #1a56db 0%, #c41e3a 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.floating-element {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    animation: floating 6s ease-in-out infinite;
+}
+
+.floating-element:nth-child(1) { top: 20%; left: 10%; width: 60px; height: 60px; animation-delay: 0s; }
+.floating-element:nth-child(2) { top: 60%; right: 10%; width: 80px; height: 80px; animation-delay: 2s; }
+.floating-element:nth-child(3) { bottom: 30%; left: 20%; width: 40px; height: 40px; animation-delay: 4s; }
+
+@keyframes floating {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(180deg); }
+}
+
+.profile-card {
+    backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.mission-card {
+    background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.9) 100%);
+    backdrop-filter: blur(10px);
+}
+
+.skill-badge {
+    background: linear-gradient(135deg, #1a56db 0%, #c41e3a 100%);
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.skill-badge:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(26, 86, 219, 0.3);
+}
+
+.timeline-item {
+    position: relative;
+    padding-left: 2rem;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.5rem;
+    width: 12px;
+    height: 12px;
+    background: linear-gradient(135deg, #1a56db 0%, #c41e3a 100%);
+    border-radius: 50%;
+    border: 3px solid white;
+    box-shadow: 0 0 0 3px rgba(26, 86, 219, 0.2);
+}
+
+.social-link {
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+}
+
+.social-link:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+.gradient-text {
+    background: linear-gradient(135deg, #1a56db 0%, #c41e3a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.animated-bg {
+    background: linear-gradient(270deg, #1a56db, #c41e3a, #1a56db, #c41e3a);
+    background-size: 800% 800%;
+    animation: gradientShift 15s ease infinite;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+}
+
+.tech-item {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.tech-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+.geometric-bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0.05;
+    background-image: 
+        radial-gradient(circle at 1px 1px, rgba(255,255,255,0.3) 1px, transparent 0);
+    background-size: 30px 30px;
+}
+
+@media (max-width: 768px) {
+    .floating-element { display: none; }
+    .tech-grid { grid-template-columns: repeat(2, 1fr); }
+    .over-mij-hero {
+        padding-top: 4rem;
+        padding-bottom: 4rem;
+    }
+}
+</style>
+
+<main class="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
     <!-- Hero Section -->
-    <section class="relative overflow-hidden">
-        <!-- Background design elements -->
-        <div class="absolute inset-0 z-0">
-            <!-- Subtle dot pattern -->
-            <div class="absolute inset-0 opacity-[0.03]" style="background-image: radial-gradient(#2563eb 1.5px, transparent 0); background-size: 30px 30px;"></div>
-            
-            <!-- Decorative shapes -->
-            <div class="absolute top-0 right-0 w-1/2 h-96 bg-gradient-to-bl from-primary/5 to-transparent rounded-bl-[100px] -z-1"></div>
-            <div class="absolute bottom-0 left-0 w-1/2 h-96 bg-gradient-to-tr from-secondary/5 to-transparent rounded-tr-[100px] -z-1"></div>
-            
-            <!-- Subtle waves - using SVG directly instead of base64 -->
-            <div class="absolute inset-0 opacity-[0.02]">
-                <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100px" viewBox="0 0 1280 140" preserveAspectRatio="none" class="absolute bottom-0 w-full">
-                    <g fill="#2563eb">
-                        <path d="M1280 86c0 0-311.9 0-389 100-66.646 19.26-307.4 101.176-318.412-S343.46 236.791 0 140v-140h14l14 .005 1260-.005z"></path>
-                    </g>
-                </svg>
-            </div>
-        </div>
-
-        <div class="container mx-auto px-6 pt-20 pb-12 relative z-10">
-            <!-- Page title with subtle animation -->
-            <div class="max-w-4xl mx-auto text-center mb-16">
-                <div class="inline-block mb-4">
-                    <span class="inline-block relative">
-                        <span class="absolute -inset-1 rounded-lg bg-gradient-to-r from-primary/20 to-secondary/20 blur-xl opacity-70 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></span>
-                        <h1 class="relative text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary leading-tight">
-                            Over PolitiekPraat
-                        </h1>
-                    </span>
-                </div>
-                <p class="text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto font-light">
-                    <span class="border-b-2 border-primary/30 pb-1">Een platform waar technologie en democratie samenkomen</span>
-                </p>
-            </div>
-
-            <!-- Main content with modern card design -->
-            <div class="grid grid-cols-1 lg:grid-cols-5 gap-10 items-start max-w-7xl mx-auto">
-                <!-- About the founder - 3 column span -->
-                <div class="lg:col-span-3 bg-white rounded-2xl p-8 border border-slate-100 shadow-xl shadow-slate-200/50 overflow-hidden relative group">
-                    <!-- Card top decoration -->
-                    <div class="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-primary to-secondary"></div>
+    <section class="over-mij-hero min-h-screen flex items-center justify-center relative overflow-hidden">
+        <!-- Animated floating elements -->
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        
+        <!-- Geometric background pattern -->
+        <div class="geometric-bg"></div>
+        
+        <!-- Hero Content -->
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="max-w-6xl mx-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                     
-                    <div class="flex flex-col md:flex-row gap-8">
-                        <!-- Profile section with image -->
-                        <div class="md:w-1/3 flex flex-col items-center">
-                            <div class="w-40 h-40 rounded-full overflow-hidden border-4 border-white shadow-lg mb-4">
-                                <!-- Verschillende paden proberen om de foto te laten werken -->
-                                <?php 
-                                $imagePath = URLROOT . '/images/naoufal-foto.jpg';
-                                $imagePath2 = URLROOT . '/public/images/naoufal-foto.jpg';
-                                $imagePath3 = URLROOT . '/public/images/profiles/naoufal-foto.jpg';
-                                $imagePath4 = '/img/naoufal-foto.jpg';
-                                ?>
-                                
-                                <!-- Vereenvoudigde fallback zonder complexe JS -->
-                                <img src="<?= $imagePath ?>" 
-                                     onerror="if(this.src !== '<?= $imagePath2 ?>') this.src='<?= $imagePath2 ?>'; else if(this.src !== '<?= $imagePath3 ?>') this.src='<?= $imagePath3 ?>'; else if(this.src !== '<?= $imagePath4 ?>') this.src='<?= $imagePath4 ?>';"
-                                     alt="Foto van Naoufal Andichi" class="w-full h-full object-cover">
+                    <!-- Left Column: Profile Info -->
+                    <div class="text-center lg:text-left" data-aos="fade-right" data-aos-duration="1000">
+                        <!-- Profile Image -->
+                        <div class="relative inline-block mb-8">
+                            <div class="absolute inset-0 bg-gradient-to-r from-blue-600 to-red-600 rounded-full blur-lg opacity-30 animate-pulse"></div>
+                            <div class="relative w-48 h-48 mx-auto rounded-full overflow-hidden border-4 border-white shadow-2xl">
+                                <img src="<?= URLROOT ?>/public/images/naoufal-foto.jpg" 
+                                     onerror="if(this.src !== '<?= URLROOT ?>/images/naoufal-foto.jpg') this.src='<?= URLROOT ?>/images/naoufal-foto.jpg'; else if(this.src !== '<?= URLROOT ?>/public/images/profiles/naoufal-foto.jpg') this.src='<?= URLROOT ?>/public/images/profiles/naoufal-foto.jpg';"
+                                     alt="Foto van Naoufal Andichi" 
+                                     class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
                             </div>
-                            
-                            <!-- Social links and badges -->
-                            <div class="flex flex-wrap justify-center gap-2 w-full">
-                                <span class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium bg-primary/10 text-primary group-hover:bg-primary/20 transition-colors">
-                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                    </svg>
-                                    Liberaal
-                                </span>
-                                <span class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium bg-secondary/10 text-secondary group-hover:bg-secondary/20 transition-colors">
-                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
-                                    </svg>
-                                    Developer
-                                </span>
-                                <a href="https://www.linkedin.com/in/naoufalandichi/" target="_blank" rel="noopener noreferrer" 
-                                   class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors">
-                                    <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                                    </svg>
-                                    LinkedIn
-                                </a>
+                            <!-- Online indicator -->
+                            <div class="absolute bottom-4 right-4 w-6 h-6 bg-green-500 border-4 border-white rounded-full animate-pulse"></div>
+                        </div>
+                        
+                        <!-- Name and Title -->
+                        <h1 class="text-5xl lg:text-7xl font-black text-white mb-4 leading-tight">
+                            Naoufal Andichi
+                        </h1>
+                        <p class="text-2xl lg:text-3xl text-blue-100 mb-6 font-light">
+                            Politiek Analist & Technologie Enthousiasteling
+                        </p>
+                        
+                        <!-- Tags -->
+                        <div class="flex flex-wrap justify-center lg:justify-start gap-3 mb-8">
+                            <span class="skill-badge px-4 py-2 rounded-full text-sm font-semibold">🏛️ Liberaal</span>
+                            <span class="skill-badge px-4 py-2 rounded-full text-sm font-semibold">💻 Developer</span>
+                            <span class="skill-badge px-4 py-2 rounded-full text-sm font-semibold">📊 Analist</span>
+                            <span class="skill-badge px-4 py-2 rounded-full text-sm font-semibold">✍️ Blogger</span>
+                        </div>
+                        
+                        <!-- Social Links -->
+                        <div class="flex justify-center lg:justify-start space-x-4">
+                            <a href="https://www.linkedin.com/in/naoufalandichi/" 
+                               target="_blank" rel="noopener noreferrer" 
+                               class="social-link p-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group">
+                                <svg class="w-6 h-6 text-blue-600 group-hover:text-blue-700" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                                </svg>
+                            </a>
+                            <a href="mailto:naoufal@politiekpraat.nl" 
+                               class="social-link p-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group">
+                                <svg class="w-6 h-6 text-gray-600 group-hover:text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                </svg>
+                            </a>
+                            <a href="<?= URLROOT ?>/blogs" 
+                               class="social-link p-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group">
+                                <svg class="w-6 h-6 text-purple-600 group-hover:text-purple-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Right Column: Quick Stats -->
+                    <div class="space-y-8" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+                        <!-- Stats Cards -->
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="profile-card p-6 rounded-2xl text-center">
+                                <div class="text-3xl font-black gradient-text mb-2">150+</div>
+                                <div class="text-gray-600 text-sm font-medium">Artikelen Geschreven</div>
+                            </div>
+                            <div class="profile-card p-6 rounded-2xl text-center">
+                                <div class="text-3xl font-black gradient-text mb-2">50k+</div>
+                                <div class="text-gray-600 text-sm font-medium">Lezers Bereikt</div>
+                            </div>
+                            <div class="profile-card p-6 rounded-2xl text-center">
+                                <div class="text-3xl font-black gradient-text mb-2">3+</div>
+                                <div class="text-gray-600 text-sm font-medium">Jaren Ervaring</div>
+                            </div>
+                            <div class="profile-card p-6 rounded-2xl text-center">
+                                <div class="text-3xl font-black gradient-text mb-2">20+</div>
+                                <div class="text-gray-600 text-sm font-medium">Politieke Thema's</div>
                             </div>
                         </div>
                         
-                        <!-- Bio content -->
-                        <div class="md:w-2/3">
-                            <h2 class="text-2xl font-bold text-gray-900 mb-4 flex items-center">
-                                <span class="bg-gradient-to-r from-primary to-secondary h-6 w-1 rounded mr-3"></span>
-                                Over Mij
-                            </h2>
+                        <!-- Mission Statement Card -->
+                        <div class="mission-card p-8 rounded-2xl shadow-xl">
+                            <h3 class="text-2xl font-bold gradient-text mb-4">Mijn Missie</h3>
+                            <p class="text-gray-700 leading-relaxed">
+                                "Politiek toegankelijk maken voor iedereen door complexe onderwerpen uit te leggen op een begrijpelijke manier."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Scroll indicator -->
+            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="py-24 bg-white relative overflow-hidden">
+        <!-- Background decoration -->
+        <div class="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-blue-50 to-transparent rounded-full opacity-60"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-purple-50 to-transparent rounded-full opacity-60"></div>
+        
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="max-w-6xl mx-auto">
+                <!-- Section Header -->
+                <div class="text-center mb-20" data-aos="fade-up">
+                    <h2 class="text-4xl lg:text-6xl font-black text-gray-900 mb-6">
+                        Over <span class="gradient-text">Mij</span>
+                    </h2>
+                    <div class="w-24 h-1 bg-gradient-to-r from-blue-600 to-red-600 mx-auto rounded-full"></div>
+                </div>
+                
+                <!-- About Content Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+                    <!-- Personal Story -->
+                    <div class="space-y-8" data-aos="fade-right" data-aos-duration="1000">
+                        <div class="bg-gradient-to-br from-white to-blue-50 p-8 rounded-2xl shadow-xl">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                                <span class="w-2 h-8 bg-gradient-to-b from-blue-600 to-red-600 rounded-full mr-4"></span>
+                                Mijn Verhaal
+                            </h3>
                             
-                            <div class="prose prose-slate max-w-none">
-                                <p class="text-gray-700 leading-relaxed mb-4">
+                            <div class="prose prose-lg text-gray-700 space-y-6">
+                                <p class="leading-relaxed">
                                     Hoi! Ik ben Naoufal Andichi, een gepassioneerde liefhebber van technologie en politiek. Al van jongs af aan ben ik gefascineerd door de manier waarop onze samenleving functioneert en hoe technologie ons dagelijks leven beïnvloedt.
                                 </p>
-                                <p class="text-gray-700 leading-relaxed mb-4">
+                                
+                                <p class="leading-relaxed">
                                     Mijn reis begon met een nieuwsgierigheid naar computers, maar al snel ontdekte ik de kracht van politiek om echte verandering teweeg te brengen. Deze unieke combinatie van interesses heeft me geïnspireerd om PolitiekPraat te creëren.
                                 </p>
-                                <p class="text-gray-700 leading-relaxed mb-4">
+                                
+                                <p class="leading-relaxed">
                                     Politiek is voor mij meer dan alleen een onderwerp; het is een passie. Ik volg het nieuws op de voet en geniet van gesprekken over de toekomst van ons land. Als liberaal geloof ik sterk in individuele vrijheid, persoonlijke verantwoordelijkheid en de kracht van onderwijs om de wereld te verbeteren.
-                                </p>
-                                <p class="text-gray-700 leading-relaxed mb-4">
-                                    Met PolitiekPraat wil ik een platform bieden waar iedereen zich welkom voelt om te leren en te groeien. Het is mijn missie om een ruimte te creëren waar we samen kunnen praten, vragen kunnen stellen en van elkaar kunnen leren.
-                                </p>
-                                <p class="text-gray-700 leading-relaxed">
-                                    Laten we samen de wereld van de politiek verkennen en ontdekken hoe we een positieve impact kunnen maken. Jouw stem is belangrijk, en ik kijk ernaar uit om samen met jou te groeien.
                                 </p>
                             </div>
                         </div>
                     </div>
+                    
+                    <!-- Philosophy & Skills -->
+                    <div class="space-y-8" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+                        <!-- Philosophy Card -->
+                        <div class="bg-gradient-to-br from-white to-purple-50 p-8 rounded-2xl shadow-xl">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                                <span class="w-2 h-8 bg-gradient-to-b from-red-600 to-blue-600 rounded-full mr-4"></span>
+                                Mijn Filosofie
+                            </h3>
+                            
+                            <div class="space-y-4">
+                                <blockquote class="text-lg italic text-gray-700 border-l-4 border-red-600 pl-6">
+                                    "Kennis is macht, maar gedeelde kennis is echte vooruitgang."
+                                </blockquote>
+                                
+                                <p class="text-gray-700 leading-relaxed">
+                                    Ik geloof dat iedereen het recht heeft om politiek te begrijpen. Door complexe onderwerpen uit te leggen op een toegankelijke manier, kunnen we samen een beter geïnformeerde samenleving creëren.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- Skills & Expertise -->
+                        <div class="bg-gradient-to-br from-white to-gray-50 p-8 rounded-2xl shadow-xl">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                                <span class="w-2 h-8 bg-gradient-to-b from-blue-600 to-red-600 rounded-full mr-4"></span>
+                                Expertise
+                            </h3>
+                            
+                            <div class="tech-grid">
+                                <div class="tech-item p-4 rounded-xl text-center">
+                                    <div class="text-2xl mb-2">🏛️</div>
+                                    <div class="text-sm font-semibold text-gray-700">Politieke Analyse</div>
+                                </div>
+                                <div class="tech-item p-4 rounded-xl text-center">
+                                    <div class="text-2xl mb-2">📊</div>
+                                    <div class="text-sm font-semibold text-gray-700">Data Visualisatie</div>
+                                </div>
+                                <div class="tech-item p-4 rounded-xl text-center">
+                                    <div class="text-2xl mb-2">✍️</div>
+                                    <div class="text-sm font-semibold text-gray-700">Content Creatie</div>
+                                </div>
+                                <div class="tech-item p-4 rounded-xl text-center">
+                                    <div class="text-2xl mb-2">💻</div>
+                                    <div class="text-sm font-semibold text-gray-700">Web Development</div>
+                                </div>
+                                <div class="tech-item p-4 rounded-xl text-center">
+                                    <div class="text-2xl mb-2">📱</div>
+                                    <div class="text-sm font-semibold text-gray-700">UX Design</div>
+                                </div>
+                                <div class="tech-item p-4 rounded-xl text-center">
+                                    <div class="text-2xl mb-2">🎯</div>
+                                    <div class="text-sm font-semibold text-gray-700">Strategy</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission & Vision Section -->
+    <section class="py-24 bg-gradient-to-br from-gray-50 to-blue-50 relative overflow-hidden">
+        <!-- Animated background -->
+        <div class="animated-bg absolute inset-0 opacity-5"></div>
+        
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="max-w-6xl mx-auto">
+                <!-- Section Header -->
+                <div class="text-center mb-20" data-aos="fade-up">
+                    <h2 class="text-4xl lg:text-6xl font-black text-gray-900 mb-6">
+                        Mijn <span class="gradient-text">Visie</span>
+                    </h2>
+                    <div class="w-24 h-1 bg-gradient-to-r from-red-600 to-blue-600 mx-auto rounded-full"></div>
                 </div>
                 
-                <!-- Mission & Vision - 2 column span -->
-                <div class="lg:col-span-2 bg-white rounded-2xl p-8 border border-slate-100 shadow-xl shadow-slate-200/50 overflow-hidden relative group">
-                    <!-- Card top decoration -->
-                    <div class="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-secondary to-primary"></div>
-                    
-                    <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-                        <span class="bg-gradient-to-r from-secondary to-primary h-6 w-1 rounded mr-3"></span>
-                        Mijn Missie
-                    </h2>
-                    
-                    <!-- Mission statement with styled quotes -->
-                    <div class="relative">
-                        <div class="absolute -top-2 -left-2 text-6xl text-primary/10">"</div>
-                        <div class="prose prose-slate max-w-none pl-6">
-                            <p class="text-gray-700 leading-relaxed mb-5">
+                <!-- Mission Content -->
+                <div class="max-w-4xl mx-auto">
+                    <div class="bg-white/80 backdrop-blur-lg p-12 rounded-3xl shadow-2xl border border-white/20" data-aos="zoom-in" data-aos-duration="1000">
+                        <!-- Quote decoration -->
+                        <div class="text-6xl text-blue-600/20 mb-6">"</div>
+                        
+                        <div class="space-y-8 text-lg leading-relaxed text-gray-700">
+                            <p class="text-xl lg:text-2xl font-light text-gray-800 mb-8">
                                 Welkom bij PolitiekPraat! Hier draait alles om het delen van frisse en scherpe inzichten over de politieke wereld. Met een flinke dosis enthousiasme duiken we in actuele onderwerpen en brengen we ze tot leven.
                             </p>
-                            <p class="text-gray-700 leading-relaxed mb-5">
+                            
+                            <p>
                                 Of het nu gaat om klimaatverandering, onderwijs of sociale rechtvaardigheid, PolitiekPraat is dé plek waar ideeën en perspectieven samenkomen. We willen je inspireren en uitdagen om mee te denken en te discussiëren.
                             </p>
-                            <p class="text-gray-700 leading-relaxed mb-5">
+                            
+                            <p>
                                 Door het delen van krachtige analyses en meningen, streven we ernaar om een beter begrip te creëren van de complexe wereld waarin we leven. Het is een uitnodiging om samen te leren en te groeien in ons inzicht en begrip van de politiek.
                             </p>
-                            <p class="text-gray-700 leading-relaxed font-medium">
+                            
+                            <p class="text-xl font-semibold gradient-text">
                                 Sluit je aan bij PolitiekPraat en ontdek de energie van geïnformeerde discussie en betrokkenheid. Samen kunnen we een verschil maken!
                             </p>
                         </div>
-                        <div class="absolute -bottom-6 -right-2 text-6xl text-primary/10">"</div>
+                        
+                        <!-- Quote end decoration -->
+                        <div class="text-6xl text-blue-600/20 text-right">"</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Journey Timeline Section -->
+    <section class="py-24 bg-white relative overflow-hidden">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="max-w-4xl mx-auto">
+                <!-- Section Header -->
+                <div class="text-center mb-20" data-aos="fade-up">
+                    <h2 class="text-4xl lg:text-6xl font-black text-gray-900 mb-6">
+                        Mijn <span class="gradient-text">Reis</span>
+                    </h2>
+                    <div class="w-24 h-1 bg-gradient-to-r from-blue-600 to-red-600 mx-auto rounded-full"></div>
+                </div>
+                
+                <!-- Timeline -->
+                <div class="space-y-12">
+                    <div class="timeline-item" data-aos="fade-up" data-aos-delay="100">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">De Ontdekking</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            Mijn eerste kennismaking met politiek gebeurde tijdens mijn studie. Ik realiseerde me hoe belangrijk het is om geïnformeerd te zijn over de beslissingen die ons dagelijks leven beïnvloeden.
+                        </p>
+                    </div>
+                    
+                    <div class="timeline-item" data-aos="fade-up" data-aos-delay="200">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Eerste Analyses</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            Ik begon met het schrijven van mijn eerste politieke analyses. Het was fascinerend om complexe onderwerpen uit te leggen op een manier die voor iedereen begrijpelijk was.
+                        </p>
+                    </div>
+                    
+                    <div class="timeline-item" data-aos="fade-up" data-aos-delay="300">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">PolitiekPraat wordt geboren</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            Met de combinatie van mijn technische achtergrond en politieke interesse, ontstond het idee voor PolitiekPraat - een platform waar politiek toegankelijk wordt gemaakt.
+                        </p>
+                    </div>
+                    
+                    <div class="timeline-item" data-aos="fade-up" data-aos-delay="400">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">De Toekomst</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            Mijn doel is om PolitiekPraat uit te bouwen tot dé plek voor politieke educatie in Nederland. Een plaats waar nieuwsgierigheid wordt geprikkeld en kennis wordt gedeeld.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+         <!-- Call to Action Section -->
+    <section class="py-24 bg-gradient-to-br from-slate-900 via-blue-900 to-red-900 relative overflow-hidden">
+        <!-- Animated Background Elements -->
+        <div class="absolute inset-0">
+            <!-- Primary floating orbs -->
+            <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-to-r from-blue-400/20 to-red-400/20 rounded-full blur-3xl animate-pulse"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gradient-to-l from-red-400/15 to-blue-400/15 rounded-full blur-3xl animate-pulse" style="animation-delay: 2s;"></div>
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-gradient-to-br from-blue-400/25 to-red-400/25 rounded-full blur-2xl animate-pulse" style="animation-delay: 4s;"></div>
+            
+            <!-- Grid pattern overlay -->
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.05"%3E%3Ccircle cx="20" cy="20" r="1"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-60"></div>
+        </div>
+        
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="max-w-5xl mx-auto text-center">
+                <!-- Header Content -->
+                <div class="mb-16" data-aos="fade-up" data-aos-duration="1000">
+                    <div class="inline-flex items-center px-4 py-2 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 text-white/90 text-sm font-medium mb-8">
+                        <svg class="w-4 h-4 mr-2 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-2-2V10a2 2 0 012-2h2m2-4h6a2 2 0 012 2v6a2 2 0 01-2 2h-6l-4 4V8a2 2 0 012-2z"/>
+                        </svg>
+                        Laten we Verbinden
+                    </div>
+                    
+                    <h2 class="text-4xl lg:text-6xl font-black text-white mb-6 leading-tight">
+                        Klaar voor een <span class="bg-gradient-to-r from-yellow-300 to-orange-400 bg-clip-text text-transparent">Gesprek</span>?
+                    </h2>
+                    
+                    <p class="text-xl lg:text-2xl text-blue-100 leading-relaxed max-w-3xl mx-auto">
+                        Heb je vragen over politiek, ideeën voor samenwerking, of wil je gewoon even brainstormen? 
+                        Ik sta altijd open voor een goed gesprek!
+                    </p>
+                </div>
+                
+                <!-- Contact Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                    <!-- Email Card -->
+                    <div class="group" data-aos="fade-up" data-aos-delay="100">
+                        <a href="mailto:naoufal@politiekpraat.nl" 
+                           class="block bg-white/10 backdrop-blur-lg p-8 rounded-3xl border border-white/20 hover:bg-white/20 hover:border-white/40 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl">
+                            <div class="relative">
+                                <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-red-500 rounded-2xl flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform duration-300">
+                                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                    </svg>
+                                </div>
+                                <h3 class="text-xl font-bold text-white mb-3">Direct Contact</h3>
+                                <p class="text-blue-200 text-sm mb-4">Voor vragen, feedback of samenwerking</p>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <!-- LinkedIn Card -->
+                    <div class="group" data-aos="fade-up" data-aos-delay="200">
+                        <a href="https://www.linkedin.com/in/naoufalandichi/" 
+                           target="_blank" rel="noopener noreferrer"
+                           class="block bg-white/10 backdrop-blur-lg p-8 rounded-3xl border border-white/20 hover:bg-white/20 hover:border-white/40 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl">
+                            <div class="relative">
+                                <div class="w-16 h-16 bg-gradient-to-br from-red-500 to-blue-500 rounded-2xl flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform duration-300">
+                                    <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                                    </svg>
+                                </div>
+                                <h3 class="text-xl font-bold text-white mb-3">Professioneel Netwerk</h3>
+                                <p class="text-blue-200 text-sm mb-4">Verbind met me op LinkedIn</p>
+                                <div class="text-blue-300 font-medium">Naoufal Andichi</div>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <!-- Blog Card -->
+                    <div class="group" data-aos="fade-up" data-aos-delay="300">
+                        <a href="<?= URLROOT ?>/blogs" 
+                           class="block bg-white/10 backdrop-blur-lg p-8 rounded-3xl border border-white/20 hover:bg-white/20 hover:border-white/40 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl">
+                            <div class="relative">
+                                <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-red-500 rounded-2xl flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform duration-300">
+                                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                                    </svg>
+                                </div>
+                                <h3 class="text-xl font-bold text-white mb-3">Mijn Analyses</h3>
+                                <p class="text-blue-200 text-sm mb-4">Ontdek mijn politieke inzichten</p>
+                                <div class="text-blue-300 font-medium">Bekijk Blogs</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Bottom CTA -->
+                <div class="bg-white/5 backdrop-blur-lg rounded-3xl p-8 border border-white/20" data-aos="fade-up" data-aos-delay="400">
+                    <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                        <div class="text-left">
+                            <h3 class="text-2xl font-bold text-white mb-2">Samen sterker in politiek</h3>
+                            <p class="text-blue-200">Laten we politiek toegankelijker maken voor iedereen.</p>
+                        </div>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <a href="<?= URLROOT ?>/stemwijzer" 
+                               class="px-8 py-4 bg-gradient-to-r from-blue-600 to-red-600 text-white font-bold rounded-2xl hover:from-blue-700 hover:to-red-700 transition-all duration-300 hover:scale-105 hover:shadow-xl">
+                                Probeer de Stemwijzer
+                            </a>
+                            <a href="<?= URLROOT ?>/blogs" 
+                               class="px-8 py-4 bg-white/20 text-white font-bold rounded-2xl border border-white/30 hover:bg-white/30 transition-all duration-300 hover:scale-105">
+                                Lees Meer
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 </main>
+
+<script>
+// Initialize AOS (Animate On Scroll)
+document.addEventListener('DOMContentLoaded', function() {
+    AOS.init({
+        duration: 800,
+        easing: 'ease-in-out',
+        once: true,
+        offset: 100
+    });
+});
+
+// Add some interactive effects
+document.addEventListener('DOMContentLoaded', function() {
+    // Profile image hover effect
+    const profileImg = document.querySelector('.over-mij-hero img');
+    if (profileImg) {
+        profileImg.addEventListener('mouseenter', function() {
+            this.style.transform = 'scale(1.1) rotate(5deg)';
+        });
+        
+        profileImg.addEventListener('mouseleave', function() {
+            this.style.transform = 'scale(1) rotate(0deg)';
+        });
+    }
+    
+    // Smooth scrolling for internal links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+});
+</script>
