@@ -946,7 +946,7 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                                     <div class="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-primary/30 via-secondary/30 to-primary/30"></div>
                                     
                                     <?php if($_SESSION['is_admin']): ?>
-                                        <a href="<?php echo URLROOT; ?>/admin" 
+                                        <a href="<?php echo URLROOT; ?>/admin/stemwijzer-dashboard.php" 
                                            class="flex items-center px-3 py-2 rounded-lg
                                                  transition-all duration-200 hover:bg-gray-50 group/item">
                                             <div class="w-9 h-9 bg-primary/5 rounded-lg flex items-center justify-center
