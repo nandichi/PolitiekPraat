@@ -1466,6 +1466,12 @@ function stemwijzer() {
                     results: this.results
                 };
                 
+                console.log('Probeer resultaten op te slaan:', {
+                    sessionId: sessionId,
+                    answersCount: Object.keys(this.answers).length,
+                    resultsCount: Object.keys(this.results).length
+                });
+                
                 const response = await fetch('/api/stemwijzer.php?action=save-results', {
                     method: 'POST',
                     headers: {
@@ -1475,13 +1481,26 @@ function stemwijzer() {
                 });
                 
                 const result = await response.json();
+                console.log('API Response:', result);
+                
                 if (result.success) {
-                    console.log('Resultaten succesvol opgeslagen in database');
+                    console.log('✅ Resultaten succesvol opgeslagen in database');
+                    console.log('Debug info:', result.debug);
+                    
+                    // Toon een subtiele notificatie aan de gebruiker
+                    this.showNotification('Je resultaten zijn opgeslagen', 'success');
                 } else {
-                    console.warn('Kon resultaten niet opslaan in database:', result.error);
+                    console.warn('❌ Kon resultaten niet opslaan in database:', result.error);
+                    console.warn('Debug info:', result.debug);
+                    
+                    // Toon een waarschuwing maar laat de gebruiker wel zijn resultaten zien
+                    this.showNotification('Resultaten konden niet worden opgeslagen, maar je kunt ze wel bekijken', 'warning');
                 }
             } catch (error) {
-                console.error('Fout bij opslaan van resultaten:', error);
+                console.error('❌ Netwerk fout bij opslaan van resultaten:', error);
+                
+                // Toon een foutmelding maar blokkeer niet het tonen van resultaten
+                this.showNotification('Verbindingsfout bij opslaan, maar je resultaten zijn wel beschikbaar', 'warning');
             }
         },
         

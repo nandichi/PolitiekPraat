@@ -68,7 +68,27 @@ try {
                     $stats = $stemwijzerController->getStatistics();
                     echo json_encode([
                         'success' => true,
-                        'statistics' => $stats
+                        'statistics' => $stats,
+                        'message' => 'Statistieken succesvol opgehaald'
+                    ]);
+                    break;
+                    
+                case 'test-save':
+                    // Test de save functionaliteit
+                    $testSessionId = 'api_test_' . time();
+                    $testAnswers = [0 => 'eens', 1 => 'neutraal', 2 => 'oneens'];
+                    $testResults = ['test' => ['score' => 2, 'total' => 6, 'agreement' => 33]];
+                    
+                    $saved = $stemwijzerController->saveResults($testSessionId, $testAnswers, $testResults, null);
+                    
+                    echo json_encode([
+                        'success' => $saved,
+                        'message' => $saved ? 'Test save successful' : 'Test save failed',
+                        'test_data' => [
+                            'sessionId' => $testSessionId,
+                            'answers_count' => count($testAnswers),
+                            'results_count' => count($testResults)
+                        ]
                     ]);
                     break;
                     
@@ -93,22 +113,67 @@ try {
                         http_response_code(400);
                         echo json_encode([
                             'success' => false,
-                            'error' => 'Invalid JSON input'
+                            'error' => 'Invalid JSON input',
+                            'debug' => 'Geen geldige JSON data ontvangen'
                         ]);
                         break;
                     }
                     
-                    $sessionId = $input['sessionId'] ?? session_id();
+                    // Valideer required fields
+                    $sessionId = $input['sessionId'] ?? null;
                     $answers = $input['answers'] ?? [];
                     $results = $input['results'] ?? [];
                     $userId = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
                     
+                    if (empty($sessionId)) {
+                        http_response_code(400);
+                        echo json_encode([
+                            'success' => false,
+                            'error' => 'Session ID is required',
+                            'debug' => 'sessionId ontbreekt in request'
+                        ]);
+                        break;
+                    }
+                    
+                    if (empty($answers)) {
+                        http_response_code(400);
+                        echo json_encode([
+                            'success' => false,
+                            'error' => 'Answers are required',
+                            'debug' => 'Geen antwoorden ontvangen'
+                        ]);
+                        break;
+                    }
+                    
+                    // Log de ontvangen data voor debugging
+                    error_log("API: save-results - Ontvangen data: sessionId=$sessionId, antwoorden=" . count($answers) . ", userId=" . ($userId ?? 'null'));
+                    
                     $saved = $stemwijzerController->saveResults($sessionId, $answers, $results, $userId);
                     
-                    echo json_encode([
-                        'success' => $saved,
-                        'message' => $saved ? 'Results saved successfully' : 'Failed to save results'
-                    ]);
+                    if ($saved) {
+                        echo json_encode([
+                            'success' => true,
+                            'message' => 'Resultaten succesvol opgeslagen',
+                            'debug' => [
+                                'sessionId' => $sessionId,
+                                'answersCount' => count($answers),
+                                'userId' => $userId,
+                                'timestamp' => date('Y-m-d H:i:s')
+                            ]
+                        ]);
+                    } else {
+                        http_response_code(500);
+                        echo json_encode([
+                            'success' => false,
+                            'error' => 'Failed to save results',
+                            'message' => 'Er is een fout opgetreden bij het opslaan van de resultaten',
+                            'debug' => [
+                                'sessionId' => $sessionId,
+                                'answersCount' => count($answers),
+                                'schemaType' => $stemwijzerController->getSchemaType()
+                            ]
+                        ]);
+                    }
                     break;
                     
                 default:

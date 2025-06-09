@@ -283,29 +283,61 @@ class StemwijzerController {
      * Sla de resultaten van een gebruiker op
      */
     public function saveResults($sessionId, $answers, $results, $userId = null) {
-        if (!$this->hasValidConnection || $this->schemaType === 'fallback') {
-             error_log("StemwijzerController: saveResults - Not saving, no DB connection or fallback schema.");
-            return true; 
+        if (!$this->hasValidConnection) {
+            error_log("StemwijzerController: saveResults - Geen database connectie beschikbaar");
+            return false; // Return false instead of true when no connection
+        }
+        
+        if ($this->schemaType === 'fallback') {
+            error_log("StemwijzerController: saveResults - Fallback schema, geen opslag mogelijk");
+            return false;
         }
         
         try {
-            if ($this->schemaType === 'old') { // Oude schema heeft geen stemwijzer_results tabel
-                error_log("StemwijzerController: saveResults - Not saving, old schema type.");
-                return true;
+            // Voor oude schema's proberen we geen resultaten op te slaan
+            if ($this->schemaType === 'old') {
+                error_log("StemwijzerController: saveResults - Oude schema, geen stemwijzer_results tabel verwacht");
+                return false;
             }
             
             // Controleer of stemwijzer_results tabel bestaat
             $this->db->query("SHOW TABLES LIKE 'stemwijzer_results'");
-            if (!$this->db->single()) {
-                error_log("StemwijzerController: saveResults - stemwijzer_results table does not exist. Not saving.");
-                return true; // Simuleer succes als tabel niet bestaat
+            $tableExists = $this->db->single();
+            
+            if (!$tableExists) {
+                error_log("StemwijzerController: saveResults - stemwijzer_results tabel bestaat niet, probeer aan te maken");
+                
+                // Probeer de tabel automatisch aan te maken
+                if (!$this->createResultsTable()) {
+                    error_log("StemwijzerController: saveResults - Kon stemwijzer_results tabel niet aanmaken");
+                    return false;
+                }
+                
+                error_log("StemwijzerController: saveResults - stemwijzer_results tabel succesvol aangemaakt");
             }
 
+            // Valideer input data
+            if (empty($sessionId)) {
+                error_log("StemwijzerController: saveResults - Session ID is leeg");
+                return false;
+            }
+            
+            if (empty($answers)) {
+                error_log("StemwijzerController: saveResults - Geen antwoorden om op te slaan");
+                return false;
+            }
+            
+            if (empty($results)) {
+                error_log("StemwijzerController: saveResults - Geen resultaten om op te slaan");
+                return false;
+            }
+
+            // Sla de resultaten op
             $this->db->query("
                 INSERT INTO stemwijzer_results 
-                (session_id, user_id, answers, results, ip_address, user_agent) 
+                (session_id, user_id, answers, results, ip_address, user_agent, completed_at) 
                 VALUES 
-                (:session_id, :user_id, :answers, :results, :ip_address, :user_agent)
+                (:session_id, :user_id, :answers, :results, :ip_address, :user_agent, NOW())
             ");
             
             $this->db->bind(':session_id', $sessionId);
@@ -316,12 +348,59 @@ class StemwijzerController {
             $this->db->bind(':user_agent', $_SERVER['HTTP_USER_AGENT'] ?? 'unknown');
             
             $success = $this->db->execute();
-            error_log("StemwijzerController: saveResults - Attempted save. Success: " . ($success ? 'true' : 'false'));
+            
+            if ($success) {
+                $insertedId = $this->db->lastInsertId();
+                error_log("StemwijzerController: saveResults - Resultaten succesvol opgeslagen met ID: " . $insertedId);
+                error_log("StemwijzerController: saveResults - Session: $sessionId, Antwoorden: " . count($answers) . ", User: " . ($userId ?? 'anonymous'));
+            } else {
+                error_log("StemwijzerController: saveResults - Database execute() faalde");
+            }
+            
             return $success;
             
         } catch (Exception $e) {
-            error_log("StemwijzerController: saveResults failed - " . $e->getMessage());
-            return false; // Geef false terug bij een daadwerkelijke fout tijdens opslaan
+            error_log("StemwijzerController: saveResults - FOUT: " . $e->getMessage());
+            error_log("StemwijzerController: saveResults - Stack trace: " . $e->getTraceAsString());
+            return false;
+        }
+    }
+
+    /**
+     * Maak de stemwijzer_results tabel aan als deze niet bestaat
+     */
+    private function createResultsTable() {
+        try {
+            $sql = "CREATE TABLE IF NOT EXISTS stemwijzer_results (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                session_id VARCHAR(255) NOT NULL,
+                user_id INT DEFAULT NULL,
+                answers JSON NOT NULL,
+                results JSON NOT NULL,
+                completed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                ip_address VARCHAR(45) DEFAULT NULL,
+                user_agent TEXT DEFAULT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                INDEX idx_session (session_id),
+                INDEX idx_user (user_id),
+                INDEX idx_completed (completed_at)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
+            
+            $this->db->query($sql);
+            $success = $this->db->execute();
+            
+            if ($success) {
+                error_log("StemwijzerController: createResultsTable - Tabel stemwijzer_results succesvol aangemaakt");
+            } else {
+                error_log("StemwijzerController: createResultsTable - Fout bij aanmaken van tabel");
+            }
+            
+            return $success;
+            
+        } catch (Exception $e) {
+            error_log("StemwijzerController: createResultsTable - FOUT: " . $e->getMessage());
+            return false;
         }
     }
 
@@ -331,20 +410,62 @@ class StemwijzerController {
     public function getStatistics() {
         if (!$this->hasValidConnection || $this->schemaType === 'fallback') {
             return [
-                'total_submissions' => 0, 'last_updated' => date('Y-m-d H:i:s'), 'schema_type' => $this->schemaType
+                'total_submissions' => 0, 
+                'last_updated' => date('Y-m-d H:i:s'), 
+                'schema_type' => $this->schemaType,
+                'database_status' => 'no_connection'
             ];
         }
+        
         try {
             $this->db->query("SHOW TABLES LIKE 'stemwijzer_results'");
-            if (!$this->db->single()) {
-                 return ['total_submissions' => 0, 'last_updated' => date('Y-m-d H:i:s'), 'schema_type' => $this->schemaType . '_no_results_table'];
+            $tableExists = $this->db->single();
+            
+            if (!$tableExists) {
+                return [
+                    'total_submissions' => 0, 
+                    'last_updated' => date('Y-m-d H:i:s'), 
+                    'schema_type' => $this->schemaType,
+                    'database_status' => 'no_results_table'
+                ];
             }
+            
+            // Basis statistieken
             $this->db->query("SELECT COUNT(*) as total FROM stemwijzer_results");
             $total = $this->db->single()->total ?? 0;
-            return ['total_submissions' => $total, 'last_updated' => date('Y-m-d H:i:s'), 'schema_type' => $this->schemaType];
+            
+            // Laatste submission
+            $this->db->query("SELECT MAX(completed_at) as last_submission FROM stemwijzer_results");
+            $lastSubmission = $this->db->single()->last_submission ?? null;
+            
+            // Submissions vandaag
+            $this->db->query("SELECT COUNT(*) as today_count FROM stemwijzer_results WHERE DATE(completed_at) = CURDATE()");
+            $todayCount = $this->db->single()->today_count ?? 0;
+            
+            // Submissions deze week
+            $this->db->query("SELECT COUNT(*) as week_count FROM stemwijzer_results WHERE completed_at >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
+            $weekCount = $this->db->single()->week_count ?? 0;
+            
+            return [
+                'total_submissions' => (int)$total,
+                'submissions_today' => (int)$todayCount,
+                'submissions_this_week' => (int)$weekCount,
+                'last_submission' => $lastSubmission,
+                'last_updated' => date('Y-m-d H:i:s'),
+                'schema_type' => $this->schemaType,
+                'database_status' => 'connected',
+                'table_status' => 'exists'
+            ];
+            
         } catch (Exception $e) {
             error_log("StemwijzerController: getStatistics failed - " . $e->getMessage());
-            return ['total_submissions' => 0, 'last_updated' => date('Y-m-d H:i:s'), 'schema_type' => 'error'];
+            return [
+                'total_submissions' => 0, 
+                'last_updated' => date('Y-m-d H:i:s'), 
+                'schema_type' => $this->schemaType,
+                'database_status' => 'error',
+                'error_message' => $e->getMessage()
+            ];
         }
     }
     
