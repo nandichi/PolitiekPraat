@@ -273,17 +273,15 @@ $news_sources = [
     ]
 ];
 
-// Voorbeeldnieuws (vervangt de API-call voor demonstratiedoeleinden)
-// PERFORMANCE TODO: Overweeg API-calls asynchroon te maken (bv. met JavaScript na het laden van de pagina) of te cachen voor betere laadtijden.
 $latest_news = [
     [
         'orientation' => 'links',
-        'source' => 'Socialisme.nu',
-        'bias' => 'links', 
+        'source' => 'De Volkskrant',
+        'bias' => 'centrum-links', 
         'publishedAt' => date('Y-m-d H:i:s'), // Vandaag 08:30
-        'title' => 'Verzet tegen kabinet groeit, maar gevaar van extreemrechts ook',
-        'description' => 'Het verzet tegen het kabinet groeit, maar tegelijkertijd neemt ook het gevaar van extreemrechts toe. Een analyse van de huidige politieke situatie en de groeiende polarisatie in Nederland.',
-        'url' => 'https://socialisme.nu/verzet-tegen-kabinet-groeit-maar-gevaar-van-extreemrechts-ook/'
+        'title' => 'Kunnen Wilders\' opponenten voorkomen dat hij de verkiezingscampagne naar zijn hand zet?',
+        'description' => 'Nu nieuwe verkiezingen aanstaande zijn, bereiden politieke partijen zich voor op een campagne waarin Geert Wilders waarschijnlijk het debat zal proberen te domineren. De vraag is of zijn tegenstanders een effectieve strategie kunnen ontwikkelen.',
+        'url' => 'https://www.volkskrant.nl/politiek/kunnen-wilders-opponenten-voorkomen-dat-hij-de-verkiezings-campagne-naar-zijn-hand-zet~b3dc1bad/'
     ],
     [
         'orientation' => 'links',
@@ -305,21 +303,21 @@ $latest_news = [
     ],
     [
         'orientation' => 'rechts',
-        'source' => 'FVD',
+        'source' => 'Dagelijkse Standaard',
         'bias' => 'rechts',
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-6 hours')), // 6 uur geleden
-        'title' => 'Reactie FVD op val kabinet',
-        'description' => 'Forum voor Democratie reageert op de val van het kabinet en roept op tot nieuwe verkiezingen om het vertrouwen in de politiek te herstellen.',
-        'url' => 'https://fvd.nl/nieuws/reactie-fvd-op-val-kabinet'
+        'title' => 'De PVV is niet genoeg: alleen met FVD kan rechts winnen',
+        'description' => 'Een analyse van de huidige politieke situatie toont aan dat de PVV alleen niet voldoende is om rechtse doelen te bereiken. Samenwerking met Forum voor Democratie zou cruciaal kunnen zijn voor een effectieve rechtse coalitie.',
+        'url' => 'https://www.dagelijksestandaard.nl/opinie/de-pvv-is-niet-genoeg-alleen-met-fvd-kan-rechts-winnen'
     ],
     [
         'orientation' => 'rechts',
-        'source' => 'De Dagelijkse Standaard',
+        'source' => 'De Telegraaf',
         'bias' => 'rechts', 
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-8 hours')), // 8 uur geleden
-        'title' => 'Wilders krijgt hoon na breuk: "Bokito" en "verrader", maar blijft strijdbaar',
-        'description' => 'Geert Wilders krijgt veel kritiek na het mislukken van de formatie, maar laat zich niet uit het veld slaan. De PVV-leider wordt onder andere uitgemaakt voor "Bokito" en "verrader".',
-        'url' => 'https://www.dagelijksestandaard.nl/politiek/wilders-krijgt-hoon-na-breuk-bokito-en-verrader-maar-blijft-strijdbaar'
+        'title' => 'PVV blijft stabiel ondanks kabinetsval, verschuivingen miniem in nieuwste peilingen',
+        'description' => 'Ondanks de val van het kabinet blijft de PVV stabiel in de peilingen. De nieuwste metingen laten slechts minimale verschuivingen zien tussen de verschillende partijen.',
+        'url' => 'https://www.telegraaf.nl/politiek/pvv-blijft-stabiel-ondanks-kabinetsval-verschuivingen-miniem-in-nieuwste-peilingen/70718243'
     ],
     [
         'orientation' => 'rechts',
