@@ -779,7 +779,7 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                         <!-- Brand text -->
                         <div class="flex flex-col">
                             <span class="text-lg md:text-2xl font-bold bg-gradient-to-r 
-                                        from-primary via-secondary to-accent bg-clip-text text-transparent
+                                        from-primary via-secondary to-primary bg-clip-text text-transparent
                                         transition-all duration-300 group-hover:from-secondary 
                                         group-hover:to-primary tracking-tight">
                                 <?php echo SITENAME; ?>

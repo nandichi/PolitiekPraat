@@ -53,8 +53,8 @@ require_once 'views/templates/header.php';
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 :root {
-    --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    --primary-gradient: linear-gradient(135deg, #1a56db 0%, #c41e3a 100%);
+    --secondary-gradient: linear-gradient(135deg, #dc2626 0%, #1e40af 100%);
     --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
     --warm-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
     --dark-gradient: linear-gradient(135deg, #434343 0%, #000000 100%);
@@ -91,8 +91,8 @@ require_once 'views/templates/header.php';
 }
 
 @keyframes pulse-glow {
-    0%, 100% { box-shadow: 0 0 20px rgba(102, 126, 234, 0.4); }
-    50% { box-shadow: 0 0 40px rgba(102, 126, 234, 0.8); }
+    0%, 100% { box-shadow: 0 0 20px rgba(26, 86, 219, 0.4); }
+    50% { box-shadow: 0 0 40px rgba(26, 86, 219, 0.8); }
 }
 
 .slide-in-bottom {
@@ -122,19 +122,19 @@ require_once 'views/templates/header.php';
 }
 </style>
 
-<main class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50">
+<main class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-red-50">
     
     <!-- Modern Hero Section -->
     <section class="relative min-h-[80vh] sm:min-h-[60vh] flex items-center justify-center overflow-hidden">
         <!-- Animated Background Elements -->
         <div class="absolute inset-0">
             <!-- Primary Gradient Background -->
-            <div class="absolute inset-0 bg-gradient-to-br from-indigo-900 via-blue-900 to-purple-900"></div>
+            <div class="absolute inset-0 bg-gradient-to-br from-blue-900 via-slate-900 to-red-900"></div>
             
             <!-- Animated Orbs -->
-            <div class="absolute top-0 left-0 w-64 sm:w-96 h-64 sm:h-96 rounded-full bg-gradient-to-r from-blue-400/30 to-purple-400/30 blur-3xl floating-animation"></div>
-            <div class="absolute bottom-0 right-0 w-48 sm:w-80 h-48 sm:h-80 rounded-full bg-gradient-to-r from-pink-400/20 to-blue-400/20 blur-3xl floating-animation" style="animation-delay: -3s;"></div>
-            <div class="absolute top-1/2 left-1/2 w-32 sm:w-64 h-32 sm:h-64 rounded-full bg-gradient-to-r from-cyan-400/25 to-blue-400/25 blur-2xl floating-animation" style="animation-delay: -1.5s;"></div>
+            <div class="absolute top-0 left-0 w-64 sm:w-96 h-64 sm:h-96 rounded-full bg-gradient-to-r from-blue-400/30 to-red-400/30 blur-3xl floating-animation"></div>
+            <div class="absolute bottom-0 right-0 w-48 sm:w-80 h-48 sm:h-80 rounded-full bg-gradient-to-r from-red-400/20 to-blue-400/20 blur-3xl floating-animation" style="animation-delay: -3s;"></div>
+            <div class="absolute top-1/2 left-1/2 w-32 sm:w-64 h-32 sm:h-64 rounded-full bg-gradient-to-r from-blue-400/25 to-red-400/25 blur-2xl floating-animation" style="animation-delay: -1.5s;"></div>
             
             <!-- Grid Pattern Overlay -->
             <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.03"%3E%3Ccircle cx="30" cy="30" r="1"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-40"></div>
@@ -153,7 +153,7 @@ require_once 'views/templates/header.php';
                 
                 <!-- Main Title -->
                 <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-4 sm:mb-6 leading-tight slide-in-bottom" style="animation-delay: 0.2s;">
-                    <span class="block text-gradient bg-gradient-to-r from-blue-300 via-purple-300 to-pink-300 bg-clip-text text-transparent">
+                    <span class="block text-gradient bg-gradient-to-r from-blue-300 via-red-300 to-blue-300 bg-clip-text text-transparent">
                         Vind Jouw Perfecte
                     </span>
                     <span class="text-white">Politieke Match</span>
@@ -174,7 +174,7 @@ require_once 'views/templates/header.php';
         <div id="loading-indicator" class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50" style="display: none;">
             <div class="bg-white rounded-3xl p-8 text-center shadow-2xl">
                 <div class="w-16 h-16 mx-auto mb-6">
-                    <svg class="animate-spin w-full h-full text-indigo-600" fill="none" viewBox="0 0 24 24">
+                    <svg class="animate-spin w-full h-full text-blue-600" fill="none" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                     </svg>
                 </div>
@@ -192,8 +192,8 @@ require_once 'views/templates/header.php';
                  class="mb-8">
                 <div class="bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/50 p-8 relative overflow-hidden">
                     <!-- Decorative background -->
-                    <div class="absolute inset-0 bg-gradient-to-br from-indigo-50/50 to-purple-50/50"></div>
-                    <div class="absolute top-0 right-0 w-32 h-32 rounded-full bg-gradient-to-br from-indigo-200/20 to-purple-200/20 blur-3xl"></div>
+                    <div class="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-red-50/50"></div>
+                    <div class="absolute top-0 right-0 w-32 h-32 rounded-full bg-gradient-to-br from-blue-200/20 to-red-200/20 blur-3xl"></div>
                     
                     <div class="relative z-10">
                         <!-- Progress Header -->
@@ -210,13 +210,13 @@ require_once 'views/templates/header.php';
                                         </circle>
                                     </svg>
                                     <div class="absolute inset-0 flex items-center justify-center">
-                                        <span class="text-sm font-bold text-indigo-600" x-text="currentStep + 1"></span>
+                                        <span class="text-sm font-bold text-blue-600" x-text="currentStep + 1"></span>
                                     </div>
                                     <!-- Gradient Definition -->
                                     <defs>
                                         <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                            <stop offset="0%" stop-color="#667eea"/>
-                                            <stop offset="100%" stop-color="#764ba2"/>
+                                            <stop offset="0%" stop-color="#1a56db"/>
+                                            <stop offset="100%" stop-color="#c41e3a"/>
                                         </linearGradient>
                                     </defs>
                                 </div>
@@ -229,7 +229,7 @@ require_once 'views/templates/header.php';
                             
                             <!-- Progress Percentage -->
                             <div class="text-right">
-                                <div class="text-2xl font-bold text-indigo-600" x-text="Math.round((currentStep / totalSteps) * 100) + '%'"></div>
+                                <div class="text-2xl font-bold text-blue-600" x-text="Math.round((currentStep / totalSteps) * 100) + '%'"></div>
                                 <div class="text-xs text-gray-500">voltooid</div>
                             </div>
                         </div>
@@ -237,7 +237,7 @@ require_once 'views/templates/header.php';
                         <!-- Modern Progress Bar -->
                         <div class="relative">
                             <div class="h-3 bg-gray-100 rounded-full overflow-hidden shadow-inner">
-                                <div class="h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full transition-all duration-700 ease-out relative"
+                                <div class="h-full bg-gradient-to-r from-blue-500 via-red-500 to-blue-600 rounded-full transition-all duration-700 ease-out relative"
                                      :style="'width: ' + (currentStep / totalSteps * 100) + '%'">
                                     <!-- Shine effect -->
                                     <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-pulse"></div>
@@ -247,15 +247,15 @@ require_once 'views/templates/header.php';
                             <!-- Progress Milestones -->
                             <div class="flex justify-between mt-4">
                                 <div class="text-xs text-gray-400 flex flex-col items-center">
-                                    <div class="w-2 h-2 rounded-full bg-indigo-500 mb-1"></div>
+                                    <div class="w-2 h-2 rounded-full bg-blue-500 mb-1"></div>
                                     <span>Start</span>
                                 </div>
                                 <div class="text-xs text-gray-400 flex flex-col items-center">
-                                    <div class="w-2 h-2 rounded-full" :class="currentStep >= totalSteps/2 ? 'bg-indigo-500' : 'bg-gray-300'"></div>
+                                    <div class="w-2 h-2 rounded-full" :class="currentStep >= totalSteps/2 ? 'bg-blue-500' : 'bg-gray-300'"></div>
                                     <span>Halverwege</span>
                                 </div>
                                 <div class="text-xs text-gray-400 flex flex-col items-center">
-                                    <div class="w-2 h-2 rounded-full" :class="currentStep >= totalSteps-1 ? 'bg-indigo-500' : 'bg-gray-300'"></div>
+                                    <div class="w-2 h-2 rounded-full" :class="currentStep >= totalSteps-1 ? 'bg-blue-500' : 'bg-gray-300'"></div>
                                     <span>Einde</span>
                                 </div>
                             </div>
@@ -274,9 +274,9 @@ require_once 'views/templates/header.php';
                 <!-- Main Start Card -->
                 <div class="bg-white/90 backdrop-blur-2xl rounded-2xl sm:rounded-3xl shadow-2xl border border-white/50 p-6 sm:p-8 md:p-10 lg:p-12 relative overflow-hidden">
                     <!-- Decorative Elements -->
-                    <div class="absolute inset-0 bg-gradient-to-br from-indigo-50/30 via-purple-50/20 to-pink-50/30"></div>
-                    <div class="absolute top-0 right-0 w-32 sm:w-48 md:w-64 h-32 sm:h-48 md:h-64 rounded-full bg-gradient-to-br from-indigo-200/20 to-purple-200/20 blur-3xl floating-animation"></div>
-                    <div class="absolute bottom-0 left-0 w-24 sm:w-36 md:w-48 h-24 sm:h-36 md:h-48 rounded-full bg-gradient-to-tr from-pink-200/20 to-blue-200/20 blur-3xl floating-animation" style="animation-delay: -2s;"></div>
+                    <div class="absolute inset-0 bg-gradient-to-br from-blue-50/30 via-red-50/20 to-blue-50/30"></div>
+                    <div class="absolute top-0 right-0 w-32 sm:w-48 md:w-64 h-32 sm:h-48 md:h-64 rounded-full bg-gradient-to-br from-blue-200/20 to-red-200/20 blur-3xl floating-animation"></div>
+                    <div class="absolute bottom-0 left-0 w-24 sm:w-36 md:w-48 h-24 sm:h-36 md:h-48 rounded-full bg-gradient-to-tr from-red-200/20 to-blue-200/20 blur-3xl floating-animation" style="animation-delay: -2s;"></div>
                     
                     <div class="relative z-10">
                         <!-- Header Section -->
@@ -302,7 +302,7 @@ require_once 'views/templates/header.php';
 
                         <!-- Features Grid -->
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-8 sm:mb-10 md:mb-12">
-                            <div class="group p-4 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100/50 card-hover">
+                            <div class="group p-4 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl bg-gradient-to-br from-blue-50 to-red-50 border border-blue-100/50 card-hover">
                                 <div class="flex items-start space-x-3 sm:space-x-4">
                                     <div class="w-10 sm:w-11 md:w-12 h-10 sm:h-11 md:h-12 rounded-lg sm:rounded-xl bg-blue-500 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
                                         <svg class="w-5 sm:w-5.5 md:w-6 h-5 sm:h-5.5 md:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -316,9 +316,9 @@ require_once 'views/templates/header.php';
                                 </div>
                             </div>
                             
-                            <div class="group p-4 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl bg-gradient-to-br from-green-50 to-emerald-50 border border-green-100/50 card-hover">
+                            <div class="group p-4 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl bg-gradient-to-br from-red-50 to-blue-50 border border-red-100/50 card-hover">
                                 <div class="flex items-start space-x-3 sm:space-x-4">
-                                    <div class="w-10 sm:w-11 md:w-12 h-10 sm:h-11 md:h-12 rounded-lg sm:rounded-xl bg-green-500 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                                    <div class="w-10 sm:w-11 md:w-12 h-10 sm:h-11 md:h-12 rounded-lg sm:rounded-xl bg-red-500 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
                                         <svg class="w-5 sm:w-5.5 md:w-6 h-5 sm:h-5.5 md:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
                                         </svg>
@@ -330,9 +330,9 @@ require_once 'views/templates/header.php';
                                 </div>
                             </div>
                             
-                            <div class="group p-4 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-100/50 card-hover">
+                            <div class="group p-4 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl bg-gradient-to-br from-blue-50 to-red-50 border border-blue-100/50 card-hover">
                                 <div class="flex items-start space-x-3 sm:space-x-4">
-                                    <div class="w-10 sm:w-11 md:w-12 h-10 sm:h-11 md:h-12 rounded-lg sm:rounded-xl bg-purple-500 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                                    <div class="w-10 sm:w-11 md:w-12 h-10 sm:h-11 md:h-12 rounded-lg sm:rounded-xl bg-blue-500 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
                                         <svg class="w-5 sm:w-5.5 md:w-6 h-5 sm:h-5.5 md:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
                                         </svg>
@@ -344,9 +344,9 @@ require_once 'views/templates/header.php';
                                 </div>
                             </div>
                             
-                            <div class="group p-4 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl bg-gradient-to-br from-orange-50 to-red-50 border border-orange-100/50 card-hover">
+                            <div class="group p-4 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl bg-gradient-to-br from-red-50 to-blue-50 border border-red-100/50 card-hover">
                                 <div class="flex items-start space-x-3 sm:space-x-4">
-                                    <div class="w-10 sm:w-11 md:w-12 h-10 sm:h-11 md:h-12 rounded-lg sm:rounded-xl bg-orange-500 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                                    <div class="w-10 sm:w-11 md:w-12 h-10 sm:h-11 md:h-12 rounded-lg sm:rounded-xl bg-red-500 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
                                         <svg class="w-5 sm:w-5.5 md:w-6 h-5 sm:h-5.5 md:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                         </svg>
@@ -362,7 +362,7 @@ require_once 'views/templates/header.php';
                         <!-- Action Section -->
                         <div class="text-center">
                             <button @click="startQuiz()" 
-                                    class="group relative w-full sm:w-auto px-8 sm:px-10 md:px-12 py-3 sm:py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold text-base sm:text-lg rounded-xl sm:rounded-2xl shadow-xl shadow-indigo-500/25 hover:shadow-2xl hover:shadow-indigo-500/40 transform hover:scale-105 transition-all duration-300 mb-4 sm:mb-6">
+                                    class="group relative w-full sm:w-auto px-8 sm:px-10 md:px-12 py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-red-600 text-white font-semibold text-base sm:text-lg rounded-xl sm:rounded-2xl shadow-xl shadow-blue-500/25 hover:shadow-2xl hover:shadow-blue-500/40 transform hover:scale-105 transition-all duration-300 mb-4 sm:mb-6">
                                 <div class="flex items-center justify-center space-x-2 sm:space-x-3">
                                     <span>Start de Stemwijzer</span>
                                     <svg class="w-4 sm:w-5 h-4 sm:h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -394,15 +394,15 @@ require_once 'views/templates/header.php';
                     <div class="xl:col-span-2">
                         <div class="bg-white/90 backdrop-blur-2xl rounded-2xl sm:rounded-3xl shadow-2xl border border-white/50 p-4 sm:p-6 md:p-8 lg:p-10 relative overflow-hidden">
                             <!-- Decorative Background -->
-                            <div class="absolute inset-0 bg-gradient-to-br from-blue-50/30 via-indigo-50/20 to-purple-50/30"></div>
-                            <div class="absolute top-0 right-0 w-24 sm:w-32 md:w-48 h-24 sm:h-32 md:h-48 rounded-full bg-gradient-to-br from-blue-200/10 to-purple-200/10 blur-3xl"></div>
+                            <div class="absolute inset-0 bg-gradient-to-br from-blue-50/30 via-red-50/20 to-blue-50/30"></div>
+                            <div class="absolute top-0 right-0 w-24 sm:w-32 md:w-48 h-24 sm:h-32 md:h-48 rounded-full bg-gradient-to-br from-blue-200/10 to-red-200/10 blur-3xl"></div>
                             
                             <div class="relative z-10">
                                 <!-- Question Header -->
                                 <div class="flex items-center justify-between mb-6 sm:mb-8">
                                     <div class="flex items-center space-x-2 sm:space-x-3">
-                                        <div class="px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-indigo-100 to-purple-100 rounded-full">
-                                            <span class="text-xs sm:text-sm font-semibold text-indigo-700">
+                                        <div class="px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-blue-100 to-red-100 rounded-full">
+                                            <span class="text-xs sm:text-sm font-semibold text-blue-700">
                                                 Vraag <span x-text="currentStep + 1"></span> van <span x-text="totalSteps"></span>
                                             </span>
                                         </div>
@@ -446,7 +446,7 @@ require_once 'views/templates/header.php';
                                          x-transition:enter="transition ease-out duration-300"
                                          x-transition:enter-start="opacity-0 transform -translate-y-4"
                                          x-transition:enter-end="opacity-100 transform translate-y-0"
-                                         class="mt-4 sm:mt-6 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl sm:rounded-2xl border border-blue-200/30 overflow-hidden">
+                                         class="mt-4 sm:mt-6 bg-gradient-to-br from-blue-50 to-red-50 rounded-xl sm:rounded-2xl border border-blue-200/30 overflow-hidden">
                                         
                                         <div class="p-4 sm:p-6">
                                             <h3 class="text-base sm:text-lg font-semibold text-blue-900 mb-3 sm:mb-4">Context van deze stelling</h3>
@@ -513,7 +513,7 @@ require_once 'views/templates/header.php';
                                         </div>
                                     </button>
 
-                                    <!-- Oneens Option -->
+                                                                        <!-- Oneens Option -->
                                     <button @click="answerQuestion('oneens')"
                                             class="group w-full p-4 sm:p-5 md:p-6 bg-gradient-to-r from-red-50 to-pink-50 hover:from-red-100 hover:to-pink-100 border-2 border-red-200 hover:border-red-300 rounded-xl sm:rounded-2xl transition-all duration-300 hover:shadow-lg hover:shadow-red-100 transform hover:-translate-y-1">
                                         <div class="flex items-center space-x-3 sm:space-x-4 md:space-x-5">
@@ -540,11 +540,11 @@ require_once 'views/templates/header.php';
                     <div class="xl:col-span-1 space-y-4 sm:space-y-6">
                         <!-- Progress Stats Card -->
                         <div class="bg-white/90 backdrop-blur-2xl rounded-2xl sm:rounded-3xl shadow-2xl border border-white/50 p-4 sm:p-6 relative overflow-hidden">
-                            <div class="absolute inset-0 bg-gradient-to-br from-purple-50/30 to-pink-50/30"></div>
+                            <div class="absolute inset-0 bg-gradient-to-br from-blue-50/30 to-red-50/30"></div>
                             
                             <div class="relative z-10">
                                 <div class="flex items-center space-x-2 sm:space-x-3 mb-4 sm:mb-6">
-                                    <div class="w-8 sm:w-10 h-8 sm:h-10 rounded-lg sm:rounded-xl bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center">
+                                    <div class="w-8 sm:w-10 h-8 sm:h-10 rounded-lg sm:rounded-xl bg-gradient-to-br from-blue-500 to-red-600 flex items-center justify-center">
                                         <svg class="w-4 sm:w-5 h-4 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
                                         </svg>
@@ -556,12 +556,12 @@ require_once 'views/templates/header.php';
                                     <div>
                                         <div class="flex justify-between items-center mb-2">
                                             <span class="text-xs sm:text-sm font-medium text-gray-600">Beantwoord</span>
-                                            <span class="text-xs sm:text-sm font-bold text-purple-600">
+                                            <span class="text-xs sm:text-sm font-bold text-blue-600">
                                                 <span x-text="Object.keys(answers).length"></span>/<span x-text="totalSteps"></span>
                                             </span>
                                         </div>
                                         <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
-                                            <div class="h-full bg-gradient-to-r from-purple-500 to-pink-500 rounded-full transition-all duration-500"
+                                            <div class="h-full bg-gradient-to-r from-blue-500 to-red-500 rounded-full transition-all duration-500"
                                                  :style="'width: ' + (Object.keys(answers).length / totalSteps * 100) + '%'"></div>
                                         </div>
                                     </div>
@@ -586,25 +586,25 @@ require_once 'views/templates/header.php';
 
                         <!-- Party Positions Card -->
                         <div class="bg-white/90 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/50 p-6 relative overflow-hidden">
-                            <div class="absolute inset-0 bg-gradient-to-br from-indigo-50/30 to-blue-50/30"></div>
+                            <div class="absolute inset-0 bg-gradient-to-br from-blue-50/30 to-red-50/30"></div>
                             
                             <div class="relative z-10">
                                 <!-- Collapsible Header -->
                                 <button @click="showPartyPositions = !showPartyPositions" 
                                         class="w-full flex items-center justify-between p-0 bg-transparent border-none cursor-pointer group">
                                     <div class="flex items-center space-x-3">
-                                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-blue-600 flex items-center justify-center">
+                                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-red-600 flex items-center justify-center">
                                             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
                                             </svg>
                                         </div>
-                                        <h3 class="text-lg font-semibold text-gray-800 group-hover:text-indigo-600 transition-colors">Partij Standpunten</h3>
+                                        <h3 class="text-lg font-semibold text-gray-800 group-hover:text-blue-600 transition-colors">Partij Standpunten</h3>
                                     </div>
                                     
                                     <!-- Toggle Icon -->
                                     <div class="flex items-center space-x-2">
                                         <span class="text-xs text-gray-500" x-show="!showPartyPositions">Klik om te bekijken</span>
-                                        <svg class="w-5 h-5 text-gray-400 group-hover:text-indigo-500 transition-all duration-200" 
+                                        <svg class="w-5 h-5 text-gray-400 group-hover:text-blue-500 transition-all duration-200" 
                                              :class="showPartyPositions ? 'rotate-180' : ''" 
                                              fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
@@ -1484,23 +1484,14 @@ function stemwijzer() {
                 console.log('API Response:', result);
                 
                 if (result.success) {
-                    console.log('✅ Resultaten succesvol opgeslagen in database');
+                    console.log('✅');
                     console.log('Debug info:', result.debug);
-                    
-                    // Toon een subtiele notificatie aan de gebruiker
-                    this.showNotification('Je resultaten zijn opgeslagen', 'success');
                 } else {
-                    console.warn('❌ Kon resultaten niet opslaan in database:', result.error);
-                    console.warn('Debug info:', result.debug);
-                    
-                    // Toon een waarschuwing maar laat de gebruiker wel zijn resultaten zien
-                    this.showNotification('Resultaten konden niet worden opgeslagen, maar je kunt ze wel bekijken', 'warning');
+                    console.warn('❌ ', result.error);
+                    console.warn('Debug info:', result.debug);  
                 }
             } catch (error) {
                 console.error('❌ Netwerk fout bij opslaan van resultaten:', error);
-                
-                // Toon een foutmelding maar blokkeer niet het tonen van resultaten
-                this.showNotification('Verbindingsfout bij opslaan, maar je resultaten zijn wel beschikbaar', 'warning');
             }
         },
         
