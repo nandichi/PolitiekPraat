@@ -46,24 +46,14 @@ $partijData = $politicalDataAPI->getPartijInformatie();
 $latestPolls = $pollAPI->getLatestPolls();
 $historicalPolls = $pollAPI->getHistoricalPolls(3);
 
-// Data voor zetelverdeling peiling 27-4-2025 (Peil.nl)
+// Data voor zetelverdeling peiling 7-6-2025 (Peil.nl)
 $peilingData = [
-    [
-        'partij' => 'VVD',
-        'zetels' => [
-            'peiling' => 30, 
-            'vorige' => 29,
-            'tkvorigepeiling' => 26,
-            'tk2023' => 24
-        ],
-        'color' => '#FF9900'
-    ],
     [
         'partij' => 'PVV',
         'zetels' => [
-            'peiling' => 28, 
-            'vorige' => 28,
-            'tkvorigepeiling' => 29,
+            'peiling' => 31, 
+            'vorige' => 31,
+            'tkvorigepeiling' => 28,
             'tk2023' => 37
         ],
         'color' => '#0078D7'
@@ -71,19 +61,29 @@ $peilingData = [
     [
         'partij' => 'GL/PvdA',
         'zetels' => [
-            'peiling' => 26, 
-            'vorige' => 26,
-            'tkvorigepeiling' => 25,
+            'peiling' => 30, 
+            'vorige' => 30,
+            'tkvorigepeiling' => 29,
             'tk2023' => 25
         ],
         'color' => '#008800'
     ],
     [
+        'partij' => 'VVD',
+        'zetels' => [
+            'peiling' => 24, 
+            'vorige' => 25,
+            'tkvorigepeiling' => 26,
+            'tk2023' => 24
+        ],
+        'color' => '#FF9900'
+    ],
+    [
         'partij' => 'CDA',
         'zetels' => [
-            'peiling' => 18, 
-            'vorige' => 17,
-            'tkvorigepeiling' => 16,
+            'peiling' => 19, 
+            'vorige' => 18,
+            'tkvorigepeiling' => 19,
             'tk2023' => 5
         ],
         'color' => '#1E8449'
@@ -93,7 +93,7 @@ $peilingData = [
         'zetels' => [
             'peiling' => 8, 
             'vorige' => 8,
-            'tkvorigepeiling' => 9,
+            'tkvorigepeiling' => 8,
             'tk2023' => 9
         ],
         'color' => '#00B13C'
@@ -101,15 +101,35 @@ $peilingData = [
     [
         'partij' => 'SP',
         'zetels' => [
-            'peiling' => 5, 
-            'vorige' => 5,
-            'tkvorigepeiling' => 5,
+            'peiling' => 7, 
+            'vorige' => 7,
+            'tkvorigepeiling' => 8,
             'tk2023' => 5
         ],
         'color' => '#EE0000'
     ],
     [
-        'partij' => 'PvdD',
+        'partij' => 'JA21',
+        'zetels' => [
+            'peiling' => 5, 
+            'vorige' => 4,
+            'tkvorigepeiling' => 4,
+            'tk2023' => 1
+        ],
+        'color' => '#4B0082'
+    ],
+    [
+        'partij' => 'FVD',
+        'zetels' => [
+            'peiling' => 4, 
+            'vorige' => 5,
+            'tkvorigepeiling' => 5,
+            'tk2023' => 3
+        ],
+        'color' => '#8B4513'
+    ],
+    [
+        'partij' => 'PvdDieren',
         'zetels' => [
             'peiling' => 4, 
             'vorige' => 4,
@@ -117,6 +137,16 @@ $peilingData = [
             'tk2023' => 3
         ],
         'color' => '#006400'
+    ],
+    [
+        'partij' => 'SGP',
+        'zetels' => [
+            'peiling' => 4, 
+            'vorige' => 4,
+            'tkvorigepeiling' => 4,
+            'tk2023' => 3
+        ],
+        'color' => '#ff7f00'
     ],
     [
         'partij' => 'DENK',
@@ -129,7 +159,17 @@ $peilingData = [
         'color' => '#00BFFF'
     ],
     [
-        'partij' => 'CU',
+        'partij' => 'Volt',
+        'zetels' => [
+            'peiling' => 4, 
+            'vorige' => 4,
+            'tkvorigepeiling' => 4,
+            'tk2023' => 2
+        ],
+        'color' => '#800080'
+    ],
+    [
+        'partij' => 'ChristenUnie',
         'zetels' => [
             'peiling' => 3, 
             'vorige' => 3,
@@ -139,61 +179,21 @@ $peilingData = [
         'color' => '#4682B4'
     ],
     [
-        'partij' => 'SGP',
-        'zetels' => [
-            'peiling' => 3, 
-            'vorige' => 3,
-            'tkvorigepeiling' => 3,
-            'tk2023' => 3
-        ],
-        'color' => '#ff7f00'
-    ],
-    [
-        'partij' => 'JA21',
-        'zetels' => [
-            'peiling' => 3, 
-            'vorige' => 3,
-            'tkvorigepeiling' => 3,
-            'tk2023' => 1
-        ],
-        'color' => '#4B0082'
-    ],
-    [
-        'partij' => 'Volt',
-        'zetels' => [
-            'peiling' => 3, 
-            'vorige' => 3,
-            'tkvorigepeiling' => 3,
-            'tk2023' => 2
-        ],
-        'color' => '#800080'
-    ],
-    [
         'partij' => 'BBB',
         'zetels' => [
-            'peiling' => 3, 
-            'vorige' => 3,
+            'peiling' => 2, 
+            'vorige' => 2,
             'tkvorigepeiling' => 3,
             'tk2023' => 7
         ],
         'color' => '#7CFC00'
     ],
     [
-        'partij' => 'FVD',
-        'zetels' => [
-            'peiling' => 2, 
-            'vorige' => 2,
-            'tkvorigepeiling' => 2,
-            'tk2023' => 3
-        ],
-        'color' => '#8B4513'
-    ],
-    [
         'partij' => 'NSC',
         'zetels' => [
-            'peiling' => 2, 
-            'vorige' => 2,
-            'tkvorigepeiling' => 2,
+            'peiling' => 1, 
+            'vorige' => 1,
+            'tkvorigepeiling' => 1,
             'tk2023' => 20
         ],
         'color' => '#4D7F78'
@@ -204,23 +204,23 @@ $peilingData = [
 $mogelijkeCoalities = [
     [
         'naam' => 'Links-progressief',
-        'partijen' => ['GroenLinks/PvdA', 'D66', 'SP', 'PvdDieren', 'Volt'],
-        'zetels' => 29 + 8 + 8 + 4 + 4 // Updated: 53
+        'partijen' => ['GL/PvdA', 'D66', 'SP', 'PvdDieren', 'Volt'],
+        'zetels' => 30 + 8 + 7 + 4 + 4 // 53 zetels
     ],
     [
         'naam' => 'Rechts-conservatief',
         'partijen' => ['PVV', 'VVD', 'BBB', 'JA21', 'SGP', 'FVD'],
-        'zetels' => 28 + 26 + 3 + 4 + 4 + 5 // Updated: 70
+        'zetels' => 31 + 24 + 2 + 5 + 4 + 4 // 70 zetels
     ],
     [
         'naam' => 'Centrum-breed',
-        'partijen' => ['GroenLinks/PvdA', 'VVD', 'CDA', 'D66', 'ChristenUnie'],
-        'zetels' => 29 + 26 + 19 + 8 + 3 // Updated: 85
+        'partijen' => ['GL/PvdA', 'VVD', 'CDA', 'D66', 'ChristenUnie'],
+        'zetels' => 30 + 24 + 19 + 8 + 3 // 84 zetels
     ],
     [
         'naam' => 'Huidige coalitie',
-        'partijen' => ['PVV', 'VVD', 'BBB', 'Nieuw Soc.Contr.'],
-        'zetels' => 28 + 26 + 3 + 1 // Updated: 58
+        'partijen' => ['PVV', 'VVD', 'BBB', 'NSC'],
+        'zetels' => 31 + 24 + 2 + 1 // 58 zetels
     ]
 ];
 
@@ -377,16 +377,16 @@ require_once 'views/templates/header.php';
             $floatingPartijen = [
                 ['naam' => 'VVD', 'kleur' => '#FF9900', 'logo' => $partyLogos['VVD'], 'positie' => 'top-20 left-4 sm:left-16', 'delay' => '0s', 'duration' => '15s'],
                 ['naam' => 'PVV', 'kleur' => '#0078D7', 'logo' => $partyLogos['PVV'], 'positie' => 'top-32 right-4 sm:right-20', 'delay' => '2s', 'duration' => '18s'],
-                ['naam' => 'GL-PvdA', 'kleur' => '#008800', 'logo' => $partyLogos['GL-PvdA'], 'positie' => 'top-1/3 left-6 sm:left-24', 'delay' => '4s', 'duration' => '20s'],
-                ['naam' => 'CDA', 'kleur' => '#1E8449', 'logo' => $partyLogos['CDA'], 'positie' => 'bottom-1/3 right-6 sm:right-16', 'delay' => '1s', 'duration' => '16s'],
-                ['naam' => 'D66', 'kleur' => '#00B13C', 'logo' => $partyLogos['D66'], 'positie' => 'bottom-40 left-4 sm:left-20', 'delay' => '3s', 'duration' => '22s'],
-                ['naam' => 'SP', 'kleur' => '#EE0000', 'logo' => $partyLogos['SP'], 'positie' => 'top-40 right-8 sm:right-32', 'delay' => '5s', 'duration' => '17s'],
-                ['naam' => 'PvdD', 'kleur' => '#006400', 'logo' => $partyLogos['PvdD'], 'positie' => 'bottom-20 right-12 sm:right-40', 'delay' => '6s', 'duration' => '19s'],
-                ['naam' => 'Volt', 'kleur' => '#800080', 'logo' => $partyLogos['Volt'], 'positie' => 'top-48 left-12 sm:left-40', 'delay' => '7s', 'duration' => '21s'],
-                ['naam' => 'JA21', 'kleur' => '#000000', 'logo' => $partyLogos['JA21'], 'positie' => 'bottom-20 left-12 sm:left-40', 'delay' => '8s', 'duration' => '23s'],
-                ['naam' => 'SGP', 'kleur' => '#000000', 'logo' => $partyLogos['SGP'], 'positie' => 'top-48 right-12 sm:right-40', 'delay' => '9s', 'duration' => '25s'],
-                ['naam' => 'FvD', 'kleur' => '#000000', 'logo' => $partyLogos['FvD'], 'positie' => 'bottom-20 right-12 sm:right-40', 'delay' => '10s', 'duration' => '27s'],
-                ['naam' => 'DENK', 'kleur' => '#000000', 'logo' => $partyLogos['DENK'], 'positie' => 'top-48 left-12 sm:left-40', 'delay' => '11s', 'duration' => '29s']
+                ['naam' => 'GL-PvdA', 'kleur' => '#008800', 'logo' => $partyLogos['GL-PvdA'], 'positie' => 'top-1/2 left-8 sm:left-24', 'delay' => '4s', 'duration' => '20s'],
+                ['naam' => 'CDA', 'kleur' => '#1E8449', 'logo' => $partyLogos['CDA'], 'positie' => 'bottom-32 right-6 sm:right-16', 'delay' => '1s', 'duration' => '16s'],
+                ['naam' => 'D66', 'kleur' => '#00B13C', 'logo' => $partyLogos['D66'], 'positie' => 'bottom-40 left-10 sm:left-32', 'delay' => '3s', 'duration' => '22s'],
+                ['naam' => 'SP', 'kleur' => '#EE0000', 'logo' => $partyLogos['SP'], 'positie' => 'top-40 right-12 sm:right-36', 'delay' => '5s', 'duration' => '17s'],
+                ['naam' => 'PvdD', 'kleur' => '#006400', 'logo' => $partyLogos['PvdD'], 'positie' => 'bottom-20 right-16 sm:right-28', 'delay' => '6s', 'duration' => '19s'],
+                ['naam' => 'Volt', 'kleur' => '#800080', 'logo' => $partyLogos['Volt'], 'positie' => 'top-56 left-6 sm:left-28', 'delay' => '7s', 'duration' => '21s'],
+                ['naam' => 'JA21', 'kleur' => '#000000', 'logo' => $partyLogos['JA21'], 'positie' => 'bottom-48 left-16 sm:left-44', 'delay' => '8s', 'duration' => '23s'],
+                ['naam' => 'SGP', 'kleur' => '#000000', 'logo' => $partyLogos['SGP'], 'positie' => 'top-64 right-8 sm:right-24', 'delay' => '9s', 'duration' => '25s'],
+                ['naam' => 'FvD', 'kleur' => '#000000', 'logo' => $partyLogos['FvD'], 'positie' => 'bottom-16 right-20 sm:right-48', 'delay' => '10s', 'duration' => '27s'],
+                ['naam' => 'DENK', 'kleur' => '#000000', 'logo' => $partyLogos['DENK'], 'positie' => 'top-72 left-14 sm:left-52', 'delay' => '11s', 'duration' => '29s']
             ];
             
             foreach($floatingPartijen as $index => $partij):
@@ -438,13 +438,6 @@ require_once 'views/templates/header.php';
                 </div>
             </div>
             <?php endforeach; ?>
-            
-                         <!-- Extra decoratieve politieke symbolen -->
-             <div class="absolute top-24 left-1/4 sm:left-1/3 opacity-8 sm:opacity-10 animate-spin-slow">
-                 <svg class="w-8 h-8 sm:w-12 sm:h-12 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
-                     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                 </svg>
-             </div>
         </div>
 
         <!-- CSS voor floating animaties -->
@@ -1288,7 +1281,7 @@ require_once 'views/templates/header.php';
                 
                         <!-- Subtitel -->
                         <p class="text-xl sm:text-2xl lg:text-3xl text-slate-600 max-w-4xl mx-auto leading-relaxed font-light">
-                            De nieuwste <span class="font-semibold text-blue-600">zetelverdeling</span> volgens recente peilingen van <span class="font-semibold text-red-600">27 april 2025</span>
+                            De nieuwste <span class="font-semibold text-blue-600">zetelverdeling</span> volgens recente peilingen van <span class="font-semibold text-red-600">7 juni 2025</span>
                         </p>
                         
                         <!-- Status indicator -->
@@ -1332,11 +1325,11 @@ require_once 'views/templates/header.php';
                                             <tr class="bg-gradient-to-r from-slate-50 via-white to-slate-50 border-b border-slate-200/50">
                                                 <th class="py-4 px-4 text-left font-bold text-slate-700 tracking-wide">Partijen</th>
                                                 <th class="py-4 px-3 text-center font-bold text-slate-700 tracking-wide whitespace-nowrap">
-                                                    <span class="hidden sm:inline">27-04-25</span>
+                                                    <span class="hidden sm:inline">07-06-25</span>
                                                     <span class="sm:hidden">Huidig</span>
                                                 </th>
                                                 <th class="py-4 px-3 text-center font-bold text-slate-700 tracking-wide whitespace-nowrap">
-                                                    <span class="hidden sm:inline">22-02-25</span>
+                                                    <span class="hidden sm:inline">31-05-25</span>
                                                     <span class="sm:hidden">Vorig</span>
                                                 </th>
                                                 <th class="py-4 px-3 text-center font-bold text-slate-700 tracking-wide">
@@ -1436,8 +1429,8 @@ require_once 'views/templates/header.php';
                                             </div>
                                         </div>
                                         <div class="text-sm text-slate-500 font-medium">
-                                        <span class="hidden sm:inline">Peilingdatum: 27 april 2025</span>
-                                            <span class="sm:hidden">27 apr 2025</span>
+                                        <span class="hidden sm:inline">Peilingdatum: 7 juni 2025</span>
+                                            <span class="sm:hidden">7 jun 2025</span>
                             </div>
                         </div>
                     </div>
