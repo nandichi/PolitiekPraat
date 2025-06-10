@@ -1,5 +1,4 @@
 <?php
-ini_set('memory_limit', '256M');
 require_once 'includes/config.php';
 require_once 'includes/Database.php';
 require_once 'includes/StemwijzerController.php';
@@ -1126,8 +1125,8 @@ function stemwijzer() {
         showingQuestion: null,
         
         // Data wordt nu uit de database geladen
-        questions: <?= json_encode($stemwijzerData['questions'] ?? []) ?>,
-        partyLogos: <?= json_encode($stemwijzerData['partyLogos'] ?? []) ?>,
+        questions: <?= json_encode($stemwijzerData['questions'] ?? [], JSON_INVALID_UTF8_SUBSTITUTE) ?>,
+        partyLogos: <?= json_encode($stemwijzerData['partyLogos'] ?? [], JSON_INVALID_UTF8_SUBSTITUTE) ?>,
         dataLoaded: <?= !empty($stemwijzerData['questions']) ? 'true' : 'false' ?>,
         
         // Loading state
