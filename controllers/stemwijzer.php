@@ -585,34 +585,42 @@ require_once 'views/templates/header.php';
                         </div>
 
                         <!-- Party Positions Card -->
-                        <div class="bg-white/90 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/50 p-6 relative overflow-hidden">
-                            <div class="absolute inset-0 bg-gradient-to-br from-blue-50/30 to-red-50/30"></div>
+                        <div class="bg-white/90 backdrop-blur-2xl rounded-2xl shadow-xl border border-white/50 relative overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-br from-blue-50/20 to-red-50/20"></div>
                             
                             <div class="relative z-10">
-                                <!-- Collapsible Header -->
-                                <button @click="showPartyPositions = !showPartyPositions" 
-                                        class="w-full flex items-center justify-between p-0 bg-transparent border-none cursor-pointer group">
-                                    <div class="flex items-center space-x-3">
-                                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-red-600 flex items-center justify-center">
-                                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                                <!-- Clean Header -->
+                                <div class="p-4 border-b border-gray-100/80">
+                                    <button @click="showPartyPositions = !showPartyPositions" 
+                                            class="w-full flex items-center justify-between group">
+                                        <div class="flex items-center space-x-3">
+                                            <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-red-600 flex items-center justify-center">
+                                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                                                </svg>
+                                            </div>
+                                            <div>
+                                                <h3 class="text-base font-semibold text-gray-800 group-hover:text-blue-600 transition-colors text-left">
+                                                    Partij Standpunten
+                                                </h3>
+                                                <p class="text-xs text-gray-500 mt-0.5" x-show="!showPartyPositions">
+                                                    Bekijk hoe partijen denken over deze stelling
+                                                </p>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Clean Toggle Icon -->
+                                        <div class="flex items-center">
+                                            <svg class="w-4 h-4 text-gray-400 group-hover:text-blue-500 transition-all duration-200" 
+                                                 :class="showPartyPositions ? 'rotate-180' : ''" 
+                                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                                             </svg>
                                         </div>
-                                        <h3 class="text-lg font-semibold text-gray-800 group-hover:text-blue-600 transition-colors">Partij Standpunten</h3>
-                                    </div>
-                                    
-                                    <!-- Toggle Icon -->
-                                    <div class="flex items-center space-x-2">
-                                        <span class="text-xs text-gray-500" x-show="!showPartyPositions">Klik om te bekijken</span>
-                                        <svg class="w-5 h-5 text-gray-400 group-hover:text-blue-500 transition-all duration-200" 
-                                             :class="showPartyPositions ? 'rotate-180' : ''" 
-                                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                        </svg>
-                                    </div>
-                                </button>
+                                    </button>
+                                </div>
                                 
-                                <!-- Collapsible Content -->
+                                <!-- Improved Collapsible Content -->
                                 <div x-show="showPartyPositions" 
                                      x-transition:enter="transition ease-out duration-300"
                                      x-transition:enter-start="opacity-0 transform -translate-y-4"
@@ -620,77 +628,93 @@ require_once 'views/templates/header.php';
                                      x-transition:leave="transition ease-in duration-200"
                                      x-transition:leave-start="opacity-100 transform translate-y-0"
                                      x-transition:leave-end="opacity-0 transform -translate-y-4"
-                                     class="mt-6 space-y-4" 
+                                     class="p-4 space-y-4" 
                                      x-init="updatePartyGroups()">
-                                    <!-- Eens partijen -->
-                                    <div x-show="eensParties.length > 0">
-                                        <h4 class="text-sm font-semibold text-emerald-700 mb-3 flex items-center">
-                                            <div class="w-3 h-3 rounded-full bg-emerald-500 mr-2"></div>
-                                            Eens (<span x-text="eensParties.length"></span>)
-                                        </h4>
-                                        <div class="flex flex-wrap gap-2">
-                                            <template x-for="party in eensParties.slice(0, 6)" :key="party">
-                                                <div class="relative group">
-                                                    <div class="w-10 h-10 rounded-lg bg-white border-2 border-emerald-200 hover:border-emerald-300 p-1 transition-colors cursor-pointer">
-                                                        <img :src="partyLogos[party]" :alt="party" class="w-full h-full object-contain rounded-md">
-                                                    </div>
-                                                    <!-- Tooltip -->
-                                                    <div class="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity z-20 pointer-events-none">
-                                                        <div class="px-2 py-1 text-xs text-white bg-gray-900 rounded-md whitespace-nowrap">
-                                                            <span x-text="party"></span>
-                                                        </div>
-                                                        <div class="w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900 mx-auto"></div>
-                                                    </div>
-                                                </div>
-                                            </template>
+                                     
+                                    <!-- Compact Party Groups -->
+                                    <div class="space-y-3">
+                                        <!-- Eens partijen -->
+                                        <div x-show="eensParties.length > 0" class="space-y-2">
+                                            <div class="flex items-center space-x-2">
+                                                <div class="w-2.5 h-2.5 rounded-full bg-emerald-500"></div>
+                                                <span class="text-sm font-medium text-emerald-700">Eens</span>
+                                                <span class="text-xs text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full" x-text="eensParties.length"></span>
+                                            </div>
+                                                                                         <div class="flex flex-wrap gap-2 ml-4">
+                                                 <template x-for="party in eensParties.slice(0, 8)" :key="party">
+                                                     <div class="relative group">
+                                                         <div class="w-10 h-10 rounded-md bg-white border border-emerald-200 hover:border-emerald-400 p-1 transition-all duration-200 hover:scale-110">
+                                                             <img :src="partyLogos[party]" :alt="party" class="w-full h-full object-contain rounded-sm">
+                                                         </div>
+                                                         <!-- Enhanced Tooltip -->
+                                                         <div class="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity z-30 pointer-events-none">
+                                                             <div class="px-2 py-1 text-xs text-white bg-gray-900 rounded-md whitespace-nowrap shadow-lg">
+                                                                 <span x-text="party"></span>
+                                                             </div>
+                                                             <div class="w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-transparent border-t-gray-900 mx-auto"></div>
+                                                         </div>
+                                                     </div>
+                                                 </template>
+                                                 <div x-show="eensParties.length > 8" class="flex items-center justify-center w-10 h-10 rounded-md bg-emerald-50 border border-emerald-200 text-xs font-medium text-emerald-600">
+                                                     +<span x-text="eensParties.length - 8"></span>
+                                                 </div>
+                                             </div>
                                         </div>
-                                    </div>
-                                    
-                                    <!-- Neutraal partijen -->
-                                    <div x-show="neutraalParties.length > 0">
-                                        <h4 class="text-sm font-semibold text-blue-700 mb-3 flex items-center">
-                                            <div class="w-3 h-3 rounded-full bg-blue-500 mr-2"></div>
-                                            Neutraal (<span x-text="neutraalParties.length"></span>)
-                                        </h4>
-                                        <div class="flex flex-wrap gap-2">
-                                            <template x-for="party in neutraalParties.slice(0, 6)" :key="party">
-                                                <div class="relative group">
-                                                    <div class="w-10 h-10 rounded-lg bg-white border-2 border-blue-200 hover:border-blue-300 p-1 transition-colors cursor-pointer">
-                                                        <img :src="partyLogos[party]" :alt="party" class="w-full h-full object-contain rounded-md">
-                                                    </div>
-                                                    <!-- Tooltip -->
-                                                    <div class="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity z-20 pointer-events-none">
-                                                        <div class="px-2 py-1 text-xs text-white bg-gray-900 rounded-md whitespace-nowrap">
-                                                            <span x-text="party"></span>
-                                                        </div>
-                                                        <div class="w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900 mx-auto"></div>
-                                                    </div>
-                                                </div>
-                                            </template>
+                                        
+                                        <!-- Neutraal partijen -->
+                                        <div x-show="neutraalParties.length > 0" class="space-y-2">
+                                            <div class="flex items-center space-x-2">
+                                                <div class="w-2.5 h-2.5 rounded-full bg-blue-500"></div>
+                                                <span class="text-sm font-medium text-blue-700">Neutraal</span>
+                                                <span class="text-xs text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full" x-text="neutraalParties.length"></span>
+                                            </div>
+                                                                                         <div class="flex flex-wrap gap-2 ml-4">
+                                                 <template x-for="party in neutraalParties.slice(0, 8)" :key="party">
+                                                     <div class="relative group">
+                                                         <div class="w-10 h-10 rounded-md bg-white border border-blue-200 hover:border-blue-400 p-1 transition-all duration-200 hover:scale-110">
+                                                             <img :src="partyLogos[party]" :alt="party" class="w-full h-full object-contain rounded-sm">
+                                                         </div>
+                                                         <!-- Enhanced Tooltip -->
+                                                         <div class="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity z-30 pointer-events-none">
+                                                             <div class="px-2 py-1 text-xs text-white bg-gray-900 rounded-md whitespace-nowrap shadow-lg">
+                                                                 <span x-text="party"></span>
+                                                             </div>
+                                                             <div class="w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-transparent border-t-gray-900 mx-auto"></div>
+                                                         </div>
+                                                     </div>
+                                                 </template>
+                                                 <div x-show="neutraalParties.length > 8" class="flex items-center justify-center w-10 h-10 rounded-md bg-blue-50 border border-blue-200 text-xs font-medium text-blue-600">
+                                                     +<span x-text="neutraalParties.length - 8"></span>
+                                                 </div>
+                                             </div>
                                         </div>
-                                    </div>
-                                    
-                                    <!-- Oneens partijen -->
-                                    <div x-show="oneensParties.length > 0">
-                                        <h4 class="text-sm font-semibold text-red-700 mb-3 flex items-center">
-                                            <div class="w-3 h-3 rounded-full bg-red-500 mr-2"></div>
-                                            Oneens (<span x-text="oneensParties.length"></span>)
-                                        </h4>
-                                        <div class="flex flex-wrap gap-2">
-                                            <template x-for="party in oneensParties.slice(0, 6)" :key="party">
-                                                <div class="relative group">
-                                                    <div class="w-10 h-10 rounded-lg bg-white border-2 border-red-200 hover:border-red-300 p-1 transition-colors cursor-pointer">
-                                                        <img :src="partyLogos[party]" :alt="party" class="w-full h-full object-contain rounded-md">
-                                                    </div>
-                                                    <!-- Tooltip -->
-                                                    <div class="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity z-20 pointer-events-none">
-                                                        <div class="px-2 py-1 text-xs text-white bg-gray-900 rounded-md whitespace-nowrap">
-                                                            <span x-text="party"></span>
-                                                        </div>
-                                                        <div class="w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900 mx-auto"></div>
-                                                    </div>
-                                                </div>
-                                            </template>
+                                        
+                                        <!-- Oneens partijen -->
+                                        <div x-show="oneensParties.length > 0" class="space-y-2">
+                                            <div class="flex items-center space-x-2">
+                                                <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                                                <span class="text-sm font-medium text-red-700">Oneens</span>
+                                                <span class="text-xs text-red-600 bg-red-50 px-2 py-0.5 rounded-full" x-text="oneensParties.length"></span>
+                                            </div>
+                                                                                         <div class="flex flex-wrap gap-2 ml-4">
+                                                 <template x-for="party in oneensParties.slice(0, 8)" :key="party">
+                                                     <div class="relative group">
+                                                         <div class="w-10 h-10 rounded-md bg-white border border-red-200 hover:border-red-400 p-1 transition-all duration-200 hover:scale-110">
+                                                             <img :src="partyLogos[party]" :alt="party" class="w-full h-full object-contain rounded-sm">
+                                                         </div>
+                                                         <!-- Enhanced Tooltip -->
+                                                         <div class="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity z-30 pointer-events-none">
+                                                             <div class="px-2 py-1 text-xs text-white bg-gray-900 rounded-md whitespace-nowrap shadow-lg">
+                                                                 <span x-text="party"></span>
+                                                             </div>
+                                                             <div class="w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-transparent border-t-gray-900 mx-auto"></div>
+                                                         </div>
+                                                     </div>
+                                                 </template>
+                                                 <div x-show="oneensParties.length > 8" class="flex items-center justify-center w-10 h-10 rounded-md bg-red-50 border border-red-200 text-xs font-medium text-red-600">
+                                                     +<span x-text="oneensParties.length - 8"></span>
+                                                 </div>
+                                             </div>
                                         </div>
                                     </div>
                                 </div>
