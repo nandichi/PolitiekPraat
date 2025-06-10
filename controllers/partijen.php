@@ -380,7 +380,7 @@ include_once BASE_PATH . '/views/templates/header.php';
         <!-- Enhanced Header & Controls Section -->
         <div class="bg-white rounded-2xl shadow-xl border border-gray-100 mb-8 overflow-hidden">
             <!-- Gradient Header -->
-            <div class="bg-gradient-to-r from-slate-800 via-slate-700 to-slate-800 px-8 py-6">
+            <div class="bg-gradient-to-r from-primary via-secondary to-primary px-8 py-6">
                 <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                     <!-- Title Section -->
                     <div class="flex items-center space-x-4">
@@ -394,7 +394,6 @@ include_once BASE_PATH . '/views/templates/header.php';
                             <p class="text-slate-300 text-sm">Ontdek de standpunten en visies van alle Nederlandse partijen</p>
                         </div>
                     </div>
-                    
                     <!-- Stats Overview -->
                     <div class="grid grid-cols-3 gap-4 lg:gap-6">
                         <div class="text-center">
