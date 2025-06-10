@@ -4,8 +4,8 @@ require_once 'includes/Database.php';
 require_once 'includes/StemwijzerController.php';
 
 // Debug mode - zet op true voor live debugging
-// Tijdelijk altijd aan voor troubleshooting
-$debugMode = true;
+// Na fix voor syntax error weer uitschakelen voor performance
+$debugMode = false;
 
 if ($debugMode) {
     error_reporting(E_ALL);
@@ -22,6 +22,18 @@ try {
     }
     
     $stemwijzerData = $stemwijzerController->getStemwijzerData();
+    
+    // Zorg ervoor dat we altijd geldige arrays hebben
+    if (!isset($stemwijzerData['questions']) || !is_array($stemwijzerData['questions'])) {
+        $stemwijzerData['questions'] = [];
+    }
+    if (!isset($stemwijzerData['partyLogos']) || !is_array($stemwijzerData['partyLogos'])) {
+        $stemwijzerData['partyLogos'] = [];
+    }
+    if (!isset($stemwijzerData['parties']) || !is_array($stemwijzerData['parties'])) {
+        $stemwijzerData['parties'] = [];
+    }
+    
     $totalQuestions = count($stemwijzerData['questions']);
     
     if ($debugMode) {
@@ -42,7 +54,11 @@ try {
     }
     
     // Fallback naar hardcoded data als database faalt
-    $stemwijzerData = ['questions' => [], 'parties' => [], 'partyLogos' => []];
+    $stemwijzerData = [
+        'questions' => [], 
+        'parties' => [], 
+        'partyLogos' => []
+    ];
     $totalQuestions = 0;
 }
 
@@ -1126,8 +1142,8 @@ function stemwijzer() {
         showingQuestion: null,
         
         // Data wordt nu uit de database geladen
-        questions: <?= json_encode($stemwijzerData['questions'] ?? []) ?>,
-        partyLogos: <?= json_encode($stemwijzerData['partyLogos'] ?? []) ?>,
+        questions: <?= json_encode($stemwijzerData['questions'] ?? [], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP) ?>,
+        partyLogos: <?= json_encode($stemwijzerData['partyLogos'] ?? [], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP) ?>,
         dataLoaded: <?= !empty($stemwijzerData['questions']) ? 'true' : 'false' ?>,
         
         // Loading state
