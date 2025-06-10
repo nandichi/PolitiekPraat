@@ -1,10 +1,10 @@
 <?php
+ini_set('memory_limit', '256M');
 require_once 'includes/config.php';
 require_once 'includes/Database.php';
 require_once 'includes/StemwijzerController.php';
 
 // Debug mode - zet op true voor live debugging
-// Na fix voor syntax error weer uitschakelen voor performance
 $debugMode = false;
 
 if ($debugMode) {
@@ -22,18 +22,6 @@ try {
     }
     
     $stemwijzerData = $stemwijzerController->getStemwijzerData();
-    
-    // Zorg ervoor dat we altijd geldige arrays hebben
-    if (!isset($stemwijzerData['questions']) || !is_array($stemwijzerData['questions'])) {
-        $stemwijzerData['questions'] = [];
-    }
-    if (!isset($stemwijzerData['partyLogos']) || !is_array($stemwijzerData['partyLogos'])) {
-        $stemwijzerData['partyLogos'] = [];
-    }
-    if (!isset($stemwijzerData['parties']) || !is_array($stemwijzerData['parties'])) {
-        $stemwijzerData['parties'] = [];
-    }
-    
     $totalQuestions = count($stemwijzerData['questions']);
     
     if ($debugMode) {
@@ -54,11 +42,7 @@ try {
     }
     
     // Fallback naar hardcoded data als database faalt
-    $stemwijzerData = [
-        'questions' => [], 
-        'parties' => [], 
-        'partyLogos' => []
-    ];
+    $stemwijzerData = ['questions' => [], 'parties' => [], 'partyLogos' => []];
     $totalQuestions = 0;
 }
 
@@ -1142,14 +1126,14 @@ function stemwijzer() {
         showingQuestion: null,
         
         // Data wordt nu uit de database geladen
-        questions: <?= json_encode($stemwijzerData['questions'] ?? [], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP) ?>,
-        partyLogos: <?= json_encode($stemwijzerData['partyLogos'] ?? [], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP) ?>,
+        questions: <?= json_encode($stemwijzerData['questions'] ?? []) ?>,
+        partyLogos: <?= json_encode($stemwijzerData['partyLogos'] ?? []) ?>,
         dataLoaded: <?= !empty($stemwijzerData['questions']) ? 'true' : 'false' ?>,
         
         // Loading state
         isLoading: false,
         
-        async init() {
+        init() {
             // Debug informatie loggen
             console.log('=== STEMWIJZER DEBUG INFO ===');
             console.log('Data loaded from PHP:', this.dataLoaded);
@@ -1157,23 +1141,12 @@ function stemwijzer() {
             console.log('Questions array length:', this.questions.length);
             console.log('Questions array:', this.questions);
             console.log('Party logos:', this.partyLogos);
-            console.log('Current URL:', window.location.href);
             console.log('===============================');
-            
-            // Test eerst de debug API endpoint
-            try {
-                console.log('Testing debug API endpoint...');
-                const debugResponse = await fetch('/api/stemwijzer.php?action=debug');
-                const debugResult = await debugResponse.json();
-                console.log('Debug API response:', debugResult);
-            } catch (error) {
-                console.error('Debug API failed:', error);
-            }
             
             // Als er geen data uit de database komt, probeer dan de API
             if (!this.dataLoaded || this.questions.length === 0) {
                 console.warn('Geen data uit database - probeer API');
-                await this.loadDataFromAPI();
+                this.loadDataFromAPI();
             } else {
                 // Update totalSteps gebaseerd op geladen data
                 this.totalSteps = this.questions.length;

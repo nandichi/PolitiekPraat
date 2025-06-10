@@ -73,57 +73,6 @@ try {
                     ]);
                     break;
                     
-                case 'debug':
-                    // Debug informatie voor troubleshooting
-                    try {
-                        $db = new Database();
-                        
-                        // Check database connection
-                        $db->query("SELECT 1 as test");
-                        $dbTest = $db->single();
-                        
-                        // Check stemwijzer tables
-                        $db->query("SHOW TABLES LIKE 'stemwijzer_%'");
-                        $tables = $db->resultSet();
-                        
-                        // Check questions
-                        $db->query("SELECT COUNT(*) as total FROM stemwijzer_questions");
-                        $totalQuestions = $db->single();
-                        
-                        $db->query("SELECT COUNT(*) as active FROM stemwijzer_questions WHERE is_active = 1");
-                        $activeQuestions = $db->single();
-                        
-                        // Check parties
-                        $db->query("SELECT COUNT(*) as total FROM stemwijzer_parties");
-                        $totalParties = $db->single();
-                        
-                        // Check positions
-                        $db->query("SELECT COUNT(*) as total FROM stemwijzer_positions");
-                        $totalPositions = $db->single();
-                        
-                        echo json_encode([
-                            'success' => true,
-                            'debug' => [
-                                'database_connection' => 'OK',
-                                'schema_type' => $stemwijzerController->getSchemaType(),
-                                'tables_found' => array_map(function($t) { return array_values((array)$t)[0]; }, $tables),
-                                'questions_total' => $totalQuestions->total,
-                                'questions_active' => $activeQuestions->active,
-                                'parties_total' => $totalParties->total,
-                                'positions_total' => $totalPositions->total,
-                                'timestamp' => date('Y-m-d H:i:s')
-                            ]
-                        ]);
-                    } catch (Exception $e) {
-                        echo json_encode([
-                            'success' => false,
-                            'error' => 'Database debug failed',
-                            'details' => $e->getMessage(),
-                            'timestamp' => date('Y-m-d H:i:s')
-                        ]);
-                    }
-                    break;
-                    
                 case 'test-save':
                     // Test de save functionaliteit
                     $testSessionId = 'api_test_' . time();
