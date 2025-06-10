@@ -16,13 +16,13 @@
 -- =================================================================
 -- Pas deze waarden aan voor jouw nieuwe vraag:
 
-SET @vraag_titel = 'Voorbeeld: Belasting op vlees';
-SET @vraag_beschrijving = 'Er moet een belasting komen op vlees om de vleesconsumptie te verminderen en het milieu te beschermen.';
-SET @vraag_context = 'Deze stelling gaat over het invoeren van een belasting op vleesproducten. Het doel is om mensen aan te moedigen minder vlees te eten, wat goed is voor het milieu omdat veeteelt veel CO2 uitstoot veroorzaakt. Tegelijkertijd betekent dit hogere prijzen voor consumenten en mogelijk economische nadelen voor boeren en vleesproducenten.';
-SET @vraag_links_perspectief = 'Vinden dat een vleesbelasting nodig is om de klimaatdoelen te halen en mensen aan te moedigen duurzamer te eten.';
-SET @vraag_rechts_perspectief = 'Vinden dat zo een belasting mensen beperkt in hun vrijheid en vooral mensen met lage inkomens treft.';
-SET @vraag_volgorde = 26; -- Verhoog dit getal voor elke nieuwe vraag
-SET @vraag_actief = 1; -- 1 = actief, 0 = inactief
+SET @vraag_titel = 'Nederland moet een vermogensbelasting invoeren voor mensen met meer dan €1 miljoen vermogen om de ongelijkheid te verkleinen';
+SET @vraag_beschrijving = 'De vermogensongelijkheid in Nederland is groot en groeit nog steeds. De rijkste 10% van de Nederlanders bezit ongeveer 60% van al het vermogen, terwijl de armste 50% slechts 5% bezit. Door inflatie en stijgende huizenprijzen wordt het verschil tussen arm en rijk steeds groter. Veel jongeren kunnen geen huis meer kopen terwijl rijke mensen steeds rijker worden door hun bezittingen. Een vermogensbelasting zou de overheid extra inkomsten geven en de ongelijkheid kunnen verkleinen, maar tegenstanders vrezen dat rijken dan naar het buitenland vertrekken.';
+SET @vraag_context = 'Nederland heeft momenteel geen echte vermogensbelasting meer sinds de afschaffing in 2001. In Box 3 wordt wel een fictief rendement belast, maar dit raakt niet het echte vermogen. Verschillende organisaties zoals Oxfam Novib pleiten voor herinvoering. Andere Europese landen zoals Frankrijk hebben wel een vermogensbelasting. De COVID-19 crisis heeft de ongelijkheid verder vergroot omdat kapitaalbezitters profiteerden van stijgende prijzen terwijl werknemers hun baan verloren. Tegelijk heeft de overheid forse schulden gemaakt om de crisis op te vangen.';
+SET @vraag_links_perspectief = 'Extreme vermogensongelijkheid is slecht voor de samenleving en democratie. Rijken hebben jarenlang geprofiteerd van belastingvoordelen terwijl gewone mensen de rekening betalen. Een vermogensbelasting is eerlijk omdat vermogen vaak bestaat uit bezittingen die door de samenleving mogelijk zijn gemaakt, zoals huizen die in waarde stijgen door overheidsinvesteringen. De opbrengsten kunnen gebruikt worden voor betere zorg, onderwijs en betaalbare woningen. Andere landen tonen aan dat het kan zonder massale vlucht van rijken.';
+SET @vraag_rechts_perspectief = 'Een vermogensbelasting verstoort de economie en jaagt ondernemers en investeerders weg naar het buitenland. Dit kost uiteindelijk meer banen en belastinginkomsten dan het oplevert. Vermogen is vaak al opgebouwd uit al belast inkomen, dus dit is dubbele belasting. Het ondermijnt spaarincentives en ondernemerschap. Administratief is het complex en duur om uit te voeren. Frankrijk schafte de vermogensbelasting uiteindelijk ook af omdat het niet werkte. De vrije markt verdeelt welvaart het beste.';
+SET @vraag_volgorde = 34;
+SET @vraag_actief = 1;
 
 -- =================================================================
 -- VRAAG TOEVOEGEN
@@ -82,8 +82,8 @@ INSERT INTO stemwijzer_positions (question_id, party_id, position, explanation, 
 SELECT 
     @nieuw_vraag_id,
     id,
-    'neutraal', -- Verander naar 'eens' of 'oneens'
-    'PVV heeft nog geen duidelijk standpunt ingenomen over dit onderwerp.', -- Pas aan
+    'oneens',
+    'Nederlandse families worden al genoeg belast. Eerst de massa-immigratie stoppen die geld kost.',
     NOW(),
     NOW()
 FROM stemwijzer_parties WHERE short_name = 'PVV';
@@ -93,8 +93,8 @@ INSERT INTO stemwijzer_positions (question_id, party_id, position, explanation, 
 SELECT 
     @nieuw_vraag_id,
     id,
-    'neutraal', -- Verander naar 'eens' of 'oneens'
-    'VVD heeft nog geen duidelijk standpunt ingenomen over dit onderwerp.', -- Pas aan
+    'oneens',
+    'Vermogensbelasting jaagt ondernemers weg en schaadt de economie. Lagere belastingen voor iedereen.',
     NOW(),
     NOW()
 FROM stemwijzer_parties WHERE short_name = 'VVD';
@@ -104,8 +104,8 @@ INSERT INTO stemwijzer_positions (question_id, party_id, position, explanation, 
 SELECT 
     @nieuw_vraag_id,
     id,
-    'neutraal', -- Verander naar 'eens' of 'oneens'
-    'NSC heeft nog geen duidelijk standpunt ingenomen over dit onderwerp.', -- Pas aan
+    'neutraal',
+    'Ongelijkheid is probleem, maar vermogensbelasting moet goed uitgewerkt worden om kapitaalvlucht te voorkomen.',
     NOW(),
     NOW()
 FROM stemwijzer_parties WHERE short_name = 'NSC';
@@ -115,8 +115,8 @@ INSERT INTO stemwijzer_positions (question_id, party_id, position, explanation, 
 SELECT 
     @nieuw_vraag_id,
     id,
-    'neutraal', -- Verander naar 'eens' of 'oneens'
-    'BBB heeft nog geen duidelijk standpunt ingenomen over dit onderwerp.', -- Pas aan
+    'oneens',
+    'Boerenfamilies met bedrijfsvermogen zouden oneerlijk geraakt worden. Focus op echte problemen.',
     NOW(),
     NOW()
 FROM stemwijzer_parties WHERE short_name = 'BBB';
@@ -126,8 +126,8 @@ INSERT INTO stemwijzer_positions (question_id, party_id, position, explanation, 
 SELECT 
     @nieuw_vraag_id,
     id,
-    'neutraal', -- Verander naar 'eens' of 'oneens'
-    'GL-PvdA heeft nog geen duidelijk standpunt ingenomen over dit onderwerp.', -- Pas aan
+    'eens',
+    'Vermogensongelijkheid ondermijnt de samenleving. Rijken moeten eerlijk bijdragen aan publieke voorzieningen.',
     NOW(),
     NOW()
 FROM stemwijzer_parties WHERE short_name = 'GL-PvdA';
@@ -137,8 +137,8 @@ INSERT INTO stemwijzer_positions (question_id, party_id, position, explanation, 
 SELECT 
     @nieuw_vraag_id,
     id,
-    'neutraal', -- Verander naar 'eens' of 'oneens'
-    'D66 heeft nog geen duidelijk standpunt ingenomen over dit onderwerp.', -- Pas aan
+    'eens',
+    'Gelijke kansen vereisen eerlijke belastingverdeling. Vermogensbelasting kan ongelijkheid verkleinen.',
     NOW(),
     NOW()
 FROM stemwijzer_parties WHERE short_name = 'D66';
@@ -148,8 +148,8 @@ INSERT INTO stemwijzer_positions (question_id, party_id, position, explanation, 
 SELECT 
     @nieuw_vraag_id,
     id,
-    'neutraal', -- Verander naar 'eens' of 'oneens'
-    'SP heeft nog geen duidelijk standpunt ingenomen over dit onderwerp.', -- Pas aan
+    'eens',
+    'De superrijken moeten eindelijk hun eerlijke deel betalen. Vermogensbelasting is sociale rechtvaardigheid.',
     NOW(),
     NOW()
 FROM stemwijzer_parties WHERE short_name = 'SP';
@@ -159,8 +159,8 @@ INSERT INTO stemwijzer_positions (question_id, party_id, position, explanation, 
 SELECT 
     @nieuw_vraag_id,
     id,
-    'neutraal', -- Verander naar 'eens' of 'oneens'
-    'PvdD heeft nog geen duidelijk standpunt ingenomen over dit onderwerp.', -- Pas aan
+    'eens',
+    'Extreme rijkdom leidt tot overconsumptie en milieuschade. Herverdeling is ook goed voor het milieu.',
     NOW(),
     NOW()
 FROM stemwijzer_parties WHERE short_name = 'PvdD';
@@ -170,8 +170,8 @@ INSERT INTO stemwijzer_positions (question_id, party_id, position, explanation, 
 SELECT 
     @nieuw_vraag_id,
     id,
-    'neutraal', -- Verander naar 'eens' of 'oneens'
-    'CDA heeft nog geen duidelijk standpunt ingenomen over dit onderwerp.', -- Pas aan
+    'neutraal',
+    'Solidariteit is belangrijk, maar vermogensbelasting moet uitvoerbaar zijn en niet contraproductief.',
     NOW(),
     NOW()
 FROM stemwijzer_parties WHERE short_name = 'CDA';
@@ -181,8 +181,8 @@ INSERT INTO stemwijzer_positions (question_id, party_id, position, explanation, 
 SELECT 
     @nieuw_vraag_id,
     id,
-    'neutraal', -- Verander naar 'eens' of 'oneens'
-    'JA21 heeft nog geen duidelijk standpunt ingenomen over dit onderwerp.', -- Pas aan
+    'oneens',
+    'Vermogensbelasting is socialistische omvolkingspolitiek die de middenklasse kapot maakt.',
     NOW(),
     NOW()
 FROM stemwijzer_parties WHERE short_name = 'JA21';
@@ -192,8 +192,8 @@ INSERT INTO stemwijzer_positions (question_id, party_id, position, explanation, 
 SELECT 
     @nieuw_vraag_id,
     id,
-    'neutraal', -- Verander naar 'eens' of 'oneens'
-    'SGP heeft nog geen duidelijk standpunt ingenomen over dit onderwerp.', -- Pas aan
+    'neutraal',
+    'Bijbelse rentmeesterschap betekent ook verantwoordelijkheid van rijken, maar belasting moet rechtvaardige zijn.',
     NOW(),
     NOW()
 FROM stemwijzer_parties WHERE short_name = 'SGP';
@@ -203,8 +203,8 @@ INSERT INTO stemwijzer_positions (question_id, party_id, position, explanation, 
 SELECT 
     @nieuw_vraag_id,
     id,
-    'neutraal', -- Verander naar 'eens' of 'oneens'
-    'FvD heeft nog geen duidelijk standpunt ingenomen over dit onderwerp.', -- Pas aan
+    'oneens',
+    'Vermogensbelasting is diefstal door de staat. Nederland moet juist een belastingparadijs worden.',
     NOW(),
     NOW()
 FROM stemwijzer_parties WHERE short_name = 'FvD';
@@ -214,8 +214,8 @@ INSERT INTO stemwijzer_positions (question_id, party_id, position, explanation, 
 SELECT 
     @nieuw_vraag_id,
     id,
-    'neutraal', -- Verander naar 'eens' of 'oneens'
-    'DENK heeft nog geen duidelijk standpunt ingenomen over dit onderwerp.', -- Pas aan
+    'eens',
+    'Ongelijkheid raakt migrantengemeenschappen hard. Rijken moeten bijdragen aan een eerlijke samenleving.',
     NOW(),
     NOW()
 FROM stemwijzer_parties WHERE short_name = 'DENK';
@@ -225,8 +225,8 @@ INSERT INTO stemwijzer_positions (question_id, party_id, position, explanation, 
 SELECT 
     @nieuw_vraag_id,
     id,
-    'neutraal', -- Verander naar 'eens' of 'oneens'
-    'Volt heeft nog geen duidelijk standpunt ingenomen over dit onderwerp.', -- Pas aan
+    'eens',
+    'Europese coördinatie van vermogensbelasting kan kapitaalvlucht voorkomen en ongelijkheid verminderen.',
     NOW(),
     NOW()
 FROM stemwijzer_parties WHERE short_name = 'Volt';
@@ -236,8 +236,8 @@ INSERT INTO stemwijzer_positions (question_id, party_id, position, explanation, 
 SELECT 
     @nieuw_vraag_id,
     id,
-    'neutraal', -- Verander naar 'eens' of 'oneens'
-    'ChristenUnie heeft nog geen duidelijk standpunt ingenomen over dit onderwerp.', -- Pas aan
+    'neutraal',
+    'ChristenUnie heeft nog geen duidelijk standpunt ingenomen over dit onderwerp.',
     NOW(),
     NOW()
 FROM stemwijzer_parties WHERE short_name = 'CU';

@@ -4,7 +4,8 @@ require_once 'includes/Database.php';
 require_once 'includes/StemwijzerController.php';
 
 // Debug mode - zet op true voor live debugging
-$debugMode = false;
+// Tijdelijk altijd aan voor troubleshooting
+$debugMode = true;
 
 if ($debugMode) {
     error_reporting(E_ALL);
@@ -1132,7 +1133,7 @@ function stemwijzer() {
         // Loading state
         isLoading: false,
         
-        init() {
+        async init() {
             // Debug informatie loggen
             console.log('=== STEMWIJZER DEBUG INFO ===');
             console.log('Data loaded from PHP:', this.dataLoaded);
@@ -1140,12 +1141,23 @@ function stemwijzer() {
             console.log('Questions array length:', this.questions.length);
             console.log('Questions array:', this.questions);
             console.log('Party logos:', this.partyLogos);
+            console.log('Current URL:', window.location.href);
             console.log('===============================');
+            
+            // Test eerst de debug API endpoint
+            try {
+                console.log('Testing debug API endpoint...');
+                const debugResponse = await fetch('/api/stemwijzer.php?action=debug');
+                const debugResult = await debugResponse.json();
+                console.log('Debug API response:', debugResult);
+            } catch (error) {
+                console.error('Debug API failed:', error);
+            }
             
             // Als er geen data uit de database komt, probeer dan de API
             if (!this.dataLoaded || this.questions.length === 0) {
                 console.warn('Geen data uit database - probeer API');
-                this.loadDataFromAPI();
+                await this.loadDataFromAPI();
             } else {
                 // Update totalSteps gebaseerd op geladen data
                 this.totalSteps = this.questions.length;
