@@ -25,6 +25,7 @@ class Database {
 
     public function query($sql) {
         $this->stmt = $this->dbh->prepare($sql);
+        return $this;
     }
 
     public function bind($param, $value, $type = null) {
@@ -66,5 +67,9 @@ class Database {
 
     public function getConnection() {
         return $this->dbh;
+    }
+
+    public function directQuery($sql) {
+        return $this->dbh->query($sql);
     }
 } 

@@ -157,8 +157,20 @@ class NewsAPI {
         $feed_url = $this->mapThemaToFeed($thema);
         return $this->getNewsFromFeed($feed_url);
     }
+    
+    /**
+     * Publieke methode om RSS feed te scrapen (voor NewsScraper)
+     */
+    public function scrapeRSSFeed($feed_url, $maxItems = 10) {
+        // Tijdelijk wijzig de max_items in de private methode
+        return $this->getNewsFromFeedWithLimit($feed_url, false, $maxItems);
+    }
 
     private function getNewsFromFeed($feed_url, $filterPolitical = false) {
+        return $this->getNewsFromFeedWithLimit($feed_url, $filterPolitical, 5);
+    }
+    
+    private function getNewsFromFeedWithLimit($feed_url, $filterPolitical = false, $max_items = 5) {
         if (!filter_var($feed_url, FILTER_VALIDATE_URL)) {
             error_log("Ongeldige feed URL: $feed_url");
             return [];
@@ -210,7 +222,7 @@ class NewsAPI {
 
             $news = [];
             $counter = 0;
-            $max_items = 5; // Maximum items per feed
+            // $max_items is now passed as parameter
             
             // Check if it's RSS 2.0 format
             if (isset($rss->channel) && isset($rss->channel->item)) {
