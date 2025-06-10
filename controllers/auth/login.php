@@ -222,13 +222,6 @@ require_once BASE_PATH . '/views/templates/header.php';
                         </div>
                     </button>
                 </form>
-
-                <p class="mt-8 text-center text-sm text-gray-600">
-                    Nog geen account? 
-                    <a href="<?php echo URLROOT; ?>/register" class="font-medium text-primary hover:text-secondary transition-colors">
-                        Registreer hier
-                    </a>
-                </p>
             </div>
         </div>
         
