@@ -377,158 +377,280 @@ include_once BASE_PATH . '/views/templates/header.php';
     </section>
     
     <div class="container mx-auto px-4 max-w-7xl -mt-6 relative z-10">
-        <!-- Content section -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
-            <!-- Filter & Sortering -->
-            <div class="lg:col-span-3 bg-white rounded-xl shadow p-4 mb-2">
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <h2 class="text-xl font-bold text-gray-800">Alle politieke partijen</h2>
-                    <div class="flex flex-wrap gap-2">
-                        <select id="sortOption" class="bg-gray-50 border border-gray-300 text-gray-700 rounded-lg px-3 py-2 focus:ring-primary focus:border-primary text-sm">
-                            <option value="name">Sorteer op naam</option>
-                            <option value="seats">Sorteer op zetels (hoog-laag)</option>
-                            <option value="polling">Sorteer op peilingen (hoog-laag)</option>
-                        </select>
+        <!-- Enhanced Header & Controls Section -->
+        <div class="bg-white rounded-2xl shadow-xl border border-gray-100 mb-8 overflow-hidden">
+            <!-- Gradient Header -->
+            <div class="bg-gradient-to-r from-slate-800 via-slate-700 to-slate-800 px-8 py-6">
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+                    <!-- Title Section -->
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-white/10 p-3 rounded-xl backdrop-blur-sm">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h2 class="text-2xl font-bold text-white mb-1">Alle Politieke Partijen</h2>
+                            <p class="text-slate-300 text-sm">Ontdek de standpunten en visies van alle Nederlandse partijen</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Stats Overview -->
+                    <div class="grid grid-cols-3 gap-4 lg:gap-6">
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-white"><?php echo count($parties); ?></div>
+                            <div class="text-xs text-slate-300 uppercase tracking-wider">Partijen</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-white">150</div>
+                            <div class="text-xs text-slate-300 uppercase tracking-wider">Zetels</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-white"><?php 
+                                $totalSeatsPolling = array_sum(array_column($parties, 'current_seats'));
+                                echo $totalSeatsPolling;
+                            ?></div>
+                            <div class="text-xs text-slate-300 uppercase tracking-wider">Bezet</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Enhanced Controls -->
+            <div class="px-8 py-6 bg-gray-50 border-t border-gray-100">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                    <!-- Sort & Filter Controls -->
+                    <div class="flex items-center space-x-4">
+                        <div class="relative">
+                            <select id="sortOption" class="appearance-none bg-white border-2 border-gray-200 text-gray-700 rounded-xl px-4 py-2.5 pr-10 font-medium focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200 cursor-pointer shadow-sm">
+                                <option value="name">📝 Alfabetisch</option>
+                                <option value="seats">🏛️ Huidige zetels</option>
+                                <option value="polling">📊 Peilingen</option>
+                            </select>
+                            <div class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none">
+                                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                </svg>
+                            </div>
+                        </div>
+                        
+                        <!-- View Toggle -->
+                        <div class="bg-white rounded-xl p-1 border-2 border-gray-200 flex">
+                            <button id="grid-view" class="px-4 py-2 rounded-lg text-sm font-medium bg-primary text-white">
+                                <svg class="w-4 h-4 inline mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
+                                </svg>
+                                Raster
+                            </button>
+                            <button id="list-view" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-600">
+                                <svg class="w-4 h-4 inline mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                                </svg>
+                                Lijst
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Search & Info -->
+                    <div class="flex items-center space-x-4">
+                        <div class="relative">
+                            <input type="text" id="searchInput" placeholder="Zoek partij..." 
+                                   class="pl-10 pr-4 py-2.5 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200 bg-white">
+                            <div class="absolute inset-y-0 left-0 flex items-center pl-3">
+                                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        
+                        <div class="text-sm text-gray-600 bg-white px-3 py-2 rounded-lg border">
+                            <span id="party-counter"><?php echo count($parties); ?></span> partijen
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
+        <!-- Revolutionary Party Cards Grid -->
+        <div id="parties-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-12">
             <?php foreach ($parties as $partyKey => $party): ?>
-                <div class="party-card bg-white rounded-xl overflow-hidden border border-gray-100 shadow-2xl relative">
-                    <!-- Decorative accent strip matching party color -->
-                    <div class="absolute top-0 left-0 right-0 h-1.5" style="background-color: <?php echo getPartyColor($partyKey); ?>"></div>
+                <article class="party-card group bg-gradient-to-br from-white to-gray-50 rounded-3xl overflow-hidden border border-gray-200 hover:border-gray-300 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 relative">
                     
-                    <!-- Party header with logo and stats -->
-                    <div class="relative p-5 border-b border-gray-100">
-                        <div class="flex items-center mb-3">
+                    <!-- Enhanced Party Header with Elegant Design -->
+                    <header class="relative overflow-hidden">
+                        <!-- Dynamic Color Gradient Background -->
+                        <div class="absolute inset-0 bg-gradient-to-br opacity-5" 
+                             style="background: linear-gradient(135deg, <?php echo getPartyColor($partyKey); ?>, <?php echo adjustColorBrightness(getPartyColor($partyKey), 40); ?>);">
+                        </div>
+                        
+                        <!-- Decorative Pattern Overlay -->
+                        <div class="absolute inset-0 opacity-5" 
+                             style="background-image: url('data:image/svg+xml,<svg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" fill-rule=\"evenodd\"><g fill=\"%23000000\" fill-opacity=\"0.4\"><circle cx=\"10\" cy=\"10\" r=\"1\"/><circle cx=\"30\" cy=\"30\" r=\"1\"/><circle cx=\"50\" cy=\"50\" r=\"1\"/></g></g></svg>');">
+                        </div>
+                        
+                        <div class="relative p-6 pb-4">
+                            <!-- Party Identity Section -->
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex items-center space-x-4">
+                                    <!-- Premium Logo Container -->
+                                    <div class="relative group-hover:scale-105 transition-transform duration-300">
+                                        <div class="w-16 h-16 rounded-2xl bg-white shadow-lg border-2 border-gray-100 flex items-center justify-center overflow-hidden group-hover:shadow-xl transition-shadow duration-300">
+                                            <img src="<?php echo htmlspecialchars($party['logo']); ?>" 
+                                                 alt="<?php echo htmlspecialchars($party['name']); ?> logo" 
+                                                 class="w-12 h-12 object-contain">
+                                        </div>
+                                        <!-- Elegant Color Dot -->
+                                        <div class="absolute -bottom-1 -right-1 w-5 h-5 rounded-full border-2 border-white shadow-md" 
+                                             style="background-color: <?php echo getPartyColor($partyKey); ?>">
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Party Name & Abbreviation -->
+                                    <div class="flex-1">
+                                        <h2 class="text-xl font-black text-gray-900 mb-1 tracking-tight">
+                                            <?php echo htmlspecialchars($partyKey); ?>
+                                        </h2>
+                                        <p class="text-sm text-gray-600 font-medium leading-tight">
+                                            <?php echo htmlspecialchars($party['name']); ?>
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                                <!-- Current Seats Display -->
+                                <div class="text-center">
+                                    <div class="bg-gradient-to-br from-gray-900 to-gray-800 text-white text-lg font-bold px-3 py-2 rounded-xl shadow-lg">
+                                        <?php echo $party['current_seats']; ?>
+                                    </div>
+                                    <div class="text-xs text-gray-500 mt-1 font-medium">zetels</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Sophisticated Polling Display -->
+                            <div class="bg-white/80 backdrop-blur-sm rounded-xl p-4 border border-gray-100">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-3">
+                                        <div>
+                                            <div class="text-xs text-gray-500 uppercase tracking-wide font-semibold mb-1">Peilingen</div>
+                                            <div class="flex items-baseline space-x-1">
+                                                <span class="text-2xl font-bold" style="color: <?php echo getPartyColor($partyKey); ?>">
+                                                    <?php echo $party['polling']['seats']; ?>
+                                                </span>
+                                                <span class="text-sm text-gray-400">van 150</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Trend Indicator -->
+                                    <?php 
+                                    $changeValue = $party['polling']['change'];
+                                    $isPositive = $changeValue > 0;
+                                    $isNegative = $changeValue < 0;
+                                    
+                                    if ($isPositive) {
+                                        $trendClass = 'bg-emerald-100 text-emerald-700 border-emerald-200';
+                                        $trendIcon = '📈';
+                                    } elseif ($isNegative) {
+                                        $trendClass = 'bg-red-100 text-red-700 border-red-200';
+                                        $trendIcon = '📉';
+                                    } else {
+                                        $trendClass = 'bg-blue-100 text-blue-700 border-blue-200';
+                                        $trendIcon = '➡️';
+                                    }
+                                    ?>
+                                    
+                                    <div class="<?php echo $trendClass; ?> px-3 py-2 rounded-lg border font-bold text-sm flex items-center space-x-1">
+                                        <span><?php echo $trendIcon; ?></span>
+                                        <span><?php echo $changeValue !== 0 ? ($changeValue > 0 ? '+' : '') . $changeValue : '0'; ?></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </header>
+                    
+                    <!-- Premium Content Section -->
+                    <div class="p-6 pt-2 space-y-5">
+                        
+                        <!-- Elegant Leader Preview -->
+                        <div class="flex items-center space-x-4 p-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl border border-gray-200">
                             <div class="relative">
-                                <div class="w-16 h-16 rounded-full overflow-hidden shadow-md border-2 border-white flex items-center justify-center bg-white">
-                                    <img src="<?php echo htmlspecialchars($party['logo']); ?>" alt="<?php echo htmlspecialchars($party['name']); ?> logo" 
-                                        class="w-14 h-14 object-contain">
+                                <div class="w-12 h-12 rounded-full overflow-hidden border-2 shadow-md" 
+                                     style="border-color: <?php echo getPartyColor($partyKey); ?>">
+                                    <img src="<?php echo htmlspecialchars($party['leader_photo']); ?>" 
+                                         alt="<?php echo htmlspecialchars($party['leader']); ?>" 
+                                         class="w-full h-full object-cover">
                                 </div>
-                                
-                                <!-- Current seats badge -->
-                                <div class="absolute -bottom-1.5 -right-1.5 bg-primary text-white text-xs font-bold rounded-full w-8 h-8 flex items-center justify-center border-2 border-white shadow-md">
-                                    <?php echo $party['current_seats']; ?>
-                                </div>
+                                <div class="absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
                             </div>
-                            
-                            <div class="ml-4">
-                                <h2 class="text-xl font-extrabold text-gray-800 mb-0.5"><?php echo htmlspecialchars($partyKey); ?></h2>
-                                <p class="text-sm text-gray-500 font-medium tracking-tight"><?php echo htmlspecialchars($party['name']); ?></p>
+                            <div class="flex-1 min-w-0">
+                                <p class="font-bold text-gray-900 text-sm truncate">
+                                    <?php echo htmlspecialchars($party['leader']); ?>
+                                </p>
+                                <p class="text-xs text-gray-600">Partijleider</p>
                             </div>
                         </div>
                         
-                        <!-- Modern polling indicator with clean design -->
-                        <div class="mt-4 bg-white rounded-xl p-3 border border-gray-100 shadow-sm">
-                            <div class="flex justify-between items-center mb-1">
-                                <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Zetels in peilingen</h3>
-                            </div>
-                            
-                            <!-- Modern visualization with party color -->
-                            <div class="mt-2 flex items-center justify-between">
-                                <?php 
-                                $changeValue = $party['polling']['change'];
-                                $isPositive = $changeValue > 0;
-                                $isNegative = $changeValue < 0;
-                                $absChange = abs($changeValue);
-                                
-                                if ($isPositive) {
-                                    $trendColor = 'text-green-600';
-                                    $trendBg = 'bg-green-50';
-                                    $trendBorderColor = 'border-green-100';
-                                    $trendIcon = '↑';
-                                } elseif ($isNegative) {
-                                    $trendColor = 'text-red-600';
-                                    $trendBg = 'bg-red-50';
-                                    $trendBorderColor = 'border-red-100';
-                                    $trendIcon = '↓';
-                                } else {
-                                    $trendColor = 'text-blue-600';
-                                    $trendBg = 'bg-blue-50';
-                                    $trendBorderColor = 'border-blue-100';
-                                    $trendIcon = '•';
-                                }
-                                
-                                $trendText = $changeValue !== 0 ? ($changeValue > 0 ? '+' : '') . $changeValue . ' zetels' : 'Ongewijzigd';
-                                ?>
-                                
-                                <!-- Zetels with trend in single clear display -->
-                                <div class="flex items-center">
-                                    <span class="text-4xl font-bold" style="color: <?php echo getPartyColor($partyKey); ?>">
-                                        <?php echo $party['polling']['seats']; ?>
+                        <!-- Refined Description -->
+                        <div class="space-y-3">
+                            <p class="text-sm text-gray-700 leading-relaxed line-clamp-3">
+                                <?php echo htmlspecialchars(mb_substr($party['description'], 0, 160)) . '...'; ?>
+                            </p>
+                        </div>
+                        
+                        <!-- Premium Standpoints Tags -->
+                        <div>
+                            <h3 class="text-xs font-bold text-gray-600 uppercase tracking-wider mb-3">
+                                Kernstandpunten
+                            </h3>
+                            <div class="flex flex-wrap gap-2">
+                                <?php $standpointKeys = array_slice(array_keys($party['standpoints']), 0, 3); ?>
+                                <?php foreach ($standpointKeys as $topic): ?>
+                                    <span class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors duration-200" 
+                                          style="background-color: <?php echo adjustColorOpacity(getPartyColor($partyKey), 0.1); ?>; 
+                                                 border-color: <?php echo adjustColorOpacity(getPartyColor($partyKey), 0.3); ?>; 
+                                                 color: <?php echo adjustColorBrightness(getPartyColor($partyKey), -40); ?>;">
+                                        <?php echo htmlspecialchars($topic); ?>
                                     </span>
-                                    <span class="text-sm text-gray-400 font-medium ml-1 mt-3">/ 150</span>
-                                </div>
-                                
-                                <!-- Single trend indicator -->
-                                <div class="flex items-center <?php echo $trendBg; ?> px-3 py-2 rounded-lg border <?php echo $trendBorderColor; ?>">
-                                    <span class="<?php echo $trendColor; ?> text-lg font-bold mr-1"><?php echo $trendIcon; ?></span>
-                                    <span class="<?php echo $trendColor; ?> font-semibold">
-                                        <?php echo $changeValue !== 0 ? ($changeValue > 0 ? '+' : '') . $changeValue : '±0'; ?>
+                                <?php endforeach; ?>
+                                <?php if (count($party['standpoints']) > 3): ?>
+                                    <span class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold bg-gray-100 text-gray-600 border border-gray-200">
+                                        +<?php echo count($party['standpoints']) - 3; ?> meer
                                     </span>
-                                </div>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- Party content -->
-                    <div class="p-5">
-                        <!-- Party Leader Preview -->
-                        <div class="flex items-center mb-4 pb-3 border-b border-gray-100">
-                            <div class="w-14 h-14 rounded-full overflow-hidden mr-3 border-2 shadow-md" style="border-color: <?php echo getPartyColor($partyKey); ?>">
-                                <img src="<?php echo htmlspecialchars($party['leader_photo']); ?>" alt="<?php echo htmlspecialchars($party['leader']); ?>" 
-                                     class="w-full h-full object-cover">
-                            </div>
-                            <div>
-                                <p class="text-sm font-bold text-gray-800 mb-0.5"><?php echo htmlspecialchars($party['leader']); ?></p>
-                                <p class="text-xs text-gray-500">Partijleider</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Party description preview -->
-                        <p class="text-sm text-gray-600 mb-4 line-clamp-3 leading-relaxed"><?php echo htmlspecialchars(mb_substr($party['description'], 0, 150)) . '...'; ?></p>
-                        
-                        <!-- Key standpoints preview with custom badges -->
-                        <div class="mb-5">
-                            <h3 class="text-xs uppercase font-bold text-gray-700 mb-2.5 tracking-wider">Kernstandpunten:</h3>
-                            <div class="flex flex-wrap gap-1.5">
-                                <?php foreach (array_slice(array_keys($party['standpoints']), 0, 3) as $topic): ?>
-                                <span class="px-2.5 py-1 rounded-full text-xs font-medium" 
-                                      style="background-color: <?php echo adjustColorOpacity(getPartyColor($partyKey), 0.15); ?>; 
-                                             color: <?php echo adjustColorBrightness(getPartyColor($partyKey), -30); ?>;">
-                                    <?php echo htmlspecialchars($topic); ?>
-                                </span>
-                                <?php endforeach; ?>
-                                <span class="bg-gray-100 text-gray-500 text-xs px-2.5 py-1 rounded-full font-medium">
-                                    +<?php echo count($party['standpoints']) - 3; ?> meer
-                                </span>
-                            </div>
-                        </div>
-                        
-                        <!-- Action buttons -->
-                        <div class="flex gap-3">
-                            <button class="party-btn flex-1 text-white text-sm px-4 py-2.5 rounded-lg flex items-center justify-center font-medium shadow-md" 
-                                    style="background-color: <?php echo getPartyColor($partyKey); ?>; 
-                                           box-shadow: 0 2px 0 <?php echo adjustColorBrightness(getPartyColor($partyKey), -30); ?>;"
+                    <!-- Sophisticated Action Footer -->
+                    <footer class="p-6 pt-0">
+                        <div class="grid grid-cols-2 gap-3">
+                            <!-- Primary Action Button -->
+                            <button class="party-btn group relative overflow-hidden text-white font-bold py-3 px-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl" 
+                                    style="background: linear-gradient(135deg, <?php echo getPartyColor($partyKey); ?>, <?php echo adjustColorBrightness(getPartyColor($partyKey), -20); ?>);"
                                     data-party="<?php echo htmlspecialchars($partyKey); ?>">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                </svg>
-                                Partij
+                                <!-- Shimmer Effect -->
+                                <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                                <span class="relative flex items-center justify-center space-x-2">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                    </svg>
+                                    <span>Partij</span>
+                                </span>
                             </button>
-                            <button class="leader-btn flex-1 bg-white border border-gray-200 text-gray-700 text-sm px-4 py-2.5 rounded-lg flex items-center justify-center font-medium bg-gray-50 shadow-md"
+                            
+                            <!-- Secondary Action Button -->
+                            <button class="leader-btn group bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-3 px-4 rounded-xl transition-all duration-300 border-2 border-gray-200 hover:border-gray-300"
                                     data-leader="<?php echo htmlspecialchars($partyKey); ?>">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                </svg>
-                                Leider
+                                <span class="flex items-center justify-center space-x-2">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                    </svg>
+                                    <span>Leider</span>
+                                </span>
                             </button>
                         </div>
-                    </div>
-                </div>
+                    </footer>
+                    
+                </article>
             <?php endforeach; ?>
         </div>
     </div>
@@ -1137,34 +1259,302 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Sorting functionality
+    // Enhanced Sorting functionality
     document.getElementById('sortOption').addEventListener('change', function() {
         const sortMethod = this.value;
         const partyCards = Array.from(document.querySelectorAll('.party-card'));
-        const partyGrid = document.querySelector('.grid');
+        const partyGrid = document.getElementById('parties-grid');
         
-        // Sort the cards
-        partyCards.sort((a, b) => {
-            const aPartyKey = a.querySelector('.party-btn').getAttribute('data-party');
-            const bPartyKey = b.querySelector('.party-btn').getAttribute('data-party');
+        // Add loading animation
+        partyGrid.style.opacity = '0.5';
+        partyGrid.style.transform = 'scale(0.98)';
+        
+        setTimeout(() => {
+            // Sort the cards
+            partyCards.sort((a, b) => {
+                const aPartyKey = a.querySelector('.party-btn').getAttribute('data-party');
+                const bPartyKey = b.querySelector('.party-btn').getAttribute('data-party');
+                
+                if (sortMethod === 'name') {
+                    return aPartyKey.localeCompare(bPartyKey);
+                } else if (sortMethod === 'seats') {
+                    return partyData[bPartyKey].current_seats - partyData[aPartyKey].current_seats;
+                } else if (sortMethod === 'polling') {
+                    return partyData[bPartyKey].polling.seats - partyData[aPartyKey].polling.seats;
+                }
+                
+                return 0;
+            });
             
-            if (sortMethod === 'name') {
-                return aPartyKey.localeCompare(bPartyKey);
-            } else if (sortMethod === 'seats') {
-                return partyData[bPartyKey].current_seats - partyData[aPartyKey].current_seats;
-            } else if (sortMethod === 'polling') {
-                return partyData[bPartyKey].polling.seats - partyData[aPartyKey].polling.seats;
-            }
+            // Remove existing cards
+            partyCards.forEach(card => card.remove());
             
-            return 0;
+            // Add the sorted cards back with staggered animation
+            partyCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                partyGrid.appendChild(card);
+                
+                setTimeout(() => {
+                    card.style.transition = 'all 0.3s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 50);
+            });
+            
+            // Restore grid
+            partyGrid.style.transition = 'all 0.3s ease';
+            partyGrid.style.opacity = '1';
+            partyGrid.style.transform = 'scale(1)';
+        }, 150);
+    });
+    
+    // Search functionality
+    const searchInput = document.getElementById('searchInput');
+    const partyCounter = document.getElementById('party-counter');
+    
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const partyCards = document.querySelectorAll('.party-card');
+            let visibleCount = 0;
+            
+            partyCards.forEach(card => {
+                const partyKey = card.querySelector('.party-btn').getAttribute('data-party');
+                const party = partyData[partyKey];
+                const searchText = `${partyKey} ${party.name} ${party.leader}`.toLowerCase();
+                
+                if (searchText.includes(searchTerm)) {
+                    card.style.display = 'block';
+                    card.style.animation = 'fadeIn 0.3s ease';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            // Update counter
+            partyCounter.textContent = visibleCount;
+        });
+    }
+    
+    // View toggle functionality (Grid/List)
+    const gridViewBtn = document.getElementById('grid-view');
+    const listViewBtn = document.getElementById('list-view');
+    const partiesGrid = document.getElementById('parties-grid');
+    
+    if (gridViewBtn && listViewBtn) {
+        listViewBtn.addEventListener('click', function() {
+            // Switch to list view
+            partiesGrid.className = 'space-y-3 mb-12';
+            
+            // Update button states
+            gridViewBtn.classList.remove('bg-primary', 'text-white');
+            gridViewBtn.classList.add('text-gray-600');
+            listViewBtn.classList.add('bg-primary', 'text-white');
+            listViewBtn.classList.remove('text-gray-600');
+            
+            // Transform cards for list view
+            document.querySelectorAll('.party-card').forEach(card => {
+                transformToListView(card);
+            });
         });
         
-        // Remove existing cards
-        partyCards.forEach(card => card.remove());
+        gridViewBtn.addEventListener('click', function() {
+            // Switch to grid view
+            partiesGrid.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-12';
+            
+            // Update button states
+            listViewBtn.classList.remove('bg-primary', 'text-white');
+            listViewBtn.classList.add('text-gray-600');
+            gridViewBtn.classList.add('bg-primary', 'text-white');
+            gridViewBtn.classList.remove('text-gray-600');
+            
+            // Transform cards back to grid view
+            document.querySelectorAll('.party-card').forEach(card => {
+                transformToGridView(card);
+            });
+        });
+    }
+    
+    // Enhanced list view transformation
+    function transformToListView(card) {
+        const partyKey = card.querySelector('.party-btn').getAttribute('data-party');
+        const party = partyData[partyKey];
+        const color = getPartyColor(partyKey);
+        const changeValue = party.polling.change;
         
-        // Add the sorted cards back
-        partyCards.forEach(card => partyGrid.appendChild(card));
-    });
+                 // Create horizontal list layout with better alignment
+         card.innerHTML = `
+             <div class="flex items-center p-6 bg-white rounded-xl border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:shadow-lg">
+                 <!-- Left Section: Party Identity (Fixed width) -->
+                 <div class="flex items-center space-x-4 w-80">
+                     <!-- Logo & Party Info -->
+                     <div class="flex items-center space-x-4">
+                         <div class="relative flex-shrink-0">
+                             <div class="w-14 h-14 rounded-xl bg-white shadow-md border-2 border-gray-100 flex items-center justify-center overflow-hidden">
+                                 <img src="${party.logo}" alt="${party.name} logo" class="w-10 h-10 object-contain">
+                             </div>
+                             <div class="absolute -bottom-1 -right-1 w-4 h-4 rounded-full border-2 border-white shadow-sm" style="background-color: ${color}"></div>
+                         </div>
+                         <div class="min-w-0">
+                             <h3 class="text-lg font-bold text-gray-900">${partyKey}</h3>
+                         </div>
+                     </div>
+                     
+                     <!-- Leader Info -->
+                     <div class="flex items-center space-x-3 pl-6 border-l border-gray-200">
+                         <div class="w-10 h-10 rounded-full overflow-hidden border-2 shadow-sm flex-shrink-0" style="border-color: ${color}">
+                             <img src="${party.leader_photo}" alt="${party.leader}" class="w-full h-full object-cover">
+                         </div>
+                         <div class="min-w-0">
+                             <p class="text-sm font-semibold text-gray-800 truncate">${party.leader}</p>
+                             <p class="text-xs text-gray-500">Partijleider</p>
+                         </div>
+                     </div>
+                 </div>
+                 
+                 <!-- Center Section: Key Stats (Fixed widths for alignment) -->
+                 <div class="flex items-center space-x-12 flex-1 justify-center">
+                     <!-- Current Seats -->
+                     <div class="text-center w-24">
+                         <div class="text-2xl font-bold text-gray-900">${party.current_seats}</div>
+                         <div class="text-xs text-gray-500 uppercase tracking-wide">Huidige zetels</div>
+                     </div>
+                     
+                     <!-- Polling -->
+                     <div class="text-center w-24">
+                         <div class="text-2xl font-bold" style="color: ${color}">${party.polling.seats}</div>
+                         <div class="text-xs text-gray-500 uppercase tracking-wide">Peilingen</div>
+                     </div>
+                     
+                     <!-- Trend -->
+                     <div class="text-center w-28">
+                         <div class="flex items-center justify-center mb-1">
+                             ${changeValue > 0 ? 
+                                 `<div class="bg-emerald-100 text-emerald-700 px-2 py-1 rounded-lg border border-emerald-200 text-sm font-bold">📈 +${changeValue}</div>` :
+                                 changeValue < 0 ? 
+                                 `<div class="bg-red-100 text-red-700 px-2 py-1 rounded-lg border border-red-200 text-sm font-bold">📉 ${changeValue}</div>` :
+                                 `<div class="bg-blue-100 text-blue-700 px-2 py-1 rounded-lg border border-blue-200 text-sm font-bold">➡️ 0</div>`
+                             }
+                         </div>
+                         <div class="text-xs text-gray-500 uppercase tracking-wide">Trend</div>
+                     </div>
+                 </div>
+                 
+                 <!-- Right Section: Actions (Fixed width) -->
+                 <div class="flex items-center space-x-3 w-56 justify-end">
+                     <button class="party-btn bg-gradient-to-r text-white font-semibold px-4 py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-300" 
+                             style="background: linear-gradient(135deg, ${color}, ${adjustColorBrightness(color, -20)});"
+                             data-party="${partyKey}">
+                         <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                         </svg>
+                         Partij
+                     </button>
+                     <button class="leader-btn bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold px-4 py-2 rounded-lg border border-gray-200 hover:border-gray-300 transition-all duration-300"
+                             data-leader="${partyKey}">
+                         <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                         </svg>
+                         Leider
+                     </button>
+                 </div>
+             </div>
+         `;
+        
+        // Re-attach event listeners for the new buttons
+        attachButtonListeners(card);
+    }
+    
+    // Restore grid view
+    function transformToGridView(card) {
+        // Get the original party key to rebuild the card
+        const partyKey = card.querySelector('.party-btn').getAttribute('data-party');
+        const party = partyData[partyKey];
+        
+        // Restore original card HTML (this would need the original template)
+        location.reload(); // Simple solution - reload to restore original cards
+    }
+    
+    // Helper function to attach event listeners to new buttons
+    function attachButtonListeners(card) {
+        const partyBtn = card.querySelector('.party-btn');
+        const leaderBtn = card.querySelector('.leader-btn');
+        
+        if (partyBtn) {
+            partyBtn.addEventListener('click', function() {
+                const partyKey = this.getAttribute('data-party');
+                const party = partyData[partyKey];
+                
+                // Fill modal with party data (same as existing functionality)
+                document.getElementById('party-modal-title').textContent = party.name;
+                document.getElementById('party-modal-logo').src = party.logo;
+                document.getElementById('party-modal-logo').alt = `${party.name} logo`;
+                document.getElementById('party-modal-abbr').textContent = partyKey;
+                document.getElementById('party-modal-name').textContent = party.name;
+                document.getElementById('party-modal-leader').textContent = party.leader;
+                document.getElementById('party-modal-leader-photo').src = party.leader_photo;
+                document.getElementById('party-modal-leader-photo').alt = party.leader;
+                document.getElementById('party-modal-description').textContent = party.description;
+                document.getElementById('party-modal-seats').textContent = party.current_seats;
+                document.getElementById('party-modal-polling').textContent = party.polling.seats;
+                
+                // Fill perspectives
+                document.getElementById('party-modal-left-perspective').textContent = party.perspectives.left;
+                document.getElementById('party-modal-right-perspective').textContent = party.perspectives.right;
+                
+                // Display polling trend
+                const trendElement = document.getElementById('party-modal-polling-trend');
+                const change = party.polling.change;
+                const changeClass = change > 0 ? 'text-green-600' : (change < 0 ? 'text-red-600' : 'text-yellow-600');
+                const changeIcon = change > 0 ? '↑' : (change < 0 ? '↓' : '→');
+                const changeText = change > 0 ? `+${change}` : change;
+                
+                trendElement.className = `text-sm font-medium ${changeClass}`;
+                trendElement.textContent = change !== 0 ? `Trend: ${changeIcon} ${changeText}` : 'Stabiel in peilingen';
+                
+                // Fill standpoints
+                const standpointsContainer = document.getElementById('party-modal-standpoints');
+                standpointsContainer.innerHTML = '';
+                
+                for (const [topic, standpoint] of Object.entries(party.standpoints)) {
+                    const standpointEl = document.createElement('div');
+                    standpointEl.className = 'bg-gray-50 p-4 rounded-xl border border-gray-200';
+                    standpointEl.innerHTML = `
+                        <h4 class="font-semibold text-gray-800 mb-2">${topic}</h4>
+                        <p class="text-gray-600 text-sm">${standpoint}</p>
+                    `;
+                    standpointsContainer.appendChild(standpointEl);
+                }
+                
+                // Show modal
+                document.getElementById('party-modal').classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            });
+        }
+        
+        if (leaderBtn) {
+            leaderBtn.addEventListener('click', function() {
+                const partyKey = this.getAttribute('data-leader');
+                const party = partyData[partyKey];
+                
+                // Fill modal with leader data
+                document.getElementById('leader-modal-title').textContent = party.leader;
+                document.getElementById('leader-modal-photo').src = party.leader_photo;
+                document.getElementById('leader-modal-photo').alt = `${party.leader} foto`;
+                document.getElementById('leader-modal-party-logo').src = party.logo;
+                document.getElementById('leader-modal-party-logo').alt = `${party.name} logo`;
+                document.getElementById('leader-modal-party-name').textContent = party.name;
+                document.getElementById('leader-modal-party-abbr').textContent = partyKey;
+                document.getElementById('leader-modal-info').textContent = party.leader_info;
+                
+                // Show modal
+                document.getElementById('leader-modal').classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            });
+        }
+    }
     
     // Tab switching for chamber views
     const currentTab = document.getElementById('current-tab');
@@ -1352,6 +1742,30 @@ document.addEventListener('DOMContentLoaded', function() {
         };
         
         return partyColors[partyKey] || '#A0A0A0';
+    }
+    
+    // Helper function to adjust color brightness for JavaScript
+    function adjustColorBrightness(hex, steps) {
+        // Remove the # if present
+        hex = hex.replace('#', '');
+        
+        // Parse r, g, b values
+        const r = parseInt(hex.substring(0, 2), 16);
+        const g = parseInt(hex.substring(2, 4), 16);
+        const b = parseInt(hex.substring(4, 6), 16);
+        
+        // Adjust brightness
+        const newR = Math.max(0, Math.min(255, r + steps));
+        const newG = Math.max(0, Math.min(255, g + steps));
+        const newB = Math.max(0, Math.min(255, b + steps));
+        
+        // Convert back to hex
+        const toHex = (n) => {
+            const hex = n.toString(16);
+            return hex.length === 1 ? '0' + hex : hex;
+        };
+        
+        return '#' + toHex(newR) + toHex(newG) + toHex(newB);
     }
 });
 
@@ -1946,7 +2360,59 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <style>
-/* Modern Coalition Maker Styling */
+/* Enhanced Party Cards Styling */
+
+/* Modern hover animations and transitions */
+.party-card {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform, box-shadow;
+}
+
+.party-card:hover {
+    box-shadow: 
+        0 25px 50px -12px rgba(0, 0, 0, 0.25),
+        0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+/* Enhanced button shimmer effects */
+.party-btn:hover {
+    animation: buttonPulse 0.6s ease;
+}
+
+@keyframes buttonPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
+/* Fade in animation for search results */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Enhanced focus states */
+input:focus, select:focus, button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+/* Premium gradient backgrounds */
+.bg-premium-gradient {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* Advanced backdrop blur effects */
+.backdrop-blur-premium {
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
 
 /* Enhanced scrollbar styling */
 .scrollbar-thin {
