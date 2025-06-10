@@ -806,6 +806,249 @@ require_once 'views/templates/header.php';
         </div>
     </section>
 
+    <!-- Programma Vergelijker Section -->
+    <section class="py-24 bg-gradient-to-br from-white via-blue-50 to-red-50 relative overflow-hidden">
+        <!-- Decoratieve achtergrond elementen -->
+        <div class="absolute inset-0">
+            <!-- Floating geometric shapes -->
+            <div class="absolute top-16 left-8 w-40 h-40 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full blur-2xl animate-float"></div>
+            <div class="absolute top-32 right-12 w-32 h-32 bg-gradient-to-br from-primary/15 to-secondary/15 rounded-full blur-xl animate-float-delayed"></div>
+            <div class="absolute bottom-20 left-1/4 w-48 h-48 bg-gradient-to-br from-secondary/10 to-primary/10 rounded-full blur-3xl animate-pulse"></div>
+            <div class="absolute bottom-16 right-1/3 w-36 h-36 bg-gradient-to-br from-secondary/12 to-primary/12 rounded-full blur-2xl animate-bounce-slow"></div>
+            
+            <!-- Grid pattern overlay -->
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMSIgZmlsbD0icmdiYSgwLDAsMCwwLjAzKSIvPgo8L3N2Zz4=')] opacity-40"></div>
+        </div>
+
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="max-w-6xl mx-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                    <!-- Linker kolom: Content -->
+                    <div class="space-y-8" data-aos="fade-right" data-aos-duration="1000" data-aos-once="true">
+                        <!-- Badge -->
+                        <div class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-100 to-red-100 rounded-full border border-blue-200/50 backdrop-blur-sm">
+                            <svg class="w-4 h-4 mr-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                            </svg>
+                            <span class="text-sm font-semibold text-primary">NIEUW!</span>
+                        </div>
+                        
+                        <!-- Hoofdtitel -->
+                        <div class="space-y-6">
+                            <h2 class="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 leading-tight tracking-tight">
+                                <span class="block mb-2">Vergelijk</span>
+                                <span class="bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent animate-gradient bg-size-200">
+                                    Partijprogramma's
+                                </span>
+                            </h2>
+                            
+                            <!-- Decoratieve lijn -->
+                            <div class="flex items-center space-x-4">
+                                <div class="w-16 h-0.5 bg-gradient-to-r from-primary to-secondary"></div>
+                                <div class="w-3 h-3 bg-primary rounded-full animate-pulse"></div>
+                                <div class="w-24 h-0.5 bg-gradient-to-r from-secondary to-primary"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Beschrijving -->
+                        <p class="text-xl lg:text-2xl text-slate-600 leading-relaxed font-light">
+                            Vergelijk de standpunten van <span class="font-semibold text-primary">alle partijen</span> over belangrijke thema's zoals klimaat, zorg en immigratie. Ontdek waar ze overeenkomen en verschillen.
+                        </p>
+                        
+                        <!-- Features -->
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="flex items-start space-x-3">
+                                <div class="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center flex-shrink-0">
+                                    <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-semibold text-slate-900 mb-1">Alle Partijen</h3>
+                                    <p class="text-sm text-slate-600">Van groot tot klein vergelijken</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <div class="w-10 h-10 rounded-xl bg-red-100 flex items-center justify-center flex-shrink-0">
+                                    <svg class="w-5 h-5 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-semibold text-slate-900 mb-1">8 Belangrijke Thema's</h3>
+                                    <p class="text-sm text-slate-600">Alle belangrijke onderwerpen</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <div class="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center flex-shrink-0">
+                                    <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-semibold text-slate-900 mb-1">Duidelijke Uitleg</h3>
+                                    <p class="text-sm text-slate-600">Begrijp de standpunten gemakkelijk</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <div class="w-10 h-10 rounded-xl bg-red-100 flex items-center justify-center flex-shrink-0">
+                                    <svg class="w-5 h-5 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-semibold text-slate-900 mb-1">Snel & Interactief</h3>
+                                    <p class="text-sm text-slate-600">Direct vergelijken en filteren</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- CTA Button -->
+                        <div class="pt-6">
+                            <div class="relative inline-block">
+                                <!-- Glow effect -->
+                                <div class="absolute -inset-1 bg-gradient-to-r from-primary via-secondary to-primary rounded-2xl blur opacity-40 animate-pulse"></div>
+                                
+                                <!-- Main button -->
+                                <a href="<?php echo URLROOT; ?>/programma-vergelijker" 
+                                   class="relative inline-flex items-center px-10 py-5 bg-gradient-to-r from-primary via-secondary to-primary text-white font-bold text-lg rounded-2xl transition-all duration-500 transform hover:scale-105 shadow-2xl hover:shadow-3xl group overflow-hidden">
+                                    
+                                    <!-- Button content -->
+                                    <div class="relative z-10 flex items-center">
+                                        <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                        </svg>
+                                        <span class="mr-3">Start Vergelijker</span>
+                                        <div class="relative">
+                                            <svg class="w-6 h-6 transform transition-transform duration-500 group-hover:translate-x-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                                            </svg>
+                                            <!-- Arrow trail effect -->
+                                            <svg class="w-6 h-6 absolute inset-0 transform translate-x-[-100%] opacity-0 group-hover:translate-x-8 group-hover:opacity-50 transition-all duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Shimmer effect -->
+                                    <div class="absolute inset-0 -top-full bg-gradient-to-b from-transparent via-white/20 to-transparent transform skew-y-12 group-hover:animate-shimmer"></div>
+                                </a>
+                            </div>
+                            
+                            <!-- Supporting text -->
+                            <p class="mt-4 text-sm text-slate-500">
+                                Gratis • <span class="font-semibold text-primary">15+</span> partijen • <span class="font-semibold text-secondary">8 thema's</span> • Side-by-side vergelijking
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Rechter kolom: Visuele demonstratie -->
+                    <div class="relative" data-aos="fade-left" data-aos-duration="1000" data-aos-once="true">
+                        <!-- Premium preview card -->
+                        <div class="relative bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/50 overflow-hidden transform -rotate-3 hover:rotate-0 transition-transform duration-700">
+                            <!-- Card header -->
+                            <div class="bg-gradient-to-r from-primary to-secondary p-6">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-lg flex items-center justify-center">
+                                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-lg font-bold text-white">Programma Vergelijker</h3>
+                                            <p class="text-blue-100 text-sm">Klimaat & Energie</p>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="text-xs text-blue-100">Vergelijking actief</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Card content -->
+                            <div class="p-6 space-y-6">
+                                <!-- Geselecteerde partijen -->
+                                <div class="space-y-3">
+                                    <h4 class="text-sm font-semibold text-slate-700">Geselecteerde partijen:</h4>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 border border-blue-200">
+                                            <div class="w-2 h-2 bg-blue-600 rounded-full mr-1"></div>
+                                            VVD
+                                        </span>
+                                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 border border-green-200">
+                                            <div class="w-2 h-2 bg-green-600 rounded-full mr-1"></div>
+                                            GL-PvdA
+                                        </span>
+                                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary border border-primary/20">
+                                            <div class="w-2 h-2 bg-primary rounded-full mr-1"></div>
+                                            D66
+                                        </span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Thema vergelijking preview -->
+                                <div class="space-y-4">
+                                    <div class="flex items-center space-x-2">
+                                        <span class="text-2xl">🌍</span>
+                                        <h5 class="text-lg font-semibold text-slate-800">Klimaat</h5>
+                                    </div>
+                                    
+                                    <!-- Standpunten preview -->
+                                    <div class="space-y-3">
+                                        <div class="bg-blue-50 rounded-lg p-3 border-l-4 border-blue-500">
+                                            <div class="flex items-center justify-between mb-1">
+                                                <span class="text-sm font-medium text-blue-800">VVD</span>
+                                                <div class="text-xs text-blue-600">Pro kernenergie</div>
+                                            </div>
+                                            <p class="text-xs text-blue-700">Steunt klimaatdoelstellingen maar benadrukt economische haalbaarheid...</p>
+                                        </div>
+                                        
+                                        <div class="bg-green-50 rounded-lg p-3 border-l-4 border-green-500">
+                                            <div class="flex items-center justify-between mb-1">
+                                                <span class="text-sm font-medium text-green-800">GL-PvdA</span>
+                                                <div class="text-xs text-green-600">Anti kernenergie</div>
+                                            </div>
+                                            <p class="text-xs text-green-700">Ambitieuze klimaatmaatregelen en snelle overgang naar hernieuwbaar...</p>
+                                        </div>
+                                        
+                                        <div class="bg-primary/10 rounded-lg p-3 border-l-4 border-primary">
+                                            <div class="flex items-center justify-between mb-1">
+                                                <span class="text-sm font-medium text-primary">D66</span>
+                                                <div class="text-xs text-primary">Voorzichtig pro</div>
+                                            </div>
+                                            <p class="text-xs text-primary">Kritisch over kernenergie maar open voor innovatieve oplossingen...</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Overeenkomsten en verschillen -->
+                                <div class="grid grid-cols-2 gap-3 text-xs">
+                                    <div class="bg-green-50 rounded-lg p-3 text-center">
+                                        <div class="font-semibold text-green-800 mb-1">2 Overeenkomsten</div>
+                                        <div class="text-green-600">CO2-reductie, duurzaamheid</div>
+                                    </div>
+                                    <div class="bg-red-50 rounded-lg p-3 text-center">
+                                        <div class="font-semibold text-red-800 mb-1">3 Verschillen</div>
+                                        <div class="text-red-600">Kernenergie, tempo, kosten</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Floating elements -->
+                            <div class="absolute -top-4 -right-4 w-8 h-8 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full animate-bounce"></div>
+                            <div class="absolute -bottom-4 -left-4 w-6 h-6 bg-gradient-to-br from-pink-400 to-secondary rounded-full animate-pulse"></div>
+                        </div>
+                        
+                        <!-- Decorative floating cards -->
+                        <div class="absolute -top-8 -left-8 w-20 h-20 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-2xl backdrop-blur-sm rotate-12 animate-float opacity-60"></div>
+                        <div class="absolute -bottom-8 -right-8 w-16 h-16 bg-gradient-to-br from-secondary/20 to-primary/20 rounded-2xl backdrop-blur-sm -rotate-12 animate-float opacity-60" style="animation-delay: -2s;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
         <!-- Laatste Nieuws & Blogs Sections -->
         <section class="py-24 bg-gradient-to-b from-gray-50 via-white to-gray-50 relative overflow-hidden">
             <!-- Decoratieve achtergrond elementen -->
