@@ -1,185 +1,115 @@
-<main class="bg-gradient-to-b from-gray-50 to-white min-h-screen">
-    <!-- Hero Section - Rebuilt to be elegant and professional -->
-    <section class="relative bg-gradient-to-br from-primary-dark via-primary to-blue-600 py-20 overflow-hidden">
-        <!-- Top accent line -->
-        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-secondary to-blue-400"></div>
+<main class="bg-gray-50 dark:bg-gray-900">
+    <!-- Hero Section -->
+    <section class="bg-gray-900 text-white relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-primary via-primary-dark to-black opacity-80"></div>
+        <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.04"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-50"></div>
         
-        <!-- Decorative elements -->
-        <div class="absolute inset-0 overflow-hidden pointer-events-none">
-            <!-- Abstract wave pattern -->
-            <svg class="absolute w-full h-56 -bottom-10 left-0 text-white/5" viewBox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-                <path fill="currentColor" fill-opacity="1" d="M0,128L40,138.7C80,149,160,171,240,170.7C320,171,400,149,480,149.3C560,149,640,171,720,192C800,213,880,235,960,229.3C1040,224,1120,192,1200,165.3C1280,139,1360,117,1400,106.7L1440,96L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z"></path>
-            </svg>
+        <div class="container mx-auto px-6 py-16 md:py-24 relative z-10 text-center">
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-4">
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-300">
+                    Politiek Neutraal Nieuws
+                </span>
+            </h1>
+            <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+                Een gebalanceerd overzicht van het laatste nieuws, objectief en overzichtelijk gepresenteerd vanuit diverse politieke hoeken.
+            </p>
             
-            <!-- Decorative circles -->
-            <div class="absolute top-20 left-10 w-40 h-40 rounded-full bg-secondary/10 filter blur-2xl"></div>
-            <div class="absolute bottom-10 right-10 w-60 h-60 rounded-full bg-blue-500/10 filter blur-3xl"></div>
-            <div class="absolute top-1/2 left-1/3 w-20 h-20 rounded-full bg-secondary/20 filter blur-xl"></div>
-            
-            <!-- Dot pattern -->
-            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"30\" height=\"30\" viewBox=\"0 0 30 30\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cpath d=\"M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z\" fill=\"rgba(255,255,255,0.07)\"%3E%3C/path%3E%3C/svg%3E')] opacity-30"></div>
-        </div>
-        
-        <div class="container mx-auto px-4 relative z-10">
-            <div class="max-w-4xl mx-auto text-center">
-                <!-- Small decorative element above title -->
-                <div class="inline-block mb-3">
-                    <div class="flex items-center justify-center space-x-1">
-                        <span class="block w-1.5 h-1.5 rounded-full bg-secondary"></span>
-                        <span class="block w-3 h-1.5 rounded-full bg-blue-400"></span>
-                        <span class="block w-1.5 h-1.5 rounded-full bg-secondary"></span>
-                    </div>
+            <!-- Statistieken -->
+            <div class="mt-10 max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-6 text-left">
+                <div class="bg-white/5 border border-white/10 rounded-lg p-5 backdrop-blur-sm">
+                    <p class="text-sm text-gray-400">Totaal Artikelen</p>
+                    <p class="text-2xl font-bold text-white"><?php echo $stats['total_articles']; ?></p>
                 </div>
-                
-                <!-- Title with gradient text -->
-                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 tracking-tight leading-tight">
-                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-100 via-white to-secondary-light">
-                        Nieuws uit alle perspectieven
-                    </span>
-                </h1>
-                
-                <!-- Subtitle with lighter weight -->
-                <p class="text-lg md:text-xl text-blue-100 mb-8 max-w-3xl mx-auto leading-relaxed font-light">
-                    Blijf geïnformeerd met een gebalanceerde selectie van nieuwsartikelen uit zowel progressieve als conservatieve bronnen
-                </p>
- 
-                <!-- News source badges with updated styling -->
-                <div class="flex flex-wrap justify-center gap-2 mt-6">
-                    <?php foreach (array_merge($news_sources['links'], $news_sources['rechts']) as $source): ?>
-                        <span class="px-3 py-1 bg-white/10 text-xs text-white font-medium rounded-full border border-white/10">
-                            <?php echo htmlspecialchars($source['name']); ?>
-                        </span>
-                    <?php endforeach; ?>
+                <div class="bg-white/5 border border-white/10 rounded-lg p-5 backdrop-blur-sm">
+                    <p class="text-sm text-blue-300">Progressieve Artikelen</p>
+                    <p class="text-2xl font-bold text-white"><?php echo $stats['progressive_count']; ?></p>
+                </div>
+                <div class="bg-white/5 border border-white/10 rounded-lg p-5 backdrop-blur-sm">
+                    <p class="text-sm text-secondary-light">Conservatieve Artikelen</p>
+                    <p class="text-2xl font-bold text-white"><?php echo $stats['conservative_count']; ?></p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Nieuws Content -->
-    <section class="py-12 relative z-10" id="artikelen">
-        <div class="container mx-auto px-4">
-            <!-- Filter knoppen - redesigned for cleaner look -->
-            <div class="flex flex-wrap gap-3 justify-center mb-8">
-                <a href="?filter=alle" 
-                   class="px-5 py-2.5 rounded-lg <?php echo $filter === 'alle' ? 'bg-primary text-white' : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-50'; ?> shadow-sm transition-all duration-200 flex items-center space-x-2">
-                    <svg class="w-4 h-4 <?php echo $filter === 'alle' ? 'text-white' : 'text-primary'; ?>" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
-                    </svg>
-                    <span class="font-medium">Alle bronnen</span>
-                    <span class="ml-1 text-xs px-2 py-0.5 rounded-full <?php echo $filter === 'alle' ? 'bg-blue-700 text-white font-medium' : 'bg-gray-200 text-gray-800 font-semibold'; ?>"><?php echo $stats['total_articles']; ?></span>
+    <section class="py-12" id="artikelen">
+        <div class="container mx-auto px-6">
+            <!-- Filter Knoppen -->
+            <div class="flex flex-wrap items-center justify-center gap-4 mb-10">
+                <a href="?filter=alle#artikelen" 
+                   class="px-5 py-2.5 rounded-full text-sm font-medium border-2 transition-all duration-300 flex items-center shadow-sm <?php echo $filter === 'alle' ? 'bg-primary text-white border-primary-dark shadow-lg' : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 border-transparent hover:border-primary hover:text-primary hover:shadow-md'; ?>">
+                    <i class="fas fa-globe-europe mr-2"></i> Alle Bronnen
                 </a>
-                <a href="?filter=progressief" 
-                   class="px-5 py-2.5 rounded-lg <?php echo $filter === 'progressief' ? 'bg-primary text-white' : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-50'; ?> shadow-sm transition-all duration-200 flex items-center space-x-2">
-                    <svg class="w-4 h-4 <?php echo $filter === 'progressief' ? 'text-white' : 'text-primary'; ?>" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-                    </svg>
-                    <span class="font-medium">Progressief</span>
-                    <span class="ml-1 text-xs px-2 py-0.5 rounded-full <?php echo $filter === 'progressief' ? 'bg-blue-700 text-white font-medium' : 'bg-gray-200 text-gray-800 font-semibold'; ?>"><?php echo $stats['progressive_count']; ?></span>
+                <a href="?filter=progressief#artikelen" 
+                   class="px-5 py-2.5 rounded-full text-sm font-medium border-2 transition-all duration-300 flex items-center shadow-sm <?php echo $filter === 'progressief' ? 'bg-primary text-white border-primary-dark shadow-lg' : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 border-transparent hover:border-primary hover:text-primary hover:shadow-md'; ?>">
+                    <i class="fas fa-arrow-left mr-2"></i> Progressief
                 </a>
-                <a href="?filter=conservatief" 
-                   class="px-5 py-2.5 rounded-lg <?php echo $filter === 'conservatief' ? 'bg-secondary text-white' : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-50'; ?> shadow-sm transition-all duration-200 flex items-center space-x-2">
-                    <svg class="w-4 h-4 <?php echo $filter === 'conservatief' ? 'text-white' : 'text-secondary'; ?>" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12"></path>
-                    </svg>
-                    <span class="font-medium">Conservatief</span>
-                    <span class="ml-1 text-xs px-2 py-0.5 rounded-full <?php echo $filter === 'conservatief' ? 'bg-red-700 text-white font-medium' : 'bg-gray-200 text-gray-800 font-semibold'; ?>"><?php echo $stats['conservative_count']; ?></span>
+                <a href="?filter=conservatief#artikelen" 
+                   class="px-5 py-2.5 rounded-full text-sm font-medium border-2 transition-all duration-300 flex items-center shadow-sm <?php echo $filter === 'conservatief' ? 'bg-primary text-white border-primary-dark shadow-lg' : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 border-transparent hover:border-primary hover:text-primary hover:shadow-md'; ?>">
+                    <i class="fas fa-arrow-right mr-2"></i> Conservatief
                 </a>
-                <a href="?clear_cache=1<?php echo !empty($filter) && $filter !== 'alle' ? "&filter=$filter" : ""; ?>" 
-                   class="px-5 py-2.5 rounded-lg bg-white border border-gray-200 text-gray-700 hover:bg-gray-50 shadow-sm transition-all duration-200 flex items-center space-x-2">
-                    <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
-                    </svg>
-                    <span class="font-medium">Vernieuwen</span>
+                <a href="?clear_cache=1<?php echo !empty($filter) && $filter !== 'alle' ? "&filter=$filter" : ""; ?>#artikelen" 
+                   class="px-5 py-2.5 rounded-full text-sm font-medium border-2 transition-all duration-300 flex items-center shadow-sm bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 border-transparent hover:border-primary hover:text-primary hover:shadow-md group">
+                    <i class="fas fa-sync-alt mr-2 group-hover:rotate-90 transition-transform duration-300"></i> Vernieuwen
                 </a>
             </div>
 
-            <!-- Nieuws artikelen grid - updated for more professional look -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <?php foreach ($latest_news as $article): ?>
-                    <article class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col h-full transform hover:-translate-y-1">
-                        <!-- Gestyleerde header sectie met gradient achtergrond -->
-                        <div class="relative h-48 overflow-hidden">
-                            <a href="<?php echo htmlspecialchars($article['url']); ?>" target="_blank" class="block h-full">
-                                <div class="w-full h-full 
-                                    <?php 
-                                        // Kies een achtergrondkleur op basis van bias
-                                        if ($article['bias'] === 'Progressief') {
-                                            echo 'bg-gradient-to-br from-primary to-blue-800';
-                                        } else {
-                                            echo 'bg-gradient-to-br from-secondary to-red-700';
-                                        }
-                                    ?> 
-                                    flex items-center justify-center p-4">
-                                    <h3 class="text-white text-xl font-bold text-center line-clamp-3"><?php echo htmlspecialchars($article['title']); ?></h3>
-                                </div>
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                            </a>
-                            <!-- Source badge on header -->
-                            <div class="absolute top-3 right-3">
-                                <span class="px-2.5 py-1.5 bg-white/90 backdrop-blur-sm text-xs font-semibold rounded-lg shadow-md">
-                                    <?php echo htmlspecialchars($article['source']); ?>
-                                </span>
+            <!-- Artikelen Grid -->
+            <?php if (!empty($latest_news)): ?>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                    <?php foreach ($latest_news as $article): ?>
+                        <article class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-2xl transition-shadow duration-300 flex flex-col overflow-hidden border-l-4 <?php echo $article['bias'] === 'Progressief' ? 'border-primary' : 'border-secondary'; ?>">
+                            <div class="p-6 flex-grow flex flex-col">
+                                <header class="mb-4">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <span class="text-xs font-semibold uppercase tracking-wider <?php echo $article['bias'] === 'Progressief' ? 'text-primary' : 'text-secondary'; ?>">
+                                            <?php echo htmlspecialchars($article['bias']); ?>
+                                        </span>
+                                        <span class="text-xs text-gray-500 dark:text-gray-400">
+                                            <?php echo htmlspecialchars($article['source']); ?>
+                                        </span>
+                                    </div>
+                                    <h3 class="text-lg font-bold text-gray-900 dark:text-white line-clamp-3">
+                                        <?php echo htmlspecialchars($article['title']); ?>
+                                    </h3>
+                                </header>
+                                <p class="text-gray-600 dark:text-gray-300 text-sm line-clamp-4 flex-grow">
+                                    <?php echo htmlspecialchars($article['description']); ?>
+                                </p>
+                                <footer class="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
+                                    <div class="flex justify-between items-center">
+                                        <time class="text-xs text-gray-500 dark:text-gray-400 flex items-center">
+                                            <i class="far fa-clock mr-1.5"></i>
+                                            <?php 
+                                                // According to a memory from a past conversation, all dates on the site must be in Dutch format.
+                                                setlocale(LC_TIME, 'nl_NL.UTF-8', 'Dutch');
+                                                $date = new DateTime($article['publishedAt']);
+                                                // Use IntlDateFormatter for localized date formatting
+                                                $formatter = new IntlDateFormatter('nl_NL', IntlDateFormatter::LONG, IntlDateFormatter::NONE, null, null, 'd MMMM yyyy');
+                                                echo $formatter->format($date);
+                                            ?>
+                                        </time>
+                                        <a href="<?php echo htmlspecialchars($article['url']); ?>" target="_blank" class="text-sm font-semibold text-primary hover:underline">
+                                            Lees meer <i class="fas fa-external-link-alt ml-1 text-xs"></i>
+                                        </a>
+                                    </div>
+                                </footer>
                             </div>
-                        </div>
-                        
-                        <div class="p-5 flex-grow flex flex-col">
-                            <!-- Bias Tag - simplified design -->
-                            <div class="mb-3">
-                                <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium <?php 
-                                    echo $article['bias'] === 'Progressief' 
-                                        ? 'bg-secondary/10 text-secondary' 
-                                        : 'bg-primary/10 text-primary'; 
-                                ?>">
-                                    <?php echo htmlspecialchars($article['bias']); ?>
-                                </span>
-                            </div>
-
-                            <!-- Artikel Beschrijving - improved readability -->
-                            <p class="text-gray-600 text-sm mb-4 line-clamp-3 leading-relaxed flex-grow">
-                                <?php echo htmlspecialchars($article['description']); ?>
-                            </p>
-
-                            <!-- Footer met Datum en Lees Meer - cleaner design -->
-                            <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
-                                <time class="text-xs text-gray-500 flex items-center">
-                                    <svg class="w-3.5 h-3.5 mr-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                    </svg>
-                                    <?php 
-                                        $date = new DateTime($article['publishedAt']);
-                                        echo $date->format('d M H:i'); 
-                                    ?>
-                                </time>
-                                <a href="<?php echo htmlspecialchars($article['url']); ?>" 
-                                   target="_blank"
-                                   class="inline-flex items-center text-xs font-medium text-primary hover:text-primary-dark transition-colors">
-                                    Lees meer
-                                    <svg class="w-3.5 h-3.5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-                    </article>
-                <?php endforeach; ?>
-            </div>
-
-            <!-- Geen artikelen gevonden - improved empty state -->
-            <?php if (empty($latest_news)): ?>
-                <div class="text-center py-16 bg-gray-50 rounded-xl border border-gray-200 max-w-xl mx-auto">
-                    <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gray-100 mb-4">
-                        <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1M19 20a2 2 0 002-2V8m-2 12a2 2 0 01-2-2v-1"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-lg font-medium text-gray-900 mb-2">Geen artikelen gevonden</h3>
-                    <p class="text-gray-500 text-sm max-w-md mx-auto">Er zijn momenteel geen artikelen beschikbaar voor deze selectie. Probeer een andere filter of kom later terug.</p>
+                        </article>
+                    <?php endforeach; ?>
+                </div>
+            <?php else: ?>
+                <!-- Geen artikelen -->
+                <div class="text-center py-20 bg-white dark:bg-gray-800 rounded-lg shadow-md border-t-4 border-primary">
+                    <i class="fas fa-newspaper fa-3x text-primary mb-4"></i>
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">Geen Artikelen Gevonden</h3>
+                    <p class="text-gray-600 dark:text-gray-300 max-w-md mx-auto">
+                        Er zijn momenteel geen artikelen die aan je selectie voldoen. Probeer een andere filter of vernieuw de data.
+                    </p>
                     <div class="mt-6">
-                        <a href="?clear_cache=1" class="inline-flex items-center px-4 py-2 bg-primary text-white rounded-lg shadow-sm hover:bg-primary-dark transition-all duration-200">
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
-                            </svg>
-                            Data vernieuwen
+                        <a href="?clear_cache=1" class="bg-primary text-white font-bold py-2 px-4 rounded-lg hover:bg-primary-dark transition-colors duration-300">
+                            <i class="fas fa-sync-alt mr-2"></i> Data Vernieuwen
                         </a>
                     </div>
                 </div>
@@ -189,28 +119,18 @@
 </main>
 
 <style>
-/* Essential utilities */
-.line-clamp-2 {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
+/* Keeping line-clamp utilities for cross-browser support */
 .line-clamp-3 {
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
-
-/* Subtle hover effects */
-article:hover img {
-    transform: scale(1.03);
-}
-
-/* Smooth transitions */
-a, button {
-    transition: all 0.2s ease-in-out;
+.line-clamp-4 {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 </style>
 
