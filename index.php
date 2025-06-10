@@ -96,6 +96,7 @@ $router->add('newsletter/unsubscribe-success', 'controllers/newsletter.php?actio
 $router->add('newsletter/unsubscribe-error', 'controllers/newsletter.php?action=unsubscribe-error');
 $router->add('stemwijzer', 'controllers/stemwijzer.php');
 $router->add('partijen', 'controllers/partijen.php');
+$router->add('programma-vergelijker', 'controllers/programma-vergelijker.php');
 
 // Get the requested URL
 $request = $_SERVER['REQUEST_URI'];

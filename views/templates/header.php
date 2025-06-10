@@ -5,6 +5,7 @@ $metaDescriptions = [
     'blogs' => 'Lees en deel politieke blogs over actuele thema\'s. Van ervaren schrijvers tot nieuwe stemmen in het politieke debat.',
     'nieuws' => 'Het laatste politieke nieuws uit betrouwbare bronnen, zowel progressief als conservatief. Blijf geïnformeerd over de Nederlandse politiek.',
     'stemwijzer' => 'Doe de stemwijzer 2025 en ontdek welke partij het beste bij jouw standpunten past. Objectief en onafhankelijk advies.',
+    'programma-vergelijker' => 'Vergelijk de verkiezingsprogramma\'s van Nederlandse politieke partijen over belangrijke thema\'s zoals klimaat, zorg en economie.',
     'forum' => 'Discussieer mee over politieke onderwerpen in ons forum. Deel je mening en ga in gesprek met anderen over de Nederlandse politiek.',
     'contact' => 'Neem contact op met PolitiekPlatform. We staan klaar om je vragen te beantwoorden en feedback te ontvangen.'
 ];
@@ -15,6 +16,7 @@ $metaKeywords = [
     'blogs' => 'politieke blogs, opinieartikelen, politieke analyses, Nederlandse politiek, politiek commentaar, verkiezingen, columnisten, Politiek Praat',
     'nieuws' => 'politiek nieuws, Nederlands nieuws, Haags nieuws, regering, oppositie, kabinet, ministeries, Tweede Kamer, Politiek Praat',
     'stemwijzer' => 'stemwijzer, politieke keuze, verkiezingen, stemhulp, kieskompas, partijkeuze, verkiezingen 2025, stemadvies, Politiek Praat',
+    'programma-vergelijker' => 'verkiezingsprogramma vergelijker, partijen vergelijken, politieke standpunten, programma\'s, Nederlandse partijen, verkiezingen, Politiek Praat',
     'forum' => 'politiek forum, politieke discussie, debat, meningen, Nederlandse politiek, politieke standpunten, actuele discussies, Politiek Praat',
     'contact' => 'contact, vragen, feedback, hulp, informatie, Politiek Praat, bereikbaarheid'
 ];
@@ -842,6 +844,17 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                                     group-hover:scale-100 transition-transform duration-300"></div>
                     </a>
 
+                    <a href="<?php echo URLROOT; ?>/programma-vergelijker" 
+                       class="relative px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg 
+                              transition-all duration-300 hover:text-primary hover:bg-primary/5
+                              group flex items-center">
+                        <span class="relative z-10">Vergelijker</span>
+                        <span class="ml-2 px-1.5 py-0.5 text-xs font-bold bg-accent text-white 
+                                    rounded-full shadow-sm">Nieuw</span>
+                        <div class="absolute inset-0 bg-primary/10 rounded-lg scale-0 
+                                    group-hover:scale-100 transition-transform duration-300"></div>
+                    </a>
+
                     <!-- Contact Dropdown - Modern redesign -->
                     <div class="relative group">
                         <button class="relative px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg 
@@ -1154,6 +1167,25 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                             </svg>
                         </div>
                         <span class="font-medium">Partijen</span>
+                    </a>
+
+                    <a href="<?php echo URLROOT; ?>/programma-vergelijker" 
+                       class="flex items-center text-gray-700 hover:text-primary p-3 rounded-lg transition-all duration-300 
+                              hover:bg-primary/5 group">
+                        <div class="mr-3 p-2 bg-primary/10 rounded-lg transition-all duration-300 
+                                    group-hover:bg-primary/20 group-hover:scale-110">
+                            <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                      d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                            </svg>
+                        </div>
+                        <span class="font-medium flex items-center">
+                            Vergelijker
+                            <span class="ml-2 inline-flex items-center px-2 py-0.5 text-xs font-medium 
+                                        bg-accent text-white rounded-full">
+                                Nieuw
+                            </span>
+                        </span>
                     </a>
 
                     <a href="<?php echo URLROOT; ?>/contact" 
