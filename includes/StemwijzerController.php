@@ -314,6 +314,9 @@ class StemwijzerController {
                 }
                 
                 error_log("StemwijzerController: saveResults - stemwijzer_results tabel succesvol aangemaakt");
+            } else {
+                // Tabel bestaat al, controleer of share_id kolom ook bestaat
+                $this->addShareIdColumnIfMissing();
             }
 
             // Valideer input data
@@ -332,15 +335,19 @@ class StemwijzerController {
                 return false;
             }
 
+            // Genereer een unieke share_id voor de link functionaliteit
+            $shareId = $this->generateShareId();
+
             // Sla de resultaten op
             $this->db->query("
                 INSERT INTO stemwijzer_results 
-                (session_id, user_id, answers, results, ip_address, user_agent, completed_at) 
+                (session_id, share_id, user_id, answers, results, ip_address, user_agent, completed_at) 
                 VALUES 
-                (:session_id, :user_id, :answers, :results, :ip_address, :user_agent, NOW())
+                (:session_id, :share_id, :user_id, :answers, :results, :ip_address, :user_agent, NOW())
             ");
             
             $this->db->bind(':session_id', $sessionId);
+            $this->db->bind(':share_id', $shareId);
             $this->db->bind(':user_id', $userId); // Kan NULL zijn
             $this->db->bind(':answers', json_encode($answers));
             $this->db->bind(':results', json_encode($results));
@@ -351,18 +358,77 @@ class StemwijzerController {
             
             if ($success) {
                 $insertedId = $this->db->lastInsertId();
-                error_log("StemwijzerController: saveResults - Resultaten succesvol opgeslagen met ID: " . $insertedId);
+                error_log("StemwijzerController: saveResults - Resultaten succesvol opgeslagen met ID: " . $insertedId . ", Share ID: " . $shareId);
                 error_log("StemwijzerController: saveResults - Session: $sessionId, Antwoorden: " . count($answers) . ", User: " . ($userId ?? 'anonymous'));
+                return $shareId; // Return share_id instead of boolean for link generation
             } else {
                 error_log("StemwijzerController: saveResults - Database execute() faalde");
             }
             
-            return $success;
+            return false;
             
         } catch (Exception $e) {
             error_log("StemwijzerController: saveResults - FOUT: " . $e->getMessage());
             error_log("StemwijzerController: saveResults - Stack trace: " . $e->getTraceAsString());
             return false;
+        }
+    }
+
+    /**
+     * Genereer een unieke share ID voor een resultaat
+     */
+    private function generateShareId() {
+        do {
+            // Genereer een unieke, URL-veilige string
+            $shareId = bin2hex(random_bytes(16)); // 32 character string
+            
+            // Controleer of deze share_id al bestaat
+            $this->db->query("SELECT id FROM stemwijzer_results WHERE share_id = :share_id");
+            $this->db->bind(':share_id', $shareId);
+            $exists = $this->db->single();
+        } while ($exists);
+        
+        return $shareId;
+    }
+
+    /**
+     * Haal resultaten op via share_id
+     */
+    public function getResultsByShareId($shareId) {
+        if (!$this->hasValidConnection || $this->schemaType === 'fallback') {
+            return null;
+        }
+        
+        try {
+            // Controleer of stemwijzer_results tabel bestaat
+            $this->db->query("SHOW TABLES LIKE 'stemwijzer_results'");
+            $tableExists = $this->db->single();
+            
+            if (!$tableExists) {
+                return null;
+            }
+
+            $this->db->query("
+                SELECT id, session_id, share_id, answers, results, completed_at, ip_address 
+                FROM stemwijzer_results 
+                WHERE share_id = :share_id
+            ");
+            $this->db->bind(':share_id', $shareId);
+            $result = $this->db->single();
+            
+            if (!$result) {
+                return null;
+            }
+            
+            // Decode JSON data
+            $result->answers = json_decode($result->answers, true);
+            $result->results = json_decode($result->results, true);
+            
+            return $result;
+            
+        } catch (Exception $e) {
+            error_log("StemwijzerController: getResultsByShareId - FOUT: " . $e->getMessage());
+            return null;
         }
     }
 
@@ -374,6 +440,7 @@ class StemwijzerController {
             $sql = "CREATE TABLE IF NOT EXISTS stemwijzer_results (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 session_id VARCHAR(255) NOT NULL,
+                share_id VARCHAR(32) NOT NULL UNIQUE,
                 user_id INT DEFAULT NULL,
                 answers JSON NOT NULL,
                 results JSON NOT NULL,
@@ -383,6 +450,7 @@ class StemwijzerController {
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                 INDEX idx_session (session_id),
+                INDEX idx_share (share_id),
                 INDEX idx_user (user_id),
                 INDEX idx_completed (completed_at)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
@@ -396,11 +464,54 @@ class StemwijzerController {
                 error_log("StemwijzerController: createResultsTable - Fout bij aanmaken van tabel");
             }
             
+            // Controleer of share_id kolom al bestaat in bestaande tabel en voeg toe indien nodig
+            $this->addShareIdColumnIfMissing();
+            
             return $success;
             
         } catch (Exception $e) {
             error_log("StemwijzerController: createResultsTable - FOUT: " . $e->getMessage());
             return false;
+        }
+    }
+
+    /**
+     * Voeg share_id kolom toe aan bestaande tabel indien deze ontbreekt
+     */
+    private function addShareIdColumnIfMissing() {
+        try {
+            // Controleer of share_id kolom al bestaat
+            $this->db->query("SHOW COLUMNS FROM stemwijzer_results LIKE 'share_id'");
+            $columnExists = $this->db->single();
+            
+            if (!$columnExists) {
+                error_log("StemwijzerController: share_id kolom bestaat niet, voeg toe...");
+                
+                // Voeg share_id kolom toe
+                $this->db->query("ALTER TABLE stemwijzer_results ADD COLUMN share_id VARCHAR(32) DEFAULT NULL AFTER session_id");
+                $this->db->execute();
+                
+                // Maak index aan
+                $this->db->query("ALTER TABLE stemwijzer_results ADD UNIQUE INDEX idx_share (share_id)");
+                $this->db->execute();
+                
+                // Update bestaande records met een share_id
+                $this->db->query("SELECT id FROM stemwijzer_results WHERE share_id IS NULL");
+                $recordsToUpdate = $this->db->resultSet();
+                
+                foreach ($recordsToUpdate as $record) {
+                    $shareId = bin2hex(random_bytes(16));
+                    $this->db->query("UPDATE stemwijzer_results SET share_id = :share_id WHERE id = :id");
+                    $this->db->bind(':share_id', $shareId);
+                    $this->db->bind(':id', $record->id);
+                    $this->db->execute();
+                }
+                
+                error_log("StemwijzerController: share_id kolom succesvol toegevoegd en bestaande records bijgewerkt");
+            }
+            
+        } catch (Exception $e) {
+            error_log("StemwijzerController: addShareIdColumnIfMissing - FOUT: " . $e->getMessage());
         }
     }
 

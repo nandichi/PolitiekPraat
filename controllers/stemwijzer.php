@@ -1097,32 +1097,68 @@ require_once 'views/templates/header.php';
                     </div>
                 </div>
 
-                <!-- Action Buttons -->
-                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                    <button @click="resetQuiz()" 
-                            class="group px-8 py-4 bg-white border-2 border-gray-300 hover:border-gray-400 text-gray-700 rounded-2xl font-semibold transition-all duration-300 hover:shadow-lg flex items-center space-x-3">
-                        <svg class="w-5 h-5 group-hover:-rotate-45 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
-                        </svg>
-                        <span>Opnieuw doen</span>
-                    </button>
+                <!-- Share Link Section (Only show if we have a share URL) -->
+                <div x-show="shareUrl" class="mb-12 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-3xl border border-blue-200/50 p-8 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-blue-100/20 to-indigo-100/20"></div>
                     
-                    <button onclick="window.print()" 
-                            class="group px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white rounded-2xl font-semibold transition-all duration-300 hover:shadow-xl shadow-lg shadow-indigo-500/25 flex items-center space-x-3">
-                        <svg class="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
-                        </svg>
-                        <span>Resultaten afdrukken</span>
-                    </button>
-                    
-                    <button @click="shareResults()" 
-                            class="group px-8 py-4 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white rounded-2xl font-semibold transition-all duration-300 hover:shadow-xl shadow-lg shadow-green-500/25 flex items-center space-x-3">
-                        <svg class="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"/>
-                        </svg>
-                        <span>Delen</span>
-                    </button>
+                    <div class="relative z-10 text-center">
+                        <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 shadow-lg shadow-blue-500/25 mb-6">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/>
+                            </svg>
+                        </div>
+                        
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Jouw Persoonlijke Resultatenlink</h3>
+                        <p class="text-lg text-gray-600 mb-6 max-w-2xl mx-auto">
+                            Bewaar deze link om je resultaten later opnieuw te bekijken, of deel hem met vrienden en familie.
+                        </p>
+                        
+                        <!-- Share URL Display -->
+                        <div class="bg-white rounded-2xl border border-gray-200 p-4 mb-6 max-w-3xl mx-auto">
+                            <div class="flex items-center space-x-3">
+                                <div class="flex-1 text-left">
+                                    <div class="text-sm text-gray-500 mb-1">Jouw resultatenlink:</div>
+                                    <div class="text-blue-600 font-mono text-sm break-all" x-text="shareUrl"></div>
+                                </div>
+                                <button @click="copyShareUrl()" 
+                                        class="px-4 py-2 bg-blue-100 hover:bg-blue-200 text-blue-700 rounded-xl font-medium transition-colors flex items-center space-x-2">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                                    </svg>
+                                    <span>Kopiëren</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Quick Actions for Share Link -->
+                        <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+                            <button @click="copyShareUrl()" 
+                                    class="group px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-semibold transition-all duration-300 hover:shadow-lg flex items-center space-x-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                                </svg>
+                                <span>Link kopiëren</span>
+                            </button>
+                            
+                            <button @click="shareResultsViaLink()" 
+                                    class="group px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-xl font-semibold transition-all duration-300 hover:shadow-lg flex items-center space-x-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"/>
+                                </svg>
+                                <span>Link delen</span>
+                            </button>
+                            
+                            <button @click="openShareUrl()" 
+                                    class="group px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-semibold transition-all duration-300 hover:shadow-lg flex items-center space-x-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                                </svg>
+                                <span>Bekijk link</span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -1147,6 +1183,8 @@ function stemwijzer() {
         showPartyDetails: false,
         detailedParty: null,
         showingQuestion: null,
+        shareUrl: '',
+        shareId: '',
         
         // Data wordt nu uit de database geladen
         questions: <?= json_encode($stemwijzerData['questions'] ?? [], JSON_INVALID_UTF8_SUBSTITUTE) ?>,
@@ -1508,10 +1546,16 @@ function stemwijzer() {
                 console.log('API Response:', result);
                 
                 if (result.success) {
-                    console.log('✅');
+                    console.log('✅ Resultaten opgeslagen!');
                     console.log('Debug info:', result.debug);
+                    
+                    // Bewaar de share URL voor later gebruik
+                    this.shareUrl = result.share_url;
+                    this.shareId = result.share_id;
+                    
+                    console.log('🔗 Share URL:', this.shareUrl);
                 } else {
-                    console.warn('❌ ', result.error);
+                    console.warn('❌ Fout bij opslaan:', result.error);
                     console.warn('Debug info:', result.debug);  
                 }
             } catch (error) {
@@ -1578,6 +1622,78 @@ function stemwijzer() {
             } else {
                 this.fallbackShare(text);
             }
+        },
+
+        copyShareUrl() {
+            if (!this.shareUrl) {
+                this.showNotification('Geen share link beschikbaar', 'error');
+                return;
+            }
+            
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(this.shareUrl).then(() => {
+                    this.showNotification('Share link gekopieerd naar klembord!', 'success');
+                }).catch(() => {
+                    this.fallbackCopyShareUrl();
+                });
+            } else {
+                this.fallbackCopyShareUrl();
+            }
+        },
+
+        fallbackCopyShareUrl() {
+            // Fallback for older browsers
+            const textArea = document.createElement('textarea');
+            textArea.value = this.shareUrl;
+            textArea.style.position = 'fixed';
+            textArea.style.opacity = '0';
+            document.body.appendChild(textArea);
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                this.showNotification('Share link gekopieerd naar klembord!', 'success');
+            } catch (err) {
+                this.showNotification('Kon share link niet kopiëren', 'error');
+            }
+            
+            document.body.removeChild(textArea);
+        },
+
+        shareResultsViaLink() {
+            if (!this.shareUrl) {
+                this.showNotification('Geen share link beschikbaar', 'error');
+                return;
+            }
+            
+            const topThree = this.finalResults.slice(0, 3);
+            const text = `Bekijk mijn Stemwijzer 2025 resultaten:\n\n` +
+                `🥇 ${topThree[0]?.name}: ${topThree[0]?.agreement}%\n` +
+                `🥈 ${topThree[1]?.name}: ${topThree[1]?.agreement}%\n` +
+                `🥉 ${topThree[2]?.name}: ${topThree[2]?.agreement}%\n\n` +
+                `Link: ${this.shareUrl}`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Mijn Stemwijzer 2025 Resultaten',
+                    text: text,
+                    url: this.shareUrl
+                }).catch(err => {
+                    console.log('Error sharing:', err);
+                    this.fallbackShare(text);
+                });
+            } else {
+                this.fallbackShare(text);
+            }
+        },
+
+        openShareUrl() {
+            if (!this.shareUrl) {
+                this.showNotification('Geen share link beschikbaar', 'error');
+                return;
+            }
+            
+            window.open(this.shareUrl, '_blank');
         },
         
         fallbackShare(text) {

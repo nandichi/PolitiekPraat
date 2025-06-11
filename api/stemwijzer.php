@@ -73,6 +73,41 @@ try {
                     ]);
                     break;
                     
+                case 'results':
+                    // Haal opgeslagen resultaten op via share_id
+                    $shareId = $_GET['share_id'] ?? '';
+                    
+                    if (empty($shareId)) {
+                        http_response_code(400);
+                        echo json_encode([
+                            'success' => false,
+                            'error' => 'Share ID is required'
+                        ]);
+                        break;
+                    }
+                    
+                    $results = $stemwijzerController->getResultsByShareId($shareId);
+                    
+                    if ($results) {
+                        // Haal ook de stemwijzer data op voor het tonen van de resultaten
+                        $stemwijzerData = $stemwijzerController->getStemwijzerData();
+                        
+                        echo json_encode([
+                            'success' => true,
+                            'results' => $results,
+                            'stemwijzer_data' => $stemwijzerData,
+                            'message' => 'Resultaten succesvol opgehaald'
+                        ]);
+                    } else {
+                        http_response_code(404);
+                        echo json_encode([
+                            'success' => false,
+                            'error' => 'Results not found',
+                            'message' => 'Geen resultaten gevonden voor deze link'
+                        ]);
+                    }
+                    break;
+                    
                 case 'test-save':
                     // Test de save functionaliteit
                     $testSessionId = 'api_test_' . time();
@@ -148,12 +183,19 @@ try {
                     // Log de ontvangen data voor debugging
                     error_log("API: save-results - Ontvangen data: sessionId=$sessionId, antwoorden=" . count($answers) . ", userId=" . ($userId ?? 'null'));
                     
-                    $saved = $stemwijzerController->saveResults($sessionId, $answers, $results, $userId);
+                    $shareId = $stemwijzerController->saveResults($sessionId, $answers, $results, $userId);
                     
-                    if ($saved) {
+                    if ($shareId) {
+                        // Genereer de link voor het delen van resultaten
+                        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
+                        $host = $_SERVER['HTTP_HOST'];
+                        $shareUrl = $protocol . $host . '/resultaten/' . $shareId;
+                        
                         echo json_encode([
                             'success' => true,
                             'message' => 'Resultaten succesvol opgeslagen',
+                            'share_id' => $shareId,
+                            'share_url' => $shareUrl,
                             'debug' => [
                                 'sessionId' => $sessionId,
                                 'answersCount' => count($answers),
