@@ -622,16 +622,12 @@ require_once 'views/templates/header.php';
 
                     <!-- Statistieken -->
                     <div class="mt-8 pt-8 border-t border-gray-200">
-                        <div class="grid grid-cols-2 md:grid-cols-3 gap-6 text-center">
+                        <div class="grid grid-cols-2 gap-6 text-center">
                             <div class="bg-blue-50 rounded-xl p-4">
                                 <div class="text-2xl font-bold text-blue-600"><?= $personalityAnalysis['total_answered'] ?></div>
                                 <div class="text-sm text-blue-700">Vragen beantwoord</div>
                             </div>
-                            <div class="bg-green-50 rounded-xl p-4">
-                                <div class="text-2xl font-bold text-green-600"><?= count($personalityAnalysis['personality_traits']) ?></div>
-                                <div class="text-sm text-green-700">Persoonlijkheidskenmerken</div>
-                            </div>
-                            <div class="bg-purple-50 rounded-xl p-4 md:col-span-1 col-span-2">
+                            <div class="bg-purple-50 rounded-xl p-4">
                                 <div class="text-2xl font-bold text-purple-600"><?= htmlspecialchars($personalityAnalysis['political_profile']['type']) ?></div>
                                 <div class="text-sm text-purple-700">Politiek Type</div>
                             </div>
