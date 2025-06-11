@@ -108,6 +108,44 @@ try {
                     }
                     break;
                     
+                case 'personality-analysis':
+                    // Haal persoonlijkheidsanalyse op via share_id
+                    $shareId = $_GET['share_id'] ?? '';
+                    
+                    if (empty($shareId)) {
+                        http_response_code(400);
+                        echo json_encode([
+                            'success' => false,
+                            'error' => 'Share ID is required'
+                        ]);
+                        break;
+                    }
+                    
+                    // Haal resultaten op
+                    $results = $stemwijzerController->getResultsByShareId($shareId);
+                    
+                    if ($results && isset($results['answers'])) {
+                        // Haal vragen op voor analyse
+                        $stemwijzerData = $stemwijzerController->getStemwijzerData();
+                        
+                        // Bereken persoonlijkheidsanalyse
+                        $personalityAnalysis = $stemwijzerController->analyzePoliticalPersonality($results['answers'], $stemwijzerData['questions']);
+                        
+                        echo json_encode([
+                            'success' => true,
+                            'personality_analysis' => $personalityAnalysis,
+                            'message' => 'Persoonlijkheidsanalyse succesvol berekend'
+                        ]);
+                    } else {
+                        http_response_code(404);
+                        echo json_encode([
+                            'success' => false,
+                            'error' => 'Results not found',
+                            'message' => 'Geen resultaten gevonden voor deze link'
+                        ]);
+                    }
+                    break;
+                    
                 case 'test-save':
                     // Test de save functionaliteit
                     $testSessionId = 'api_test_' . time();

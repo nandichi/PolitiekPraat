@@ -746,111 +746,198 @@ require_once 'views/templates/header.php';
                     </h2>
                     
                     <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed mb-8">
-                        Ontdek wie je bent in de politieke wereld en wat jouw unieke standpunten zeggen over jouw persoonlijkheid.
+                        Op basis van jouw antwoorden hebben we een uniek profiel samengesteld dat jouw politieke voorkeur en persoonlijkheid beschrijft.
                     </p>
                 </div>
 
-                <!-- Persoonlijkheidsanalyse Card -->
-                <div class="bg-white/90 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/50 overflow-hidden mb-16">
-                    <div class="bg-gradient-to-r" :class="'bg-gradient-to-r ' + personalityAnalysis.political_profile.color">
-                        <div class="p-8 text-white relative overflow-hidden">
-                            <div class="absolute inset-0 bg-gradient-to-r from-black/10 to-transparent"></div>
-                            <div class="absolute top-0 right-0 w-64 h-64 rounded-full bg-white/10 blur-3xl transform translate-x-32 -translate-y-32"></div>
-                            
-                            <div class="relative z-10">
-                                <div class="flex items-center justify-between mb-6">
-                                    <div>
-                                        <h3 class="text-3xl font-bold mb-2" x-text="personalityAnalysis.political_profile.type"></h3>
-                                        <p class="text-white/90 text-lg leading-relaxed" x-text="personalityAnalysis.political_profile.description"></p>
-                                    </div>
-                                    <div class="text-6xl opacity-20">🗳️</div>
+                <!-- Hoofdprofiel Card -->
+                <div class="bg-white/90 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/50 overflow-hidden mb-12">
+                    <div class="bg-gradient-to-r p-8 text-white relative overflow-hidden" :class="personalityAnalysis.political_profile.color">
+                        <div class="absolute inset-0 bg-gradient-to-r from-black/10 to-transparent"></div>
+                        <div class="absolute top-0 right-0 w-64 h-64 rounded-full bg-white/10 blur-3xl transform translate-x-32 -translate-y-32"></div>
+                        
+                        <div class="relative z-10">
+                            <div class="flex items-center justify-between mb-6">
+                                <div>
+                                    <h3 class="text-3xl font-bold mb-2" x-text="personalityAnalysis.political_profile.type"></h3>
+                                    <p class="text-white/90 text-lg leading-relaxed" x-text="personalityAnalysis.political_profile.description"></p>
                                 </div>
-                                
-                                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                                    <div class="bg-white/20 rounded-xl p-4 text-center">
-                                        <div class="text-2xl font-bold" x-text="Math.round(personalityAnalysis.left_right_percentage) + '%'"></div>
-                                        <div class="text-sm opacity-90">Rechts</div>
-                                    </div>
-                                    <div class="bg-white/20 rounded-xl p-4 text-center">
-                                        <div class="text-2xl font-bold" x-text="Math.round(personalityAnalysis.progressive_percentage) + '%'"></div>
-                                        <div class="text-sm opacity-90">Progressief</div>
-                                    </div>
-                                    <div class="bg-white/20 rounded-xl p-4 text-center">
-                                        <div class="text-2xl font-bold" x-text="Math.round(personalityAnalysis.authoritarian_percentage) + '%'"></div>
-                                        <div class="text-sm opacity-90">Autoritair</div>
-                                    </div>
-                                    <div class="bg-white/20 rounded-xl p-4 text-center">
-                                        <div class="text-2xl font-bold" x-text="Math.round(personalityAnalysis.eu_pro_percentage) + '%'"></div>
-                                        <div class="text-sm opacity-90">Pro-EU</div>
-                                    </div>
+                                <div class="text-6xl opacity-20">🗳️</div>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                <div class="bg-white/20 rounded-xl p-4 text-center">
+                                    <div class="text-2xl font-bold" x-text="Math.round(personalityAnalysis.left_right_percentage) + '%'"></div>
+                                    <div class="text-sm opacity-90">Rechts</div>
+                                </div>
+                                <div class="bg-white/20 rounded-xl p-4 text-center">
+                                    <div class="text-2xl font-bold" x-text="Math.round(personalityAnalysis.progressive_percentage) + '%'"></div>
+                                    <div class="text-sm opacity-90">Progressief</div>
+                                </div>
+                                <div class="bg-white/20 rounded-xl p-4 text-center">
+                                    <div class="text-2xl font-bold" x-text="Math.round(personalityAnalysis.authoritarian_percentage) + '%'"></div>
+                                    <div class="text-sm opacity-90">Autoritair</div>
+                                </div>
+                                <div class="bg-white/20 rounded-xl p-4 text-center">
+                                    <div class="text-2xl font-bold" x-text="Math.round(personalityAnalysis.eu_pro_percentage) + '%'"></div>
+                                    <div class="text-sm opacity-90">Pro-EU</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- Persoonlijkheidskenmerken -->
+                    <!-- Politiek Kompas -->
                     <div class="p-8">
-                        <h4 class="text-2xl font-bold text-gray-800 mb-6 text-center">Jouw Politieke Kenmerken</h4>
+                        <h4 class="text-2xl font-bold text-gray-800 mb-6 text-center">Jouw Positie op het Politieke Kompas</h4>
                         
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" x-show="personalityAnalysis.personality_traits.length > 0">
-                            <template x-for="trait in personalityAnalysis.personality_traits" :key="trait.name">
-                                <div class="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 border border-gray-200 text-center hover:shadow-lg transition-shadow">
-                                    <div class="text-4xl mb-4" x-text="trait.icon"></div>
-                                    <h5 class="text-lg font-bold text-gray-800 mb-2" x-text="trait.name"></h5>
-                                    <p class="text-gray-600 text-sm leading-relaxed" x-text="trait.description"></p>
+                        <div class="max-w-md mx-auto mb-8">
+                            <div class="relative w-80 h-80 mx-auto">
+                                <!-- Kompas achtergrond -->
+                                <div class="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full border-2 border-gray-300"></div>
+                                
+                                <!-- Kwadranten -->
+                                <div class="absolute inset-0 grid grid-cols-2 grid-rows-2 rounded-full overflow-hidden">
+                                    <div class="bg-green-200/30 border-r border-b border-gray-300 flex items-center justify-center">
+                                        <span class="text-xs font-medium text-green-700 text-center">Links<br/>Liberaal</span>
+                                    </div>
+                                    <div class="bg-blue-200/30 border-b border-gray-300 flex items-center justify-center">
+                                        <span class="text-xs font-medium text-blue-700 text-center">Rechts<br/>Liberaal</span>
+                                    </div>
+                                    <div class="bg-red-200/30 border-r border-gray-300 flex items-center justify-center">
+                                        <span class="text-xs font-medium text-red-700 text-center">Links<br/>Autoritair</span>
+                                    </div>
+                                    <div class="bg-indigo-200/30 flex items-center justify-center">
+                                        <span class="text-xs font-medium text-indigo-700 text-center">Rechts<br/>Autoritair</span>
+                                    </div>
                                 </div>
-                            </template>
+                                
+                                <!-- Assen labels -->
+                                <div class="absolute top-2 left-1/2 transform -translate-x-1/2 text-xs font-medium text-gray-600">Liberaal</div>
+                                <div class="absolute bottom-2 left-1/2 transform -translate-x-1/2 text-xs font-medium text-gray-600">Autoritair</div>
+                                <div class="absolute left-2 top-1/2 transform -translate-y-1/2 text-xs font-medium text-gray-600 -rotate-90">Links</div>
+                                <div class="absolute right-2 top-1/2 transform -translate-y-1/2 text-xs font-medium text-gray-600 rotate-90">Rechts</div>
+                                
+                                <!-- Jouw positie -->
+                                <div class="absolute w-4 h-4 rounded-full border-2 border-white shadow-lg transform -translate-x-2 -translate-y-2"
+                                     :class="'bg-' + personalityAnalysis.compass_position.quadrant.color + '-500'"
+                                     :style="'left: ' + ((personalityAnalysis.compass_position.x + 50) * 2.8) + 'px; top: ' + ((-personalityAnalysis.compass_position.y + 50) * 2.8) + 'px;'">
+                                </div>
+                                
+                                <!-- Centrum punt -->
+                                <div class="absolute top-1/2 left-1/2 w-2 h-2 bg-gray-400 rounded-full transform -translate-x-1 -translate-y-1"></div>
+                            </div>
                         </div>
                         
-                        <!-- Politiek Kompas -->
-                        <div class="mt-12">
-                            <h4 class="text-xl font-bold text-gray-800 mb-6 text-center">Jouw Positie op het Politieke Kompas</h4>
-                            
-                            <div class="max-w-sm mx-auto">
-                                <div class="relative w-64 h-64 mx-auto">
-                                    <!-- Kompas achtergrond -->
-                                    <div class="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full border-2 border-gray-300"></div>
-                                    
-                                    <!-- Kwadranten -->
-                                    <div class="absolute inset-0 grid grid-cols-2 grid-rows-2 rounded-full overflow-hidden">
-                                        <div class="bg-green-200/30 border-r border-b border-gray-300 flex items-center justify-center">
-                                            <span class="text-xs font-medium text-green-700 text-center">Links<br/>Liberaal</span>
-                                        </div>
-                                        <div class="bg-blue-200/30 border-b border-gray-300 flex items-center justify-center">
-                                            <span class="text-xs font-medium text-blue-700 text-center">Rechts<br/>Liberaal</span>
-                                        </div>
-                                        <div class="bg-red-200/30 border-r border-gray-300 flex items-center justify-center">
-                                            <span class="text-xs font-medium text-red-700 text-center">Links<br/>Autoritair</span>
-                                        </div>
-                                        <div class="bg-indigo-200/30 flex items-center justify-center">
-                                            <span class="text-xs font-medium text-indigo-700 text-center">Rechts<br/>Autoritair</span>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- Assen labels -->
-                                    <div class="absolute top-1 left-1/2 transform -translate-x-1/2 text-xs font-medium text-gray-600">Liberaal</div>
-                                    <div class="absolute bottom-1 left-1/2 transform -translate-x-1/2 text-xs font-medium text-gray-600">Autoritair</div>
-                                    <div class="absolute left-1 top-1/2 transform -translate-y-1/2 text-xs font-medium text-gray-600 -rotate-90">Links</div>
-                                    <div class="absolute right-1 top-1/2 transform -translate-y-1/2 text-xs font-medium text-gray-600 rotate-90">Rechts</div>
-                                    
-                                    <!-- Jouw positie -->
-                                    <div class="absolute w-3 h-3 rounded-full border-2 border-white shadow-lg transform -translate-x-1.5 -translate-y-1.5"
-                                         :class="'bg-' + personalityAnalysis.compass_position.quadrant.color + '-500'"
-                                         :style="'left: ' + ((personalityAnalysis.compass_position.x + 50) * 2.24) + 'px; top: ' + ((-personalityAnalysis.compass_position.y + 50) * 2.24) + 'px;'">
-                                    </div>
-                                    
-                                    <!-- Centrum punt -->
-                                    <div class="absolute top-1/2 left-1/2 w-1.5 h-1.5 bg-gray-400 rounded-full transform -translate-x-0.75 -translate-y-0.75"></div>
-                                </div>
+                        <div class="text-center">
+                            <div class="inline-flex items-center px-4 py-2 rounded-full font-semibold"
+                                 :class="'bg-' + personalityAnalysis.compass_position.quadrant.color + '-100 text-' + personalityAnalysis.compass_position.quadrant.color + '-800'">
+                                <div class="w-3 h-3 rounded-full mr-2"
+                                     :class="'bg-' + personalityAnalysis.compass_position.quadrant.color + '-500'"></div>
+                                <span x-text="personalityAnalysis.compass_position.quadrant.name"></span>
                             </div>
-                            
-                            <div class="text-center mt-6">
-                                <div class="inline-flex items-center px-4 py-2 rounded-full font-semibold"
-                                     :class="'bg-' + personalityAnalysis.compass_position.quadrant.color + '-100 text-' + personalityAnalysis.compass_position.quadrant.color + '-800'">
-                                    <div class="w-3 h-3 rounded-full mr-2"
-                                         :class="'bg-' + personalityAnalysis.compass_position.quadrant.color + '-500'"></div>
-                                    <span x-text="personalityAnalysis.compass_position.quadrant.name"></span>
-                                </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Persoonlijkheidskenmerken -->
+                <div x-show="personalityAnalysis.personality_traits.length > 0" class="bg-white/90 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/50 p-8 mb-12">
+                    <h4 class="text-2xl font-bold text-gray-800 mb-6 text-center">Jouw Politieke Kenmerken</h4>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <template x-for="trait in personalityAnalysis.personality_traits" :key="trait.name">
+                            <div class="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 border border-gray-200 text-center hover:shadow-lg transition-shadow">
+                                <div class="text-4xl mb-4" x-text="trait.icon"></div>
+                                <h5 class="text-lg font-bold text-gray-800 mb-2" x-text="trait.name"></h5>
+                                <p class="text-gray-600 text-sm leading-relaxed" x-text="trait.description"></p>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+
+                <!-- Politieke Assen Analyse -->
+                <div class="bg-white/90 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/50 p-8 mb-16">
+                    <h4 class="text-2xl font-bold text-gray-800 mb-8 text-center">Gedetailleerde Politieke Analyse</h4>
+                    
+                    <div class="space-y-8">
+                        <!-- Links-Rechts As -->
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-sm font-medium text-gray-600">Economisch Links</span>
+                                <span class="text-sm font-medium text-gray-600">Economisch Rechts</span>
+                            </div>
+                            <div class="relative h-4 bg-gradient-to-r from-red-200 via-gray-200 to-blue-200 rounded-full">
+                                <div class="absolute top-0 h-full bg-gradient-to-r from-red-500 to-blue-500 rounded-full transition-all duration-700"
+                                     :style="'width: ' + Math.round(personalityAnalysis.left_right_percentage) + '%; opacity: 0.8;'"></div>
+                                <div class="absolute top-1/2 transform -translate-y-1/2 w-3 h-3 bg-white border-2 border-gray-400 rounded-full shadow"
+                                     :style="'left: calc(' + Math.round(personalityAnalysis.left_right_percentage) + '% - 6px);'"></div>
+                            </div>
+                            <div class="text-center mt-2">
+                                <span class="text-lg font-bold text-gray-700"><span x-text="Math.round(personalityAnalysis.left_right_percentage)"></span>% Rechts georiënteerd</span>
+                            </div>
+                        </div>
+
+                        <!-- Progressief-Conservatief As -->
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-sm font-medium text-gray-600">Conservatief</span>
+                                <span class="text-sm font-medium text-gray-600">Progressief</span>
+                            </div>
+                            <div class="relative h-4 bg-gradient-to-r from-orange-200 via-gray-200 to-green-200 rounded-full">
+                                <div class="absolute top-0 h-full bg-gradient-to-r from-orange-500 to-green-500 rounded-full transition-all duration-700"
+                                     :style="'width: ' + Math.round(personalityAnalysis.progressive_percentage) + '%; opacity: 0.8;'"></div>
+                                <div class="absolute top-1/2 transform -translate-y-1/2 w-3 h-3 bg-white border-2 border-gray-400 rounded-full shadow"
+                                     :style="'left: calc(' + Math.round(personalityAnalysis.progressive_percentage) + '% - 6px);'"></div>
+                            </div>
+                            <div class="text-center mt-2">
+                                <span class="text-lg font-bold text-gray-700"><span x-text="Math.round(personalityAnalysis.progressive_percentage)"></span>% Progressief</span>
+                            </div>
+                        </div>
+
+                        <!-- Autoritair-Libertair As -->
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-sm font-medium text-gray-600">Libertair</span>
+                                <span class="text-sm font-medium text-gray-600">Autoritair</span>
+                            </div>
+                            <div class="relative h-4 bg-gradient-to-r from-purple-200 via-gray-200 to-red-200 rounded-full">
+                                <div class="absolute top-0 h-full bg-gradient-to-r from-purple-500 to-red-500 rounded-full transition-all duration-700"
+                                     :style="'width: ' + Math.round(personalityAnalysis.authoritarian_percentage) + '%; opacity: 0.8;'"></div>
+                                <div class="absolute top-1/2 transform -translate-y-1/2 w-3 h-3 bg-white border-2 border-gray-400 rounded-full shadow"
+                                     :style="'left: calc(' + Math.round(personalityAnalysis.authoritarian_percentage) + '% - 6px);'"></div>
+                            </div>
+                            <div class="text-center mt-2">
+                                <span class="text-lg font-bold text-gray-700"><span x-text="Math.round(personalityAnalysis.authoritarian_percentage)"></span>% Autoritair</span>
+                            </div>
+                        </div>
+
+                        <!-- EU As -->
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-sm font-medium text-gray-600">EU Skeptisch</span>
+                                <span class="text-sm font-medium text-gray-600">Pro-EU</span>
+                            </div>
+                            <div class="relative h-4 bg-gradient-to-r from-yellow-200 via-gray-200 to-blue-200 rounded-full">
+                                <div class="absolute top-0 h-full bg-gradient-to-r from-yellow-500 to-blue-500 rounded-full transition-all duration-700"
+                                     :style="'width: ' + Math.round(personalityAnalysis.eu_pro_percentage) + '%; opacity: 0.8;'"></div>
+                                <div class="absolute top-1/2 transform -translate-y-1/2 w-3 h-3 bg-white border-2 border-gray-400 rounded-full shadow"
+                                     :style="'left: calc(' + Math.round(personalityAnalysis.eu_pro_percentage) + '% - 6px);'"></div>
+                            </div>
+                            <div class="text-center mt-2">
+                                <span class="text-lg font-bold text-gray-700"><span x-text="Math.round(personalityAnalysis.eu_pro_percentage)"></span>% Pro-EU</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Statistieken -->
+                    <div class="mt-8 pt-8 border-t border-gray-200">
+                        <div class="grid grid-cols-2 gap-6 text-center">
+                            <div class="bg-blue-50 rounded-xl p-4">
+                                <div class="text-2xl font-bold text-blue-600" x-text="personalityAnalysis.total_answered"></div>
+                                <div class="text-sm text-blue-700">Vragen beantwoord</div>
+                            </div>
+                            <div class="bg-purple-50 rounded-xl p-4">
+                                <div class="text-2xl font-bold text-purple-600" x-text="personalityAnalysis.political_profile.type"></div>
+                                <div class="text-sm text-purple-700">Politiek Type</div>
                             </div>
                         </div>
                     </div>
@@ -1002,27 +1089,27 @@ require_once 'views/templates/header.php';
                 </div>
 
                 <!-- Complete Results List -->
-                <div class="bg-white/90 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/50 overflow-hidden mb-12">
+                <div class="bg-white/90 backdrop-blur-2xl rounded-2xl sm:rounded-3xl shadow-2xl border border-white/50 overflow-hidden mb-12">
                     <!-- Header -->
-                    <div class="bg-gradient-to-r from-indigo-50 to-purple-50 px-8 py-6 border-b border-gray-100">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
-                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="bg-gradient-to-r from-indigo-50 to-purple-50 px-4 sm:px-6 lg:px-8 py-4 sm:py-6 border-b border-gray-100">
+                        <div class="flex items-center space-x-2 sm:space-x-3">
+                            <div class="w-8 sm:w-10 h-8 sm:h-10 rounded-lg sm:rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+                                <svg class="w-4 sm:w-5 h-4 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
                                 </svg>
                             </div>
-                            <h3 class="text-2xl font-bold text-gray-800">Volledige Ranglijst</h3>
+                            <h3 class="text-lg sm:text-xl lg:text-2xl font-bold text-gray-800">Volledige Ranglijst</h3>
                         </div>
                     </div>
                     
                     <!-- Results List -->
                     <div class="divide-y divide-gray-100">
                         <template x-for="(result, index) in finalResults" :key="index">
-                            <div class="px-8 py-6 hover:bg-gray-50 transition-all duration-300 group cursor-pointer" @click="showPartyExplanation(result)">
-                                <div class="flex items-center space-x-6">
+                            <div class="px-4 sm:px-6 lg:px-8 py-4 sm:py-6 hover:bg-gray-50 transition-all duration-300 group cursor-pointer" @click="showPartyExplanation(result)">
+                                <div class="flex items-center space-x-3 sm:space-x-4 lg:space-x-6">
                                     <!-- Rank -->
                                     <div class="flex-shrink-0">
-                                        <div class="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-lg"
+                                        <div class="w-8 sm:w-10 h-8 sm:h-10 rounded-lg sm:rounded-xl flex items-center justify-center font-bold text-sm sm:text-lg"
                                              :class="{
                                                 'bg-gradient-to-br from-yellow-400 to-yellow-600 text-white shadow-lg shadow-yellow-500/25': index === 0,
                                                 'bg-gradient-to-br from-gray-400 to-gray-600 text-white shadow-lg shadow-gray-500/25': index === 1,
@@ -1034,19 +1121,19 @@ require_once 'views/templates/header.php';
                                     </div>
                                     
                                     <!-- Party Info -->
-                                    <div class="flex items-center space-x-4 flex-1">
+                                    <div class="flex items-center space-x-3 sm:space-x-4 flex-1 min-w-0">
                                         <!-- Logo -->
-                                        <div class="w-14 h-14 rounded-xl bg-white border border-gray-200 p-2 shadow-sm group-hover:shadow-md transition-shadow">
-                                            <img :src="result.logo" :alt="result.name" class="w-full h-full object-contain rounded-lg">
+                                        <div class="w-10 sm:w-12 lg:w-14 h-10 sm:h-12 lg:h-14 rounded-lg sm:rounded-xl bg-white border border-gray-200 p-1 sm:p-2 shadow-sm group-hover:shadow-md transition-shadow flex-shrink-0">
+                                            <img :src="result.logo" :alt="result.name" class="w-full h-full object-contain rounded-sm sm:rounded-lg">
                                         </div>
                                         
                                         <!-- Name & Progress -->
-                                        <div class="flex-1">
-                                            <h4 class="text-xl font-bold text-gray-800 mb-2 group-hover:text-indigo-600 transition-colors" x-text="result.name"></h4>
+                                        <div class="flex-1 min-w-0">
+                                            <h4 class="text-base sm:text-lg lg:text-xl font-bold text-gray-800 mb-1 sm:mb-2 group-hover:text-indigo-600 transition-colors truncate" x-text="result.name"></h4>
                                             
                                             <!-- Progress Bar -->
-                                            <div class="flex items-center space-x-3">
-                                                <div class="flex-1 h-3 bg-gray-100 rounded-full overflow-hidden">
+                                            <div class="flex items-center space-x-2 sm:space-x-3">
+                                                <div class="flex-1 h-2 sm:h-3 bg-gray-100 rounded-full overflow-hidden">
                                                     <div class="h-full rounded-full transition-all duration-700 ease-out"
                                                          :class="{
                                                             'bg-gradient-to-r from-yellow-400 to-yellow-600': index === 0,
@@ -1057,19 +1144,19 @@ require_once 'views/templates/header.php';
                                                          :style="'width: ' + result.agreement + '%'">
                                                     </div>
                                                 </div>
-                                                <div class="text-sm text-gray-500 min-w-[4rem]" x-text="result.agreement + '%'"></div>
+                                                <div class="text-xs sm:text-sm text-gray-500 min-w-[2.5rem] sm:min-w-[4rem]" x-text="result.agreement + '%'"></div>
                                             </div>
                                         </div>
                                     </div>
                                     
                                     <!-- Percentage & Arrow -->
-                                    <div class="flex items-center space-x-4">
-                                        <div class="text-right">
-                                            <div class="text-3xl font-bold text-gray-800" x-text="result.agreement + '%'"></div>
-                                            <div class="text-sm text-gray-500">match</div>
+                                    <div class="flex items-center space-x-2 sm:space-x-4 flex-shrink-0">
+                                        <div class="text-right hidden sm:block">
+                                            <div class="text-lg sm:text-2xl lg:text-3xl font-bold text-gray-800" x-text="result.agreement + '%'"></div>
+                                            <div class="text-xs sm:text-sm text-gray-500">match</div>
                                         </div>
                                         
-                                        <svg class="w-6 h-6 text-gray-400 group-hover:text-indigo-500 group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg class="w-4 sm:w-5 lg:w-6 h-4 sm:h-5 lg:h-6 text-gray-400 group-hover:text-indigo-500 group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                                         </svg>
                                     </div>
@@ -1246,13 +1333,6 @@ require_once 'views/templates/header.php';
                                     <div class="text-sm text-gray-500 mb-1">Jouw resultatenlink:</div>
                                     <div class="text-blue-600 font-mono text-sm break-all" x-text="shareUrl"></div>
                                 </div>
-                                <button @click="copyShareUrl()" 
-                                        class="px-4 py-2 bg-blue-100 hover:bg-blue-200 text-blue-700 rounded-xl font-medium transition-colors flex items-center space-x-2">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
-                                    </svg>
-                                    <span>Kopiëren</span>
-                                </button>
                             </div>
                         </div>
                         
@@ -1264,14 +1344,6 @@ require_once 'views/templates/header.php';
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
                                 </svg>
                                 <span>Link kopiëren</span>
-                            </button>
-                            
-                            <button @click="shareResultsViaLink()" 
-                                    class="group px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-xl font-semibold transition-all duration-300 hover:shadow-lg flex items-center space-x-2">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"/>
-                                </svg>
-                                <span>Link delen</span>
                             </button>
                             
                             <button @click="openShareUrl()" 
@@ -1306,7 +1378,26 @@ function stemwijzer() {
         
         results: {},
         finalResults: [],
-        personalityAnalysis: {},
+        personalityAnalysis: {
+            political_profile: {
+                type: '',
+                description: '',
+                color: 'from-gray-500 to-slate-600'
+            },
+            personality_traits: [],
+            compass_position: {
+                x: 0,
+                y: 0,
+                quadrant: {
+                    name: 'Centraal',
+                    color: 'gray'
+                }
+            },
+            left_right_percentage: 50,
+            progressive_percentage: 50,
+            authoritarian_percentage: 50,
+            eu_pro_percentage: 50
+        },
         showPartyDetails: false,
         detailedParty: null,
         showingQuestion: null,
@@ -1701,6 +1792,8 @@ function stemwijzer() {
 
             // Normaliseer scores naar percentages
             const totalQuestions = Object.keys(this.answers).length;
+            analysis.total_answered = totalQuestions;
+            
             if (totalQuestions > 0) {
                 analysis.left_right_percentage = ((analysis.left_right_score / totalQuestions) + 1) * 50;
                 analysis.progressive_percentage = ((analysis.progressive_conservative_score / totalQuestions) + 1) * 50;
@@ -1855,6 +1948,9 @@ function stemwijzer() {
                     this.shareUrl = result.share_url;
                     this.shareId = result.share_id;
                     
+                    // Haal uitgebreide persoonlijkheidsanalyse op van de backend
+                    await this.loadPersonalityAnalysisFromBackend(result.share_id);
+                    
                     console.log('🔗 Share URL:', this.shareUrl);
                 } else {
                     console.warn('❌ Fout bij opslaan:', result.error);
@@ -1862,6 +1958,28 @@ function stemwijzer() {
                 }
             } catch (error) {
                 console.error('❌ Netwerk fout bij opslaan van resultaten:', error);
+            }
+        },
+        
+        async loadPersonalityAnalysisFromBackend(shareId) {
+            try {
+                console.log('🧠 Laden persoonlijkheidsanalyse van backend...');
+                
+                const response = await fetch(`/api/stemwijzer.php?action=personality-analysis&share_id=${shareId}`);
+                const result = await response.json();
+                
+                if (result.success && result.personality_analysis) {
+                    console.log('✅ Persoonlijkheidsanalyse geladen van backend:', result.personality_analysis);
+                    this.personalityAnalysis = result.personality_analysis;
+                } else {
+                    console.warn('❌ Kon persoonlijkheidsanalyse niet laden van backend, gebruik client-side versie');
+                    // Fallback naar client-side berekening
+                    this.calculatePersonalityAnalysis();
+                }
+            } catch (error) {
+                console.error('❌ Fout bij laden persoonlijkheidsanalyse van backend:', error);
+                // Fallback naar client-side berekening
+                this.calculatePersonalityAnalysis();
             }
         },
         
