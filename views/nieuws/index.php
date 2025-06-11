@@ -240,6 +240,19 @@
     <!-- News Articles Section -->
     <section class="relative z-10 pb-32">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Debug info (tijdelijk) -->
+            <?php if (isset($_GET['debug'])): ?>
+                <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded mb-8">
+                    <strong>Debug Info:</strong><br>
+                    - Huidige pagina: <?php echo $currentPage; ?><br>
+                    - Totaal pagina's: <?php echo $totalPages; ?><br>
+                    - Totaal artikelen: <?php echo $totalArticles; ?><br>
+                    - Artikelen per pagina: <?php echo $articlesPerPage; ?><br>
+                    - Artikelen gevonden: <?php echo count($latest_news); ?><br>
+                    - Filter: <?php echo $filter; ?>
+                </div>
+            <?php endif; ?>
+            
             <?php if (!empty($latest_news)): ?>
                                  <!-- Premium Articles Grid -->
                  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -338,60 +351,145 @@
                     <?php endforeach; ?>
                 </div>
                 
-                <!-- Load More Section -->
-                <div class="text-center mt-20" data-aos="zoom-in" data-aos-delay="400" data-aos-once="true">
+                <!-- Pagination Section -->
+                <?php if (isset($_GET['debug'])): ?>
+                    <div class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded mb-8">
+                        <strong>Paginering Debug:</strong><br>
+                        - $totalPages: <?php echo $totalPages; ?><br>
+                        - Conditie ($totalPages > 1): <?php echo ($totalPages > 1) ? 'true' : 'false'; ?>
+                    </div>
+                <?php endif; ?>
+                
+                <?php if ($totalPages > 1): ?>
+                <div class="text-center mt-20" data-aos="fade-up" data-aos-delay="400" data-aos-once="true">
                     <div class="relative inline-block">
                         <!-- Multi-layered glow effect -->
-                        <div class="absolute -inset-8 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-800 rounded-3xl blur-2xl opacity-20 animate-pulse"></div>
-                        <div class="absolute -inset-4 bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-700 rounded-2xl blur-xl opacity-30"></div>
+                        <div class="absolute -inset-4 bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-700 rounded-2xl blur-xl opacity-20"></div>
                         
-                        <!-- Main button container -->
+                        <!-- Main pagination container -->
                         <div class="relative bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow-2xl border border-white/50">
                             <div class="space-y-6">
-                                <div class="space-y-4">
-                                    <h3 class="text-2xl sm:text-3xl font-black text-slate-900">Ontdek meer nieuws</h3>
-                                    <p class="text-slate-600 max-w-2xl mx-auto">
-                                        Blijf op de hoogte van alle ontwikkelingen door verschillende bronnen en perspectieven te verkennen
+                                <!-- Pagination Info -->
+                                <div class="text-center space-y-2">
+                                    <h3 class="text-xl font-bold text-slate-900">
+                                        Pagina <?php echo $currentPage; ?> van <?php echo $totalPages; ?>
+                                    </h3>
+                                    <p class="text-slate-600">
+                                        Totaal <?php echo $totalArticles; ?> artikelen gevonden
                                     </p>
                                 </div>
                                 
-                                <!-- Stats -->
-                                <div class="grid grid-cols-3 gap-6 py-6">
-                                    <div class="text-center">
-                                        <div class="text-2xl font-bold text-blue-600"><?php echo count($latest_news); ?>+</div>
-                                        <div class="text-sm text-slate-500">Artikelen</div>
-                                    </div>
-                                    <div class="text-center">
-                                        <div class="text-2xl font-bold text-purple-600">2</div>
-                                        <div class="text-sm text-slate-500">Perspectieven</div>
-                                    </div>
-                                    <div class="text-center">
-                                        <div class="text-2xl font-bold text-indigo-600">24/7</div>
-                                        <div class="text-sm text-slate-500">Updates</div>
-                                    </div>
+                                <!-- Pagination Controls -->
+                                <div class="flex items-center justify-center space-x-2">
+                                    <!-- Vorige Pagina -->
+                                    <?php if ($currentPage > 1): ?>
+                                        <a href="?<?php 
+                                            $params = [];
+                                            if ($filter !== 'alle') $params[] = "filter=$filter";
+                                            $params[] = "page=" . ($currentPage - 1);
+                                            echo implode('&', $params);
+                                        ?>#artikelen" 
+                                           class="group relative flex items-center justify-center w-12 h-12 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-xl">
+                                            <svg class="w-5 h-5 transform group-hover:-translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                                            </svg>
+                                        </a>
+                                    <?php endif; ?>
+                                    
+                                    <!-- Pagina Nummers -->
+                                    <?php
+                                    $startPage = max(1, $currentPage - 2);
+                                    $endPage = min($totalPages, $currentPage + 2);
+                                    
+                                    // Eerste pagina
+                                    if ($startPage > 1):
+                                    ?>
+                                        <a href="?<?php 
+                                            $params = [];
+                                            if ($filter !== 'alle') $params[] = "filter=$filter";
+                                            $params[] = "page=1";
+                                            echo implode('&', $params);
+                                        ?>#artikelen" 
+                                           class="flex items-center justify-center w-12 h-12 text-slate-700 bg-white/70 hover:bg-white rounded-xl transition-all duration-300 hover:scale-105 shadow-md hover:shadow-lg font-medium">
+                                            1
+                                        </a>
+                                        <?php if ($startPage > 2): ?>
+                                            <span class="text-slate-400 font-bold">...</span>
+                                        <?php endif; ?>
+                                    <?php endif; ?>
+                                    
+                                    <!-- Huidige range -->
+                                    <?php for ($i = $startPage; $i <= $endPage; $i++): ?>
+                                        <a href="?<?php 
+                                            $params = [];
+                                            if ($filter !== 'alle') $params[] = "filter=$filter";
+                                            $params[] = "page=$i";
+                                            echo implode('&', $params);
+                                        ?>#artikelen" 
+                                           class="flex items-center justify-center w-12 h-12 <?php echo $i === $currentPage ? 'bg-gradient-to-r from-blue-600 to-indigo-700 text-white shadow-lg' : 'text-slate-700 bg-white/70 hover:bg-white'; ?> rounded-xl transition-all duration-300 hover:scale-105 shadow-md hover:shadow-lg font-medium">
+                                            <?php echo $i; ?>
+                                        </a>
+                                    <?php endfor; ?>
+                                    
+                                    <!-- Laatste pagina -->
+                                    <?php if ($endPage < $totalPages): ?>
+                                        <?php if ($endPage < $totalPages - 1): ?>
+                                            <span class="text-slate-400 font-bold">...</span>
+                                        <?php endif; ?>
+                                        <a href="?<?php 
+                                            $params = [];
+                                            if ($filter !== 'alle') $params[] = "filter=$filter";
+                                            $params[] = "page=$totalPages";
+                                            echo implode('&', $params);
+                                        ?>#artikelen" 
+                                           class="flex items-center justify-center w-12 h-12 text-slate-700 bg-white/70 hover:bg-white rounded-xl transition-all duration-300 hover:scale-105 shadow-md hover:shadow-lg font-medium">
+                                            <?php echo $totalPages; ?>
+                                        </a>
+                                    <?php endif; ?>
+                                    
+                                    <!-- Volgende Pagina -->
+                                    <?php if ($currentPage < $totalPages): ?>
+                                        <a href="?<?php 
+                                            $params = [];
+                                            if ($filter !== 'alle') $params[] = "filter=$filter";
+                                            $params[] = "page=" . ($currentPage + 1);
+                                            echo implode('&', $params);
+                                        ?>#artikelen" 
+                                           class="group relative flex items-center justify-center w-12 h-12 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-xl">
+                                            <svg class="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                            </svg>
+                                        </a>
+                                    <?php endif; ?>
                                 </div>
                                 
-                                <!-- CTA Button -->
-                                <a href="?clear_cache=1<?php echo !empty($filter) && $filter !== 'alle' ? "&filter=$filter" : ""; ?>#artikelen" 
-                                   class="group relative inline-flex items-center justify-center px-12 py-5 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-800 bg-size-200 bg-pos-0 hover:bg-pos-100 text-white font-bold text-xl rounded-2xl transition-all duration-500 transform hover:scale-105 shadow-2xl hover:shadow-3xl overflow-hidden">
-                                    
-                                    <!-- Button content -->
-                                    <div class="relative z-10 flex items-center">
-                                        <span class="mr-4">Laad meer artikelen</span>
-                                        <div class="relative">
-                                            <svg class="w-7 h-7 transform transition-transform duration-500 group-hover:translate-x-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <!-- Refresh Button -->
+                                <div class="pt-4 border-t border-slate-200/50">
+                                    <a href="?clear_cache=1<?php 
+                                        $params = [];
+                                        if ($filter !== 'alle') $params[] = "filter=$filter";
+                                        if ($currentPage > 1) $params[] = "page=$currentPage";
+                                        echo !empty($params) ? '&' . implode('&', $params) : '';
+                                    ?>#artikelen" 
+                                       class="group relative inline-flex items-center justify-center px-8 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-bold rounded-xl transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl overflow-hidden">
+                                        
+                                        <!-- Button content -->
+                                        <div class="relative z-10 flex items-center">
+                                            <svg class="w-5 h-5 mr-3 transform group-hover:rotate-180 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
                                             </svg>
+                                            <span>Vernieuw artikelen</span>
                                         </div>
-                                    </div>
-                                    
-                                    <!-- Shimmer effect -->
-                                    <div class="absolute inset-0 -top-full bg-gradient-to-b from-transparent via-white/30 to-transparent transform skew-y-12 group-hover:animate-shimmer"></div>
-                                </a>
+                                        
+                                        <!-- Shimmer effect -->
+                                        <div class="absolute inset-0 -top-full bg-gradient-to-b from-transparent via-white/30 to-transparent transform skew-y-12 group-hover:animate-shimmer"></div>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <?php endif; ?>
                 
             <?php else: ?>
                 <!-- No Articles State - Premium Design -->

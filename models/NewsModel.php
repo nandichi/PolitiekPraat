@@ -60,6 +60,83 @@ class NewsModel {
     }
     
     /**
+     * Haal alle nieuwsartikelen op met paginering
+     */
+    public function getAllNewsPaginated($page = 1, $perPage = 9) {
+        $offset = ($page - 1) * $perPage;
+        $sql = "SELECT * FROM news_articles ORDER BY published_at DESC LIMIT ? OFFSET ?";
+        
+        try {
+            $this->db->query($sql);
+            $this->db->bind(1, intval($perPage));
+            $this->db->bind(2, intval($offset));
+            $this->db->execute();
+            $result = $this->db->resultSet();
+            return $this->formatNewsResultsFromObject($result);
+        } catch (Exception $e) {
+            error_log("NewsModel::getAllNewsPaginated fout: " . $e->getMessage());
+            return [];
+        }
+    }
+    
+    /**
+     * Haal nieuwsartikelen op per oriëntatie met paginering
+     */
+    public function getNewsByOrientationPaginated($orientation, $page = 1, $perPage = 9) {
+        $offset = ($page - 1) * $perPage;
+        $sql = "SELECT * FROM news_articles WHERE orientation = ? ORDER BY published_at DESC LIMIT ? OFFSET ?";
+        
+        try {
+            $this->db->query($sql);
+            $this->db->bind(1, $orientation);
+            $this->db->bind(2, intval($perPage));
+            $this->db->bind(3, intval($offset));
+            $this->db->execute();
+            $result = $this->db->resultSet();
+            return $this->formatNewsResultsFromObject($result);
+        } catch (Exception $e) {
+            error_log("NewsModel::getNewsByOrientationPaginated fout: " . $e->getMessage());
+            return [];
+        }
+    }
+    
+    /**
+     * Haal gefilterd nieuws op met paginering
+     */
+    public function getFilteredNewsPaginated($filter = 'alle', $page = 1, $perPage = 9) {
+        switch($filter) {
+            case 'progressief':
+                return $this->getNewsByOrientationPaginated('links', $page, $perPage);
+            case 'conservatief':
+                return $this->getNewsByOrientationPaginated('rechts', $page, $perPage);
+            default:
+                return $this->getAllNewsPaginated($page, $perPage);
+        }
+    }
+    
+    /**
+     * Tel het totale aantal artikelen
+     */
+    public function getTotalCount($filter = 'alle') {
+        try {
+            switch($filter) {
+                case 'progressief':
+                    $result = $this->db->directQuery("SELECT COUNT(*) as total FROM news_articles WHERE orientation = 'links'");
+                    break;
+                case 'conservatief':
+                    $result = $this->db->directQuery("SELECT COUNT(*) as total FROM news_articles WHERE orientation = 'rechts'");
+                    break;
+                default:
+                    $result = $this->db->directQuery("SELECT COUNT(*) as total FROM news_articles");
+            }
+            return $result->fetch(PDO::FETCH_ASSOC)['total'];
+        } catch (Exception $e) {
+            error_log("NewsModel::getTotalCount fout: " . $e->getMessage());
+            return 0;
+        }
+    }
+    
+    /**
      * Voeg een nieuw artikel toe
      */
     public function addNewsArticle($title, $description, $url, $source, $bias, $orientation, $publishedAt) {
