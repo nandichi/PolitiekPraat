@@ -123,17 +123,31 @@
 
                         <!-- Theme Selection -->
                         <div class="space-y-6">
-                            <div class="flex items-center space-x-4">
-                                                                 <div class="w-12 h-12 bg-gradient-to-br from-secondary to-primary rounded-2xl flex items-center justify-center shadow-lg">
-                                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                               d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
-                                     </svg>
-                                 </div>
-                                <div>
-                                    <h3 class="text-xl sm:text-2xl font-bold text-slate-800">Selecteer Thema's</h3>
-                                    <p class="text-slate-500 text-sm">Kies de onderwerpen die je wilt vergelijken</p>
+                                                        <div class="flex flex-col space-y-4 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
+                                <div class="flex items-center space-x-4">
+                                     <div class="w-12 h-12 bg-gradient-to-br from-secondary to-primary rounded-2xl flex items-center justify-center shadow-lg">
+                                         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                   d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+                                         </svg>
+                                     </div>
+                                    <div>
+                                        <h3 class="text-xl sm:text-2xl font-bold text-slate-800">Selecteer Thema's</h3>
+                                        <p class="text-slate-500 text-sm">Kies de onderwerpen die je wilt vergelijken</p>
+                                    </div>
                                 </div>
+                                <button id="select-all-themes" 
+                                        class="group inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r from-primary to-secondary 
+                                              text-white font-medium rounded-xl shadow-lg hover:shadow-xl 
+                                              transform hover:scale-105 active:scale-95 transition-all duration-300 
+                                              text-sm whitespace-nowrap flex-shrink-0">
+                                    <svg class="w-4 h-4 mr-2 group-hover:rotate-12 transition-transform duration-300" 
+                                         fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                              d="M5 13l4 4L19 7"/>
+                                    </svg>
+                                    <span id="select-all-text">Alle selecteren</span>
+                                </button>
                             </div>
                             
                             <div class="space-y-3" id="theme-selector">
@@ -502,6 +516,47 @@ document.addEventListener('DOMContentLoaded', function() {
         checkbox.addEventListener('change', updateCompareButton);
     });
     
+    // Select all themes functionality
+    const selectAllThemesBtn = document.getElementById('select-all-themes');
+    const selectAllText = document.getElementById('select-all-text');
+    
+    selectAllThemesBtn.addEventListener('click', function() {
+        const themeCheckboxes = document.querySelectorAll('.theme-checkbox');
+        const checkedThemes = document.querySelectorAll('.theme-checkbox:checked');
+        const allSelected = checkedThemes.length === themeCheckboxes.length;
+        
+        themeCheckboxes.forEach(checkbox => {
+            checkbox.checked = !allSelected;
+        });
+        
+        // Update button text and icon
+        if (allSelected) {
+            selectAllText.textContent = 'Alle selecteren';
+        } else {
+            selectAllText.textContent = 'Alle deselecteren';
+        }
+        
+        updateCompareButton();
+    });
+    
+    // Update select all button text based on current selection
+    function updateSelectAllButton() {
+        const themeCheckboxes = document.querySelectorAll('.theme-checkbox');
+        const checkedThemes = document.querySelectorAll('.theme-checkbox:checked');
+        const allSelected = checkedThemes.length === themeCheckboxes.length;
+        
+        if (allSelected && themeCheckboxes.length > 0) {
+            selectAllText.textContent = 'Alle deselecteren';
+        } else {
+            selectAllText.textContent = 'Alle selecteren';
+        }
+    }
+    
+    // Update select all button when individual checkboxes change
+    document.querySelectorAll('.theme-checkbox').forEach(checkbox => {
+        checkbox.addEventListener('change', updateSelectAllButton);
+    });
+    
     // Perform comparison
     function performComparison() {
         const selectedParties = Array.from(document.querySelectorAll('.party-checkbox:checked'))
@@ -662,6 +717,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initial state
     updateCompareButton();
+    updateSelectAllButton();
     
     // Feasibility color mapping
     window.getFeasibilityColor = function(score) {
