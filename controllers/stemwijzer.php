@@ -730,6 +730,132 @@ require_once 'views/templates/header.php';
                  x-transition:enter-start="opacity-0 transform scale-95"
                  x-transition:enter-end="opacity-100 transform scale-100">
                 
+                <!-- Persoonlijkheidsanalyse Hero -->
+                <div class="text-center mb-16">
+                    <div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-600 shadow-lg shadow-purple-500/25 mb-6">
+                        <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                        </svg>
+                    </div>
+                    
+                    <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+                        Jouw Politieke
+                        <span class="text-gradient bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                            Persoonlijkheid
+                        </span>
+                    </h2>
+                    
+                    <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed mb-8">
+                        Ontdek wie je bent in de politieke wereld en wat jouw unieke standpunten zeggen over jouw persoonlijkheid.
+                    </p>
+                </div>
+
+                <!-- Persoonlijkheidsanalyse Card -->
+                <div class="bg-white/90 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/50 overflow-hidden mb-16">
+                    <div class="bg-gradient-to-r" :class="'bg-gradient-to-r ' + personalityAnalysis.political_profile.color">
+                        <div class="p-8 text-white relative overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-r from-black/10 to-transparent"></div>
+                            <div class="absolute top-0 right-0 w-64 h-64 rounded-full bg-white/10 blur-3xl transform translate-x-32 -translate-y-32"></div>
+                            
+                            <div class="relative z-10">
+                                <div class="flex items-center justify-between mb-6">
+                                    <div>
+                                        <h3 class="text-3xl font-bold mb-2" x-text="personalityAnalysis.political_profile.type"></h3>
+                                        <p class="text-white/90 text-lg leading-relaxed" x-text="personalityAnalysis.political_profile.description"></p>
+                                    </div>
+                                    <div class="text-6xl opacity-20">🗳️</div>
+                                </div>
+                                
+                                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                    <div class="bg-white/20 rounded-xl p-4 text-center">
+                                        <div class="text-2xl font-bold" x-text="Math.round(personalityAnalysis.left_right_percentage) + '%'"></div>
+                                        <div class="text-sm opacity-90">Rechts</div>
+                                    </div>
+                                    <div class="bg-white/20 rounded-xl p-4 text-center">
+                                        <div class="text-2xl font-bold" x-text="Math.round(personalityAnalysis.progressive_percentage) + '%'"></div>
+                                        <div class="text-sm opacity-90">Progressief</div>
+                                    </div>
+                                    <div class="bg-white/20 rounded-xl p-4 text-center">
+                                        <div class="text-2xl font-bold" x-text="Math.round(personalityAnalysis.authoritarian_percentage) + '%'"></div>
+                                        <div class="text-sm opacity-90">Autoritair</div>
+                                    </div>
+                                    <div class="bg-white/20 rounded-xl p-4 text-center">
+                                        <div class="text-2xl font-bold" x-text="Math.round(personalityAnalysis.eu_pro_percentage) + '%'"></div>
+                                        <div class="text-sm opacity-90">Pro-EU</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Persoonlijkheidskenmerken -->
+                    <div class="p-8">
+                        <h4 class="text-2xl font-bold text-gray-800 mb-6 text-center">Jouw Politieke Kenmerken</h4>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" x-show="personalityAnalysis.personality_traits.length > 0">
+                            <template x-for="trait in personalityAnalysis.personality_traits" :key="trait.name">
+                                <div class="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 border border-gray-200 text-center hover:shadow-lg transition-shadow">
+                                    <div class="text-4xl mb-4" x-text="trait.icon"></div>
+                                    <h5 class="text-lg font-bold text-gray-800 mb-2" x-text="trait.name"></h5>
+                                    <p class="text-gray-600 text-sm leading-relaxed" x-text="trait.description"></p>
+                                </div>
+                            </template>
+                        </div>
+                        
+                        <!-- Politiek Kompas -->
+                        <div class="mt-12">
+                            <h4 class="text-xl font-bold text-gray-800 mb-6 text-center">Jouw Positie op het Politieke Kompas</h4>
+                            
+                            <div class="max-w-sm mx-auto">
+                                <div class="relative w-64 h-64 mx-auto">
+                                    <!-- Kompas achtergrond -->
+                                    <div class="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full border-2 border-gray-300"></div>
+                                    
+                                    <!-- Kwadranten -->
+                                    <div class="absolute inset-0 grid grid-cols-2 grid-rows-2 rounded-full overflow-hidden">
+                                        <div class="bg-green-200/30 border-r border-b border-gray-300 flex items-center justify-center">
+                                            <span class="text-xs font-medium text-green-700 text-center">Links<br/>Liberaal</span>
+                                        </div>
+                                        <div class="bg-blue-200/30 border-b border-gray-300 flex items-center justify-center">
+                                            <span class="text-xs font-medium text-blue-700 text-center">Rechts<br/>Liberaal</span>
+                                        </div>
+                                        <div class="bg-red-200/30 border-r border-gray-300 flex items-center justify-center">
+                                            <span class="text-xs font-medium text-red-700 text-center">Links<br/>Autoritair</span>
+                                        </div>
+                                        <div class="bg-indigo-200/30 flex items-center justify-center">
+                                            <span class="text-xs font-medium text-indigo-700 text-center">Rechts<br/>Autoritair</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Assen labels -->
+                                    <div class="absolute top-1 left-1/2 transform -translate-x-1/2 text-xs font-medium text-gray-600">Liberaal</div>
+                                    <div class="absolute bottom-1 left-1/2 transform -translate-x-1/2 text-xs font-medium text-gray-600">Autoritair</div>
+                                    <div class="absolute left-1 top-1/2 transform -translate-y-1/2 text-xs font-medium text-gray-600 -rotate-90">Links</div>
+                                    <div class="absolute right-1 top-1/2 transform -translate-y-1/2 text-xs font-medium text-gray-600 rotate-90">Rechts</div>
+                                    
+                                    <!-- Jouw positie -->
+                                    <div class="absolute w-3 h-3 rounded-full border-2 border-white shadow-lg transform -translate-x-1.5 -translate-y-1.5"
+                                         :class="'bg-' + personalityAnalysis.compass_position.quadrant.color + '-500'"
+                                         :style="'left: ' + ((personalityAnalysis.compass_position.x + 50) * 2.24) + 'px; top: ' + ((-personalityAnalysis.compass_position.y + 50) * 2.24) + 'px;'">
+                                    </div>
+                                    
+                                    <!-- Centrum punt -->
+                                    <div class="absolute top-1/2 left-1/2 w-1.5 h-1.5 bg-gray-400 rounded-full transform -translate-x-0.75 -translate-y-0.75"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="text-center mt-6">
+                                <div class="inline-flex items-center px-4 py-2 rounded-full font-semibold"
+                                     :class="'bg-' + personalityAnalysis.compass_position.quadrant.color + '-100 text-' + personalityAnalysis.compass_position.quadrant.color + '-800'">
+                                    <div class="w-3 h-3 rounded-full mr-2"
+                                         :class="'bg-' + personalityAnalysis.compass_position.quadrant.color + '-500'"></div>
+                                    <span x-text="personalityAnalysis.compass_position.quadrant.name"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Results Hero Section -->
                 <div class="text-center mb-12">
                     <div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-600 shadow-lg shadow-green-500/25 mb-6">
@@ -1180,6 +1306,7 @@ function stemwijzer() {
         
         results: {},
         finalResults: [],
+        personalityAnalysis: {},
         showPartyDetails: false,
         detailedParty: null,
         showingQuestion: null,
@@ -1517,6 +1644,181 @@ function stemwijzer() {
                     logo: this.partyLogos[party]
                 }))
                 .sort((a, b) => b.agreement - a.agreement);
+                
+            // Calculate personality analysis
+            this.calculatePersonalityAnalysis();
+        },
+
+        calculatePersonalityAnalysis() {
+            const analysis = {
+                left_right_score: 0,
+                progressive_conservative_score: 0,
+                authoritarian_libertarian_score: 0,
+                eu_skeptic_pro_score: 0,
+                economic_left_right: 0,
+                social_liberal_conservative: 0,
+                total_answered: Object.keys(this.answers).length
+            };
+
+            // Categorieën van vragen voor verschillende assen
+            const economicKeywords = ['belasting', 'uitkering', 'economie', 'subsidie', 'markt', 'inkomen', 'pensioen'];
+            const socialKeywords = ['asiel', 'immigratie', 'integratie', 'criminaliteit', 'veiligheid', 'identiteit'];
+            const euKeywords = ['europa', 'eu', 'europese', 'brexit', 'soevereiniteit'];
+            const progressiveKeywords = ['klimaat', 'milieu', 'duurzaam', 'innovatie', 'technologie'];
+            const authoritarianKeywords = ['veiligheid', 'privacy', 'surveillance', 'politie', 'straf'];
+
+            Object.keys(this.answers).forEach(questionIndex => {
+                const question = this.questions[questionIndex];
+                if (!question) return;
+                
+                const answer = this.answers[questionIndex];
+                const questionText = ((question.title || '') + ' ' + (question.description || '')).toLowerCase();
+                
+                // Bepaal de waarde van het antwoord
+                let answerValue = 0;
+                if (answer === 'eens') answerValue = 1;
+                else if (answer === 'oneens') answerValue = -1;
+
+                // Check voor verschillende categorieën
+                if (this.containsKeywords(questionText, economicKeywords)) {
+                    analysis.economic_left_right += answerValue;
+                }
+                if (this.containsKeywords(questionText, socialKeywords)) {
+                    analysis.social_liberal_conservative += answerValue;
+                }
+                if (this.containsKeywords(questionText, euKeywords)) {
+                    analysis.eu_skeptic_pro_score += answerValue;
+                }
+                if (this.containsKeywords(questionText, progressiveKeywords)) {
+                    analysis.progressive_conservative_score += answerValue;
+                }
+                if (this.containsKeywords(questionText, authoritarianKeywords)) {
+                    analysis.authoritarian_libertarian_score += answerValue;
+                }
+
+                analysis.left_right_score += answerValue;
+            });
+
+            // Normaliseer scores naar percentages
+            const totalQuestions = Object.keys(this.answers).length;
+            if (totalQuestions > 0) {
+                analysis.left_right_percentage = ((analysis.left_right_score / totalQuestions) + 1) * 50;
+                analysis.progressive_percentage = ((analysis.progressive_conservative_score / totalQuestions) + 1) * 50;
+                analysis.authoritarian_percentage = ((analysis.authoritarian_libertarian_score / totalQuestions) + 1) * 50;
+                analysis.eu_pro_percentage = ((analysis.eu_skeptic_pro_score / totalQuestions) + 1) * 50;
+                analysis.economic_right_percentage = ((analysis.economic_left_right / totalQuestions) + 1) * 50;
+                analysis.social_conservative_percentage = ((analysis.social_liberal_conservative / totalQuestions) + 1) * 50;
+            }
+
+            // Bepaal politiek profiel
+            analysis.political_profile = this.determinePoliticalProfile(analysis);
+            analysis.personality_traits = this.determinePoliticalTraits(analysis);
+            analysis.compass_position = this.determineCompassPosition(analysis);
+
+            this.personalityAnalysis = analysis;
+        },
+
+        containsKeywords(text, keywords) {
+            return keywords.some(keyword => text.includes(keyword));
+        },
+
+        determinePoliticalProfile(analysis) {
+            const leftRight = analysis.left_right_percentage || 50;
+            const progressive = analysis.progressive_percentage || 50;
+            
+            if (leftRight < 35 && progressive > 65) {
+                return {
+                    type: 'Progressief Links',
+                    description: 'Je hebt vooruitstrevende ideeën en gelooft in sociale gelijkheid en verandering.',
+                    color: 'from-green-500 to-blue-500'
+                };
+            } else if (leftRight < 35 && progressive < 35) {
+                return {
+                    type: 'Traditioneel Links',
+                    description: 'Je combineert linkse economische ideeën met meer traditionele sociale waarden.',
+                    color: 'from-red-500 to-orange-500'
+                };
+            } else if (leftRight > 65 && progressive > 65) {
+                return {
+                    type: 'Progressief Rechts',
+                    description: 'Je bent economisch liberaal maar sociaal vooruitstrevend.',
+                    color: 'from-blue-500 to-purple-500'
+                };
+            } else if (leftRight > 65 && progressive < 35) {
+                return {
+                    type: 'Conservatief Rechts',
+                    description: 'Je hebt traditionele waarden en gelooft in vrije markteconomie.',
+                    color: 'from-blue-600 to-indigo-600'
+                };
+            } else {
+                return {
+                    type: 'Politiek Centraal',
+                    description: 'Je hebt een gematigde politieke houding met elementen van verschillende kanten.',
+                    color: 'from-gray-500 to-slate-600'
+                };
+            }
+        },
+
+        determinePoliticalTraits(analysis) {
+            const traits = [];
+            
+            const leftRight = analysis.left_right_percentage || 50;
+            const progressive = analysis.progressive_percentage || 50;
+            const authoritarian = analysis.authoritarian_percentage || 50;
+            const euPro = analysis.eu_pro_percentage || 50;
+
+            if (leftRight < 30) {
+                traits.push({name: 'Sterk Sociaal Bewust', icon: '❤️', description: 'Gelijkheid en solidariteit staan centraal'});
+            } else if (leftRight > 70) {
+                traits.push({name: 'Economisch Liberal', icon: '💼', description: 'Gelooft in vrije markt en ondernemerschap'});
+            }
+
+            if (progressive > 70) {
+                traits.push({name: 'Vooruitstrevend', icon: '🚀', description: 'Omarmt verandering en innovatie'});
+            } else if (progressive < 30) {
+                traits.push({name: 'Traditioneel', icon: '🏛️', description: 'Waardeert bewezen systemen en tradities'});
+            }
+
+            if (authoritarian > 70) {
+                traits.push({name: 'Veiligheid Georiënteerd', icon: '🛡️', description: 'Prioriteit aan orde en veiligheid'});
+            } else if (authoritarian < 30) {
+                traits.push({name: 'Vrijheidsliefhebber', icon: '🕊️', description: 'Individualiteit en persoonlijke vrijheid belangrijk'});
+            }
+
+            if (euPro > 70) {
+                traits.push({name: 'Europees Minded', icon: '🇪🇺', description: 'Steunt Europese samenwerking'});
+            } else if (euPro < 30) {
+                traits.push({name: 'Soevereiniteitsvoorkeur', icon: '🏴', description: 'Nationale autonomie is belangrijk'});
+            }
+
+            if (Math.abs(leftRight - 50) < 15 && Math.abs(progressive - 50) < 15) {
+                traits.push({name: 'Pragmatisch', icon: '⚖️', description: 'Zoekt balans tussen verschillende standpunten'});
+            }
+
+            return traits;
+        },
+
+        determineCompassPosition(analysis) {
+            const economic = (analysis.economic_right_percentage || 50) - 50;
+            const social = (analysis.social_conservative_percentage || 50) - 50;
+            
+            return {
+                x: economic,
+                y: social,
+                quadrant: this.getQuadrant(economic, social)
+            };
+        },
+
+        getQuadrant(x, y) {
+            if (x > 0 && y < 0) {
+                return {name: 'Rechts-Liberaal', color: 'blue'};
+            } else if (x > 0 && y > 0) {
+                return {name: 'Rechts-Autoritair', color: 'indigo'};
+            } else if (x < 0 && y > 0) {
+                return {name: 'Links-Autoritair', color: 'red'};
+            } else {
+                return {name: 'Links-Liberaal', color: 'green'};
+            }
         },
         
         async saveResultsToDatabase() {

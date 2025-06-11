@@ -228,8 +228,490 @@ require_once 'views/templates/header.php';
         usort($finalResults, function($a, $b) {
             return $b['agreement'] - $a['agreement'];
         });
+        
+        // Genereer persoonlijkheidsanalyse
+        $personalityAnalysis = $stemwijzerController->analyzePoliticalPersonality($savedResults->answers, $stemwijzerData['questions']);
         ?>
         
+        <!-- Politieke Persoonlijkheidsanalyse Sectie -->
+        <div class="max-w-6xl mx-auto pb-12">
+            <!-- Persoonlijkheidsanalyse Hero -->
+            <div class="text-center mb-16">
+                <div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-600 shadow-lg shadow-purple-500/25 mb-6">
+                    <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                    </svg>
+                </div>
+                
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+                    Jouw Politieke
+                    <span class="text-gradient bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                        Persoonlijkheid
+                    </span>
+                </h2>
+                
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed mb-8">
+                    Op basis van jouw antwoorden hebben we een uniek profiel samengesteld dat jouw politieke voorkeur en persoonlijkheid beschrijft.
+                </p>
+            </div>
+
+            <!-- Hoofdprofiel Card -->
+            <div class="bg-white/90 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/50 overflow-hidden mb-12">
+                <?php
+                $profileColorClass = 'bg-gradient-to-r ' . $personalityAnalysis['political_profile']['color'];
+                ?>
+                <div class="<?= $profileColorClass ?> p-8 text-white relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-r from-black/10 to-transparent"></div>
+                    <div class="absolute top-0 right-0 w-64 h-64 rounded-full bg-white/10 blur-3xl transform translate-x-32 -translate-y-32"></div>
+                    
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-6">
+                            <div>
+                                <h3 class="text-3xl font-bold mb-2"><?= htmlspecialchars($personalityAnalysis['political_profile']['type']) ?></h3>
+                                <p class="text-white/90 text-lg leading-relaxed"><?= htmlspecialchars($personalityAnalysis['political_profile']['description']) ?></p>
+                            </div>
+                            <div class="text-6xl opacity-20">🗳️</div>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <div class="bg-white/20 rounded-xl p-4 text-center">
+                                <div class="text-2xl font-bold"><?= round($personalityAnalysis['left_right_percentage']) ?>%</div>
+                                <div class="text-sm opacity-90">Rechts</div>
+                            </div>
+                            <div class="bg-white/20 rounded-xl p-4 text-center">
+                                <div class="text-2xl font-bold"><?= round($personalityAnalysis['progressive_percentage']) ?>%</div>
+                                <div class="text-sm opacity-90">Progressief</div>
+                            </div>
+                            <div class="bg-white/20 rounded-xl p-4 text-center">
+                                <div class="text-2xl font-bold"><?= round($personalityAnalysis['authoritarian_percentage']) ?>%</div>
+                                <div class="text-sm opacity-90">Autoritair</div>
+                            </div>
+                            <div class="bg-white/20 rounded-xl p-4 text-center">
+                                <div class="text-2xl font-bold"><?= round($personalityAnalysis['eu_pro_percentage']) ?>%</div>
+                                <div class="text-sm opacity-90">Pro-EU</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Politiek Kompas -->
+                <div class="p-8">
+                    <h4 class="text-2xl font-bold text-gray-800 mb-6 text-center">Jouw Positie op het Politieke Kompas</h4>
+                    
+                    <div class="max-w-md mx-auto mb-8">
+                        <div class="relative w-80 h-80 mx-auto">
+                            <!-- Kompas achtergrond -->
+                            <div class="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full border-2 border-gray-300"></div>
+                            
+                            <!-- Kwadranten -->
+                            <div class="absolute inset-0 grid grid-cols-2 grid-rows-2 rounded-full overflow-hidden">
+                                <div class="bg-green-200/30 border-r border-b border-gray-300 flex items-center justify-center">
+                                    <span class="text-xs font-medium text-green-700 text-center">Links<br/>Progressief</span>
+                                </div>
+                                <div class="bg-blue-200/30 border-b border-gray-300 flex items-center justify-center">
+                                    <span class="text-xs font-medium text-blue-700 text-center">Rechts<br/>Progressief</span>
+                                </div>
+                                <div class="bg-red-200/30 border-r border-gray-300 flex items-center justify-center">
+                                    <span class="text-xs font-medium text-red-700 text-center">Links<br/>Conservatief</span>
+                                </div>
+                                <div class="bg-indigo-200/30 flex items-center justify-center">
+                                    <span class="text-xs font-medium text-indigo-700 text-center">Rechts<br/>Conservatief</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Assen labels -->
+                            <div class="absolute top-2 left-1/2 transform -translate-x-1/2 text-xs font-medium text-gray-600">Progressief</div>
+                            <div class="absolute bottom-2 left-1/2 transform -translate-x-1/2 text-xs font-medium text-gray-600">Conservatief</div>
+                            <div class="absolute left-2 top-1/2 transform -translate-y-1/2 text-xs font-medium text-gray-600 -rotate-90">Links</div>
+                            <div class="absolute right-2 top-1/2 transform -translate-y-1/2 text-xs font-medium text-gray-600 rotate-90">Rechts</div>
+                            
+                            <!-- Jouw positie -->
+                            <?php 
+                            // Gebruik progressief percentage voor Y-as (geïnverteerd omdat progressief bovenaan moet)
+                            $x = ($personalityAnalysis['left_right_percentage'] - 50) * 2.8 + 140; // Schaal naar pixels
+                            $y = (50 - $personalityAnalysis['progressive_percentage']) * 2.8 + 140; // Inverteer Y-as (progressief = boven)
+                            
+                            // Bepaal kwadrant op basis van progressief/conservatief
+                            if ($personalityAnalysis['left_right_percentage'] > 50 && $personalityAnalysis['progressive_percentage'] > 50) {
+                                $quadrantColor = 'blue'; // Rechts-Progressief
+                            } elseif ($personalityAnalysis['left_right_percentage'] > 50 && $personalityAnalysis['progressive_percentage'] < 50) {
+                                $quadrantColor = 'indigo'; // Rechts-Conservatief
+                            } elseif ($personalityAnalysis['left_right_percentage'] < 50 && $personalityAnalysis['progressive_percentage'] < 50) {
+                                $quadrantColor = 'red'; // Links-Conservatief
+                            } else {
+                                $quadrantColor = 'green'; // Links-Progressief
+                            }
+                            $dotColorClass = 'bg-' . $quadrantColor . '-500';
+                            ?>
+                            <div class="absolute w-4 h-4 <?= $dotColorClass ?> rounded-full border-2 border-white shadow-lg transform -translate-x-2 -translate-y-2"
+                                 style="left: <?= $x ?>px; top: <?= $y ?>px;">
+                            </div>
+                            
+                            <!-- Centrum punt -->
+                            <div class="absolute top-1/2 left-1/2 w-2 h-2 bg-gray-400 rounded-full transform -translate-x-1 -translate-y-1"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center">
+                        <?php
+                        $badgeColorClass = 'bg-' . $quadrantColor . '-100 text-' . $quadrantColor . '-800';
+                        $dotBadgeColorClass = 'bg-' . $quadrantColor . '-500';
+                        
+                        // Bepaal kwadrant naam
+                        if ($personalityAnalysis['left_right_percentage'] > 50 && $personalityAnalysis['progressive_percentage'] > 50) {
+                            $quadrantName = 'Rechts-Progressief';
+                        } elseif ($personalityAnalysis['left_right_percentage'] > 50 && $personalityAnalysis['progressive_percentage'] < 50) {
+                            $quadrantName = 'Rechts-Conservatief';
+                        } elseif ($personalityAnalysis['left_right_percentage'] < 50 && $personalityAnalysis['progressive_percentage'] < 50) {
+                            $quadrantName = 'Links-Conservatief';
+                        } else {
+                            $quadrantName = 'Links-Progressief';
+                        }
+                        ?>
+                        <div class="inline-flex items-center px-4 py-2 <?= $badgeColorClass ?> rounded-full font-semibold">
+                            <div class="w-3 h-3 <?= $dotBadgeColorClass ?> rounded-full mr-2"></div>
+                            <?= htmlspecialchars($quadrantName) ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Uitgebreide Persoonlijke Insights -->
+            <div class="bg-white/90 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/50 p-8 mb-12">
+                <h4 class="text-2xl font-bold text-gray-800 mb-8 text-center">Persoonlijke Politieke Insights</h4>
+                
+                <!-- Politieke Persoonlijkheidstype -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+                    <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 border border-blue-100">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center mr-4">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                </svg>
+                            </div>
+                            <h5 class="text-xl font-bold text-gray-800">Jouw Politieke DNA</h5>
+                        </div>
+                        <?php
+                        $eensCount = 0;
+                        $oneensCount = 0;
+                        $neutraalCount = 0;
+                        foreach ($savedResults->answers as $answer) {
+                            if ($answer === 'eens') $eensCount++;
+                            elseif ($answer === 'oneens') $oneensCount++;
+                            else $neutraalCount++;
+                        }
+                        $totalAnswers = count($savedResults->answers);
+                        
+                        // Bepaal politiek gedragsprofiel
+                        $strongOpinions = round((($eensCount + $oneensCount) / $totalAnswers) * 100);
+                        $cautious = round(($neutraalCount / $totalAnswers) * 100);
+                        $positivelyInclined = round(($eensCount / $totalAnswers) * 100);
+                        $criticallyInclined = round(($oneensCount / $totalAnswers) * 100);
+                        
+                        $behaviorType = '';
+                        $behaviorIcon = '';
+                        $behaviorColor = '';
+                        
+                        if ($strongOpinions >= 80) {
+                            $behaviorType = 'Politieke Activist';
+                            $behaviorIcon = '🔥';
+                            $behaviorColor = 'red';
+                            $behaviorDesc = 'Je hebt sterke politieke meningen en staat duidelijk voor je overtuigingen.';
+                        } elseif ($strongOpinions >= 60 && $positivelyInclined > $criticallyInclined) {
+                            $behaviorType = 'Optimistische Stemmer';
+                            $behaviorIcon = '🌟';
+                            $behaviorColor = 'green';
+                            $behaviorDesc = 'Je bent overwegend positief en steunt veel politieke voorstellen.';
+                        } elseif ($strongOpinions >= 60 && $criticallyInclined > $positivelyInclined) {
+                            $behaviorType = 'Kritische Denker';
+                            $behaviorIcon = '🤔';
+                            $behaviorColor = 'orange';
+                            $behaviorDesc = 'Je bekijkt politieke voorstellen kritisch en bent vaak sceptisch.';
+                        } elseif ($cautious >= 40) {
+                            $behaviorType = 'Voorzichtige Overdenker';
+                            $behaviorIcon = '⚖️';
+                            $behaviorColor = 'purple';
+                            $behaviorDesc = 'Je weegt alle opties zorgvuldig af voordat je een standpunt inneemt.';
+                        } else {
+                            $behaviorType = 'Gematigde Burger';
+                            $behaviorIcon = '🤝';
+                            $behaviorColor = 'blue';
+                            $behaviorDesc = 'Je hebt een evenwichtige mix van standpunten en bent pragmatisch.';
+                        }
+                        ?>
+                        
+                        <!-- Hoofdprofiel -->
+                        <div class="text-center mb-6 p-4 bg-white rounded-xl border border-<?= $behaviorColor ?>-200">
+                            <div class="text-4xl mb-2"><?= $behaviorIcon ?></div>
+                            <h6 class="text-lg font-bold text-<?= $behaviorColor ?>-600 mb-2"><?= $behaviorType ?></h6>
+                            <p class="text-sm text-gray-600"><?= $behaviorDesc ?></p>
+                        </div>
+                        
+                        <!-- Statistieken in cirkelvorm -->
+                        <div class="grid grid-cols-3 gap-4">
+                            <div class="text-center">
+                                <div class="relative w-16 h-16 mx-auto mb-2">
+                                    <svg class="w-16 h-16 transform -rotate-90" viewBox="0 0 36 36">
+                                        <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" 
+                                              fill="none" stroke="#e5e7eb" stroke-width="3"/>
+                                        <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" 
+                                              fill="none" stroke="#10b981" stroke-width="3" 
+                                              stroke-dasharray="<?= $positivelyInclined ?>, 100"/>
+                                    </svg>
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <span class="text-xs font-bold text-green-600"><?= $positivelyInclined ?>%</span>
+                                    </div>
+                                </div>
+                                <div class="text-xs text-green-700 font-medium">Positief</div>
+                            </div>
+                            
+                            <div class="text-center">
+                                <div class="relative w-16 h-16 mx-auto mb-2">
+                                    <svg class="w-16 h-16 transform -rotate-90" viewBox="0 0 36 36">
+                                        <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" 
+                                              fill="none" stroke="#e5e7eb" stroke-width="3"/>
+                                        <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" 
+                                              fill="none" stroke="#ef4444" stroke-width="3" 
+                                              stroke-dasharray="<?= $criticallyInclined ?>, 100"/>
+                                    </svg>
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <span class="text-xs font-bold text-red-600"><?= $criticallyInclined ?>%</span>
+                                    </div>
+                                </div>
+                                <div class="text-xs text-red-700 font-medium">Kritisch</div>
+                            </div>
+                            
+                            <div class="text-center">
+                                <div class="relative w-16 h-16 mx-auto mb-2">
+                                    <svg class="w-16 h-16 transform -rotate-90" viewBox="0 0 36 36">
+                                        <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" 
+                                              fill="none" stroke="#e5e7eb" stroke-width="3"/>
+                                        <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" 
+                                              fill="none" stroke="#6b7280" stroke-width="3" 
+                                              stroke-dasharray="<?= $cautious ?>, 100"/>
+                                    </svg>
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <span class="text-xs font-bold text-gray-600"><?= $cautious ?>%</span>
+                                    </div>
+                                </div>
+                                <div class="text-xs text-gray-700 font-medium">Voorzichtig</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Beslissingspatroon -->
+                    <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-6 border border-purple-100">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center mr-4">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                                </svg>
+                            </div>
+                            <h5 class="text-xl font-bold text-gray-800">Besluitvorming</h5>
+                        </div>
+                        <?php
+                        $decisivePercentage = round((($eensCount + $oneensCount) / $totalAnswers) * 100);
+                        $cautiousPercentage = round(($neutraalCount / $totalAnswers) * 100);
+                        ?>
+                        <div class="space-y-4">
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-purple-600 mb-2"><?= $decisivePercentage ?>%</div>
+                                <div class="text-sm text-purple-700">Besluitvaardig</div>
+                                <div class="text-xs text-gray-600 mt-1">Je neemt duidelijke standpunten in</div>
+                            </div>
+                            
+                            <div class="text-center border-t border-purple-200 pt-4">
+                                <div class="text-2xl font-bold text-gray-600 mb-2"><?= $cautiousPercentage ?>%</div>
+                                <div class="text-sm text-gray-700">Voorzichtig</div>
+                                <div class="text-xs text-gray-600 mt-1">Je houdt alle opties open</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Persoonlijkheidskenmerken -->
+                <?php if (!empty($personalityAnalysis['personality_traits'])): ?>
+                <div class="bg-white/90 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/50 p-8 mb-12">
+                    <h4 class="text-2xl font-bold text-gray-800 mb-6 text-center">Jouw Politieke Kenmerken</h4>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <?php foreach ($personalityAnalysis['personality_traits'] as $trait): ?>
+                        <div class="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 border border-gray-200 text-center hover:shadow-lg transition-shadow">
+                            <div class="text-4xl mb-4"><?= $trait['icon'] ?></div>
+                            <h5 class="text-lg font-bold text-gray-800 mb-2"><?= htmlspecialchars($trait['name']) ?></h5>
+                            <p class="text-gray-600 text-sm leading-relaxed"><?= htmlspecialchars($trait['description']) ?></p>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+                <?php endif; ?>
+
+                <!-- Politieke Assen Analyse -->
+                <div class="bg-white/90 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/50 p-8 mb-16">
+                    <h4 class="text-2xl font-bold text-gray-800 mb-8 text-center">Gedetailleerde Politieke Analyse</h4>
+                    
+                    <div class="space-y-8">
+                        <!-- Links-Rechts As -->
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-sm font-medium text-gray-600">Economisch Links</span>
+                                <span class="text-sm font-medium text-gray-600">Economisch Rechts</span>
+                            </div>
+                            <div class="relative h-4 bg-gradient-to-r from-red-200 via-gray-200 to-blue-200 rounded-full">
+                                <div class="absolute top-0 h-full bg-gradient-to-r from-red-500 to-blue-500 rounded-full transition-all duration-700"
+                                     style="width: <?= round($personalityAnalysis['left_right_percentage']) ?>%; opacity: 0.8;"></div>
+                                <div class="absolute top-1/2 transform -translate-y-1/2 w-3 h-3 bg-white border-2 border-gray-400 rounded-full shadow"
+                                     style="left: calc(<?= round($personalityAnalysis['left_right_percentage']) ?>% - 6px);"></div>
+                            </div>
+                            <div class="text-center mt-2">
+                                <span class="text-lg font-bold text-gray-700"><?= round($personalityAnalysis['left_right_percentage']) ?>% Rechts georiënteerd</span>
+                            </div>
+                        </div>
+
+                        <!-- Progressief-Conservatief As -->
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-sm font-medium text-gray-600">Conservatief</span>
+                                <span class="text-sm font-medium text-gray-600">Progressief</span>
+                            </div>
+                            <div class="relative h-4 bg-gradient-to-r from-orange-200 via-gray-200 to-green-200 rounded-full">
+                                <div class="absolute top-0 h-full bg-gradient-to-r from-orange-500 to-green-500 rounded-full transition-all duration-700"
+                                     style="width: <?= round($personalityAnalysis['progressive_percentage']) ?>%; opacity: 0.8;"></div>
+                                <div class="absolute top-1/2 transform -translate-y-1/2 w-3 h-3 bg-white border-2 border-gray-400 rounded-full shadow"
+                                     style="left: calc(<?= round($personalityAnalysis['progressive_percentage']) ?>% - 6px);"></div>
+                            </div>
+                            <div class="text-center mt-2">
+                                <span class="text-lg font-bold text-gray-700"><?= round($personalityAnalysis['progressive_percentage']) ?>% Progressief</span>
+                            </div>
+                        </div>
+
+                        <!-- Autoritair-Libertair As -->
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-sm font-medium text-gray-600">Libertair</span>
+                                <span class="text-sm font-medium text-gray-600">Autoritair</span>
+                            </div>
+                            <div class="relative h-4 bg-gradient-to-r from-purple-200 via-gray-200 to-red-200 rounded-full">
+                                <div class="absolute top-0 h-full bg-gradient-to-r from-purple-500 to-red-500 rounded-full transition-all duration-700"
+                                     style="width: <?= round($personalityAnalysis['authoritarian_percentage']) ?>%; opacity: 0.8;"></div>
+                                <div class="absolute top-1/2 transform -translate-y-1/2 w-3 h-3 bg-white border-2 border-gray-400 rounded-full shadow"
+                                     style="left: calc(<?= round($personalityAnalysis['authoritarian_percentage']) ?>% - 6px);"></div>
+                            </div>
+                            <div class="text-center mt-2">
+                                <span class="text-lg font-bold text-gray-700"><?= round($personalityAnalysis['authoritarian_percentage']) ?>% Autoritair</span>
+                            </div>
+                        </div>
+
+                        <!-- EU As -->
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-sm font-medium text-gray-600">EU Skeptisch</span>
+                                <span class="text-sm font-medium text-gray-600">Pro-EU</span>
+                            </div>
+                            <div class="relative h-4 bg-gradient-to-r from-yellow-200 via-gray-200 to-blue-200 rounded-full">
+                                <div class="absolute top-0 h-full bg-gradient-to-r from-yellow-500 to-blue-500 rounded-full transition-all duration-700"
+                                     style="width: <?= round($personalityAnalysis['eu_pro_percentage']) ?>%; opacity: 0.8;"></div>
+                                <div class="absolute top-1/2 transform -translate-y-1/2 w-3 h-3 bg-white border-2 border-gray-400 rounded-full shadow"
+                                     style="left: calc(<?= round($personalityAnalysis['eu_pro_percentage']) ?>% - 6px);"></div>
+                            </div>
+                            <div class="text-center mt-2">
+                                <span class="text-lg font-bold text-gray-700"><?= round($personalityAnalysis['eu_pro_percentage']) ?>% Pro-EU</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Statistieken -->
+                    <div class="mt-8 pt-8 border-t border-gray-200">
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-6 text-center">
+                            <div class="bg-blue-50 rounded-xl p-4">
+                                <div class="text-2xl font-bold text-blue-600"><?= $personalityAnalysis['total_answered'] ?></div>
+                                <div class="text-sm text-blue-700">Vragen beantwoord</div>
+                            </div>
+                            <div class="bg-green-50 rounded-xl p-4">
+                                <div class="text-2xl font-bold text-green-600"><?= count($personalityAnalysis['personality_traits']) ?></div>
+                                <div class="text-sm text-green-700">Persoonlijkheidskenmerken</div>
+                            </div>
+                            <div class="bg-purple-50 rounded-xl p-4 md:col-span-1 col-span-2">
+                                <div class="text-2xl font-bold text-purple-600"><?= htmlspecialchars($personalityAnalysis['political_profile']['type']) ?></div>
+                                <div class="text-sm text-purple-700">Politiek Type</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Politieke Focus Areas -->
+            <div class="bg-white/90 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/50 p-8 mb-12">
+                <h4 class="text-2xl font-bold text-gray-800 mb-6 text-center">Jouw Politieke Focusgebieden</h4>
+                
+                <?php
+                // Analyseer welke onderwerpen het meest belangrijk zijn
+                $economicTopics = ['belasting', 'uitkering', 'economie', 'subsidie', 'markt', 'inkomen', 'pensioen'];
+                $socialTopics = ['asiel', 'immigratie', 'integratie', 'criminaliteit', 'veiligheid', 'identiteit'];
+                $environmentTopics = ['klimaat', 'milieu', 'duurzaam', 'energie'];
+                $euTopics = ['europa', 'eu', 'europese'];
+                
+                $economicScore = 0;
+                $socialScore = 0;
+                $environmentScore = 0;
+                $euScore = 0;
+                
+                foreach ($savedResults->answers as $index => $answer) {
+                    if ($answer === 'neutraal') continue;
+                    
+                    if (!isset($stemwijzerData['questions'][$index])) continue;
+                    
+                    $question = $stemwijzerData['questions'][$index];
+                    $questionText = '';
+                    
+                    // Handle both object and array formats
+                    if (is_object($question)) {
+                        $questionText = strtolower($question->title . ' ' . $question->description);
+                    } else {
+                        $questionText = strtolower($question['title'] . ' ' . $question['description']);
+                    }
+                    
+                    foreach ($economicTopics as $topic) {
+                        if (strpos($questionText, $topic) !== false) $economicScore++;
+                    }
+                    foreach ($socialTopics as $topic) {
+                        if (strpos($questionText, $topic) !== false) $socialScore++;
+                    }
+                    foreach ($environmentTopics as $topic) {
+                        if (strpos($questionText, $topic) !== false) $environmentScore++;
+                    }
+                    foreach ($euTopics as $topic) {
+                        if (strpos($questionText, $topic) !== false) $euScore++;
+                    }
+                }
+                
+                $focusAreas = [
+                    ['name' => 'Economie & Werk', 'score' => $economicScore, 'icon' => '💼', 'color' => 'blue'],
+                    ['name' => 'Samenleving & Veiligheid', 'score' => $socialScore, 'icon' => '🏛️', 'color' => 'red'],
+                    ['name' => 'Milieu & Klimaat', 'score' => $environmentScore, 'icon' => '🌍', 'color' => 'green'],
+                    ['name' => 'Europa & Internationaal', 'score' => $euScore, 'icon' => '🇪🇺', 'color' => 'purple']
+                ];
+                
+                usort($focusAreas, function($a, $b) { return $b['score'] - $a['score']; });
+                ?>
+                
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                    <?php foreach ($focusAreas as $index => $area): ?>
+                    <div class="text-center p-4 bg-gradient-to-br from-<?= $area['color'] ?>-50 to-white rounded-xl border border-<?= $area['color'] ?>-200 hover:shadow-lg transition-all">
+                        <div class="text-2xl mb-2"><?= $area['icon'] ?></div>
+                        <div class="text-sm font-medium text-gray-800 mb-1"><?= $area['name'] ?></div>
+                        <div class="text-xs text-gray-600"><?= $area['score'] ?> sterke standpunten</div>
+                        <?php if ($index === 0 && $area['score'] > 0): ?>
+                        <div class="mt-2 px-2 py-1 bg-<?= $area['color'] ?>-100 text-<?= $area['color'] ?>-800 text-xs rounded-full">
+                            Top focus
+                        </div>
+                        <?php endif; ?>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+
+               
+
         <!-- Results Display - Reuse styling from stemwijzer.php -->
         <div class="max-w-6xl mx-auto pb-20">
             

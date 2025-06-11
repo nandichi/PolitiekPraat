@@ -433,6 +433,220 @@ class StemwijzerController {
     }
 
     /**
+     * Analyseer de politieke persoonlijkheid op basis van antwoorden
+     */
+    public function analyzePoliticalPersonality($answers, $questions) {
+        $analysis = [
+            'left_right_score' => 0,
+            'progressive_conservative_score' => 0,
+            'authoritarian_libertarian_score' => 0,
+            'eu_skeptic_pro_score' => 0,
+            'economic_left_right' => 0,
+            'social_liberal_conservative' => 0,
+            'total_answered' => count($answers)
+        ];
+
+        // Categorieën van vragen voor verschillende assen
+        $economicQuestions = ['belasting', 'uitkering', 'economie', 'subsidie', 'markt', 'inkomen', 'pensioen'];
+        $socialQuestions = ['asiel', 'immigratie', 'integratie', 'criminaliteit', 'veiligheid', 'identiteit'];
+        $euQuestions = ['europa', 'eu', 'europese', 'brexit', 'soevereiniteit'];
+        $progressiveQuestions = ['klimaat', 'milieu', 'duurzaam', 'innovatie', 'technologie'];
+        $authoritarianQuestions = ['veiligheid', 'privacy', 'surveillance', 'politie', 'straf'];
+
+        foreach ($answers as $questionIndex => $answer) {
+            if (!isset($questions[$questionIndex])) continue;
+            
+            $question = $questions[$questionIndex];
+            
+            // Controleer of $question een object of array is en behandel dienovereenkomstig
+            if (is_object($question)) {
+                $questionText = strtolower($question->title . ' ' . $question->description);
+            } else {
+                $questionText = strtolower($question['title'] . ' ' . $question['description']);
+            }
+            
+            // Bepaal de waarde van het antwoord (-1 = oneens, 0 = neutraal, 1 = eens)
+            $answerValue = 0;
+            if ($answer === 'eens') $answerValue = 1;
+            elseif ($answer === 'oneens') $answerValue = -1;
+
+            // Economische as (links-rechts)
+            if ($this->containsKeywords($questionText, $economicQuestions)) {
+                $analysis['economic_left_right'] += $answerValue;
+            }
+
+            // Sociale as (progressief-conservatief)
+            if ($this->containsKeywords($questionText, $socialQuestions)) {
+                $analysis['social_liberal_conservative'] += $answerValue;
+            }
+
+            // EU as (skeptisch-pro)
+            if ($this->containsKeywords($questionText, $euQuestions)) {
+                $analysis['eu_skeptic_pro_score'] += $answerValue;
+            }
+
+            // Progressief-conservatief
+            if ($this->containsKeywords($questionText, $progressiveQuestions)) {
+                $analysis['progressive_conservative_score'] += $answerValue;
+            }
+
+            // Autoritair-libertair
+            if ($this->containsKeywords($questionText, $authoritarianQuestions)) {
+                $analysis['authoritarian_libertarian_score'] += $answerValue;
+            }
+
+            // Algemene links-rechts score
+            $analysis['left_right_score'] += $answerValue;
+        }
+
+        // Normaliseer scores naar percentages
+        $totalQuestions = count($answers);
+        if ($totalQuestions > 0) {
+            $analysis['left_right_percentage'] = (($analysis['left_right_score'] / $totalQuestions) + 1) * 50;
+            $analysis['progressive_percentage'] = (($analysis['progressive_conservative_score'] / $totalQuestions) + 1) * 50;
+            $analysis['authoritarian_percentage'] = (($analysis['authoritarian_libertarian_score'] / $totalQuestions) + 1) * 50;
+            $analysis['eu_pro_percentage'] = (($analysis['eu_skeptic_pro_score'] / $totalQuestions) + 1) * 50;
+            $analysis['economic_right_percentage'] = (($analysis['economic_left_right'] / $totalQuestions) + 1) * 50;
+            $analysis['social_conservative_percentage'] = (($analysis['social_liberal_conservative'] / $totalQuestions) + 1) * 50;
+        }
+
+        // Bepaal politiek profiel
+        $analysis['political_profile'] = $this->determinePoliticalProfile($analysis);
+        $analysis['personality_traits'] = $this->determinePoliticalTraits($analysis);
+        $analysis['compass_position'] = $this->determineCompassPosition($analysis);
+
+        return $analysis;
+    }
+
+    /**
+     * Helper functie om te controleren of tekst bepaalde keywords bevat
+     */
+    private function containsKeywords($text, $keywords) {
+        foreach ($keywords as $keyword) {
+            if (strpos($text, $keyword) !== false) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Bepaal het politieke profiel
+     */
+    private function determinePoliticalProfile($analysis) {
+        $leftRight = $analysis['left_right_percentage'] ?? 50;
+        $progressive = $analysis['progressive_percentage'] ?? 50;
+        
+        if ($leftRight < 35 && $progressive > 65) {
+            return [
+                'type' => 'Progressief Links',
+                'description' => 'Je hebt vooruitstrevende ideeën en gelooft in sociale gelijkheid en verandering.',
+                'color' => 'from-green-500 to-blue-500'
+            ];
+        } elseif ($leftRight < 35 && $progressive < 35) {
+            return [
+                'type' => 'Traditioneel Links',
+                'description' => 'Je combineert linkse economische ideeën met meer traditionele sociale waarden.',
+                'color' => 'from-red-500 to-orange-500'
+            ];
+        } elseif ($leftRight > 65 && $progressive > 65) {
+            return [
+                'type' => 'Progressief Rechts',
+                'description' => 'Je bent economisch liberaal maar sociaal vooruitstrevend.',
+                'color' => 'from-blue-500 to-purple-500'
+            ];
+        } elseif ($leftRight > 65 && $progressive < 35) {
+            return [
+                'type' => 'Conservatief Rechts',
+                'description' => 'Je hebt traditionele waarden en gelooft in vrije markteconomie.',
+                'color' => 'from-blue-600 to-indigo-600'
+            ];
+        } else {
+            return [
+                'type' => 'Politiek Centraal',
+                'description' => 'Je hebt een gematigde politieke houding met elementen van verschillende kanten.',
+                'color' => 'from-gray-500 to-slate-600'
+            ];
+        }
+    }
+
+    /**
+     * Bepaal politieke karaktereigenschappen
+     */
+    private function determinePoliticalTraits($analysis) {
+        $traits = [];
+        
+        $leftRight = $analysis['left_right_percentage'] ?? 50;
+        $progressive = $analysis['progressive_percentage'] ?? 50;
+        $authoritarian = $analysis['authoritarian_percentage'] ?? 50;
+        $euPro = $analysis['eu_pro_percentage'] ?? 50;
+
+        // Links-rechts traits
+        if ($leftRight < 30) {
+            $traits[] = ['name' => 'Sterk Sociaal Bewust', 'icon' => '❤️', 'description' => 'Gelijkheid en solidariteit staan centraal'];
+        } elseif ($leftRight > 70) {
+            $traits[] = ['name' => 'Economisch Liberal', 'icon' => '💼', 'description' => 'Gelooft in vrije markt en ondernemerschap'];
+        }
+
+        // Progressief-conservatief traits
+        if ($progressive > 70) {
+            $traits[] = ['name' => 'Vooruitstrevend', 'icon' => '🚀', 'description' => 'Omarmt verandering en innovatie'];
+        } elseif ($progressive < 30) {
+            $traits[] = ['name' => 'Traditioneel', 'icon' => '🏛️', 'description' => 'Waardeert bewezen systemen en tradities'];
+        }
+
+        // Autoritair-libertair traits
+        if ($authoritarian > 70) {
+            $traits[] = ['name' => 'Veiligheid Georiënteerd', 'icon' => '🛡️', 'description' => 'Prioriteit aan orde en veiligheid'];
+        } elseif ($authoritarian < 30) {
+            $traits[] = ['name' => 'Vrijheidsliefhebber', 'icon' => '🕊️', 'description' => 'Individualiteit en persoonlijke vrijheid belangrijk'];
+        }
+
+        // EU traits
+        if ($euPro > 70) {
+            $traits[] = ['name' => 'Europees Minded', 'icon' => '🇪🇺', 'description' => 'Steunt Europese samenwerking'];
+        } elseif ($euPro < 30) {
+            $traits[] = ['name' => 'Soevereiniteitsvoorkeur', 'icon' => '🏴', 'description' => 'Nationale autonomie is belangrijk'];
+        }
+
+        // Voeg algemene traits toe
+        if (abs($leftRight - 50) < 15 && abs($progressive - 50) < 15) {
+            $traits[] = ['name' => 'Pragmatisch', 'icon' => '⚖️', 'description' => 'Zoekt balans tussen verschillende standpunten'];
+        }
+
+        return $traits;
+    }
+
+    /**
+     * Bepaal positie op het politieke kompas
+     */
+    private function determineCompassPosition($analysis) {
+        $economic = ($analysis['economic_right_percentage'] ?? 50) - 50; // -50 tot +50
+        $social = ($analysis['social_conservative_percentage'] ?? 50) - 50; // -50 tot +50
+        
+        return [
+            'x' => $economic, // Links (-) naar Rechts (+)
+            'y' => $social,   // Liberaal (-) naar Autoritair (+)
+            'quadrant' => $this->getQuadrant($economic, $social)
+        ];
+    }
+
+    /**
+     * Bepaal het kwadrant op het politieke kompas
+     */
+    private function getQuadrant($x, $y) {
+        if ($x > 0 && $y < 0) {
+            return ['name' => 'Rechts-Liberaal', 'color' => 'blue'];
+        } elseif ($x > 0 && $y > 0) {
+            return ['name' => 'Rechts-Autoritair', 'color' => 'indigo'];
+        } elseif ($x < 0 && $y > 0) {
+            return ['name' => 'Links-Autoritair', 'color' => 'red'];
+        } else {
+            return ['name' => 'Links-Liberaal', 'color' => 'green'];
+        }
+    }
+
+    /**
      * Maak de stemwijzer_results tabel aan als deze niet bestaat
      */
     private function createResultsTable() {
