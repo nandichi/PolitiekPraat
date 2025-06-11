@@ -55,21 +55,93 @@ class ProgrammaVergelijkerController {
         ];
 
         // Partij informatie uit de bestaande partijen controller
-        $parties = [
+$parties = [
     'PVV' => [
         'name' => 'Partij voor de Vrijheid',
         'leader' => 'Geert Wilders',
         'logo' => 'https://i.ibb.co/DfR8pS2Y/403880390-713625330344634-198487231923339026-n.jpg',
-        'description' => 'De Partij voor de Vrijheid (PVV) is een rechtse nationalistische partij die zich richt op het behoud van de Nederlandse identiteit, cultuur en soevereiniteit. Onder leiding van Geert Wilders pleit de partij voor een harde aanpak van immigratie en een sceptische houding tegenover internationale samenwerking, met name binnen de EU.',
+        'description' => 'De Partij voor de Vrijheid (PVV) is een rechts-nationalistische partij die onder leiding van Geert Wilders streeft naar behoud van Nederlandse identiteit en soevereiniteit. De partij benadrukt een harde aanpak van immigratie en is kritisch op EU-samenwerking, met een focus op nationale controle.',
         'standpoints' => [
-            'Immigratie' => 'De PVV pleit voor een zeer streng immigratiebeleid, waaronder een volledige stop op asielaanvragen en strengere regels voor gezinshereniging. De partij wil de instroom van migranten minimaliseren om de Nederlandse cultuur en sociale cohesie te beschermen, met een focus op grensbewaking en snelle uitzetting van uitgeprocedeerde asielzoekers.',
-            'Klimaat' => 'De PVV is zeer kritisch over ambitieuze klimaatmaatregelen, vooral als deze economische groei of de portemonnee van burgers belasten. De partij stelt dat klimaatbeleid realistisch en betaalbaar moet zijn, en verzet zich tegen wat zij ziet als overdreven milieuactivisme, zoals windmolenparken of hoge CO2-belastingen.',
-            'Zorg' => 'De partij wil het eigen risico in de zorg volledig afschaffen om de toegang tot gezondheidszorg voor alle Nederlanders te verbeteren. Daarnaast pleit de PVV voor meer investeringen in zorgpersoneel en kortere wachttijden, met een focus op directe zorgverlening in plaats van bureaucratie.',
-            'Energie' => 'De PVV steunt de ontwikkeling van kernenergie als een betrouwbare en betaalbare energiebron binnen een brede energiemix. De partij ziet kernenergie als een oplossing om de afhankelijkheid van fossiele brandstoffen te verminderen zonder de economie te schaden door dure groene alternatieven.',
-            'Economie' => 'De PVV wil minder EU-regelgeving en meer nationale controle over economische beslissingen. De partij pleit voor belastingverlaging voor burgers en het midden- en kleinbedrijf (mkb), en is tegen wat zij ziet als overmatige bemoeienis van Brussel met de Nederlandse economie.',
-            'Onderwijs' => 'De PVV wil meer nadruk op Nederlandse geschiedenis, cultuur en waarden in het onderwijs. De partij pleit voor een curriculum dat nationale trots versterkt en minder aandacht besteedt aan multiculturele thema’s. Daarnaast wil de PVV investeren in praktisch onderwijs en vakmanschap.',
-            'Woningmarkt' => 'De PVV pleit voor voorrang voor Nederlandse staatsburgers bij de toewijzing van sociale huurwoningen. De partij wil de woningnood aanpakken door meer betaalbare woningen te bouwen en de instroom van migranten, die volgens de PVV de woningmarkt belast, te beperken.',
-            'Veiligheid' => 'De PVV pleit voor een harde aanpak van criminaliteit met strengere straffen, meer politie op straat en een zerotolerancebeleid. De partij richt zich vooral op het aanpakken van overlast, geweld en criminele activiteiten die volgens haar worden versterkt door immigratie.'
+            'Immigratie' => [
+                'summary' => 'De PVV pleit voor een extreem restrictief immigratiebeleid met een stop op asielaanvragen, strengere gezinshereniging en focus op grensbewaking en uitzetting.',
+                'details' => 'De PVV wil grenscontroles herinvoeren, asielopvangplaatsen drastisch reduceren en gezinshereniging voor asielzoekers stoppen. Internationale verdragen zoals het Vluchtelingenverdrag en EVRM moeten worden opgezegd of herzien. Een puntenmodel voor arbeidsmigratie richt zich op hoogopgeleiden met baangarantie. Inburgering wordt strenger met zware sancties bij falen, zoals intrekking van verblijfsrecht. De partij wil ook remigratie stimuleren voor niet-geïntegreerde migranten. Dit beleid is gebaseerd op de overtuiging dat massa-immigratie de Nederlandse cultuur en sociale cohesie bedreigt, met nadruk op assimilatie boven integratie.',
+                'feasibility' => [
+                    'score' => 'Zeer moeilijk',
+                    'explanation' => 'Het opzeggen van internationale verdragen botst met EU-recht en internationale verplichtingen, wat juridische en diplomatieke conflicten veroorzaakt. Permanente grenscontroles schenden Schengen-akkoorden; tijdelijke controles zijn mogelijk maar beperkt. Een asielstop is juridisch vrijwel onhaalbaar zonder grondwetswijziging. Remigratieplannen stuiten op ethische en praktische bezwaren, met beperkte publieke steun. Kritiek: PVV overschat de haalbaarheid en negeert economische afhankelijkheid van migratie in sectoren zoals zorg en bouw.',
+                    'costs' => '€1-2 miljard voor grensbewaking en deportatie, besparingen op opvang (€500 miljoen), juridische procedures kosten miljoenen',
+                    'timeline' => '3-7 jaar voor gedeeltelijke implementatie, 10+ jaar voor verdragswijzigingen'
+                ]
+            ],
+            'Klimaat' => [
+                'summary' => 'De PVV verzet zich tegen ambitieuze klimaatmaatregelen, ziet CO2-reductie als overdreven en wil betaalbare energie boven groene doelen.',
+                'details' => 'De PVV wil het Klimaatakkoord van Parijs opzeggen, subsidies voor wind- en zonne-energie schrappen en kolencentrales openhouden. Nieuwe gascentrales moeten energiezekerheid garanderen. Windmolens op land worden verwijderd, en offshore windparken stoppen. Energiebelasting en benzineaccijns worden afgeschaft. De partij betwist de rol van CO2 in klimaatverandering en richt zich op adaptatie (bijv. dijken) in plaats van mitigatie. Dit weerspiegelt scepsis over klimaatwetenschap en een focus op economische groei en lage lasten voor burgers.',
+                'feasibility' => [
+                    'score' => 'Gedeeltelijk haalbaar',
+                    'explanation' => 'Subsidies en energiebelasting schrappen kan binnen 1-2 jaar, maar opzeggen van het Klimaatakkoord botst met EU-verplichtingen, wat boetes of handelsbeperkingen oplevert. Windmolenverwijdering is juridisch complex door contracten en kostbaar. Gascentrales bouwen is haalbaar maar duurt 5-7 jaar. Kritiek: PVV negeert internationale druk en economische risico’s van afwijzing van groene transitie, zoals verlies van EU-fondsen en innovatieachterstand.',
+                    'costs' => '€3-5 miljard inkomstenderving door belastingafschaffing, €1-2 miljard voor windmolenverwijdering, mogelijke EU-boetes €500 miljoen+',
+                    'timeline' => '1-2 jaar voor belastingwijzigingen, 5-10 jaar voor energie-infrastructuur'
+                ]
+            ],
+            'Zorg' => [
+                'summary' => 'De PVV wil eigen risico afschaffen, zorgpremie verlagen en wachttijden verkorten door meer zorgpersoneel en minder bureaucratie.',
+                'details' => 'Het eigen risico wordt volledig geschrapt om zorg toegankelijker te maken, vooral voor lagere inkomens. Zorgpremies dalen door overheidsbijdragen. De PVV wil meer zorgpersoneel via betere salarissen, minder administratie en versnelde opleidingen. Wachtlijsten worden aangepakt door ziekenhuisuitbreiding en meer specialisten. Bureaucratie wordt verminderd door managementlagen te schrappen. Nederlandse zorgverleners krijgen voorrang bij vacatures, wat migratiebeperking weerspiegelt. De focus ligt op directe zorg boven preventie of innovatie.',
+                'feasibility' => [
+                    'score' => 'Gedeeltelijk haalbaar',
+                    'explanation' => 'Afschaffing eigen risico kost €2,5-3 miljard, haalbaar met belastingverhoging elders, maar vereist coalitiesteun. Meer zorgpersoneel vergt 5-10 jaar voor opleiding en werving. Voorrang voor Nederlanders is juridisch riskant (discriminatie). Kritiek: PVV onderschat complexiteit van personeelstekorten en afhankelijkheid van buitenlandse zorgverleners. Wachtlijstvermindering vereist structurele hervormingen, geen snelle fix.',
+                    'costs' => '€2,5-3 miljard voor eigen risico, €1-2 miljard voor personeel en infrastructuur',
+                    'timeline' => '1-2 jaar voor eigen risico, 5-10 jaar voor personeel en wachtlijsten'
+                ]
+            ],
+            'Energie' => [
+                'summary' => 'De PVV steunt kernenergie als betrouwbare energiebron en wil fossiele brandstoffen behouden boven dure groene alternatieven.',
+                'details' => 'De PVV wil twee nieuwe kerncentrales bouwen en onderzoek doen naar kleine modulaire reactoren (SMR). Gas- en kolencentrales blijven open voor energiezekerheid. Subsidies voor wind- en zonne-energie worden gestopt, en nieuwe windparken geweigerd. De partij ziet kernenergie als oplossing voor energieonafhankelijkheid zonder economische schade door groene transitie. Dit sluit aan bij hun afwijzing van klimaatdogma’s en focus op betaalbaarheid.',
+                'feasibility' => [
+                    'score' => 'Moeilijk',
+                    'explanation' => 'Kerncentrales bouwen duurt 10-15 jaar en kost €10-20 miljard, met publieke weerstand en strenge veiligheidsregels. SMR-technologie is nog experimenteel. Fossiele brandstoffen behouden botst met EU-doelen, wat boetes oplevert. Subsidies stoppen is haalbaar maar schaadt groene sector. Kritiek: PVV negeert lange-termijnrisico’s van fossiele afhankelijkheid en onderschat complexiteit van kernenergie.',
+                    'costs' => '€10-20 miljard voor kerncentrales, €500 miljoen+ voor SMR-onderzoek, EU-boetes mogelijk',
+                    'timeline' => '10-15 jaar voor kerncentrales, 2-3 jaar voor subsidie-stop'
+                ]
+            ],
+            'Economie' => [
+                'summary' => 'De PVV wil minder EU-regelgeving, lagere belastingen voor burgers en mkb, en nationale controle over economische besluiten.',
+                'details' => 'De PVV pleit voor verlaging van inkomsten- en vennootschapsbelasting, vooral voor mkb. EU-regelgeving wordt beperkt om nationale autonomie te versterken. Subsidies gaan naar lokale bedrijven, niet naar multinationals. De partij wil handelsbarrières met niet-EU-landen verlagen en protectionisme voor Nederlandse producten. Dit weerspiegelt anti-EU-sentiment en focus op nationale welvaart.',
+                'feasibility' => [
+                    'score' => 'Gedeeltelijk haalbaar',
+                    'explanation' => 'Belastingverlaging is mogelijk maar kost €5-10 miljard, wat compensatie vereist (bijv. hogere btw). EU-regelgeving beperken is lastig binnen EU-lidmaatschap; volledige exit is politiek onrealistisch. Protectionisme botst met WTO-regels. Kritiek: PVV onderschat economische afhankelijkheid van EU-markt en risico’s van handelsisolatie.',
+                    'costs' => '€5-10 miljard inkomstenderving, juridische kosten bij EU-conflicten',
+                    'timeline' => '1-3 jaar voor belastingwijzigingen, 5-10 jaar voor EU-onderhandelingen'
+                ]
+            ],
+            'Onderwijs' => [
+                'summary' => 'De PVV wil meer nadruk op Nederlandse geschiedenis en cultuur in onderwijs, met minder multiculturele thema’s en meer praktisch onderwijs.',
+                'details' => 'Het curriculum wordt herzien om nationale trots te benadrukken, met focus op Nederlandse geschiedenis, literatuur en waarden. Multiculturele en ‘woke’ thema’s worden geschrapt. Praktisch onderwijs (mbo) krijgt meer budget, en academisch onderwijs wordt selectiever. Leraren krijgen betere salarissen, maar diversiteitsquota worden afgeschaft. Dit reflecteert de PVV’s culturele conservatisme en anti-progressieve houding.',
+                'feasibility' => [
+                    'score' => 'Gedeeltelijk haalbaar',
+                    'explanation' => 'Curriculumaanscherping is mogelijk binnen 2-3 jaar, maar botst met onderwijsvrijheid en diversiteitswetten. Mbo-investeringen zijn haalbaar, maar selectiever academisch onderwijs kan ongelijkheid vergroten. Kritiek: PVV’s focus op nationalisme kan inclusiviteit schaden en weerstand oproepen bij onderwijsinstellingen.',
+                    'costs' => '€1-2 miljard voor mbo en salarissen, lage kosten voor curriculumwijzigingen',
+                    'timeline' => '2-3 jaar voor curriculum, 3-5 jaar voor mbo-uitbreiding'
+                ]
+            ],
+            'Woningmarkt' => [
+                'summary' => 'De PVV wil Nederlanders voorrang bij sociale huurwoningen en woningnood aanpakken door migratie te beperken en meer te bouwen.',
+                'details' => 'Nederlanders krijgen prioriteit bij sociale huurwoningen, en migranten worden uitgesloten van toegang tot 2030. De PVV wil 100.000 betaalbare woningen bouwen, vooral voor starters, door bureaucratie te schrappen. Migratiebeperking moet druk op de woningmarkt verlagen. Huurprijzen worden bevroren voor lage inkomens. Dit beleid koppelt woningnood aan immigratie.',
+                'feasibility' => [
+                    'score' => 'Moeilijk',
+                    'explanation' => 'Voorrang voor Nederlanders is juridisch riskant (discriminatie) en botst met EU-recht. Woningbouw is haalbaar maar kost 5-10 jaar. Migratiebeperking heeft beperkt effect op woningnood, gezien bredere oorzaken (vergrijzing, urbanisatie). Kritiek: PVV oversimplificeert probleem en negeert economische behoefte aan migranten.',
+                    'costs' => '€10-20 miljard voor woningbouw, juridische kosten bij discriminatiezaken',
+                    'timeline' => '5-10 jaar voor woningbouw, 2-3 jaar voor huurbevriezing'
+                ]
+            ],
+            'Veiligheid' => [
+                'summary' => 'De PVV wil strengere straffen, meer politie en zerotolerance tegen criminaliteit, vooral gerelateerd aan immigratie.',
+                'details' => 'De PVV pleit voor minimumstraffen, langere gevangenisstraffen en meer politie (10.000 extra agenten). Overlast en geweld, vooral door migranten, worden prioritair aangepakt. De partij wil detentiecentra voor illegalen en snelle uitzetting. Preventie krijgt weinig nadruk; de focus ligt op repressie. Dit weerspiegelt de PVV’s harde anti-migratie- en veiligheidshouding.',
+                'feasibility' => [
+                    'score' => 'Gedeeltelijk haalbaar',
+                    'explanation' => 'Meer politie en strengere straffen zijn mogelijk binnen 3-5 jaar, maar kosten hoog. Detentiecentra zijn juridisch complex en stuiten op mensenrechtenbezwaren. Immigratiegerichte aanpak kan discriminatieclaims opleveren. Kritiek: PVV negeert sociale oorzaken van criminaliteit en effectiviteit van preventie.',
+                    'costs' => '€2-3 miljard voor politie en gevangenissen, €500 miljoen voor detentiecentra',
+                    'timeline' => '3-5 jaar voor politie-uitbreiding, 2-3 jaar voor strafverhoging'
+                ]
+            ]
         ],
         'current_seats' => 37,
         'color' => '#1E40AF'
@@ -78,16 +150,88 @@ class ProgrammaVergelijkerController {
         'name' => 'Volkspartij voor Vrijheid en Democratie',
         'leader' => 'Dilan Yeşilgöz-Zegerius',
         'logo' => 'https://logo.clearbit.com/vvd.nl',
-        'description' => 'De Volkspartij voor Vrijheid en Democratie (VVD) is een rechtsliberale partij die zich inzet voor individuele vrijheid, economische groei en een slagvaardige, efficiënte overheid. Onder leiding van Dilan Yeşilgöz-Zegerius combineert de VVD een pro-marktbenadering met een pragmatische visie op maatschappelijke uitdagingen.',
+        'description' => 'De VVD is een rechtsliberale partij onder leiding van Dilan Yeşilgöz-Zegerius, die inzet op individuele vrijheid, economische groei en een efficiënte overheid. De partij combineert marktgerichte oplossingen met pragmatisme.',
         'standpoints' => [
-            'Immigratie' => 'De VVD pleit voor een streng maar rechtvaardig immigratiebeleid, met een focus op selectieve toelating van asielzoekers en internationale samenwerking om migratiestromen te beheersen. De partij wil snelle integratie van toegelaten migranten en een harde aanpak van illegale migratie.',
-            'Klimaat' => 'De VVD ondersteunt klimaatdoelstellingen, zoals het verminderen van CO2-uitstoot, maar benadrukt dat deze maatregelen economisch haalbaar moeten zijn. De partij wil innovatie in groene technologie stimuleren zonder bedrijven of huishoudens onevenredig te belasten met hoge kosten.',
-            'Zorg' => 'De VVD wil het eigen risico in de zorg behouden om de zorgkosten beheersbaar te houden, maar pleit voor meer efficiëntie in de zorgsector. De partij steunt investeringen in preventie en digitalisering om de kwaliteit van zorg te verbeteren en wachttijden te verkorten.',
-            'Energie' => 'De VVD ziet kernenergie als een belangrijke aanvulling op duurzame energiebronnen zoals wind en zon. De partij wil investeren in nieuwe kerncentrales om een stabiele en betaalbare energievoorziening te garanderen, terwijl de afhankelijkheid van buitenlandse energie afneemt.',
-            'Economie' => 'De VVD pleit voor lagere belastingen, minder bureaucratie en een gunstig vestigingsklimaat voor bedrijven. De partij wil ondernemerschap stimuleren en Nederland aantrekkelijk houden voor internationale investeerders, met een focus op innovatie en digitalisering.',
-            'Onderwijs' => 'De VVD wil meer autonomie voor scholen en een focus op excellentie in het onderwijs. De partij pleit voor investeringen in bèta- en techniekonderwijs, en wil dat het onderwijssysteem flexibel is om talent te stimuleren en kansengelijkheid te bevorderen.',
-            'Woningmarkt' => 'De VVD wil de woningbouw versnellen door marktwerking te stimuleren en overbodige regels te schrappen. De partij pleit voor meer samenwerking met private partijen om betaalbare woningen te bouwen, met een focus op starters en middeninkomens.',
-            'Veiligheid' => 'De VVD wil investeren in een sterke politie en betere cybersecurity om Nederland veiliger te maken. De partij pleit voor een harde aanpak van georganiseerde misdaad en drugscriminaliteit, en wil dat daders streng worden gestraft.'
+            'Immigratie' => [
+                'summary' => 'De VVD wil een streng maar rechtvaardig immigratiebeleid met selectieve asieltoelating, snelle integratie en aanpak van illegale migratie.',
+                'details' => 'De VVD pleit voor een quotum voor asielzoekers en strengere criteria voor toelating, zoals oorlogsvluchtelingen prioriteren. Illegale migratie wordt bestreden met grensbewaking en snelle uitzetting. Integratie is verplicht, met taaltoetsen en werk binnen een jaar. Gezinshereniging wordt beperkt tot kerngezinnen. De partij wil EU-deals met derde landen (bijv. Turkije) uitbreiden om migratiestromen te stoppen. Dit beleid balanceert humanitaire plichten met draagkracht, maar legt sterke nadruk op controle en assimilatie.',
+                'feasibility' => [
+                    'score' => 'Gedeeltelijk haalbaar',
+                    'explanation' => 'Asielquotum is juridisch lastig binnen EU-recht en Vluchtelingenverdrag. EU-deals zijn haalbaar maar kosten tijd en geld. Snelle integratie vereist forse investeringen in taal en werk. Grensbewaking is deels mogelijk binnen Schengen. Kritiek: VVD’s focus op controle kan humane verplichtingen ondermijnen en integratie bemoeilijken door strenge eisen.',
+                    'costs' => '€500-800 miljoen voor grensbewaking en uitzetting, €1 miljard voor integratie',
+                    'timeline' => '2-4 jaar voor EU-deals, 3-5 jaar voor integratieprogramma’s'
+                ]
+            ],
+            'Klimaat' => [
+                'summary' => 'De VVD steunt CO2-reductie maar wil economisch haalbare maatregelen, met focus op innovatie boven hoge belastingen.',
+                'details' => 'De VVD wil 55% CO2-reductie in 2030 (EU-doel), maar alleen via innovatie zoals waterstof, CCS en biobrandstoffen. Bedrijven krijgen subsidies voor groene technologie, maar hoge CO2-belastingen worden vermeden. Huishoudens worden ontzien via lagere energiebelasting. Wind- en zonne-energie worden ondersteund, maar kernenergie is cruciaal. De partij wil boeren helpen verduurzamen zonder gedwongen krimp. Dit weerspiegelt een marktgerichte, pragmatische aanpak.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Innovatiesubsidies en kernenergie zijn haalbaar binnen EU-kaders. Lagere belastingen voor huishoudens kunnen snel. Boerensteun is politiek gevoelig maar mogelijk. Kritiek: VVD’s afwijzing van hoge CO2-belastingen kan reductiedoelen vertragen, en afhankelijkheid van innovatie is riskant als technologie achterblijft.',
+                    'costs' => '€5-10 miljard voor subsidies, €1-2 miljard voor boerensteun',
+                    'timeline' => '2-5 jaar voor subsidies, 10-15 jaar voor kernenergie'
+                ]
+            ],
+            'Zorg' => [
+                'summary' => 'De VVD wil eigen risico behouden, maar zorg efficiënter maken via digitalisering en preventie, met kortere wachttijden.',
+                'details' => 'Het eigen risico blijft om zorgkosten te beheersen, maar wordt niet verhoogd. Digitalisering (bijv. e-health) en preventieprogramma’s moeten kosten drukken en wachttijden verkorten. De VVD wil meer marktwerking in de zorg, zoals concurrentie tussen ziekenhuizen. Zorgpersoneel krijgt betere arbeidsvoorwaarden, maar geen grootschalige salarisverhoging. Dit beleid prioriteert efficiëntie boven toegankelijkheid.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Digitalisering en preventie zijn breed gedragen en kosten-effectief. Eigen risico behouden is politiek haalbaar, maar stuit op weerstand van links. Marktwerking kan weerstand oproepen bij zorgpersoneel. Kritiek: VVD negeert toegankelijkheidsproblemen voor lage inkomens en risico’s van marktwerking, zoals ongelijke zorgkwaliteit.',
+                    'costs' => '€1-2 miljard voor digitalisering, €500-800 miljoen voor preventie',
+                    'timeline' => '2-4 jaar voor digitalisering, 3-5 jaar voor wachttijdreductie'
+                ]
+            ],
+            'Energie' => [
+                'summary' => 'De VVD ziet kernenergie als sleutel voor stabiele energie, naast wind en zon, en wil energieonafhankelijkheid.',
+                'details' => 'De VVD wil vier kerncentrales bouwen tegen 2035 en kleine modulaire reactoren (SMR) ontwikkelen. Offshore windparken en zonne-energie worden uitgebreid, maar kernenergie is prioriteit voor stabiliteit. Gaswinning in Groningen stopt, maar nieuwe gascentrales zijn mogelijk. Energieonafhankelijkheid vermindert afhankelijkheid van Rusland en Qatar. Dit beleid combineert duurzaamheid met pragmatisme.',
+                'feasibility' => [
+                    'score' => 'Gedeeltelijk haalbaar',
+                    'explanation' => 'Kerncentrales kosten 10-15 jaar en €40-60 miljard, met publieke en politieke weerstand. SMR is nog niet marktrijp. Wind- en zonne-uitbreiding is haalbaar binnen 5-7 jaar. Kritiek: VVD overschat snelheid van kernenergie en negeert kostenrisico’s en veiligheidszorgen.',
+                    'costs' => '€40-60 miljard voor kerncentrales, €5-10 miljard voor wind/zon',
+                    'timeline' => '10-15 jaar voor kerncentrales, 5-7 jaar voor wind/zon'
+                ]
+            ],
+            'Economie' => [
+                'summary' => 'De VVD wil lagere belastingen, minder bureaucratie en een aantrekkelijk vestigingsklimaat voor bedrijven.',
+                'details' => 'De VVD pleit voor verlaging van vennootschapsbelasting en lastenverlichting voor mkb. Bureaucratie wordt verminderd door vergunningen te versnellen. Innovatie krijgt €2-3 miljard aan subsidies, vooral voor tech en startups. Nederland moet aantrekkelijk blijven voor multinationals via belastingvoordelen. Dit weerspiegelt een pro-marktvisie met focus op groei.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Belastingverlaging en subsidies zijn mogelijk binnen 2-3 jaar, maar kosten €5-7 miljard. Bureaucratievermindering is haalbaar maar vereist bestuurlijke hervormingen. Kritiek: VVD’s focus op multinationals kan mkb benadelen en ongelijkheid vergroten.',
+                    'costs' => '€5-7 miljard voor belastingverlaging, €2-3 miljard voor subsidies',
+                    'timeline' => '2-3 jaar voor belastingwijzigingen, 3-5 jaar voor bureaucratie'
+                ]
+            ],
+            'Onderwijs' => [
+                'summary' => 'De VVD wil meer autonomie voor scholen, focus op bèta/techniek en kansengelijkheid via excellentie.',
+                'details' => 'Scholen krijgen meer vrijheid in curriculum en budget. Bèta- en techniekonderwijs krijgt €1 miljard extra, met focus op digitale vaardigheden. Kansengelijkheid wordt bevorderd via talentprogramma’s, niet via nivellering. Leraren krijgen betere training, maar geen forse salarisverhoging. Dit weerspiegelt een meritocratische visie.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Autonomie en bèta-investeringen zijn haalbaar binnen 3-5 jaar. Talentprogramma’s zijn politiek breed gedragen. Kritiek: VVD’s focus op excellentie kan achterstandsgroepen benadelen en lerarentekort negeren.',
+                    'costs' => '€1-2 miljard voor bèta/techniek, €500 miljoen voor training',
+                    'timeline' => '3-5 jaar voor implementatie'
+                ]
+            ],
+            'Woningmarkt' => [
+                'summary' => 'De VVD wil woningbouw versnellen via marktwerking en minder regels, met focus op starters en middeninkomens.',
+                'details' => 'De VVD wil 100.000 woningen per jaar bouwen door private investeerders te stimuleren en vergunningen te versoepelen. Starters krijgen hypotheeksteun, en middeninkomens toegang tot middenhuur. Sociale huur blijft beperkt om marktwerking te bevorderen. Dit beleid prioriteert economische groei boven sociale gelijkheid.',
+                'feasibility' => [
+                    'score' => 'Gedeeltelijk haalbaar',
+                    'explanation' => 'Woningbouw is haalbaar maar kost 5-10 jaar door grondtekort en NIMBY-weerstand. Hypotheeksteun kan binnen 2-3 jaar. Kritiek: VVD’s marktaanpak kan betaalbaarheid ondermijnen en sociale huur tekortschieten.',
+                    'costs' => '€10-20 miljard voor woningbouw, €1-2 miljard voor hypotheeksteun',
+                    'timeline' => '5-10 jaar voor woningbouw, 2-3 jaar voor hypotheeksteun'
+                ]
+            ],
+            'Veiligheid' => [
+                'summary' => 'De VVD wil meer politie, betere cybersecurity en een harde aanpak van georganiseerde misdaad.',
+                'details' => 'De VVD wil 5.000 extra agenten, strengere straffen voor drugscriminaliteit en €1 miljard voor cybersecurity. Georganiseerde misdaad wordt aangepakt via internationale samenwerking. Preventie krijgt minder nadruk. Dit weerspiegelt een repressieve aanpak.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Politie-uitbreiding en cybersecurity zijn haalbaar binnen 3-5 jaar. Internationale samenwerking is effectief maar tijdrovend. Kritiek: VVD negeert sociale oorzaken van criminaliteit en effectiviteit van preventie.',
+                    'costs' => '€2-3 miljard voor politie, €1-2 miljard voor cybersecurity',
+                    'timeline' => '3-5 jaar voor implementatie'
+                ]
+            ]
         ],
         'current_seats' => 24,
         'color' => '#FF6B35'
@@ -96,16 +240,88 @@ class ProgrammaVergelijkerController {
         'name' => 'Nieuw Sociaal Contract',
         'leader' => 'Pieter Omtzigt',
         'logo' => 'https://i.ibb.co/YT2fJZb4/nsc.png',
-        'description' => 'Nieuw Sociaal Contract (NSC) is een relatief nieuwe partij die onder leiding van Pieter Omtzigt streeft naar transparant en eerlijk bestuur. De partij wil een fundamentele hervorming van de democratische instituties en een samenleving waarin burgers weer vertrouwen hebben in de overheid.',
+        'description' => 'Nieuw Sociaal Contract (NSC) onder leiding van Pieter Omtzigt streeft naar transparant bestuur en een rechtvaardige samenleving. De partij richt zich op hervorming van instituties en herstel van vertrouwen in de overheid.',
         'standpoints' => [
-            'Immigratie' => 'NSC pleit voor een doordacht asielbeleid dat zowel veiligheid als humanitaire verplichtingen waarborgt. De partij wil een gecontroleerde instroom van migranten, met een focus op snelle integratie en duidelijke regels voor wie in Nederland mag blijven.',
-            'Klimaat' => 'NSC streeft naar een evenwichtige aanpak van klimaatbeleid, waarbij zowel ecologische als economische belangen worden meegewogen. De partij wil realistische doelen stellen en investeren in innovatieve oplossingen die de energietransitie betaalbaar houden.',
-            'Zorg' => 'NSC overweegt aanpassingen aan het eigen risico in de zorg om de toegankelijkheid te verbeteren, maar is terughoudend met volledige afschaffing vanwege de kosten. De partij wil meer investeren in preventie en betere werkomstandigheden voor zorgpersoneel.',
-            'Energie' => 'NSC staat open voor kernenergie als onderdeel van een stabiele en duurzame energiemix, mits veiligheid en kosten-effectiviteit zijn gegarandeerd. De partij wil ook investeren in andere vormen van groene energie, zoals waterstof.',
-            'Economie' => 'NSC wil het vertrouwen in de overheid herstellen door transparantie en goed bestuur te bevorderen. De partij pleit voor een eerlijke economie waarin zowel grote bedrijven als het mkb gelijke kansen krijgen, met aandacht voor regionale ontwikkeling.',
-            'Onderwijs' => 'NSC wil de kwaliteit en toegankelijkheid van onderwijs verbeteren, met een focus op kansengelijkheid. De partij pleit voor meer investeringen in leraren en een curriculum dat aansluit bij de behoeften van de moderne arbeidsmarkt.',
-            'Woningmarkt' => 'NSC wil betaalbare woningen voor starters en de middenklasse door meer woningbouw en betere regulering van de huurmarkt. De partij pleit ook voor een eerlijke verdeling van woningen en aandacht voor regionale verschillen.',
-            'Veiligheid' => 'NSC wil een effectieve aanpak van criminaliteit, met een focus op preventie en handhaving. De partij pleit voor meer zichtbare politie en betere bescherming van burgerrechten, terwijl de oorzaken van criminaliteit worden aangepakt.'
+            'Immigratie' => [
+                'summary' => 'NSC wil een gecontroleerd asielbeleid met snelle integratie en respect voor humanitaire verplichtingen.',
+                'details' => 'NSC pleit voor een jaarlijks asielplafond, snelle screening van asielaanvragen en verplichte integratie binnen twee jaar (taal, werk). Illegale migratie wordt bestreden met EU-samenwerking. Opvang is kleinschalig en regionaal verspreid. Dit beleid balanceert draagkracht en menselijkheid.',
+                'feasibility' => [
+                    'score' => 'Gedeeltelijk haalbaar',
+                    'explanation' => 'Asielplafond is juridisch complex binnen EU-recht. Snelle integratie vereist forse investeringen. EU-samenwerking is haalbaar maar tijdrovend. Kleinschalige opvang kan binnen 2-3 jaar.',
+                    'costs' => '€1-2 miljard voor integratie, €500-800 miljoen voor opvang',
+                    'timeline' => '2-4 jaar voor opvang, 3-5 jaar voor integratie'
+                ]
+            ],
+            'Klimaat' => [
+                'summary' => 'NSC wil realistische klimaatdoelen met balans tussen ecologie en economie, en focus op innovatie.',
+                'details' => 'NSC steunt 50% CO2-reductie in 2030 via waterstof, CCS en energiebesparing. Boeren en mkb krijgen steun om te verduurzamen. Hoge belastingen worden vermeden, en huishoudens krijgen energiecompensatie. Dit weerspiegelt een pragmatische aanpak.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Innovatie en boerensteun zijn haalbaar binnen 3-5 jaar. Energiecompensatie kan snel. Kritiek: 50% reductie is minder ambitieus dan EU-doelen, wat spanningen kan opleveren.',
+                    'costs' => '€3-5 miljard voor innovatie, €1-2 miljard voor compensatie',
+                    'timeline' => '2-5 jaar voor implementatie'
+                ]
+            ],
+            'Zorg' => [
+                'summary' => 'NSC wil eigen risico aanpassen en investeren in preventie en zorgpersoneel.',
+                'details' => 'Het eigen risico wordt verlaagd voor chronisch zieken en lage inkomens. Preventie krijgt €1 miljard, en zorgpersoneel betere salarissen en minder administratie. Wachttijden worden verkort via regionale samenwerking. Dit beleid richt zich op toegankelijkheid.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Eigen risico verlagen kost €1-2 miljard, haalbaar met coalitiesteun. Preventie en salarissen zijn breed gedragen. Kritiek: structurele personeelstekorten vereisen langetermijnoplossingen.',
+                    'costs' => '€1-2 miljard voor eigen risico, €1-2 miljard voor personeel',
+                    'timeline' => '2-3 jaar voor eigen risico, 5-7 jaar voor personeel'
+                ]
+            ],
+            'Energie' => [
+                'summary' => 'NSC steunt kernenergie binnen een duurzame energiemix, met focus op veiligheid en betaalbaarheid.',
+                'details' => 'NSC wil één kerncentrale en onderzoek naar SMR. Wind, zon en waterstof krijgen €3-5 miljard. Energieprijzen worden gestabiliseerd via subsidies voor lage inkomens. Dit weerspiegelt een brede aanpak.',
+                'feasibility' => [
+                    'score' => 'Gedeeltelijk haalbaar',
+                    'explanation' => 'Kerncentrale kost 10-12 jaar en €10-15 miljard. Wind/zon is haalbaar binnen 5-7 jaar. Subsidies zijn snel implementeerbaar. Kritiek: kernenergie kent publieke weerstand.',
+                    'costs' => '€10-15 miljard voor kerncentrale, €3-5 miljard voor wind/zon',
+                    'timeline' => '10-12 jaar voor kerncentrale, 3-5 jaar voor wind/zon'
+                ]
+            ],
+            'Economie' => [
+                'summary' => 'NSC wil een eerlijke economie met focus op mkb, regionale ontwikkeling en transparantie.',
+                'details' => 'NSC pleit voor €2-3 miljard steun voor mkb en regionale economieën. Belastingen worden eerlijker via hogere heffing op multinationals. Bureaucratie wordt verminderd via digitale overheid. Dit weerspiegelt goed bestuur.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Mkb-steun en digitalisering zijn haalbaar binnen 3-5 jaar. Belastinghervorming kan weerstand oproepen bij bedrijven. Kritiek: regionale focus kan grote steden benadelen.',
+                    'costs' => '€2-3 miljard voor mkb, €1-2 miljard voor digitalisering',
+                    'timeline' => '3-5 jaar voor implementatie'
+                ]
+            ],
+            'Onderwijs' => [
+                'summary' => 'NSC wil kansengelijkheid, meer leraren en een modern curriculum.',
+                'details' => 'NSC investeert €2-3 miljard in leraren en achterstandsscholen. Het curriculum richt zich op digitale vaardigheden en arbeidsmarkt. Kansengelijkheid krijgt prioriteit via extra steun voor kansarme leerlingen.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Investeringen zijn haalbaar binnen 3-5 jaar. Kritiek: lerarentekort oplossen duurt langer door opleidingsduur.',
+                    'costs' => '€2-3 miljard voor leraren en scholen',
+                    'timeline' => '3-5 jaar voor implementatie'
+                ]
+            ],
+            'Woningmarkt' => [
+                'summary' => 'NSC wil betaalbare woningen via meer bouw en regulering van huur.',
+                'details' => 'NSC wil 80.000 woningen per jaar bouwen, met focus op starters. Huurprijzen worden gereguleerd, en sociale huur uitgebreid. Regionale verschillen krijgen aandacht.',
+                'feasibility' => [
+                    'score' => 'Gedeeltelijk haalbaar',
+                    'explanation' => 'Woningbouw kost 5-10 jaar door grondtekort. Huurregulering is haalbaar binnen 2-3 jaar. Kritiek: financiering is uitdagend.',
+                    'costs' => '€8-15 miljard voor woningbouw, €500 miljoen voor regulering',
+                    'timeline' => '5-10 jaar voor woningbouw, 2-3 jaar voor regulering'
+                ]
+            ],
+            'Veiligheid' => [
+                'summary' => 'NSC wil meer politie, preventie en burgerrechten beschermen.',
+                'details' => 'NSC wil 3.000 extra agenten, €1 miljard voor preventie en betere rechtspraak. Burgerrechten worden gewaarborgd via transparante politie.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Politie en preventie zijn haalbaar binnen 3-5 jaar. Kritiek: preventie-effecten duren lang.',
+                    'costs' => '€1-2 miljard voor politie, €1-2 miljard voor preventie',
+                    'timeline' => '3-5 jaar voor implementatie'
+                ]
+            ]
         ],
         'current_seats' => 20,
         'color' => '#059669'
@@ -114,16 +330,88 @@ class ProgrammaVergelijkerController {
         'name' => 'BoerBurgerBeweging',
         'leader' => 'Caroline van der Plas',
         'logo' => 'https://i.ibb.co/qMjw7jDV/bbb.png',
-        'description' => 'De BoerBurgerBeweging (BBB) vertegenwoordigt de belangen van de agrarische sector en het platteland. Onder leiding van Caroline van der Plas combineert de partij een focus op traditionele waarden met een pragmatische visie op innovatie en duurzaamheid voor het platteland.',
+        'description' => 'De BoerBurgerBeweging (BBB) onder leiding van Caroline van der Plas verdedigt plattelandswaarden en de agrarische sector, met een pragmatische visie op duurzaamheid.',
         'standpoints' => [
-            'Immigratie' => 'BBB steunt een streng asielbeleid en wil de instroom van migranten beperken om de druk op plattelandsgebieden te verminderen. De partij pleit voor betere integratie van nieuwkomers in kleine gemeenschappen, met respect voor lokale tradities.',
-            'Klimaat' => 'BBB is sceptisch over ingrijpende klimaatmaatregelen die de agrarische sector onevenredig treffen. De partij wil boeren ondersteunen bij verduurzaming, maar verzet zich tegen wat zij ziet als onrealistische milieudoelen die de voedselproductie bedreigen.',
-            'Zorg' => 'BBB wil het eigen risico in de zorg verlagen om de toegang tot zorg voor plattelandsbewoners te verbeteren. De partij pleit ook voor meer zorgfaciliteiten in dunbevolkte gebieden en betere ondersteuning voor mantelzorgers.',
-            'Energie' => 'BBB ziet kernenergie als een betrouwbare en duurzame oplossing binnen de energietransitie. De partij wil dat energie betaalbaar blijft voor burgers en bedrijven, en pleit voor een mix van energiebronnen, waaronder zonne- en windenergie op geschikte locaties.',
-            'Economie' => 'BBB wil de plattelandseconomie versterken door boeren en kleine ondernemers te ondersteunen. De partij pleit voor minder bureaucratie en meer subsidies voor duurzame landbouw, met een focus op voedselzekerheid en lokale productie.',
-            'Onderwijs' => 'BBB pleit voor praktijkgericht onderwijs en meer aandacht voor landbouw en voedselproductie in het curriculum. De partij wil ook dat plattelandscholen beter worden gefinancierd om de leefbaarheid van dorpen te behouden.',
-            'Woningmarkt' => 'BBB wil meer woningbouw op het platteland om jonge gezinnen en starters aan te trekken. De partij pleit voor het behoud van dorpskernen en een eerlijke verdeling van woningen, met minder nadruk op grootschalige urbanisatie.',
-            'Veiligheid' => 'BBB wil de veiligheid op het platteland vergroten door meer politie-inzet en betere bescherming van boeren tegen diefstal en activisme. De partij pleit ook voor een aanpak van overlast en criminaliteit in kleine gemeenschappen.'
+            'Immigratie' => [
+                'summary' => 'BBB wil een streng asielbeleid en betere integratie in plattelandsgemeenten.',
+                'details' => 'BBB pleit voor een asielstop behalve voor oorlogsvluchtelingen en snelle uitzetting van illegalen. Integratie richt zich op lokale tradities en werk. Opvang is kleinschalig.',
+                'feasibility' => [
+                    'score' => 'Moeilijk',
+                    'explanation' => 'Asielstop is juridisch complex. Kleinschalige opvang is haalbaar maar kost tijd. Kritiek: integratie in kleine gemeenten kan spanningen opleveren.',
+                    'costs' => '€500-800 miljoen voor opvang, €300-500 miljoen voor integratie',
+                    'timeline' => '2-4 jaar voor opvang, 3-5 jaar voor integratie'
+                ]
+            ],
+            'Klimaat' => [
+                'summary' => 'BBB is sceptisch over strenge klimaatmaatregelen en wil boeren ontzien.',
+                'details' => 'BBB steunt 40% CO2-reductie in 2030, maar alleen via innovatie en boerensteun. Hoge belastingen worden vermeden, en windmolens beperkt tot zee.',
+                'feasibility' => [
+                    'score' => 'Gedeeltelijk haalbaar',
+                    'explanation' => 'Boerensteun is haalbaar, maar 40% reductie is onder EU-doelen. Windmolenbeperking kan juridisch lastig zijn.',
+                    'costs' => '€2-3 miljard voor boerensteun, €1-2 miljard voor innovatie',
+                    'timeline' => '2-5 jaar voor implementatie'
+                ]
+            ],
+            'Zorg' => [
+                'summary' => 'BBB wil eigen risico verlagen en meer zorgfaciliteiten op platteland.',
+                'details' => 'Het eigen risico wordt gehalveerd, en €1-2 miljard gaat naar plattelandsziekenhuizen en mantelzorg. Personeel krijgt betere voorwaarden.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Eigen risico halveren kost €1,5-2 miljard, haalbaar met steun. Plattelandszorg is mogelijk maar tijdrovend. Kritiek: personeelstekorten blijven een probleem.',
+                    'costs' => '€1,5-2 miljard voor eigen risico, €1-2 miljard voor zorgfaciliteiten',
+                    'timeline' => '2-3 jaar voor eigen risico, 5-7 jaar voor zorgfaciliteiten'
+                ]
+            ],
+            'Energie' => [
+                'summary' => 'BBB steunt kernenergie en een mix van duurzame energiebronnen.',
+                'details' => 'BBB wil één kerncentrale en €2-3 miljard voor zon en wind op geschikte locaties. Energieprijzen worden gestabiliseerd via subsidies.',
+                'feasibility' => [
+                    'score' => 'Gedeeltelijk haalbaar',
+                    'explanation' => 'Kerncentrale kost 10-12 jaar. Zon/wind is haalbaar binnen 5-7 jaar. Kritiek: publieke acceptatie van kernenergie is onzeker.',
+                    'costs' => '€10-15 miljard voor kerncentrale, €2-3 miljard voor zon/wind',
+                    'timeline' => '10-12 jaar voor kerncentrale, 3-5 jaar voor zon/wind'
+                ]
+            ],
+            'Economie' => [
+                'summary' => 'BBB wil plattelandseconomie versterken met steun voor boeren en mkb.',
+                'details' => 'BBB investeert €2-3 miljard in boeren en lokale ondernemers. Bureaucratie wordt verminderd, en voedselzekerheid krijgt prioriteit.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Boerensteun en bureaucratievermindering zijn haalbaar binnen 3-5 jaar. Kritiek: focus op platteland kan stedelijke economieën verwaarlozen.',
+                    'costs' => '€2-3 miljard voor steun, €500-800 miljoen voor bureaucratie',
+                    'timeline' => '3-5 jaar voor implementatie'
+                ]
+            ],
+            'Onderwijs' => [
+                'summary' => 'BBB wil praktijkgericht onderwijs en meer plattelandscholen.',
+                'details' => 'BBB investeert €1-2 miljard in mbo en plattelandscholen. Het curriculum richt zich op landbouw en voedselproductie.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Mbo-investeringen zijn haalbaar binnen 3-5 jaar. Kritiek: focus op landbouw kan bredere arbeidsmarktbehoeften negeren.',
+                    'costs' => '€1-2 miljard voor mbo en plattelandscholen',
+                    'timeline' => '3-5 jaar voor implementatie'
+                ]
+            ],
+            'Woningmarkt' => [
+                'summary' => 'BBB wil meer woningen op platteland en dorpskernen behouden.',
+                'details' => 'BBB wil 50.000 woningen per jaar bouwen op platteland, met focus op starters. Huurprijzen worden gereguleerd.',
+                'feasibility' => [
+                    'score' => 'Gedeeltelijk haalbaar',
+                    'explanation' => 'Woningbouw kost 5-10 jaar door grondtekort. Huurregulering is haalbaar binnen 2-3 jaar. Kritiek: focus op platteland kan stedelijke noden negeren.',
+                    'costs' => '€5-10 miljard voor woningbouw, €500-800 miljoen voor regulering',
+                    'timeline' => '5-10 jaar voor woningbouw, 2-3 jaar voor regulering'
+                ]
+            ],
+            'Veiligheid' => [
+                'summary' => 'BBB wil meer politie op platteland en boeren beschermen.',
+                'details' => 'BBB wil 2.000 extra agenten en €500-800 miljoen voor boerenbescherming tegen diefstal. Preventie richt zich op plattelandsgemeenten.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Politie-uitbreiding is haalbaar binnen 3-5 jaar. Boerenbescherming is specifiek maar mogelijk. Kritiek: focus op platteland kan stedelijke criminaliteit negeren.',
+                    'costs' => '€1-2 miljard voor politie, €500-800 miljoen voor boerenbescherming',
+                    'timeline' => '3-5 jaar voor implementatie'
+                ]
+            ]
         ],
         'current_seats' => 7,
         'color' => '#16A34A'
@@ -132,16 +420,88 @@ class ProgrammaVergelijkerController {
         'name' => 'GroenLinks-PvdA',
         'leader' => 'Frans Timmermans',
         'logo' => 'https://i.ibb.co/67hkc5Hv/gl-pvda.png',
-        'description' => 'GroenLinks-PvdA is een progressieve alliantie die onder leiding van Frans Timmermans strijdt voor sociale rechtvaardigheid, duurzaamheid en gelijke kansen. De partij combineert de groene idealen van GroenLinks met de sociaaldemocratische waarden van de PvdA.',
+        'description' => 'GroenLinks-PvdA, onder leiding van Frans Timmermans, is een progressieve alliantie die inzet op sociale rechtvaardigheid, duurzaamheid en gelijke kansen.',
         'standpoints' => [
-            'Immigratie' => 'GL-PvdA pleit voor een humaan asielbeleid waarin mensenrechten en internationale verplichtingen centraal staan. De partij wil veilige en legale migratieroutes, betere opvangvoorzieningen en een eerlijke verdeling van asielzoekers binnen Europa.',
-            'Klimaat' => 'GL-PvdA steunt ambitieuze klimaatmaatregelen, zoals een snelle overgang naar hernieuwbare energie en een forse reductie van CO2-uitstoot. De partij is bereid economische offers te brengen om klimaatverandering tegen te gaan en wil dat de vervuiler betaalt.',
-            'Zorg' => 'GL-PvdA wil het eigen risico in de zorg afschaffen om de toegang tot gezondheidszorg voor iedereen te garanderen. De partij pleit ook voor meer investeringen in zorgpersoneel, preventie en mentale gezondheidszorg.',
-            'Energie' => 'GL-PvdA is tegen kernenergie vanwege de veiligheidsrisico’s en lange bouwtijden. De partij wil vol inzetten op hernieuwbare energiebronnen zoals wind, zon en waterstof, en pleit voor een snelle afbouw van fossiele brandstoffen.',
-            'Economie' => 'GL-PvdA wil een eerlijkere verdeling van welvaart door hogere belastingen voor topinkomens en multinationals. De partij pleit voor een sterke publieke sector en betere arbeidsvoorwaarden, met een focus op het bestrijden van ongelijkheid.',
-            'Onderwijs' => 'GL-PvdA wil gelijke kansen in het onderwijs door meer investeringen in achterstandsscholen en het verlagen van studiekosten. De partij pleit ook voor een inclusief curriculum dat duurzaamheid en diversiteit benadrukt.',
-            'Woningmarkt' => 'GL-PvdA wil meer sociale huurwoningen en strengere regulering van huurprijzen om wonen betaalbaar te maken. De partij pleit voor een stop op speculatie door grote beleggers en meer rechten voor huurders.',
-            'Veiligheid' => 'GL-PvdA wil criminaliteit aanpakken door te investeren in preventie en de sociale oorzaken van misdaad, zoals armoede en ongelijkheid. De partij pleit voor een humane aanpak van detentie en meer aandacht voor re-integratie.'
+            'Immigratie' => [
+                'summary' => 'GL-PvdA pleit voor een humaan asielbeleid met legale routes en Europese samenwerking.',
+                'details' => 'GL-PvdA wil een EU-asielbeleid met verplichte herverdeling van vluchtelingen. Legale migratiekanalen moeten smokkel tegengaan. Nederland neemt 10.000 extra vluchtelingen per jaar op, met €2-3 miljard voor opvang en integratie. Gezinshereniging wordt versoepeld, en kinderen krijgen prioriteit. Een regularisatieregeling komt voor langdurig verblijvenden zonder papieren. Dit weerspiegelt een inclusieve visie.',
+                'feasibility' => [
+                    'score' => 'Moeilijk',
+                    'explanation' => 'EU-herverdeling vereist brede steun, wat politiek lastig is. Opvanguitbreiding is haalbaar maar kostbaar. Regularisatie is mogelijk maar controversieel. Kritiek: extra opvang kan draagvlak in samenleving ondermijnen.',
+                    'costs' => '€2-4 miljard voor opvang en integratie, EU-subsidies mogelijk',
+                    'timeline' => '2-3 jaar voor opvang, 5-10 jaar voor EU-samenwerking'
+                ]
+            ],
+            'Klimaat' => [
+                'summary' => 'GL-PvdA wil ambitieuze CO2-reductie en snelle transitie naar hernieuwbare energie.',
+                'details' => 'GL-PvdA steunt 65% CO2-reductie in 2030 via wind, zon en waterstof. Fossiele subsidies stoppen, en vervuilers betalen hogere belastingen. Huishoudens krijgen €2-3 miljard compensatie. Boeren worden geholpen met duurzame transitie.',
+                'feasibility' => [
+                    'score' => 'Gedeeltelijk haalbaar',
+                    'explanation' => 'Wind/zon-uitbreiding is haalbaar binnen 5-7 jaar. Fossiele subsidie-stop kan snel. Hoge belastingen zijn politiek gevoelig. Kritiek: kosten voor huishoudens kunnen weerstand oproepen.',
+                    'costs' => '€10-15 miljard voor hernieuwbare energie, €2-3 miljard voor compensatie',
+                    'timeline' => '3-7 jaar voor implementatie'
+                ]
+            ],
+            'Zorg' => [
+                'summary' => 'GL-PvdA wil eigen risico afschaffen en investeren in zorgpersoneel en preventie.',
+                'details' => 'Het eigen risico wordt geschrapt (€2,5-3 miljard). Zorgpersoneel krijgt hogere salarissen en minder administratie. Preventie en mentale zorg krijgen €1-2 miljard. Dit richt zich op toegankelijkheid en kwaliteit.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Eigen risico afschaffen is haalbaar met coalitiesteun. Personeelsinvesteringen kosten tijd. Kritiek: financiering vereist belastingverhoging.',
+                    'costs' => '€2,5-3 miljard voor eigen risico, €1-2 miljard voor personeel',
+                    'timeline' => '1-2 jaar voor eigen risico, 5-7 jaar voor personeel'
+                ]
+            ],
+            'Energie' => [
+                'summary' => 'GL-PvdA is tegen kernenergie en wil volledig duurzame energie.',
+                'details' => 'GL-PvdA investeert €15-20 miljard in wind, zon en waterstof. Fossiele brandstoffen worden uitgefaseerd tegen 2040. Energieprijzen worden gestabiliseerd via subsidies.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Wind/zon is haalbaar binnen 5-10 jaar. Fossiele uitfasering is ambitieus maar mogelijk met EU-steun. Kritiek: afhankelijkheid van import blijft risico.',
+                    'costs' => '€15-20 miljard voor hernieuwbare energie, €2-3 miljard voor subsidies',
+                    'timeline' => '5-10 jaar voor implementatie'
+                ]
+            ],
+            'Economie' => [
+                'summary' => 'GL-PvdA wil eerlijkere welvaart via hogere belastingen voor rijken en multinationals.',
+                'details' => 'Topinkomens en multinationals betalen 5-10% meer belasting. €5-7 miljard gaat naar publieke sector en arbeidsvoorwaarden. Flexwerk wordt beperkt.',
+                'feasibility' => [
+                    'score' => 'Gedeeltelijk haalbaar',
+                    'explanation' => 'Belastingverhoging is haalbaar maar kan bedrijven afschrikken. Publieke investeringen zijn mogelijk. Kritiek: economische groei kan afnemen.',
+                    'costs' => '€5-7 miljard voor publieke sector',
+                    'timeline' => '2-4 jaar voor implementatie'
+                ]
+            ],
+            'Onderwijs' => [
+                'summary' => 'GL-PvdA wil gelijke kansen en inclusief onderwijs.',
+                'details' => 'GL-PvdA investeert €3-5 miljard in achterstandsscholen en studiekostenverlaging. Het curriculum benadrukt diversiteit en duurzaamheid.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Investeringen zijn haalbaar binnen 3-5 jaar. Kritiek: lerarentekort blijft een uitdaging.',
+                    'costs' => '€3-5 miljard voor onderwijs',
+                    'timeline' => '3-5 jaar voor implementatie'
+                ]
+            ],
+            'Woningmarkt' => [
+                'summary' => 'GL-PvdA wil meer sociale huur en strengere huurregulering.',
+                'details' => 'GL-PvdA wil 50.000 sociale huurwoningen per jaar en huurprijsbevriezing. Beleggers worden beperkt via belastingen.',
+                'feasibility' => [
+                    'score' => 'Gedeeltelijk haalbaar',
+                    'explanation' => 'Huurregulering is haalbaar binnen 2-3 jaar. Woningbouw kost 5-10 jaar. Kritiek: beleggersbeperking kan investeringen remmen.',
+                    'costs' => '€5-10 miljard voor woningbouw, €500-800 miljoen voor regulering',
+                    'timeline' => '5-10 jaar voor woningbouw, 2-3 jaar voor regulering'
+                ]
+            ],
+            'Veiligheid' => [
+                'summary' => 'GL-PvdA wil criminaliteit aanpakken via preventie en sociale oorzaken.',
+                'details' => 'GL-PvdA investeert €2-3 miljard in preventie en armoedebestrijding. Politie krijgt training tegen discriminatie.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Preventie is haalbaar binnen 3-5 jaar. Kritiek: effecten duren lang, en repressieve aanpak ontbreekt.',
+                    'costs' => '€2-3 miljard voor preventie',
+                    'timeline' => '3-5 jaar voor implementatie'
+                ]
+            ]
         ],
         'current_seats' => 25,
         'color' => '#DC2626'
@@ -150,16 +510,88 @@ class ProgrammaVergelijkerController {
         'name' => 'Democraten 66',
         'leader' => 'Rob Jetten',
         'logo' => 'https://logo.clearbit.com/d66.nl',
-        'description' => 'Democraten 66 (D66) is een progressief-liberale partij die onder leiding van Rob Jetten pleit voor een open en inclusieve samenleving. De partij legt de nadruk op onderwijs, innovatie en democratische vernieuwing.',
+        'description' => 'D66, onder leiding van Rob Jetten, is een progressief-liberale partij die inzet op onderwijs, innovatie en een inclusieve samenleving.',
         'standpoints' => [
-            'Immigratie' => 'D66 pleit voor een humaan maar gestructureerd asielbeleid met veilige en legale migratieroutes. De partij wil internationale samenwerking om migratiestromen te beheren en investeert in integratieprogramma’s voor nieuwkomers.',
-            'Klimaat' => 'D66 wil dat Nederland een leidende rol speelt in de klimaattransitie, met ambitieuze doelen voor CO2-reductie en investeringen in groene technologie. De partij pleit voor een snelle overgang naar een circulaire economie.',
-            'Zorg' => 'D66 wil het eigen risico in de zorg bevriezen en een maximumbedrag per behandeling instellen om de kosten voor burgers te beperken. De partij pleit ook voor meer aandacht voor preventie en digitalisering in de zorg.',
-            'Energie' => 'D66 is kritisch over kernenergie, maar staat open voor innovatieve en veilige toepassingen. De partij geeft echter de voorkeur aan hernieuwbare energiebronnen zoals wind en zon, en wil fossiele brandstoffen zo snel mogelijk uitfaseren.',
-            'Economie' => 'D66 wil innovatie en ondernemerschap stimuleren door te investeren in technologie en startups. De partij pleit voor een open economie met een sterke positie voor Nederland in de EU en de wereldmarkt.',
-            'Onderwijs' => 'D66 wil fors investeren in onderwijs om Nederland een kenniseconomie van wereldklasse te maken. De partij pleit voor meer aandacht voor digitalisering, wetenschap en gelijke kansen voor alle leerlingen.',
-            'Woningmarkt' => 'D66 pleit voor slimme verdichting en duurzame woningbouw om de woningnood aan te pakken. De partij wil meer flexibiliteit in de huurmarkt en ondersteuning voor starters en middeninkomens.',
-            'Veiligheid' => 'D66 wil veiligheidsdiensten moderniseren en investeren in cybersecurity. De partij pleit voor een evenwichtige aanpak van criminaliteit, met aandacht voor preventie en respect voor burgerrechten.'
+            'Immigratie' => [
+                'summary' => 'D66 wil een humaan asielbeleid met legale routes en EU-samenwerking.',
+                'details' => 'D66 pleit voor veilige migratiekanalen en EU-herverdeling van asielzoekers. Integratie krijgt €1-2 miljard voor taal en werk. Opvang is humaan en kleinschalig.',
+                'feasibility' => [
+                    'score' => 'Moeilijk',
+                    'explanation' => 'EU-herverdeling is politiek complex. Integratie-investeringen zijn haalbaar binnen 3-5 jaar. Kritiek: draagvlak kan afnemen bij hoge instroom.',
+                    'costs' => '€1-2 miljard voor integratie, €500-800 miljoen voor opvang',
+                    'timeline' => '3-5 jaar voor integratie, 5-10 jaar voor EU-samenwerking'
+                ]
+            ],
+            'Klimaat' => [
+                'summary' => 'D66 wil leidende rol in klimaattransitie met CO2-reductie en circulaire economie.',
+                'details' => 'D66 steunt 60% CO2-reductie in 2030 via wind, zon en circulaire innovatie. €10-15 miljard gaat naar groene technologie.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Wind/zon en innovatie zijn haalbaar binnen 5-7 jaar. Kritiek: hoge kosten kunnen weerstand oproepen.',
+                    'costs' => '€10-15 miljard voor groene technologie',
+                    'timeline' => '5-7 jaar voor implementatie'
+                ]
+            ],
+            'Zorg' => [
+                'summary' => 'D66 wil eigen risico bevriezen en investeren in preventie en digitalisering.',
+                'details' => 'Het eigen risico krijgt een maximum per behandeling. €1-2 miljard gaat naar e-health en preventie. Personeel krijgt training.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Eigen risico aanpassen is haalbaar binnen 2-3 jaar. Digitalisering is breed gedragen. Kritiek: personeelstekorten blijven een probleem.',
+                    'costs' => '€1-2 miljard voor digitalisering, €500-800 miljoen voor preventie',
+                    'timeline' => '2-3 jaar voor eigen risico, 3-5 jaar voor digitalisering'
+                ]
+            ],
+            'Energie' => [
+                'summary' => 'D66 is kritisch op kernenergie en wil hernieuwbare energiebronnen.',
+                'details' => 'D66 investeert €10-12 miljard in wind, zon en waterstof. Fossiele brandstoffen worden uitgefaseerd tegen 2040.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Wind/zon is haalbaar binnen 5-7 jaar. Fossiele uitfasering is ambitieus maar mogelijk. Kritiek: afhankelijkheid van import blijft risico.',
+                    'costs' => '€10-12 miljard voor hernieuwbare energie',
+                    'timeline' => '5-7 jaar voor implementatie'
+                ]
+            ],
+            'Economie' => [
+                'summary' => 'D66 wil innovatie stimuleren en een open economie.',
+                'details' => 'D66 investeert €3-5 miljard in startups en technologie. Multinationals betalen eerlijkere belastingen.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Investeringen zijn haalbaar binnen 3-5 jaar. Belastinghervorming kan weerstand oproepen. Kritiek: mkb kan minder profiteren.',
+                    'costs' => '€3-5 miljard voor innovatie',
+                    'timeline' => '3-5 jaar voor implementatie'
+                ]
+            ],
+            'Onderwijs' => [
+                'summary' => 'D66 wil investeren in onderwijs en digitale vaardigheden.',
+                'details' => 'D66 investeert €3-5 miljard in digitalisering en wetenschap. Kansengelijkheid krijgt prioriteit via extra steun.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Investeringen zijn haalbaar binnen 3-5 jaar. Kritiek: lerarentekort blijft een uitdaging.',
+                    'costs' => '€3-5 miljard voor onderwijs',
+                    'timeline' => '3-5 jaar voor implementatie'
+                ]
+            ],
+            'Woningmarkt' => [
+                'summary' => 'D66 wil duurzame woningbouw en flexibele huurmarkt.',
+                'details' => 'D66 wil 80.000 woningen per jaar, met focus op duurzaamheid. Huurmarkt wordt flexibeler via deregulering.',
+                'feasibility' => [
+                    'score' => 'Gedeeltelijk haalbaar',
+                    'explanation' => 'Woningbouw kost 5-10 jaar. Deregulering is haalbaar binnen 2-3 jaar. Kritiek: flexibiliteit kan huurders schaden.',
+                    'costs' => '€8-15 miljard voor woningbouw, €500-800 miljoen voor deregulering',
+                    'timeline' => '5-10 jaar voor woningbouw, 2-3 jaar voor deregulering'
+                ]
+            ],
+            'Veiligheid' => [
+                'summary' => 'D66 wil moderne veiligheidsdiensten en cybersecurity.',
+                'details' => 'D66 investeert €1-2 miljard in cybersecurity en preventie. Politie krijgt training voor burgerrechten.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Cybersecurity en preventie zijn haalbaar binnen 3-5 jaar. Kritiek: repressieve aanpak ontbreekt.',
+                    'costs' => '€1-2 miljard voor cybersecurity',
+                    'timeline' => '3-5 jaar voor implementatie'
+                ]
+            ]
         ],
         'current_seats' => 9,
         'color' => '#7C3AED'
@@ -168,16 +600,88 @@ class ProgrammaVergelijkerController {
         'name' => 'Socialistische Partij',
         'leader' => 'Jimmy Dijk',
         'logo' => 'https://logo.clearbit.com/sp.nl',
-        'description' => 'De Socialistische Partij (SP) is een linkse partij die onder leiding van Jimmy Dijk strijdt tegen sociale ongelijkheid en voor een sterke verzorgingsstaat. De partij zet zich in voor de belangen van gewone burgers en arbeiders.',
+        'description' => 'De SP, onder leiding van Jimmy Dijk, is een linkse partij die strijdt tegen ongelijkheid en voor een sterke verzorgingsstaat.',
         'standpoints' => [
-            'Immigratie' => 'De SP wil een humaan asielbeleid met goede opvang en integratie, maar pleit ook voor beheersing van de instroom om de druk op sociale voorzieningen te beperken. De partij legt de nadruk op het aanpakken van mondiale oorzaken van migratie.',
-            'Klimaat' => 'De SP steunt klimaatmaatregelen, maar wil dat de kosten eerlijk worden verdeeld. De partij pleit voor een klimaattransitie waarin grote bedrijven en rijken meer bijdragen, en gewone burgers worden ontzien.',
-            'Zorg' => 'De SP wil het eigen risico in de zorg afschaffen om gezondheidszorg voor iedereen toegankelijk te maken. De partij pleit ook voor een nationaal zorgfonds en meer investeringen in zorgpersoneel en publieke zorginstellingen.',
-            'Energie' => 'De SP is tegen kernenergie vanwege de risico’s en kosten, en wil vol inzetten op hernieuwbare energiebronnen zoals wind en zon. De partij pleit voor een publieke energievoorziening die betaalbaar is voor iedereen.',
-            'Economie' => 'De SP wil ongelijkheid bestrijden door hogere belastingen voor de rijken en betere arbeidsrechten. De partij pleit voor een sterke publieke sector en meer bescherming voor werknemers tegen flexwerk en ontslag.',
-            'Onderwijs' => 'De SP wil gratis onderwijs voor iedereen, van basisschool tot universiteit. De partij pleit voor kleinere klassen, meer leraren en een inclusief onderwijssysteem dat kansengelijkheid bevordert.',
-            'Woningmarkt' => 'De SP wil meer betaalbare huurwoningen en strengere regulering van huurprijzen. De partij pleit voor een stop op de verkoop van sociale huurwoningen en meer rechten voor huurders.',
-            'Veiligheid' => 'De SP wil criminaliteit aanpakken door de sociale oorzaken, zoals armoede en werkloosheid, te bestrijden. De partij pleit voor meer buurtpreventie en een humane aanpak van detentie en re-integratie.'
+            'Immigratie' => [
+                'summary' => 'SP wil humaan asielbeleid en aanpak van mondiale migratie-oorzaken.',
+                'details' => 'SP pleit voor betere opvang en integratie, met €1-2 miljard voor taal en werk. Mondiale ongelijkheid wordt aangepakt via ontwikkelingshulp.',
+                'feasibility' => [
+                    'score' => 'Gedeeltelijk haalbaar',
+                    'explanation' => 'Opvang en integratie zijn haalbaar binnen 3-5 jaar. Mondiale aanpak is langetermijn. Kritiek: draagvlak kan afnemen bij hoge instroom.',
+                    'costs' => '€1-2 miljard voor integratie, €500-800 miljoen voor opvang',
+                    'timeline' => '3-5 jaar voor integratie, 5-10 jaar voor mondiale aanpak'
+                ]
+            ],
+            'Klimaat' => [
+                'summary' => 'SP wil eerlijke klimaattransitie met bijdrage van rijken.',
+                'details' => 'SP steunt 55% CO2-reductie in 2030 via wind en zon. Grote bedrijven betalen hogere belastingen, en huishoudens krijgen compensatie.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Wind/zon en compensatie zijn haalbaar binnen 5-7 jaar. Belastingverhoging is politiek gevoelig. Kritiek: economische groei kan afnemen.',
+                    'costs' => '€5-10 miljard voor hernieuwbare energie, €1-2 miljard voor compensatie',
+                    'timeline' => '5-7 jaar voor implementatie'
+                ]
+            ],
+            'Zorg' => [
+                'summary' => 'SP wil eigen risico afschaffen en nationaal zorgfonds.',
+                'details' => 'Het eigen risico wordt geschrapt (€2,5-3 miljard). Een nationaal zorgfonds vervangt verzekeraars. Personeel krijgt hogere salarissen.',
+                'feasibility' => [
+                    'score' => 'Moeilijk',
+                    'explanation' => 'Eigen risico afschaffen is haalbaar. Zorgfonds vereist grote hervorming en weerstand van verzekeraars. Kritiek: financiering is uitdagend.',
+                    'costs' => '€2,5-3 miljard voor eigen risico, €5-10 miljard voor zorgfonds',
+                    'timeline' => '1-2 jaar voor eigen risico, 5-10 jaar voor zorgfonds'
+                ]
+            ],
+            'Energie' => [
+                'summary' => 'SP is tegen kernenergie en wil publieke duurzame energie.',
+                'details' => 'SP investeert €10-15 miljard in wind en zon. Energievoorziening wordt genationaliseerd. Fossiele brandstoffen stoppen tegen 2040.',
+                'feasibility' => [
+                    'score' => 'Gedeeltelijk haalbaar',
+                    'explanation' => 'Wind/zon is haalbaar binnen 5-7 jaar. Nationalisering is politiek controversieel. Kritiek: kosten en haalbaarheid zijn onzeker.',
+                    'costs' => '€10-15 miljard voor hernieuwbare energie, €5-10 miljard voor nationalisering',
+                    'timeline' => '5-7 jaar voor wind/zon, 10-15 jaar voor nationalisering'
+                ]
+            ],
+            'Economie' => [
+                'summary' => 'SP wil ongelijkheid bestrijden via hogere belastingen en arbeidsrechten.',
+                'details' => 'Topinkomens betalen 10% meer belasting. €5-7 miljard gaat naar publieke sector en flexwerkbeperking.',
+                'feasibility' => [
+                    'score' => 'Gedeeltelijk haalbaar',
+                    'explanation' => 'Belastingverhoging is haalbaar maar kan bedrijven afschrikken. Publieke investeringen zijn mogelijk. Kritiek: economische groei kan afnemen.',
+                    'costs' => '€5-7 miljard voor publieke sector',
+                    'timeline' => '2-4 jaar voor implementatie'
+                ]
+            ],
+            'Onderwijs' => [
+                'summary' => 'SP wil gratis onderwijs en kleinere klassen.',
+                'details' => 'SP investeert €5-7 miljard in gratis onderwijs en meer leraren. Klasgroottes worden verkleind.',
+                'feasibility' => [
+                    'score' => 'Moeilijk',
+                    'explanation' => 'Gratis onderwijs kost veel en vereist belastingverhoging. Meer leraren is haalbaar binnen 5-7 jaar. Kritiek: financiering is uitdagend.',
+                    'costs' => '€5-7 miljard voor onderwijs',
+                    'timeline' => '5-7 jaar voor implementatie'
+                ]
+            ],
+            'Woningmarkt' => [
+                'summary' => 'SP wil meer sociale huur en huurprijsregulering.',
+                'details' => 'SP wil 50.000 sociale huurwoningen per jaar en huurprijsbevriezing. Sociale huurverkoop wordt gestopt.',
+                'feasibility' => [
+                    'score' => 'Gedeeltelijk haalbaar',
+                    'explanation' => 'Huurregulering is haalbaar binnen 2-3 jaar. Woningbouw kost 5-10 jaar. Kritiek: financiering is uitdagend.',
+                    'costs' => '€5-10 miljard voor woningbouw, €500-800 miljoen voor regulering',
+                    'timeline' => '5-10 jaar voor woningbouw, 2-3 jaar voor regulering'
+                ]
+            ],
+            'Veiligheid' => [
+                'summary' => 'SP wil criminaliteit aanpakken via sociale oorzaken.',
+                'details' => 'SP investeert €2-3 miljard in armoedebestrijding en buurtpreventie. Politie krijgt training tegen discriminatie.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Preventie is haalbaar binnen 3-5 jaar. Kritiek: effecten duren lang, en repressieve aanpak ontbreekt.',
+                    'costs' => '€2-3 miljard voor preventie',
+                    'timeline' => '3-5 jaar voor implementatie'
+                ]
+            ]
         ],
         'current_seats' => 5,
         'color' => '#EF4444'
@@ -186,16 +690,88 @@ class ProgrammaVergelijkerController {
         'name' => 'Partij voor de Dieren',
         'leader' => 'Esther Ouwehand',
         'logo' => 'https://logo.clearbit.com/partijvoordedieren.nl',
-        'description' => 'De Partij voor de Dieren (PvdD) onder leiding van Esther Ouwehand richt zich op dierenwelzijn, duurzaamheid en natuurbehoud. De partij heeft een brede visie op een rechtvaardige en ecologisch verantwoorde samenleving.',
+        'description' => 'De PvdD, onder leiding van Esther Ouwehand, richt zich op dierenwelzijn, duurzaamheid en natuurbehoud.',
         'standpoints' => [
-            'Immigratie' => 'De PvdD pleit voor een asielbeleid dat mensenrechten respecteert en rekening houdt met ecologische draagkracht. De partij wil mondiale ongelijkheid en klimaatverandering aanpakken als oorzaken van migratie.',
-            'Klimaat' => 'De PvdD steunt radicaal klimaatbeleid, zoals een snelle afbouw van fossiele brandstoffen en strenge CO2-reductie. De partij is bereid economische groei op korte termijn op te offeren voor een leefbare planeet.',
-            'Zorg' => 'De PvdD wil zorg toegankelijk maken zonder financiële drempels, zoals het eigen risico. De partij pleit ook voor meer aandacht voor preventie, gezonde voeding en mentale gezondheid in het zorgsysteem.',
-            'Energie' => 'De PvdD is tegen kernenergie vanwege de risico’s en pleit voor een snelle overgang naar hernieuwbare energiebronnen zoals wind, zon en geothermische energie. De partij wil een volledig duurzame energievoorziening.',
-            'Economie' => 'De PvdD pleit voor een circulaire economie waarin duurzaamheid en eerlijkheid voorop staan. De partij wil af van groeidenken en steunt lokale, kleinschalige bedrijven en eerlijke handelspraktijken.',
-            'Onderwijs' => 'De PvdD wil meer aandacht voor duurzaamheid, dierenwelzijn en ecologie in het onderwijs. De partij pleit voor een inclusief curriculum dat jongeren voorbereidt op een duurzame toekomst.',
-            'Woningmarkt' => 'De PvdD wil duurzame woningbouw die rekening houdt met natuur en biodiversiteit. De partij pleit voor betaalbare woningen en een stop op grootschalige bouwprojecten die het milieu schaden.',
-            'Veiligheid' => 'De PvdD wil dieren en natuur beter beschermen tegen mishandeling en vernietiging. De partij pleit ook voor een humane aanpak van criminaliteit, met aandacht voor preventie en sociale rechtvaardigheid.'
+            'Immigratie' => [
+                'summary' => 'PvdD wil humaan asielbeleid met focus op ecologische draagkracht.',
+                'details' => 'PvdD pleit voor opvang van vluchtelingen, maar rekening houdend met milieu-impact. Mondiale ongelijkheid wordt aangepakt via klimaatbeleid.',
+                'feasibility' => [
+                    'score' => 'Moeilijk',
+                    'explanation' => 'Ecologische focus is uniek maar lastig meetbaar. Opvang is haalbaar binnen 2-3 jaar. Kritiek: draagvlak kan afnemen bij hoge instroom.',
+                    'costs' => '€500-800 miljoen voor opvang, €300-500 miljoen voor integratie',
+                    'timeline' => '2-3 jaar voor opvang, 5-10 jaar voor mondiale aanpak'
+                ]
+            ],
+            'Klimaat' => [
+                'summary' => 'PvdD wil radicaal klimaatbeleid met snelle fossiele afbouw.',
+                'details' => 'PvdD steunt 70% CO2-reductie in 2030 via wind, zon en veganisme-promotie. Fossiele brandstoffen stoppen tegen 2035.',
+                'feasibility' => [
+                    'score' => 'Moeilijk',
+                    'explanation' => 'Wind/zon is haalbaar binnen 5-7 jaar. Fossiele stop is ambitieus en economisch riskant. Kritiek: veganisme-promotie heeft beperkt draagvlak.',
+                    'costs' => '€15-20 miljard voor hernieuwbare energie',
+                    'timeline' => '5-7 jaar voor wind/zon, 10-15 jaar voor fossiele stop'
+                ]
+            ],
+            'Zorg' => [
+                'summary' => 'PvdD wil eigen risico afschaffen en focus op preventie.',
+                'details' => 'Het eigen risico wordt geschrapt (€2,5-3 miljard). €1-2 miljard gaat naar gezonde voeding en mentale zorg.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Eigen risico afschaffen is haalbaar met coalitiesteun. Preventie is breed gedragen. Kritiek: financiering vereist belastingverhoging.',
+                    'costs' => '€2,5-3 miljard voor eigen risico, €1-2 miljard voor preventie',
+                    'timeline' => '1-2 jaar voor eigen risico, 3-5 jaar voor preventie'
+                ]
+            ],
+            'Energie' => [
+                'summary' => 'PvdD is tegen kernenergie en wil volledig duurzame energie.',
+                'details' => 'PvdD investeert €15-20 miljard in wind, zon en geothermische energie. Fossiele brandstoffen stoppen tegen 2035.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Wind/zon is haalbaar binnen 5-7 jaar. Fossiele stop is ambitieus maar mogelijk. Kritiek: afhankelijkheid van import blijft risico.',
+                    'costs' => '€15-20 miljard voor hernieuwbare energie',
+                    'timeline' => '5-7 jaar voor implementatie'
+                ]
+            ],
+            'Economie' => [
+                'summary' => 'PvdD wil circulaire economie en lokale bedrijven.',
+                'details' => 'PvdD investeert €3-5 miljard in circulaire innovatie en lokale mkb. Groeidenken wordt verlaten.',
+                'feasibility' => [
+                    'score' => 'Gedeeltelijk haalbaar',
+                    'explanation' => 'Circulaire innovatie is haalbaar binnen 3-5 jaar. Groeistop is economisch riskant. Kritiek: mkb-steun kan grootbedrijven benadelen.',
+                    'costs' => '€3-5 miljard voor innovatie',
+                    'timeline' => '3-5 jaar voor implementatie'
+                ]
+            ],
+            'Onderwijs' => [
+                'summary' => 'PvdD wil duurzaamheid en dierenwelzijn in onderwijs.',
+                'details' => 'PvdD investeert €1-2 miljard in ecologisch curriculum en kansengelijkheid.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Curriculumwijziging is haalbaar binnen 2-3 jaar. Kritiek: focus op ecologie kan andere onderwerpen verdringen.',
+                    'costs' => '€1-2 miljard voor onderwijs',
+                    'timeline' => '2-3 jaar voor implementatie'
+                ]
+            ],
+            'Woningmarkt' => [
+                'summary' => 'PvdD wil duurzame woningbouw en betaalbare woningen.',
+                'details' => 'PvdD wil 50.000 duurzame woningen per jaar. Huurprijzen worden gereguleerd.',
+                'feasibility' => [
+                    'score' => 'Gedeeltelijk haalbaar',
+                    'explanation' => 'Woningbouw kost 5-10 jaar. Huurregulering is haalbaar binnen 2-3 jaar. Kritiek: duurzaamheid kan kosten opdrijven.',
+                    'costs' => '€5-10 miljard voor woningbouw, €500-800 miljoen voor regulering',
+                    'timeline' => '5-10 jaar voor woningbouw, 2-3 jaar voor regulering'
+                ]
+            ],
+            'Veiligheid' => [
+                'summary' => 'PvdD wil dieren en natuur beschermen en humane criminaliteitsaanpak.',
+                'details' => 'PvdD investeert €1-2 miljard in dierenbescherming en sociale preventie.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Preventie en dierenbescherming zijn haalbaar binnen 3-5 jaar. Kritiek: repressieve aanpak ontbreekt.',
+                    'costs' => '€1-2 miljard voor preventie',
+                    'timeline' => '3-5 jaar voor implementatie'
+                ]
+            ]
         ],
         'current_seats' => 6,
         'color' => '#10B981'
@@ -204,106 +780,538 @@ class ProgrammaVergelijkerController {
         'name' => 'Christen-Democratisch Appèl',
         'leader' => 'Henri Bontenbal',
         'logo' => 'https://logo.clearbit.com/cda.nl',
-        'description' => 'Het Christen-Democratisch Appèl (CDA) onder leiding van Henri Bontenbal staat voor een samenleving gebaseerd op christendemocratische waarden zoals solidariteit, rentmeesterschap en gemeenschapszin. De partij zoekt een balans tussen traditie en vooruitgang.',
+        'description' => 'Het CDA, onder leiding van Henri Bontenbal, staat voor christendemocratische waarden zoals solidariteit en rentmeesterschap.',
         'standpoints' => [
-            'Immigratie' => 'Het CDA pleit voor een onderscheidend asielbeleid dat tijdelijke bescherming biedt aan echte vluchtelingen, maar permanente verblijfsrechten beperkt. De partij wil snelle integratie en een harde aanpak van illegale migratie.',
-            'Klimaat' => 'Het CDA steunt klimaatmaatregelen, maar wil deze combineren met economische stabiliteit. De partij pleit voor een realistische energietransitie en samenwerking met bedrijven om groene innovaties te stimuleren.',
-            'Zorg' => 'Het CDA wil het eigen risico in de zorg gericht verlagen om de toegankelijkheid te verbeteren, met name voor chronisch zieken. De partij pleit ook voor meer ondersteuning voor mantelzorgers en lokale zorgvoorzieningen.',
-            'Energie' => 'Het CDA ziet kernenergie als een belangrijk onderdeel van een brede energiemix, mits veiligheid is gegarandeerd. De partij wil ook investeren in duurzame energiebronnen en energiebesparing.',
-            'Economie' => 'Het CDA pleit voor een sociale markteconomie waarin bedrijven en gemeenschappen samenwerken. De partij wil een eerlijk speelveld voor het mkb en pleit voor meer regionale economische ontwikkeling.',
-            'Onderwijs' => 'Het CDA wil waardegedreven onderwijs met ruimte voor keuzevrijheid. De partij pleit voor investeringen in leraren en een curriculum dat zowel academische als praktische vaardigheden benadrukt.',
-            'Woningmarkt' => 'Het CDA wil betaalbare woningen voor gezinnen en starters door meer woningbouw en betere samenwerking tussen overheden en marktpartijen. De partij pleit ook voor het behoud van leefbare wijken.',
-            'Veiligheid' => 'Het CDA wil veiligheid en rechtsorde handhaven met respect voor individuele rechten. De partij pleit voor meer zichtbare politie, een harde aanpak van criminaliteit en aandacht voor preventie.'
+            'Immigratie' => [
+                'summary' => 'CDA wil tijdelijke asielbescherming en snelle integratie.',
+                'details' => 'CDA pleit voor tijdelijke opvang van oorlogsvluchtelingen en snelle uitzetting van illegalen. Integratie krijgt €1-2 miljard voor taal en werk.',
+                'feasibility' => [
+                    'score' => 'Gedeeltelijk haalbaar',
+                    'explanation' => 'Tijdelijke opvang is haalbaar binnen 2-3 jaar. Integratie-investeringen zijn mogelijk. Kritiek: strenge uitzetting kan humane plichten ondermijnen.',
+                    'costs' => '€1-2 miljard voor integratie, €500-800 miljoen voor opvang',
+                    'timeline' => '2-3 jaar voor opvang, 3-5 jaar voor integratie'
+                ]
+            ],
+            'Klimaat' => [
+                'summary' => 'CDA wil realistische klimaattransitie met economische stabiliteit.',
+                'details' => 'CDA steunt 50% CO2-reductie in 2030 via innovatie en boerensteun. €5-7 miljard gaat naar CCS en waterstof.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Innovatie en boerensteun zijn haalbaar binnen 3-5 jaar. Kritiek: 50% reductie is minder ambitieus dan EU-doelen.',
+                    'costs' => '€5-7 miljard voor innovatie',
+                    'timeline' => '3-5 jaar voor implementatie'
+                ]
+            ],
+            'Zorg' => [
+                'summary' => 'CDA wil eigen risico verlagen en mantelzorg ondersteunen.',
+                'details' => 'Het eigen risico wordt verlaagd voor chronisch zieken (€1-2 miljard). Mantelzorg en lokale zorg krijgen €1-2 miljard.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Eigen risico verlagen is haalbaar met coalitiesteun. Lokale zorg is mogelijk. Kritiek: personeelstekorten blijven een probleem.',
+                    'costs' => '€1-2 miljard voor eigen risico, €1-2 miljard voor mantelzorg',
+                    'timeline' => '2-3 jaar voor eigen risico, 3-5 jaar voor mantelzorg'
+                ]
+            ],
+            'Energie' => [
+                'summary' => 'CDA steunt kernenergie binnen brede energiemix.',
+                'details' => 'CDA wil één kerncentrale en €5-7 miljard voor wind, zon en energiebesparing.',
+                'feasibility' => [
+                    'score' => 'Gedeeltelijk haalbaar',
+                    'explanation' => 'Kerncentrale kost 10-12 jaar. Wind/zon is haalbaar binnen 5-7 jaar. Kritiek: publieke acceptatie van kernenergie is onzeker.',
+                    'costs' => '€10-15 miljard voor kerncentrale, €5-7 miljard voor wind/zon',
+                    'timeline' => '10-12 jaar voor kerncentrale, 3-5 jaar voor wind/zon'
+                ]
+            ],
+            'Economie' => [
+                'summary' => 'CDA wil sociale markteconomie met focus op mkb.',
+                'details' => 'CDA investeert €2-3 miljard in mkb en regionale economie. Belastingen blijven stabiel.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Mkb-steun is haalbaar binnen 3-5 jaar. Kritiek: regionale focus kan grote steden benadelen.',
+                    'costs' => '€2-3 miljard voor mkb',
+                    'timeline' => '3-5 jaar voor implementatie'
+                ]
+            ],
+            'Onderwijs' => [
+                'summary' => 'CDA wil waardegedreven onderwijs en keuzevrijheid.',
+                'details' => 'CDA investeert €1-2 miljard in leraren en praktisch onderwijs. Waarden zoals respect krijgen nadruk.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Investeringen zijn haalbaar binnen 3-5 jaar. Kritiek: lerarentekort blijft een uitdaging.',
+                    'costs' => '€1-2 miljard voor onderwijs',
+                    'timeline' => '3-5 jaar voor implementatie'
+                ]
+            ],
+            'Woningmarkt' => [
+                'summary' => 'CDA wil betaalbare woningen voor gezinnen.',
+                'details' => 'CDA wil 80.000 woningen per jaar, met focus op gezinnen. Sociale huur wordt uitgebreid.',
+                'feasibility' => [
+                    'score' => 'Gedeeltelijk haalbaar',
+                    'explanation' => 'Woningbouw kost 5-10 jaar. Sociale huur is haalbaar binnen 3-5 jaar. Kritiek: financiering is uitdagend.',
+                    'costs' => '€8-15 miljard voor woningbouw, €500-800 miljoen voor sociale huur',
+                    'timeline' => '5-10 jaar voor woningbouw, 3-5 jaar voor sociale huur'
+                ]
+            ],
+            'Veiligheid' => [
+                'summary' => 'CDA wil zichtbare politie en preventie.',
+                'details' => 'CDA wil 3.000 extra agenten en €1-2 miljard voor preventie en rechtspraak.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Politie en preventie zijn haalbaar binnen 3-5 jaar. Kritiek: effecten van preventie duren lang.',
+                    'costs' => '€1-2 miljard voor politie, €1-2 miljard voor preventie',
+                    'timeline' => '3-5 jaar voor implementatie'
+                ]
+            ]
         ],
         'current_seats' => 5,
         'color' => '#F59E0B'
-    ],
-    'SGP' => [
-        'name' => 'Staatkundig Gereformeerde Partij',
-        'leader' => 'Chris Stoffer',
-        'logo' => 'https://logo.clearbit.com/sgp.nl',
-        'description' => 'De Staatkundig Gereformeerde Partij (SGP) is een christelijke partij die onder leiding van Chris Stoffer staat voor Bijbels-geïnspireerde politiek. De partij legt de nadruk op traditionele waarden, gezinsbeleid en een sobere, betrouwbare overheid.',
-        'standpoints' => [
-            'Immigratie' => 'De SGP pleit voor een streng en selectief immigratiebeleid, waarbij de Nederlandse identiteit en sociale cohesie worden beschermd. De partij wil een gecontroleerde instroom van migranten en snelle uitzetting van illegalen, met aandacht voor humanitaire verplichtingen.',
-            'Klimaat' => 'De SGP steunt een rentmeesterschapsbenadering van klimaatbeleid, waarbij zorg voor het milieu wordt gecombineerd met economische stabiliteit. De partij pleit voor realistische maatregelen en technologische innovatie in plaats van hoge belastingen.',
-            'Zorg' => 'De SGP wil de zorg toegankelijk houden en overweegt een verlaging van het eigen risico, met name voor lagere inkomens. De partij pleit voor meer aandacht voor ethische kwesties in de zorg, zoals euthanasie en abortus.',
-            'Energie' => 'De SGP staat open voor kernenergie als een stabiele en schone energiebron, mits veiligheid gewaarborgd is. De partij wil een gebalanceerde energiemix met aandacht voor zowel duurzame energie als betaalbaarheid.',
-            'Economie' => 'De SGP pleit voor een sobere economie met een sterke focus op het gezin als hoeksteen van de samenleving. De partij wil lagere lasten voor gezinnen en het mkb, en is voorstander van een beperkte overheidsrol.',
-            'Onderwijs' => 'De SGP wil vrijheid van onderwijs waarborgen, met ruimte voor christelijk en ander bijzonder onderwijs. De partij pleit voor een curriculum dat traditionele waarden en normen benadrukt.',
-            'Woningmarkt' => 'De SGP wil betaalbare woningen voor gezinnen en starters, met aandacht voor het behoud van dorps- en gemeenschapsstructuren. De partij pleit voor meer woningbouw zonder aantasting van natuur en landschap.',
-            'Veiligheid' => 'De SGP wil een harde aanpak van criminaliteit en pleit voor meer politie-inzet en strengere straffen. De partij legt ook nadruk op het belang van gezin en gemeenschap in het voorkomen van criminaliteit.'
-        ],
-        'current_seats' => 3,
-        'color' => '#003087'
     ],
     'FvD' => [
         'name' => 'Forum voor Democratie',
         'leader' => 'Thierry Baudet',
         'logo' => 'https://logo.clearbit.com/fvd.nl',
-        'description' => 'Forum voor Democratie (FvD) is een conservatieve, nationalistische partij onder leiding van Thierry Baudet. De partij pleit voor directe democratie, nationale soevereiniteit en een kritische houding tegenover globalisering en de EU.',
+        'description' => 'Forum voor Democratie (FvD), onder leiding van Thierry Baudet, is een conservatieve, nationalistische partij die directe democratie, nationale soevereiniteit en een kritische houding tegenover globalisering en de EU voorstaat.',
         'standpoints' => [
-            'Immigratie' => 'FvD wil een zeer streng immigratiebeleid met een stop op asielaanvragen en een focus op remigratie van niet-geïntegreerde migranten. De partij ziet immigratie als een bedreiging voor de Nederlandse cultuur en veiligheid.',
-            'Klimaat' => 'FvD is uiterst sceptisch over klimaatbeleid en ziet veel maatregelen als onnodig en economisch schadelijk. De partij pleit voor aanpassing in plaats van mitigatie en wil af van subsidies voor wind- en zonne-energie.',
-            'Zorg' => 'FvD wil het eigen risico in de zorg afschaffen om de toegankelijkheid te verbeteren. De partij pleit voor minder bureaucratie in de zorgsector en meer autonomie voor zorgverleners.',
-            'Energie' => 'FvD steunt kernenergie als een kosteneffectieve oplossing voor energieonafhankelijkheid. De partij is tegen grootschalige investeringen in wind- en zonne-energie vanwege de kosten en landschapsvervuiling.',
-            'Economie' => 'FvD wil minder EU-regelgeving en een focus op nationale economische belangen. De partij pleit voor lagere belastingen en deregulering om ondernemerschap te stimuleren.',
-            'Onderwijs' => 'FvD wil een onderwijssysteem dat de Nederlandse identiteit en geschiedenis benadrukt. De partij is tegen wat zij ziet als ‘woke’ invloeden in het onderwijs en pleit voor meer aandacht voor klassieke kennis.',
-            'Woningmarkt' => 'FvD wil de woningnood aanpakken door meer bouwvrijheid en minder bureaucratie. De partij pleit voor voorrang voor Nederlanders bij sociale huurwoningen en een beperking van migratie om de druk op de woningmarkt te verlichten.',
-            'Veiligheid' => 'FvD pleit voor een zerotolerancebeleid tegen criminaliteit, met strengere straffen en meer politie. De partij legt een sterke nadruk op het aanpakken van misdaad die zij koppelt aan immigratie.'
+            'Immigratie' => [
+                'summary' => 'FvD wil een extreem streng immigratiebeleid met asielstop en remigratie van niet-geïntegreerde migranten.',
+                'details' => 'FvD pleit voor een volledige stop op asielaanvragen, sluiting van asielcentra en actieve remigratie van niet-geïntegreerde migranten via financiële prikkels. Grenscontroles worden heringevoerd, en gezinshereniging wordt vrijwel onmogelijk gemaakt. Arbeidsmigratie is beperkt tot hoogopgeleiden met tijdelijke visa. De partij ziet immigratie als een bedreiging voor de Nederlandse cultuur, met nadruk op assimilatie en nationale identiteit.',
+                'feasibility' => [
+                    'score' => 'Zeer moeilijk',
+                    'explanation' => 'Een asielstop en remigratie zijn juridisch vrijwel onhaalbaar binnen EU-recht en internationale verdragen (EVRM, Vluchtelingenverdrag). Grenscontroles schenden Schengen-akkoorden. Remigratieplannen stuiten op ethische en praktische bezwaren, met beperkt draagvlak. Kritiek: FvD overschat de uitvoerbaarheid en negeert economische afhankelijkheid van migranten in sectoren zoals landbouw en technologie.',
+                    'costs' => '€1-2 miljard voor grensbewaking en remigratie, besparingen op opvang (€300-500 miljoen), juridische kosten hoog',
+                    'timeline' => '3-7 jaar voor gedeeltelijke implementatie, 10+ jaar voor verdragswijzigingen'
+                ]
+            ],
+            'Klimaat' => [
+                'summary' => 'FvD is zeer sceptisch over klimaatbeleid en ziet maatregelen als economisch schadelijk.',
+                'details' => 'FvD wil alle klimaatdoelen schrappen, inclusief het Klimaatakkoord van Parijs. Subsidies voor wind- en zonne-energie worden gestopt, en fossiele brandstoffen blijven prioriteit. CO2 wordt niet gezien als hoofdprobleem; de partij richt zich op adaptatie (bijv. waterbeheer). Windmolens worden verwijderd, en energiebelastingen verlaagd. Dit weerspiegelt afwijzing van klimaatwetenschap en focus op economische groei.',
+                'feasibility' => [
+                    'score' => 'Gedeeltelijk haalbaar',
+                    'explanation' => 'Subsidies stoppen en belastingen verlagen kan binnen 1-2 jaar, maar botst met EU-verplichtingen, wat boetes oplevert. Windmolenverwijdering is juridisch complex door contracten. Kritiek: FvD negeert lange-termijnrisico’s van klimaatverandering en internationale sancties.',
+                    'costs' => '€2-4 miljard inkomstenderving door belastingverlaging, €1-2 miljard voor windmolenverwijdering, EU-boetes €500 miljoen+',
+                    'timeline' => '1-2 jaar voor belastingwijzigingen, 5-7 jaar voor energie-aanpassingen'
+                ]
+            ],
+            'Zorg' => [
+                'summary' => 'FvD wil eigen risico afschaffen en bureaucratie in de zorg verminderen.',
+                'details' => 'Het eigen risico wordt geschrapt om zorg toegankelijker te maken (€2,5-3 miljard). Managementlagen worden verwijderd, en zorgverleners krijgen meer autonomie. Zorgpersoneel krijgt betere salarissen, maar buitenlandse werving wordt beperkt. De focus ligt op directe zorg, niet op preventie of digitalisering. Dit weerspiegelt een anti-bureaucratische houding.',
+                'feasibility' => [
+                    'score' => 'Gedeeltelijk haalbaar',
+                    'explanation' => 'Eigen risico afschaffen is haalbaar met coalitiesteun, maar vereist belastingverhoging elders. Bureaucratievermindering is mogelijk, maar beperking van buitenlands personeel verergert tekorten. Kritiek: FvD onderschat afhankelijkheid van buitenlandse zorgverleners en complexiteit van zorgsysteem.',
+                    'costs' => '€2,5-3 miljard voor eigen risico, €500-800 miljoen voor bureaucratievermindering',
+                    'timeline' => '1-2 jaar voor eigen risico, 3-5 jaar voor bureaucratie'
+                ]
+            ],
+            'Energie' => [
+                'summary' => 'FvD steunt kernenergie en fossiele brandstoffen boven groene energie.',
+                'details' => 'FvD wil twee kerncentrales bouwen en onderzoek naar SMR. Fossiele brandstoffen blijven dominant, en subsidies voor wind/zon worden geschrapt. Energieprijzen worden verlaagd via belastingverlaging. Dit weerspiegelt scepsis over groene transitie.',
+                'feasibility' => [
+                    'score' => 'Moeilijk',
+                    'explanation' => 'Kerncentrales kosten 10-15 jaar en €10-20 miljard, met publieke weerstand. Fossiele afhankelijkheid botst met EU-doelen, wat boetes oplevert. Kritiek: FvD negeert duurzaamheidstrends en economische risico’s.',
+                    'costs' => '€10-20 miljard voor kerncentrales, €1-2 miljard inkomstenderving',
+                    'timeline' => '10-15 jaar voor kerncentrales, 1-2 jaar voor subsidie-stop'
+                ]
+            ],
+            'Economie' => [
+                'summary' => 'FvD wil minder EU-regelgeving en lagere belastingen voor nationale belangen.',
+                'details' => 'FvD pleit voor verlaging van inkomsten- en vennootschapsbelasting (€5-7 miljard). EU-regelgeving wordt geminimaliseerd, en handelsbarrières met niet-EU-landen verlaagd. Subsidies gaan naar lokale bedrijven. Dit weerspiegelt anti-EU-nationalisme.',
+                'feasibility' => [
+                    'score' => 'Gedeeltelijk haalbaar',
+                    'explanation' => 'Belastingverlaging is mogelijk maar kost €5-7 miljard. EU-regelgeving beperken is lastig binnen lidmaatschap. Kritiek: FvD onderschat economische afhankelijkheid van EU.',
+                    'costs' => '€5-7 miljard voor belastingverlaging, juridische kosten bij EU-conflicten',
+                    'timeline' => '1-3 jaar voor belastingwijzigingen, 5-10 jaar voor EU-onderhandelingen'
+                ]
+            ],
+            'Onderwijs' => [
+                'summary' => 'FvD wil onderwijs gericht op Nederlandse identiteit en klassieke kennis.',
+                'details' => 'Het curriculum benadrukt Nederlandse geschiedenis en literatuur, met schrapping van ‘woke’ thema’s. Mbo krijgt €1-2 miljard, en academisch onderwijs wordt selectiever. Leraren krijgen betere salarissen.',
+                'feasibility' => [
+                    'score' => 'Gedeeltelijk haalbaar',
+                    'explanation' => 'Curriculumaanscherping is mogelijk binnen 2-3 jaar, maar botst met onderwijsvrijheid. Mbo-investeringen zijn haalbaar. Kritiek: focus op nationalisme kan inclusiviteit schaden.',
+                    'costs' => '€1-2 miljard voor mbo, lage kosten voor curriculum',
+                    'timeline' => '2-3 jaar voor curriculum, 3-5 jaar voor mbo'
+                ]
+            ],
+            'Woningmarkt' => [
+                'summary' => 'FvD wil Nederlanders voorrang bij sociale huur en woningnood aanpakken via migratiebeperking.',
+                'details' => 'Nederlanders krijgen prioriteit bij sociale huurwoningen tot 2030. FvD wil 80.000 woningen bouwen door bureaucratie te schrappen. Migratiebeperking moet druk op de woningmarkt verlagen.',
+                'feasibility' => [
+                    'score' => 'Moeilijk',
+                    'explanation' => 'Voorrang voor Nederlanders is juridisch riskant (discriminatie). Woningbouw kost 5-10 jaar. Migratiebeperking heeft beperkt effect. Kritiek: FvD oversimplificeert woningnood.',
+                    'costs' => '€8-15 miljard voor woningbouw, juridische kosten bij discriminatiezaken',
+                    'timeline' => '5-10 jaar voor woningbouw, 2-3 jaar voor huurbeleid'
+                ]
+            ],
+            'Veiligheid' => [
+                'summary' => 'FvD wil zerotolerance tegen criminaliteit, vooral gerelateerd aan immigratie.',
+                'details' => 'FvD pleit voor minimumstraffen, 5.000 extra agenten en detentiecentra voor illegalen. Overlast door migranten krijgt prioriteit. Preventie krijgt weinig aandacht.',
+                'feasibility' => [
+                    'score' => 'Gedeeltelijk haalbaar',
+                    'explanation' => 'Politie-uitbreiding is mogelijk binnen 3-5 jaar. Detentiecentra zijn juridisch complex. Kritiek: focus op migranten kan discriminatieclaims opleveren.',
+                    'costs' => '€1-2 miljard voor politie, €500-800 miljoen voor detentiecentra',
+                    'timeline' => '3-5 jaar voor politie, 2-3 jaar voor strafverhoging'
+                ]
+            ]
         ],
         'current_seats' => 3,
         'color' => '#8B0000'
     ],
-    'DENK' => [
-        'name' => 'DENK',
-        'leader' => 'Stephan van Baarle',
-        'logo' => 'https://i.ibb.co/JwdSLG7g/DENK.jpg',
-        'description' => 'DENK is een partij die onder leiding van Stephan van Baarle opkomt voor diversiteit, gelijke kansen en inclusie. De partij richt zich vooral op de belangen van minderheidsgroepen en pleit voor een rechtvaardige samenleving.',
+    'SGP' => [
+        'name' => 'Staatkundig Gereformeerde Partij',
+        'leader' => 'Chris Stoffer',
+        'logo' => 'https://logo.clearbit.com/sgp.nl',
+        'description' => 'De SGP, onder leiding van Chris Stoffer, voert Bijbels-geïnspireerde politiek met nadruk op traditionele waarden, gezinsbeleid en een sobere overheid.',
         'standpoints' => [
-            'Immigratie' => 'DENK pleit voor een humaan asielbeleid en betere integratie van migranten. De partij wil discriminatie op de arbeids- en woningmarkt aanpakken en pleit voor gelijke behandeling van alle burgers.',
-            'Klimaat' => 'DENK steunt klimaatbeleid, maar wil dat de kosten eerlijk worden verdeeld en dat burgers met lagere inkomens worden ontzien. De partij pleit voor toegankelijke groene oplossingen voor iedereen.',
-            'Zorg' => 'DENK wil het eigen risico in de zorg afschaffen om gezondheidszorg toegankelijk te maken voor iedereen. De partij pleit ook voor meer aandacht voor cultureel sensitieve zorg en betere arbeidsvoorwaarden in de zorgsector.',
-            'Energie' => 'DENK is voorstander van een snelle overgang naar hernieuwbare energie, zoals wind en zon. De partij wil dat energie betaalbaar blijft en pleit voor subsidies voor duurzame initiatieven in achterstandswijken.',
-            'Economie' => 'DENK wil ongelijkheid aanpakken door hogere belastingen voor de rijken en betere ondersteuning voor kleine ondernemers. De partij pleit voor een inclusieve economie waarin iedereen kansen krijgt.',
-            'Onderwijs' => 'DENK wil gelijke kansen in het onderwijs door te investeren in achterstandsscholen en het aanpakken van discriminatie. De partij pleit voor een inclusief curriculum dat diversiteit viert.',
-            'Woningmarkt' => 'DENK wil meer sociale huurwoningen en strengere regulering van huurprijzen. De partij pleit voor een eerlijke verdeling van woningen en maatregelen tegen discriminatie op de woningmarkt.',
-            'Veiligheid' => 'DENK wil criminaliteit aanpakken door te investeren in preventie en sociale programma’s. De partij pleit voor een inclusieve aanpak van veiligheid, met aandacht voor discriminatie door politie.'
+            'Immigratie' => [
+                'summary' => 'SGP wil een streng immigratiebeleid met focus op Nederlandse identiteit en humanitaire plichten.',
+                'details' => 'SGP pleit voor selectieve asieltoelating, met prioriteit voor christelijke vluchtelingen en snelle uitzetting van illegalen. Integratie richt zich op Nederlandse taal en waarden, met €500-800 miljoen voor taalcursussen en werk. Grenscontroles worden versterkt. Dit weerspiegelt een conservatieve, christelijke visie.',
+                'feasibility' => [
+                    'score' => 'Gedeeltelijk haalbaar',
+                    'explanation' => 'Selectieve toelating is juridisch lastig binnen EU-recht. Integratie-investeringen zijn haalbaar binnen 3-5 jaar. Grenscontroles botsen met Schengen. Kritiek: prioriteit voor christelijke vluchtelingen kan als discriminatoir worden gezien.',
+                    'costs' => '€500-800 miljoen voor integratie, €300-500 miljoen voor grensbewaking',
+                    'timeline' => '2-3 jaar voor integratie, 3-5 jaar voor grenscontroles'
+                ]
+            ],
+            'Klimaat' => [
+                'summary' => 'SGP wil rentmeesterschap met realistische klimaatmaatregelen.',
+                'details' => 'SGP steunt 40% CO2-reductie in 2030 via energiebesparing en innovatie (€3-5 miljard). Hoge belastingen worden vermeden, en boeren krijgen steun voor verduurzaming. Windmolens op land worden beperkt.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Energiebesparing en boerensteun zijn haalbaar binnen 3-5 jaar. 40% reductie is minder ambitieus dan EU-doelen. Kritiek: beperkte windmolens kunnen transitie vertragen.',
+                    'costs' => '€3-5 miljard voor innovatie, €1-2 miljard voor boerensteun',
+                    'timeline' => '3-5 jaar voor implementatie'
+                ]
+            ],
+            'Zorg' => [
+                'summary' => 'SGP wil eigen risico verlagen en ethische kwesties in zorg aanpakken.',
+                'details' => 'Het eigen risico wordt verlaagd voor lage inkomens (€1-2 miljard). €1-2 miljard gaat naar mantelzorg en ethische zorg (bijv. tegen euthanasie). Personeel krijgt betere voorwaarden.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Eigen risico verlagen is haalbaar met coalitiesteun. Ethische focus is politiek gevoelig. Kritiek: personeelstekorten blijven een probleem.',
+                    'costs' => '€1-2 miljard voor eigen risico, €1-2 miljard voor mantelzorg',
+                    'timeline' => '2-3 jaar voor eigen risico, 3-5 jaar voor mantelzorg'
+                ]
+            ],
+            'Energie' => [
+                'summary' => 'SGP steunt kernenergie en een gebalanceerde energiemix.',
+                'details' => 'SGP wil één kerncentrale en €3-5 miljard voor wind, zon en energiebesparing. Energieprijzen worden gestabiliseerd via subsidies.',
+                'feasibility' => [
+                    'score' => 'Gedeeltelijk haalbaar',
+                    'explanation' => 'Kerncentrale kost 10-12 jaar. Wind/zon is haalbaar binnen 5-7 jaar. Kritiek: publieke acceptatie van kernenergie is onzeker.',
+                    'costs' => '€10-15 miljard voor kerncentrale, €3-5 miljard voor wind/zon',
+                    'timeline' => '10-12 jaar voor kerncentrale, 3-5 jaar voor wind/zon'
+                ]
+            ],
+            'Economie' => [
+                'summary' => 'SGP wil sobere economie met focus op gezinnen en mkb.',
+                'details' => 'SGP investeert €1-2 miljard in mkb en gezinsondersteuning. Belastingen blijven stabiel, en bureaucratie wordt verminderd.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Mkb-steun en bureaucratievermindering zijn haalbaar binnen 3-5 jaar. Kritiek: focus op gezinnen kan bredere economie verwaarlozen.',
+                    'costs' => '€1-2 miljard voor mkb en gezinnen',
+                    'timeline' => '3-5 jaar voor implementatie'
+                ]
+            ],
+            'Onderwijs' => [
+                'summary' => 'SGP wil christelijk onderwijs en traditionele waarden.',
+                'details' => 'SGP investeert €1-2 miljard in bijzonder onderwijs en leraren. Het curriculum benadrukt waarden zoals respect en verantwoordelijkheid.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Investeringen zijn haalbaar binnen 3-5 jaar. Kritiek: focus op christelijk onderwijs kan inclusiviteit beperken.',
+                    'costs' => '€1-2 miljard voor onderwijs',
+                    'timeline' => '3-5 jaar voor implementatie'
+                ]
+            ],
+            'Woningmarkt' => [
+                'summary' => 'SGP wil betaalbare woningen en behoud van dorpsstructuren.',
+                'details' => 'SGP wil 50.000 woningen per jaar, met focus op gezinnen. Sociale huur wordt uitgebreid zonder natuur aan te tasten.',
+                'feasibility' => [
+                    'score' => 'Gedeeltelijk haalbaar',
+                    'explanation' => 'Woningbouw kost 5-10 jaar. Sociale huur is haalbaar binnen 3-5 jaar. Kritiek: natuurbehoud kan bouw vertragen.',
+                    'costs' => '€5-10 miljard voor woningbouw, €500-800 miljoen voor sociale huur',
+                    'timeline' => '5-10 jaar voor woningbouw, 3-5 jaar voor sociale huur'
+                ]
+            ],
+            'Veiligheid' => [
+                'summary' => 'SGP wil harde aanpak van criminaliteit en gezin als basis.',
+                'details' => 'SGP wil 2.000 extra agenten en strengere straffen. €1-2 miljard gaat naar preventie via gezin en gemeenschap.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Politie en preventie zijn haalbaar binnen 3-5 jaar. Kritiek: gezin-focus kan bredere oorzaken negeren.',
+                    'costs' => '€1-2 miljard voor politie, €1-2 miljard voor preventie',
+                    'timeline' => '3-5 jaar voor implementatie'
+                ]
+            ]
         ],
         'current_seats' => 3,
-        'color' => '#00CED1'
+        'color' => '#003087'
     ],
     'Volt' => [
         'name' => 'Volt Nederland',
         'leader' => 'Laurens Dassen',
         'logo' => 'https://logo.clearbit.com/voltnederland.org',
-        'description' => 'Volt Nederland is een progressieve, pro-Europese partij onder leiding van Laurens Dassen. De partij pleit voor grensoverschrijdende samenwerking, duurzaamheid en democratische vernieuwing binnen Europa.',
+        'description' => 'Volt Nederland, onder leiding van Laurens Dassen, is een pro-Europese partij die inzet op grensoverschrijdende samenwerking, duurzaamheid en democratische vernieuwing.',
         'standpoints' => [
-            'Immigratie' => 'Volt pleit voor een humaan en Europees gecoördineerd asielbeleid met veilige migratieroutes. De partij wil investeren in integratie en pleit voor een eerlijke verdeling van asielzoekers binnen de EU.',
-            'Klimaat' => 'Volt wil een ambitieus klimaatbeleid met een snelle overgang naar een CO2-neutrale economie. De partij pleit voor Europese samenwerking om groene technologieën te ontwikkelen en klimaatdoelen te halen.',
-            'Zorg' => 'Volt wil het eigen risico in de zorg verlagen en investeren in toegankelijke gezondheidszorg. De partij pleit voor Europese samenwerking op het gebied van zorginnovatie en pandemiepreventie.',
-            'Energie' => 'Volt is kritisch over kernenergie en geeft de voorkeur aan hernieuwbare energiebronnen zoals wind, zon en waterstof. De partij wil een Europese energiemarkt die duurzaam en betaalbaar is.',
-            'Economie' => 'Volt pleit voor een sterke Europese economie met minder bureaucratie en meer innovatie. De partij wil startups en het mkb ondersteunen en pleit voor een eerlijke belastingheffing op multinationals.',
-            'Onderwijs' => 'Volt wil een Europees onderwijssysteem dat excellentie en toegankelijkheid combineert. De partij pleit voor meer investeringen in digitalisering en een curriculum dat Europese waarden benadrukt.',
-            'Woningmarkt' => 'Volt wil de woningnood aanpakken door duurzame woningbouw en Europese samenwerking. De partij pleit voor betaalbare woningen en een eerlijke huurmarkt voor starters en jongeren.',
-            'Veiligheid' => 'Volt wil Europese samenwerking op het gebied van veiligheid en cybersecurity. De partij pleit voor een moderne aanpak van criminaliteit, met aandacht voor preventie en mensenrechten.'
+            'Immigratie' => [
+                'summary' => 'Volt wil een humaan, Europees gecoördineerd asielbeleid.',
+                'details' => 'Volt pleit voor EU-herverdeling van asielzoekers en legale migratiekanalen. €1-2 miljard gaat naar integratie (taal, werk). Opvang is kleinschalig en humaan. Dit weerspiegelt een pro-EU-visie.',
+                'feasibility' => [
+                    'score' => 'Moeilijk',
+                    'explanation' => 'EU-herverdeling is politiek complex. Integratie-investeringen zijn haalbaar binnen 3-5 jaar. Kritiek: draagvlak kan afnemen bij hoge instroom.',
+                    'costs' => '€1-2 miljard voor integratie, €500-800 miljoen voor opvang',
+                    'timeline' => '3-5 jaar voor integratie, 5-10 jaar voor EU-samenwerking'
+                ]
+            ],
+            'Klimaat' => [
+                'summary' => 'Volt wil een CO2-neutrale economie via Europese samenwerking.',
+                'details' => 'Volt steunt 60% CO2-reductie in 2030 via wind, zon en waterstof. €10-15 miljard gaat naar groene technologie en EU-fondsen.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Wind/zon en innovatie zijn haalbaar binnen 5-7 jaar. EU-fondsen vereisen samenwerking. Kritiek: hoge kosten kunnen weerstand oproepen.',
+                    'costs' => '€10-15 miljard voor groene technologie',
+                    'timeline' => '5-7 jaar voor implementatie'
+                ]
+            ],
+            'Zorg' => [
+                'summary' => 'Volt wil eigen risico verlagen en Europese zorginnovatie.',
+                'details' => 'Het eigen risico wordt verlaagd (€1-2 miljard). €1-2 miljard gaat naar e-health en pandemiepreventie via EU-samenwerking.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Eigen risico verlagen is haalbaar met coalitiesteun. E-health is breed gedragen. Kritiek: EU-samenwerking kan traag zijn.',
+                    'costs' => '€1-2 miljard voor eigen risico, €1-2 miljard voor e-health',
+                    'timeline' => '2-3 jaar voor eigen risico, 3-5 jaar voor e-health'
+                ]
+            ],
+            'Energie' => [
+                'summary' => 'Volt wil hernieuwbare energie en een Europese energiemarkt.',
+                'details' => 'Volt investeert €10-12 miljard in wind, zon en waterstof. Fossiele brandstoffen stoppen tegen 2040. Een EU-energiemarkt wordt ontwikkeld.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Wind/zon is haalbaar binnen 5-7 jaar. EU-energiemarkt vereist lange-termijnsamenwerking. Kritiek: afhankelijkheid van import blijft risico.',
+                    'costs' => '€10-12 miljard voor hernieuwbare energie',
+                    'timeline' => '5-7 jaar voor wind/zon, 10-15 jaar voor EU-markt'
+                ]
+            ],
+            'Economie' => [
+                'summary' => 'Volt wil innovatie en eerlijke belastingen via EU-samenwerking.',
+                'details' => 'Volt investeert €3-5 miljard in startups en technologie. Multinationals betalen eerlijkere belastingen via EU-regels.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Investeringen zijn haalbaar binnen 3-5 jaar. Belastinghervorming vereist EU-steun. Kritiek: mkb kan minder profiteren.',
+                    'costs' => '€3-5 miljard voor innovatie',
+                    'timeline' => '3-5 jaar voor implementatie'
+                ]
+            ],
+            'Onderwijs' => [
+                'summary' => 'Volt wil Europees onderwijs en digitale vaardigheden.',
+                'details' => 'Volt investeert €3-5 miljard in digitalisering en EU-uitwisseling. Het curriculum benadrukt Europese waarden.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Investeringen zijn haalbaar binnen 3-5 jaar. Kritiek: lerarentekort blijft een uitdaging.',
+                    'costs' => '€3-5 miljard voor onderwijs',
+                    'timeline' => '3-5 jaar voor implementatie'
+                ]
+            ],
+            'Woningmarkt' => [
+                'summary' => 'Volt wil duurzame woningbouw en eerlijke huurmarkt.',
+                'details' => 'Volt wil 80.000 duurzame woningen per jaar. Huurmarkt wordt gereguleerd via EU-standaarden.',
+                'feasibility' => [
+                    'score' => 'Gedeeltelijk haalbaar',
+                    'explanation' => 'Woningbouw kost 5-10 jaar. Huurregulering is haalbaar binnen 2-3 jaar. Kritiek: EU-standaarden kunnen traag zijn.',
+                    'costs' => '€8-15 miljard voor woningbouw, €500-800 miljoen voor regulering',
+                    'timeline' => '5-10 jaar voor woningbouw, 2-3 jaar voor regulering'
+                ]
+            ],
+            'Veiligheid' => [
+                'summary' => 'Volt wil EU-samenwerking op veiligheid en cybersecurity.',
+                'details' => 'Volt investeert €1-2 miljard in cybersecurity en preventie via EU-samenwerking. Politie krijgt training voor burgerrechten.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Cybersecurity en preventie zijn haalbaar binnen 3-5 jaar. Kritiek: EU-samenwerking kan traag zijn.',
+                    'costs' => '€1-2 miljard voor cybersecurity',
+                    'timeline' => '3-5 jaar voor implementatie'
+                ]
+            ]
         ],
         'current_seats' => 2,
         'color' => '#502379'
+    ],
+    'DENK' => [
+        'name' => 'DENK',
+        'leader' => 'Stephan van Baarle',
+        'logo' => 'https://i.ibb.co/JwdSLG7g/DENK.jpg',
+        'description' => 'DENK, onder leiding van Stephan van Baarle, komt op voor diversiteit, gelijke kansen en inclusie, met focus op minderheidsgroepen.',
+        'standpoints' => [
+            'Immigratie' => [
+                'summary' => 'DENK wil humaan asielbeleid en aanpak van discriminatie.',
+                'details' => 'DENK pleit voor betere opvang en €1-2 miljard voor integratie (taal, werk). Discriminatie op arbeids- en woningmarkt wordt bestreden via wetgeving. Gezinshereniging wordt versoepeld.',
+                'feasibility' => [
+                    'score' => 'Gedeeltelijk haalbaar',
+                    'explanation' => 'Opvang en integratie zijn haalbaar binnen 3-5 jaar. Discriminatiewetten zijn mogelijk maar vereisen draagvlak. Kritiek: draagvlak kan afnemen bij hoge instroom.',
+                    'costs' => '€1-2 miljard voor integratie, €500-800 miljoen voor opvang',
+                    'timeline' => '3-5 jaar voor integratie, 2-3 jaar voor opvang'
+                ]
+            ],
+            'Klimaat' => [
+                'summary' => 'DENK wil eerlijke klimaattransitie met ontzien van lage inkomens.',
+                'details' => 'DENK steunt 50% CO2-reductie in 2030 via wind en zon. €5-7 miljard gaat naar toegankelijke groene oplossingen. Lage inkomens krijgen energiecompensatie.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Wind/zon en compensatie zijn haalbaar binnen 5-7 jaar. Kritiek: 50% reductie is minder ambitieus dan EU-doelen.',
+                    'costs' => '€5-7 miljard voor hernieuwbare energie, €1-2 miljard voor compensatie',
+                    'timeline' => '5-7 jaar voor implementatie'
+                ]
+            ],
+            'Zorg' => [
+                'summary' => 'DENK wil eigen risico afschaffen en cultureel sensitieve zorg.',
+                'details' => 'Het eigen risico wordt geschrapt (€2,5-3 miljard). €1-2 miljard gaat naar cultureel sensitieve zorg en betere arbeidsvoorwaarden.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Eigen risico afschaffen is haalbaar met coalitiesteun. Culturele zorg is mogelijk. Kritiek: financiering vereist belastingverhoging.',
+                    'costs' => '€2,5-3 miljard voor eigen risico, €1-2 miljard voor zorg',
+                    'timeline' => '1-2 jaar voor eigen risico, 3-5 jaar voor zorg'
+                ]
+            ],
+            'Energie' => [
+                'summary' => 'DENK wil hernieuwbare energie en betaalbare prijzen.',
+                'details' => 'DENK investeert €5-7 miljard in wind en zon, met subsidies voor achterstandswijken. Fossiele brandstoffen stoppen tegen 2040.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Wind/zon is haalbaar binnen 5-7 jaar. Subsidies zijn snel implementeerbaar. Kritiek: afhankelijkheid van import blijft risico.',
+                    'costs' => '€5-7 miljard voor hernieuwbare energie, €1-2 miljard voor subsidies',
+                    'timeline' => '5-7 jaar voor implementatie'
+                ]
+            ],
+            'Economie' => [
+                'summary' => 'DENK wil ongelijkheid aanpakken en kleine ondernemers steunen.',
+                'details' => 'DENK verhoogt belastingen voor rijken en multinationals. €2-3 miljard gaat naar mkb en inclusieve economie.',
+                'feasibility' => [
+                    'score' => 'Gedeeltelijk haalbaar',
+                    'explanation' => 'Belastingverhoging is haalbaar maar kan bedrijven afschrikken. Mkb-steun is mogelijk. Kritiek: economische groei kan afnemen.',
+                    'costs' => '€2-3 miljard voor mkb',
+                    'timeline' => '3-5 jaar voor implementatie'
+                ]
+            ],
+            'Onderwijs' => [
+                'summary' => 'DENK wil gelijke kansen en inclusief curriculum.',
+                'details' => 'DENK investeert €2-3 miljard in achterstandsscholen en diversiteit in het curriculum.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Investeringen zijn haalbaar binnen 3-5 jaar. Kritiek: lerarentekort blijft een uitdaging.',
+                    'costs' => '€2-3 miljard voor onderwijs',
+                    'timeline' => '3-5 jaar voor implementatie'
+                ]
+            ],
+            'Woningmarkt' => [
+                'summary' => 'DENK wil meer sociale huur en aanpak van discriminatie.',
+                'details' => 'DENK wil 50.000 sociale huurwoningen per jaar en huurprijsbevriezing. Discriminatie op de woningmarkt wordt bestreden.',
+                'feasibility' => [
+                    'score' => 'Gedeeltelijk haalbaar',
+                    'explanation' => 'Huurregulering is haalbaar binnen 2-3 jaar. Woningbouw kost 5-10 jaar. Kritiek: financiering is uitdagend.',
+                    'costs' => '€5-10 miljard voor woningbouw, €500-800 miljoen voor regulering',
+                    'timeline' => '5-10 jaar voor woningbouw, 2-3 jaar voor regulering'
+                ]
+            ],
+            'Veiligheid' => [
+                'summary' => 'DENK wil preventie en aanpak van discriminatie door politie.',
+                'details' => 'DENK investeert €1-2 miljard in sociale preventie en politietraining tegen discriminatie.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Preventie en training zijn haalbaar binnen 3-5 jaar. Kritiek: repressieve aanpak ontbreekt.',
+                    'costs' => '€1-2 miljard voor preventie',
+                    'timeline' => '3-5 jaar voor implementatie'
+                ]
+            ]
+        ],
+        'current_seats' => 3,
+        'color' => '#00CED1'
     ],
     'CU' => [
         'name' => 'ChristenUnie',
         'leader' => 'Mirjam Bikker',
         'logo' => 'https://logo.clearbit.com/christenunie.nl',
-        'description' => 'De ChristenUnie (CU) is een christelijke partij onder leiding van Mirjam Bikker, die zich inzet voor een samenleving gebaseerd op Bijbelse waarden, zoals gerechtigheid, zorg voor de naaste en rentmeesterschap.',
+        'description' => 'De ChristenUnie, onder leiding van Mirjam Bikker, is een christelijke partij die inzet op Bijbelse waarden, gerechtigheid en rentmeesterschap.',
         'standpoints' => [
-            'Immigratie' => 'De CU pleit voor een humaan asielbeleid dat vluchtelingen beschermt, maar ook de draagkracht van de samenleving respecteert. De partij wil betere opvang en integratie, met aandacht voor kwetsbare groepen.',
-            'Klimaat' => 'De CU steunt een rentmeesterschapsbenadering van klimaatbeleid, met ambitieuze doelen voor CO2-reductie. De partij wil duurzame innovatie stimuleren en pleit voor een eerlijke verdeling van de kosten.',
-            'Zorg' => 'De CU wil het eigen risico in de zorg verlagen en investeren in toegankelijke zorg, met name voor ouderen en chronisch zieken. De partij pleit ook voor meer aandacht voor ethische kwesties in de zorg.',
-            'Energie' => 'De CU staat open voor kernenergie als onderdeel van een duurzame energiemix, maar geeft de voorkeur aan hernieuwbare energiebronnen. De partij wil energie betaalbaar houden voor gezinnen.',
-            'Economie' => 'De CU pleit voor een eerlijke economie waarin gezinnen en het mkb centraal staan. De partij wil een sterke sociale zekerheid en pleit voor een eerlijke verdeling van welvaart.',
-            'Onderwijs' => 'De CU wil vrijheid van onderwijs waarborgen en investeren in leraren. De partij pleit voor een curriculum dat waarden zoals respect en verantwoordelijkheid benadrukt.',
-            'Woningmarkt' => 'De CU wil betaalbare woningen voor gezinnen en starters door meer woningbouw en betere regulering van de huurmarkt. De partij pleit voor het behoud van leefbare gemeenschappen.',
-            'Veiligheid' => 'De CU wil een rechtvaardige aanpak van criminaliteit, met aandacht voor preventie en re-integratie. De partij pleit voor meer zichtbare politie en een focus op het gezin als basis voor veiligheid.'
+            'Immigratie' => [
+                'summary' => 'CU wil humaan asielbeleid met respect voor draagkracht.',
+                'details' => 'CU pleit voor opvang van kwetsbare vluchtelingen en snelle integratie (€1-2 miljard voor taal en werk). Illegale migratie wordt beperkt via EU-samenwerking.',
+                'feasibility' => [
+                    'score' => 'Gedeeltelijk haalbaar',
+                    'explanation' => 'Opvang en integratie zijn haalbaar binnen 3-5 jaar. EU-samenwerking is tijdrovend. Kritiek: draagvlak kan afnemen bij hoge instroom.',
+                    'costs' => '€1-2 miljard voor integratie, €500-800 miljoen voor opvang',
+                    'timeline' => '3-5 jaar voor integratie, 2-3 jaar voor opvang'
+                ]
+            ],
+            'Klimaat' => [
+                'summary' => 'CU wil rentmeesterschap met ambitieuze CO2-reductie.',
+                'details' => 'CU steunt 55% CO2-reductie in 2030 via wind, zon en energiebesparing. €5-7 miljard gaat naar groene innovatie en boerensteun.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Wind/zon en boerensteun zijn haalbaar binnen 5-7 jaar. Kritiek: financiering vereist coalitiesteun.',
+                    'costs' => '€5-7 miljard voor innovatie, €1-2 miljard voor boerensteun',
+                    'timeline' => '5-7 jaar voor implementatie'
+                ]
+            ],
+            'Zorg' => [
+                'summary' => 'CU wil eigen risico verlagen en ethische zorg.',
+                'details' => 'Het eigen risico wordt verlaagd voor ouderen en chronisch zieken (€1-2 miljard). €1-2 miljard gaat naar mantelzorg en ethische kwesties.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Eigen risico verlagen is haalbaar met coalitiesteun. Ethische focus is mogelijk. Kritiek: personeelstekorten blijven een probleem.',
+                    'costs' => '€1-2 miljard voor eigen risico, €1-2 miljard voor mantelzorg',
+                    'timeline' => '2-3 jaar voor eigen risico, 3-5 jaar voor mantelzorg'
+                ]
+            ],
+            'Energie' => [
+                'summary' => 'CU steunt hernieuwbare energie en is open voor kernenergie.',
+                'details' => 'CU investeert €5-7 miljard in wind, zon en waterstof. Eén kerncentrale wordt overwogen. Fossiele brandstoffen stoppen tegen 2040.',
+                'feasibility' => [
+                    'score' => 'Gedeeltelijk haalbaar',
+                    'explanation' => 'Wind/zon is haalbaar binnen 5-7 jaar. Kerncentrale kost 10-12 jaar. Kritiek: publieke acceptatie van kernenergie is onzeker.',
+                    'costs' => '€10-15 miljard voor kerncentrale, €5-7 miljard voor wind/zon',
+                    'timeline' => '10-12 jaar voor kerncentrale, 5-7 jaar voor wind/zon'
+                ]
+            ],
+            'Economie' => [
+                'summary' => 'CU wil eerlijke economie met focus op gezinnen.',
+                'details' => 'CU investeert €2-3 miljard in mkb en sociale zekerheid. Belastingen blijven stabiel.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Mkb-steun is haalbaar binnen 3-5 jaar. Kritiek: focus op gezinnen kan bredere economie verwaarlozen.',
+                    'costs' => '€2-3 miljard voor mkb en sociale zekerheid',
+                    'timeline' => '3-5 jaar voor implementatie'
+                ]
+            ],
+            'Onderwijs' => [
+                'summary' => 'CU wil waardegedreven onderwijs en keuzevrijheid.',
+                'details' => 'CU investeert €1-2 miljard in leraren en bijzonder onderwijs. Waarden zoals respect krijgen nadruk.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Investeringen zijn haalbaar binnen 3-5 jaar. Kritiek: focus op waarden kan inclusiviteit beperken.',
+                    'costs' => '€1-2 miljard voor onderwijs',
+                    'timeline' => '3-5 jaar voor implementatie'
+                ]
+            ],
+            'Woningmarkt' => [
+                'summary' => 'CU wil betaalbare woningen en leefbare gemeenschappen.',
+                'details' => 'CU wil 80.000 woningen per jaar, met focus op gezinnen. Sociale huur wordt uitgebreid.',
+                'feasibility' => [
+                    'score' => 'Gedeeltelijk haalbaar',
+                    'explanation' => 'Woningbouw kost 5-10 jaar. Sociale huur is haalbaar binnen 3-5 jaar. Kritiek: financiering is uitdagend.',
+                    'costs' => '€8-15 miljard voor woningbouw, €500-800 miljoen voor sociale huur',
+                    'timeline' => '5-10 jaar voor woningbouw, 3-5 jaar voor sociale huur'
+                ]
+            ],
+            'Veiligheid' => [
+                'summary' => 'CU wil rechtvaardige aanpak van criminaliteit en preventie.',
+                'details' => 'CU wil 2.000 extra agenten en €1-2 miljard voor preventie via gezin en gemeenschap.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Politie en preventie zijn haalbaar binnen 3-5 jaar. Kritiek: gezin-focus kan bredere oorzaken negeren.',
+                    'costs' => '€1-2 miljard voor politie, €1-2 miljard voor preventie',
+                    'timeline' => '3-5 jaar voor implementatie'
+                ]
+            ]
         ],
         'current_seats' => 3,
         'color' => '#005F6B'
@@ -312,21 +1320,93 @@ class ProgrammaVergelijkerController {
         'name' => 'Juiste Antwoord 2021',
         'leader' => 'Joost Eerdmans',
         'logo' => 'https://logo.clearbit.com/ja21.nl',
-        'description' => 'Juiste Antwoord 2021 (JA21) is een conservatieve partij onder leiding van Joost Eerdmans, die zich richt op nationale soevereiniteit, veiligheid en een pragmatische aanpak van maatschappelijke problemen.',
+        'description' => 'JA21, onder leiding van Joost Eerdmans, is een conservatieve partij die nationale soevereiniteit, veiligheid en pragmatisme benadrukt.',
         'standpoints' => [
-            'Immigratie' => 'JA21 pleit voor een streng immigratiebeleid met een focus op het beperken van asielinstroom en het bevorderen van remigratie. De partij wil de Nederlandse identiteit beschermen en illegalen snel uitzetten.',
-            'Klimaat' => 'JA21 is kritisch over dure klimaatmaatregelen en wil een pragmatische aanpak die de economie niet schaadt. De partij pleit voor technologische oplossingen en is sceptisch over grootschalige groene projecten.',
-            'Zorg' => 'JA21 wil het eigen risico in de zorg verlagen om de toegankelijkheid te verbeteren. De partij pleit voor minder bureaucratie en meer investeringen in directe zorgverlening.',
-            'Energie' => 'JA21 steunt kernenergie als een betrouwbare en betaalbare energiebron. De partij wil een gebalanceerde energiemix en is tegen dure subsidies voor wind- en zonne-energie.',
-            'Economie' => 'JA21 wil lagere belastingen en minder regelgeving om ondernemerschap te stimuleren. De partij pleit voor een sterke nationale economie en minder afhankelijkheid van de EU.',
-            'Onderwijs' => 'JA21 wil een onderwijssysteem dat de Nederlandse cultuur en geschiedenis benadrukt. De partij pleit voor meer discipline in het onderwijs en investeringen in praktische vaardigheden.',
-            'Woningmarkt' => 'JA21 wil de woningnood aanpakken door meer bouwvrijheid en minder bureaucratie. De partij pleit voor voorrang voor Nederlanders bij sociale huurwoningen en een beperking van migratie.',
-            'Veiligheid' => 'JA21 pleit voor een harde aanpak van criminaliteit, met strengere straffen en meer politie. De partij wil ook meer aandacht voor de bestrijding van drugscriminaliteit en illegale migratie.'
+            'Immigratie' => [
+                'summary' => 'JA21 wil streng immigratiebeleid en remigratie bevorderen.',
+                'details' => 'JA21 pleit voor een asielplafond, snelle uitzetting van illegalen en remigratie via financiële prikkels. Integratie richt zich op assimilatie (€500-800 miljoen). Grenscontroles worden versterkt.',
+                'feasibility' => [
+                    'score' => 'Moeilijk',
+                    'explanation' => 'Asielplafond is juridisch lastig binnen EU-recht. Remigratie stuit op ethische bezwaren. Grenscontroles botsen met Schengen. Kritiek: JA21 overschat uitvoerbaarheid.',
+                    'costs' => '€500-800 miljoen voor integratie, €300-500 miljoen voor grensbewaking',
+                    'timeline' => '2-3 jaar voor integratie, 3-5 jaar voor grenscontroles'
+                ]
+            ],
+            'Klimaat' => [
+                'summary' => 'JA21 wil pragmatisch klimaatbeleid zonder economische schade.',
+                'details' => 'JA21 steunt 40% CO2-reductie in 2030 via innovatie (€3-5 miljard). Hoge belastingen worden vermeden, en boeren krijgen steun.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Innovatie en boerensteun zijn haalbaar binnen 3-5 jaar. 40% reductie is minder ambitieus dan EU-doelen. Kritiek: beperkte ambities kunnen transitie vertragen.',
+                    'costs' => '€3-5 miljard voor innovatie, €1-2 miljard voor boerensteun',
+                    'timeline' => '3-5 jaar voor implementatie'
+                ]
+            ],
+            'Zorg' => [
+                'summary' => 'JA21 wil eigen risico verlagen en bureaucratie verminderen.',
+                'details' => 'Het eigen risico wordt verlaagd (€1-2 miljard). €1-2 miljard gaat naar directe zorg en minder managementlagen.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Eigen risico verlagen is haalbaar met coalitiesteun. Bureaucratievermindering is mogelijk. Kritiek: personeelstekorten blijven een probleem.',
+                    'costs' => '€1-2 miljard voor eigen risico, €1-2 miljard voor bureaucratie',
+                    'timeline' => '2-3 jaar voor eigen risico, 3-5 jaar voor bureaucratie'
+                ]
+            ],
+            'Energie' => [
+                'summary' => 'JA21 steunt kernenergie en een gebalanceerde energiemix.',
+                'details' => 'JA21 wil één kerncentrale en €3-5 miljard voor wind en zon. Fossiele brandstoffen blijven tijdelijk nodig.',
+                'feasibility' => [
+                    'score' => 'Gedeeltelijk haalbaar',
+                    'explanation' => 'Kerncentrale kost 10-12 jaar. Wind/zon is haalbaar binnen 5-7 jaar. Kritiek: publieke acceptatie van kernenergie is onzeker.',
+                    'costs' => '€10-15 miljard voor kerncentrale, €3-5 miljard voor wind/zon',
+                    'timeline' => '10-12 jaar voor kerncentrale, 5-7 jaar voor wind/zon'
+                ]
+            ],
+            'Economie' => [
+                'summary' => 'JA21 wil lagere belastingen en nationale economie versterken.',
+                'details' => 'JA21 verlaagt belastingen (€3-5 miljard) en investeert €1-2 miljard in mkb. EU-regelgeving wordt beperkt.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Belastingverlaging en mkb-steun zijn haalbaar binnen 3-5 jaar. EU-regelgeving beperken is lastig. Kritiek: economische afhankelijkheid van EU wordt onderschat.',
+                    'costs' => '€3-5 miljard voor belastingverlaging, €1-2 miljard voor mkb',
+                    'timeline' => '3-5 jaar voor implementatie'
+                ]
+            ],
+            'Onderwijs' => [
+                'summary' => 'JA21 wil Nederlands onderwijs en meer discipline.',
+                'details' => 'JA21 investeert €1-2 miljard in mbo en discipline in het curriculum. Nederlandse cultuur krijgt nadruk.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Mbo-investeringen zijn haalbaar binnen 3-5 jaar. Kritiek: focus op nationale cultuur kan inclusiviteit beperken.',
+                    'costs' => '€1-2 miljard voor onderwijs',
+                    'timeline' => '3-5 jaar voor implementatie'
+                ]
+            ],
+            'Woningmarkt' => [
+                'summary' => 'JA21 wil Nederlanders voorrang en meer bouwvrijheid.',
+                'details' => 'JA21 wil 80.000 woningen per jaar en voorrang voor Nederlanders bij sociale huur. Bureaucratie wordt geschrapt.',
+                'feasibility' => [
+                    'score' => 'Moeilijk',
+                    'explanation' => 'Woningbouw kost 5-10 jaar. Voorrang voor Nederlanders is juridisch riskant. Kritiek: migratiebeperking overschat effect op woningnood.',
+                    'costs' => '€8-15 miljard voor woningbouw, €500-800 miljoen voor regulering',
+                    'timeline' => '5-10 jaar voor woningbouw, 2-3 jaar voor huurbeleid'
+                ]
+            ],
+            'Veiligheid' => [
+                'summary' => 'JA21 wil harde aanpak van criminaliteit en drugscriminaliteit.',
+                'details' => 'JA21 wil 3.000 extra agenten, strengere straffen en €1-2 miljard voor drugsaanpak.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Politie en strafverhoging zijn haalbaar binnen 3-5 jaar. Kritiek: focus op repressie negeert preventie.',
+                    'costs' => '€1-2 miljard voor politie, €1-2 miljard voor drugsaanpak',
+                    'timeline' => '3-5 jaar voor implementatie'
+                ]
+            ]
         ],
         'current_seats' => 1,
         'color' => '#FFD700'
-    ]
-        ];
+    ],
+];
 
         // Data structureren voor de view
         $data = [

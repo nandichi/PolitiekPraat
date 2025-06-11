@@ -369,6 +369,68 @@
     animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
+/* Slide animations for details */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        max-height: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        max-height: 500px;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 1;
+        max-height: 500px;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        max-height: 0;
+        transform: translateY(-10px);
+    }
+}
+
+/* Feasibility badge styling */
+.feasibility-badge {
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.feasibility-badge:hover {
+    transform: scale(1.05);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Feasibility color variants */
+.feasibility-haalbaar {
+    background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+    color: #065f46;
+    border: 1px solid #10b981;
+}
+
+.feasibility-gedeeltelijk {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    color: #92400e;
+    border: 1px solid #f59e0b;
+}
+
+.feasibility-moeilijk {
+    background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+    color: #991b1b;
+    border: 1px solid #ef4444;
+}
+
+/* Details section styling */
+.details-section {
+    transition: all 0.3s ease;
+}
+
 /* Responsive improvements */
 @media (max-width: 640px) {
     .text-4xl { font-size: 2.5rem; }
@@ -482,7 +544,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 selectedParties.forEach((partyKey, partyIndex) => {
                     const party = parties[partyKey];
-                    const standpoint = party.standpoints[themeKey] || 'Geen specifiek standpunt bekend voor dit thema.';
+                    const standpoint = party.standpoints[themeKey];
+                    
+                    // Check if standpoint is in new format (object) or old format (string)
+                    const isNewFormat = standpoint && typeof standpoint === 'object';
+                    const summary = isNewFormat ? standpoint.summary : (standpoint || 'Geen specifiek standpunt bekend voor dit thema.');
+                    const details = isNewFormat ? standpoint.details : null;
+                    const feasibility = isNewFormat ? standpoint.feasibility : null;
+                    
+                    const uniqueId = `${themeKey}_${partyKey}_${Date.now()}_${Math.random()}`.replace(/[^a-zA-Z0-9]/g, '');
                     
                     html += `
                         <div class="bg-white rounded-2xl p-4 sm:p-6 border-l-4 shadow-md hover:shadow-lg 
@@ -499,11 +569,61 @@ document.addEventListener('DOMContentLoaded', function() {
                                             <div class="flex items-center justify-center sm:justify-start space-x-2 text-sm text-slate-500 mt-1">
                                                 <span>${party.current_seats} zetels</span>
                                                 <span class="w-2 h-2 rounded-full" style="background-color: ${party.color}"></span>
+                                                ${feasibility ? `<span class="px-2 py-1 rounded-full text-xs font-medium ${getFeasibilityColor(feasibility.score)}">${feasibility.score}</span>` : ''}
                                             </div>
                                         </div>
                                     </div>
                                     <div class="prose prose-sm max-w-none">
-                                        <p class="text-slate-700 leading-relaxed text-sm sm:text-base">${standpoint}</p>
+                                        <p class="text-slate-700 leading-relaxed text-sm sm:text-base">${summary}</p>
+                                        
+                                        ${details ? `
+                                            <div id="details_${uniqueId}" class="hidden mt-4 space-y-4 border-t border-slate-200 pt-4">
+                                                <div>
+                                                    <h5 class="font-semibold text-slate-800 mb-2 flex items-center">
+                                                        <svg class="w-4 h-4 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                                        </svg>
+                                                        Gedetailleerde plannen
+                                                    </h5>
+                                                    <p class="text-slate-600 text-sm leading-relaxed">${details}</p>
+                                                </div>
+                                                
+                                                ${feasibility ? `
+                                                    <div class="bg-slate-50 rounded-xl p-4">
+                                                        <h5 class="font-semibold text-slate-800 mb-3 flex items-center">
+                                                            <svg class="w-4 h-4 mr-2 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                                            </svg>
+                                                            Haalbaarheidsanalyse
+                                                        </h5>
+                                                        <div class="grid sm:grid-cols-2 gap-3 text-sm">
+                                                            <div>
+                                                                <span class="font-medium text-slate-700">Realiseerbaarheid:</span>
+                                                                <p class="text-slate-600 mt-1">${feasibility.explanation}</p>
+                                                            </div>
+                                                            <div>
+                                                                <span class="font-medium text-slate-700">Kosten/Baten:</span>
+                                                                <p class="text-slate-600 mt-1">${feasibility.costs}</p>
+                                                            </div>
+                                                            <div class="sm:col-span-2">
+                                                                <span class="font-medium text-slate-700">Tijdslijn:</span>
+                                                                <p class="text-slate-600 mt-1">${feasibility.timeline}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                ` : ''}
+                                            </div>
+                                            
+                                            <button onclick="toggleDetails('${uniqueId}')" 
+                                                    class="mt-3 inline-flex items-center px-4 py-2 text-sm font-medium text-blue-600 
+                                                           hover:text-blue-800 hover:bg-blue-50 rounded-lg transition-colors duration-200">
+                                                <span id="toggle_text_${uniqueId}">Lees meer</span>
+                                                <svg id="toggle_icon_${uniqueId}" class="w-4 h-4 ml-1 transform transition-transform duration-200" 
+                                                     fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                                </svg>
+                                            </button>
+                                        ` : ''}
                                     </div>
                                 </div>
                             </div>
@@ -542,6 +662,41 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initial state
     updateCompareButton();
+    
+    // Feasibility color mapping
+    window.getFeasibilityColor = function(score) {
+        switch(score.toLowerCase()) {
+            case 'haalbaar': 
+                return 'feasibility-haalbaar feasibility-badge';
+            case 'gedeeltelijk': 
+                return 'feasibility-gedeeltelijk feasibility-badge';
+            case 'moeilijk': 
+                return 'feasibility-moeilijk feasibility-badge';
+            default: 
+                return 'bg-gray-100 text-gray-800 feasibility-badge';
+        }
+    };
+    
+    // Toggle details function
+    window.toggleDetails = function(uniqueId) {
+        const detailsDiv = document.getElementById(`details_${uniqueId}`);
+        const toggleText = document.getElementById(`toggle_text_${uniqueId}`);
+        const toggleIcon = document.getElementById(`toggle_icon_${uniqueId}`);
+        
+        if (detailsDiv.classList.contains('hidden')) {
+            detailsDiv.classList.remove('hidden');
+            detailsDiv.style.animation = 'slideDown 0.3s ease-out';
+            toggleText.textContent = 'Lees minder';
+            toggleIcon.style.transform = 'rotate(180deg)';
+        } else {
+            detailsDiv.style.animation = 'slideUp 0.3s ease-out';
+            setTimeout(() => {
+                detailsDiv.classList.add('hidden');
+            }, 300);
+            toggleText.textContent = 'Lees meer';
+            toggleIcon.style.transform = 'rotate(0deg)';
+        }
+    };
     
     // Add animation classes for staggered entrance
     const observerOptions = {
