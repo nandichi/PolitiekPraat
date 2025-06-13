@@ -795,7 +795,7 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                         </div>
                     </a>
 
-                <!-- Desktop Navigation Links - Modern redesign -->
+                <!-- Desktop Navigation Links - Improved organization -->
                 <div class="hidden md:flex items-center space-x-1 lg:space-x-2">
                     <a href="<?php echo URLROOT; ?>/" 
                        class="relative px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg 
@@ -824,17 +824,6 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                                     group-hover:scale-100 transition-transform duration-300"></div>
                     </a>
 
-                    <a href="<?php echo URLROOT; ?>/stemwijzer" 
-                       class="relative px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg 
-                              transition-all duration-300 hover:text-primary hover:bg-primary/5
-                              group flex items-center">
-                        <span class="relative z-10">Stemwijzer</span>
-                        <span class="ml-2 px-1.5 py-0.5 text-xs font-bold bg-secondary text-white 
-                                    rounded-full shadow-sm">2025</span>
-                        <div class="absolute inset-0 bg-primary/10 rounded-lg scale-0 
-                                    group-hover:scale-100 transition-transform duration-300"></div>
-                    </a>
-
                     <a href="<?php echo URLROOT; ?>/partijen" 
                        class="relative px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg 
                               transition-all duration-300 hover:text-primary hover:bg-primary/5
@@ -844,23 +833,76 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                                     group-hover:scale-100 transition-transform duration-300"></div>
                     </a>
 
-                    <a href="<?php echo URLROOT; ?>/programma-vergelijker" 
-                       class="relative px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg 
-                              transition-all duration-300 hover:text-primary hover:bg-primary/5
-                              group flex items-center">
-                        <span class="relative z-10">Vergelijker</span>
-                        <span class="ml-2 px-1.5 py-0.5 text-xs font-bold bg-accent text-white 
-                                    rounded-full shadow-sm">Nieuw</span>
-                        <div class="absolute inset-0 bg-primary/10 rounded-lg scale-0 
-                                    group-hover:scale-100 transition-transform duration-300"></div>
-                    </a>
-
-                    <!-- Contact Dropdown - Modern redesign -->
+                    <!-- Tools Dropdown - New organized section -->
                     <div class="relative group">
                         <button class="relative px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg 
                                       transition-all duration-300 hover:text-primary hover:bg-primary/5
                                       flex items-center">
-                            <span class="relative z-10">Contact</span>
+                            <span class="relative z-10">Hulpmiddelen</span>
+                            <svg class="w-4 h-4 ml-2 transform transition-transform duration-300 group-hover:rotate-180" 
+                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                            <div class="absolute inset-0 bg-primary/10 rounded-lg scale-0 
+                                        group-hover:scale-100 transition-transform duration-300"></div>
+                        </button>
+
+                        <div class="absolute left-0 mt-3 w-64 dropdown-content z-50" style="margin-top: -5px; padding-top: 15px;">
+                            <div class="p-2 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden">
+                                <!-- Subtle top accent -->
+                                <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-secondary to-accent"></div>
+                                
+                                <a href="<?php echo URLROOT; ?>/stemwijzer" 
+                                   class="flex items-center px-3 py-3 rounded-lg transition-all duration-200
+                                          hover:bg-gray-50 group/item">
+                                    <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-secondary/10
+                                              transition-all duration-200 group-hover/item:scale-110 group-hover/item:bg-secondary/20">
+                                        <svg class="w-5 h-5 text-secondary transition-all duration-200" 
+                                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                  d="M9 5H7a2 2 0 00-2 2v11a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+                                        </svg>
+                                    </div>
+                                    <div class="ml-3 flex-1">
+                                        <div class="flex items-center">
+                                            <p class="text-sm font-semibold text-gray-800">Stemwijzer</p>
+                                            <span class="ml-2 px-2 py-0.5 text-xs font-bold bg-secondary text-white 
+                                                        rounded-full shadow-sm">2025</span>
+                                        </div>
+                                        <p class="text-xs text-gray-500">Ontdek welke partij bij je past</p>
+                                    </div>
+                                </a>
+
+                                <a href="<?php echo URLROOT; ?>/programma-vergelijker" 
+                                   class="flex items-center px-3 py-3 mt-1 rounded-lg transition-all duration-200
+                                          hover:bg-gray-50 group/item">
+                                    <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-accent/10
+                                              transition-all duration-200 group-hover/item:scale-110 group-hover/item:bg-accent/20">
+                                        <svg class="w-5 h-5 text-accent transition-all duration-200" 
+                                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                  d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                        </svg>
+                                    </div>
+                                    <div class="ml-3 flex-1">
+                                        <div class="flex items-center">
+                                            <p class="text-sm font-semibold text-gray-800">Programma Vergelijker</p>
+                                            <span class="ml-2 px-2 py-0.5 text-xs font-bold bg-accent text-white 
+                                                        rounded-full shadow-sm">Nieuw</span>
+                                        </div>
+                                        <p class="text-xs text-gray-500">Vergelijk partijstandpunten</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Info Dropdown - Reorganized -->
+                    <div class="relative group">
+                        <button class="relative px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg 
+                                      transition-all duration-300 hover:text-primary hover:bg-primary/5
+                                      flex items-center">
+                            <span class="relative z-10">Info</span>
                             <svg class="w-4 h-4 ml-2 transform transition-transform duration-300 group-hover:rotate-180" 
                                  fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
@@ -874,29 +916,12 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                                 <!-- Subtle top accent -->
                                 <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-secondary to-accent"></div>
                                 
-                                <a href="<?php echo URLROOT; ?>/contact" 
+                                <a href="<?php echo URLROOT; ?>/over-mij" 
                                    class="flex items-center px-3 py-3 rounded-lg transition-all duration-200
                                           hover:bg-gray-50 group/item">
                                     <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-primary/10
                                               transition-all duration-200 group-hover/item:scale-110 group-hover/item:bg-primary/20">
                                         <svg class="w-5 h-5 text-primary transition-all duration-200" 
-                                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                                  d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                                        </svg>
-                                    </div>
-                                    <div class="ml-3">
-                                        <p class="text-sm font-semibold text-gray-800">Contact</p>
-                                        <p class="text-xs text-gray-500">Neem contact op</p>
-                                    </div>
-                                </a>
-
-                                <a href="<?php echo URLROOT; ?>/over-mij" 
-                                   class="flex items-center px-3 py-3 mt-1 rounded-lg transition-all duration-200
-                                          hover:bg-gray-50 group/item">
-                                    <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-secondary/10
-                                              transition-all duration-200 group-hover/item:scale-110 group-hover/item:bg-secondary/20">
-                                        <svg class="w-5 h-5 text-secondary transition-all duration-200" 
                                              fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                                   d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
@@ -905,6 +930,23 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                                     <div class="ml-3">
                                         <p class="text-sm font-semibold text-gray-800">Over ons</p>
                                         <p class="text-xs text-gray-500">Leer ons kennen</p>
+                                    </div>
+                                </a>
+
+                                <a href="<?php echo URLROOT; ?>/contact" 
+                                   class="flex items-center px-3 py-3 mt-1 rounded-lg transition-all duration-200
+                                          hover:bg-gray-50 group/item">
+                                    <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-secondary/10
+                                              transition-all duration-200 group-hover/item:scale-110 group-hover/item:bg-secondary/20">
+                                        <svg class="w-5 h-5 text-secondary transition-all duration-200" 
+                                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                  d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                        </svg>
+                                    </div>
+                                    <div class="ml-3">
+                                        <p class="text-sm font-semibold text-gray-800">Contact</p>
+                                        <p class="text-xs text-gray-500">Neem contact op</p>
                                     </div>
                                 </a>
                             </div>
@@ -1137,25 +1179,6 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                         <span class="font-medium">Nieuws</span>
                     </a>
 
-                    <a href="<?php echo URLROOT; ?>/stemwijzer" 
-                       class="flex items-center text-gray-700 hover:text-primary p-3 rounded-lg transition-all duration-300 
-                              hover:bg-primary/5 group">
-                        <div class="mr-3 p-2 bg-primary/10 rounded-lg transition-all duration-300 
-                                    group-hover:bg-primary/20 group-hover:scale-110">
-                            <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                      d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
-                            </svg>
-                        </div>
-                        <span class="font-medium flex items-center">
-                            Stemwijzer
-                            <span class="ml-2 inline-flex items-center px-2 py-0.5 text-xs font-medium 
-                                        bg-secondary text-white rounded-full">
-                                Nieuw
-                            </span>
-                        </span>
-                    </a>
-
                     <a href="<?php echo URLROOT; ?>/partijen" 
                        class="flex items-center text-gray-700 hover:text-primary p-3 rounded-lg transition-all duration-300 
                               hover:bg-primary/5 group">
@@ -1169,50 +1192,83 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                         <span class="font-medium">Partijen</span>
                     </a>
 
-                    <a href="<?php echo URLROOT; ?>/programma-vergelijker" 
-                       class="flex items-center text-gray-700 hover:text-primary p-3 rounded-lg transition-all duration-300 
-                              hover:bg-primary/5 group">
-                        <div class="mr-3 p-2 bg-primary/10 rounded-lg transition-all duration-300 
-                                    group-hover:bg-primary/20 group-hover:scale-110">
-                            <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                      d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                            </svg>
+                    <!-- Mobile Tools Section -->
+                    <div class="py-2">
+                        <div class="text-xs font-semibold text-gray-500 uppercase tracking-wider px-3 mb-2">
+                            Hulpmiddelen
                         </div>
-                        <span class="font-medium flex items-center">
-                            Vergelijker
-                            <span class="ml-2 inline-flex items-center px-2 py-0.5 text-xs font-medium 
-                                        bg-accent text-white rounded-full">
-                                Nieuw
+                        
+                        <a href="<?php echo URLROOT; ?>/stemwijzer" 
+                           class="flex items-center text-gray-700 hover:text-primary p-3 rounded-lg transition-all duration-300 
+                                  hover:bg-secondary/5 group ml-2">
+                            <div class="mr-3 p-2 bg-secondary/10 rounded-lg transition-all duration-300 
+                                        group-hover:bg-secondary/20 group-hover:scale-110">
+                                <svg class="w-5 h-5 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                          d="M9 5H7a2 2 0 00-2 2v11a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+                                </svg>
+                            </div>
+                            <span class="font-medium flex items-center">
+                                Stemwijzer
+                                <span class="ml-2 inline-flex items-center px-2 py-0.5 text-xs font-medium 
+                                            bg-secondary text-white rounded-full">
+                                    2025
+                                </span>
                             </span>
-                        </span>
-                    </a>
+                        </a>
 
-                    <a href="<?php echo URLROOT; ?>/contact" 
-                       class="flex items-center text-gray-700 hover:text-primary p-3 rounded-lg transition-all duration-300 
-                              hover:bg-primary/5 group">
-                        <div class="mr-3 p-2 bg-primary/10 rounded-lg transition-all duration-300 
-                                    group-hover:bg-primary/20 group-hover:scale-110">
-                            <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                            </svg>
-                        </div>
-                        <span class="font-medium">Contact</span>
-                    </a>
+                        <a href="<?php echo URLROOT; ?>/programma-vergelijker" 
+                           class="flex items-center text-gray-700 hover:text-primary p-3 rounded-lg transition-all duration-300 
+                                  hover:bg-accent/5 group ml-2">
+                            <div class="mr-3 p-2 bg-accent/10 rounded-lg transition-all duration-300 
+                                        group-hover:bg-accent/20 group-hover:scale-110">
+                                <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                          d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                </svg>
+                            </div>
+                            <span class="font-medium flex items-center">
+                                Programma Vergelijker
+                                <span class="ml-2 inline-flex items-center px-2 py-0.5 text-xs font-medium 
+                                            bg-accent text-white rounded-full">
+                                    Nieuw
+                                </span>
+                            </span>
+                        </a>
+                    </div>
 
-                    <a href="<?php echo URLROOT; ?>/over-mij" 
-                       class="flex items-center text-gray-700 hover:text-primary p-3 rounded-lg transition-all duration-300 
-                              hover:bg-primary/5 group">
-                        <div class="mr-3 p-2 bg-primary/10 rounded-lg transition-all duration-300 
-                                    group-hover:bg-primary/20 group-hover:scale-110">
-                            <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                            </svg>
+                    <!-- Mobile Info Section -->
+                    <div class="py-2">
+                        <div class="text-xs font-semibold text-gray-500 uppercase tracking-wider px-3 mb-2">
+                            Informatie
                         </div>
-                        <span class="font-medium">Over ons</span>
-                    </a>
+                        
+                        <a href="<?php echo URLROOT; ?>/over-mij" 
+                           class="flex items-center text-gray-700 hover:text-primary p-3 rounded-lg transition-all duration-300 
+                                  hover:bg-primary/5 group ml-2">
+                            <div class="mr-3 p-2 bg-primary/10 rounded-lg transition-all duration-300 
+                                        group-hover:bg-primary/20 group-hover:scale-110">
+                                <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                          d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                </svg>
+                            </div>
+                            <span class="font-medium">Over ons</span>
+                        </a>
+
+                        <a href="<?php echo URLROOT; ?>/contact" 
+                           class="flex items-center text-gray-700 hover:text-primary p-3 rounded-lg transition-all duration-300 
+                                  hover:bg-secondary/5 group ml-2">
+                            <div class="mr-3 p-2 bg-secondary/10 rounded-lg transition-all duration-300 
+                                        group-hover:bg-secondary/20 group-hover:scale-110">
+                                <svg class="w-5 h-5 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                          d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                </svg>
+                            </div>
+                            <span class="font-medium">Contact</span>
+                        </a>
+                    </div>
                 </nav>
 
                 <!-- Mobile Auth Section - Simplified -->
