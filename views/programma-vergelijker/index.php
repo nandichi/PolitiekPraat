@@ -1,56 +1,67 @@
 <?php require_once 'views/templates/header.php'; ?>
 
 <div class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
-    <!-- Hero Section -->
-    <section class="relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-r from-primary/10 via-secondary/10 to-primary/10"></div>
-        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-24">
-            <div class="text-center">
-                <!-- Icon Container -->
+    <!-- Modern Hero Section -->
+    <section class="relative bg-gradient-to-br from-primary-dark via-primary to-secondary py-24 overflow-hidden">
+        <!-- Subtle background elements -->
+        <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg opacity=\"0.03\"%3E%3Ccircle cx=\"30\" cy=\"30\" r=\"1.5\" fill=\"white\"/%3E%3Ccircle cx=\"0\" cy=\"30\" r=\"1\" fill=\"white\"/%3E%3Ccircle cx=\"60\" cy=\"30\" r=\"1\" fill=\"white\"/%3E%3Ccircle cx=\"30\" cy=\"0\" r=\"1\" fill=\"white\"/%3E%3Ccircle cx=\"30\" cy=\"60\" r=\"1\" fill=\"white\"/%3E%3C/g%3E%3C/svg%3E')] opacity-40"></div>
+        
+        <!-- Ambient light effects -->
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-secondary/15 rounded-full blur-3xl"></div>
+        
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-5xl mx-auto">
+                <!-- Header badge -->
                 <div class="flex justify-center mb-8">
-                    <div class="relative">
-                        <div class="w-24 h-24 bg-gradient-to-br from-primary to-secondary rounded-3xl flex items-center justify-center shadow-2xl transform rotate-3 hover:rotate-6 transition-all duration-500">
-                            <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                      d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                            </svg>
-                        </div>
-                        <div class="absolute -top-2 -right-2 w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center">
-                            <span class="text-xs font-bold text-yellow-800">NL</span>
-                        </div>
+                    <div class="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
+                        <div class="w-2 h-2 bg-secondary-light rounded-full mr-3 animate-pulse"></div>
+                        <span class="text-white/90 text-sm font-medium">Programma analyse tool</span>
                     </div>
                 </div>
-
-                <!-- Title -->
-                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black mb-6">
-                    <span class="bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent">
-                        Programma Vergelijker
-                    </span>
-                </h1>
-
-                <!-- Subtitle -->
-                <p class="text-lg sm:text-xl text-slate-600 max-w-4xl mx-auto leading-relaxed mb-8 px-4">
-                    Vergelijk de standpunten van Nederlandse politieke partijen over belangrijke thema's. 
-                    Ontdek waar partijen overeenkomen en waar ze van elkaar verschillen.
-                </p>
-
-                <!-- Stats -->
-                <div class="flex flex-wrap justify-center gap-8 mb-12">
-                    <div class="text-center">
-                        <div class="text-2xl sm:text-3xl font-bold text-primary"><?php echo count($data['parties']); ?></div>
-                        <div class="text-sm text-slate-500 font-medium">Partijen</div>
+                
+                <!-- Main title -->
+                <div class="text-center mb-12">
+                    <h1 class="text-5xl md:text-6xl lg:text-7xl font-black text-white mb-6 tracking-tight">
+                        Programma
+                        <span class="block bg-gradient-to-r from-secondary-light via-secondary to-primary-light bg-clip-text text-transparent">
+                            Vergelijker
+                        </span>
+                    </h1>
+                    
+                    <p class="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
+                        Vergelijk standpunten van Nederlandse politieke partijen
+                    </p>
+                </div>
+                
+                <!-- Quick stats -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
+                    <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-white mb-2"><?php echo count($data['parties']); ?></div>
+                            <div class="text-blue-200 text-sm uppercase tracking-wider">Partijen</div>
+                        </div>
                     </div>
-                    <div class="text-center">
-                        <div class="text-2xl sm:text-3xl font-bold text-secondary"><?php echo count($data['themes']); ?></div>
-                        <div class="text-sm text-slate-500 font-medium">Thema's</div>
+                    
+                    <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-white mb-2"><?php echo count($data['themes']); ?></div>
+                            <div class="text-blue-200 text-sm uppercase tracking-wider">Thema's</div>
+                        </div>
                     </div>
-                    <div class="text-center">
-                        <div class="text-2xl sm:text-3xl font-bold text-primary">150</div>
-                        <div class="text-sm text-slate-500 font-medium">Zetels</div>
+                    
+                    <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-white mb-2">150</div>
+                            <div class="text-blue-200 text-sm uppercase tracking-wider">Zetels</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        
+        <!-- Bottom fade -->
+        <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-slate-50 to-transparent"></div>
     </section>
 
     <!-- Main Comparison Tool -->

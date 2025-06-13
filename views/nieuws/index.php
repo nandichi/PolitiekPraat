@@ -1,138 +1,65 @@
-<main class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/20 relative overflow-hidden">
-    <!-- Premium decoratieve achtergrond -->
-    <div class="absolute inset-0 z-0">
-        <!-- Animated gradient orbs -->
-        <div class="absolute -top-40 -left-40 w-96 h-96 bg-gradient-to-br from-blue-400/20 to-indigo-600/20 rounded-full blur-3xl animate-float opacity-60"></div>
-        <div class="absolute top-1/3 right-0 w-80 h-80 bg-gradient-to-br from-purple-400/15 to-pink-500/15 rounded-full blur-2xl animate-float-delayed opacity-50"></div>
-        <div class="absolute bottom-0 left-1/3 w-72 h-72 bg-gradient-to-br from-emerald-400/10 to-teal-500/10 rounded-full blur-3xl animate-pulse-slow opacity-40"></div>
+<main class="bg-gradient-to-b from-slate-50 to-white min-h-screen">
+    <!-- Modern Hero Section -->
+    <section class="relative bg-gradient-to-br from-primary-dark via-primary to-secondary py-24 overflow-hidden">
+        <!-- Subtle background elements -->
+        <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg opacity=\"0.03\"%3E%3Ccircle cx=\"30\" cy=\"30\" r=\"1.5\" fill=\"white\"/%3E%3Ccircle cx=\"0\" cy=\"30\" r=\"1\" fill=\"white\"/%3E%3Ccircle cx=\"60\" cy=\"30\" r=\"1\" fill=\"white\"/%3E%3Ccircle cx=\"30\" cy=\"0\" r=\"1\" fill=\"white\"/%3E%3Ccircle cx=\"30\" cy=\"60\" r=\"1\" fill=\"white\"/%3E%3C/g%3E%3C/svg%3E')] opacity-40"></div>
         
-        <!-- Grid pattern overlay -->
-        <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg opacity=\"0.03\"%3E%3Cpath d=\"M30 0L30 60M0 30L60 30\" stroke=\"%23334155\" stroke-width=\"1\"%3E%3C/path%3E%3Ccircle cx=\"30\" cy=\"30\" r=\"1\" fill=\"%23334155\"%3E%3C/circle%3E%3C/g%3E%3C/svg%3E')] opacity-50"></div>
+        <!-- Ambient light effects -->
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-secondary/15 rounded-full blur-3xl"></div>
         
-        <!-- Floating geometric shapes -->
-        <div class="absolute top-20 right-20 w-4 h-4 bg-blue-500/20 rounded-full animate-bounce"></div>
-        <div class="absolute top-1/2 left-10 w-6 h-6 bg-purple-500/20 rounded-full animate-bounce animation-delay-75"></div>
-        <div class="absolute bottom-1/3 right-1/4 w-3 h-3 bg-emerald-500/20 rounded-full animate-bounce animation-delay-150"></div>
-    </div>
-
-    <!-- Hero Section -->
-    <section class="relative z-10 pt-24 pb-32 overflow-hidden">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Hero Header -->
-            <div class="text-center mb-20 relative" data-aos="fade-up" data-aos-duration="1000">
-                <!-- Background text effect -->
-                <div class="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
-                    <span class="text-[160px] sm:text-[200px] lg:text-[250px] xl:text-[300px] font-black text-slate-100/20 select-none tracking-wider transform -rotate-2 leading-none">NIEUWS</span>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-5xl mx-auto">
+                <!-- Header badge -->
+                <div class="flex justify-center mb-8">
+                    <div class="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
+                        <div class="w-2 h-2 bg-secondary-light rounded-full mr-3 animate-pulse"></div>
+                        <span class="text-white/90 text-sm font-medium">Live nieuwsupdates</span>
+                    </div>
                 </div>
                 
-                <!-- Main content -->
-                <div class="relative z-10 space-y-8">
-                    <!-- Badge -->
-                    <div class="inline-flex items-center px-6 py-3 bg-white/80 backdrop-blur-sm rounded-full border border-blue-200/50 shadow-lg" data-aos="zoom-in" data-aos-delay="200">
-                        <div class="flex items-center space-x-3">
-                            <div class="relative">
-                                <div class="w-3 h-3 bg-blue-500 rounded-full animate-pulse"></div>
-                                <div class="absolute inset-0 w-3 h-3 bg-blue-500 rounded-full animate-ping opacity-30"></div>
-                            </div>
-                            <span class="text-sm font-bold text-slate-700 uppercase tracking-wide">Live Updates</span>
-                        </div>
-                    </div>
+                <!-- Main title -->
+                <div class="text-center mb-12">
+                    <h1 class="text-5xl md:text-6xl lg:text-7xl font-black text-white mb-6 tracking-tight">
+                        Politiek
+                        <span class="block bg-gradient-to-r from-secondary-light via-secondary to-primary-light bg-clip-text text-transparent">
+                            Nieuws
+                        </span>
+                    </h1>
                     
-                    <!-- Main title -->
-                    <div class="space-y-6">
-                        <h1 class="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black text-slate-900 leading-tight tracking-tight">
-                            <span class="block mb-4">Politiek</span>
-                            <span class="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent animate-gradient bg-size-200">
-                                Neutraal Nieuws
-                            </span>
-                        </h1>
-                        
-                        <!-- Decorative line system -->
-                        <div class="flex items-center justify-center space-x-6 mt-8">
-                            <div class="w-16 h-1 bg-gradient-to-r from-transparent via-blue-500 to-indigo-600 rounded-full"></div>
-                            <div class="relative">
-                                <div class="w-4 h-4 bg-blue-600 rounded-full animate-pulse"></div>
-                                <div class="absolute inset-0 w-4 h-4 bg-blue-600 rounded-full animate-ping opacity-30"></div>
-                            </div>
-                            <div class="w-32 h-1 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 rounded-full"></div>
-                            <div class="relative">
-                                <div class="w-4 h-4 bg-purple-600 rounded-full animate-pulse animation-delay-300"></div>
-                                <div class="absolute inset-0 w-4 h-4 bg-purple-600 rounded-full animate-ping opacity-30 animation-delay-300"></div>
-                            </div>
-                            <div class="w-16 h-1 bg-gradient-to-r from-purple-600 via-purple-500 to-transparent rounded-full"></div>
-                        </div>
-                    </div>
-                    
-                    <!-- Subtitle -->
-                    <p class="text-xl sm:text-2xl lg:text-3xl text-slate-600 max-w-4xl mx-auto leading-relaxed font-light" data-aos="fade-up" data-aos-delay="400">
-                        Een <span class="font-semibold text-blue-600">gebalanceerd overzicht</span> van het laatste nieuws, objectief gepresenteerd vanuit <span class="font-semibold text-purple-600">diverse politieke hoeken</span>
+                    <p class="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
+                        Een gebalanceerd overzicht van het laatste nieuws, objectief gepresenteerd vanuit diverse politieke hoeken
                     </p>
                 </div>
-            </div>
-
-            <!-- Premium Statistics Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-16" data-aos="fade-up" data-aos-delay="600">
-                <div class="group relative">
-                    <!-- Glow effect -->
-                    <div class="absolute -inset-1 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl blur opacity-25 group-hover:opacity-40 transition-opacity duration-300"></div>
-                    
-                    <!-- Card -->
-                    <div class="relative bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-white/50 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
-                        <div class="text-center space-y-4">
-                            <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto shadow-lg">
-                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="text-3xl lg:text-4xl font-black text-slate-900 mb-2"><?php echo $stats['total_articles']; ?></p>
-                                <p class="text-sm font-medium text-slate-600 uppercase tracking-wide">Totaal Artikelen</p>
-                            </div>
+                
+                <!-- Quick stats -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
+                    <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-white mb-2"><?php echo $stats['total_articles']; ?></div>
+                            <div class="text-blue-200 text-sm uppercase tracking-wider">Totaal artikelen</div>
                         </div>
                     </div>
-                </div>
-
-                <div class="group relative">
-                    <!-- Glow effect -->
-                    <div class="absolute -inset-1 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-2xl blur opacity-25 group-hover:opacity-40 transition-opacity duration-300"></div>
                     
-                    <!-- Card -->
-                    <div class="relative bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-white/50 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
-                        <div class="text-center space-y-4">
-                            <div class="w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center mx-auto shadow-lg">
-                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="text-3xl lg:text-4xl font-black text-slate-900 mb-2"><?php echo $stats['progressive_count']; ?></p>
-                                <p class="text-sm font-medium text-slate-600 uppercase tracking-wide">Progressieve Artikelen</p>
-                            </div>
+                    <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-white mb-2"><?php echo $stats['progressive_count']; ?></div>
+                            <div class="text-blue-200 text-sm uppercase tracking-wider">Progressief</div>
                         </div>
                     </div>
-                </div>
-
-                <div class="group relative">
-                    <!-- Glow effect -->
-                    <div class="absolute -inset-1 bg-gradient-to-r from-orange-500 to-red-600 rounded-2xl blur opacity-25 group-hover:opacity-40 transition-opacity duration-300"></div>
                     
-                    <!-- Card -->
-                    <div class="relative bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-white/50 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
-                        <div class="text-center space-y-4">
-                            <div class="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-600 rounded-2xl flex items-center justify-center mx-auto shadow-lg">
-                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="text-3xl lg:text-4xl font-black text-slate-900 mb-2"><?php echo $stats['conservative_count']; ?></p>
-                                <p class="text-sm font-medium text-slate-600 uppercase tracking-wide">Conservatieve Artikelen</p>
-                            </div>
+                    <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-white mb-2"><?php echo $stats['conservative_count']; ?></div>
+                            <div class="text-blue-200 text-sm uppercase tracking-wider">Conservatief</div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        
+        <!-- Bottom fade -->
+        <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-slate-50 to-transparent"></div>
     </section>
 
     <!-- Premium Filter Section -->

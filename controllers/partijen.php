@@ -329,51 +329,67 @@ include_once BASE_PATH . '/views/templates/header.php';
 ?>
 
 <main class="bg-gradient-to-b from-slate-50 to-white min-h-screen">
-    <!-- Hero Section - Elegant and professional design zoals in stemwijzer.php -->
-    <section class="relative bg-gradient-to-br from-primary-dark via-primary to-blue-600 py-20 overflow-hidden">
-        <!-- Top accent line -->
-        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-secondary to-blue-400"></div>
+    <!-- Modern Hero Section -->
+    <section class="relative bg-gradient-to-br from-primary-dark via-primary to-secondary py-24 overflow-hidden">
+        <!-- Subtle background elements -->
+        <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg opacity=\"0.03\"%3E%3Ccircle cx=\"30\" cy=\"30\" r=\"1.5\" fill=\"white\"/%3E%3Ccircle cx=\"0\" cy=\"30\" r=\"1\" fill=\"white\"/%3E%3Ccircle cx=\"60\" cy=\"30\" r=\"1\" fill=\"white\"/%3E%3Ccircle cx=\"30\" cy=\"0\" r=\"1\" fill=\"white\"/%3E%3Ccircle cx=\"30\" cy=\"60\" r=\"1\" fill=\"white\"/%3E%3C/g%3E%3C/svg%3E')] opacity-40"></div>
         
-        <!-- Decorative elements -->
-        <div class="absolute inset-0 overflow-hidden pointer-events-none">
-            <!-- Abstract wave pattern -->
-            <svg class="absolute w-full h-56 -bottom-10 left-0 text-white/5" viewBox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-                <path fill="currentColor" fill-opacity="1" d="M0,128L40,138.7C80,149,160,171,240,170.7C320,171,400,149,480,149.3C560,149,640,171,720,192C800,213,880,235,960,229.3C1040,224,1120,192,1200,165.3C1280,139,1360,117,1400,106.7L1440,96L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z"></path>
-            </svg>
-            
-            <!-- Decorative circles -->
-            <div class="absolute top-20 left-10 w-40 h-40 rounded-full bg-secondary/10 filter blur-2xl"></div>
-            <div class="absolute bottom-10 right-10 w-60 h-60 rounded-full bg-blue-500/10 filter blur-3xl"></div>
-            <div class="absolute top-1/2 left-1/3 w-20 h-20 rounded-full bg-secondary/20 filter blur-xl"></div>
-            
-            <!-- Dot pattern -->
-            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"30\" height=\"30\" viewBox=\"0 0 30 30\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cpath d=\"M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z\" fill=\"rgba(255,255,255,0.07)\"%3E%3C/path%3E%3C/svg%3E')] opacity-30"></div>
-        </div>
+        <!-- Ambient light effects -->
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-secondary/15 rounded-full blur-3xl"></div>
         
         <div class="container mx-auto px-4 relative z-10">
-            <div class="max-w-4xl mx-auto text-center">
-                <!-- Small decorative element above title -->
-                <div class="inline-block mb-3">
-                    <div class="flex items-center justify-center space-x-1">
-                        <span class="block w-1.5 h-1.5 rounded-full bg-secondary"></span>
-                        <span class="block w-3 h-1.5 rounded-full bg-blue-400"></span>
-                        <span class="block w-1.5 h-1.5 rounded-full bg-secondary"></span>
+            <div class="max-w-5xl mx-auto">
+                <!-- Header badge -->
+                <div class="flex justify-center mb-8">
+                    <div class="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
+                        <div class="w-2 h-2 bg-secondary-light rounded-full mr-3 animate-pulse"></div>
+                        <span class="text-white/90 text-sm font-medium">Live politieke data</span>
                     </div>
                 </div>
                 
-                <!-- Title with gradient text -->
-                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 tracking-tight leading-tight">
-                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-100 via-white to-secondary-light">
-                        Nederlandse Politieke Partijen
-                    </span>
-                </h1>
+                <!-- Main title -->
+                <div class="text-center mb-12">
+                    <h1 class="text-5xl md:text-6xl lg:text-7xl font-black text-white mb-6 tracking-tight">
+                        Nederlandse
+                        <span class="block bg-gradient-to-r from-secondary-light via-secondary to-primary-light bg-clip-text text-transparent">
+                            Politieke Partijen
+                        </span>
+                    </h1>
+                    
+                    <p class="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
+                        Ontdek alle standpunten, lijsttrekkers en actuele peilingen
+                    </p>
+                </div>
                 
-                <!-- Subtitle with lighter weight -->
-                <p class="text-lg md:text-xl text-blue-100 mb-8 max-w-3xl mx-auto leading-relaxed font-light">
-                    Ontdek de standpunten, lijsttrekkers en actuele peilingen van alle partijen in de Nederlandse politiek
-                </p>
+                <!-- Quick stats -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
+                    <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-white mb-2"><?php echo count($parties); ?></div>
+                            <div class="text-blue-200 text-sm uppercase tracking-wider">Partijen</div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-white mb-2">150</div>
+                            <div class="text-blue-200 text-sm uppercase tracking-wider">Zetels</div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-white mb-2">2025</div>
+                            <div class="text-blue-200 text-sm uppercase tracking-wider">Verkiezingsjaar</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+        
+        <!-- Bottom fade -->
+        <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-slate-50 to-transparent"></div>
     </section>
     
     <div class="container mx-auto px-4 max-w-7xl -mt-6 relative z-10">
