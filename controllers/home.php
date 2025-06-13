@@ -473,12 +473,19 @@ require_once 'views/templates/header.php';
                 
                 <!-- Gecentraliseerde content -->
                 <div class="text-center space-y-8 max-w-4xl mx-auto" data-aos="fade-up" data-aos-duration="1000">
+                    <!-- Subtitle badge -->
+                    <div class="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 mb-6">
+                        <div class="w-2 h-2 bg-secondary rounded-full mr-3 animate-pulse"></div>
+                        <span class="text-gray-700 text-sm font-medium">Het grootste onafhankelijke politieke platform</span>
+                    </div>
+                    
                     <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold leading-tight tracking-tight">
-                        <span class="block bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent">PolitiekPraat</span>
+                        <span class="block bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent">Praat mee over</span>
+                        <span class="block bg-gradient-to-r from-secondary via-primary to-secondary bg-clip-text text-transparent mt-2">politiek in Nederland</span>
                     </h1>
                     
-                    <p class="text-xl sm:text-2xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-                        PolitiekPraat maakt complexe politieke onderwerpen begrijpelijk. Ontdek analyses, volg het laatste nieuws en vorm je eigen mening.
+                    <p class="text-xl sm:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                        Het platform voor open en constructieve discussie over actuele politieke thema's. Vorm je mening en bouw mee aan een sterker debat.
                     </p>
                     
                     <!-- Inline CSS voor kritieke button styling als fallback -->
@@ -537,11 +544,11 @@ require_once 'views/templates/header.php';
                     <div class="flex flex-col sm:flex-row gap-4 justify-center pt-4">
                         <a href="<?php echo URLROOT; ?>/blogs" class="new-hero-cta-primary hero-btn-primary group">
                             <span>Bekijk onze Blogs</span>
-                            <svg class="w-5 h-5 ml-2 transform group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                            <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
                         </a>
                         <a href="<?php echo URLROOT; ?>/stemwijzer" class="new-hero-cta-secondary hero-btn-secondary group">
-                            <span>Start de Stemwijzer</span>
-                            <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
+                            <span>Ontdek je standpunt</span>
+                            <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
                         </a>
                     </div>
 
@@ -583,7 +590,7 @@ require_once 'views/templates/header.php';
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                     <!-- Linker kolom: Content -->
                     <div class="space-y-8" data-aos="fade-right" data-aos-duration="1000" data-aos-once="true">
-                                                 <!-- Badge -->
+                        <!-- Badge -->
                         <div class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-100 to-red-100 rounded-full border border-blue-200/50 backdrop-blur-sm">
                             <svg class="w-4 h-4 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -608,60 +615,39 @@ require_once 'views/templates/header.php';
                             </div>
                         </div>
                         
-                                                 <!-- Beschrijving -->
-                        <p class="text-xl lg:text-2xl text-slate-600 leading-relaxed font-light">
-                            Beantwoord <span class="font-semibold text-blue-600"><?php echo $totalQuestions ?? '25'; ?> vragen</span> over belangrijke politieke onderwerpen en ontdek welke partij het beste bij jouw standpunten past.
+                        <!-- Verbeterde beschrijving -->
+                        <p class="text-xl lg:text-2xl text-slate-600 leading-relaxed">
+                            Beantwoord <span class="font-semibold text-blue-600"><?php echo $totalQuestions ?? '25'; ?> actuele vragen</span> en zie direct welke partij het beste bij jouw standpunten past.
                         </p>
                         
-                        <!-- Features -->
-                        <div class="grid grid-cols-2 gap-6">
-                                                         <div class="flex items-start space-x-3">
-                                <div class="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center flex-shrink-0">
-                                    <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h3 class="text-lg font-semibold text-slate-900 mb-1">Persoonlijke Match</h3>
-                                    <p class="text-sm text-slate-600">Ontdek je percentage match met elke partij</p>
-                                </div>
+                        <!-- Verbeterde Features - Gestructureerde lijst -->
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-2 h-2 bg-blue-600 rounded-full"></div>
+                                <span class="text-lg text-slate-700"><strong>Persoonlijke match-percentages</strong> met alle partijen</span>
                             </div>
-                            <div class="flex items-start space-x-3">
-                                <div class="w-10 h-10 rounded-xl bg-red-100 flex items-center justify-center flex-shrink-0">
-                                    <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h3 class="text-lg font-semibold text-slate-900 mb-1">Uitleg per Vraag</h3>
-                                    <p class="text-sm text-slate-600">Begrijp waarom partijen bepaalde standpunten innemen</p>
-                                </div>
+                            <div class="flex items-center space-x-3">
+                                <div class="w-2 h-2 bg-red-600 rounded-full"></div>
+                                <span class="text-lg text-slate-700"><strong>Korte uitleg</strong> bij elke vraag en waarom het belangrijk is</span>
                             </div>
-                            <div class="flex items-start space-x-3">
-                                <div class="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center flex-shrink-0">
-                                    <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h3 class="text-lg font-semibold text-slate-900 mb-1">Snel & Makkelijk</h3>
-                                    <p class="text-sm text-slate-600">Klaar in slechts 5-10 minuten</p>
-                                </div>
+                            <div class="flex items-center space-x-3">
+                                <div class="w-2 h-2 bg-blue-600 rounded-full"></div>
+                                <span class="text-lg text-slate-700"><strong>In 5-10 minuten klaar</strong> en meteen resultaat</span>
                             </div>
-                            <div class="flex items-start space-x-3">
-                                <div class="w-10 h-10 rounded-xl bg-red-100 flex items-center justify-center flex-shrink-0">
-                                    <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h3 class="text-lg font-semibold text-slate-900 mb-1">100% Anoniem</h3>
-                                    <p class="text-sm text-slate-600">Jouw antwoorden blijven privé</p>
-                                </div>
+                            <div class="flex items-center space-x-3">
+                                <div class="w-2 h-2 bg-red-600 rounded-full"></div>
+                                <span class="text-lg text-slate-700"><strong>100% anoniem</strong> - geen account nodig</span>
                             </div>
                         </div>
                         
-                        <!-- CTA Button -->
+                        <!-- Uitleg percentages -->
+                        <div class="bg-blue-50 rounded-xl p-4 border border-blue-100">
+                            <p class="text-sm text-slate-600">
+                                <strong class="text-blue-700">Match-percentage uitleg:</strong> Hoe hoger het percentage, hoe beter de partij bij jouw antwoorden past. 85% betekent dat je het bij 85% van de vragen eens bent met die partij.
+                            </p>
+                        </div>
+                        
+                        <!-- Verbeterde CTA Button -->
                         <div class="pt-6">
                             <div class="relative inline-block">
                                 <!-- Glow effect -->
@@ -669,14 +655,14 @@ require_once 'views/templates/header.php';
                                 
                                 <!-- Main button -->
                                 <a href="<?php echo URLROOT; ?>/stemwijzer" 
-                                   class="relative inline-flex items-center px-10 py-5 bg-gradient-to-r from-primary via-secondary to-primary text-white font-bold text-lg rounded-2xl transition-all duration-500 transform hover:scale-105 shadow-2xl hover:shadow-3xl group overflow-hidden">
+                                   class="relative inline-flex items-center px-12 py-6 bg-gradient-to-r from-primary via-secondary to-primary text-white font-bold text-xl rounded-2xl transition-all duration-500 transform hover:scale-105 shadow-2xl hover:shadow-3xl group overflow-hidden">
                                     
                                     <!-- Button content -->
                                     <div class="relative z-10 flex items-center">
                                         <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
                                         </svg>
-                                        <span class="mr-3">Start de Stemwijzer</span>
+                                        <span class="mr-3">Start de Stemwijzer – Ontdek jouw match!</span>
                                         <div class="relative">
                                             <svg class="w-6 h-6 transform transition-transform duration-500 group-hover:translate-x-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
@@ -695,7 +681,7 @@ require_once 'views/templates/header.php';
                             
                             <!-- Supporting text -->
                             <p class="mt-4 text-sm text-slate-500">
-                                Gratis • <span class="font-semibold text-blue-600"><?php echo $totalQuestions ?? '25'; ?></span> vragen • <span class="font-semibold text-red-600">Alle partijen</span> opgenomen
+                                Gratis • <span class="font-semibold text-blue-600"><?php echo $totalQuestions ?? '25'; ?></span> vragen • <span class="font-semibold text-red-600">Alle Nederlandse partijen</span> opgenomen
                             </p>
                         </div>
                     </div>
@@ -806,211 +792,98 @@ require_once 'views/templates/header.php';
         </div>
     </section>
 
-    <!-- Programma Vergelijker Section - Volledig Vernieuwd -->
-    <section class="py-32 bg-gradient-to-br from-slate-50 via-blue-50/70 to-indigo-100 relative overflow-hidden">
-        <!-- Dynamische achtergrond met interactieve elementen -->
+    <!-- Programma Vergelijker Section - Consistent met Stemwijzer styling -->
+    <section class="py-24 bg-gradient-to-br from-blue-50 via-slate-50 to-red-50 relative overflow-hidden">
+        <!-- Decoratieve achtergrond elementen -->
         <div class="absolute inset-0">
-            <!-- Animated hexagon grid -->
-            <div class="absolute inset-0 opacity-[0.03]">
-                <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-                    <defs>
-                        <pattern id="hexagons" x="0" y="0" width="10" height="8.66" patternUnits="userSpaceOnUse">
-                            <polygon points="5,0 8.66,2.5 8.66,7.5 5,10 1.34,7.5 1.34,2.5" fill="none" stroke="currentColor" stroke-width="0.5"/>
-                        </pattern>
-                    </defs>
-                    <rect width="100%" height="100%" fill="url(#hexagons)" class="text-blue-600"/>
-                </svg>
-            </div>
+            <!-- Floating geometric shapes -->
+            <div class="absolute top-16 left-8 w-40 h-40 bg-gradient-to-br from-blue-400/20 to-red-500/20 rounded-full blur-2xl animate-float"></div>
+            <div class="absolute top-32 right-12 w-32 h-32 bg-gradient-to-br from-primary/15 to-secondary/15 rounded-full blur-xl animate-float-delayed"></div>
+            <div class="absolute bottom-20 left-1/4 w-48 h-48 bg-gradient-to-br from-red-500/10 to-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
+            <div class="absolute bottom-16 right-1/3 w-36 h-36 bg-gradient-to-br from-secondary/12 to-primary/12 rounded-full blur-2xl animate-bounce-slow"></div>
             
-            <!-- Floating geometric elements -->
-            <div class="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-blue-500/10 to-indigo-600/10 rounded-full blur-2xl animate-float opacity-70"></div>
-            <div class="absolute top-40 right-16 w-24 h-24 bg-gradient-to-br from-red-500/10 to-orange-500/10 rounded-full blur-xl animate-float-delayed opacity-60"></div>
-            <div class="absolute bottom-32 left-1/3 w-40 h-40 bg-gradient-to-br from-purple-500/8 to-pink-500/8 rounded-full blur-3xl animate-pulse opacity-50"></div>
-            <div class="absolute bottom-20 right-1/4 w-28 h-28 bg-gradient-to-br from-green-500/10 to-emerald-500/10 rounded-full blur-2xl animate-bounce-slow opacity-65"></div>
-            
-            <!-- Diagonal lines pattern -->
-            <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGxpbmUgeDE9IjAiIHkxPSIzMCIgeDI9IjYwIiB5Mj0iMzAiIHN0cm9rZT0icmdiYSg5OSwxMDIsMjQxLDAuMDUpIiBzdHJva2Utd2lkdGg9IjEiLz4KPGxpbmUgeDE9IjMwIiB5MT0iMCIgeDI9IjMwIiB5Mj0iNjAiIHN0cm9rZT0icmdiYSg5OSx4MTAyLDI0MSwwLjA1KSIgc3Ryb2tlLXdpZHRoPSIxIi8+Cjwvc3ZnPg==')] opacity-30"></div>
+            <!-- Grid pattern overlay -->
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMSIgZmlsbD0icmdiYSgwLDAsMCwwLjAzKSIvPgo8L3N2Zz4=')] opacity-40"></div>
         </div>
 
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative">
-            <div class="max-w-7xl mx-auto">
-                <div class="grid grid-cols-1 xl:grid-cols-5 gap-16 items-center">
-                    <!-- Linker kolom: Content (3 van 5 kolommen) -->
-                    <div class="xl:col-span-3 space-y-10" data-aos="fade-right" data-aos-duration="1000" data-aos-once="true">
-                        <!-- Premium Badge met geavanceerde styling -->
-                        <div class="relative inline-flex items-center group">
-                            <!-- Glow effect achter badge -->
-                            <div class="absolute -inset-2 bg-gradient-to-r from-blue-600 via-purple-600 to-red-600 rounded-full blur-md opacity-30 group-hover:opacity-50 transition-opacity duration-500 animate-pulse"></div>
-                            
-                            <!-- Main badge -->
-                            <div class="relative inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600/90 via-purple-600/90 to-red-600/90 rounded-full border border-white/20 backdrop-blur-xl shadow-2xl">
-                                <!-- Lightning icon -->
-                                <div class="relative mr-3">
-                                    <svg class="w-5 h-5 text-white animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                                    </svg>
-                                </div>
-                                <span class="text-sm font-bold text-white tracking-wide">NIEUW</span>
-                                
-                                <!-- Shimmer effect -->
-                                <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform skew-x-12 group-hover:animate-shimmer"></div>
-                            </div>
+            <div class="max-w-6xl mx-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                    <!-- Linker kolom: Content -->
+                    <div class="space-y-8" data-aos="fade-right" data-aos-duration="1000" data-aos-once="true">
+                        <!-- Badge -->
+                        <div class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-100 to-red-100 rounded-full border border-blue-200/50 backdrop-blur-sm">
+                            <svg class="w-4 h-4 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                            </svg>
+                            <span class="text-sm font-semibold text-blue-700">Interactieve Tool</span>
                         </div>
                         
-                        <!-- Hoofdtitel met premium styling -->
-                        <div class="space-y-8">
-                            <div class="relative">
-                                <!-- Main title -->
-                                <h2 class="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black leading-[0.85] tracking-tight">
-                                    <!-- First line -->
-                                    <span class="block text-slate-900 mb-3">
-                                        Vergelijk
-                                    </span>
-                                    
-                                    <!-- Second line with gradient -->
-                                    <span class="block relative">
-                                        <span class="bg-gradient-to-r from-blue-600 via-purple-600 to-red-600 bg-clip-text text-transparent animate-gradient bg-size-300">
-                                            Programma's
-                                        </span>
-                                        
-                                        <!-- Animated underline -->
-                                        <div class="absolute -bottom-4 left-0 right-0 h-1.5 bg-gradient-to-r from-blue-600 via-purple-600 to-red-600 rounded-full transform scale-x-0 animate-expand-width"></div>
-                                    </span>
-                                </h2>
-                                
-                                <!-- Floating accent elements -->
-                                <div class="absolute -top-6 -left-4 w-3 h-3 bg-blue-500 rounded-full animate-bounce opacity-60"></div>
-                                <div class="absolute top-1/2 -right-6 w-2 h-2 bg-purple-500 rounded-full animate-pulse opacity-70"></div>
-                                <div class="absolute -bottom-2 left-1/3 w-4 h-4 bg-red-500 rounded-full animate-ping opacity-50"></div>
-                            </div>
-                            
-                            <!-- Decoratieve elementen -->
-                            <div class="flex items-center space-x-6">
-                                <div class="flex items-center space-x-3">
-                                    <div class="w-20 h-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full"></div>
-                                    <div class="w-4 h-4 bg-purple-600 rounded-full animate-pulse shadow-lg shadow-purple-300"></div>
-                                    <div class="w-16 h-1 bg-gradient-to-r from-purple-600 to-red-600 rounded-full"></div>
-                                </div>
-                                <!-- Additional accent -->
-                                <div class="flex space-x-2">
-                                    <div class="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style="animation-delay: 0.1s;"></div>
-                                    <div class="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style="animation-delay: 0.2s;"></div>
-                                    <div class="w-2 h-2 bg-red-400 rounded-full animate-bounce" style="animation-delay: 0.3s;"></div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Enhanced description -->
+                        <!-- Hoofdtitel -->
                         <div class="space-y-6">
-                            <p class="text-xl lg:text-2xl xl:text-3xl text-slate-700 leading-relaxed font-light">
-                                Vergelijk de standpunten van <span class="font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">alle Nederlandse partijen</span> over 8 cruciale thema's. Ontdek overeenkomsten, verschillen en maak een weloverwogen keuze.
-                            </p>
+                            <h2 class="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 leading-tight tracking-tight">
+                                <span class="block mb-2">Vergelijk</span>
+                                <span class="bg-gradient-to-r from-blue-600 via-red-600 to-blue-800 bg-clip-text text-transparent animate-gradient bg-size-200">
+                                    Partijstandpunten
+                                </span>
+                            </h2>
                             
-                            <!-- Key stats -->
-                            <div class="flex flex-wrap items-center gap-8 text-sm font-medium">
-                                <div class="flex items-center space-x-2">
-                                    <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                                        <span class="text-blue-600 font-bold text-xs">15+</span>
-                                    </div>
-                                    <span class="text-slate-600">Partijen</span>
-                                </div>
-                                <div class="flex items-center space-x-2">
-                                    <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
-                                        <span class="text-purple-600 font-bold text-xs">8</span>
-                                    </div>
-                                    <span class="text-slate-600">Thema's</span>
-                                </div>
-                                <div class="flex items-center space-x-2">
-                                    <div class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center">
-                                        <span class="text-red-600 font-bold text-xs">∞</span>
-                                    </div>
-                                    <span class="text-slate-600">Vergelijkingen</span>
-                                </div>
+                            <!-- Decoratieve lijn -->
+                            <div class="flex items-center space-x-4">
+                                <div class="w-16 h-0.5 bg-gradient-to-r from-blue-500 to-red-600"></div>
+                                <div class="w-3 h-3 bg-blue-600 rounded-full animate-pulse"></div>
+                                <div class="w-24 h-0.5 bg-gradient-to-r from-red-600 to-blue-600"></div>
                             </div>
                         </div>
                         
-                        <!-- Enhanced Features Grid -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                            <!-- Feature 1 -->
-                            <div class="group relative">
-                                <div class="absolute -inset-2 bg-gradient-to-r from-blue-600/20 to-purple-600/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                                <div class="relative flex items-start space-x-4 p-6 bg-white/80 backdrop-blur-sm rounded-2xl border border-white/40 shadow-lg hover:shadow-2xl transition-all duration-500 group-hover:transform group-hover:scale-[1.02]">
-                                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center flex-shrink-0 shadow-lg shadow-blue-200 group-hover:shadow-xl group-hover:shadow-blue-300 transition-all duration-500">
-                                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                                        </svg>
-                                    </div>
-                                    <div class="flex-1">
-                                        <h3 class="text-lg font-bold text-slate-900 mb-2 group-hover:text-blue-700 transition-colors">15+ Partijen</h3>
-                                        <p class="text-sm text-slate-600 leading-relaxed">Van regeringspartijen tot kleinere bewegingen - alle standpunten overzichtelijk naast elkaar</p>
-                                    </div>
-                                </div>
+                        <!-- Verbeterde beschrijving -->
+                        <p class="text-xl lg:text-2xl text-slate-600 leading-relaxed">
+                            Bekijk de standpunten van <span class="font-semibold text-blue-600">15+ partijen</span> over 8 belangrijke thema's en maak een weloverwogen keuze.
+                        </p>
+                        
+                        <!-- Verbeterde Features - Gestructureerde lijst -->
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-2 h-2 bg-blue-600 rounded-full"></div>
+                                <span class="text-lg text-slate-700"><strong>15+ partijen</strong> van groot tot klein</span>
                             </div>
-
-                            <!-- Feature 2 -->
-                            <div class="group relative">
-                                <div class="absolute -inset-2 bg-gradient-to-r from-purple-600/20 to-red-600/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                                <div class="relative flex items-start space-x-4 p-6 bg-white/80 backdrop-blur-sm rounded-2xl border border-white/40 shadow-lg hover:shadow-2xl transition-all duration-500 group-hover:transform group-hover:scale-[1.02]">
-                                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-500 to-red-500 flex items-center justify-center flex-shrink-0 shadow-lg shadow-purple-200 group-hover:shadow-xl group-hover:shadow-purple-300 transition-all duration-500">
-                                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
-                                        </svg>
-                                    </div>
-                                    <div class="flex-1">
-                                        <h3 class="text-lg font-bold text-slate-900 mb-2 group-hover:text-purple-700 transition-colors">8 Cruciale Thema's</h3>
-                                        <p class="text-sm text-slate-600 leading-relaxed">Klimaat, zorg, onderwijs, immigratie en meer - alle belangrijke onderwerpen uitgebreid behandeld</p>
-                                    </div>
-                                </div>
+                            <div class="flex items-center space-x-3">
+                                <div class="w-2 h-2 bg-red-600 rounded-full"></div>
+                                <span class="text-lg text-slate-700"><strong>8 thema's</strong> klimaat, zorg, onderwijs, immigratie</span>
                             </div>
-
-                            <!-- Feature 3 -->
-                            <div class="group relative">
-                                <div class="absolute -inset-2 bg-gradient-to-r from-red-600/20 to-orange-600/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                                <div class="relative flex items-start space-x-4 p-6 bg-white/80 backdrop-blur-sm rounded-2xl border border-white/40 shadow-lg hover:shadow-2xl transition-all duration-500 group-hover:transform group-hover:scale-[1.02]">
-                                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center flex-shrink-0 shadow-lg shadow-red-200 group-hover:shadow-xl group-hover:shadow-red-300 transition-all duration-500">
-                                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                        </svg>
-                                    </div>
-                                    <div class="flex-1">
-                                        <h3 class="text-lg font-bold text-slate-900 mb-2 group-hover:text-red-700 transition-colors">Helder & Objectief</h3>
-                                        <p class="text-sm text-slate-600 leading-relaxed">Complexe standpunten vertaald naar begrijpelijke taal zonder politieke kleur</p>
-                                    </div>
-                                </div>
+                            <div class="flex items-center space-x-3">
+                                <div class="w-2 h-2 bg-blue-600 rounded-full"></div>
+                                <span class="text-lg text-slate-700"><strong>Objectief en helder</strong> begrijpelijke uitleg zonder politieke kleur</span>
                             </div>
-
-                            <!-- Feature 4 -->
-                            <div class="group relative">
-                                <div class="absolute -inset-2 bg-gradient-to-r from-green-600/20 to-emerald-600/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                                <div class="relative flex items-start space-x-4 p-6 bg-white/80 backdrop-blur-sm rounded-2xl border border-white/40 shadow-lg hover:shadow-2xl transition-all duration-500 group-hover:transform group-hover:scale-[1.02]">
-                                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center flex-shrink-0 shadow-lg shadow-green-200 group-hover:shadow-xl group-hover:shadow-green-300 transition-all duration-500">
-                                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                        </svg>
-                                    </div>
-                                    <div class="flex-1">
-                                        <h3 class="text-lg font-bold text-slate-900 mb-2 group-hover:text-green-700 transition-colors">Interactief & Snel</h3>
-                                        <p class="text-sm text-slate-600 leading-relaxed">Real-time filtering, side-by-side vergelijking en directe resultaten. Deze app is ontworpen om je te helpen.</p>
-                                    </div>
-                                </div>
+                            <div class="flex items-center space-x-3">
+                                <div class="w-2 h-2 bg-red-600 rounded-full"></div>
+                                <span class="text-lg text-slate-700"><strong>Interactief</strong> filter, vergelijk en zie direct de verschillen</span>
                             </div>
                         </div>
                         
+                        <!-- Uitleg functionaliteit -->
+                        <div class="bg-blue-50 rounded-xl p-4 border border-blue-100">
+                            <p class="text-sm text-slate-600">
+                                <strong class="text-blue-700">Zo werkt het:</strong> Selecteer partijen en thema's, bekijk overeenkomsten en verschillen in één oogopslag. Real-time filtering toont direct hoeveel partijen overeenkomen of verschillen per standpunt.
+                            </p>
+                        </div>
+                        
+                        <!-- Verbeterde CTA Button -->
                         <div class="pt-6">
-                            <div class="relative inline-block mb-6">
+                            <div class="relative inline-block">
                                 <!-- Glow effect -->
-                                <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 via-purple-600 to-red-600 rounded-2xl blur opacity-40 animate-pulse"></div>
+                                <div class="absolute -inset-1 bg-gradient-to-r from-primary via-secondary to-primary rounded-2xl blur opacity-40 animate-pulse"></div>
                                 
                                 <!-- Main button -->
                                 <a href="<?php echo URLROOT; ?>/programma-vergelijker" 
-                                   class="relative inline-flex items-center px-10 py-5 bg-gradient-to-r from-blue-600 via-purple-600 to-red-600 text-white font-bold text-lg rounded-2xl transition-all duration-500 transform hover:scale-105 group overflow-hidden">
+                                   class="relative inline-flex items-center px-12 py-6 bg-gradient-to-r from-primary via-secondary to-primary text-white font-bold text-xl rounded-2xl transition-all duration-500 transform hover:scale-105 shadow-2xl hover:shadow-3xl group overflow-hidden">
                                     
                                     <!-- Button content -->
                                     <div class="relative z-10 flex items-center">
                                         <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
                                         </svg>
-                                        <span class="mr-3">Start Vergelijken</span>
+                                        <span class="mr-3">Vergelijk nu partijen</span>
                                         <div class="relative">
                                             <svg class="w-6 h-6 transform transition-transform duration-500 group-hover:translate-x-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
@@ -1027,246 +900,135 @@ require_once 'views/templates/header.php';
                                 </a>
                             </div>
                             
-                            <!-- Enhanced supporting information -->
-                            <div class="space-y-4">
-                                <!-- Key selling points -->
-                                <div class="flex flex-wrap items-center justify-center gap-6 text-sm font-medium">
-                                    <div class="flex items-center space-x-2 px-4 py-2 bg-white/60 backdrop-blur-sm rounded-full border border-white/40">
-                                        <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                                        <span class="text-slate-700">Objectief & Onpartijdig</span>
-                                    </div>
-                                    <div class="flex items-center space-x-2 px-4 py-2 bg-white/60 backdrop-blur-sm rounded-full border border-white/40">
-                                        <div class="w-3 h-3 bg-blue-500 rounded-full animate-pulse" style="animation-delay: 0.2s;"></div>
-                                        <span class="text-slate-700"><span class="font-bold text-blue-600">15+</span> Partijen</span>
-                                    </div>
-                                    <div class="flex items-center space-x-2 px-4 py-2 bg-white/60 backdrop-blur-sm rounded-full border border-white/40">
-                                        <div class="w-3 h-3 bg-purple-500 rounded-full animate-pulse" style="animation-delay: 0.4s;"></div>
-                                        <span class="text-slate-700"><span class="font-bold text-purple-600">8</span> Thema's</span>
-                                    </div>
-                                    <div class="flex items-center space-x-2 px-4 py-2 bg-white/60 backdrop-blur-sm rounded-full border border-white/40">
-                                        <div class="w-3 h-3 bg-red-500 rounded-full animate-pulse" style="animation-delay: 0.6s;"></div>
-                                        <span class="text-slate-700">Side-by-side</span>
-                                    </div>
-                                </div>
-                            </div>
+                            <!-- Supporting text -->
+                            <p class="mt-4 text-sm text-slate-500">
+                                Gratis • <span class="font-semibold text-blue-600">15+ partijen</span> • <span class="font-semibold text-red-600">8 belangrijke thema's</span> • Direct resultaat
+                            </p>
                         </div>
                     </div>
                     
-                    <!-- Rechter kolom: Interactive Preview (2 van 5 kolommen) -->
-                    <div class="xl:col-span-2 relative" data-aos="fade-left" data-aos-duration="1000" data-aos-once="true">
-                        <!-- Main preview container -->
-                        <div class="relative">
-                            <!-- Mobile/Desktop Preview Toggle -->
-                            <div class="relative bg-gradient-to-br from-white via-blue-50/80 to-purple-50/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/50 overflow-hidden transform hover:scale-[1.02] transition-all duration-700 group">
-                                
-                                <!-- Browser/App bar -->
-                                <div class="bg-gradient-to-r from-slate-800 via-slate-700 to-slate-800 p-4 flex items-center space-x-3">
-                                    <!-- Window controls -->
-                                    <div class="flex space-x-2">
-                                        <div class="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
-                                        <div class="w-3 h-3 bg-yellow-500 rounded-full animate-pulse" style="animation-delay: 0.2s;"></div>
-                                        <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse" style="animation-delay: 0.4s;"></div>
+                    <!-- Rechter kolom: Visuele demonstratie -->
+                    <div class="relative" data-aos="fade-left" data-aos-duration="1000" data-aos-once="true">
+                        <!-- Premium preview card -->
+                        <div class="relative bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/50 overflow-hidden transform rotate-3 hover:rotate-0 transition-transform duration-700">
+                            <!-- Card header -->
+                            <div class="bg-gradient-to-r from-primary to-secondary p-6">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-lg flex items-center justify-center">
+                                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-lg font-bold text-white">Programma Vergelijker</h3>
+                                            <p class="text-indigo-100 text-sm">Thema: Klimaat & Energie</p>
+                                        </div>
                                     </div>
-                                    
-                                    <!-- URL bar -->
-                                    <div class="flex-1 bg-slate-600/50 rounded-lg px-4 py-2 text-xs text-white/70 font-mono">
-                                        politiekpraat.nl/programma-vergelijker
-                                    </div>
-                                    
-                                    <!-- Status indicator -->
-                                    <div class="flex items-center space-x-2">
-                                        <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                                        <span class="text-xs text-white/70">Live</span>
+                                    <div class="text-right">
+                                        <div class="text-2xl font-bold text-white">3</div>
+                                        <div class="text-xs text-indigo-100">Partijen</div>
                                     </div>
                                 </div>
-                                
-                                <!-- App header -->
-                                <div class="bg-gradient-to-r from-blue-600 via-purple-600 to-red-600 p-6">
-                                    <div class="flex items-center justify-between">
-                                        <div class="flex items-center space-x-4">
-                                            <!-- Logo -->
-                                            <div class="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center group-hover:rotate-12 transition-transform duration-500">
-                                                <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                                                </svg>
-                                            </div>
-                                            <div>
-                                                <h3 class="text-xl font-bold text-white">Programma Vergelijker</h3>
-                                                <p class="text-white/80 text-sm">Thema: <span class="font-semibold">🌍 Klimaat & Energie</span></p>
-                                            </div>
-                                        </div>
-                                        
-                                        <!-- Live indicator -->
-                                        <div class="flex items-center space-x-2 bg-white/20 px-3 py-1 rounded-full">
-                                            <div class="w-2 h-2 bg-green-300 rounded-full animate-ping"></div>
-                                            <span class="text-white text-xs font-medium">Actief</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            
-                                <!-- Main content area -->
-                                <div class="p-8 space-y-8 bg-gradient-to-br from-white/95 to-slate-50/95">
-                                    <!-- Party selector preview -->
-                                    <div class="space-y-4">
-                                        <div class="flex items-center justify-between">
-                                            <h4 class="text-lg font-bold text-slate-800">Geselecteerde partijen</h4>
-                                            <div class="text-xs text-slate-500 bg-slate-100 px-2 py-1 rounded-full">3 van 15</div>
-                                        </div>
-                                        
-                                        <!-- Interactive party pills -->
-                                        <div class="flex flex-wrap gap-3">
-                                            <div class="group relative">
-                                                <div class="absolute -inset-1 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full blur opacity-20 group-hover:opacity-40 transition-opacity"></div>
-                                                <div class="relative inline-flex items-center px-4 py-2 bg-blue-500 text-white rounded-full text-sm font-medium hover:bg-blue-600 transition-colors cursor-pointer">
-                                                    <div class="w-2 h-2 bg-white rounded-full mr-2 animate-pulse"></div>
-                                                    VVD
-                                                    <svg class="w-4 h-4 ml-2 opacity-60" fill="currentColor" viewBox="0 0 20 20">
-                                                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="group relative">
-                                                <div class="absolute -inset-1 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full blur opacity-20 group-hover:opacity-40 transition-opacity"></div>
-                                                <div class="relative inline-flex items-center px-4 py-2 bg-green-500 text-white rounded-full text-sm font-medium hover:bg-green-600 transition-colors cursor-pointer">
-                                                    <div class="w-2 h-2 bg-white rounded-full mr-2 animate-pulse" style="animation-delay: 0.2s;"></div>
-                                                    GL-PvdA
-                                                    <svg class="w-4 h-4 ml-2 opacity-60" fill="currentColor" viewBox="0 0 20 20">
-                                                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="group relative">
-                                                <div class="absolute -inset-1 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-full blur opacity-20 group-hover:opacity-40 transition-opacity"></div>
-                                                <div class="relative inline-flex items-center px-4 py-2 bg-purple-500 text-white rounded-full text-sm font-medium hover:bg-purple-600 transition-colors cursor-pointer">
-                                                    <div class="w-2 h-2 bg-white rounded-full mr-2 animate-pulse" style="animation-delay: 0.4s;"></div>
-                                                    D66
-                                                    <svg class="w-4 h-4 ml-2 opacity-60" fill="currentColor" viewBox="0 0 20 20">
-                                                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- Live comparison preview -->
-                                    <div class="space-y-6">
-                                        <!-- Topic header -->
-                                        <div class="flex items-center justify-between">
-                                            <div class="flex items-center space-x-3">
-                                                <div class="text-3xl">🌍</div>
-                                                <div>
-                                                    <h5 class="text-xl font-bold text-slate-800">Klimaat & Energie</h5>
-                                                    <p class="text-sm text-slate-600">Kernenergie standpunten</p>
-                                                </div>
-                                            </div>
-                                            <!-- Progress indicator -->
-                                            <div class="flex items-center space-x-2 text-xs text-slate-500">
-                                                <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
-                                                <span>Live updating</span>
-                                            </div>
-                                        </div>
-                                        
-                                        <!-- Comparison cards -->
-                                        <div class="space-y-4">
-                                            <!-- VVD standpunt -->
-                                            <div class="group relative">
-                                                <div class="absolute -inset-1 bg-gradient-to-r from-blue-500/20 to-blue-600/20 rounded-xl blur opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                                                <div class="relative bg-gradient-to-r from-blue-50 to-blue-100/80 rounded-xl p-4 border border-blue-200/50 hover:shadow-lg transition-all cursor-pointer">
-                                                    <div class="flex items-start justify-between mb-3">
-                                                        <div class="flex items-center space-x-3">
-                                                            <div class="w-8 h-8 bg-white rounded-lg border border-blue-200 flex items-center justify-center shadow-sm">
-                                                                <img src="https://logo.clearbit.com/vvd.nl" alt="VVD logo" class="w-6 h-6 object-contain">
-                                                            </div>
-                                                            <span class="font-semibold text-blue-800">Voorstander kernenergie</span>
-                                                        </div>
-                                                        <div class="flex items-center space-x-1 bg-green-100 px-2 py-1 rounded-full">
-                                                            <div class="w-2 h-2 bg-green-500 rounded-full"></div>
-                                                            <span class="text-xs text-green-700 font-medium">Pro</span>
-                                                        </div>
-                                                    </div>
-                                                    <p class="text-sm text-blue-700 leading-relaxed">Kernenergie als brug naar duurzame toekomst, economische haalbaarheid prioriteit...</p>
-                                                </div>
-                                            </div>
-                                            
-                                            <!-- GL-PvdA standpunt -->
-                                            <div class="group relative">
-                                                <div class="absolute -inset-1 bg-gradient-to-r from-green-500/20 to-emerald-600/20 rounded-xl blur opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                                                <div class="relative bg-gradient-to-r from-green-50 to-emerald-100/80 rounded-xl p-4 border border-green-200/50 hover:shadow-lg transition-all cursor-pointer">
-                                                    <div class="flex items-start justify-between mb-3">
-                                                        <div class="flex items-center space-x-3">
-                                                            <div class="w-8 h-8 bg-white rounded-lg border border-green-200 flex items-center justify-center shadow-sm">
-                                                                <img src="https://i.ibb.co/67hkc5Hv/gl-pvda.png" alt="GL-PvdA logo" class="w-6 h-6 object-contain">
-                                                            </div>
-                                                            <span class="font-semibold text-green-800">Tegen kernenergie</span>
-                                                        </div>
-                                                        <div class="flex items-center space-x-1 bg-red-100 px-2 py-1 rounded-full">
-                                                            <div class="w-2 h-2 bg-red-500 rounded-full"></div>
-                                                            <span class="text-xs text-red-700 font-medium">Tegen</span>
-                                                        </div>
-                                                    </div>
-                                                    <p class="text-sm text-green-700 leading-relaxed">Volledig inzetten op hernieuwbare energie, kernenergie te risicovol en traag...</p>
-                                                </div>
-                                            </div>
-                                            
-                                            <!-- D66 standpunt -->
-                                            <div class="group relative">
-                                                <div class="absolute -inset-1 bg-gradient-to-r from-purple-500/20 to-indigo-600/20 rounded-xl blur opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                                                <div class="relative bg-gradient-to-r from-purple-50 to-indigo-100/80 rounded-xl p-4 border border-purple-200/50 hover:shadow-lg transition-all cursor-pointer">
-                                                    <div class="flex items-start justify-between mb-3">
-                                                        <div class="flex items-center space-x-3">
-                                                            <div class="w-8 h-8 bg-white rounded-lg border border-purple-200 flex items-center justify-center shadow-sm">
-                                                                <img src="https://logo.clearbit.com/d66.nl" alt="D66 logo" class="w-6 h-6 object-contain">
-                                                            </div>
-                                                            <span class="font-semibold text-purple-800">Voorzichtig voorstander</span>
-                                                        </div>
-                                                        <div class="flex items-center space-x-1 bg-yellow-100 px-2 py-1 rounded-full">
-                                                            <div class="w-2 h-2 bg-yellow-500 rounded-full"></div>
-                                                            <span class="text-xs text-yellow-700 font-medium">Neutraal</span>
-                                                        </div>
-                                                    </div>
-                                                    <p class="text-sm text-purple-700 leading-relaxed">Open voor nieuwe kernenergie als onderdeel van energiemix, mits veilig...</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- Quick stats -->
-                                    <div class="grid grid-cols-2 gap-4">
-                                        <div class="bg-gradient-to-br from-green-50 to-emerald-100 rounded-2xl p-4 text-center border border-green-200/50">
-                                            <div class="text-2xl font-bold text-green-700 mb-1">2</div>
-                                            <div class="text-sm font-medium text-green-600">Overeenkomsten</div>
-                                            <div class="text-xs text-green-500 mt-1">CO2-reductie, transitie</div>
-                                        </div>
-                                        <div class="bg-gradient-to-br from-red-50 to-orange-100 rounded-2xl p-4 text-center border border-red-200/50">
-                                            <div class="text-2xl font-bold text-red-700 mb-1">5</div>
-                                            <div class="text-sm font-medium text-red-600">Verschillen</div>
-                                            <div class="text-xs text-red-500 mt-1">Tempo, methode, kosten</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            
-                                <!-- Interactive floating elements -->
-                                <div class="absolute -top-3 -right-3 w-6 h-6 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full animate-bounce shadow-lg"></div>
-                                <div class="absolute -bottom-3 -left-3 w-4 h-4 bg-gradient-to-br from-pink-400 to-purple-500 rounded-full animate-pulse shadow-lg"></div>
-                                <div class="absolute top-1/2 -right-2 w-3 h-3 bg-gradient-to-br from-blue-400 to-indigo-500 rounded-full animate-ping"></div>
                             </div>
                             
-                            <!-- Enhanced decorative floating cards -->
-                            <div class="absolute -top-12 -left-12 w-24 h-24 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-3xl backdrop-blur-sm rotate-12 animate-float opacity-60 group-hover:opacity-80 transition-opacity"></div>
-                            <div class="absolute -bottom-12 -right-12 w-20 h-20 bg-gradient-to-br from-purple-500/20 to-red-500/20 rounded-3xl backdrop-blur-sm -rotate-12 animate-float opacity-60 group-hover:opacity-80 transition-opacity" style="animation-delay: -2s;"></div>
-                            <div class="absolute top-16 -left-8 w-16 h-16 bg-gradient-to-br from-green-500/15 to-emerald-500/15 rounded-2xl backdrop-blur-sm rotate-45 animate-float opacity-50" style="animation-delay: -1s;"></div>
+                            <!-- Card content -->
+                            <div class="p-6 space-y-6">
+                                <!-- Partij selectie preview -->
+                                <div class="space-y-4">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm font-medium text-slate-500">Geselecteerde partijen</span>
+                                        <div class="text-xs text-slate-400">3 van 15</div>
+                                    </div>
+                                    
+                                    <!-- Partij pills -->
+                                    <div class="flex flex-wrap gap-2">
+                                        <div class="inline-flex items-center px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
+                                            VVD
+                                            <svg class="w-3 h-3 ml-1" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                                            </svg>
+                                        </div>
+                                        <div class="inline-flex items-center px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">
+                                            GL-PvdA
+                                            <svg class="w-3 h-3 ml-1" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                                            </svg>
+                                        </div>
+                                        <div class="inline-flex items-center px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm font-medium">
+                                            D66
+                                            <svg class="w-3 h-3 ml-1" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Thema header -->
+                                    <div class="bg-slate-50 rounded-xl p-4">
+                                        <div class="flex items-center space-x-3">
+                                            <div class="text-2xl">🌍</div>
+                                            <div>
+                                                <h4 class="text-lg font-semibold text-slate-900">Klimaat & Energie</h4>
+                                                <p class="text-sm text-slate-600">Kernenergie standpunten</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Vergelijking resultaat -->
+                                    <div class="space-y-2">
+                                        <div class="flex items-center justify-between p-3 bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg border border-blue-200">
+                                            <div class="flex items-center space-x-2">
+                                                <div class="w-4 h-4 bg-blue-600 rounded-full"></div>
+                                                <span class="text-sm font-medium text-slate-800">VVD: Voor kernenergie</span>
+                                            </div>
+                                            <span class="text-xs text-green-600 font-bold">✓ PRO</span>
+                                        </div>
+                                        <div class="flex items-center justify-between p-3 bg-gradient-to-r from-green-50 to-green-100 rounded-lg border border-green-200">
+                                            <div class="flex items-center space-x-2">
+                                                <div class="w-4 h-4 bg-green-600 rounded-full"></div>
+                                                <span class="text-sm font-medium text-slate-800">GL-PvdA: Tegen kernenergie</span>
+                                            </div>
+                                            <span class="text-xs text-red-600 font-bold">✗ TEGEN</span>
+                                        </div>
+                                        <div class="flex items-center justify-between p-3 bg-gradient-to-r from-purple-50 to-purple-100 rounded-lg border border-purple-200">
+                                            <div class="flex items-center space-x-2">
+                                                <div class="w-4 h-4 bg-purple-600 rounded-full"></div>
+                                                <span class="text-sm font-medium text-slate-800">D66: Voorzichtig voor</span>
+                                            </div>
+                                            <span class="text-xs text-yellow-600 font-bold">~ NEUTRAAL</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Statistieken -->
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div class="bg-gradient-to-br from-green-50 to-emerald-100 rounded-xl p-3 text-center border border-green-200/50">
+                                        <div class="text-xl font-bold text-green-700">2</div>
+                                        <div class="text-xs font-medium text-green-600">Overeenkomsten</div>
+                                    </div>
+                                    <div class="bg-gradient-to-br from-red-50 to-orange-100 rounded-xl p-3 text-center border border-red-200/50">
+                                        <div class="text-xl font-bold text-red-700">5</div>
+                                        <div class="text-xs font-medium text-red-600">Verschillen</div>
+                                    </div>
+                                </div>
+                            </div>
                             
-                            <!-- Additional interactive elements -->
-                            <div class="absolute top-8 -right-6 w-8 h-8 bg-gradient-to-br from-red-500/25 to-orange-500/25 rounded-full backdrop-blur-sm animate-pulse opacity-70"></div>
-                            <div class="absolute bottom-16 -left-6 w-12 h-12 bg-gradient-to-br from-indigo-500/20 to-blue-500/20 rounded-xl backdrop-blur-sm rotate-12 animate-float opacity-60" style="animation-delay: -3s;"></div>
+                            <!-- Floating elements -->
+                            <div class="absolute -top-4 -right-4 w-8 h-8 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full animate-bounce"></div>
+                            <div class="absolute -bottom-4 -left-4 w-6 h-6 bg-gradient-to-br from-pink-400 to-purple-500 rounded-full animate-pulse"></div>
                         </div>
+                        
+                        <!-- Decorative floating cards -->
+                        <div class="absolute -top-8 -left-8 w-20 h-20 bg-gradient-to-br from-blue-400/20 to-primary/20 rounded-2xl backdrop-blur-sm rotate-12 animate-float opacity-60"></div>
+                        <div class="absolute -bottom-8 -right-8 w-16 h-16 bg-gradient-to-br from-red-400/20 to-secondary/20 rounded-2xl backdrop-blur-sm -rotate-12 animate-float opacity-60" style="animation-delay: -2s;"></div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+
+
 
         <!-- Laatste Nieuws & Blogs Sections -->
         <section class="py-24 bg-gradient-to-b from-gray-50 via-white to-gray-50 relative overflow-hidden">
