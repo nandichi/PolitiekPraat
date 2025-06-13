@@ -121,6 +121,7 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                     colors: {
                         primary: '#1a365d',    // Donkerblauw - VVD/conservatief
                         secondary: '#c41e3a',  // Rood - PvdA/progressief
+                        accent: '#1a365d',     // Donkerblauw - VVD/conservatief
                         tertiary: '#F59E0B',   // Oranje voor accent kleuren
                     },
                     animation: {
