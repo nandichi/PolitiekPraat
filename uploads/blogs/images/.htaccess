@@ -3,8 +3,8 @@ Options -Indexes
 Options -ExecCGI
 AddHandler cgi-script .php .pl .py .jsp .asp .sh .cgi
 
-# Audio bestanden toestaan
-<FilesMatch "\.(mp3|wav|ogg)$">
+# Afbeelding en audio bestanden toestaan
+<FilesMatch "\.(jpg|jpeg|png|gif|webp|svg|mp3|wav|ogg)$">
     Order Allow,Deny
     Allow from all
 </FilesMatch>
