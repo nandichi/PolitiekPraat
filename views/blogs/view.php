@@ -137,7 +137,7 @@ require_once 'views/templates/header.php'; ?>
                     <?php endif; ?>
 
                     <!-- Audio sectie voor tekst-naar-spraak (indien aanwezig) -->
-                    <?php if (!empty($blog->audio_path)): ?>
+                    <?php if (!empty($blog->audio_path) || !empty($blog->audio_url) || !empty($blog->soundcloud_url)): ?>
                     <div class="relative border-b border-gray-100">
                         <div class="bg-gradient-to-r from-primary/5 via-secondary/5 to-primary/5 p-4 sm:p-6">
                             <div class="flex items-center gap-3 mb-4">
@@ -148,18 +148,108 @@ require_once 'views/templates/header.php'; ?>
                                 </div>
                                 <div>
                                     <h3 class="font-semibold text-gray-900">Audio versie</h3>
-                                    <p class="text-sm text-gray-600">Luister naar dit artikel</p>
+                                    <p class="text-sm text-gray-600">Luister naar dit artikel
+                                        <?php if (!empty($blog->audio_url)): ?>
+                                            <span class="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">
+                                                <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                                                </svg>
+                                                Google Drive
+                                            </span>
+                                        <?php endif; ?>
+                                        <?php if (!empty($blog->soundcloud_url)): ?>
+                                            <span class="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-orange-100 text-orange-800">
+                                                <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                                    <path d="M7 17.939h-1v-8.068c.308-.231.639-.429 1-.566v8.634zm3 0h1v-9.224c-.229.265-.443.548-.621.857l-.379-.184v8.551zm-2 0h1v-8.848c-.508-.079-.623-.05-1-.01v8.858zm-4 0h1v-6.891c-.024.184-.037.37-.037.557 0 .228.017.457.037.684v5.65zm13 0h1v-2.24c-.508.138-1.027.262-1.532.355l.532.025v1.86z"/>
+                                                </svg>
+                                                SoundCloud
+                                            </span>
+                                        <?php endif; ?>
+                                    </p>
                                 </div>
                             </div>
                             
                             <!-- Moderne audio player -->
                             <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-                                <audio controls class="w-full" preload="metadata">
-                                    <source src="<?php echo URLROOT . '/' . $blog->audio_path; ?>" type="audio/mpeg">
-                                    <source src="<?php echo URLROOT . '/' . $blog->audio_path; ?>" type="audio/wav">
-                                    <source src="<?php echo URLROOT . '/' . $blog->audio_path; ?>" type="audio/ogg">
-                                    Je browser ondersteunt geen audio weergave.
-                                </audio>
+                                <?php if (!empty($blog->soundcloud_url)): ?>
+                                    <!-- SoundCloud Embed Player -->
+                                    <?php
+                                    // Constructeer SoundCloud embed URL
+                                    $soundcloudEmbedUrl = 'https://w.soundcloud.com/player/?url=' . urlencode($blog->soundcloud_url) . '&color=%23ff5500&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=true';
+                                    ?>
+                                    <iframe width="100%" 
+                                            height="166" 
+                                            scrolling="no" 
+                                            frameborder="no" 
+                                            allow="autoplay" 
+                                            src="<?php echo htmlspecialchars($soundcloudEmbedUrl); ?>">
+                                    </iframe>
+                                    
+                                <?php elseif (!empty($blog->audio_url)): ?>
+                                    <?php
+                                    // Extracteer file ID uit Google Drive URL
+                                    $fileId = '';
+                                    if (preg_match('/\/file\/d\/([a-zA-Z0-9_-]+)/', $blog->audio_url, $matches)) {
+                                        $fileId = $matches[1];
+                                    } elseif (preg_match('/[?&]id=([a-zA-Z0-9_-]+)/', $blog->audio_url, $matches)) {
+                                        $fileId = $matches[1];
+                                    }
+                                    ?>
+                                    
+                                    <?php if ($fileId): ?>
+                                        <!-- Google Drive Audio Player met verbeterde compatibiliteit -->
+                                        <div class="google-drive-audio-container">
+                                            <!-- Probeer eerst de audio direct te laden -->
+                                            <audio id="googleDriveAudio" controls class="w-full" preload="none" style="display: none;">
+                                                <source src="https://docs.google.com/uc?export=download&id=<?php echo $fileId; ?>" type="audio/mpeg">
+                                                <source src="https://drive.google.com/uc?export=download&id=<?php echo $fileId; ?>" type="audio/mpeg">
+                                            </audio>
+                                            
+                                            <!-- Fallback: Google Drive preview iframe -->
+                                            <div id="googleDrivePreview" class="relative">
+                                                <div class="flex items-center justify-center p-6 bg-gray-50 rounded-lg">
+                                                    <div class="text-center">
+                                                        <svg class="w-12 h-12 text-gray-400 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>
+                                                        </svg>
+                                                        <p class="text-gray-600 mb-4">Audio bestand laden vanuit Google Drive...</p>
+                                                        <button onclick="loadGoogleDriveAudio('<?php echo $fileId; ?>')" class="inline-flex items-center px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors">
+                                                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h1m4 0h1m-6-8h12a2 2 0 012 2v8a2 2 0 01-2 2H6a2 2 0 01-2-2V8a2 2 0 012-2z"/>
+                                                            </svg>
+                                                            Audio laden
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                
+                                                <!-- Alternatieve optie: open in nieuwe tab -->
+                                                <div class="mt-3 text-center">
+                                                    <a href="https://drive.google.com/file/d/<?php echo $fileId; ?>/view" 
+                                                       target="_blank" 
+                                                       class="inline-flex items-center text-sm text-gray-600 hover:text-primary transition-colors">
+                                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                                                        </svg>
+                                                        Open in Google Drive
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php else: ?>
+                                        <div class="text-center text-red-600 p-4">
+                                            <p>Fout: Kan Google Drive audio niet laden. Controleer of de link correct is.</p>
+                                        </div>
+                                    <?php endif; ?>
+                                    
+                                <?php elseif (!empty($blog->audio_path)): ?>
+                                    <!-- Lokaal audio bestand -->
+                                    <audio controls class="w-full" preload="metadata">
+                                        <source src="<?php echo URLROOT . '/' . $blog->audio_path; ?>" type="audio/mpeg">
+                                        <source src="<?php echo URLROOT . '/' . $blog->audio_path; ?>" type="audio/wav">
+                                        <source src="<?php echo URLROOT . '/' . $blog->audio_path; ?>" type="audio/ogg">
+                                        Je browser ondersteunt geen audio weergave.
+                                    </audio>
+                                <?php endif; ?>
                                 
                                 <!-- Audio controles en info -->
                                 <div class="mt-3 flex items-center justify-between text-sm text-gray-500">
@@ -1043,9 +1133,130 @@ async function copyToClipboard() {
 }
 
 // Audio Player Functionality
-<?php if (!empty($blog->audio_path)): ?>
+<?php if (!empty($blog->audio_path) || !empty($blog->audio_url)): ?>
 let currentSpeed = 1;
 const speeds = [0.5, 0.75, 1, 1.25, 1.5, 2];
+
+// Google Drive Audio Loading Functionaliteit
+function loadGoogleDriveAudio(fileId) {
+    const audioElement = document.getElementById('googleDriveAudio');
+    const previewElement = document.getElementById('googleDrivePreview');
+    
+    if (!audioElement || !previewElement) return;
+    
+    // Toon loading state
+    previewElement.innerHTML = `
+        <div class="flex items-center justify-center p-6 bg-gray-50 rounded-lg">
+            <div class="text-center">
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-3"></div>
+                <p class="text-gray-600">Audio wordt geladen...</p>
+            </div>
+        </div>
+    `;
+    
+    // Probeer verschillende Google Drive URL formaten
+    const urls = [
+        `https://docs.google.com/uc?export=download&id=${fileId}`,
+        `https://drive.google.com/uc?export=download&id=${fileId}`,
+        `https://www.googleapis.com/drive/v3/files/${fileId}?alt=media&key=YOUR_API_KEY`
+    ];
+    
+    let urlIndex = 0;
+    
+    function tryNextUrl() {
+        if (urlIndex >= urls.length) {
+            // Als alle URLs falen, toon alternatieve opties
+            showGoogleDriveAlternatives(fileId);
+            return;
+        }
+        
+        const currentUrl = urls[urlIndex];
+        audioElement.src = currentUrl;
+        
+        // Event listeners voor deze poging
+        const onCanPlay = () => {
+            // Audio succesvol geladen
+            audioElement.style.display = 'block';
+            previewElement.style.display = 'none';
+            cleanup();
+            showNotification('Google Drive audio succesvol geladen!', 'success');
+        };
+        
+        const onError = () => {
+            urlIndex++;
+            cleanup();
+            tryNextUrl();
+        };
+        
+        const cleanup = () => {
+            audioElement.removeEventListener('canplay', onCanPlay);
+            audioElement.removeEventListener('error', onError);
+        };
+        
+        audioElement.addEventListener('canplay', onCanPlay);
+        audioElement.addEventListener('error', onError);
+        
+        // Timeout na 5 seconden
+        setTimeout(() => {
+            if (audioElement.style.display === 'none') {
+                urlIndex++;
+                cleanup();
+                tryNextUrl();
+            }
+        }, 5000);
+    }
+    
+    tryNextUrl();
+}
+
+function showGoogleDriveAlternatives(fileId) {
+    const previewElement = document.getElementById('googleDrivePreview');
+    if (!previewElement) return;
+    
+    previewElement.innerHTML = `
+        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+            <div class="flex items-start">
+                <svg class="w-6 h-6 text-yellow-600 mt-0.5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.5 0L4.232 15.5c-.77.833.192 2.5 1.732 2.5z"/>
+                </svg>
+                <div class="flex-1">
+                    <h3 class="text-yellow-800 font-medium mb-2">Audio kan niet direct worden afgespeeld</h3>
+                    <p class="text-yellow-700 text-sm mb-4">
+                        Google Drive heeft beperkingen voor directe audio streaming. Gebruik een van de onderstaande opties:
+                    </p>
+                    <div class="space-y-3">
+                        <a href="https://drive.google.com/file/d/${fileId}/view" 
+                           target="_blank" 
+                           class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                            </svg>
+                            Luister in Google Drive
+                        </a>
+                        <button onclick="downloadGoogleDriveAudio('${fileId}')" 
+                                class="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors ml-3">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                            Download Audio
+                        </button>
+                    </div>
+                    <div class="mt-4 p-3 bg-white border border-yellow-200 rounded">
+                        <p class="text-xs text-gray-600">
+                            <strong>Tip voor de auteur:</strong> Voor betere compatibiliteit, upload audio bestanden liever direct naar de website in plaats van Google Drive links te gebruiken.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function downloadGoogleDriveAudio(fileId) {
+    const downloadUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
+    window.open(downloadUrl, '_blank');
+    showNotification('Audio download gestart via Google Drive', 'success');
+}
 
 function changePlaybackSpeed() {
     const audioPlayer = document.querySelector('audio');
@@ -1075,20 +1286,37 @@ function changePlaybackSpeed() {
 }
 
 function downloadAudio() {
-    const audioPath = '<?php echo URLROOT . "/" . $blog->audio_path; ?>';
-    const filename = 'audio-<?php echo $blog->slug; ?>.mp3';
-    
-    // Create download link
-    const link = document.createElement('a');
-    link.href = audioPath;
-    link.download = filename;
-    link.style.display = 'none';
-    
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    
-    showNotification('Audio download gestart', 'success');
+    <?php if (!empty($blog->soundcloud_url)): ?>
+        // Voor SoundCloud audio - open in nieuwe tab
+        window.open('<?php echo htmlspecialchars($blog->soundcloud_url); ?>', '_blank');
+        showNotification('SoundCloud audio geopend in nieuwe tab', 'success');
+    <?php elseif (!empty($blog->audio_url)): ?>
+        // Voor Google Drive audio
+        const audioUrl = '<?php echo htmlspecialchars($audioSrc ?? $blog->audio_url); ?>';
+        const filename = 'audio-<?php echo $blog->slug; ?>.mp3';
+        
+        // Open Google Drive download in nieuwe tab
+        window.open(audioUrl, '_blank');
+        showNotification('Audio download gestart via Google Drive', 'success');
+    <?php elseif (!empty($blog->audio_path)): ?>
+        // Voor lokaal geüploade audio
+        const audioPath = '<?php echo URLROOT . "/" . $blog->audio_path; ?>';
+        const filename = 'audio-<?php echo $blog->slug; ?>.mp3';
+        
+        // Create download link
+        const link = document.createElement('a');
+        link.href = audioPath;
+        link.download = filename;
+        link.style.display = 'none';
+        
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        showNotification('Audio download gestart', 'success');
+    <?php else: ?>
+        showNotification('Geen audio beschikbaar voor download', 'error');
+    <?php endif; ?>
 }
 
 // Initialize audio player when DOM is loaded

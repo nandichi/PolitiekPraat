@@ -1,0 +1,16 @@
+# Beveiligingsregels voor uploads
+Options -Indexes
+Options -ExecCGI
+AddHandler cgi-script .php .pl .py .jsp .asp .sh .cgi
+
+# Audio bestanden toestaan
+<FilesMatch "\.(mp3|wav|ogg)$">
+    Order Allow,Deny
+    Allow from all
+</FilesMatch>
+
+# PHP bestanden blokkeren
+<FilesMatch "\.(php|phtml|php3|php4|php5|pl|py|jsp|asp|sh|cgi)$">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>

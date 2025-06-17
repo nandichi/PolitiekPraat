@@ -81,7 +81,45 @@ class BlogsController {
 
             // Handle audio upload voor tekst-naar-spraak
             $audio_path = '';
-            if (isset($_FILES['audio']) && $_FILES['audio']['error'] === UPLOAD_ERR_OK) {
+            $audio_url = '';
+            
+            // Handle Google Drive audio URL
+            if (!empty($_POST['audio_url'])) {
+                $audio_url = trim($_POST['audio_url']);
+                // Valideer Google Drive URLs
+                if (strpos($audio_url, 'drive.google.com') !== false) {
+                    // Extracteer file ID uit Google Drive URL
+                    if (preg_match('/\/file\/d\/([a-zA-Z0-9_-]+)/', $audio_url, $matches) || 
+                        preg_match('/[?&]id=([a-zA-Z0-9_-]+)/', $audio_url, $matches)) {
+                        // URL is geldig, bewaar originele URL
+                    } else {
+                        $audio_url = ''; // Reset als Google Drive URL ongeldig is
+                    }
+                } else {
+                    $audio_url = ''; // Reset als het geen Google Drive URL is
+                }
+            }
+
+            // Handle SoundCloud audio URL
+            $soundcloud_url = '';
+            if (!empty($_POST['soundcloud_url'])) {
+                $soundcloud_url = trim($_POST['soundcloud_url']);
+                // Valideer SoundCloud URLs
+                if (strpos($soundcloud_url, 'soundcloud.com') !== false) {
+                    // Basis validatie voor SoundCloud URLs
+                    if (preg_match('/^https:\/\/(www\.|m\.)?soundcloud\.com\/[^\/]+\/[^\/]+/', $soundcloud_url) ||
+                        preg_match('/^https:\/\/(www\.|m\.)?soundcloud\.com\/[^\/]+\/sets\/[^\/]+/', $soundcloud_url)) {
+                        // URL is geldig, bewaar originele URL
+                    } else {
+                        $soundcloud_url = ''; // Reset als SoundCloud URL ongeldig is
+                    }
+                } else {
+                    $soundcloud_url = ''; // Reset als het geen SoundCloud URL is
+                }
+            }
+            
+            // Handle lokaal audio bestand upload (alleen als geen URL is opgegeven)
+            if (empty($audio_url) && isset($_FILES['audio']) && $_FILES['audio']['error'] === UPLOAD_ERR_OK) {
                 $upload_dir = 'uploads/blogs/audio/';
                 if (!file_exists($upload_dir)) {
                     mkdir($upload_dir, 0777, true);
@@ -111,7 +149,9 @@ class BlogsController {
                 'image_path' => $image_path,
                 'video_path' => $video_path,
                 'video_url' => $video_url,
-                'audio_path' => $audio_path
+                'audio_path' => $audio_path,
+                'audio_url' => $audio_url,
+                'soundcloud_url' => $soundcloud_url
             ];
             
             // Create the blog post
@@ -272,9 +312,62 @@ class BlogsController {
                 $video_url = '';
             }
 
-            // Handle new audio upload if provided
+            // Handle audio updates
             $audio_path = isset($blog->audio_path) ? $blog->audio_path : ''; // Keep existing audio by default
-            if (isset($_FILES['audio']) && $_FILES['audio']['error'] === UPLOAD_ERR_OK) {
+            $audio_url = isset($blog->audio_url) ? $blog->audio_url : ''; // Keep existing audio URL by default
+            $soundcloud_url = isset($blog->soundcloud_url) ? $blog->soundcloud_url : ''; // Keep existing SoundCloud URL by default
+            
+            // Handle updated Google Drive audio URL
+            if (!empty($_POST['audio_url'])) {
+                $audio_url = trim($_POST['audio_url']);
+                // Valideer Google Drive URLs
+                if (strpos($audio_url, 'drive.google.com') !== false) {
+                    // Extracteer file ID uit Google Drive URL
+                    if (preg_match('/\/file\/d\/([a-zA-Z0-9_-]+)/', $audio_url, $matches) || 
+                        preg_match('/[?&]id=([a-zA-Z0-9_-]+)/', $audio_url, $matches)) {
+                        // URL is geldig, bewaar originele URL
+                        // Reset lokaal audio bestand als URL wordt gebruikt
+                        if (!empty($blog->audio_path) && file_exists($blog->audio_path)) {
+                            unlink($blog->audio_path);
+                        }
+                        $audio_path = '';
+                    } else {
+                        $audio_url = ''; // Reset als Google Drive URL ongeldig is
+                    }
+                } else {
+                    $audio_url = ''; // Reset als het geen Google Drive URL is
+                }
+            } else {
+                $audio_url = '';
+            }
+
+            // Handle updated SoundCloud audio URL
+            if (!empty($_POST['soundcloud_url'])) {
+                $soundcloud_url = trim($_POST['soundcloud_url']);
+                // Valideer SoundCloud URLs
+                if (strpos($soundcloud_url, 'soundcloud.com') !== false) {
+                    // Basis validatie voor SoundCloud URLs
+                    if (preg_match('/^https:\/\/(www\.|m\.)?soundcloud\.com\/[^\/]+\/[^\/]+/', $soundcloud_url) ||
+                        preg_match('/^https:\/\/(www\.|m\.)?soundcloud\.com\/[^\/]+\/sets\/[^\/]+/', $soundcloud_url)) {
+                        // URL is geldig, bewaar originele URL
+                        // Reset lokaal audio bestand en Google Drive URL als SoundCloud wordt gebruikt
+                        if (!empty($blog->audio_path) && file_exists($blog->audio_path)) {
+                            unlink($blog->audio_path);
+                        }
+                        $audio_path = '';
+                        $audio_url = '';
+                    } else {
+                        $soundcloud_url = ''; // Reset als SoundCloud URL ongeldig is
+                    }
+                } else {
+                    $soundcloud_url = ''; // Reset als het geen SoundCloud URL is
+                }
+            } else {
+                $soundcloud_url = '';
+            }
+            
+            // Handle lokaal audio bestand upload (alleen als geen URL is opgegeven)
+            if (empty($audio_url) && isset($_FILES['audio']) && $_FILES['audio']['error'] === UPLOAD_ERR_OK) {
                 $upload_dir = 'uploads/blogs/audio/';
                 if (!file_exists($upload_dir)) {
                     mkdir($upload_dir, 0777, true);
@@ -295,6 +388,7 @@ class BlogsController {
                                 unlink($blog->audio_path);
                             }
                             $audio_path = $target_path;
+                            $audio_url = ''; // Reset URL als lokaal bestand wordt gebruikt
                         }
                     }
                 }
@@ -307,7 +401,9 @@ class BlogsController {
                 'image_path' => $image_path,
                 'video_path' => $video_path,
                 'video_url' => $video_url,
-                'audio_path' => $audio_path
+                'audio_path' => $audio_path,
+                'audio_url' => $audio_url,
+                'soundcloud_url' => $soundcloud_url
             ];
             
             if ($this->blogModel->update($data)) {

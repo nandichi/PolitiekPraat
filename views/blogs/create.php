@@ -241,13 +241,48 @@
                             Tekst-naar-Spraak Audio
                         </label>
                         
-                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300">
-                            <div class="flex items-center mb-4">
-                                <svg class="w-5 h-5 text-primary mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>
-                                </svg>
-                                <h3 class="font-medium text-gray-900">Audio bestand voor voorlezen</h3>
+                        <!-- Audio opties kaartweergave -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Google Drive Audio URL input kaart -->
+                            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300">
+                                <div class="flex items-center mb-3">
+                                    <svg class="w-5 h-5 text-primary mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                                    </svg>
+                                    <h3 class="font-medium text-gray-900">Google Drive Audio</h3>
+                                </div>
+                                
+                                <div class="relative group mb-2">
+                                    <input type="url" 
+                                           name="audio_url" 
+                                           id="audio_url" 
+                                           class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition-all duration-300 bg-gray-50/50"
+                                           placeholder="https://drive.google.com/file/d/.../view">
+                                    <div class="absolute inset-0 bg-primary/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+                                </div>
+                                <p class="text-sm text-gray-500">Plak een Google Drive audio link (MP3, WAV, OGG)</p>
+                                <div class="mt-2 text-xs text-gray-400 bg-blue-50 p-3 rounded-lg border border-blue-100">
+                                    <div class="space-y-2">
+                                        <p><strong>Stap-voor-stap instructies:</strong></p>
+                                        <ol class="list-decimal list-inside space-y-1 text-xs">
+                                            <li>Upload je MP3 bestand naar Google Drive</li>
+                                            <li>Klik rechts op het bestand → "Delen"</li>
+                                            <li>Wijzig toegang naar "Iedereen met de link"</li>
+                                            <li>Kopieer de link en plak hier</li>
+                                        </ol>
+                                        <p class="text-yellow-600 font-medium">⚠️ Let op: Google Drive audio werkt niet altijd perfect. Voor beste resultaten gebruik lokale upload hiernaast.</p>
+                                    </div>
+                                </div>
                             </div>
+
+                            <!-- Audio bestand upload kaart -->
+                            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300">
+                                <div class="flex items-center mb-3">
+                                    <svg class="w-5 h-5 text-primary mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>
+                                    </svg>
+                                    <h3 class="font-medium text-gray-900">Audio bestand uploaden</h3>
+                                </div>
                             
                             <div class="relative group/upload">
                                 <div class="relative flex flex-col items-center p-6 bg-gradient-to-br from-gray-50 to-blue-50/30 rounded-xl border border-dashed border-gray-200 transition-all duration-300 hover:bg-gradient-to-br hover:from-gray-50 hover:to-blue-50/50 hover:border-primary/30">
@@ -327,6 +362,125 @@
                                                     </span>
                                                 </div>
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Audio URL Preview -->
+                        <div id="audioUrlPreview" class="hidden mt-6">
+                            <div class="relative bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+                                <!-- Preview header -->
+                                <div class="flex items-center justify-between mb-3">
+                                    <div class="flex items-center space-x-2">
+                                        <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                                        </svg>
+                                        <h3 class="font-medium text-gray-900">Google Drive audio preview</h3>
+                                    </div>
+                                    <button type="button" 
+                                            onclick="removeAudioUrl()" 
+                                            class="group inline-flex items-center px-3 py-1 space-x-1 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors duration-300">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                        </svg>
+                                        <span class="text-sm font-medium">Verwijderen</span>
+                                    </button>
+                                </div>
+
+                                <!-- Audio player container -->
+                                <div class="bg-gradient-to-r from-primary/5 to-secondary/5 rounded-lg p-4">
+                                    <audio id="audioUrlPlayer" controls class="w-full">
+                                        <source src="" type="audio/mpeg">
+                                        Je browser ondersteunt geen audio weergave.
+                                    </audio>
+                                    <!-- Audio info -->
+                                    <div class="mt-3 flex items-center justify-between text-sm text-gray-600">
+                                        <span id="audioUrlInfo">Google Drive audio wordt geladen...</span>
+                                        <div class="flex items-center space-x-2">
+                                            <span class="inline-flex items-center text-green-600">
+                                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                                </svg>
+                                                Google Drive verbonden
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SoundCloud Audio URL Sectie -->
+                    <div class="mb-10" data-aos="fade-up" data-aos-delay="325">
+                        <label class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                            <svg class="w-5 h-5 text-orange-500 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M7 17.939h-1v-8.068c.308-.231.639-.429 1-.566v8.634zm3 0h1v-9.224c-.229.265-.443.548-.621.857l-.379-.184v8.551zm-2 0h1v-8.848c-.508-.079-.623-.05-1-.01v8.858zm-4 0h1v-6.891c-.024.184-.037.37-.037.557 0 .228.017.457.037.684v5.65zm13 0h1v-2.24c-.508.138-1.027.262-1.532.355l.532.025v1.86zm-3 0h1v-2.32c-.203.206-.398.422-.609.629l.609.177v1.514zm2 0h1v-2.174c-.993.21-1.927.364-2.811.455l.811-.039v1.758zm3-2.557c-.024-.068-.053-.133-.063-.201l-.045-.171c-.065-.247-.077-.49-.077-.731 0-.242.012-.484.077-.731l.045-.171c.024-.09.054-.177.087-.265.069-.176.158-.343.261-.501.309-.473.765-.884 1.346-1.15.208-.095.406-.141.601-.141.195 0 .393.046.601.141.581.266 1.037.677 1.346 1.15.103.158.192.325.261.501.033.088.063.175.087.265l.045.171c.065.247.077.489.077.731 0 .241-.012.484-.077.731l-.045.171c-.01.068-.039.133-.063.201l-3 2.557zm-14.32-2.557c-.024-.068-.053-.133-.063-.201l-.045-.171c-.065-.247-.077-.49-.077-.731 0-.242.012-.484.077-.731l.045-.171c.024-.09.054-.177.087-.265.069-.176.158-.343.261-.501.309-.473.765-.884 1.346-1.15.208-.095.406-.141.601-.141.195 0 .393.046.601.141.581.266 1.037.677 1.346 1.15.103.158.192.325.261.501.033.088.063.175.087.265l.045.171c.065.247.077.489.077.731 0 .241-.012.484-.077.731l-.045.171c-.01.068-.039.133-.063.201l-3 2.557z"/>
+                            </svg>
+                            SoundCloud Audio (Aanbevolen)
+                        </label>
+                        
+                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300">
+                            <div class="relative group mb-2">
+                                <input type="url" 
+                                       name="soundcloud_url" 
+                                       id="soundcloud_url" 
+                                       class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500 outline-none transition-all duration-300 bg-gray-50/50"
+                                       placeholder="https://soundcloud.com/user/track-name">
+                                <div class="absolute inset-0 bg-orange-500/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+                            </div>
+                            <p class="text-sm text-gray-500">Plak een SoundCloud track of playlist link</p>
+                            <div class="mt-2 text-xs text-gray-400 bg-orange-50 p-3 rounded-lg border border-orange-100">
+                                <div class="space-y-2">
+                                    <p><strong>SoundCloud instructies:</strong></p>
+                                    <ol class="list-decimal list-inside space-y-1 text-xs">
+                                        <li>Ga naar je SoundCloud track</li>
+                                        <li>Klik op "Share" onder de track</li>
+                                        <li>Kopieer de link en plak hier</li>
+                                        <li>Zorg dat de track openbaar is</li>
+                                    </ol>
+                                    <p class="text-green-600 font-medium">✅ Voordeel: SoundCloud werkt betrouwbaar zonder CORS problemen en heeft professionele audio player</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SoundCloud URL Preview -->
+                        <div id="soundcloudPreview" class="hidden mt-6">
+                            <div class="relative bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+                                <!-- Preview header -->
+                                <div class="flex items-center justify-between mb-3">
+                                    <div class="flex items-center space-x-2">
+                                        <svg class="w-5 h-5 text-orange-500" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M7 17.939h-1v-8.068c.308-.231.639-.429 1-.566v8.634zm3 0h1v-9.224c-.229.265-.443.548-.621.857l-.379-.184v8.551zm-2 0h1v-8.848c-.508-.079-.623-.05-1-.01v8.858zm-4 0h1v-6.891c-.024.184-.037.37-.037.557 0 .228.017.457.037.684v5.65zm13 0h1v-2.24c-.508.138-1.027.262-1.532.355l.532.025v1.86zm-3 0h1v-2.32c-.203.206-.398.422-.609.629l.609.177v1.514zm2 0h1v-2.174c-.993.21-1.927.364-2.811.455l.811-.039v1.758zm3-2.557c-.024-.068-.053-.133-.063-.201l-.045-.171c-.065-.247-.077-.49-.077-.731 0-.242.012-.484.077-.731l.045-.171c.024-.09.054-.177.087-.265.069-.176.158-.343.261-.501.309-.473.765-.884 1.346-1.15.208-.095.406-.141.601-.141.195 0 .393.046.601.141.581.266 1.037.677 1.346 1.15.103.158.192.325.261.501.033.088.063.175.087.265l.045.171c.065.247.077.489.077.731 0 .241-.012.484-.077.731l-.045.171c-.01.068-.039.133-.063.201l-3 2.557zm-14.32-2.557c-.024-.068-.053-.133-.063-.201l-.045-.171c-.065-.247-.077-.49-.077-.731 0-.242.012-.484.077-.731l.045-.171c.024-.09.054-.177.087-.265.069-.176.158-.343.261-.501.309-.473.765-.884 1.346-1.15.208-.095.406-.141.601-.141.195 0 .393.046.601.141.581.266 1.037.677 1.346 1.15.103.158.192.325.261.501.033.088.063.175.087.265l.045.171c.065.247.077.489.077.731 0 .241-.012.484-.077.731l-.045.171c-.01.068-.039.133-.063.201l-3 2.557z"/>
+                                        </svg>
+                                        <h3 class="font-medium text-gray-900">SoundCloud Preview</h3>
+                                    </div>
+                                    <button type="button" 
+                                            onclick="removeSoundCloudUrl()" 
+                                            class="group inline-flex items-center px-3 py-1 space-x-1 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors duration-300">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                        </svg>
+                                        <span class="text-sm font-medium">Verwijderen</span>
+                                    </button>
+                                </div>
+                                
+                                <!-- SoundCloud embed container -->
+                                <div class="bg-gradient-to-r from-orange-50 to-red-50 rounded-lg p-4">
+                                    <div id="soundcloudEmbedContainer" class="w-full">
+                                        <!-- SoundCloud iframe wordt hier geladen -->
+                                    </div>
+                                    <!-- SoundCloud info -->
+                                    <div class="mt-3 flex items-center justify-between text-sm text-gray-600">
+                                        <span id="soundcloudInfo">SoundCloud track wordt geladen...</span>
+                                        <div class="flex items-center space-x-2">
+                                            <span class="inline-flex items-center text-orange-600">
+                                                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                                    <path d="M7 17.939h-1v-8.068c.308-.231.639-.429 1-.566v8.634zm3 0h1v-9.224c-.229.265-.443.548-.621.857l-.379-.184v8.551zm-2 0h1v-8.848c-.508-.079-.623-.05-1-.01v8.858zm-4 0h1v-6.891c-.024.184-.037.37-.037.557 0 .228.017.457.037.684v5.65zm13 0h1v-2.24c-.508.138-1.027.262-1.532.355l.532.025v1.86zm-3 0h1v-2.32c-.203.206-.398.422-.609.629l.609.177v1.514zm2 0h1v-2.174c-.993.21-1.927.364-2.811.455l.811-.039v1.758zm3-2.557c-.024-.068-.053-.133-.063-.201l-.045-.171c-.065-.247-.077-.49-.077-.731 0-.242.012-.484.077-.731l.045-.171c.024-.09.054-.177.087-.265.069-.176.158-.343.261-.501.309-.473.765-.884 1.346-1.15.208-.095.406-.141.601-.141.195 0 .393.046.601.141.581.266 1.037.677 1.346 1.15.103.158.192.325.261.501.033.088.063.175.087.265l.045.171c.065.247.077.489.077.731 0 .241-.012.484-.077.731l-.045.171c-.01.068-.039.133-.063.201l-3 2.557zm-14.32-2.557c-.024-.068-.053-.133-.063-.201l-.045-.171c-.065-.247-.077-.49-.077-.731 0-.242.012-.484.077-.731l.045-.171c.024-.09.054-.177.087-.265.069-.176.158-.343.261-.501.309-.473.765-.884 1.346-1.15.208-.095.406-.141.601-.141.195 0 .393.046.601.141.581.266 1.037.677 1.346 1.15.103.158.192.325.261.501.033.088.063.175.087.265l.045.171c.065.247.077.489.077.731 0 .241-.012.484-.077.731l-.045.171c-.01.068-.039.133-.063.201l-3 2.557z"/>
+                                                </svg>
+                                                SoundCloud verbonden
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -998,6 +1152,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const audioPlayer = document.getElementById('audioPlayer');
     const audioInfoText = document.getElementById('audioInfo');
     const audioDurationText = document.getElementById('audioDuration');
+    const audioUrlInput = document.getElementById('audio_url');
+    const audioUrlPreview = document.getElementById('audioUrlPreview');
+    const audioUrlPlayer = document.getElementById('audioUrlPlayer');
+    const audioUrlInfo = document.getElementById('audioUrlInfo');
+    
+    // SoundCloud functionaliteit
+    const soundcloudInput = document.getElementById('soundcloud_url');
+    const soundcloudPreview = document.getElementById('soundcloudPreview');
+    const soundcloudEmbedContainer = document.getElementById('soundcloudEmbedContainer');
+    const soundcloudInfo = document.getElementById('soundcloudInfo');
 
     // Functie om bestandsgrootte te formatteren
     function formatFileSize(bytes) {
@@ -1063,6 +1227,201 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 300);
     }
 
+    // Google Drive URL naar direct download URL converter
+    function convertGoogleDriveUrl(url) {
+        // Zoek naar file ID in verschillende Google Drive URL formaten
+        const fileIdMatch = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+        
+        if (fileIdMatch) {
+            const fileId = fileIdMatch[1];
+            return `https://drive.google.com/uc?export=download&id=${fileId}`;
+        }
+        
+        // Zoek naar id parameter
+        const idParamMatch = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+        if (idParamMatch) {
+            const fileId = idParamMatch[1];
+            return `https://drive.google.com/uc?export=download&id=${fileId}`;
+        }
+        
+        return null;
+    }
+
+    // Audio URL validatie en preview
+    audioUrlInput.addEventListener('input', function() {
+        const url = this.value.trim();
+        if (url) {
+            // Check of het een Google Drive URL is
+            if (url.includes('drive.google.com')) {
+                const directUrl = convertGoogleDriveUrl(url);
+                if (directUrl) {
+                    showAudioUrlPreview(directUrl, url);
+                } else {
+                    alert('Geen geldige Google Drive audio link. Zorg dat je een link hebt van een gedeeld bestand.');
+                    this.value = '';
+                }
+            } else {
+                alert('Alleen Google Drive links worden ondersteund');
+                this.value = '';
+            }
+        }
+    });
+
+    function showAudioUrlPreview(directUrl, originalUrl) {
+        audioUrlPreview.classList.remove('hidden');
+        audioUrlPreview.style.opacity = '0';
+        audioUrlPreview.style.transform = 'translateY(10px)';
+        
+        // Update audio player met direct download URL
+        audioUrlPlayer.src = directUrl;
+        
+        // Update bestandsinformatie
+        audioUrlInfo.textContent = 'Google Drive audio bestand geladen';
+        
+        // Animeer het verschijnen
+        setTimeout(() => {
+            audioUrlPreview.style.opacity = '1';
+            audioUrlPreview.style.transform = 'translateY(0)';
+        }, 50);
+        
+        // Reset lokaal audio bestand als URL wordt gebruikt
+        if (audioInput.value) {
+            audioInput.value = '';
+            audioPreview.classList.add('hidden');
+        }
+    }
+
+    // Audio URL verwijderen functie
+    window.removeAudioUrl = function() {
+        audioUrlInput.value = ''; // Reset URL input
+        audioUrlPreview.classList.add('hidden'); // Verberg preview
+        
+        // Animatie voor het verwijderen
+        audioUrlPreview.style.opacity = '0';
+        audioUrlPreview.style.transform = 'translateY(-10px)';
+        
+        setTimeout(() => {
+            audioUrlPreview.style.opacity = '';
+            audioUrlPreview.style.transform = '';
+            audioUrlPlayer.src = ''; // Reset audio player
+        }, 300);
+    }
+
+    // SoundCloud URL functionaliteit
+    function validateSoundCloudUrl(url) {
+        // Check verschillende SoundCloud URL formaten
+        const patterns = [
+            /^https:\/\/soundcloud\.com\/[^\/]+\/[^\/]+/,
+            /^https:\/\/soundcloud\.com\/[^\/]+\/sets\/[^\/]+/,
+            /^https:\/\/m\.soundcloud\.com\/[^\/]+\/[^\/]+/
+        ];
+        
+        return patterns.some(pattern => pattern.test(url));
+    }
+
+    async function getSoundCloudEmbed(url) {
+        try {
+            // Gebruik SoundCloud oEmbed API voor betrouwbare embeds
+            const oembedUrl = `https://soundcloud.com/oembed?format=json&url=${encodeURIComponent(url)}&maxheight=166&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false`;
+            
+            const response = await fetch(oembedUrl);
+            if (!response.ok) {
+                throw new Error('SoundCloud API fout');
+            }
+            
+            const data = await response.json();
+            return {
+                success: true,
+                html: data.html,
+                title: data.title,
+                author: data.author_name
+            };
+        } catch (error) {
+            console.error('SoundCloud embed fout:', error);
+            // Fallback naar handmatige iframe constructie
+            const trackId = url.split('/').pop();
+            const embedUrl = `https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}&color=%23ff5500&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=true`;
+            
+            return {
+                success: true,
+                html: `<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="${embedUrl}"></iframe>`,
+                title: 'SoundCloud Audio',
+                author: 'Onbekende artiest'
+            };
+        }
+    }
+
+    // SoundCloud URL validatie en preview
+    soundcloudInput.addEventListener('input', async function() {
+        const url = this.value.trim();
+        if (url) {
+            if (validateSoundCloudUrl(url)) {
+                await showSoundCloudPreview(url);
+            } else {
+                alert('Geen geldige SoundCloud link. Gebruik een link van soundcloud.com');
+                this.value = '';
+            }
+        }
+    });
+
+    async function showSoundCloudPreview(url) {
+        soundcloudPreview.classList.remove('hidden');
+        soundcloudPreview.style.opacity = '0';
+        soundcloudPreview.style.transform = 'translateY(10px)';
+        
+        // Toon loading state
+        soundcloudInfo.textContent = 'SoundCloud track wordt geladen...';
+        soundcloudEmbedContainer.innerHTML = '<div class="text-center p-4"><div class="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500 mx-auto"></div></div>';
+        
+        try {
+            const embedData = await getSoundCloudEmbed(url);
+            
+            if (embedData.success) {
+                // Update container met SoundCloud embed
+                soundcloudEmbedContainer.innerHTML = embedData.html;
+                soundcloudInfo.textContent = `${embedData.title} - ${embedData.author}`;
+            } else {
+                throw new Error('Kan SoundCloud embed niet laden');
+            }
+        } catch (error) {
+            console.error('SoundCloud preview fout:', error);
+            soundcloudEmbedContainer.innerHTML = '<div class="text-red-600 text-center p-4">❌ Kan SoundCloud track niet laden</div>';
+            soundcloudInfo.textContent = 'Fout bij laden van SoundCloud track';
+        }
+        
+        // Animeer het verschijnen
+        setTimeout(() => {
+            soundcloudPreview.style.opacity = '1';
+            soundcloudPreview.style.transform = 'translateY(0)';
+        }, 50);
+        
+        // Reset andere audio opties als SoundCloud wordt gebruikt
+        if (audioInput.value) {
+            audioInput.value = '';
+            audioPreview.classList.add('hidden');
+        }
+        if (audioUrlInput.value) {
+            audioUrlInput.value = '';
+            audioUrlPreview.classList.add('hidden');
+        }
+    }
+
+    // SoundCloud URL verwijderen functie
+    window.removeSoundCloudUrl = function() {
+        soundcloudInput.value = ''; // Reset URL input
+        soundcloudPreview.classList.add('hidden'); // Verberg preview
+        
+        // Animatie voor het verwijderen
+        soundcloudPreview.style.opacity = '0';
+        soundcloudPreview.style.transform = 'translateY(-10px)';
+        
+        setTimeout(() => {
+            soundcloudPreview.style.opacity = '';
+            soundcloudPreview.style.transform = '';
+            soundcloudEmbedContainer.innerHTML = ''; // Reset embed container
+        }, 300);
+    }
+
     // Event listeners voor audio bestand upload
     audioInput.addEventListener('change', function(e) {
         if (e.target.files && e.target.files[0]) {
@@ -1084,6 +1443,12 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             updateAudioPreview(file);
+            
+            // Reset URL input als er een bestand is gekozen
+            if (audioUrlInput.value) {
+                audioUrlInput.value = '';
+                audioUrlPreview.classList.add('hidden');
+            }
         }
     });
 
