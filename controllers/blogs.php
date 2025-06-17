@@ -78,6 +78,30 @@ class BlogsController {
                     $video_url = ''; // Reset als URL ongeldig is
                 }
             }
+
+            // Handle audio upload voor tekst-naar-spraak
+            $audio_path = '';
+            if (isset($_FILES['audio']) && $_FILES['audio']['error'] === UPLOAD_ERR_OK) {
+                $upload_dir = 'uploads/blogs/audio/';
+                if (!file_exists($upload_dir)) {
+                    mkdir($upload_dir, 0777, true);
+                }
+                
+                $file_extension = strtolower(pathinfo($_FILES['audio']['name'], PATHINFO_EXTENSION));
+                $allowed_audio = ['mp3', 'wav', 'ogg'];
+                
+                if (in_array($file_extension, $allowed_audio)) {
+                    // Check bestandsgrootte (max 50MB)
+                    if ($_FILES['audio']['size'] <= 50 * 1024 * 1024) {
+                        $new_filename = uniqid() . '.' . $file_extension;
+                        $target_path = $upload_dir . $new_filename;
+                        
+                        if (move_uploaded_file($_FILES['audio']['tmp_name'], $target_path)) {
+                            $audio_path = $target_path;
+                        }
+                    }
+                }
+            }
             
             // Create blog post data
             $data = [
@@ -86,7 +110,8 @@ class BlogsController {
                 'summary' => !empty($_POST['summary']) ? trim($_POST['summary']) : substr(strip_tags(trim($_POST['content'])), 0, 150) . '...',
                 'image_path' => $image_path,
                 'video_path' => $video_path,
-                'video_url' => $video_url
+                'video_url' => $video_url,
+                'audio_path' => $audio_path
             ];
             
             // Create the blog post
@@ -246,6 +271,34 @@ class BlogsController {
             } else {
                 $video_url = '';
             }
+
+            // Handle new audio upload if provided
+            $audio_path = isset($blog->audio_path) ? $blog->audio_path : ''; // Keep existing audio by default
+            if (isset($_FILES['audio']) && $_FILES['audio']['error'] === UPLOAD_ERR_OK) {
+                $upload_dir = 'uploads/blogs/audio/';
+                if (!file_exists($upload_dir)) {
+                    mkdir($upload_dir, 0777, true);
+                }
+                
+                $file_extension = strtolower(pathinfo($_FILES['audio']['name'], PATHINFO_EXTENSION));
+                $allowed_audio = ['mp3', 'wav', 'ogg'];
+                
+                if (in_array($file_extension, $allowed_audio)) {
+                    // Check bestandsgrootte (max 50MB)
+                    if ($_FILES['audio']['size'] <= 50 * 1024 * 1024) {
+                        $new_filename = uniqid() . '.' . $file_extension;
+                        $target_path = $upload_dir . $new_filename;
+                        
+                        if (move_uploaded_file($_FILES['audio']['tmp_name'], $target_path)) {
+                            // Delete old audio if it exists
+                            if (!empty($blog->audio_path) && file_exists($blog->audio_path)) {
+                                unlink($blog->audio_path);
+                            }
+                            $audio_path = $target_path;
+                        }
+                    }
+                }
+            }
             
             $data = [
                 'id' => $id,
@@ -253,7 +306,8 @@ class BlogsController {
                 'content' => trim($_POST['content']),
                 'image_path' => $image_path,
                 'video_path' => $video_path,
-                'video_url' => $video_url
+                'video_url' => $video_url,
+                'audio_path' => $audio_path
             ];
             
             if ($this->blogModel->update($data)) {
@@ -299,6 +353,10 @@ class BlogsController {
             
             if (!empty($blog->video_path) && file_exists($blog->video_path)) {
                 unlink($blog->video_path);
+            }
+            
+            if (!empty($blog->audio_path) && file_exists($blog->audio_path)) {
+                unlink($blog->audio_path);
             }
         }
         

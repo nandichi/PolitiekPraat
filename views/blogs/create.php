@@ -232,6 +232,108 @@
                         </div>
                     </div>
 
+                    <!-- Audio Upload Sectie voor Tekst-naar-Spraak -->
+                    <div class="mb-10" data-aos="fade-up" data-aos-delay="275">
+                        <label class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                            <svg class="w-5 h-5 text-primary mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
+                            </svg>
+                            Tekst-naar-Spraak Audio
+                        </label>
+                        
+                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300">
+                            <div class="flex items-center mb-4">
+                                <svg class="w-5 h-5 text-primary mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>
+                                </svg>
+                                <h3 class="font-medium text-gray-900">Audio bestand voor voorlezen</h3>
+                            </div>
+                            
+                            <div class="relative group/upload">
+                                <div class="relative flex flex-col items-center p-6 bg-gradient-to-br from-gray-50 to-blue-50/30 rounded-xl border border-dashed border-gray-200 transition-all duration-300 hover:bg-gradient-to-br hover:from-gray-50 hover:to-blue-50/50 hover:border-primary/30">
+                                    <!-- Decoratieve elementen -->
+                                    <div class="absolute -left-2 -top-2 w-24 h-24 bg-primary/10 rounded-full mix-blend-multiply filter blur-xl opacity-0 group-hover/upload:opacity-60 transition-all duration-700"></div>
+                                    <div class="absolute -right-2 -bottom-2 w-24 h-24 bg-secondary/10 rounded-full mix-blend-multiply filter blur-xl opacity-0 group-hover/upload:opacity-60 transition-all duration-700"></div>
+
+                                    <!-- Audio icoon container -->
+                                    <div class="relative z-10 group/icon">
+                                        <div class="p-4 bg-white rounded-xl border border-gray-100 shadow-sm transition-all duration-500 group-hover/upload:bg-white group-hover/upload:shadow-md group-hover/upload:scale-105">
+                                            <svg class="w-10 h-10 text-gray-400 transition-colors duration-300 group-hover/upload:text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+
+                                    <!-- Upload tekst en knop -->
+                                    <div class="relative z-10 text-center space-y-3 mt-4">
+                                        <label for="audio" class="group/button inline-flex items-center px-5 py-2.5 bg-white border-2 border-primary/30 text-primary font-medium rounded-lg cursor-pointer shadow-sm transition-all duration-300 hover:border-primary hover:bg-primary hover:text-white hover:shadow-md">
+                                            <svg class="w-4 h-4 mr-2 transition-transform duration-300 group-hover/button:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                                            </svg>
+                                            <span>Audiobestand kiezen</span>
+                                            <input id="audio" name="audio" type="file" class="sr-only" accept="audio/*">
+                                        </label>
+                                        
+                                        <div class="flex flex-col items-center space-y-2">
+                                            <p class="text-sm text-gray-500">
+                                                Upload een voorgelezen versie van je blog artikel
+                                            </p>
+                                            <span class="inline-flex items-center px-2.5 py-1 space-x-1 bg-gray-100 rounded-full text-xs text-gray-500">
+                                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                                </svg>
+                                                <span>MP3, WAV of OGG (max. 50MB)</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Audio Preview -->
+                                <div id="audioPreview" class="hidden mt-4">
+                                    <div class="relative bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+                                        <!-- Preview header -->
+                                        <div class="flex items-center justify-between mb-3">
+                                            <div class="flex items-center space-x-2">
+                                                <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
+                                                </svg>
+                                                <h3 class="font-medium text-gray-900">Audio preview</h3>
+                                            </div>
+                                            <button type="button" 
+                                                    onclick="removeAudio()" 
+                                                    class="group inline-flex items-center px-3 py-1 space-x-1 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors duration-300">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                                </svg>
+                                                <span class="text-sm font-medium">Verwijderen</span>
+                                            </button>
+                                        </div>
+
+                                        <!-- Audio player container -->
+                                        <div class="bg-gradient-to-r from-primary/5 to-secondary/5 rounded-lg p-4">
+                                            <audio id="audioPlayer" controls class="w-full">
+                                                <source src="" type="audio/mpeg">
+                                                Je browser ondersteunt geen audio weergave.
+                                            </audio>
+                                            <!-- Audio info -->
+                                            <div class="mt-3 flex items-center justify-between text-sm text-gray-600">
+                                                <span id="audioInfo">Audio info laden...</span>
+                                                <div class="flex items-center space-x-4">
+                                                    <span class="inline-flex items-center">
+                                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                                        </svg>
+                                                        <span id="audioDuration">--:--</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Content Editor Sectie - volledig herontworpen met markdown knoppen -->
                     <div class="mt-10" data-aos="fade-up" data-aos-delay="300">
                         <div class="mb-6">
@@ -887,6 +989,101 @@ document.addEventListener('DOMContentLoaded', function() {
             updateVideoPreview(file);
             // Reset URL input als er een bestand is gekozen
             videoUrlInput.value = '';
+        }
+    });
+
+    // Audio functionaliteit
+    const audioInput = document.getElementById('audio');
+    const audioPreview = document.getElementById('audioPreview');
+    const audioPlayer = document.getElementById('audioPlayer');
+    const audioInfoText = document.getElementById('audioInfo');
+    const audioDurationText = document.getElementById('audioDuration');
+
+    // Functie om bestandsgrootte te formatteren
+    function formatFileSize(bytes) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
+
+    // Functie om tijd te formatteren (seconden naar mm:ss)
+    function formatTime(seconds) {
+        const minutes = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60);
+        return `${minutes}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    // Audio upload en preview
+    function updateAudioPreview(file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            audioPreview.classList.remove('hidden');
+            audioPreview.style.opacity = '0';
+            audioPreview.style.transform = 'translateY(10px)';
+            
+            // Update audio player
+            audioPlayer.src = e.target.result;
+            
+            // Update bestandsinformatie
+            const fileInfo = `${file.name} (${formatFileSize(file.size)})`;
+            audioInfoText.textContent = fileInfo;
+            
+            // Audio metadata laden voor duur
+            audioPlayer.addEventListener('loadedmetadata', function() {
+                if (!isNaN(audioPlayer.duration)) {
+                    audioDurationText.textContent = formatTime(audioPlayer.duration);
+                }
+            });
+            
+            // Animeer het verschijnen
+            setTimeout(() => {
+                audioPreview.style.opacity = '1';
+                audioPreview.style.transform = 'translateY(0)';
+            }, 50);
+        }
+        reader.readAsDataURL(file);
+    }
+
+    // Audio verwijderen functie
+    window.removeAudio = function() {
+        audioInput.value = ''; // Reset input
+        audioPreview.classList.add('hidden'); // Verberg preview
+        
+        // Animatie voor het verwijderen
+        audioPreview.style.opacity = '0';
+        audioPreview.style.transform = 'translateY(-10px)';
+        
+        setTimeout(() => {
+            audioPreview.style.opacity = '';
+            audioPreview.style.transform = '';
+            audioPlayer.src = ''; // Reset audio player
+            audioDurationText.textContent = '--:--';
+        }, 300);
+    }
+
+    // Event listeners voor audio bestand upload
+    audioInput.addEventListener('change', function(e) {
+        if (e.target.files && e.target.files[0]) {
+            const file = e.target.files[0];
+            
+            // Check bestandsgrootte (max 50MB)
+            if (file.size > 50 * 1024 * 1024) {
+                alert('Audio bestand mag niet groter zijn dan 50MB');
+                this.value = '';
+                return;
+            }
+            
+            // Check bestandstype
+            const allowedTypes = ['audio/mpeg', 'audio/wav', 'audio/ogg', 'audio/mp3'];
+            if (!allowedTypes.includes(file.type) && !file.name.toLowerCase().match(/\.(mp3|wav|ogg)$/)) {
+                alert('Alleen MP3, WAV en OGG bestanden zijn toegestaan');
+                this.value = '';
+                return;
+            }
+            
+            updateAudioPreview(file);
         }
     });
 

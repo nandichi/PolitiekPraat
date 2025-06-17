@@ -136,6 +136,59 @@ require_once 'views/templates/header.php'; ?>
                     </div>
                     <?php endif; ?>
 
+                    <!-- Audio sectie voor tekst-naar-spraak (indien aanwezig) -->
+                    <?php if (!empty($blog->audio_path)): ?>
+                    <div class="relative border-b border-gray-100">
+                        <div class="bg-gradient-to-r from-primary/5 via-secondary/5 to-primary/5 p-4 sm:p-6">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="p-2 bg-white rounded-lg shadow-sm">
+                                    <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-gray-900">Audio versie</h3>
+                                    <p class="text-sm text-gray-600">Luister naar dit artikel</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Moderne audio player -->
+                            <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+                                <audio controls class="w-full" preload="metadata">
+                                    <source src="<?php echo URLROOT . '/' . $blog->audio_path; ?>" type="audio/mpeg">
+                                    <source src="<?php echo URLROOT . '/' . $blog->audio_path; ?>" type="audio/wav">
+                                    <source src="<?php echo URLROOT . '/' . $blog->audio_path; ?>" type="audio/ogg">
+                                    Je browser ondersteunt geen audio weergave.
+                                </audio>
+                                
+                                <!-- Audio controles en info -->
+                                <div class="mt-3 flex items-center justify-between text-sm text-gray-500">
+                                    <div class="flex items-center space-x-2">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>
+                                        </svg>
+                                        <span>Tekst-naar-spraak versie</span>
+                                    </div>
+                                    <div class="flex items-center space-x-4">
+                                        <button onclick="changePlaybackSpeed()" id="speedButton" class="inline-flex items-center px-2 py-1 bg-gray-100 hover:bg-gray-200 rounded text-xs font-medium transition-colors">
+                                            <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                            </svg>
+                                            <span id="speedText">1x</span>
+                                        </button>
+                                        <button onclick="downloadAudio()" class="inline-flex items-center px-2 py-1 bg-gray-100 hover:bg-gray-200 rounded text-xs font-medium transition-colors">
+                                            <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                            </svg>
+                                            Download
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <?php endif; ?>
+
                     <!-- Content -->
                     <div class="p-4 sm:p-6 lg:p-8 xl:p-12">
                         <!-- Main Content -->
@@ -988,4 +1041,87 @@ async function copyToClipboard() {
         showNotification('Kon link niet kopiëren', 'error');
     }
 }
+
+// Audio Player Functionality
+<?php if (!empty($blog->audio_path)): ?>
+let currentSpeed = 1;
+const speeds = [0.5, 0.75, 1, 1.25, 1.5, 2];
+
+function changePlaybackSpeed() {
+    const audioPlayer = document.querySelector('audio');
+    const speedButton = document.getElementById('speedButton');
+    const speedText = document.getElementById('speedText');
+    
+    if (!audioPlayer) return;
+    
+    // Find current speed index and move to next
+    const currentIndex = speeds.indexOf(currentSpeed);
+    const nextIndex = (currentIndex + 1) % speeds.length;
+    currentSpeed = speeds[nextIndex];
+    
+    // Update audio playback rate
+    audioPlayer.playbackRate = currentSpeed;
+    
+    // Update button text
+    speedText.textContent = currentSpeed + 'x';
+    
+    // Visual feedback
+    speedButton.classList.add('bg-primary', 'text-white');
+    setTimeout(() => {
+        speedButton.classList.remove('bg-primary', 'text-white');
+    }, 200);
+    
+    showNotification(`Afspeelsnelheid aangepast naar ${currentSpeed}x`, 'info');
+}
+
+function downloadAudio() {
+    const audioPath = '<?php echo URLROOT . "/" . $blog->audio_path; ?>';
+    const filename = 'audio-<?php echo $blog->slug; ?>.mp3';
+    
+    // Create download link
+    const link = document.createElement('a');
+    link.href = audioPath;
+    link.download = filename;
+    link.style.display = 'none';
+    
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    showNotification('Audio download gestart', 'success');
+}
+
+// Initialize audio player when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    const audioPlayer = document.querySelector('audio');
+    
+    if (audioPlayer) {
+        // Add loading indicator
+        audioPlayer.addEventListener('loadstart', function() {
+            showNotification('Audio wordt geladen...', 'info');
+        });
+        
+        // Audio loaded successfully
+        audioPlayer.addEventListener('canplaythrough', function() {
+            console.log('Audio gereed voor afspelen');
+        });
+        
+        // Error handling
+        audioPlayer.addEventListener('error', function(e) {
+            console.error('Audio load error:', e);
+            showNotification('Er is een probleem met het laden van de audio', 'error');
+        });
+        
+        // Time update for progress tracking
+        audioPlayer.addEventListener('timeupdate', function() {
+            // Can be used for additional progress tracking if needed
+        });
+        
+        // Audio ended
+        audioPlayer.addEventListener('ended', function() {
+            showNotification('Audio afspelen voltooid', 'success');
+        });
+    }
+});
+<?php endif; ?>
 </script>
