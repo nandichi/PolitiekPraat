@@ -58,6 +58,96 @@ if (!function_exists('isAdmin')) {
     }
 }
 
+if (!function_exists('getBlogImageUrl')) {
+    /**
+     * Gets the correct URL for a blog image
+     * 
+     * @param string|null $imagePath The image path from database
+     * @return string|null The full URL to the image or null if no image
+     */
+    function getBlogImageUrl($imagePath) {
+        if (empty($imagePath)) {
+            return null;
+        }
+        
+        // If path already starts with http:// or https://, return as is
+        if (preg_match('/^https?:\/\//', $imagePath)) {
+            return $imagePath;
+        }
+        
+        // Remove any leading slash to normalize the path
+        $imagePath = ltrim($imagePath, '/');
+        
+        // Check if the file exists
+        if (file_exists(BASE_PATH . '/' . $imagePath)) {
+            return URLROOT . '/' . $imagePath;
+        }
+        
+        // If file doesn't exist, still return the expected path for backwards compatibility
+        return URLROOT . '/' . $imagePath;
+    }
+}
+
+if (!function_exists('getBlogVideoUrl')) {
+    /**
+     * Gets the correct URL for a blog video
+     * 
+     * @param string|null $videoPath The video path from database
+     * @return string|null The full URL to the video or null if no video
+     */
+    function getBlogVideoUrl($videoPath) {
+        if (empty($videoPath)) {
+            return null;
+        }
+        
+        // If path already starts with http:// or https://, return as is
+        if (preg_match('/^https?:\/\//', $videoPath)) {
+            return $videoPath;
+        }
+        
+        // Remove any leading slash to normalize the path
+        $videoPath = ltrim($videoPath, '/');
+        
+        // Check if the file exists
+        if (file_exists(BASE_PATH . '/' . $videoPath)) {
+            return URLROOT . '/' . $videoPath;
+        }
+        
+        // If file doesn't exist, still return the expected path for backwards compatibility
+        return URLROOT . '/' . $videoPath;
+    }
+}
+
+if (!function_exists('getBlogAudioUrl')) {
+    /**
+     * Gets the correct URL for a blog audio file
+     * 
+     * @param string|null $audioPath The audio path from database
+     * @return string|null The full URL to the audio or null if no audio
+     */
+    function getBlogAudioUrl($audioPath) {
+        if (empty($audioPath)) {
+            return null;
+        }
+        
+        // If path already starts with http:// or https://, return as is
+        if (preg_match('/^https?:\/\//', $audioPath)) {
+            return $audioPath;
+        }
+        
+        // Remove any leading slash to normalize the path
+        $audioPath = ltrim($audioPath, '/');
+        
+        // Check if the file exists
+        if (file_exists(BASE_PATH . '/' . $audioPath)) {
+            return URLROOT . '/' . $audioPath;
+        }
+        
+        // If file doesn't exist, still return the expected path for backwards compatibility
+        return URLROOT . '/' . $audioPath;
+    }
+}
+
 // Additional helper functions can be added here
 
 } // End of !defined('HELPERS_INCLUDED') 

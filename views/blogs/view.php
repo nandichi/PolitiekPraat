@@ -2,7 +2,7 @@
 // Voeg dynamische meta tags toe voor deze specifieke blog
 $pageTitle = htmlspecialchars($blog->title) . ' | PolitiekPraat';
 $pageDescription = htmlspecialchars($blog->summary);
-$pageImage = $blog->image_path ? URLROOT . '/' . $blog->image_path : URLROOT . '/public/img/og-image.jpg';
+$pageImage = $blog->image_path ? getBlogImageUrl($blog->image_path) : URLROOT . '/public/img/og-image.jpg';
 
 // Voeg deze variabelen toe aan $data voor de header
 $data = [
@@ -18,7 +18,7 @@ require_once 'views/templates/header.php'; ?>
 
 <main class="bg-gradient-to-br from-gray-50 via-blue-50/30 to-indigo-50/20 min-h-screen">
     <!-- Professionele Hero Section -->
-    <section class="relative text-white <?php echo $blog->image_path ? 'bg-cover bg-center' : 'bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900'; ?>" style="<?php echo $blog->image_path ? 'background-image: url(\'' . URLROOT . '/' . $blog->image_path . '\');' : ''; ?>">
+    <section class="relative text-white <?php echo $blog->image_path ? 'bg-cover bg-center' : 'bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900'; ?>" style="<?php echo $blog->image_path ? 'background-image: url(\'' . getBlogImageUrl($blog->image_path) . '\');' : ''; ?>">
         <!-- Overlay -->
         <div class="absolute inset-0 <?php echo $blog->image_path ? 'bg-black/60' : ''; ?>">
             <?php if (!$blog->image_path): ?>
@@ -105,8 +105,8 @@ require_once 'views/templates/header.php'; ?>
                         <?php if ($blog->video_path): ?>
                             <!-- Lokaal geüploade video -->
                             <div class="relative aspect-video bg-black">
-                                <video controls class="w-full h-full rounded-t-2xl sm:rounded-t-3xl" poster="<?php echo $blog->image_path ? URLROOT . '/' . $blog->image_path : ''; ?>">
-                                    <source src="<?php echo URLROOT . '/' . $blog->video_path; ?>" type="video/mp4">
+                                <video controls class="w-full h-full rounded-t-2xl sm:rounded-t-3xl" poster="<?php echo $blog->image_path ? getBlogImageUrl($blog->image_path) : ''; ?>">
+                                    <source src="<?php echo getBlogVideoUrl($blog->video_path); ?>" type="video/mp4">
                                     Je browser ondersteunt geen video weergave.
                                 </video>
                             </div>
@@ -517,7 +517,7 @@ require_once 'views/templates/header.php'; ?>
                                 <a href="<?php echo URLROOT . '/blogs/view/' . $relatedBlog->slug; ?>" class="block">
                                     <?php if ($relatedBlog->image_path): ?>
                                         <div class="relative h-40 sm:h-48 overflow-hidden">
-                                            <img src="<?php echo URLROOT . '/' . $relatedBlog->image_path; ?>" 
+                                            <img src="<?php echo getBlogImageUrl($relatedBlog->image_path); ?>" 
                                                  alt="<?php echo htmlspecialchars($relatedBlog->title); ?>"
                                                  class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
                                             <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>

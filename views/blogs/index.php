@@ -127,7 +127,7 @@
                         <a href="<?php echo URLROOT . '/blogs/view/' . $blog->slug; ?>" class="block relative">
                             <?php if ($blog->image_path): ?>
                                 <div class="relative h-52 overflow-hidden">
-                                    <img src="<?php echo URLROOT . '/' . $blog->image_path; ?>" 
+                                    <img src="<?php echo getBlogImageUrl($blog->image_path); ?>" 
                                          alt="<?php echo htmlspecialchars($blog->title); ?>"
                                          class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110">
                                     <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>

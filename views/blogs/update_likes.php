@@ -32,7 +32,7 @@
                         <?php if($blog->image_path): ?>
                             <div class="flex-shrink-0 h-16 w-16 sm:h-20 sm:w-20 mr-3 sm:mr-4">
                                 <img class="h-16 w-16 sm:h-20 sm:w-20 rounded-lg object-cover shadow-md border border-gray-100" 
-                                     src="<?php echo URLROOT . '/' . $blog->image_path; ?>" 
+                                     src="<?php echo getBlogImageUrl($blog->image_path); ?>" 
                                      alt="<?php echo htmlspecialchars($blog->title); ?>">
                             </div>
                         <?php else: ?>

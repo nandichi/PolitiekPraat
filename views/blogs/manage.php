@@ -84,7 +84,7 @@
                                                 <?php if($blog->image_path): ?>
                                                     <div class="flex-shrink-0 h-16 w-16 mr-4">
                                                         <img class="h-16 w-16 rounded-lg object-cover" 
-                                                             src="<?php echo URLROOT . '/' . $blog->image_path; ?>" 
+                                                             src="<?php echo getBlogImageUrl($blog->image_path); ?>" 
                                                              alt="<?php echo htmlspecialchars($blog->title); ?>">
                                                     </div>
                                                 <?php else: ?>
@@ -172,7 +172,7 @@
                                     <?php if($blog->image_path): ?>
                                         <div class="flex-shrink-0 h-16 w-16 mr-3">
                                             <img class="h-16 w-16 rounded-lg object-cover" 
-                                                 src="<?php echo URLROOT . '/' . $blog->image_path; ?>" 
+                                                 src="<?php echo getBlogImageUrl($blog->image_path); ?>" 
                                                  alt="<?php echo htmlspecialchars($blog->title); ?>">
                                         </div>
                                     <?php else: ?>

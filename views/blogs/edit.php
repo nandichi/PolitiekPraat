@@ -75,7 +75,7 @@
                                     </div>
                                     <div class="relative rounded-xl overflow-hidden bg-white shadow-md">
                                         <div class="aspect-[16/9] overflow-hidden">
-                                            <img src="<?php echo URLROOT . '/' . $blog->image_path; ?>" 
+                                            <img src="<?php echo getBlogImageUrl($blog->image_path); ?>" 
                                                  alt="<?php echo htmlspecialchars($blog->title); ?>"
                                                  class="w-full h-full object-cover transition-transform duration-700 hover:scale-105">
                                         </div>
