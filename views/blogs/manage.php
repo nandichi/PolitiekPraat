@@ -81,21 +81,12 @@
                                     <tr class="hover:bg-gray-50 transition-colors">
                                         <td class="px-6 py-4">
                                             <div class="flex items-center">
-                                                                                <?php if($blog->image_path): ?>
-                                    <?php
-                                    // Bepaal het juiste afbeelding pad
-                                    $imagePath = '';
-                                    if (strpos($blog->image_path, 'http') === 0) {
-                                        $imagePath = $blog->image_path;
-                                    } else {
-                                        $imagePath = URLROOT . '/' . $blog->image_path;
-                                    }
-                                    ?>
-                                    <div class="flex-shrink-0 h-16 w-16 mr-4">
-                                        <img class="h-16 w-16 rounded-lg object-cover" 
-                                             src="<?php echo $imagePath; ?>" 
-                                             alt="<?php echo htmlspecialchars($blog->title); ?>">
-                                    </div>
+                                                <?php if($blog->image_path): ?>
+                                                    <div class="flex-shrink-0 h-16 w-16 mr-4">
+                                                        <img class="h-16 w-16 rounded-lg object-cover" 
+                                                             src="<?php echo URLROOT . '/' . $blog->image_path; ?>" 
+                                                             alt="<?php echo htmlspecialchars($blog->title); ?>">
+                                                    </div>
                                                 <?php else: ?>
                                                     <div class="flex-shrink-0 h-16 w-16 mr-4 bg-gray-100 rounded-lg flex items-center justify-center">
                                                         <svg class="h-8 w-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -178,21 +169,12 @@
                         <?php foreach($blogs as $blog): ?>
                             <div class="p-4 border-b border-gray-200 last:border-b-0">
                                 <div class="flex items-start">
-                                                        <?php if($blog->image_path): ?>
-                        <?php
-                        // Bepaal het juiste afbeelding pad voor mobiele weergave
-                        $mobileImagePath = '';
-                        if (strpos($blog->image_path, 'http') === 0) {
-                            $mobileImagePath = $blog->image_path;
-                        } else {
-                            $mobileImagePath = URLROOT . '/' . $blog->image_path;
-                        }
-                        ?>
-                        <div class="flex-shrink-0 h-16 w-16 mr-3">
-                            <img class="h-16 w-16 rounded-lg object-cover" 
-                                 src="<?php echo $mobileImagePath; ?>" 
-                                 alt="<?php echo htmlspecialchars($blog->title); ?>">
-                        </div>
+                                    <?php if($blog->image_path): ?>
+                                        <div class="flex-shrink-0 h-16 w-16 mr-3">
+                                            <img class="h-16 w-16 rounded-lg object-cover" 
+                                                 src="<?php echo URLROOT . '/' . $blog->image_path; ?>" 
+                                                 alt="<?php echo htmlspecialchars($blog->title); ?>">
+                                        </div>
                                     <?php else: ?>
                                         <div class="flex-shrink-0 h-16 w-16 mr-3 bg-gray-100 rounded-lg flex items-center justify-center">
                                             <svg class="h-8 w-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">

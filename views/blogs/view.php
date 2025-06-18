@@ -2,37 +2,7 @@
 // Voeg dynamische meta tags toe voor deze specifieke blog
 $pageTitle = htmlspecialchars($blog->title) . ' | PolitiekPraat';
 $pageDescription = htmlspecialchars($blog->summary);
-
-// ========================================
-// DEFINITIEVE AFBEELDING LOGICA
-// ========================================
-$blogHeaderImageUrl = '';
-$blogHeaderImageExists = false;
-
-// Debug: Log wat er uit de database komt
-error_log("DEBUG blog afbeelding: " . ($blog->image_path ?? 'NULL'));
-
-if (!empty($blog->image_path) && $blog->image_path !== null) {
-    // Check of het path al volledig is of relatief
-    if (strpos($blog->image_path, 'http') === 0) {
-        // Het is al een volledige URL
-        $blogHeaderImageUrl = $blog->image_path;
-        $blogHeaderImageExists = true;
-        error_log("DEBUG: Volledige URL gevonden: " . $blogHeaderImageUrl);
-    } else {
-        // Het is een relatief pad, voeg URLROOT toe
-        $blogHeaderImageUrl = URLROOT . '/' . $blog->image_path;
-        // Check of het bestand bestaat
-        $blogHeaderImageExists = file_exists($blog->image_path);
-        error_log("DEBUG: Relatief pad omgezet naar: " . $blogHeaderImageUrl);
-        error_log("DEBUG: Bestand bestaat: " . ($blogHeaderImageExists ? 'JA' : 'NEE'));
-    }
-} else {
-    error_log("DEBUG: Geen afbeelding path gevonden");
-}
-
-// Voor meta tags gebruiken we de blog image of een fallback
-$pageImage = $blogHeaderImageUrl ?: URLROOT . '/public/img/og-image.jpg';
+$pageImage = $blog->image_path ? URLROOT . '/' . $blog->image_path : URLROOT . '/public/img/og-image.jpg';
 
 // Voeg deze variabelen toe aan $data voor de header
 $data = [
@@ -43,34 +13,15 @@ $data = [
 
 require_once 'views/templates/header.php'; ?>
 
-<!-- Debug info (tijdelijk) -->
-<?php if (isset($_GET['debug'])): ?>
-<div style="position: fixed; top: 50px; left: 10px; background: black; color: white; padding: 10px; z-index: 9999; font-size: 12px; max-width: 400px; border-radius: 8px;">
-    <strong>🔍 AFBEELDING DEBUG INFO:</strong><br>
-    blog->image_path: <span style="color: yellow;"><?php echo htmlspecialchars($blog->image_path ?? 'NULL'); ?></span><br>
-    blogHeaderImageUrl: <span style="color: cyan;"><?php echo htmlspecialchars($blogHeaderImageUrl ?? 'NULL'); ?></span><br>
-    blogHeaderImageExists: <span style="color: <?php echo $blogHeaderImageExists ? 'lightgreen' : 'red'; ?>;"><?php echo $blogHeaderImageExists ? 'YES' : 'NO'; ?></span><br>
-    URLROOT: <span style="color: lightblue;"><?php echo URLROOT; ?></span><br>
-    File exists check: <span style="color: <?php echo ($blog->image_path && file_exists($blog->image_path)) ? 'lightgreen' : 'red'; ?>;"><?php echo ($blog->image_path && file_exists($blog->image_path)) ? 'YES' : 'NO'; ?></span>
-</div>
-<?php endif; ?>
-
 <!-- Reading Progress Bar -->
 <div id="reading-progress" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-primary via-secondary to-accent z-50 transition-all duration-300 ease-out" style="width: 0%"></div>
 
 <main class="bg-gradient-to-br from-gray-50 via-blue-50/30 to-indigo-50/20 min-h-screen">
-    <!-- ========================================
-         MODERNE HERO SECTIE MET AFBEELDING
-         ======================================== -->
-    <section class="relative text-white <?php echo $blogHeaderImageUrl && $blogHeaderImageExists ? 'bg-cover bg-center' : 'bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900'; ?>" 
-             style="<?php echo $blogHeaderImageUrl && $blogHeaderImageExists ? 'background-image: url(\'' . $blogHeaderImageUrl . '\'); background-size: cover; background-position: center; min-height: 60vh;' : 'min-height: 60vh;'; ?>"
-             <?php if (isset($_GET['debug'])): ?>
-             data-debug-image="<?php echo htmlspecialchars($blogHeaderImageUrl ?? 'none'); ?>"
-             data-debug-exists="<?php echo $blogHeaderImageExists ? 'true' : 'false'; ?>"
-             <?php endif; ?>>
+    <!-- Professionele Hero Section -->
+    <section class="relative text-white <?php echo $blog->image_path ? 'bg-cover bg-center' : 'bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900'; ?>" style="<?php echo $blog->image_path ? 'background-image: url(\'' . URLROOT . '/' . $blog->image_path . '\');' : ''; ?>">
         <!-- Overlay -->
-        <div class="absolute inset-0 <?php echo $blogHeaderImageUrl && $blogHeaderImageExists ? 'bg-black/60' : ''; ?>">
-            <?php if (!$blogHeaderImageUrl || !$blogHeaderImageExists): ?>
+        <div class="absolute inset-0 <?php echo $blog->image_path ? 'bg-black/60' : ''; ?>">
+            <?php if (!$blog->image_path): ?>
                 <div class="absolute inset-0 opacity-30 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.03"%3E%3Ccircle cx="30" cy="30" r="4"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]"></div>
                 <div class="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-transparent to-red-900/20"></div>
             <?php endif; ?>
@@ -154,7 +105,7 @@ require_once 'views/templates/header.php'; ?>
                         <?php if ($blog->video_path): ?>
                             <!-- Lokaal geüploade video -->
                             <div class="relative aspect-video bg-black">
-                                <video controls class="w-full h-full rounded-t-2xl sm:rounded-t-3xl" poster="<?php echo $blogHeaderImageUrl; ?>">
+                                <video controls class="w-full h-full rounded-t-2xl sm:rounded-t-3xl" poster="<?php echo $blog->image_path ? URLROOT . '/' . $blog->image_path : ''; ?>">
                                     <source src="<?php echo URLROOT . '/' . $blog->video_path; ?>" type="video/mp4">
                                     Je browser ondersteunt geen video weergave.
                                 </video>
@@ -192,7 +143,7 @@ require_once 'views/templates/header.php'; ?>
                             <div class="flex items-center gap-3 mb-4">
                                 <div class="p-2 bg-white rounded-lg shadow-sm">
                                     <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 016 0v6a3 3 0 01-3 3z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
                                     </svg>
                                 </div>
                                 <div>

@@ -75,16 +75,7 @@
                                     </div>
                                     <div class="relative rounded-xl overflow-hidden bg-white shadow-md">
                                         <div class="aspect-[16/9] overflow-hidden">
-                                            <?php
-                                            // Bepaal het juiste afbeelding pad
-                                            $imagePath = '';
-                                            if (strpos($blog->image_path, 'http') === 0) {
-                                                $imagePath = $blog->image_path;
-                                            } else {
-                                                $imagePath = URLROOT . '/' . $blog->image_path;
-                                            }
-                                            ?>
-                                            <img src="<?php echo $imagePath; ?>" 
+                                            <img src="<?php echo URLROOT . '/' . $blog->image_path; ?>" 
                                                  alt="<?php echo htmlspecialchars($blog->title); ?>"
                                                  class="w-full h-full object-cover transition-transform duration-700 hover:scale-105">
                                         </div>
