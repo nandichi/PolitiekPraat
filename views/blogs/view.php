@@ -136,7 +136,7 @@ require_once 'views/templates/header.php'; ?>
                     </div>
                     <?php endif; ?>
 
-                    <!-- Audio sectie voor tekst-naar-spraak (indien aanwezig) -->
+                    <!-- Podcast sectie (indien aanwezig) -->
                     <?php if (!empty($blog->audio_path) || !empty($blog->audio_url) || !empty($blog->soundcloud_url)): ?>
                     <div class="relative border-b border-gray-100">
                         <div class="bg-gradient-to-r from-primary/5 via-secondary/5 to-primary/5 p-4 sm:p-6">
@@ -147,8 +147,13 @@ require_once 'views/templates/header.php'; ?>
                                     </svg>
                                 </div>
                                 <div>
-                                    <h3 class="font-semibold text-gray-900">Audio versie</h3>
-                                    <p class="text-sm text-gray-600">Luister naar dit artikel
+                                    <h3 class="font-semibold text-gray-900 flex items-center gap-2">
+                                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary">
+                                            PODCAST
+                                        </span>
+                                        PolitiekPraat Podcast Aflevering
+                                    </h3>
+                                    <p class="text-sm text-gray-600">Luister naar de volledige podcastaflevering
                                         <?php if (!empty($blog->audio_url)): ?>
                                             <span class="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">
                                                 <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -169,16 +174,16 @@ require_once 'views/templates/header.php'; ?>
                                 </div>
                             </div>
                             
-                            <!-- Moderne audio player -->
+                            <!-- Moderne podcast player -->
                             <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
                                 <?php if (!empty($blog->soundcloud_url)): ?>
-                                    <!-- SoundCloud Embed Player -->
+                                    <!-- SoundCloud Podcast Embed Player -->
                                     <?php
-                                    // Constructeer SoundCloud embed URL
-                                    $soundcloudEmbedUrl = 'https://w.soundcloud.com/player/?url=' . urlencode($blog->soundcloud_url) . '&color=%23ff5500&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=true';
+                                    // Constructeer SoundCloud embed URL voor podcast
+                                    $soundcloudEmbedUrl = 'https://w.soundcloud.com/player/?url=' . urlencode($blog->soundcloud_url) . '&color=%23ff5500&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=true&visual=true';
                                     ?>
                                     <iframe width="100%" 
-                                            height="166" 
+                                            height="300" 
                                             scrolling="no" 
                                             frameborder="no" 
                                             allow="autoplay" 
@@ -197,27 +202,35 @@ require_once 'views/templates/header.php'; ?>
                                     ?>
                                     
                                     <?php if ($fileId): ?>
-                                        <!-- Google Drive Audio Player met verbeterde compatibiliteit -->
-                                        <div class="google-drive-audio-container">
+                                        <!-- Google Drive Podcast Player met verbeterde compatibiliteit -->
+                                        <div class="google-drive-podcast-container">
                                             <!-- Probeer eerst de audio direct te laden -->
-                                            <audio id="googleDriveAudio" controls class="w-full" preload="none" style="display: none;">
+                                            <audio id="googleDrivePodcast" controls class="w-full" preload="none" style="display: none;">
                                                 <source src="https://docs.google.com/uc?export=download&id=<?php echo $fileId; ?>" type="audio/mpeg">
                                                 <source src="https://drive.google.com/uc?export=download&id=<?php echo $fileId; ?>" type="audio/mpeg">
                                             </audio>
                                             
                                             <!-- Fallback: Google Drive preview iframe -->
                                             <div id="googleDrivePreview" class="relative">
-                                                <div class="flex items-center justify-center p-6 bg-gray-50 rounded-lg">
+                                                <div class="flex items-center justify-center p-8 bg-gradient-to-br from-primary/5 to-secondary/5 rounded-lg">
                                                     <div class="text-center">
-                                                        <svg class="w-12 h-12 text-gray-400 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>
-                                                        </svg>
-                                                        <p class="text-gray-600 mb-4">Audio bestand laden vanuit Google Drive...</p>
-                                                        <button onclick="loadGoogleDriveAudio('<?php echo $fileId; ?>')" class="inline-flex items-center px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors">
-                                                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <div class="relative mb-4">
+                                                            <div class="w-20 h-20 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center mx-auto animate-pulse">
+                                                                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
+                                                                </svg>
+                                                            </div>
+                                                            <div class="absolute -top-1 -right-1 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center">
+                                                                <div class="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                                                            </div>
+                                                        </div>
+                                                        <h4 class="font-semibold text-gray-900 mb-2">PolitiekPraat Podcast</h4>
+                                                        <p class="text-gray-600 mb-4">Podcast aflevering laden vanuit Google Drive...</p>
+                                                        <button onclick="loadGoogleDrivePodcast('<?php echo $fileId; ?>')" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-primary to-secondary text-white rounded-lg hover:from-primary-dark hover:to-secondary-dark transition-all duration-300 shadow-lg">
+                                                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h1m4 0h1m-6-8h12a2 2 0 012 2v8a2 2 0 01-2 2H6a2 2 0 01-2-2V8a2 2 0 012-2z"/>
                                                             </svg>
-                                                            Audio laden
+                                                            Podcast afspelen
                                                         </button>
                                                     </div>
                                                 </div>
@@ -237,41 +250,69 @@ require_once 'views/templates/header.php'; ?>
                                         </div>
                                     <?php else: ?>
                                         <div class="text-center text-red-600 p-4">
-                                            <p>Fout: Kan Google Drive audio niet laden. Controleer of de link correct is.</p>
+                                            <p>Fout: Kan podcast niet laden. Controleer of de link correct is.</p>
                                         </div>
                                     <?php endif; ?>
                                     
                                 <?php elseif (!empty($blog->audio_path)): ?>
-                                    <!-- Lokaal audio bestand -->
-                                    <audio controls class="w-full" preload="metadata">
-                                        <source src="<?php echo URLROOT . '/' . $blog->audio_path; ?>" type="audio/mpeg">
-                                        <source src="<?php echo URLROOT . '/' . $blog->audio_path; ?>" type="audio/wav">
-                                        <source src="<?php echo URLROOT . '/' . $blog->audio_path; ?>" type="audio/ogg">
-                                        Je browser ondersteunt geen audio weergave.
-                                    </audio>
+                                    <!-- Lokaal podcast bestand -->
+                                    <div class="podcast-player-container">
+                                        <audio controls class="w-full" preload="metadata">
+                                            <source src="<?php echo URLROOT . '/' . $blog->audio_path; ?>" type="audio/mpeg">
+                                            <source src="<?php echo URLROOT . '/' . $blog->audio_path; ?>" type="audio/wav">
+                                            <source src="<?php echo URLROOT . '/' . $blog->audio_path; ?>" type="audio/ogg">
+                                            Je browser ondersteunt geen audio weergave.
+                                        </audio>
+                                    </div>
                                 <?php endif; ?>
                                 
-                                <!-- Audio controles en info -->
-                                <div class="mt-3 flex items-center justify-between text-sm text-gray-500">
-                                    <div class="flex items-center space-x-2">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>
-                                        </svg>
-                                        <span>Tekst-naar-spraak versie</span>
+                                <!-- Podcast controles en info -->
+                                <div class="mt-4 flex items-center justify-between text-sm text-gray-500">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="flex items-center space-x-2">
+                                            <div class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
+                                            <span class="font-medium">LIVE PODCAST</span>
+                                        </div>
+                                        <div class="flex items-center space-x-1">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5zM4 19h5a2 2 0 002-2v-5a2 2 0 00-2-2H4a2 2 0 00-2 2v5a2 2 0 002 2z"/>
+                                            </svg>
+                                            <span>PolitiekPraat Studio</span>
+                                        </div>
                                     </div>
-                                    <div class="flex items-center space-x-4">
-                                        <button onclick="changePlaybackSpeed()" id="speedButton" class="inline-flex items-center px-2 py-1 bg-gray-100 hover:bg-gray-200 rounded text-xs font-medium transition-colors">
+                                    <div class="flex items-center space-x-3">
+                                        <button onclick="changePodcastSpeed()" id="podcastSpeedButton" class="inline-flex items-center px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-full text-xs font-medium transition-colors">
                                             <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
                                             </svg>
-                                            <span id="speedText">1x</span>
+                                            <span id="podcastSpeedText">1x</span>
                                         </button>
-                                        <button onclick="downloadAudio()" class="inline-flex items-center px-2 py-1 bg-gray-100 hover:bg-gray-200 rounded text-xs font-medium transition-colors">
+                                        <button onclick="sharePodcast()" class="inline-flex items-center px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-full text-xs font-medium transition-colors">
+                                            <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"/>
+                                            </svg>
+                                            Delen
+                                        </button>
+                                        <button onclick="downloadPodcast()" class="inline-flex items-center px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-full text-xs font-medium transition-colors">
                                             <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                                             </svg>
                                             Download
                                         </button>
+                                    </div>
+                                </div>
+                                
+                                <!-- Podcast metadata -->
+                                <div class="mt-4 p-3 bg-gray-50 rounded-lg">
+                                    <div class="flex items-start justify-between">
+                                        <div class="flex-1">
+                                            <h4 class="font-medium text-gray-900 mb-1">Over deze aflevering</h4>
+                                            <p class="text-xs text-gray-600">Een diepgaande bespreking van actuele politieke ontwikkelingen met expert analyse en achtergrond informatie.</p>
+                                        </div>
+                                        <div class="ml-4 text-right">
+                                            <div class="text-xs text-gray-500">Publicatiedatum</div>
+                                            <div class="text-sm font-medium text-gray-900"><?php echo date('d M Y', strtotime($blog->published_at)); ?></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
