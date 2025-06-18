@@ -1133,7 +1133,7 @@ require_once 'views/templates/header.php';
                                     <!-- Image sectie -->
                                     <div class="relative h-64 lg:h-72 overflow-hidden">
                                         <?php if ($blog->image_path): ?>
-                                            <img src="<?php echo URLROOT . '/' . $blog->image_path; ?>" 
+                                            <img src="<?php echo getBlogImageUrl($blog->image_path); ?>" 
                                                  alt="<?php echo htmlspecialchars($blog->title); ?>"
                                                  class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
                                                  loading="lazy" decoding="async">

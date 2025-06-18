@@ -26,7 +26,9 @@ class BlogsController {
 
             // Handle image upload
             if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-                $upload_dir = 'uploads/blogs/images/';
+                $upload_dir = BASE_PATH . '/uploads/blogs/images/';
+                $relative_upload_dir = 'uploads/blogs/images/';
+                
                 if (!file_exists($upload_dir)) {
                     mkdir($upload_dir, 0777, true);
                 }
@@ -39,14 +41,23 @@ class BlogsController {
                     $target_path = $upload_dir . $new_filename;
                     
                     if (move_uploaded_file($_FILES['image']['tmp_name'], $target_path)) {
-                        $image_path = $target_path;
+                        // Store the relative path in database for compatibility
+                        $image_path = $relative_upload_dir . $new_filename;
+                        
+                        // Debug: Log the upload success
+                        error_log("Blog image uploaded successfully: " . $image_path);
+                    } else {
+                        // Debug: Log upload failure
+                        error_log("Blog image upload failed for file: " . $_FILES['image']['name']);
                     }
                 }
             }
 
             // Handle video upload
             if (isset($_FILES['video']) && $_FILES['video']['error'] === UPLOAD_ERR_OK) {
-                $upload_dir = 'uploads/blogs/videos/';
+                $upload_dir = BASE_PATH . '/uploads/blogs/videos/';
+                $relative_upload_dir = 'uploads/blogs/videos/';
+                
                 if (!file_exists($upload_dir)) {
                     mkdir($upload_dir, 0777, true);
                 }
@@ -61,7 +72,8 @@ class BlogsController {
                         $target_path = $upload_dir . $new_filename;
                         
                         if (move_uploaded_file($_FILES['video']['tmp_name'], $target_path)) {
-                            $video_path = $target_path;
+                            // Store the relative path in database for compatibility
+                            $video_path = $relative_upload_dir . $new_filename;
                         }
                     }
                 }
@@ -120,7 +132,9 @@ class BlogsController {
             
             // Handle lokaal audio bestand upload (alleen als geen URL is opgegeven)
             if (empty($audio_url) && isset($_FILES['audio']) && $_FILES['audio']['error'] === UPLOAD_ERR_OK) {
-                $upload_dir = 'uploads/blogs/audio/';
+                $upload_dir = BASE_PATH . '/uploads/blogs/audio/';
+                $relative_upload_dir = 'uploads/blogs/audio/';
+                
                 if (!file_exists($upload_dir)) {
                     mkdir($upload_dir, 0777, true);
                 }
@@ -135,7 +149,8 @@ class BlogsController {
                         $target_path = $upload_dir . $new_filename;
                         
                         if (move_uploaded_file($_FILES['audio']['tmp_name'], $target_path)) {
-                            $audio_path = $target_path;
+                            // Store the relative path in database for compatibility
+                            $audio_path = $relative_upload_dir . $new_filename;
                         }
                     }
                 }
@@ -153,6 +168,9 @@ class BlogsController {
                 'audio_url' => $audio_url,
                 'soundcloud_url' => $soundcloud_url
             ];
+            
+            // Debug: Log what will be saved to database
+            error_log("Blog data to save - Image path: " . $image_path . ", Video path: " . $video_path . ", Audio path: " . $audio_path);
             
             // Create the blog post
             $blogId = $this->blogModel->create($data);
@@ -249,7 +267,9 @@ class BlogsController {
 
             // Handle new image upload if provided
             if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-                $upload_dir = 'uploads/blogs/images/';
+                $upload_dir = BASE_PATH . '/uploads/blogs/images/';
+                $relative_upload_dir = 'uploads/blogs/images/';
+                
                 if (!file_exists($upload_dir)) {
                     mkdir($upload_dir, 0777, true);
                 }
@@ -262,18 +282,21 @@ class BlogsController {
                     $target_path = $upload_dir . $new_filename;
                     
                     if (move_uploaded_file($_FILES['image']['tmp_name'], $target_path)) {
-                        // Delete old image if it exists
-                        if (!empty($blog->image_path) && file_exists($blog->image_path)) {
-                            unlink($blog->image_path);
+                        // Delete old image if it exists  
+                        if (!empty($blog->image_path) && file_exists(BASE_PATH . '/' . $blog->image_path)) {
+                            unlink(BASE_PATH . '/' . $blog->image_path);
                         }
-                        $image_path = $target_path;
+                        // Store the relative path in database for compatibility
+                        $image_path = $relative_upload_dir . $new_filename;
                     }
                 }
             }
 
             // Handle new video upload if provided
             if (isset($_FILES['video']) && $_FILES['video']['error'] === UPLOAD_ERR_OK) {
-                $upload_dir = 'uploads/blogs/videos/';
+                $upload_dir = BASE_PATH . '/uploads/blogs/videos/';
+                $relative_upload_dir = 'uploads/blogs/videos/';
+                
                 if (!file_exists($upload_dir)) {
                     mkdir($upload_dir, 0777, true);
                 }
@@ -289,10 +312,11 @@ class BlogsController {
                         
                         if (move_uploaded_file($_FILES['video']['tmp_name'], $target_path)) {
                             // Delete old video if it exists
-                            if (!empty($blog->video_path) && file_exists($blog->video_path)) {
-                                unlink($blog->video_path);
+                            if (!empty($blog->video_path) && file_exists(BASE_PATH . '/' . $blog->video_path)) {
+                                unlink(BASE_PATH . '/' . $blog->video_path);
                             }
-                            $video_path = $target_path;
+                            // Store the relative path in database for compatibility
+                            $video_path = $relative_upload_dir . $new_filename;
                         }
                     }
                 }
@@ -327,8 +351,8 @@ class BlogsController {
                         preg_match('/[?&]id=([a-zA-Z0-9_-]+)/', $audio_url, $matches)) {
                         // URL is geldig, bewaar originele URL
                         // Reset lokaal audio bestand als URL wordt gebruikt
-                        if (!empty($blog->audio_path) && file_exists($blog->audio_path)) {
-                            unlink($blog->audio_path);
+                        if (!empty($blog->audio_path) && file_exists(BASE_PATH . '/' . $blog->audio_path)) {
+                            unlink(BASE_PATH . '/' . $blog->audio_path);
                         }
                         $audio_path = '';
                     } else {
@@ -351,8 +375,8 @@ class BlogsController {
                         preg_match('/^https:\/\/(www\.|m\.)?soundcloud\.com\/[^\/]+\/sets\/[^\/]+/', $soundcloud_url)) {
                         // URL is geldig, bewaar originele URL
                         // Reset lokaal audio bestand en Google Drive URL als SoundCloud wordt gebruikt
-                        if (!empty($blog->audio_path) && file_exists($blog->audio_path)) {
-                            unlink($blog->audio_path);
+                        if (!empty($blog->audio_path) && file_exists(BASE_PATH . '/' . $blog->audio_path)) {
+                            unlink(BASE_PATH . '/' . $blog->audio_path);
                         }
                         $audio_path = '';
                         $audio_url = '';
@@ -368,7 +392,9 @@ class BlogsController {
             
             // Handle lokaal audio bestand upload (alleen als geen URL is opgegeven)
             if (empty($audio_url) && isset($_FILES['audio']) && $_FILES['audio']['error'] === UPLOAD_ERR_OK) {
-                $upload_dir = 'uploads/blogs/audio/';
+                $upload_dir = BASE_PATH . '/uploads/blogs/audio/';
+                $relative_upload_dir = 'uploads/blogs/audio/';
+                
                 if (!file_exists($upload_dir)) {
                     mkdir($upload_dir, 0777, true);
                 }
@@ -384,10 +410,11 @@ class BlogsController {
                         
                         if (move_uploaded_file($_FILES['audio']['tmp_name'], $target_path)) {
                             // Delete old audio if it exists
-                            if (!empty($blog->audio_path) && file_exists($blog->audio_path)) {
-                                unlink($blog->audio_path);
+                            if (!empty($blog->audio_path) && file_exists(BASE_PATH . '/' . $blog->audio_path)) {
+                                unlink(BASE_PATH . '/' . $blog->audio_path);
                             }
-                            $audio_path = $target_path;
+                            // Store the relative path in database for compatibility
+                            $audio_path = $relative_upload_dir . $new_filename;
                             $audio_url = ''; // Reset URL als lokaal bestand wordt gebruikt
                         }
                     }
@@ -443,16 +470,16 @@ class BlogsController {
         // Delete the blog
         if ($this->blogModel->delete($id)) {
             // Delete associated files if they exist
-            if (!empty($blog->image_path) && file_exists($blog->image_path)) {
-                unlink($blog->image_path);
+            if (!empty($blog->image_path) && file_exists(BASE_PATH . '/' . $blog->image_path)) {
+                unlink(BASE_PATH . '/' . $blog->image_path);
             }
             
-            if (!empty($blog->video_path) && file_exists($blog->video_path)) {
-                unlink($blog->video_path);
+            if (!empty($blog->video_path) && file_exists(BASE_PATH . '/' . $blog->video_path)) {
+                unlink(BASE_PATH . '/' . $blog->video_path);
             }
             
-            if (!empty($blog->audio_path) && file_exists($blog->audio_path)) {
-                unlink($blog->audio_path);
+            if (!empty($blog->audio_path) && file_exists(BASE_PATH . '/' . $blog->audio_path)) {
+                unlink(BASE_PATH . '/' . $blog->audio_path);
             }
         }
         
