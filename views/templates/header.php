@@ -869,7 +869,6 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                                             <span class="ml-2 px-2 py-0.5 text-xs font-bold bg-secondary text-white 
                                                         rounded-full shadow-sm">2025</span>
                                         </div>
-                                        <p class="text-xs text-gray-500">Ontdek welke partij bij je past</p>
                                     </div>
                                 </a>
 
@@ -886,11 +885,10 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                                     </div>
                                     <div class="ml-3 flex-1">
                                         <div class="flex items-center">
-                                            <p class="text-sm font-semibold text-gray-800">Programma Vergelijker</p>
+                                            <p class="text-sm font-semibold text-gray-800">Vergelijker</p>
                                             <span class="ml-2 px-2 py-0.5 text-xs font-bold bg-accent text-white 
                                                         rounded-full shadow-sm">Nieuw</span>
                                         </div>
-                                        <p class="text-xs text-gray-500">Vergelijk partijstandpunten</p>
                                     </div>
                                 </a>
                             </div>
