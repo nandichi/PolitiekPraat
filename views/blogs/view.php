@@ -17,78 +17,76 @@ require_once 'views/templates/header.php'; ?>
 <div id="reading-progress" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-primary via-secondary to-accent z-50 transition-all duration-300 ease-out" style="width: 0%"></div>
 
 <main class="bg-gradient-to-br from-gray-50 via-blue-50/30 to-indigo-50/20 min-h-screen">
-    <section class="relative overflow-hidden text-white <?php echo $blog->image_path ? 'bg-cover bg-center' : 'bg-gradient-to-br from-primary-dark via-primary to-secondary'; ?>" style="<?php echo $blog->image_path ? 'background-image: url(\'' . getBlogImageUrl($blog->image_path) . '\');' : ''; ?>">
-        <!-- Overlay voor leesbaarheid -->
-        <div class="absolute inset-0 <?php echo $blog->image_path ? 'bg-black/60' : 'bg-primary-dark/30'; ?>"></div>
+    <!-- Professionele Hero Section -->
+    <section class="relative text-white <?php echo $blog->image_path ? 'bg-cover bg-center' : 'bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900'; ?>" style="<?php echo $blog->image_path ? 'background-image: url(\'' . getBlogImageUrl($blog->image_path) . '\');' : ''; ?>">
+        <!-- Overlay -->
+        <div class="absolute inset-0 <?php echo $blog->image_path ? 'bg-black/60' : ''; ?>">
+            <?php if (!$blog->image_path): ?>
+                <div class="absolute inset-0 opacity-30 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.03"%3E%3Ccircle cx="30" cy="30" r="4"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]"></div>
+                <div class="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-transparent to-red-900/20"></div>
+            <?php endif; ?>
+        </div>
         
-        <!-- Sfeervolle lichteffecten als er geen afbeelding is -->
-        <?php if (!$blog->image_path): ?>
-            <div class="absolute top-0 left-0 -translate-x-1/4 -translate-y-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-pulse"></div>
-            <div class="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 w-96 h-96 bg-secondary/15 rounded-full blur-3xl animate-pulse" style="animation-delay: 2s;"></div>
-        <?php endif; ?>
-
         <div class="relative z-10 container mx-auto px-4">
             <div class="max-w-4xl mx-auto flex flex-col items-center justify-center min-h-[50vh] md:min-h-[60vh] py-16 text-center">
                 
-                <!-- Broodkruimelpad voor navigatie -->
-                <nav class="w-full mb-4" aria-label="Breadcrumb">
-                    <ol class="flex justify-center items-center space-x-2 text-sm text-blue-200/80">
+                <!-- Breadcrumb -->
+                <nav class="w-full mb-6" aria-label="Breadcrumb">
+                    <ol class="flex justify-center items-center space-x-2 text-sm text-gray-300">
                         <li><a href="<?php echo URLROOT; ?>" class="hover:text-white transition-colors duration-200">Home</a></li>
-                        <li><span class="opacity-50">/</span></li>
+                        <li><span class="text-gray-500">/</span></li>
                         <li><a href="<?php echo URLROOT; ?>/blogs" class="hover:text-white transition-colors duration-200">Blogs</a></li>
-                        <li><span class="opacity-50">/</span></li>
-                        <li class="text-white/70 truncate max-w-xs"><?php echo htmlspecialchars($blog->title); ?></li>
+                        <li><span class="text-gray-500">/</span></li>
+                        <li class="text-gray-400 truncate max-w-xs"><?php echo htmlspecialchars($blog->title); ?></li>
                     </ol>
                 </nav>
 
-                <!-- Categorie Badge -->
-                <div class="mb-6">
-                    <span class="inline-flex items-center gap-x-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/20 text-sm font-medium text-blue-100 backdrop-blur-sm">
-                        <svg class="w-2 h-2 fill-green-400" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3"></circle></svg>
+                <!-- Badges -->
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="inline-flex items-center px-4 py-1.5 rounded-full bg-blue-600/20 border border-blue-500/30 text-blue-200 font-medium text-sm backdrop-blur-sm">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+                        </svg>
                         Politieke Analyse
                     </span>
+                    
+                    <div class="inline-flex items-center text-gray-300 text-sm bg-white/10 px-4 py-1.5 rounded-full backdrop-blur-sm border border-white/20">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <span id="reading-minutes">5</span> min lezen
+                    </div>
                 </div>
                 
-                <!-- Titel van de blog -->
-                <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-secondary-light via-white to-primary-light leading-tight tracking-tight mb-8 [text-shadow:_0_2px_10px_rgb(0_0_0_/_30%)]">
+                <!-- Title -->
+                <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight tracking-tight mb-8 [text-shadow:_0_2px_4px_rgb(0_0_0_/_50%)]">
                     <?php echo htmlspecialchars($blog->title); ?>
                 </h1>
 
-                <!-- Meta-informatie (Auteur, Datum, Leestijd, Likes) -->
-                <div class="flex flex-wrap justify-center items-center gap-4 sm:gap-6">
-                    
-                    <!-- Auteur en publicatiedatum -->
-                    <div class="flex items-center space-x-3">
-                        <img src="<?php echo URLROOT; ?>/public/images/profiles/naoufal-foto.jpg" 
-                             onerror="this.src='<?php echo URLROOT; ?>/public/images/naoufal-foto.jpg';"
+                <!-- Author Info & Actions -->
+                <div class="flex flex-col sm:flex-row items-center gap-6">
+                    <div class="flex items-center space-x-4">
+                        <img src="<?php echo URLROOT; ?>/public/images/naoufal-foto.jpg" 
+                             onerror="if(this.src !== '<?php echo URLROOT; ?>/images/naoufal-foto.jpg') this.src='<?php echo URLROOT; ?>/images/naoufal-foto.jpg'; else if(this.src !== '<?php echo URLROOT; ?>/public/images/profiles/naoufal-foto.jpg') this.src='<?php echo URLROOT; ?>/public/images/profiles/naoufal-foto.jpg';"
                              alt="<?php echo htmlspecialchars($blog->author_name); ?>"
-                             class="w-12 h-12 rounded-full border-2 border-white/20 shadow-lg object-cover">
-                        <div>
-                            <p class="font-semibold text-base text-white"><?php echo htmlspecialchars($blog->author_name); ?></p>
-                            <p class="text-sm text-blue-200/90"><?php 
+                             class="w-14 h-14 rounded-full border-2 border-white/30 shadow-xl object-cover">
+                        <div class="text-left">
+                            <h3 class="text-white font-semibold text-lg"><?php echo htmlspecialchars($blog->author_name); ?></h3>
+                            <p class="text-gray-300 text-sm"><?php 
                                 $formatter = new IntlDateFormatter('nl_NL', IntlDateFormatter::LONG, IntlDateFormatter::NONE);
                                 echo $formatter->format(strtotime($blog->published_at)); 
                             ?></p>
                         </div>
                     </div>
-
-                    <div class="hidden sm:block w-px h-8 bg-white/20"></div>
-
-                    <!-- Leestijd -->
-                    <div class="flex items-center space-x-2 bg-white/10 p-2 rounded-full">
-                        <svg class="w-5 h-5 text-blue-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        <span class="text-sm font-medium text-white"><span id="reading-minutes">5</span> min lezen</span>
-                    </div>
-
-                    <!-- Like-knop -->
+                    
                     <button id="heroLikeButton" 
-                            class="hero-like-btn group flex items-center space-x-2 bg-white/10 hover:bg-white/20 p-2 rounded-full transition-all duration-300"
+                            class="hero-like-btn group flex items-center space-x-2 bg-white/5 hover:bg-white/10 px-4 py-2 rounded-full transition-all duration-300 hover:scale-105 border border-white/20"
                             data-slug="<?php echo $blog->slug; ?>"
                             aria-label="Like deze blog">
-                        <svg class="w-5 h-5 transition-all duration-300 group-hover:text-red-400 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 transition-all duration-300 group-hover:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
                         </svg>
-                        <span id="hero-like-count" class="group-hover:text-red-400 transition-colors text-sm font-semibold text-white"><?php echo $blog->likes; ?> likes</span>
+                        <span id="hero-like-count" class="group-hover:text-red-400 transition-colors text-sm font-semibold"><?php echo $blog->likes; ?> likes</span>
                     </button>
                 </div>
             </div>
