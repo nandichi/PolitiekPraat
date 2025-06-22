@@ -34,7 +34,7 @@ $parties = [
             'Energie' => 'Voorstander van kernenergie als onderdeel van de energiemix'
         ],
         'current_seats' => 37,
-        'polling' => ['seats' => 31, 'percentage' => 20.7, 'change' => -6],
+        'polling' => ['seats' => 30, 'percentage' => 20.0, 'change' => -7],
         'perspectives' => [
             'left' => 'De PVV pleit voor afschaffing van het eigen risico in de zorg, wat de gezondheidszorg toegankelijker en betaalbaarder maakt voor alle burgers, vooral voor mensen met lagere inkomens.',
             'right' => 'De PVV komt sterk op voor nationale soevereiniteit en strenger immigratiebeleid, wat aanhangers zien als bescherming van de Nederlandse cultuur en identiteit.'
@@ -54,7 +54,7 @@ $parties = [
             'Energie' => 'Voorstander van kernenergie als aanvulling op duurzame bronnen'
         ],
         'current_seats' => 24,
-        'polling' => ['seats' => 24, 'percentage' => 16.0, 'change' => 0],
+        'polling' => ['seats' => 22, 'percentage' => 14.7, 'change' => -2],
         'perspectives' => [
             'left' => 'De VVD steunt praktische klimaatmaatregelen en energietransitieplannen die de industrie niet vervreemden, waardoor een duurzamere economie mogelijk wordt zonder massaal banenverlies.',
             'right' => 'De VVD bevordert economische groei, lagere belastingen en minder bureaucratie, wat ondernemerschap stimuleert en de markteconomie versterkt.'
@@ -62,11 +62,11 @@ $parties = [
     ],
     'NSC' => [
         'name' => 'Nieuw Sociaal Contract',
-        'leader' => 'Pieter Omtzigt',
+        'leader' => 'Nicolien van Vroonhoven',
         'logo' => 'https://i.ibb.co/YT2fJZb4/nsc.png',
-        'leader_photo' => '/partijleiders/omtzicht.jpg',
+        'leader_photo' => 'https://i.ibb.co/NgY27GmZ/nicolien-van-vroonhoven-en-piete.jpg',
         'description' => 'NSC is een baanbrekende partij die staat voor transparantie, eerlijk bestuur en een fundamentele herwaardering van de democratische instituties. Zij leggen de nadruk op integriteit, een verantwoordelijke overheid en het herstel van het vertrouwen in de politiek. Met een duidelijke agenda gericht op grondrechten, tegenmacht en publieke participatie wil NSC de politiek opnieuw in dienst stellen van de burger.',
-        'leader_info' => 'Pieter Omtzigt, de oprichter van NSC in 2023, is bekend geworden door zijn vasthoudende onderzoek naar de toeslagenaffaire. Zijn reputatie als een compromisloze waarheidsvinder en zijn scherpe blik op systemische misstanden maken hem tot een symbool van integriteit en rechtvaardigheid. Hij streeft ernaar de politiek te zuiveren van gevestigde belangen en de macht terug te geven aan de gewone burger.',
+        'leader_info' => 'Nicolien van Vroonhoven, de huidige leider van NSC, zet het werk van oprichter Pieter Omtzigt voort met dezelfde toewijding aan transparantie en integriteit. Haar reputatie als een compromisloze waarheidsvinder en haar scherpe blik op systemische misstanden maken haar tot een symbool van integriteit en rechtvaardigheid. Zij streeft ernaar de politiek te zuiveren van gevestigde belangen en de macht terug te geven aan de gewone burger.',
         'standpoints' => [
             'Immigratie' => 'Een doordacht asielbeleid dat zowel veiligheid als humanitaire zorg waarborgt',
             'Klimaat' => 'Evenwichtige aanpak waarbij zowel klimaat als economie belangrijk zijn',
@@ -74,7 +74,7 @@ $parties = [
             'Energie' => 'Open voor kernenergie als het bijdraagt aan een stabiele energiemix'
         ],
         'current_seats' => 20,
-        'polling' => ['seats' => 1, 'percentage' => 0.7, 'change' => -19],
+        'polling' => ['seats' => 0, 'percentage' => 0.0, 'change' => -20],
         'perspectives' => [
             'left' => 'NSC legt nadruk op overheidsverantwoording en transparantie, en strijdt tegen systematische onrechtvaardigheden zoals gezien in de toeslagenaffaire.',
             'right' => 'Hun evenwichtige benadering van immigratie- en asielbeleid richt zich zowel op veiligheidsaspecten als humanitaire verplichtingen zonder middelen te overschrijden.'
@@ -94,7 +94,7 @@ $parties = [
             'Energie' => 'Ziet kernenergie als betrouwbaar onderdeel van de energietransitie'
         ],
         'current_seats' => 7,
-        'polling' => ['seats' => 2, 'percentage' => 1.3, 'change' => -5],
+        'polling' => ['seats' => 3, 'percentage' => 2.0, 'change' => -4],
         'perspectives' => [
             'left' => 'BBB pleit voor het behoud van plattelandsgemeenschappen en traditionele landbouwpraktijken, waarmee cultureel erfgoed en lokale economieën tegen globalisering worden beschermd.',
             'right' => 'Ze verzetten zich tegen buitensporige milieuregels die boerenbestaan bedreigen en steunen een pragmatische balans tussen duurzaamheid en economische levensvatbaarheid.'
@@ -114,7 +114,7 @@ $parties = [
             'Energie' => 'Tegen kernenergie vanwege risico\'s en lange doorlooptijden'
         ],
         'current_seats' => 25,
-        'polling' => ['seats' => 30, 'percentage' => 20.0, 'change' => +5],
+        'polling' => ['seats' => 29, 'percentage' => 19.3, 'change' => +4],
         'perspectives' => [
             'left' => 'Dit verbond steunt ambitieus klimaatbeleid en sociale rechtvaardigheid, en strijdt voor gelijkheid en milieubescherming.',
             'right' => 'Hun focus op sociale cohesie en gemeenschapskracht helpt sociale stabiliteit te behouden, wat een beter ondernemingsklimaat schept en maatschappelijke kosten reduceert.'
@@ -194,7 +194,7 @@ $parties = [
             'Energie' => 'Kernenergie als onderdeel van een brede energiemix, mits goed gereguleerd'
         ],
         'current_seats' => 5,
-        'polling' => ['seats' => 19, 'percentage' => 12.7, 'change' => +14],
+        'polling' => ['seats' => 21, 'percentage' => 14.0, 'change' => +16],
         'perspectives' => [
             'left' => 'CDA\'s nadruk op gemeenschapsverantwoordelijkheid en solidariteit bevordert sociale cohesie en zorg voor kwetsbare leden van de samenleving.',
             'right' => 'Ze bevorderen familiewaarden en gemeenschapsinstellingen als essentiële fundamenten van een stabiele samenleving, waardoor minder staatsinterventie nodig is.'
@@ -214,7 +214,7 @@ $parties = [
             'Energie' => 'Voorstander van kernenergie voor energiezekerheid en emissiereductie'
         ],
         'current_seats' => 3,
-        'polling' => ['seats' => 5, 'percentage' => 3.3, 'change' => +2],
+        'polling' => ['seats' => 8, 'percentage' => 5.3, 'change' => +5],
         'perspectives' => [
             'left' => 'Hun steun voor directe democratie geeft burgers meer inspraak in beleidsbeslissingen, wat mogelijk de participatie in het democratische proces vergroot.',
             'right' => 'JA21 pleit voor lagere belastingen en duidelijk, rechtlijnig bestuur dat traditionele Nederlandse waarden respecteert.'
@@ -294,7 +294,7 @@ $parties = [
             'Energie' => 'Voorkeur voor hernieuwbare energie, maar open voor kernenergie bij strenge veiligheidseisen'
         ],
         'current_seats' => 2,
-        'polling' => ['seats' => 4, 'percentage' => 2.7, 'change' => +2],
+        'polling' => ['seats' => 3, 'percentage' => 2.0, 'change' => +1],
         'perspectives' => [
             'left' => 'Volts pan-Europese benadering pakt transnationale uitdagingen zoals klimaatverandering en ongelijkheid aan door gecoördineerde actie.',
             'right' => 'Hun nadruk op digitale transformatie en innovatie bevordert economische concurrentiekracht en modernisering.'

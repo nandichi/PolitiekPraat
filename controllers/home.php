@@ -51,9 +51,9 @@ $peilingData = [
     [
         'partij' => 'PVV',
         'zetels' => [
-            'peiling' => 31, 
+            'peiling' => 30, 
             'vorige' => 31,
-            'tkvorigepeiling' => 28,
+            'tkvorigepeiling' => 31,
             'tk2023' => 37
         ],
         'color' => '#0078D7'
@@ -61,9 +61,9 @@ $peilingData = [
     [
         'partij' => 'GL/PvdA',
         'zetels' => [
-            'peiling' => 30, 
+            'peiling' => 29, 
             'vorige' => 30,
-            'tkvorigepeiling' => 29,
+            'tkvorigepeiling' => 30,
             'tk2023' => 25
         ],
         'color' => '#008800'
@@ -71,9 +71,9 @@ $peilingData = [
     [
         'partij' => 'VVD',
         'zetels' => [
-            'peiling' => 24, 
-            'vorige' => 25,
-            'tkvorigepeiling' => 26,
+            'peiling' => 22, 
+            'vorige' => 24,
+            'tkvorigepeiling' => 25,
             'tk2023' => 24
         ],
         'color' => '#FF9900'
@@ -81,9 +81,9 @@ $peilingData = [
     [
         'partij' => 'CDA',
         'zetels' => [
-            'peiling' => 19, 
-            'vorige' => 18,
-            'tkvorigepeiling' => 19,
+            'peiling' => 21, 
+            'vorige' => 19,
+            'tkvorigepeiling' => 18,
             'tk2023' => 5
         ],
         'color' => '#1E8449'
@@ -99,30 +99,30 @@ $peilingData = [
         'color' => '#00B13C'
     ],
     [
-        'partij' => 'SP',
-        'zetels' => [
-            'peiling' => 7, 
-            'vorige' => 7,
-            'tkvorigepeiling' => 8,
-            'tk2023' => 5
-        ],
-        'color' => '#EE0000'
-    ],
-    [
         'partij' => 'JA21',
         'zetels' => [
-            'peiling' => 5, 
-            'vorige' => 4,
+            'peiling' => 8, 
+            'vorige' => 5,
             'tkvorigepeiling' => 4,
             'tk2023' => 1
         ],
         'color' => '#4B0082'
     ],
     [
+        'partij' => 'SP',
+        'zetels' => [
+            'peiling' => 7, 
+            'vorige' => 7,
+            'tkvorigepeiling' => 7,
+            'tk2023' => 5
+        ],
+        'color' => '#EE0000'
+    ],
+    [
         'partij' => 'FVD',
         'zetels' => [
             'peiling' => 4, 
-            'vorige' => 5,
+            'vorige' => 4,
             'tkvorigepeiling' => 5,
             'tk2023' => 3
         ],
@@ -161,7 +161,7 @@ $peilingData = [
     [
         'partij' => 'Volt',
         'zetels' => [
-            'peiling' => 4, 
+            'peiling' => 3, 
             'vorige' => 4,
             'tkvorigepeiling' => 4,
             'tk2023' => 2
@@ -181,9 +181,9 @@ $peilingData = [
     [
         'partij' => 'BBB',
         'zetels' => [
-            'peiling' => 2, 
+            'peiling' => 3, 
             'vorige' => 2,
-            'tkvorigepeiling' => 3,
+            'tkvorigepeiling' => 2,
             'tk2023' => 7
         ],
         'color' => '#7CFC00'
@@ -191,7 +191,7 @@ $peilingData = [
     [
         'partij' => 'NSC',
         'zetels' => [
-            'peiling' => 1, 
+            'peiling' => 0, 
             'vorige' => 1,
             'tkvorigepeiling' => 1,
             'tk2023' => 20
@@ -205,22 +205,22 @@ $mogelijkeCoalities = [
     [
         'naam' => 'Links-progressief',
         'partijen' => ['GL/PvdA', 'D66', 'SP', 'PvdDieren', 'Volt'],
-        'zetels' => 30 + 8 + 7 + 4 + 4 // 53 zetels
+        'zetels' => 29 + 8 + 7 + 4 + 3 // 51 zetels
     ],
     [
         'naam' => 'Rechts-conservatief',
         'partijen' => ['PVV', 'VVD', 'BBB', 'JA21', 'SGP', 'FVD'],
-        'zetels' => 31 + 24 + 2 + 5 + 4 + 4 // 70 zetels
+        'zetels' => 30 + 22 + 3 + 8 + 4 + 4 // 71 zetels
     ],
     [
         'naam' => 'Centrum-breed',
         'partijen' => ['GL/PvdA', 'VVD', 'CDA', 'D66', 'ChristenUnie'],
-        'zetels' => 30 + 24 + 19 + 8 + 3 // 84 zetels
+        'zetels' => 29 + 22 + 21 + 8 + 3 // 83 zetels
     ],
     [
         'naam' => 'Huidige coalitie',
         'partijen' => ['PVV', 'VVD', 'BBB', 'NSC'],
-        'zetels' => 31 + 24 + 2 + 1 // 58 zetels
+        'zetels' => 30 + 22 + 3 + 0 // 55 zetels
     ]
 ];
 
@@ -279,54 +279,54 @@ $latest_news = [
         'source' => 'De Volkskrant',
         'bias' => 'centrum-links', 
         'publishedAt' => date('Y-m-d H:i:s'), // Vandaag 08:30
-        'title' => 'Kunnen Wilders\' opponenten voorkomen dat hij de verkiezingscampagne naar zijn hand zet?',
-        'description' => 'Nu nieuwe verkiezingen aanstaande zijn, bereiden politieke partijen zich voor op een campagne waarin Geert Wilders waarschijnlijk het debat zal proberen te domineren. De vraag is of zijn tegenstanders een effectieve strategie kunnen ontwikkelen.',
-        'url' => 'https://www.volkskrant.nl/politiek/kunnen-wilders-opponenten-voorkomen-dat-hij-de-verkiezings-campagne-naar-zijn-hand-zet~b3dc1bad/'
+        'title' => 'VS bombarderen nucleaire faciliteiten Iran en storten zich in onvoorspelbaar conflict',
+        'description' => 'De Verenigde Staten hebben nucleaire faciliteiten in Iran gebombardeerd, wat heeft geleid tot een zeer gespannen situatie. Dit militaire ingrijpen brengt grote onzekerheid met zich mee over mogelijke vergeldingsacties en de toekomstige stabiliteit in de regio.',
+        'url' => 'https://www.volkskrant.nl/buitenland/vs-bombarderen-nucleaire-faciliteiten-iran-en-storten-zich-in-onvoorspelbaar-conflict~b4bd58ef/'
     ],
     [
         'orientation' => 'links',
         'source' => 'NRC',
         'bias' => 'links', 
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-2 hours')), // 2 uur geleden
-        'title' => 'De meeste plannen van kabinet Schoof stuitten op juridische bezwaren en praktische problemen',
-        'description' => 'Een analyse van de plannen van het kabinet Schoof laat zien dat veel voorstellen vastliepen op juridische obstakels en uitvoeringsproblemen. Dit heeft geleid tot vertraging en herziening van belangrijke beleidsvoornemens.',
-        'url' => 'https://www.nrc.nl/nieuws/2025/06/03/de-meeste-plannen-van-kabinet-schoof-stuitten-op-juridische-bezwaren-en-praktische-problemen-a4895665'
+        'title' => 'President die geen eindeloze oorlogen meer beloofde mengt zich in nieuwe oorlog met Iran',
+        'description' => 'De Amerikaanse president die beloofde een einde te maken aan eindeloze oorlogen, raakt nu verwikkeld in een nieuw militair conflict met Iran. Dit roept vragen op over de geloofwaardigheid van eerdere beloftes en de toekomstige koers van het Amerikaanse buitenlandbeleid.',
+        'url' => 'https://www.nrc.nl/nieuws/2025/06/22/president-die-geen-eindeloze-oorlogen-meer-beloofde-mengt-zich-in-nieuwe-oorlog-met-iran-a4897821'
     ],
     [
         'orientation' => 'links',
         'source' => 'Trouw',
         'bias' => 'links', 
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-4 hours')), // 4 uur geleden
-        'title' => 'VVD wil rechts beleid blijven voeren, maar heeft de oppositie de komende tijd hard nodig',
-        'description' => 'De VVD wil vasthouden aan een rechtse koers, maar zal voor het uitvoeren van beleid steun nodig hebben van de oppositie. Dit zorgt voor een complexe politieke situatie waarin compromissen onvermijdelijk zijn.',
-        'url' => 'https://www.trouw.nl/politiek/vvd-wil-rechts-beleid-blijven-voeren-maar-heeft-de-oppositie-de-komende-tijd-hard-nodig~b7f31232/'
+        'title' => 'Gemengde reacties op controversiële uitspraken Saskia over migratie',
+        'description' => 'De recente uitspraken van Saskia over het migratiebeleid leiden tot verhitte discussies. Sommigen prijzen haar directe aanpak, terwijl anderen haar standpunten te extreem vinden. De politieke spanning neemt toe.',
+        'url' => 'https://www.trouw.nl/politiek/gemengde-reacties-op-controversiele-uitspraken-saskia-over-migratie~b7f31232/'
     ],
     [
         'orientation' => 'rechts',
         'source' => 'Dagelijkse Standaard',
         'bias' => 'rechts',
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-6 hours')), // 6 uur geleden
-        'title' => 'De PVV is niet genoeg: alleen met FVD kan rechts winnen',
-        'description' => 'Een analyse van de huidige politieke situatie toont aan dat de PVV alleen niet voldoende is om rechtse doelen te bereiken. Samenwerking met Forum voor Democratie zou cruciaal kunnen zijn voor een effectieve rechtse coalitie.',
-        'url' => 'https://www.dagelijksestandaard.nl/opinie/de-pvv-is-niet-genoeg-alleen-met-fvd-kan-rechts-winnen'
+        'title' => 'Amerika bombardeert Iraanse kerninstallaties en Israël wist dat dit zou gebeuren',
+        'description' => 'De Verenigde Staten hebben Iraanse kerninstallaties gebombardeerd. Volgens bronnen was Israël vooraf op de hoogte van deze militaire actie. Dit markeert een significante escalatie in de spanningen tussen de VS en Iran.',
+        'url' => 'https://www.dagelijksestandaard.nl/buitenland/amerika-bombardeert-iraanse-kerninstallaties-en-israel-wist-dat-dit-zou-gebeuren'
     ],
     [
         'orientation' => 'rechts',
         'source' => 'De Telegraaf',
         'bias' => 'rechts', 
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-8 hours')), // 8 uur geleden
-        'title' => 'PVV blijft stabiel ondanks kabinetsval, verschuivingen miniem in nieuwste peilingen',
-        'description' => 'Ondanks de val van het kabinet blijft de PVV stabiel in de peilingen. De nieuwste metingen laten slechts minimale verschuivingen zien tussen de verschillende partijen.',
-        'url' => 'https://www.telegraaf.nl/politiek/pvv-blijft-stabiel-ondanks-kabinetsval-verschuivingen-miniem-in-nieuwste-peilingen/70718243'
+        'title' => 'LIVE - Iran: Aanval VS heeft eeuwigdurende gevolgen',
+        'description' => 'Iran heeft gereageerd op de Amerikaanse bombardementen op nucleaire faciliteiten en waarschuwt voor "eeuwigdurende gevolgen". Volg hier live de laatste ontwikkelingen rondom het conflict tussen de VS en Iran.',
+        'url' => 'https://www.telegraaf.nl/buitenland/live-iran-aanval-vs-heeft-eeuwigdurende-gevolgen/73099627.html'
     ],
     [
         'orientation' => 'rechts',
-        'source' => 'Nieuw Rechts', 
-        'bias' => 'rechts',
+        'source' => 'Nieuw Rechts',
+        'bias' => 'rechts', 
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-10 hours')), // 10 uur geleden
-        'title' => 'Premier Schoof meldt officiële val van kabinet: weg vrij voor nieuwe verkiezingen',
-        'description' => 'Premier Schoof heeft zojuist de officiële val van het kabinet bekendgemaakt. Dit betekent dat er nieuwe verkiezingen zullen komen.',
-        'url' => 'https://nieuwrechts.nl/104641-premier-schoof-meldt-officile-val-van-kabinet-weg-vrij-voor-nieuwe-verkiezingen'
+        'title' => 'VS bombardeert nucleaire installaties in Iran, Trump spreekt van overwinning',
+        'description' => 'De Verenigde Staten hebben nucleaire installaties in Iran gebombardeerd. Voormalig president Trump noemt de actie een overwinning en zegt dat dit onder zijn leiding al eerder had moeten gebeuren.',
+        'url' => 'https://nieuwrechts.nl/104891-vs-bombardeert-nucleaire-installaties-in-iran-trump-spreekt-van-overwinning'
     ]
 ];
 
