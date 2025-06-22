@@ -62,101 +62,130 @@
         <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-slate-50 to-transparent"></div>
     </section>
 
-    <!-- Premium Filter Section -->
-    <section class="relative z-10 pb-12" id="artikelen">
+    <!-- Modern Filter Section -->
+    <section class="relative z-10 -mt-20 pb-16" id="artikelen">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Filter Container -->
-            <div class="max-w-4xl mx-auto mb-16" data-aos="fade-up" data-aos-delay="200">
+            <div class="max-w-5xl mx-auto" data-aos="fade-up" data-aos-delay="200">
                 <!-- Filter Header -->
-                <div class="text-center mb-8">
-                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mb-4">Filter Perspectief</h2>
-                    <p class="text-slate-600 max-w-2xl mx-auto">Ontdek nieuws vanuit verschillende politieke perspectieven en vorm je eigen mening</p>
+                <div class="text-center mb-12">
+                    <div class="inline-flex items-center px-6 py-3 bg-white/90 backdrop-blur-sm rounded-full border border-slate-200/50 shadow-lg mb-6">
+                        <div class="w-2 h-2 bg-primary rounded-full animate-pulse mr-3"></div>
+                        <span class="text-slate-700 font-semibold text-sm">Nieuws Perspectief</span>
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-black text-slate-900 mb-4">Bekijk vanuit elk perspectief</h2>
+                    <p class="text-lg text-slate-600 max-w-2xl mx-auto">Vorm je eigen mening door nieuws te bekijken vanuit verschillende politieke invalshoeken</p>
                 </div>
                 
-                <!-- Premium Filter Buttons -->
-                <div class="relative p-2 bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/50">
-                    <div class="flex flex-wrap items-center justify-center gap-2">
-                        <!-- Alle Bronnen -->
+                <!-- Modern Filter Grid -->
+                <div class="bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/70 p-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        
+                        <!-- Alle Bronnen - Neutrale Blauw -->
                         <a href="?filter=alle#artikelen" 
-                           class="group relative px-8 py-4 rounded-2xl text-sm font-bold transition-all duration-500 transform hover:scale-105 flex items-center overflow-hidden <?php echo $filter === 'alle' ? 'bg-gradient-to-r from-slate-700 to-slate-900 text-white shadow-lg' : 'bg-white/50 text-slate-700 hover:bg-white hover:shadow-md'; ?>">
-                            <!-- Background animation -->
+                           class="group relative p-6 rounded-2xl transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 overflow-hidden <?php echo $filter === 'alle' ? 'bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-xl' : 'bg-slate-50 hover:bg-white text-slate-700 hover:shadow-lg'; ?>">
+                            
+                            <!-- Hover background -->
                             <?php if($filter !== 'alle'): ?>
-                            <div class="absolute inset-0 bg-gradient-to-r from-slate-700 to-slate-900 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
+                            <div class="absolute inset-0 bg-gradient-to-br from-blue-500 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
                             <?php endif; ?>
                             
                             <!-- Content -->
-                            <div class="relative z-10 flex items-center <?php echo $filter !== 'alle' ? 'group-hover:text-white' : ''; ?>">
-                                <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center mr-3 shadow-sm">
-                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            <div class="relative z-10 text-center <?php echo $filter !== 'alle' ? 'group-hover:text-white' : ''; ?>">
+                                <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center mx-auto mb-4 shadow-lg">
+                                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
                                     </svg>
                                 </div>
-                                <span>Alle Bronnen</span>
+                                <h3 class="font-black text-lg mb-2">Alle Bronnen</h3>
+                                <p class="text-sm opacity-80">Objectief overzicht</p>
                                 <?php if($filter === 'alle'): ?>
-                                <div class="ml-2 w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                                <div class="absolute top-3 right-3 w-3 h-3 bg-white rounded-full animate-pulse"></div>
                                 <?php endif; ?>
                             </div>
+                            
+                            <!-- Decorative elements -->
+                            <div class="absolute -top-2 -right-2 w-8 h-8 bg-blue-400/20 rounded-full group-hover:scale-150 transition-transform duration-500"></div>
+                            <div class="absolute -bottom-1 -left-1 w-6 h-6 bg-blue-500/20 rounded-full group-hover:scale-125 transition-transform duration-700"></div>
                         </a>
 
-                        <!-- Progressief -->
+                        <!-- Progressief - Groen -->
                         <a href="?filter=progressief#artikelen" 
-                           class="group relative px-8 py-4 rounded-2xl text-sm font-bold transition-all duration-500 transform hover:scale-105 flex items-center overflow-hidden <?php echo $filter === 'progressief' ? 'bg-gradient-to-r from-emerald-600 to-teal-700 text-white shadow-lg' : 'bg-white/50 text-slate-700 hover:bg-white hover:shadow-md'; ?>">
-                            <!-- Background animation -->
+                           class="group relative p-6 rounded-2xl transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 overflow-hidden <?php echo $filter === 'progressief' ? 'bg-gradient-to-br from-emerald-500 to-green-600 text-white shadow-xl' : 'bg-slate-50 hover:bg-white text-slate-700 hover:shadow-lg'; ?>">
+                            
+                            <!-- Hover background -->
                             <?php if($filter !== 'progressief'): ?>
-                            <div class="absolute inset-0 bg-gradient-to-r from-emerald-600 to-teal-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
+                            <div class="absolute inset-0 bg-gradient-to-br from-emerald-500 to-green-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
                             <?php endif; ?>
                             
                             <!-- Content -->
-                            <div class="relative z-10 flex items-center <?php echo $filter !== 'progressief' ? 'group-hover:text-white' : ''; ?>">
-                                <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center mr-3 shadow-sm">
-                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                            <div class="relative z-10 text-center <?php echo $filter !== 'progressief' ? 'group-hover:text-white' : ''; ?>">
+                                <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-green-600 flex items-center justify-center mx-auto mb-4 shadow-lg">
+                                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
                                     </svg>
                                 </div>
-                                <span>Progressief</span>
+                                <h3 class="font-black text-lg mb-2">Progressief</h3>
+                                <p class="text-sm opacity-80">Vooruitstrevend</p>
                                 <?php if($filter === 'progressief'): ?>
-                                <div class="ml-2 w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                                <div class="absolute top-3 right-3 w-3 h-3 bg-white rounded-full animate-pulse"></div>
                                 <?php endif; ?>
                             </div>
+                            
+                            <!-- Decorative elements -->
+                            <div class="absolute -top-2 -right-2 w-8 h-8 bg-emerald-400/20 rounded-full group-hover:scale-150 transition-transform duration-500"></div>
+                            <div class="absolute -bottom-1 -left-1 w-6 h-6 bg-green-500/20 rounded-full group-hover:scale-125 transition-transform duration-700"></div>
                         </a>
 
-                        <!-- Conservatief -->
+                        <!-- Conservatief - Rood -->
                         <a href="?filter=conservatief#artikelen" 
-                           class="group relative px-8 py-4 rounded-2xl text-sm font-bold transition-all duration-500 transform hover:scale-105 flex items-center overflow-hidden <?php echo $filter === 'conservatief' ? 'bg-gradient-to-r from-orange-600 to-red-700 text-white shadow-lg' : 'bg-white/50 text-slate-700 hover:bg-white hover:shadow-md'; ?>">
-                            <!-- Background animation -->
+                           class="group relative p-6 rounded-2xl transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 overflow-hidden <?php echo $filter === 'conservatief' ? 'bg-gradient-to-br from-red-500 to-red-600 text-white shadow-xl' : 'bg-slate-50 hover:bg-white text-slate-700 hover:shadow-lg'; ?>">
+                            
+                            <!-- Hover background -->
                             <?php if($filter !== 'conservatief'): ?>
-                            <div class="absolute inset-0 bg-gradient-to-r from-orange-600 to-red-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
+                            <div class="absolute inset-0 bg-gradient-to-br from-red-500 to-red-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
                             <?php endif; ?>
                             
                             <!-- Content -->
-                            <div class="relative z-10 flex items-center <?php echo $filter !== 'conservatief' ? 'group-hover:text-white' : ''; ?>">
-                                <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center mr-3 shadow-sm">
-                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div class="relative z-10 text-center <?php echo $filter !== 'conservatief' ? 'group-hover:text-white' : ''; ?>">
+                                <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-red-500 to-red-600 flex items-center justify-center mx-auto mb-4 shadow-lg">
+                                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
                                     </svg>
                                 </div>
-                                <span>Conservatief</span>
+                                <h3 class="font-black text-lg mb-2">Conservatief</h3>
+                                <p class="text-sm opacity-80">Behoudend</p>
                                 <?php if($filter === 'conservatief'): ?>
-                                <div class="ml-2 w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                                <div class="absolute top-3 right-3 w-3 h-3 bg-white rounded-full animate-pulse"></div>
                                 <?php endif; ?>
                             </div>
+                            
+                            <!-- Decorative elements -->
+                            <div class="absolute -top-2 -right-2 w-8 h-8 bg-red-400/20 rounded-full group-hover:scale-150 transition-transform duration-500"></div>
+                            <div class="absolute -bottom-1 -left-1 w-6 h-6 bg-red-500/20 rounded-full group-hover:scale-125 transition-transform duration-700"></div>
                         </a>
 
-                        <!-- Refresh Button -->
+                        <!-- Vernieuwen -->
                         <a href="?clear_cache=1<?php echo !empty($filter) && $filter !== 'alle' ? "&filter=$filter" : ""; ?>#artikelen" 
-                           class="group relative px-8 py-4 rounded-2xl text-sm font-bold transition-all duration-500 transform hover:scale-105 flex items-center bg-white/50 text-slate-700 hover:bg-white hover:shadow-md overflow-hidden">
-                            <!-- Background animation -->
-                            <div class="absolute inset-0 bg-gradient-to-r from-indigo-600 to-purple-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
+                           class="group relative p-6 rounded-2xl transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 bg-slate-50 hover:bg-white text-slate-700 hover:shadow-lg overflow-hidden">
+                            
+                            <!-- Hover background -->
+                            <div class="absolute inset-0 bg-gradient-to-br from-purple-500 to-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
                             
                             <!-- Content -->
-                            <div class="relative z-10 flex items-center group-hover:text-white">
-                                <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center mr-3 shadow-sm">
-                                    <svg class="w-4 h-4 text-white transform group-hover:rotate-180 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div class="relative z-10 text-center group-hover:text-white">
+                                <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center mx-auto mb-4 shadow-lg">
+                                    <svg class="w-8 h-8 text-white transform group-hover:rotate-180 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
                                     </svg>
                                 </div>
-                                <span>Vernieuwen</span>
+                                <h3 class="font-black text-lg mb-2">Vernieuwen</h3>
+                                <p class="text-sm opacity-80">Actualiseren</p>
                             </div>
+                            
+                            <!-- Decorative elements -->
+                            <div class="absolute -top-2 -right-2 w-8 h-8 bg-purple-400/20 rounded-full group-hover:scale-150 transition-transform duration-500"></div>
+                            <div class="absolute -bottom-1 -left-1 w-6 h-6 bg-indigo-500/20 rounded-full group-hover:scale-125 transition-transform duration-700"></div>
                         </a>
                     </div>
                 </div>
@@ -181,99 +210,100 @@
             <?php endif; ?>
             
             <?php if (!empty($latest_news)): ?>
-                                 <!-- Premium Articles Grid -->
-                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <!-- Modern Articles Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
                     <?php foreach ($latest_news as $index => $article): ?>
-                        <article class="group relative bg-white/90 backdrop-blur-sm rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700 hover:-translate-y-3 border border-white/50" 
+                        <article class="group relative bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-slate-100" 
                                 data-aos="fade-up" 
                                 data-aos-delay="<?php echo $index * 100; ?>"
-                                data-aos-duration="800"
+                                data-aos-duration="600"
                                 data-aos-once="true">
                             
-                            <!-- Hover effect overlay -->
-                            <div class="absolute inset-0 bg-gradient-to-br from-blue-50/30 to-purple-50/30 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+                            <!-- Kleuraccent bovenaan gebaseerd op bias -->
+                            <div class="absolute top-0 left-0 right-0 h-2 <?php echo $article['bias'] === 'Progressief' ? 'bg-gradient-to-r from-emerald-500 to-green-600' : 'bg-gradient-to-r from-red-500 to-red-600'; ?>"></div>
                             
-                                                         <!-- Top accent line based on bias -->
-                             <div class="absolute top-0 left-0 right-0 h-1 <?php echo $article['bias'] === 'Progressief' ? 'bg-gradient-to-r from-blue-500 to-indigo-600' : 'bg-gradient-to-r from-red-500 to-orange-600'; ?> transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-out"></div>
+                            <!-- Hover overlay effect -->
+                            <div class="absolute inset-0 <?php echo $article['bias'] === 'Progressief' ? 'bg-gradient-to-br from-emerald-50/40 to-green-50/40' : 'bg-gradient-to-br from-red-50/40 to-red-50/40'; ?> opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                             
                             <div class="relative z-10 p-8 h-full flex flex-col">
-                                <!-- Header with bias and source -->
-                                <div class="flex justify-between items-start mb-6">
-                                    <div class="space-y-2">
-                                                                                 <!-- Bias Badge -->
-                                         <span class="inline-flex items-center px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider border <?php echo $article['bias'] === 'Progressief' ? 'bg-blue-100 text-blue-800 border-blue-200' : 'bg-red-100 text-red-800 border-red-200'; ?> shadow-sm">
-                                             <div class="w-2 h-2 rounded-full mr-2 <?php echo $article['bias'] === 'Progressief' ? 'bg-blue-600' : 'bg-red-600'; ?> animate-pulse"></div>
+                                <!-- Header met bias badge en bron -->
+                                <div class="mb-6">
+                                    <!-- Bias Badge met juiste kleuren -->
+                                    <div class="flex items-center justify-between mb-4">
+                                        <span class="inline-flex items-center px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider <?php echo $article['bias'] === 'Progressief' ? 'bg-emerald-100 text-emerald-800 border border-emerald-200' : 'bg-red-100 text-red-800 border border-red-200'; ?> shadow-sm">
+                                            <div class="w-2 h-2 rounded-full mr-2 <?php echo $article['bias'] === 'Progressief' ? 'bg-emerald-600' : 'bg-red-600'; ?> animate-pulse"></div>
                                             <?php echo htmlspecialchars($article['bias']); ?>
                                         </span>
                                         
-                                                                                 <!-- Source -->
-                                         <div class="flex items-center space-x-2">
-                                             <div class="w-8 h-8 rounded-lg <?php echo $article['bias'] === 'Progressief' ? 'bg-gradient-to-br from-blue-500 to-indigo-600' : 'bg-gradient-to-br from-red-500 to-orange-600'; ?> flex items-center justify-center shadow-sm">
-                                                <span class="text-white font-black text-xs">
-                                                    <?php echo substr($article['source'], 0, 2); ?>
-                                                </span>
+                                        <!-- Bookmark icon -->
+                                        <div class="w-10 h-10 rounded-xl <?php echo $article['bias'] === 'Progressief' ? 'bg-emerald-50 group-hover:bg-emerald-100' : 'bg-red-50 group-hover:bg-red-100'; ?> flex items-center justify-center transition-colors duration-300">
+                                            <svg class="w-5 h-5 <?php echo $article['bias'] === 'Progressief' ? 'text-emerald-600' : 'text-red-600'; ?>" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Bron informatie -->
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-10 h-10 rounded-xl <?php echo $article['bias'] === 'Progressief' ? 'bg-gradient-to-br from-emerald-500 to-green-600' : 'bg-gradient-to-br from-red-500 to-red-600'; ?> flex items-center justify-center shadow-md">
+                                            <span class="text-white font-black text-sm">
+                                                <?php echo strtoupper(substr($article['source'], 0, 2)); ?>
+                                            </span>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="font-semibold text-slate-800"><?php echo htmlspecialchars($article['source']); ?></div>
+                                            <div class="text-xs text-slate-500">
+                                                <?php 
+                                                // Nederlandse datum formatting volgens memory
+                                                $date = new DateTime($article['publishedAt']);
+                                                $formatter = new IntlDateFormatter('nl_NL', IntlDateFormatter::MEDIUM, IntlDateFormatter::SHORT, null, null, 'd MMM yyyy, HH:mm');
+                                                echo $formatter->format($date);
+                                                ?>
                                             </div>
-                                            <span class="text-sm font-medium text-slate-600"><?php echo htmlspecialchars($article['source']); ?></span>
                                         </div>
                                     </div>
                                 </div>
                                 
-                                <!-- Article Content -->
+                                <!-- Artikel content -->
                                 <div class="flex-grow space-y-4">
-                                                                         <!-- Title -->
-                                     <h3 class="text-xl lg:text-2xl font-bold text-slate-900 leading-tight <?php echo $article['bias'] === 'Progressief' ? 'group-hover:text-blue-700' : 'group-hover:text-red-700'; ?> transition-colors duration-300 line-clamp-3">
+                                    <!-- Titel -->
+                                    <h3 class="text-xl lg:text-2xl font-black text-slate-900 leading-tight line-clamp-3 <?php echo $article['bias'] === 'Progressief' ? 'group-hover:text-emerald-700' : 'group-hover:text-red-700'; ?> transition-colors duration-300">
                                         <?php echo htmlspecialchars($article['title']); ?>
                                     </h3>
                                     
-                                    <!-- Description -->
+                                    <!-- Beschrijving -->
                                     <p class="text-slate-600 leading-relaxed line-clamp-4 group-hover:text-slate-700 transition-colors duration-300">
                                         <?php echo htmlspecialchars($article['description']); ?>
                                     </p>
                                 </div>
                                 
-                                <!-- Footer -->
-                                <div class="mt-8 pt-6 border-t border-slate-200/50 space-y-4">
-                                    <!-- Published time -->
-                                    <div class="flex items-center justify-between">
-                                        <div class="flex items-center space-x-2 text-sm text-slate-500">
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                            </svg>
-                                            <time>
-                                                <?php 
-                                                // Volgens de memory, alle datums moeten in Nederlands formaat
-                                                setlocale(LC_TIME, 'nl_NL.UTF-8', 'Dutch');
-                                                $date = new DateTime($article['publishedAt']);
-                                                $formatter = new IntlDateFormatter('nl_NL', IntlDateFormatter::MEDIUM, IntlDateFormatter::SHORT, null, null, 'd MMM yyyy, HH:mm');
-                                                echo $formatter->format($date);
-                                                ?>
-                                            </time>
-                                        </div>
-                                    </div>
-                                    
-                                                                         <!-- Read More Button -->
-                                     <a href="<?php echo htmlspecialchars($article['url']); ?>" 
-                                        target="_blank" 
-                                        rel="noopener noreferrer"
-                                        class="group/btn relative inline-flex items-center justify-center w-full px-6 py-3 <?php echo $article['bias'] === 'Progressief' ? 'bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700' : 'bg-gradient-to-r from-red-500 to-orange-600 hover:from-red-600 hover:to-orange-700'; ?> text-white font-bold rounded-2xl transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl overflow-hidden">
+                                <!-- Footer met CTA -->
+                                <div class="mt-8 pt-6 border-t border-slate-200/60">
+                                    <a href="<?php echo htmlspecialchars($article['url']); ?>" 
+                                       target="_blank" 
+                                       rel="noopener noreferrer"
+                                       class="group/btn relative inline-flex items-center justify-center w-full px-6 py-4 <?php echo $article['bias'] === 'Progressief' ? 'bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700' : 'bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700'; ?> text-white font-bold rounded-2xl transition-all duration-300 hover:scale-[1.02] shadow-lg hover:shadow-xl overflow-hidden">
                                         
-                                        <!-- Button content -->
+                                        <!-- Button inhoud -->
                                         <span class="relative z-10 flex items-center">
+                                            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                                            </svg>
                                             Lees volledig artikel
-                                            <svg class="w-5 h-5 ml-2 transform transition-transform duration-300 group-hover/btn:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <svg class="w-5 h-5 ml-3 transform transition-transform duration-300 group-hover/btn:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
                                             </svg>
                                         </span>
                                         
-                                        <!-- Shine effect -->
-                                        <div class="absolute inset-0 -top-full bg-gradient-to-b from-transparent via-white/20 to-transparent transform skew-y-12 group-hover:animate-shimmer"></div>
+                                        <!-- Glans effect -->
+                                        <div class="absolute inset-0 -top-full bg-gradient-to-b from-transparent via-white/20 to-transparent transform skew-y-12 transition-transform duration-1000 group-hover/btn:translate-y-full"></div>
                                     </a>
                                 </div>
                             </div>
                             
-                                                         <!-- Decorative corner elements -->
-                             <div class="absolute top-0 right-0 w-16 h-16 <?php echo $article['bias'] === 'Progressief' ? 'bg-gradient-to-br from-blue-500/10 to-indigo-500/10' : 'bg-gradient-to-br from-red-500/10 to-orange-500/10'; ?> transform rotate-45 translate-x-8 -translate-y-8 group-hover:translate-x-6 group-hover:-translate-y-6 transition-transform duration-700 opacity-0 group-hover:opacity-100"></div>
-                             <div class="absolute bottom-0 left-0 w-12 h-12 <?php echo $article['bias'] === 'Progressief' ? 'bg-gradient-to-tr from-indigo-500/10 to-blue-500/10' : 'bg-gradient-to-tr from-orange-500/10 to-red-500/10'; ?> transform rotate-45 -translate-x-6 translate-y-6 group-hover:-translate-x-4 group-hover:translate-y-4 transition-transform duration-700 opacity-0 group-hover:opacity-100"></div>
+                            <!-- Decoratieve hoekelementen -->
+                            <div class="absolute -top-1 -right-1 w-12 h-12 <?php echo $article['bias'] === 'Progressief' ? 'bg-emerald-500/10' : 'bg-red-500/10'; ?> rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                            <div class="absolute -bottom-1 -left-1 w-8 h-8 <?php echo $article['bias'] === 'Progressief' ? 'bg-green-500/10' : 'bg-red-500/10'; ?> rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                         </article>
                     <?php endforeach; ?>
                 </div>
@@ -288,130 +318,122 @@
                 <?php endif; ?>
                 
                 <?php if ($totalPages > 1): ?>
-                <div class="text-center mt-20" data-aos="fade-up" data-aos-delay="400" data-aos-once="true">
-                    <div class="relative inline-block">
-                        <!-- Multi-layered glow effect -->
-                        <div class="absolute -inset-4 bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-700 rounded-2xl blur-xl opacity-20"></div>
+                <!-- Modern Pagination -->
+                <div class="text-center mt-24" data-aos="fade-up" data-aos-delay="400" data-aos-once="true">
+                    <div class="max-w-4xl mx-auto">
+                        <!-- Pagination Header -->
+                        <div class="mb-8">
+                            <h3 class="text-2xl font-black text-slate-900 mb-2">
+                                Pagina <?php echo $currentPage; ?> van <?php echo $totalPages; ?>
+                            </h3>
+                            <p class="text-slate-600">
+                                <?php echo $totalArticles; ?> artikelen gevonden in totaal
+                            </p>
+                        </div>
                         
-                        <!-- Main pagination container -->
-                        <div class="relative bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow-2xl border border-white/50">
-                            <div class="space-y-6">
-                                <!-- Pagination Info -->
-                                <div class="text-center space-y-2">
-                                    <h3 class="text-xl font-bold text-slate-900">
-                                        Pagina <?php echo $currentPage; ?> van <?php echo $totalPages; ?>
-                                    </h3>
-                                    <p class="text-slate-600">
-                                        Totaal <?php echo $totalArticles; ?> artikelen gevonden
-                                    </p>
-                                </div>
+                        <!-- Main Pagination Container -->
+                        <div class="bg-white rounded-3xl shadow-xl border border-slate-100 p-8">
+                            <div class="flex items-center justify-center flex-wrap gap-3">
                                 
-                                <!-- Pagination Controls -->
-                                <div class="flex items-center justify-center space-x-2">
-                                    <!-- Vorige Pagina -->
-                                    <?php if ($currentPage > 1): ?>
-                                        <a href="?<?php 
-                                            $params = [];
-                                            if ($filter !== 'alle') $params[] = "filter=$filter";
-                                            $params[] = "page=" . ($currentPage - 1);
-                                            echo implode('&', $params);
-                                        ?>#artikelen" 
-                                           class="group relative flex items-center justify-center w-12 h-12 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-xl">
-                                            <svg class="w-5 h-5 transform group-hover:-translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                                            </svg>
-                                        </a>
-                                    <?php endif; ?>
-                                    
-                                    <!-- Pagina Nummers -->
-                                    <?php
-                                    $startPage = max(1, $currentPage - 2);
-                                    $endPage = min($totalPages, $currentPage + 2);
-                                    
-                                    // Eerste pagina
-                                    if ($startPage > 1):
-                                    ?>
-                                        <a href="?<?php 
-                                            $params = [];
-                                            if ($filter !== 'alle') $params[] = "filter=$filter";
-                                            $params[] = "page=1";
-                                            echo implode('&', $params);
-                                        ?>#artikelen" 
-                                           class="flex items-center justify-center w-12 h-12 text-slate-700 bg-white/70 hover:bg-white rounded-xl transition-all duration-300 hover:scale-105 shadow-md hover:shadow-lg font-medium">
-                                            1
-                                        </a>
-                                        <?php if ($startPage > 2): ?>
-                                            <span class="text-slate-400 font-bold">...</span>
-                                        <?php endif; ?>
-                                    <?php endif; ?>
-                                    
-                                    <!-- Huidige range -->
-                                    <?php for ($i = $startPage; $i <= $endPage; $i++): ?>
-                                        <a href="?<?php 
-                                            $params = [];
-                                            if ($filter !== 'alle') $params[] = "filter=$filter";
-                                            $params[] = "page=$i";
-                                            echo implode('&', $params);
-                                        ?>#artikelen" 
-                                           class="flex items-center justify-center w-12 h-12 <?php echo $i === $currentPage ? 'bg-gradient-to-r from-blue-600 to-indigo-700 text-white shadow-lg' : 'text-slate-700 bg-white/70 hover:bg-white'; ?> rounded-xl transition-all duration-300 hover:scale-105 shadow-md hover:shadow-lg font-medium">
-                                            <?php echo $i; ?>
-                                        </a>
-                                    <?php endfor; ?>
-                                    
-                                    <!-- Laatste pagina -->
-                                    <?php if ($endPage < $totalPages): ?>
-                                        <?php if ($endPage < $totalPages - 1): ?>
-                                            <span class="text-slate-400 font-bold">...</span>
-                                        <?php endif; ?>
-                                        <a href="?<?php 
-                                            $params = [];
-                                            if ($filter !== 'alle') $params[] = "filter=$filter";
-                                            $params[] = "page=$totalPages";
-                                            echo implode('&', $params);
-                                        ?>#artikelen" 
-                                           class="flex items-center justify-center w-12 h-12 text-slate-700 bg-white/70 hover:bg-white rounded-xl transition-all duration-300 hover:scale-105 shadow-md hover:shadow-lg font-medium">
-                                            <?php echo $totalPages; ?>
-                                        </a>
-                                    <?php endif; ?>
-                                    
-                                    <!-- Volgende Pagina -->
-                                    <?php if ($currentPage < $totalPages): ?>
-                                        <a href="?<?php 
-                                            $params = [];
-                                            if ($filter !== 'alle') $params[] = "filter=$filter";
-                                            $params[] = "page=" . ($currentPage + 1);
-                                            echo implode('&', $params);
-                                        ?>#artikelen" 
-                                           class="group relative flex items-center justify-center w-12 h-12 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-xl">
-                                            <svg class="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                                            </svg>
-                                        </a>
-                                    <?php endif; ?>
-                                </div>
-                                
-                                <!-- Refresh Button -->
-                                <div class="pt-4 border-t border-slate-200/50">
-                                    <a href="?clear_cache=1<?php 
+                                <!-- Vorige Pagina -->
+                                <?php if ($currentPage > 1): ?>
+                                    <a href="?<?php 
                                         $params = [];
                                         if ($filter !== 'alle') $params[] = "filter=$filter";
-                                        if ($currentPage > 1) $params[] = "page=$currentPage";
-                                        echo !empty($params) ? '&' . implode('&', $params) : '';
+                                        $params[] = "page=" . ($currentPage - 1);
+                                        echo implode('&', $params);
                                     ?>#artikelen" 
-                                       class="group relative inline-flex items-center justify-center px-8 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-bold rounded-xl transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl overflow-hidden">
-                                        
-                                        <!-- Button content -->
-                                        <div class="relative z-10 flex items-center">
-                                            <svg class="w-5 h-5 mr-3 transform group-hover:rotate-180 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
-                                            </svg>
-                                            <span>Vernieuw artikelen</span>
-                                        </div>
-                                        
-                                        <!-- Shimmer effect -->
-                                        <div class="absolute inset-0 -top-full bg-gradient-to-b from-transparent via-white/30 to-transparent transform skew-y-12 group-hover:animate-shimmer"></div>
+                                       class="group flex items-center px-6 py-3 bg-slate-100 hover:bg-primary text-slate-700 hover:text-white rounded-xl transition-all duration-300 hover:scale-105 shadow-md hover:shadow-lg font-semibold">
+                                        <svg class="w-5 h-5 mr-2 transform group-hover:-translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                                        </svg>
+                                        Vorige
                                     </a>
-                                </div>
+                                <?php endif; ?>
+                                
+                                <!-- Pagina Nummers -->
+                                <?php
+                                $startPage = max(1, $currentPage - 2);
+                                $endPage = min($totalPages, $currentPage + 2);
+                                
+                                // Eerste pagina
+                                if ($startPage > 1):
+                                ?>
+                                    <a href="?<?php 
+                                        $params = [];
+                                        if ($filter !== 'alle') $params[] = "filter=$filter";
+                                        $params[] = "page=1";
+                                        echo implode('&', $params);
+                                    ?>#artikelen" 
+                                       class="flex items-center justify-center w-12 h-12 text-slate-700 bg-slate-100 hover:bg-primary hover:text-white rounded-xl transition-all duration-300 hover:scale-105 shadow-md hover:shadow-lg font-semibold">
+                                        1
+                                    </a>
+                                    <?php if ($startPage > 2): ?>
+                                        <span class="text-slate-400 font-bold px-2">...</span>
+                                    <?php endif; ?>
+                                <?php endif; ?>
+                                
+                                <!-- Huidige range -->
+                                <?php for ($i = $startPage; $i <= $endPage; $i++): ?>
+                                    <a href="?<?php 
+                                        $params = [];
+                                        if ($filter !== 'alle') $params[] = "filter=$filter";
+                                        $params[] = "page=$i";
+                                        echo implode('&', $params);
+                                    ?>#artikelen" 
+                                       class="flex items-center justify-center w-12 h-12 <?php echo $i === $currentPage ? 'bg-gradient-to-br from-primary to-primary-dark text-white shadow-lg' : 'text-slate-700 bg-slate-100 hover:bg-primary hover:text-white'; ?> rounded-xl transition-all duration-300 hover:scale-105 shadow-md hover:shadow-lg font-semibold">
+                                        <?php echo $i; ?>
+                                    </a>
+                                <?php endfor; ?>
+                                
+                                <!-- Laatste pagina -->
+                                <?php if ($endPage < $totalPages): ?>
+                                    <?php if ($endPage < $totalPages - 1): ?>
+                                        <span class="text-slate-400 font-bold px-2">...</span>
+                                    <?php endif; ?>
+                                    <a href="?<?php 
+                                        $params = [];
+                                        if ($filter !== 'alle') $params[] = "filter=$filter";
+                                        $params[] = "page=$totalPages";
+                                        echo implode('&', $params);
+                                    ?>#artikelen" 
+                                       class="flex items-center justify-center w-12 h-12 text-slate-700 bg-slate-100 hover:bg-primary hover:text-white rounded-xl transition-all duration-300 hover:scale-105 shadow-md hover:shadow-lg font-semibold">
+                                        <?php echo $totalPages; ?>
+                                    </a>
+                                <?php endif; ?>
+                                
+                                <!-- Volgende Pagina -->
+                                <?php if ($currentPage < $totalPages): ?>
+                                    <a href="?<?php 
+                                        $params = [];
+                                        if ($filter !== 'alle') $params[] = "filter=$filter";
+                                        $params[] = "page=" . ($currentPage + 1);
+                                        echo implode('&', $params);
+                                    ?>#artikelen" 
+                                       class="group flex items-center px-6 py-3 bg-slate-100 hover:bg-primary text-slate-700 hover:text-white rounded-xl transition-all duration-300 hover:scale-105 shadow-md hover:shadow-lg font-semibold">
+                                        Volgende
+                                        <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                        </svg>
+                                    </a>
+                                <?php endif; ?>
+                            </div>
+                            
+                            <!-- Quick Actions -->
+                            <div class="mt-8 pt-6 border-t border-slate-200 flex justify-center">
+                                <a href="?clear_cache=1<?php 
+                                    $params = [];
+                                    if ($filter !== 'alle') $params[] = "filter=$filter";
+                                    if ($currentPage > 1) $params[] = "page=$currentPage";
+                                    echo !empty($params) ? '&' . implode('&', $params) : '';
+                                ?>#artikelen" 
+                                   class="group inline-flex items-center px-8 py-3 bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white font-bold rounded-xl transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl">
+                                    
+                                    <svg class="w-5 h-5 mr-3 transform group-hover:rotate-180 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                                    </svg>
+                                    Vernieuw artikelen
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -419,42 +441,47 @@
                 <?php endif; ?>
                 
             <?php else: ?>
-                <!-- No Articles State - Premium Design -->
-                <div class="text-center py-24" data-aos="fade-up">
-                    <!-- Background effect -->
-                    <div class="relative max-w-2xl mx-auto">
-                        <div class="absolute -inset-1 bg-gradient-to-r from-slate-200 to-slate-300 rounded-3xl blur opacity-25"></div>
-                        <div class="relative bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/50 p-12">
-                            <!-- Icon -->
-                            <div class="relative mb-8">
-                                <div class="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full blur-xl opacity-20"></div>
-                                <div class="relative w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto shadow-xl">
-                                    <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
-                                    </svg>
-                                </div>
+                <!-- Modern Empty State -->
+                <div class="text-center py-32" data-aos="fade-up">
+                    <div class="max-w-2xl mx-auto">
+                        <!-- Icon Container -->
+                        <div class="relative mb-12">
+                            <div class="w-32 h-32 bg-gradient-to-br from-slate-100 to-slate-200 rounded-full flex items-center justify-center mx-auto shadow-2xl">
+                                <svg class="w-16 h-16 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+                                </svg>
                             </div>
+                            <!-- Decoratieve elementen -->
+                            <div class="absolute -top-2 -right-2 w-8 h-8 bg-slate-200/50 rounded-full"></div>
+                            <div class="absolute -bottom-3 -left-3 w-6 h-6 bg-slate-300/50 rounded-full"></div>
+                        </div>
+                        
+                        <!-- Content -->
+                        <div class="space-y-6">
+                            <h3 class="text-4xl font-black text-slate-900">Geen Artikelen Gevonden</h3>
+                            <p class="text-xl text-slate-600 max-w-lg mx-auto leading-relaxed">
+                                Er zijn momenteel geen artikelen beschikbaar voor de geselecteerde filter. Probeer een andere selectie of vernieuw de data.
+                            </p>
                             
-                            <!-- Content -->
-                            <div class="space-y-6">
-                                <h3 class="text-3xl font-black text-slate-900">Geen Artikelen Gevonden</h3>
-                                <p class="text-lg text-slate-600 max-w-md mx-auto leading-relaxed">
-                                    Er zijn momenteel geen artikelen die aan je selectie voldoen. Probeer een andere filter of vernieuw de data.
-                                </p>
+                            <!-- Action Buttons -->
+                            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8">
+                                <!-- Terug naar alle artikelen -->
+                                <a href="?filter=alle#artikelen" 
+                                   class="inline-flex items-center px-8 py-4 bg-primary hover:bg-primary-dark text-white font-bold rounded-2xl transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl">
+                                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                                    </svg>
+                                    Bekijk alle artikelen
+                                </a>
                                 
-                                <!-- CTA Button -->
-                                <div class="pt-6">
-                                    <a href="?clear_cache=1" 
-                                       class="group relative inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-700 text-white font-bold rounded-2xl transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl overflow-hidden">
-                                        <div class="absolute inset-0 bg-gradient-to-r from-purple-700 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                                        <span class="relative flex items-center">
-                                            <svg class="w-5 h-5 mr-3 transform group-hover:rotate-180 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
-                                            </svg>
-                                            Data Vernieuwen
-                                        </span>
-                                    </a>
-                                </div>
+                                <!-- Vernieuw data -->
+                                <a href="?clear_cache=1" 
+                                   class="group inline-flex items-center px-8 py-4 bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white font-bold rounded-2xl transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl">
+                                    <svg class="w-5 h-5 mr-3 transform group-hover:rotate-180 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                                    </svg>
+                                    Data vernieuwen
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -464,84 +491,9 @@
     </section>
 </main>
 
-<!-- Custom Animations CSS -->
+<!-- Modern Nieuws Styling -->
 <style>
-/* Premium animations and effects */
-@keyframes float {
-    0%, 100% { transform: translateY(0px) rotate(0deg); }
-    25% { transform: translateY(-20px) rotate(3deg); }
-    50% { transform: translateY(-10px) rotate(-2deg); }
-    75% { transform: translateY(-15px) rotate(1deg); }
-}
-
-@keyframes float-delayed {
-    0%, 100% { transform: translateY(0px) rotate(0deg); }
-    25% { transform: translateY(-25px) rotate(-3deg); }
-    50% { transform: translateY(-15px) rotate(2deg); }
-    75% { transform: translateY(-20px) rotate(-1deg); }
-}
-
-@keyframes pulse-slow {
-    0%, 100% { opacity: 0.4; transform: scale(1); }
-    50% { opacity: 0.8; transform: scale(1.05); }
-}
-
-@keyframes shimmer {
-    0% { transform: translateY(-100%) skewY(12deg); }
-    100% { transform: translateY(300%) skewY(12deg); }
-}
-
-@keyframes gradient {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-}
-
-.animate-float {
-    animation: float 6s ease-in-out infinite;
-}
-
-.animate-float-delayed {
-    animation: float-delayed 8s ease-in-out infinite;
-    animation-delay: -4s;
-}
-
-.animate-pulse-slow {
-    animation: pulse-slow 4s ease-in-out infinite;
-}
-
-.animate-shimmer {
-    animation: shimmer 1.5s ease-out;
-}
-
-.animate-gradient {
-    animation: gradient 3s ease infinite;
-}
-
-.bg-size-200 {
-    background-size: 200% 200%;
-}
-
-.bg-pos-0 {
-    background-position: 0% 50%;
-}
-
-.bg-pos-100 {
-    background-position: 100% 50%;
-}
-
-.animation-delay-75 {
-    animation-delay: 75ms;
-}
-
-.animation-delay-150 {
-    animation-delay: 150ms;
-}
-
-.animation-delay-300 {
-    animation-delay: 300ms;
-}
-
-/* Line clamp utilities */
+/* Utility classes voor line clamping */
 .line-clamp-3 {
     display: -webkit-box;
     -webkit-line-clamp: 3;
@@ -556,38 +508,52 @@
     overflow: hidden;
 }
 
-/* Enhanced hover effects */
-.group:hover .group-hover\:scale-110 {
-    transform: scale(1.1);
+/* Smooth hover animaties */
+.hover\:scale-\[1\.02\]:hover {
+    transform: scale(1.02);
 }
 
-.group:hover .group-hover\:rotate-12 {
-    transform: rotate(12deg);
-}
-
-/* Glass morphism effect */
-.backdrop-blur-sm {
-    backdrop-filter: blur(4px);
-}
-
-/* Custom focus styles */
-.focus\:ring-4:focus {
-    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
-}
-
-/* Responsive adjustments */
+/* Responsive aanpassingen */
 @media (max-width: 640px) {
-    .text-\[160px\] {
-        font-size: 100px;
+    .grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
     }
-    .text-\[200px\] {
-        font-size: 120px;
+    
+    .px-8 {
+        padding-left: 1rem;
+        padding-right: 1rem;
     }
-    .text-\[250px\] {
-        font-size: 140px;
+    
+    .py-4 {
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
     }
-    .text-\[300px\] {
-        font-size: 160px;
+    
+    .text-4xl {
+        font-size: 2rem;
+    }
+    
+    .text-xl {
+        font-size: 1.125rem;
+    }
+}
+
+/* Focus states voor toegankelijkheid */
+.focus\:ring-2:focus {
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+    outline: none;
+}
+
+/* Print styling */
+@media print {
+    .shadow-lg, .shadow-xl, .shadow-2xl {
+        box-shadow: none !important;
+    }
+    
+    .bg-gradient-to-r, .bg-gradient-to-br {
+        background: #374151 !important;
+        color: white !important;
     }
 }
 </style>
