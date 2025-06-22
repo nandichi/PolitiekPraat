@@ -385,6 +385,21 @@ include_once BASE_PATH . '/views/templates/header.php';
                         </div>
                     </div>
                 </div>
+                
+                <!-- Polling Source Attribution -->
+                <div class="mt-8 flex justify-center">
+                    <div class="inline-flex items-center px-4 py-3 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 transition duration-300 hover:bg-white/20">
+                        <svg class="w-4 h-4 text-white mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                        </svg>
+                        <span class="text-white text-sm font-medium">Peilingen bronnen:</span>
+                        <div class="flex items-center ml-2 space-x-2">
+                            <span class="text-white text-sm font-bold"><a href="https://maurice.nl/" target="_blank" class="hover:text-secondary-light transition-colors duration-300">Maurice de Hond</a></span>
+                            <div class="w-1 h-1 bg-white rounded-full"></div> 
+                            <span class="text-white text-sm font-bold"><a href="https://home.noties.nl/peil/" target="_blank" class="hover:text-secondary-light transition-colors duration-300">Peil.nl</a></span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         
@@ -1791,7 +1806,7 @@ function getPartyColor($partyKey) {
         'PVV' => '#0078D7',
         'VVD' => '#FF9900',
         'NSC' => '#4D7F78',
-        'BBB' => '#006633',
+        'BBB' => '#95c119',
         'GL-PvdA' => '#008800',
         'D66' => '#00B13C',
         'SP' => '#EE0000',
