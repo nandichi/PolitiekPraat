@@ -475,9 +475,39 @@ require_once 'views/templates/header.php';
                 
                 <!-- Gecentraliseerde content -->
                 <div class="text-center space-y-8 max-w-4xl mx-auto" data-aos="fade-up" data-aos-duration="1000">
+                    <!-- Stijlen voor de animatie van de wisselende titels in de hero sectie -->
+                    <style>
+                        .animated-text-container {
+                            position: relative;
+                        }
+                        .animated-text-item {
+                            position: absolute;
+                            width: 100%;
+                            left: 0;
+                            right: 0;
+                            opacity: 0;
+                            transform: translateY(30px);
+                            animation: text-cycle 12s infinite ease-in-out;
+                        }
+                        .animated-text-item:nth-child(1) { animation-delay: 0s; }
+                        .animated-text-item:nth-child(2) { animation-delay: 3s; }
+                        .animated-text-item:nth-child(3) { animation-delay: 6s; }
+                        .animated-text-item:nth-child(4) { animation-delay: 9s; }
+
+                        @keyframes text-cycle {
+                            0% { opacity: 0; transform: translateY(30px); }
+                            5%, 20% { opacity: 1; transform: translateY(0); }
+                            25%, 100% { opacity: 0; transform: translateY(-30px); }
+                        }
+                    </style>
                     <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold leading-tight tracking-tight">
-                        <span class="block bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent">Praat mee over</span>
-                        <span class="block bg-gradient-to-r from-secondary via-primary to-secondary bg-clip-text text-transparent mt-2">politiek in Nederland</span>
+                        <span class="block bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent">Jouw stem in het</span>
+                        <span class="animated-text-container block h-32 sm:h-40 md:h-48 lg:h-60 relative">
+                            <span class="animated-text-item bg-gradient-to-r from-secondary via-primary to-secondary bg-clip-text text-transparent mt-2">politieke debat.</span>
+                            <span class="animated-text-item bg-gradient-to-r from-secondary via-primary to-secondary bg-clip-text text-transparent mt-2">hart van de democratie.</span>
+                            <span class="animated-text-item bg-gradient-to-r from-secondary via-primary to-secondary bg-clip-text text-transparent mt-2">gesprek over morgen.</span>
+                            <span class="animated-text-item bg-gradient-to-r from-secondary via-primary to-secondary bg-clip-text text-transparent mt-2">vormen van de toekomst.</span>
+                        </span>
                     </h1>
                     
                     <p class="text-xl sm:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
