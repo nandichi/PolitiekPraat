@@ -475,12 +475,6 @@ require_once 'views/templates/header.php';
                 
                 <!-- Gecentraliseerde content -->
                 <div class="text-center space-y-8 max-w-4xl mx-auto" data-aos="fade-up" data-aos-duration="1000">
-                    <!-- Subtitle badge -->
-                    <div class="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 mb-6">
-                        <div class="w-2 h-2 bg-secondary rounded-full mr-3 animate-pulse"></div>
-                        <span class="text-gray-700 text-sm font-medium">Het grootste onafhankelijke politieke platform</span>
-                    </div>
-                    
                     <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold leading-tight tracking-tight">
                         <span class="block bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent">Praat mee over</span>
                         <span class="block bg-gradient-to-r from-secondary via-primary to-secondary bg-clip-text text-transparent mt-2">politiek in Nederland</span>
