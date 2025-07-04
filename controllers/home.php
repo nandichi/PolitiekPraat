@@ -30,6 +30,8 @@ function stripMarkdown($text) {
     return $text;
 }
 
+// Reces informatie wordt automatisch ingesteld door helpers.php
+
 // PERFORMANCE TODO: Implement server-side caching (e.g., Redis, Memcached) for database queries and API responses to significantly improve TTFB (Time To First Byte).
 $db = new Database();
 $newsAPI = new NewsAPI();
