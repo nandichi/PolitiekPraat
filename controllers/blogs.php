@@ -23,6 +23,7 @@ class BlogsController {
             $image_path = '';
             $video_path = '';
             $video_url = '';
+            $error = ''; // Variabele voor foutmeldingen
 
             // Handle image upload
             if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
@@ -47,10 +48,19 @@ class BlogsController {
                         // Debug: Log the upload success
                         error_log("Blog image uploaded successfully: " . $image_path);
                     } else {
-                        // Debug: Log upload failure
-                        error_log("Blog image upload failed for file: " . $_FILES['image']['name']);
+                        // Debug: Log upload failure and set error for user
+                        error_log("Blog image upload failed for file: " . $_FILES['image']['name'] . ". Check permissions for target path: " . $target_path);
+                        $error = 'Het uploaden van de afbeelding is mislukt. Controleer de bestandsrechten van de uploadmap.';
                     }
+                } else {
+                    $error = 'Ongeldig bestandstype voor afbeelding. Toegestane types: ' . implode(', ', $allowed_images);
                 }
+            }
+            
+            // Stop als er een uploadfout was
+            if (!empty($error)) {
+                require_once BASE_PATH . '/views/blogs/create.php';
+                return;
             }
 
             // Handle video upload
@@ -264,6 +274,7 @@ class BlogsController {
             $image_path = $blog->image_path; // Keep existing image by default
             $video_path = $blog->video_path; // Keep existing video by default
             $video_url = $blog->video_url;   // Keep existing video URL by default
+            $error = ''; // Variabele voor foutmeldingen
 
             // Handle new image upload if provided
             if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
@@ -288,8 +299,20 @@ class BlogsController {
                         }
                         // Store the relative path in database for compatibility
                         $image_path = $relative_upload_dir . $new_filename;
+                    } else {
+                        // Debug: Log upload failure and set error for user
+                        error_log("Blog image upload failed for file: " . $_FILES['image']['name'] . ". Check permissions for target path: " . $target_path);
+                        $error = 'Het uploaden van de nieuwe afbeelding is mislukt. Controleer de bestandsrechten van de uploadmap.';
                     }
+                } else {
+                    $error = 'Ongeldig bestandstype voor afbeelding. Toegestane types: ' . implode(', ', $allowed_images);
                 }
+            }
+            
+            // Stop als er een uploadfout was
+            if (!empty($error)) {
+                require_once BASE_PATH . '/views/blogs/edit.php';
+                return;
             }
 
             // Handle new video upload if provided

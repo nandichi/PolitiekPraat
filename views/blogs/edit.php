@@ -27,6 +27,13 @@
             <form action="<?php echo URLROOT; ?>/blogs/edit/<?php echo $blog->id; ?>" method="POST" enctype="multipart/form-data" 
                   class="bg-white rounded-3xl shadow-xl overflow-hidden transform transition-all duration-500 hover:shadow-2xl relative">
                 
+                <?php if (!empty($error)): ?>
+                    <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 m-6 rounded-lg" role="alert">
+                        <p class="font-bold">Er is een fout opgetreden:</p>
+                        <p><?php echo htmlspecialchars($error); ?></p>
+                    </div>
+                <?php endif; ?>
+
                 <!-- Decoratieve header bar met gradient -->
                 <div class="bg-gradient-to-r from-primary via-primary/90 to-secondary h-2"></div>
 
