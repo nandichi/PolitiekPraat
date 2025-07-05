@@ -1,24 +1,9 @@
-# Beveiligingsregels voor uploads
+# ----------------------------------------------------------------------
+# Tijdelijke Test - Sta alle toegang toe
+# ----------------------------------------------------------------------
+# Deze configuratie is alleen voor debuggen om te zien of de server
+# de 'Require all granted' directive accepteert.
+# ----------------------------------------------------------------------
+
 Options -Indexes
-Options -ExecCGI
-AddHandler cgi-script .php .pl .py .jsp .asp .sh .cgi
-
-# Afbeeldingen toestaan (Apache 2.4 syntax)
-<FilesMatch "\.(jpg|jpeg|png|gif|webp|svg)$">
-    Require all granted
-</FilesMatch>
-
-# Audio bestanden toestaan
-<FilesMatch "\.(mp3|wav|ogg)$">
-    Require all granted
-</FilesMatch>
-
-# Video bestanden toestaan
-<FilesMatch "\.(mp4|webm|ogg|avi|mov)$">
-    Require all granted
-</FilesMatch>
-
-# PHP bestanden blokkeren
-<FilesMatch "\.(php|phtml|php3|php4|php5|pl|py|jsp|asp|sh|cgi)$">
-    Require all denied
-</FilesMatch>
+Require all granted
