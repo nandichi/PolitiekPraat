@@ -44,6 +44,8 @@ class BlogsController {
                     if (move_uploaded_file($_FILES['image']['tmp_name'], $target_path)) {
                         // Extra controle: verifieer of het bestand echt is opgeslagen
                         if (file_exists($target_path)) {
+                            // Stel de juiste bestandsrechten in
+                            chmod($target_path, 0644);
                             $image_path = $relative_upload_dir . $new_filename;
                             error_log("Blog image uploaded and verified successfully: " . $image_path);
                         } else {
@@ -298,6 +300,8 @@ class BlogsController {
                     if (move_uploaded_file($_FILES['image']['tmp_name'], $target_path)) {
                         // Extra controle: verifieer of het bestand echt is opgeslagen
                         if (file_exists($target_path)) {
+                            // Stel de juiste bestandsrechten in
+                            chmod($target_path, 0644);
                             if (!empty($blog->image_path) && file_exists(BASE_PATH . '/' . $blog->image_path)) {
                                 unlink(BASE_PATH . '/' . $blog->image_path);
                             }
