@@ -29,28 +29,67 @@ class BlogsController {
                 $upload_dir = BASE_PATH . '/uploads/blogs/images/';
                 $relative_upload_dir = 'uploads/blogs/images/';
                 
+                // Uitgebreide logging voor debugging
+                error_log("Blog image upload attempt - BASE_PATH: " . BASE_PATH);
+                error_log("Upload directory: " . $upload_dir);
+                error_log("Directory exists: " . (file_exists($upload_dir) ? 'YES' : 'NO'));
+                error_log("Directory writable: " . (is_writable($upload_dir) ? 'YES' : 'NO'));
+                
                 if (!file_exists($upload_dir)) {
-                    mkdir($upload_dir, 0777, true);
+                    $mkdir_result = mkdir($upload_dir, 0755, true);
+                    error_log("Creating directory result: " . ($mkdir_result ? 'SUCCESS' : 'FAILED'));
+                    if ($mkdir_result) {
+                        chmod($upload_dir, 0755);
+                        error_log("Directory permissions set to 0755");
+                    }
                 }
                 
                 $file_extension = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
                 $allowed_images = ['jpg', 'jpeg', 'png', 'gif'];
                 
+                error_log("File extension: " . $file_extension);
+                error_log("File size: " . $_FILES['image']['size']);
+                error_log("Temp file: " . $_FILES['image']['tmp_name']);
+                
                 if (in_array($file_extension, $allowed_images)) {
                     $new_filename = uniqid() . '.' . $file_extension;
                     $target_path = $upload_dir . $new_filename;
+                    
+                    error_log("Target path: " . $target_path);
+                    error_log("Temp file exists: " . (file_exists($_FILES['image']['tmp_name']) ? 'YES' : 'NO'));
                     
                     if (move_uploaded_file($_FILES['image']['tmp_name'], $target_path)) {
                         // Store the relative path in database for compatibility
                         $image_path = $relative_upload_dir . $new_filename;
                         
+                        // Set correct file permissions
+                        chmod($target_path, 0644);
+                        
                         // Debug: Log the upload success
                         error_log("Blog image uploaded successfully: " . $image_path);
+                        error_log("File size after upload: " . filesize($target_path));
                     } else {
-                        // Debug: Log upload failure
+                        // Debug: Log upload failure with more details
                         error_log("Blog image upload failed for file: " . $_FILES['image']['name']);
+                        error_log("Upload error details - Source: " . $_FILES['image']['tmp_name'] . ", Target: " . $target_path);
+                        error_log("Last error: " . error_get_last()['message']);
                     }
+                } else {
+                    error_log("Invalid file extension: " . $file_extension . " for file: " . $_FILES['image']['name']);
                 }
+            } else if (isset($_FILES['image']) && $_FILES['image']['error'] !== UPLOAD_ERR_NO_FILE) {
+                // Log upload errors
+                $upload_errors = [
+                    UPLOAD_ERR_INI_SIZE => 'File exceeds upload_max_filesize',
+                    UPLOAD_ERR_FORM_SIZE => 'File exceeds MAX_FILE_SIZE',
+                    UPLOAD_ERR_PARTIAL => 'File was only partially uploaded',
+                    UPLOAD_ERR_NO_FILE => 'No file was uploaded',
+                    UPLOAD_ERR_NO_TMP_DIR => 'Missing temporary folder',
+                    UPLOAD_ERR_CANT_WRITE => 'Failed to write file to disk',
+                    UPLOAD_ERR_EXTENSION => 'File upload stopped by extension'
+                ];
+                $error_msg = isset($upload_errors[$_FILES['image']['error']]) ? $upload_errors[$_FILES['image']['error']] : 'Unknown upload error';
+                error_log("Blog image upload error: " . $error_msg . " (Code: " . $_FILES['image']['error'] . ")");
             }
 
             // Handle video upload
@@ -270,26 +309,70 @@ class BlogsController {
                 $upload_dir = BASE_PATH . '/uploads/blogs/images/';
                 $relative_upload_dir = 'uploads/blogs/images/';
                 
+                // Uitgebreide logging voor debugging (edit functie)
+                error_log("Blog image edit upload attempt - BASE_PATH: " . BASE_PATH);
+                error_log("Upload directory: " . $upload_dir);
+                error_log("Directory exists: " . (file_exists($upload_dir) ? 'YES' : 'NO'));
+                error_log("Directory writable: " . (is_writable($upload_dir) ? 'YES' : 'NO'));
+                
                 if (!file_exists($upload_dir)) {
-                    mkdir($upload_dir, 0777, true);
+                    $mkdir_result = mkdir($upload_dir, 0755, true);
+                    error_log("Creating directory result: " . ($mkdir_result ? 'SUCCESS' : 'FAILED'));
+                    if ($mkdir_result) {
+                        chmod($upload_dir, 0755);
+                        error_log("Directory permissions set to 0755");
+                    }
                 }
                 
                 $file_extension = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
                 $allowed_images = ['jpg', 'jpeg', 'png', 'gif'];
                 
+                error_log("File extension: " . $file_extension);
+                error_log("File size: " . $_FILES['image']['size']);
+                error_log("Temp file: " . $_FILES['image']['tmp_name']);
+                
                 if (in_array($file_extension, $allowed_images)) {
                     $new_filename = uniqid() . '.' . $file_extension;
                     $target_path = $upload_dir . $new_filename;
+                    
+                    error_log("Target path: " . $target_path);
+                    error_log("Temp file exists: " . (file_exists($_FILES['image']['tmp_name']) ? 'YES' : 'NO'));
                     
                     if (move_uploaded_file($_FILES['image']['tmp_name'], $target_path)) {
                         // Delete old image if it exists  
                         if (!empty($blog->image_path) && file_exists(BASE_PATH . '/' . $blog->image_path)) {
                             unlink(BASE_PATH . '/' . $blog->image_path);
+                            error_log("Old image deleted: " . $blog->image_path);
                         }
                         // Store the relative path in database for compatibility
                         $image_path = $relative_upload_dir . $new_filename;
+                        
+                        // Set correct file permissions
+                        chmod($target_path, 0644);
+                        
+                        error_log("Blog image edit uploaded successfully: " . $image_path);
+                        error_log("File size after upload: " . filesize($target_path));
+                    } else {
+                        error_log("Blog image edit upload failed for file: " . $_FILES['image']['name']);
+                        error_log("Upload error details - Source: " . $_FILES['image']['tmp_name'] . ", Target: " . $target_path);
+                        error_log("Last error: " . error_get_last()['message']);
                     }
+                } else {
+                    error_log("Invalid file extension: " . $file_extension . " for file: " . $_FILES['image']['name']);
                 }
+            } else if (isset($_FILES['image']) && $_FILES['image']['error'] !== UPLOAD_ERR_NO_FILE) {
+                // Log upload errors for edit
+                $upload_errors = [
+                    UPLOAD_ERR_INI_SIZE => 'File exceeds upload_max_filesize',
+                    UPLOAD_ERR_FORM_SIZE => 'File exceeds MAX_FILE_SIZE',
+                    UPLOAD_ERR_PARTIAL => 'File was only partially uploaded',
+                    UPLOAD_ERR_NO_FILE => 'No file was uploaded',
+                    UPLOAD_ERR_NO_TMP_DIR => 'Missing temporary folder',
+                    UPLOAD_ERR_CANT_WRITE => 'Failed to write file to disk',
+                    UPLOAD_ERR_EXTENSION => 'File upload stopped by extension'
+                ];
+                $error_msg = isset($upload_errors[$_FILES['image']['error']]) ? $upload_errors[$_FILES['image']['error']] : 'Unknown upload error';
+                error_log("Blog image edit upload error: " . $error_msg . " (Code: " . $_FILES['image']['error'] . ")");
             }
 
             // Handle new video upload if provided
