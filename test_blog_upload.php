@@ -78,15 +78,51 @@ if (isset($_POST['test_upload']) && isset($_FILES['test_image'])) {
                 $relative_path = 'uploads/blogs/images/' . $new_filename;
                 $image_url = URLROOT . '/' . $relative_path;
                 echo "<p>Afbeelding URL: " . $image_url . "</p>";
-                echo "<img src='" . $image_url . "' style='max-width: 200px; max-height: 200px;' alt='Test upload'>";
+                echo "<p><a href='" . $image_url . "' target='_blank'>Klik hier om de afbeelding direct te bekijken</a></p>";
+                
+                // Test verschillende URL formaten
+                echo "<h4>URL Tests:</h4>";
+                echo "<p>Direct URL: <a href='" . $image_url . "' target='_blank'>" . $image_url . "</a></p>";
+                echo "<p>Bestand op disk: " . $target_path . "</p>";
+                echo "<p>Bestand bestaat: " . (file_exists($target_path) ? 'JA' : 'NEE') . "</p>";
                 
                 // Test getBlogImageUrl functie
                 $generated_url = getBlogImageUrl($relative_path);
                 echo "<p>getBlogImageUrl result: " . $generated_url . "</p>";
                 
-                // Verwijder test bestand na 10 seconden
-                echo "<p><em>Test bestand wordt automatisch verwijderd na weergave</em></p>";
-                sleep(2);
+                // Probeer de afbeelding te tonen
+                echo "<h4>Afbeelding Test:</h4>";
+                echo "<img src='" . $image_url . "' style='max-width: 200px; max-height: 200px; border: 1px solid red;' alt='Test upload' onerror='this.style.display=\"none\"; this.nextSibling.style.display=\"block\";'>";
+                echo "<p style='display: none; color: red;'>❌ Afbeelding kan niet worden geladen!</p>";
+                
+                // Test of het bestand via HTTP toegankelijk is
+                echo "<h4>HTTP Toegankelijkheid Test:</h4>";
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, $image_url);
+                curl_setopt($ch, CURLOPT_NOBODY, true);
+                curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_exec($ch);
+                $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                curl_close($ch);
+                
+                echo "<p>HTTP Status Code: " . $http_code . "</p>";
+                if ($http_code == 200) {
+                    echo "<p style='color: green;'>✓ Afbeelding is toegankelijk via HTTP</p>";
+                } else {
+                    echo "<p style='color: red;'>✗ Afbeelding is NIET toegankelijk via HTTP</p>";
+                    echo "<p>Mogelijke oorzaken:</p>";
+                    echo "<ul>";
+                    echo "<li>.htaccess bestand blokkeert toegang</li>";
+                    echo "<li>Web server configuratie probleem</li>";
+                    echo "<li>Directory permissies</li>";
+                    echo "<li>Bestandspermissies</li>";
+                    echo "</ul>";
+                }
+                
+                // Wacht iets langer voordat we verwijderen
+                echo "<p><em>Test bestand wordt over 5 seconden verwijderd...</em></p>";
+                sleep(5);
                 if (file_exists($target_path)) {
                     unlink($target_path);
                     echo "<p style='color: blue;'>Test bestand verwijderd</p>";
@@ -141,7 +177,7 @@ try {
     $db = new Database();
     $conn = $db->getConnection();
     
-    $query = "SELECT id, title, image_path, created_at FROM blogs WHERE image_path IS NOT NULL AND image_path != '' ORDER BY created_at DESC LIMIT 5";
+    $query = "SELECT id, title, image_path, published_at FROM blogs WHERE image_path IS NOT NULL AND image_path != '' ORDER BY published_at DESC LIMIT 5";
     $stmt = $conn->prepare($query);
     $stmt->execute();
     $blogs = $stmt->fetchAll(PDO::FETCH_OBJ);
