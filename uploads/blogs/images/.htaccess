@@ -3,20 +3,22 @@ Options -Indexes
 Options -ExecCGI
 AddHandler cgi-script .php .pl .py .jsp .asp .sh .cgi
 
-# Afbeeldingen toestaan
+# Afbeeldingen toestaan (Apache 2.4 syntax)
 <FilesMatch "\.(jpg|jpeg|png|gif|webp|svg)$">
-    Order Allow,Deny
-    Allow from all
+    Require all granted
 </FilesMatch>
 
 # Audio bestanden toestaan
 <FilesMatch "\.(mp3|wav|ogg)$">
-    Order Allow,Deny
-    Allow from all
+    Require all granted
+</FilesMatch>
+
+# Video bestanden toestaan
+<FilesMatch "\.(mp4|webm|ogg|avi|mov)$">
+    Require all granted
 </FilesMatch>
 
 # PHP bestanden blokkeren
 <FilesMatch "\.(php|phtml|php3|php4|php5|pl|py|jsp|asp|sh|cgi)$">
-    Order Deny,Allow
-    Deny from all
+    Require all denied
 </FilesMatch>
