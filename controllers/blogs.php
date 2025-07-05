@@ -42,11 +42,14 @@ class BlogsController {
                     $target_path = $upload_dir . $new_filename;
                     
                     if (move_uploaded_file($_FILES['image']['tmp_name'], $target_path)) {
-                        // Store the relative path in database for compatibility
-                        $image_path = $relative_upload_dir . $new_filename;
-                        
-                        // Debug: Log the upload success
-                        error_log("Blog image uploaded successfully: " . $image_path);
+                        // Extra controle: verifieer of het bestand echt is opgeslagen
+                        if (file_exists($target_path)) {
+                            $image_path = $relative_upload_dir . $new_filename;
+                            error_log("Blog image uploaded and verified successfully: " . $image_path);
+                        } else {
+                            error_log("Blog image upload failed verification. File not found at: " . $target_path);
+                            $error = 'Afbeelding is niet correct opgeslagen na upload. Controleer de serverconfiguratie en maprechten.';
+                        }
                     } else {
                         // Debug: Log upload failure and set error for user
                         error_log("Blog image upload failed for file: " . $_FILES['image']['name'] . ". Check permissions for target path: " . $target_path);
@@ -293,12 +296,17 @@ class BlogsController {
                     $target_path = $upload_dir . $new_filename;
                     
                     if (move_uploaded_file($_FILES['image']['tmp_name'], $target_path)) {
-                        // Delete old image if it exists  
-                        if (!empty($blog->image_path) && file_exists(BASE_PATH . '/' . $blog->image_path)) {
-                            unlink(BASE_PATH . '/' . $blog->image_path);
+                        // Extra controle: verifieer of het bestand echt is opgeslagen
+                        if (file_exists($target_path)) {
+                            if (!empty($blog->image_path) && file_exists(BASE_PATH . '/' . $blog->image_path)) {
+                                unlink(BASE_PATH . '/' . $blog->image_path);
+                            }
+                            $image_path = $relative_upload_dir . $new_filename;
+                            error_log("Blog image updated and verified successfully: " . $image_path);
+                        } else {
+                            error_log("Blog image update failed verification. File not found at: " . $target_path);
+                            $error = 'Nieuwe afbeelding is niet correct opgeslagen na upload. Controleer de serverconfiguratie en maprechten.';
                         }
-                        // Store the relative path in database for compatibility
-                        $image_path = $relative_upload_dir . $new_filename;
                     } else {
                         // Debug: Log upload failure and set error for user
                         error_log("Blog image upload failed for file: " . $_FILES['image']['name'] . ". Check permissions for target path: " . $target_path);
