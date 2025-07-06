@@ -6,6 +6,7 @@ require_once '../includes/Database.php';
 require_once '../includes/functions.php';
 require_once '../models/NewsModel.php';
 require_once '../includes/NewsScraper.php';
+require_once '../includes/mail_helper.php';
 
 // Logging functie
 function logMessage($message) {
@@ -114,12 +115,80 @@ try {
     logMessage("Performance: {$memoryUsage}MB memory, {$executionTime}s execution time");
     logMessage("Auto news scraper completed successfully");
     
+    // Email notificatie versturen
+    $emailSummary = "News scraper succesvol uitgevoerd! {$scrapedCount} nieuwe artikelen gevonden.";
+    $emailDetails = "Scraping Resultaten:\n";
+    $emailDetails .= "- Nieuwe artikelen: {$scrapedCount}\n";
+    $emailDetails .= "- Fouten: " . count($errors) . "\n";
+    $emailDetails .= "- Memory gebruik: {$memoryUsage}MB\n";
+    $emailDetails .= "- Uitvoeringstijd: {$executionTime}s\n";
+    $emailDetails .= "- Database artikelen totaal: " . ($statsAfter['total_articles'] ?? 0) . "\n\n";
+    
+    if (!empty($errors)) {
+        $emailDetails .= "Fouten tijdens scraping:\n";
+        foreach ($errors as $error) {
+            $emailDetails .= "- $error\n";
+        }
+        $emailDetails .= "\n";
+    }
+    
+    // Voeg bron statistieken toe
+    $emailDetails .= "Bron Statistieken:\n";
+    foreach ($scrapingStats as $source => $sourceStats) {
+        $emailDetails .= "- $source: " . ($sourceStats['last_articles_found'] ?? 0) . " artikelen\n";
+    }
+    
+    // Bepaal email status
+    $emailStatus = 'success';
+    if (!empty($errors)) {
+        $emailStatus = count($errors) > $scrapedCount ? 'error' : 'warning';
+    }
+    
+    // Verstuur email
+    $logFile = '../logs/auto_news_scraper.log';
+    $emailSent = sendCronJobEmail(
+        'Auto News Scraper',
+        $emailStatus,
+        $emailSummary,
+        $emailDetails,
+        $logFile
+    );
+    
+    if ($emailSent) {
+        logMessage("Email notificatie verstuurd naar admin");
+    } else {
+        logMessage("Waarschuwing: Email notificatie kon niet worden verstuurd");
+    }
+    
 } catch (Exception $e) {
     logMessage("Error in auto news scraper: " . $e->getMessage());
     logMessage("Stack trace: " . $e->getTraceAsString());
     
     // Log naar main error log ook
     error_log("Auto News Scraper Error: " . $e->getMessage());
+    
+    // Verstuur error email
+    $errorSummary = "Auto News Scraper FOUT! Het script is gestopt met een kritieke fout.";
+    $errorDetails = "Fout: " . $e->getMessage() . "\n\n";
+    $errorDetails .= "Stack trace:\n" . $e->getTraceAsString() . "\n\n";
+    $errorDetails .= "Tijd: " . date('Y-m-d H:i:s') . "\n";
+    $errorDetails .= "Server: " . gethostname() . "\n";
+    
+    $logFile = '../logs/auto_news_scraper.log';
+    $emailSent = sendCronJobEmail(
+        'Auto News Scraper - ERROR',
+        'error',
+        $errorSummary,
+        $errorDetails,
+        $logFile
+    );
+    
+    if ($emailSent) {
+        logMessage("Error email notificatie verstuurd naar admin");
+    } else {
+        logMessage("Kritiek: Error email kon niet worden verstuurd!");
+    }
+    
     exit(1);
 }
 ?> 

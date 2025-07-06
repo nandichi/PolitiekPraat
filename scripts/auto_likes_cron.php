@@ -4,6 +4,7 @@
 require_once '../includes/config.php';
 require_once '../includes/Database.php';
 require_once '../includes/functions.php';
+require_once '../includes/mail_helper.php';
 
 // Logging functie
 function logMessage($message) {
@@ -95,8 +96,60 @@ try {
     logMessage("Auto likes cron job completed successfully");
     logMessage("Updated $updatedCount blogs with $totalLikesAdded total likes");
     
+    // Email notificatie versturen
+    $emailSummary = "Auto Likes succesvol uitgevoerd! {$updatedCount} blogs bijgewerkt met {$totalLikesAdded} likes.";
+    $emailDetails = "Likes Resultaten:\n";
+    $emailDetails .= "- Blogs verwerkt: " . count($blogs) . "\n";
+    $emailDetails .= "- Blogs bijgewerkt: {$updatedCount}\n";
+    $emailDetails .= "- Totale likes toegevoegd: {$totalLikesAdded}\n";
+    $emailDetails .= "- Min likes per blog: {$minLikes}\n";
+    $emailDetails .= "- Max likes per blog: {$maxLikes}\n";
+    $emailDetails .= "- Interval: " . ($autoSettings['interval_hours'] ?? 6) . " uur\n";
+    $emailDetails .= "- Tijd: " . date('Y-m-d H:i:s') . "\n";
+    
+    // Verstuur email
+    $logFile = '../logs/auto_likes.log';
+    $emailSent = sendCronJobEmail(
+        'Auto Likes',
+        'success',
+        $emailSummary,
+        $emailDetails,
+        $logFile
+    );
+    
+    if ($emailSent) {
+        logMessage("Email notificatie verstuurd naar admin");
+    } else {
+        logMessage("Waarschuwing: Email notificatie kon niet worden verstuurd");
+    }
+    
 } catch (Exception $e) {
     logMessage("Error in auto likes cron job: " . $e->getMessage());
     logMessage("Stack trace: " . $e->getTraceAsString());
+    
+    // Verstuur error email
+    $errorSummary = "Auto Likes FOUT! Het script is gestopt met een kritieke fout.";
+    $errorDetails = "Fout: " . $e->getMessage() . "\n\n";
+    $errorDetails .= "Stack trace:\n" . $e->getTraceAsString() . "\n\n";
+    $errorDetails .= "Tijd: " . date('Y-m-d H:i:s') . "\n";
+    $errorDetails .= "Server: " . gethostname() . "\n";
+    
+    $logFile = '../logs/auto_likes.log';
+    $emailSent = sendCronJobEmail(
+        'Auto Likes - ERROR',
+        'error',
+        $errorSummary,
+        $errorDetails,
+        $logFile
+    );
+    
+    if ($emailSent) {
+        logMessage("Error email notificatie verstuurd naar admin");
+    } else {
+        logMessage("Kritiek: Error email kon niet worden verstuurd!");
+    }
+    
+    // Log naar main error log ook
+    error_log("Auto Likes Cron Error: " . $e->getMessage());
 }
 ?> 
