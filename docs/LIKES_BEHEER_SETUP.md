@@ -9,7 +9,10 @@ Het likes beheer systeem stelt administrators in staat om handmatig likes toe te
 ### 1. Handmatige Likes Beheer
 
 - **Willekeurige Likes Toevoegen**: Voeg een willekeurig aantal likes toe aan alle of een selectie van blogs
-- **Individuele Blog Likes**: Stel het exacte aantal likes in voor specifieke blogs
+- **Bulk Likes Editor**: Selecteer meerdere blogs en werk ze tegelijk bij
+- **Individuele Blog Likes**: Stel het exacte aantal likes in voor specifieke blogs met directe AJAX update
+- **Snelle Aanpassingen**: Plus/minus knoppen voor elke blog
+- **Keyboard Shortcuts**: Ctrl+A (select all), Ctrl+Enter (bulk update)
 - **Statistieken**: Bekijk totaal aantal blogs en likes
 
 ### 2. Automatische Likes Systeem
@@ -26,6 +29,29 @@ Het likes beheer systeem is toegankelijk via:
 - **Dashboard**: Ga naar Admin > Stemwijzer Dashboard
 - **Snelle Actie**: Klik op "Likes Beheer" in de snelle acties sectie
 - **Directe URL**: `/admin/likes-beheer.php`
+
+## Bulk Likes Editor Gebruik
+
+### Bulk Bewerkingen
+
+1. **Selecteer blogs**: Klik op checkboxes naast blogs die je wilt bewerken
+2. **Alles selecteren**: Klik "Alles Selecteren" of gebruik Ctrl+A
+3. **Bulk waarde instellen**: Voer een waarde in bij "Stel alle geselecteerde in op"
+4. **Bulk update**: Klik "Bulk Update" of gebruik Ctrl+Enter
+
+### Individuele Blog Bewerkingen
+
+1. **Directe aanpassing**: Gebruik de +/- knoppen naast elke blog
+2. **Handmatige invoer**: Typ een specifiek aantal likes
+3. **Directe update**: Klik "Update" voor onmiddellijke AJAX update
+4. **Visuele feedback**: Kleurveranderingen geven succes/fout aan
+
+### Sneltoetsen
+
+- **Ctrl/Cmd + A**: Selecteer alle blogs
+- **Ctrl/Cmd + Enter**: Voer bulk update uit
+- **Tab**: Navigeer tussen invoervelden
+- **Enter**: Update individuele blog (in invoerveld)
 
 ## Automatische Functionaliteit Instellen
 

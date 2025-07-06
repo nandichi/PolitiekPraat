@@ -1,316 +1,367 @@
-# News Scraper Systeem
+# News Scraper Automatisering Systeem
 
 ## Overzicht
 
-Het News Scraper systeem haalt automatisch de laatste politieke nieuwsartikelen op van verschillende Nederlandse nieuwsbronnen en slaat deze op in de database. Het systeem voorkomt duplicate scraping en draait elke 30 minuten automatisch.
+Het automatische news scraper systeem verzamelt politiek nieuws van verschillende bronnen en voegt deze toe aan de PolitiekPraat database. Het systeem ondersteunt zowel handmatige als automatische scraping met configureerbare intervallen.
 
-## Architectuur
+## Functies
 
-### Componenten
+### 1. Automatische News Scraping
 
-1. **NewsScraper** (`includes/NewsScraper.php`) - Hoofdklasse voor scraping
-2. **NewsModel** (`models/NewsModel.php`) - Database operaties
-3. **NewsAPI** (`includes/NewsAPI.php`) - RSS feed parsing
-4. **run_news_scraper.php** (`scripts/run_news_scraper.php`) - CLI script
-5. **Admin Dashboard** (`admin/scraper_dashboard.php`) - Web interface
+- **Configureerbare Intervallen**: 15 minuten tot 8 uur
+- **Meerdere Nieuwsbronnen**: Progressieve en conservatieve bronnen
+- **RSS Feed Monitoring**: Automatische controle van RSS feeds
+- **Foutafhandeling**: Robuuste error handling en logging
 
-### Database Tabel
+### 2. Handmatige Beheer Tools
 
-- `news_articles` - Opslag van gescrapte artikelen
-- `cache/last_scraped.json` - Tracking van laatste gescrapte artikelen
+- **Directe Scraping**: Voer scraping handmatig uit
+- **RSS Feed Testing**: Test alle bronnen op bereikbaarheid
+- **Oude Artikelen Cleanup**: Automatisch opruimen van oude content
+- **Real-time Logs**: Live monitoring van scraping activiteit
 
-## Nieuwsbronnen
+### 3. Monitoring & Analytics
 
-### Progressieve Bronnen (links)
+- **Uitgebreide Statistieken**: Per bron en totale statistieken
+- **Performance Tracking**: Memory en execution time monitoring
+- **Error Reporting**: Gedetailleerde foutrapportage
 
-- **De Volkskrant**: `https://www.volkskrant.nl/nieuws-achtergrond/politiek/rss.xml`
-- **NRC**: `https://www.nrc.nl/sectie/politiek/rss/`
-- **Trouw**: `https://www.trouw.nl/politiek/rss.xml`
+## Installatie
 
-### Conservatieve Bronnen (rechts)
-
-- **Telegraaf**: `https://www.telegraaf.nl/nieuws/politiek/rss`
-- **AD**: `https://www.ad.nl/politiek/rss.xml`
-- **NU.nl**: `https://www.nu.nl/rss/Politiek`
-
-## Features
-
-### 🔄 Slimme Duplicate Detectie
-
-- Controleert laatste gescrapte artikel per bron
-- Stopt scraping zodra een bekend artikel wordt gevonden
-- Controleert database op bestaande URLs
-
-### 📊 Automatische Categorisatie
-
-- Bepaalt automatisch politieke oriëntatie per bron
-- Classificeert bias als 'Progressief' of 'Conservatief'
-- Filtert alleen politiek relevante content
-
-### 🧹 Automatische Cleanup
-
-- Verwijdert automatisch artikelen ouder dan 30 dagen
-- Draait dagelijks om 6:00 AM via cron job
-
-### 📈 Monitoring & Statistieken
-
-- Real-time database statistieken
-- Scraping status per bron
-- Error logging en rapportage
-
-## Installatie & Setup
-
-### Stap 1: Database Migratie
+### Automatische Setup (Aanbevolen)
 
 ```bash
-# Voer de nieuws database migratie uit
-php scripts/populate_news_database.php
+# Voer het setup script uit
+bash scripts/setup_news_cron.sh
 ```
 
-### Stap 2: Handmatige Test
+Het setup script:
+
+- Controleert PHP installatie
+- Maakt benodigde directories aan
+- Configureert cron job met gewenst interval
+- Test het systeem
+- Geeft gebruiksinstructies
+
+### Handmatige Setup
+
+1. **Maak directories aan:**
 
 ```bash
-# Test de scraper handmatig
-php scripts/run_news_scraper.php
+mkdir -p logs cache
+chmod 755 logs cache
 ```
 
-### Stap 3: Automatische Setup (Cron Job)
+2. **Configureer cron job:**
 
 ```bash
-# Automatische cron job setup
-bash scripts/setup_cron.sh
-```
-
-**Of handmatig cron job toevoegen:**
-
-```bash
-# Open crontab
+# Bewerk crontab
 crontab -e
 
-# Voeg deze regel toe (vervang [PROJECT_PATH])
-*/30 * * * * /usr/bin/php [PROJECT_PATH]/scripts/run_news_scraper.php >> [PROJECT_PATH]/logs/news_scraper.log 2>&1
+# Voeg toe (bijvoorbeeld elke 30 minuten):
+*/30 * * * * /usr/bin/php /path/to/your/project/scripts/auto_news_scraper.php >> /path/to/your/project/logs/auto_news_scraper.log 2>&1
 ```
 
-### Stap 4: Admin Dashboard
-
-Ga naar: `http://yoursite.com/admin/scraper_dashboard.php`
-
-- Bekijk statistieken
-- Run scraper handmatig
-- Monitor scraping status
-
-## Gebruik
-
-### CLI Script
+3. **Test de installatie:**
 
 ```bash
-# Basis uitvoering
-php scripts/run_news_scraper.php
-
-# Met logging
-php scripts/run_news_scraper.php >> logs/news_scraper.log 2>&1
-```
-
-### Admin Dashboard
-
-1. Open `admin/scraper_dashboard.php`
-2. Bekijk database statistieken
-3. Run scraper met "🚀 Scraper Nu Uitvoeren" knop
-4. Monitor status per nieuwsbron
-
-### Programmatisch Gebruik
-
-```php
-require_once 'includes/NewsScraper.php';
-require_once 'models/NewsModel.php';
-
-$db = new Database();
-$newsModel = new NewsModel($db);
-$scraper = new NewsScraper($newsModel);
-
-// Scrape alle bronnen
-$result = $scraper->scrapeAllSources();
-echo "Nieuwe artikelen: " . $result['scraped_count'];
-
-// Cleanup oude artikelen
-$deleted = $scraper->cleanupOldArticles(30);
-echo "Verwijderde artikelen: " . $deleted;
-
-// Statistieken
-$stats = $scraper->getScrapingStats();
-foreach ($stats as $source => $sourceStats) {
-    echo "$source: {$sourceStats['last_scraped']}\n";
-}
+php scripts/auto_news_scraper.php
 ```
 
 ## Configuratie
 
-### Nieuwe Nieuwsbron Toevoegen
+### Beheersinterface
 
-Bewerk `includes/NewsScraper.php`:
+Ga naar: `admin/news-scraper-beheer.php`
 
-```php
-private $newsSources = [
-    'Nieuwe Bron' => [
-        'rss_url' => 'https://example.com/rss',
-        'orientation' => 'links', // of 'rechts'
-        'bias' => 'Progressief' // of 'Conservatief'
-    ]
-];
-```
+### Automatische Instellingen
 
-### Scraping Interval Wijzigen
+- **Scraping Interval**: 15 minuten tot 8 uur
+- **Automatische Cleanup**: Optioneel verwijderen van oude artikelen
+- **Cleanup Periode**: 7 tot 60 dagen
+- **RSS Feed Testing**: Validatie van alle bronnen
 
-Bewerk cron job:
+### Handmatige Configuratie
 
-```bash
-# Elke 15 minuten
-*/15 * * * * /usr/bin/php [PROJECT_PATH]/scripts/run_news_scraper.php
+Bewerk: `cache/auto_scraper_settings.json`
 
-# Elk uur
-0 * * * * /usr/bin/php [PROJECT_PATH]/scripts/run_news_scraper.php
-
-# Elke 2 uur
-0 */2 * * * /usr/bin/php [PROJECT_PATH]/scripts/run_news_scraper.php
-```
-
-### Cleanup Interval Aanpassen
-
-Bewerk `scripts/run_news_scraper.php`:
-
-```php
-// Verander cleanup tijd (standaard 06:00)
-if ($currentHour == '06') {
-    $deletedCount = $scraper->cleanupOldArticles(30); // 30 dagen
+```json
+{
+  "enabled": true,
+  "interval_minutes": 30,
+  "auto_cleanup": true,
+  "cleanup_days": 30,
+  "last_run": 1640995200,
+  "last_cleanup": 1640995200
 }
 ```
 
-## Monitoring
+## Gebruik
 
-### Log Files
+### Via Beheersinterface
+
+1. Ga naar Admin Dashboard
+2. Klik op "News Scraper"
+3. Configureer instellingen
+4. Monitor activiteit via logs
+
+### Via Command Line
 
 ```bash
-# Volg real-time logs
-tail -f logs/news_scraper.log
+# Handmatige scraping
+php scripts/auto_news_scraper.php
 
-# Bekijk laatste 100 regels
-tail -100 logs/news_scraper.log
+# Bekijk logs
+tail -f logs/auto_news_scraper.log
 
-# Zoek naar fouten
-grep -i error logs/news_scraper.log
+# Test RSS feeds
+php scripts/test_rss_feeds.php
 ```
 
-### Cache Bestanden
+## Nieuwsbronnen
 
-- `cache/last_scraped.json` - Laatste scrape status per bron
-- `cache/news.json` - NewsAPI cache (legacy)
+Het systeem scraped van verschillende politieke nieuwsbronnen:
 
-### Database Queries
+### Progressieve Bronnen
 
-```sql
--- Controleer recente artikelen
-SELECT source, COUNT(*) as count, MAX(published_at) as laatste
-FROM news_articles
-WHERE published_at > DATE_SUB(NOW(), INTERVAL 24 HOUR)
-GROUP BY source;
+- NOS Politiek
+- NU.nl Politiek
+- De Volkskrant
+- Trouw
 
--- Bekijk scraping performance
-SELECT DATE(created_at) as datum, COUNT(*) as artikelen
-FROM news_articles
-GROUP BY DATE(created_at)
-ORDER BY datum DESC;
-```
+### Conservatieve Bronnen
+
+- Telegraaf Politiek
+- AD Politiek
+- Nederlands Dagblad
+
+### RSS Feed Management
+
+Bronnen worden gedefinieerd in `includes/NewsScraper.php` met:
+
+- RSS URL
+- Politieke oriëntatie
+- Scraping frequentie
+- Error handling
+
+## Monitoring
+
+### Live Logs
+
+- **Locatie**: `logs/auto_news_scraper.log`
+- **Rotatie**: Handmatig of via logrotate
+- **Format**: Timestamp + detailbericht
+
+### Performance Metrics
+
+- Memory usage
+- Execution time
+- Scraped articles count
+- Error rates per source
+
+### Foutafhandeling
+
+- Network timeouts
+- Invalid RSS feeds
+- Database connection issues
+- Duplicate article prevention
 
 ## Troubleshooting
 
-### Veel Voorkomende Problemen
+### Cron Job Werkt Niet
 
-**1. RSS Feed 404 Errors**
+```bash
+# Controleer cron service
+sudo systemctl status cron
 
-- Controleer of RSS URLs nog geldig zijn
-- Nieuwssites wijzigen soms hun RSS endpoints
-- Update URLs in `NewsScraper.php`
+# Bekijk cron logs
+grep CRON /var/log/syslog
 
-**2. Geen Nieuwe Artikelen**
-
-- Check `cache/last_scraped.json` voor laatste status
-- RSS feeds hebben mogelijk geen nieuwe content
-- Verwijder cache file om force refresh te doen
-
-**3. Database Connectie Fouten**
-
-- Controleer database credentials in `includes/config.php`
-- Zorg dat `news_articles` tabel bestaat
-- Run database migratie opnieuw
-
-**4. Cron Job Draait Niet**
-
-- Controleer cron service: `sudo service cron status`
-- Verificeer cron job: `crontab -l`
-- Check PHP pad: `which php`
-
-### Debug Mode
-
-Voeg debug output toe aan `NewsScraper.php`:
-
-```php
-// In scrapeSource methode
-echo "DEBUG: Scraping $sourceName\n";
-echo "DEBUG: Found " . count($articles) . " articles\n";
-print_r($articles); // Toon alle artikelen
+# Test handmatig
+php scripts/auto_news_scraper.php
 ```
 
-### Performance Optimalisatie
+### RSS Feeds Falen
 
-- Verhoog `max_items` voor meer artikelen per scrape
-- Verlaag scraping frequentie voor minder server load
-- Voeg database indexen toe voor snellere queries
+```bash
+# Test specifieke feed
+curl -I "https://feeds.nos.nl/nosnieuwspolitiek"
 
-## Security Overwegingen
+# Controleer PHP extensions
+php -m | grep -E "curl|xml|dom"
+```
 
-### Productie Setup
+### Database Problemen
 
-1. **Admin Dashboard Beveiliging**
+```bash
+# Test database connectie
+php scripts/test_database.php
 
-   - Implementeer echte authenticatie
-   - Beperk toegang tot admin IP's
-   - Gebruik HTTPS
+# Controleer nieuws tabellen
+mysql -u user -p -e "DESCRIBE news_articles"
+```
 
-2. **Script Beveiliging**
+### Permission Issues
 
-   - Run cron jobs onder beperkte user
-   - Valideer alle input parameters
-   - Log alle admin acties
+```bash
+# Fix directory permissions
+chmod 755 logs cache scripts
+chmod +x scripts/*.sh
 
-3. **Database Beveiliging**
-   - Gebruik prepared statements (al geïmplementeerd)
-   - Beperk database user rechten
-   - Backup database regelmatig
+# Fix file permissions
+chmod 644 cache/*.json logs/*.log
+```
 
-## Uitbreidingsmogelijkheden
+## Performance Optimizatie
 
-### Geplande Features
+### Interval Aanbevelingen
 
-- [ ] Email notificaties bij scraping fouten
-- [ ] API endpoint voor externe integraties
-- [ ] Machine learning voor betere content classificatie
-- [ ] Image scraping voor artikelen
-- [ ] Social media sentiment analyse
+- **Hoge Frequentie**: 15-30 minuten (breaking news sites)
+- **Normale Frequentie**: 1-2 uur (dagelijkse updates)
+- **Lage Frequentie**: 4-8 uur (minder actieve sites)
 
-### Custom Integraties
+### Resource Management
 
-Het systeem is ontworpen voor uitbreiding:
+- Memory limit: minimaal 128MB
+- Execution time: max 300 seconden
+- Database connections: connection pooling
+- HTTP timeouts: 30 seconden
 
-- Voeg nieuwe RSS bronnen toe
-- Integreer met andere CMS systemen
-- Export naar externe databases
-- Custom filtering op basis van keywords
+### Caching Strategieën
 
-## Support
+- RSS feed caching (5-15 minuten)
+- Duplicate detection (hash-based)
+- Database query optimization
+- Index optimization
 
-Voor vragen of problemen:
+## Backup & Recovery
 
-1. Check de logs: `logs/news_scraper.log`
-2. Bekijk admin dashboard voor status
-3. Test handmatig: `php scripts/run_news_scraper.php`
-4. Controleer database verbinding en tabellen
+### Data Backup
+
+```bash
+# Backup nieuws database
+mysqldump -u user -p database_name news_articles > news_backup.sql
+
+# Backup configuratie
+tar -czf config_backup.tar.gz cache/ logs/
+```
+
+### Recovery Procedures
+
+```bash
+# Restore database
+mysql -u user -p database_name < news_backup.sql
+
+# Reset configuratie
+rm cache/auto_scraper_settings.json
+# Herconfigureer via beheersinterface
+```
+
+## Security
+
+### Access Control
+
+- Admin-only toegang tot beheersinterfaces
+- Secure file permissions
+- SQL injection preventie
+- XSS protection
+
+### Network Security
+
+- HTTPS voor RSS feeds waar mogelijk
+- User-Agent spoofing preventie
+- Rate limiting
+- IP whitelisting voor admin
+
+## Uitbreiding
+
+### Nieuwe Nieuwsbronnen Toevoegen
+
+1. Edit `includes/NewsScraper.php`
+2. Voeg RSS URL toe aan `$sources` array
+3. Definieer politieke oriëntatie
+4. Test de nieuwe bron
+
+### Custom Intervals
+
+```php
+// In auto_news_scraper.php
+$customIntervals = [
+    'source1' => 15, // 15 minuten
+    'source2' => 60, // 1 uur
+    'default' => 30  // 30 minuten
+];
+```
+
+### Webhook Integration
+
+```php
+// Webhook notificaties bij nieuwe artikelen
+function sendWebhook($article) {
+    $payload = json_encode([
+        'title' => $article['title'],
+        'source' => $article['source'],
+        'url' => $article['url']
+    ]);
+
+    // Verstuur naar externe service
+}
+```
+
+## Onderhoud
+
+### Dagelijkse Taken
+
+- Controleer error logs
+- Monitor disk space
+- Verificeer database groei
+
+### Wekelijkse Taken
+
+- Analyseer scraping statistieken
+- Update RSS feed lijst
+- Performance review
+
+### Maandelijkse Taken
+
+- Database optimalisatie
+- Log rotatie
+- Security updates
+
+## API Reference
+
+### Manual Scraping
+
+```php
+$scraper = new NewsScraper($newsModel);
+$result = $scraper->scrapeAllSources();
+```
+
+### Cleanup
+
+```php
+$deletedCount = $scraper->cleanupOldArticles($days);
+```
+
+### Statistics
+
+```php
+$stats = $newsModel->getNewsStats();
+$scrapingStats = $scraper->getScrapingStats();
+```
+
+## Changelog
+
+### v2.0.0 - Automatisering Update
+
+- Toegevoegd: Automatische cron job systeem
+- Toegevoegd: Beheersinterface
+- Toegevoegd: Uitgebreide logging
+- Verbeterd: Error handling
+- Verbeterd: Performance monitoring
+
+### v1.0.0 - Initial Release
+
+- Basis RSS scraping functionaliteit
+- Handmatige scraping interface
+- Database integratie
