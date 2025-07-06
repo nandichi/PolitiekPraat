@@ -34,7 +34,7 @@ $parties = [
             'Energie' => 'Voorstander van kernenergie als onderdeel van de energiemix'
         ],
         'current_seats' => 37,
-        'polling' => ['seats' => 30, 'percentage' => 20.0, 'change' => -7],
+        'polling' => ['seats' => 29, 'percentage' => 19.3, 'change' => -8],
         'perspectives' => [
             'left' => 'De PVV pleit voor afschaffing van het eigen risico in de zorg, wat de gezondheidszorg toegankelijker en betaalbaarder maakt voor alle burgers, vooral voor mensen met lagere inkomens.',
             'right' => 'De PVV komt sterk op voor nationale soevereiniteit en strenger immigratiebeleid, wat aanhangers zien als bescherming van de Nederlandse cultuur en identiteit.'
@@ -54,7 +54,7 @@ $parties = [
             'Energie' => 'Voorstander van kernenergie als aanvulling op duurzame bronnen'
         ],
         'current_seats' => 24,
-        'polling' => ['seats' => 22, 'percentage' => 14.7, 'change' => -2],
+        'polling' => ['seats' => 20, 'percentage' => 13.3, 'change' => -4],
         'perspectives' => [
             'left' => 'De VVD steunt praktische klimaatmaatregelen en energietransitieplannen die de industrie niet vervreemden, waardoor een duurzamere economie mogelijk wordt zonder massaal banenverlies.',
             'right' => 'De VVD bevordert economische groei, lagere belastingen en minder bureaucratie, wat ondernemerschap stimuleert en de markteconomie versterkt.'
@@ -94,7 +94,7 @@ $parties = [
             'Energie' => 'Ziet kernenergie als betrouwbaar onderdeel van de energietransitie'
         ],
         'current_seats' => 7,
-        'polling' => ['seats' => 3, 'percentage' => 2.0, 'change' => -4],
+        'polling' => ['seats' => 4, 'percentage' => 2.7, 'change' => -3],
         'perspectives' => [
             'left' => 'BBB pleit voor het behoud van plattelandsgemeenschappen en traditionele landbouwpraktijken, waarmee cultureel erfgoed en lokale economieën tegen globalisering worden beschermd.',
             'right' => 'Ze verzetten zich tegen buitensporige milieuregels die boerenbestaan bedreigen en steunen een pragmatische balans tussen duurzaamheid en economische levensvatbaarheid.'
@@ -114,7 +114,7 @@ $parties = [
             'Energie' => 'Tegen kernenergie vanwege risico\'s en lange doorlooptijden'
         ],
         'current_seats' => 25,
-        'polling' => ['seats' => 29, 'percentage' => 19.3, 'change' => +4],
+        'polling' => ['seats' => 28, 'percentage' => 18.7, 'change' => +3],
         'perspectives' => [
             'left' => 'Dit verbond steunt ambitieus klimaatbeleid en sociale rechtvaardigheid, en strijdt voor gelijkheid en milieubescherming.',
             'right' => 'Hun focus op sociale cohesie en gemeenschapskracht helpt sociale stabiliteit te behouden, wat een beter ondernemingsklimaat schept en maatschappelijke kosten reduceert.'
@@ -134,7 +134,7 @@ $parties = [
             'Energie' => 'Kritisch over kernenergie, maar innovatie en veiligheid kunnen doorslaggevend zijn'
         ],
         'current_seats' => 9,
-        'polling' => ['seats' => 8, 'percentage' => 5.3, 'change' => -1],
+        'polling' => ['seats' => 9, 'percentage' => 6.0, 'change' => 0],
         'perspectives' => [
             'left' => 'D66 pleit voor investering in onderwijs en wetenschap, bevordert gelijke kansen en innovatieve oplossingen voor maatschappelijke problemen.',
             'right' => 'Hun nadruk op individuele vrijheid en progressief-liberale waarden stimuleert persoonlijke verantwoordelijkheid en modernisering van de economie.'
@@ -154,7 +154,7 @@ $parties = [
             'Energie' => 'Tegen investeringen in kerncentrales, liever inzetten op duurzame energie'
         ],
         'current_seats' => 5,
-        'polling' => ['seats' => 7, 'percentage' => 4.7, 'change' => +2],
+        'polling' => ['seats' => 7, 'percentage' => 4.7, 'change' => 2],
         'perspectives' => [
             'left' => 'De SP vecht consequent tegen ongelijkheid en voor een robuust sociaal vangnet, en komt op voor de rechten van werknemers en economisch kwetsbare groepen.',
             'right' => 'Hun benadering van politiek vanuit de basis en focus op het luisteren naar zorgen van gewone burgers helpt echte gemeenschapsproblemen aan te pakken.'
@@ -173,8 +173,8 @@ $parties = [
             'Zorg' => 'Zorg moet toegankelijk zijn zonder financiële drempels',
             'Energie' => 'Kernenergie is verouderd, inzetten op hernieuwbare energiebronnen'
         ],
-        'current_seats' => 6,
-        'polling' => ['seats' => 4, 'percentage' => 2.7, 'change' => -2],
+        'current_seats' => 3,
+        'polling' => ['seats' => 4, 'percentage' => 2.7, 'change' => +1],
         'perspectives' => [
             'left' => 'Naast dierenwelzijn pleit PvdD voor een fundamenteel ander economisch systeem dat ecologische grenzen en biodiversiteit respecteert.',
             'right' => 'Hun focus op rentmeesterschap van de natuur sluit aan bij conservatieve tradities van zorgvuldig beheer van hulpbronnen en behoud voor toekomstige generaties.'
@@ -213,8 +213,8 @@ $parties = [
             'Zorg' => 'Vindt een zekere mate van eigen bijdrage noodzakelijk voor efficiëntie',
             'Energie' => 'Voorstander van kernenergie voor energiezekerheid en emissiereductie'
         ],
-        'current_seats' => 3,
-        'polling' => ['seats' => 8, 'percentage' => 5.3, 'change' => +5],
+        'current_seats' => 1,
+        'polling' => ['seats' => 10, 'percentage' => 6.7, 'change' => +9],
         'perspectives' => [
             'left' => 'Hun steun voor directe democratie geeft burgers meer inspraak in beleidsbeslissingen, wat mogelijk de participatie in het democratische proces vergroot.',
             'right' => 'JA21 pleit voor lagere belastingen en duidelijk, rechtlijnig bestuur dat traditionele Nederlandse waarden respecteert.'
@@ -253,8 +253,8 @@ $parties = [
             'Zorg' => 'Voorstander van afschaffing van het eigen risico voor toegankelijke zorg',
             'Energie' => 'Wil investeren in kernenergie als alternatief voor fossiele brandstoffen'
         ],
-        'current_seats' => 2,
-        'polling' => ['seats' => 4, 'percentage' => 2.7, 'change' => +2],
+        'current_seats' => 3,
+        'polling' => ['seats' => 4, 'percentage' => 2.7, 'change' => +1],
         'perspectives' => [
             'left' => 'FvD steunt afschaffing van het eigen risico in de zorg, wat de toegankelijkheid van gezondheidszorg voor alle burgers zou verbeteren, ongeacht inkomen.',
             'right' => 'Hun pleidooi voor nationale soevereiniteit en democratische hervorming is gericht op het teruggeven van macht aan burgers en het beperken van bureaucratische overreach.'

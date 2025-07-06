@@ -53,8 +53,8 @@ $peilingData = [
     [
         'partij' => 'PVV',
         'zetels' => [
-            'peiling' => 30, 
-            'vorige' => 31,
+            'peiling' => 29, 
+            'vorige' => 30,
             'tkvorigepeiling' => 31,
             'tk2023' => 37
         ],
@@ -63,52 +63,52 @@ $peilingData = [
     [
         'partij' => 'GL/PvdA',
         'zetels' => [
-            'peiling' => 29, 
-            'vorige' => 30,
+            'peiling' => 28, 
+            'vorige' => 29,
             'tkvorigepeiling' => 30,
             'tk2023' => 25
         ],
         'color' => '#008800'
     ],
     [
-        'partij' => 'VVD',
-        'zetels' => [
-            'peiling' => 22, 
-            'vorige' => 24,
-            'tkvorigepeiling' => 25,
-            'tk2023' => 24
-        ],
-        'color' => '#FF9900'
-    ],
-    [
         'partij' => 'CDA',
         'zetels' => [
             'peiling' => 21, 
-            'vorige' => 19,
+            'vorige' => 21,
             'tkvorigepeiling' => 18,
             'tk2023' => 5
         ],
         'color' => '#1E8449'
     ],
     [
+        'partij' => 'VVD',
+        'zetels' => [
+            'peiling' => 20, 
+            'vorige' => 22,
+            'tkvorigepeiling' => 25,
+            'tk2023' => 24
+        ],
+        'color' => '#FF9900'
+    ],
+    [
+        'partij' => 'JA21',
+        'zetels' => [
+            'peiling' => 10, 
+            'vorige' => 8,
+            'tkvorigepeiling' => 4,
+            'tk2023' => 1
+        ],
+        'color' => '#4B0082'
+    ],
+    [
         'partij' => 'D66',
         'zetels' => [
-            'peiling' => 8, 
+            'peiling' => 9, 
             'vorige' => 8,
             'tkvorigepeiling' => 8,
             'tk2023' => 9
         ],
         'color' => '#00B13C'
-    ],
-    [
-        'partij' => 'JA21',
-        'zetels' => [
-            'peiling' => 8, 
-            'vorige' => 5,
-            'tkvorigepeiling' => 4,
-            'tk2023' => 1
-        ],
-        'color' => '#4B0082'
     ],
     [
         'partij' => 'SP',
@@ -119,6 +119,16 @@ $peilingData = [
             'tk2023' => 5
         ],
         'color' => '#EE0000'
+    ],
+    [
+        'partij' => 'BBB',
+        'zetels' => [
+            'peiling' => 4, 
+            'vorige' => 3,
+            'tkvorigepeiling' => 2,
+            'tk2023' => 7
+        ],
+        'color' => '#7CFC00'
     ],
     [
         'partij' => 'FVD',
@@ -164,7 +174,7 @@ $peilingData = [
         'partij' => 'Volt',
         'zetels' => [
             'peiling' => 3, 
-            'vorige' => 4,
+            'vorige' => 3,
             'tkvorigepeiling' => 4,
             'tk2023' => 2
         ],
@@ -181,20 +191,10 @@ $peilingData = [
         'color' => '#4682B4'
     ],
     [
-        'partij' => 'BBB',
-        'zetels' => [
-            'peiling' => 3, 
-            'vorige' => 2,
-            'tkvorigepeiling' => 2,
-            'tk2023' => 7
-        ],
-        'color' => '#7CFC00'
-    ],
-    [
         'partij' => 'NSC',
         'zetels' => [
             'peiling' => 0, 
-            'vorige' => 1,
+            'vorige' => 0,
             'tkvorigepeiling' => 1,
             'tk2023' => 20
         ],
@@ -202,27 +202,27 @@ $peilingData = [
     ]
 ];
 
-// Mogelijke coalities berekenen op basis van de bijgewerkte peilingdata
+// Mogelijke coalities berekenen op basis van de bijgewerkte peilingdata van 5-7-2025
 $mogelijkeCoalities = [
     [
         'naam' => 'Links-progressief',
         'partijen' => ['GL/PvdA', 'D66', 'SP', 'PvdDieren', 'Volt'],
-        'zetels' => 29 + 8 + 7 + 4 + 3 // 51 zetels
+        'zetels' => 28 + 9 + 7 + 4 + 3 // 51 zetels
     ],
     [
         'naam' => 'Rechts-conservatief',
         'partijen' => ['PVV', 'VVD', 'BBB', 'JA21', 'SGP', 'FVD'],
-        'zetels' => 30 + 22 + 3 + 8 + 4 + 4 // 71 zetels
+        'zetels' => 29 + 20 + 4 + 10 + 4 + 4 // 71 zetels
     ],
     [
         'naam' => 'Centrum-breed',
         'partijen' => ['GL/PvdA', 'VVD', 'CDA', 'D66', 'ChristenUnie'],
-        'zetels' => 29 + 22 + 21 + 8 + 3 // 83 zetels
+        'zetels' => 28 + 20 + 21 + 9 + 3 // 81 zetels
     ],
     [
         'naam' => 'Huidige coalitie',
         'partijen' => ['PVV', 'VVD', 'BBB', 'NSC'],
-        'zetels' => 30 + 22 + 3 + 0 // 55 zetels
+        'zetels' => 29 + 20 + 4 + 0 // 53 zetels
     ]
 ];
 
