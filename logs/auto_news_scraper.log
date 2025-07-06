@@ -1,0 +1,19 @@
+[2025-07-06 20:24:50] Starting auto news scraper cron job
+[2025-07-06 20:24:50] Auto scraper settings file not found. Exiting.
+[2025-07-06 20:25:21] Starting auto news scraper cron job
+[2025-07-06 20:25:21] Current database stats: 132 total articles
+[2025-07-06 20:25:21] Starting news scraping...
+[2025-07-06 20:25:23] Scraping completed - Found 49 new articles
+[2025-07-06 20:25:23] Source statistics:
+[2025-07-06 20:25:23]   De Volkskrant: 10 articles, last scraped: 2025-07-06 20:25:22
+[2025-07-06 20:25:23]   NRC: 10 articles, last scraped: 2025-07-06 20:25:22
+[2025-07-06 20:25:23]   Trouw: 10 articles, last scraped: 2025-07-06 20:25:22
+[2025-07-06 20:25:23]   Telegraaf: 10 articles, last scraped: 2025-07-06 20:25:22
+[2025-07-06 20:25:23]   AD: 10 articles, last scraped: 2025-07-06 20:25:22
+[2025-07-06 20:25:23]   NU.nl: 9 articles, last scraped: 2025-06-13 17:54:04
+[2025-07-06 20:25:23] Starting automatic cleanup of articles older than 30 days
+[2025-07-06 20:25:23] Cleanup completed - Deleted 13 old articles
+[2025-07-06 20:25:23] Updated database stats: 168 total articles
+[2025-07-06 20:25:23] Performance: 2MB memory, 1.1s execution time
+[2025-07-06 20:25:23] Auto news scraper completed successfully
+[2025-07-06 20:25:23] Email notificatie verstuurd naar admin

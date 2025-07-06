@@ -1,14 +1,20 @@
 <?php
 // Automatische likes cron job script
 // Dit script kan worden uitgevoerd door een cron job om automatisch likes toe te voegen
-require_once '../includes/config.php';
-require_once '../includes/Database.php';
-require_once '../includes/functions.php';
-require_once '../includes/mail_helper.php';
+
+// Zet working directory naar project root voor correcte includes
+$scriptDir = dirname(__FILE__);
+$projectRoot = dirname($scriptDir);
+chdir($projectRoot);
+
+require_once 'includes/config.php';
+require_once 'includes/Database.php';
+require_once 'includes/functions.php';
+require_once 'includes/mail_helper.php';
 
 // Logging functie
 function logMessage($message) {
-    $logFile = '../logs/auto_likes.log';
+    $logFile = 'logs/auto_likes.log';
     $timestamp = date('Y-m-d H:i:s');
     $logEntry = "[$timestamp] $message" . PHP_EOL;
     file_put_contents($logFile, $logEntry, FILE_APPEND | LOCK_EX);
@@ -19,12 +25,12 @@ try {
     logMessage("Starting auto likes cron job");
     
     // Controleer of logs directory bestaat
-    if (!is_dir('../logs')) {
-        mkdir('../logs', 0755, true);
+    if (!is_dir('logs')) {
+        mkdir('logs', 0755, true);
     }
     
     // Laad automatische instellingen
-    $autoSettingsFile = '../cache/auto_likes_settings.json';
+    $autoSettingsFile = 'cache/auto_likes_settings.json';
     if (!file_exists($autoSettingsFile)) {
         logMessage("Auto likes settings file not found. Exiting.");
         exit;
@@ -108,7 +114,7 @@ try {
     $emailDetails .= "- Tijd: " . date('Y-m-d H:i:s') . "\n";
     
     // Verstuur email
-    $logFile = '../logs/auto_likes.log';
+    $logFile = 'logs/auto_likes.log';
     $emailSent = sendCronJobEmail(
         'Auto Likes',
         'success',
@@ -134,7 +140,7 @@ try {
     $errorDetails .= "Tijd: " . date('Y-m-d H:i:s') . "\n";
     $errorDetails .= "Server: " . gethostname() . "\n";
     
-    $logFile = '../logs/auto_likes.log';
+    $logFile = 'logs/auto_likes.log';
     $emailSent = sendCronJobEmail(
         'Auto Likes - ERROR',
         'error',
