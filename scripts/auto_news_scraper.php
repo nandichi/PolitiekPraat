@@ -2,23 +2,31 @@
 // Automatische news scraper cron job script
 // Dit script kan worden uitgevoerd door een cron job om automatisch nieuws te scrapen
 
-// Zet working directory naar project root voor correcte includes
+// Bepaal het absolute pad naar de project root
 $scriptDir = dirname(__FILE__);
 $projectRoot = dirname($scriptDir);
-chdir($projectRoot);
 
-require_once 'includes/config.php';
-require_once 'includes/Database.php';
-require_once 'includes/functions.php';
-require_once 'models/NewsModel.php';
-require_once 'includes/NewsScraper.php';
-require_once 'includes/mail_helper.php';
+// Gebruik absolute paden voor alle includes
+require_once $projectRoot . '/includes/config.php';
+require_once $projectRoot . '/includes/Database.php';
+require_once $projectRoot . '/includes/functions.php';
+require_once $projectRoot . '/models/NewsModel.php';
+require_once $projectRoot . '/includes/NewsScraper.php';
+require_once $projectRoot . '/includes/mail_helper.php';
 
 // Logging functie
 function logMessage($message) {
-    $logFile = 'logs/auto_news_scraper.log';
+    global $projectRoot;
+    $logFile = $projectRoot . '/logs/auto_news_scraper.log';
     $timestamp = date('Y-m-d H:i:s');
     $logEntry = "[$timestamp] $message" . PHP_EOL;
+    
+    // Zorg ervoor dat logs directory bestaat
+    $logDir = dirname($logFile);
+    if (!is_dir($logDir)) {
+        mkdir($logDir, 0755, true);
+    }
+    
     file_put_contents($logFile, $logEntry, FILE_APPEND | LOCK_EX);
     echo $logEntry;
 }
@@ -27,12 +35,12 @@ try {
     logMessage("Starting auto news scraper cron job");
     
     // Controleer of logs directory bestaat
-    if (!is_dir('logs')) {
-        mkdir('logs', 0755, true);
+    if (!is_dir($projectRoot . '/logs')) {
+        mkdir($projectRoot . '/logs', 0755, true);
     }
     
     // Laad automatische instellingen
-    $autoSettingsFile = 'cache/auto_scraper_settings.json';
+    $autoSettingsFile = $projectRoot . '/cache/auto_scraper_settings.json';
     if (!file_exists($autoSettingsFile)) {
         logMessage("Auto scraper settings file not found. Exiting.");
         exit;
@@ -151,7 +159,7 @@ try {
     }
     
     // Verstuur email
-    $logFile = 'logs/auto_news_scraper.log';
+    $logFile = $projectRoot . '/logs/auto_news_scraper.log';
     $emailSent = sendCronJobEmail(
         'Auto News Scraper',
         $emailStatus,
@@ -180,7 +188,7 @@ try {
     $errorDetails .= "Tijd: " . date('Y-m-d H:i:s') . "\n";
     $errorDetails .= "Server: " . gethostname() . "\n";
     
-    $logFile = 'logs/auto_news_scraper.log';
+    $logFile = $projectRoot . '/logs/auto_news_scraper.log';
     $emailSent = sendCronJobEmail(
         'Auto News Scraper - ERROR',
         'error',

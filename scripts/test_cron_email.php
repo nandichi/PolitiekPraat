@@ -2,13 +2,13 @@
 // Test script voor cron job email functionaliteit
 // Gebruik dit om te testen of de email configuratie werkt
 
-// Zet working directory naar project root voor correcte includes
+// Bepaal het absolute pad naar de project root
 $scriptDir = dirname(__FILE__);
 $projectRoot = dirname($scriptDir);
-chdir($projectRoot);
 
-require_once 'includes/config.php';
-require_once 'includes/mail_helper.php';
+// Gebruik absolute paden voor alle includes
+require_once $projectRoot . '/includes/config.php';
+require_once $projectRoot . '/includes/mail_helper.php';
 
 echo "🧪 Testing PolitiekPraat Cron Job Email Functionaliteit\n";
 echo "========================================================\n\n";
@@ -81,7 +81,7 @@ echo "\n";
 
 // Test 5: Email met log bestand
 echo "Test 5: Verzenden van email met log inhoud...\n";
-$testLogFile = 'logs/test_log.txt';
+$testLogFile = $projectRoot . '/logs/test_log.txt';
 file_put_contents($testLogFile, "[" . date('Y-m-d H:i:s') . "] Test log entry 1\n");
 file_put_contents($testLogFile, "[" . date('Y-m-d H:i:s') . "] Test log entry 2\n", FILE_APPEND);
 file_put_contents($testLogFile, "[" . date('Y-m-d H:i:s') . "] Test log entry 3\n", FILE_APPEND);
@@ -137,7 +137,7 @@ echo "\n";
 // Toon configuratie info
 echo "📧 Email Configuratie Info:\n";
 echo "==========================================\n";
-$mailConfig = include 'includes/mail_config.php';
+$mailConfig = include $projectRoot . '/includes/mail_config.php';
 echo "SMTP Host: " . $mailConfig['smtp_host'] . "\n";
 echo "SMTP Port: " . $mailConfig['smtp_port'] . "\n";
 echo "SMTP Username: " . $mailConfig['smtp_username'] . "\n";
