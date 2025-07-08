@@ -6,8 +6,48 @@ class ChatGPTAPI {
     private $model = 'gpt-4o-mini';
     
     public function __construct() {
-        // API key uit environment of direct ingesteld
-        $this->apiKey = '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';
+        // Probeer API key uit verschillende bronnen te halen
+        $this->apiKey = $this->getApiKey();
+        
+        if (!$this->apiKey) {
+            throw new Exception('ChatGPT API key niet gevonden. Zet de key in een .env file of als environment variabele OPENAI_API_KEY.');
+        }
+    }
+    
+    /**
+     * Haal API key op uit veilige bronnen
+     */
+    private function getApiKey() {
+        // 1. Probeer uit environment variabele
+        $envKey = getenv('OPENAI_API_KEY');
+        if ($envKey) {
+            return $envKey;
+        }
+        
+        // 2. Probeer uit $_ENV superglobal
+        if (isset($_ENV['OPENAI_API_KEY'])) {
+            return $_ENV['OPENAI_API_KEY'];
+        }
+        
+        // 3. Probeer uit .env file (als die bestaat)
+        $envFile = __DIR__ . '/../.env';
+        if (file_exists($envFile)) {
+            $envContent = file_get_contents($envFile);
+            if (preg_match('/OPENAI_API_KEY=(.+)/', $envContent, $matches)) {
+                return trim($matches[1]);
+            }
+        }
+        
+        // 4. Probeer uit aparte config file (niet in git)
+        $configFile = __DIR__ . '/../config/api_keys.php';
+        if (file_exists($configFile)) {
+            $config = include $configFile;
+            if (isset($config['openai_api_key'])) {
+                return $config['openai_api_key'];
+            }
+        }
+        
+        return null;
     }
     
     /**

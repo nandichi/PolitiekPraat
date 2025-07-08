@@ -8,4 +8,7 @@
 composer.lock
 
 # Gevoelige configuratie bestanden
-/includes/mail_config.php 
+/includes/mail_config.php
+.env
+.env.local
+/config/api_keys.php 
