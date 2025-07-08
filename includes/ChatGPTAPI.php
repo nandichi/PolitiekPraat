@@ -1,0 +1,207 @@
+<?php
+
+class ChatGPTAPI {
+    private $apiKey;
+    private $apiUrl = 'https://api.openai.com/v1/chat/completions';
+    private $model = 'gpt-4o-mini';
+    
+    public function __construct() {
+        // API key uit environment of direct ingesteld
+        $this->apiKey = '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';
+    }
+    
+    /**
+     * Vraag ChatGPT om uitgebreide uitleg bij een stemwijzer vraag
+     */
+    public function explainQuestion($question, $context, $leftView, $rightView) {
+        $prompt = "Je bent een Nederlandse politieke expert die neutrale uitleg geeft over politieke stellingen. 
+
+Geef een uitgebreide, neutrale uitleg (ongeveer 150-200 woorden) over de volgende politieke stelling:
+
+**Stelling:** {$question}
+
+**Context:** {$context}
+
+**Linkse visie:** {$leftView}
+
+**Rechtse visie:** {$rightView}
+
+Leg uit:
+1. Waarom dit onderwerp belangrijk is in de Nederlandse politiek
+2. Wat de hoofdargumenten zijn van beide kanten
+3. Welke gevolgen verschillende standpunten kunnen hebben
+4. Geef concrete voorbeelden waar relevant
+
+Schrijf in toegankelijke taal voor gewone burgers. Blijf volledig neutraal en geef geen eigen mening.";
+
+        return $this->makeAPICall($prompt);
+    }
+    
+    /**
+     * Vraag ChatGPT waarom een bepaalde partij bij iemand past
+     */
+    public function explainPartyMatch($partyName, $userAnswers, $questions, $matchPercentage) {
+        // Maak een samenvatting van de user's antwoorden
+        $answerSummary = $this->summarizeUserAnswers($userAnswers, $questions);
+        
+        $prompt = "Je bent een Nederlandse politieke expert die persoonlijk advies geeft over partij-matches.
+
+Een gebruiker heeft {$matchPercentage}% overeenkomst met {$partyName}. 
+
+**Gebruiker's politieke profiel:**
+{$answerSummary}
+
+Leg in ongeveer 150-200 woorden uit:
+1. Waarom {$partyName} zo goed bij deze gebruiker past
+2. Op welke specifieke onderwerpen ze het eens zijn
+3. Wat de kernwaarden zijn die ze delen
+4. Waar ze mogelijk zouden kunnen verschillen (als relevant)
+5. Geef concrete voorbeelden van {$partyName}'s standpunten die aansluiten
+
+Schrijf in een persoonlijke, toegankelijke toespraak alsof je direct tegen de gebruiker praat. Begin met iets zoals 'Op basis van jouw antwoorden...' Blijf feitelijk en objectief.";
+
+        return $this->makeAPICall($prompt);
+    }
+    
+    /**
+     * Maak een samenvatting van gebruiker's antwoorden
+     */
+    private function summarizeUserAnswers($userAnswers, $questions) {
+        $summary = "De gebruiker heeft de volgende standpunten ingenomen:\n\n";
+        
+        foreach ($userAnswers as $questionIndex => $answer) {
+            if (isset($questions[$questionIndex])) {
+                $question = $questions[$questionIndex];
+                
+                // Controleer of $question een object of array is
+                if (is_object($question)) {
+                    $title = $question->title ?? 'Onbekende vraag';
+                } else {
+                    $title = $question['title'] ?? 'Onbekende vraag';
+                }
+                
+                $summary .= "- {$title}: {$answer}\n";
+            }
+        }
+        
+        return $summary;
+    }
+    
+    /**
+     * Geef algemeen politiek advies gebaseerd op alle antwoorden
+     */
+    public function generatePoliticalAdvice($personalityAnalysis, $topMatches) {
+        $topThree = array_slice($topMatches, 0, 3);
+        $topMatchesText = implode(', ', array_map(function($match) {
+            return $match['name'] . ' (' . $match['agreement'] . '%)';
+        }, $topThree));
+        
+        $prompt = "Je bent een Nederlandse politieke expert die persoonlijk stemadvies geeft.
+
+Een gebruiker heeft de stemwijzer ingevuld met de volgende resultaten:
+
+**Top 3 partij matches:** {$topMatchesText}
+
+**Politiek profiel:** {$personalityAnalysis['political_profile']['type']} - {$personalityAnalysis['political_profile']['description']}
+
+**Politieke kenmerken:**
+- {$personalityAnalysis['left_right_percentage']}% rechts georiënteerd  
+- {$personalityAnalysis['progressive_percentage']}% progressief
+- {$personalityAnalysis['authoritarian_percentage']}% autoritair
+- {$personalityAnalysis['eu_pro_percentage']}% pro-EU
+
+Geef in ongeveer 200-250 woorden persoonlijk stemadvies:
+1. Wat deze resultaten zeggen over hun politieke identiteit
+2. Waarom de top matches goed bij hen passen
+3. Op welke thema's ze extra moeten letten bij hun stemkeuze
+4. Suggesties voor vervolgstappen (partijprogramma's lezen, debatten kijken, etc.)
+
+Schrijf persoonlijk en bemoedigend. Begin met 'Op basis van jouw stemwijzer resultaten...' Eindigt met praktisch advies.";
+
+        return $this->makeAPICall($prompt);
+    }
+    
+    /**
+     * Maak daadwerkelijke API call naar OpenAI
+     */
+    private function makeAPICall($prompt) {
+        $data = [
+            'model' => $this->model,
+            'messages' => [
+                [
+                    'role' => 'system', 
+                    'content' => 'Je bent een Nederlandse politieke expert die neutrale, informatieve uitleg geeft over politiek. Je schrijft in duidelijk Nederlands voor gewone burgers.'
+                ],
+                [
+                    'role' => 'user', 
+                    'content' => $prompt
+                ]
+            ],
+            'max_tokens' => 400,
+            'temperature' => 0.7
+        ];
+        
+        $headers = [
+            'Authorization: Bearer ' . $this->apiKey,
+            'Content-Type: application/json'
+        ];
+        
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $this->apiUrl);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+        
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $error = curl_error($ch);
+        curl_close($ch);
+        
+        if ($error) {
+            return [
+                'success' => false,
+                'error' => 'cURL error: ' . $error
+            ];
+        }
+        
+        if ($httpCode !== 200) {
+            return [
+                'success' => false,
+                'error' => 'HTTP error: ' . $httpCode,
+                'response' => $response
+            ];
+        }
+        
+        $decodedResponse = json_decode($response, true);
+        
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            return [
+                'success' => false,
+                'error' => 'JSON decode error: ' . json_last_error_msg()
+            ];
+        }
+        
+        if (!isset($decodedResponse['choices'][0]['message']['content'])) {
+            return [
+                'success' => false,
+                'error' => 'Unexpected API response format',
+                'response' => $decodedResponse
+            ];
+        }
+        
+        return [
+            'success' => true,
+            'content' => trim($decodedResponse['choices'][0]['message']['content'])
+        ];
+    }
+    
+    /**
+     * Test de API verbinding
+     */
+    public function testConnection() {
+        $testPrompt = "Zeg gewoon 'Hallo, de ChatGPT API werkt!' in het Nederlands.";
+        return $this->makeAPICall($testPrompt);
+    }
+} 
