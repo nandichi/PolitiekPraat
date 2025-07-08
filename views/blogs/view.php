@@ -237,17 +237,17 @@ require_once 'views/templates/header.php'; ?>
                     </div>
 
                     <!-- Social Actions & Share -->
-                    <div class="px-4 sm:px-6 lg:px-8 xl:px-12 py-6 sm:py-8 bg-gradient-to-r from-gray-50 to-blue-50/50 border-t border-gray-100">
-                        <div class="flex flex-col lg:flex-row items-center justify-between gap-4 sm:gap-6">
-                            <!-- Like & Bookmark Actions -->
-                            <div class="flex items-center gap-3 sm:gap-4">
+                    <div class="px-4 sm:px-6 lg:px-8 xl:px-12 py-8 sm:py-10 bg-gradient-to-br from-slate-50 via-blue-50/80 to-indigo-50/60 border-t border-gray-200/50">
+                        <div class="max-w-4xl mx-auto">
+                            <!-- Action Buttons Row -->
+                            <div class="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-8 mb-8">
                                 <!-- Enhanced Like Button -->
                                 <button id="likeButton" 
-                                        class="group relative flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2 sm:py-3 bg-white rounded-full shadow-lg border-2 border-transparent hover:border-red-200 transition-all duration-300 transform hover:scale-105"
+                                        class="group relative flex items-center gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-white/50 hover:border-red-200/60 transition-all duration-500 transform hover:scale-105 hover:shadow-xl"
                                         data-slug="<?php echo $blog->slug; ?>"
                                         aria-label="Like deze blog">
                                     <div class="relative">
-                                        <svg class="w-5 sm:w-6 h-5 sm:h-6 transition-all duration-300 group-hover:text-red-500" 
+                                        <svg class="w-6 h-6 transition-all duration-300 group-hover:text-red-500" 
                                              viewBox="0 0 24 24"
                                              fill="none"
                                              stroke="currentColor"
@@ -267,55 +267,75 @@ require_once 'views/templates/header.php'; ?>
                                             <div class="particle"></div>
                                         </div>
                                     </div>
-                                    <span id="likeCount" class="font-semibold text-gray-700 group-hover:text-red-500 transition-colors text-sm sm:text-base"><?php echo $blog->likes; ?></span>
+                                    <div class="flex flex-col items-start">
+                                        <span id="likeCount" class="font-bold text-lg text-gray-800 group-hover:text-red-500 transition-colors"><?php echo $blog->likes; ?></span>
+                                        <span class="text-xs text-gray-500 group-hover:text-red-400 transition-colors">Likes</span>
+                                    </div>
                                 </button>
 
-                                <!-- Bookmark Button -->
-                                <button id="bookmarkButton" 
-                                        class="group flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2 sm:py-3 bg-white rounded-full shadow-lg border-2 border-transparent hover:border-amber-200 transition-all duration-300 transform hover:scale-105"
+                                <!-- Politieke Bias Detector Button -->
+                                <button id="biasButton" 
+                                        class="group relative flex items-center gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-purple-500/10 to-indigo-500/10 backdrop-blur-sm rounded-2xl shadow-lg border border-purple-200/50 hover:border-purple-300/60 transition-all duration-500 transform hover:scale-105 hover:shadow-xl"
                                         data-slug="<?php echo $blog->slug; ?>"
-                                        aria-label="Bookmark deze blog">
-                                    <svg class="w-5 sm:w-6 h-5 sm:h-6 transition-all duration-300 group-hover:text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path>
-                                    </svg>
-                                    <span class="font-semibold text-gray-700 group-hover:text-amber-500 transition-colors text-sm sm:text-base">Bewaren</span>
+                                        aria-label="Analyseer politieke bias">
+                                    <div class="relative">
+                                        <svg class="w-6 h-6 text-purple-600 transition-all duration-300 group-hover:text-purple-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="flex flex-col items-start">
+                                        <span class="font-bold text-lg text-purple-700 group-hover:text-purple-800 transition-colors">AI Analyse</span>
+                                        <span class="text-xs text-purple-600 group-hover:text-purple-700 transition-colors">Politieke Bias</span>
+                                    </div>
                                 </button>
                             </div>
 
+                            <!-- Divider -->
+                            <div class="relative mb-8">
+                                <div class="absolute inset-0 flex items-center">
+                                    <div class="w-full border-t border-gray-300/50"></div>
+                                </div>
+                                <div class="relative flex justify-center text-sm">
+                                    <span class="bg-gradient-to-br from-slate-50 via-blue-50/80 to-indigo-50/60 px-4 text-gray-500 font-medium">Deel dit artikel</span>
+                                </div>
+                            </div>
+
                             <!-- Share Options -->
-                            <div class="flex items-center gap-2 sm:gap-3">
-                                <span class="text-gray-600 font-medium mr-1 sm:mr-2 text-sm sm:text-base">Delen:</span>
-                                
+                            <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
                                 <!-- Twitter/X share button -->
                                 <button onclick="window.open('https://twitter.com/intent/tweet?text=<?php echo urlencode($blog->title); ?>&url=<?php echo urlencode(URLROOT . '/blogs/' . $blog->slug); ?>', '_blank')" 
-                                        class="p-2 sm:p-3 bg-sky-500 text-white rounded-full hover:bg-sky-600 transition-colors transform hover:scale-110 shadow-lg">
-                                    <svg class="w-4 sm:w-5 h-4 sm:h-5" fill="currentColor" viewBox="0 0 24 24">
+                                        class="group flex items-center gap-2 px-4 py-3 bg-gradient-to-r from-sky-500 to-blue-500 text-white rounded-xl hover:from-sky-600 hover:to-blue-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                                         <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
                                     </svg>
+                                    <span class="hidden sm:inline font-medium">Twitter</span>
                                 </button>
                                 
                                 <!-- LinkedIn share button -->
                                 <button onclick="window.open('https://www.linkedin.com/sharing/share-offsite/?url=<?php echo urlencode(URLROOT . '/blogs/' . $blog->slug); ?>', '_blank')"
-                                        class="p-2 sm:p-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors transform hover:scale-110 shadow-lg">
-                                    <svg class="w-4 sm:w-5 h-4 sm:h-5" fill="currentColor" viewBox="0 0 24 24">
+                                        class="group flex items-center gap-2 px-4 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                                         <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                                     </svg>
+                                    <span class="hidden sm:inline font-medium">LinkedIn</span>
                                 </button>
                                 
                                 <!-- Facebook share button -->
                                 <button onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode(URLROOT . '/blogs/' . $blog->slug); ?>', '_blank')"
-                                        class="p-2 sm:p-3 bg-blue-800 text-white rounded-full hover:bg-blue-900 transition-colors transform hover:scale-110 shadow-lg">
-                                    <svg class="w-4 sm:w-5 h-4 sm:h-5" fill="currentColor" viewBox="0 0 24 24">
+                                        class="group flex items-center gap-2 px-4 py-3 bg-gradient-to-r from-blue-800 to-indigo-800 text-white rounded-xl hover:from-blue-900 hover:to-indigo-900 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                                         <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                                     </svg>
+                                    <span class="hidden sm:inline font-medium">Facebook</span>
                                 </button>
                                 
                                 <!-- Copy link button -->
-                                <button onclick="navigator.clipboard.writeText('<?php echo URLROOT . '/blogs/' . $blog->slug; ?>').then(() => alert('Link gekopieerd!'))"
-                                        class="p-2 sm:p-3 bg-gray-600 text-white rounded-full hover:bg-gray-700 transition-colors transform hover:scale-110 shadow-lg">
-                                    <svg class="w-4 sm:w-5 h-4 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <button onclick="navigator.clipboard.writeText('<?php echo URLROOT . '/blogs/' . $blog->slug; ?>').then(() => showNotification('Link gekopieerd!', 'success'))"
+                                        class="group flex items-center gap-2 px-4 py-3 bg-gradient-to-r from-gray-600 to-gray-700 text-white rounded-xl hover:from-gray-700 hover:to-gray-800 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
                                     </svg>
+                                    <span class="hidden sm:inline font-medium">Kopiëren</span>
                                 </button>
                             </div>
                         </div>
@@ -485,6 +505,141 @@ require_once 'views/templates/header.php'; ?>
         </div>
     </section>
 </main>
+
+<!-- Bias Analysis Modal -->
+<div id="biasModal" class="fixed inset-0 z-50 hidden">
+    <!-- Modal Overlay -->
+    <div class="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity"></div>
+    
+    <!-- Modal Content -->
+    <div class="fixed inset-0 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden">
+            <!-- Modal Header -->
+            <div class="bg-gradient-to-r from-purple-500 to-indigo-600 px-6 py-4">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="p-2 bg-white/20 rounded-lg">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white">Politieke Bias Analyse</h3>
+                            <p class="text-purple-100 text-sm">AI-gedreven analyse van politieke orientatie</p>
+                        </div>
+                    </div>
+                    <button id="closeBiasModal" class="p-2 hover:bg-white/20 rounded-lg transition-colors">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Modal Body -->
+            <div class="p-6 overflow-y-auto max-h-[70vh]">
+                <!-- Loading State -->
+                <div id="biasLoading" class="text-center py-8">
+                    <div class="inline-flex items-center space-x-3">
+                        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-500"></div>
+                        <span class="text-gray-600 font-medium">Artikel wordt geanalyseerd...</span>
+                    </div>
+                    <p class="text-gray-500 text-sm mt-2">Dit kan een paar seconden duren</p>
+                </div>
+                
+                <!-- Error State -->
+                <div id="biasError" class="hidden">
+                    <div class="bg-red-50 border border-red-200 rounded-xl p-6">
+                        <div class="flex items-start">
+                            <svg class="w-6 h-6 text-red-500 mt-0.5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.5 0L4.232 15.5c-.77.833.192 2.5 1.732 2.5z"/>
+                            </svg>
+                            <div>
+                                <h4 class="text-red-800 font-medium mb-1">Analyse mislukt</h4>
+                                <p id="biasErrorMessage" class="text-red-700 text-sm"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Results -->
+                <div id="biasResults" class="hidden space-y-6">
+                    <!-- Overall Orientation -->
+                    <div class="bg-gradient-to-r from-gray-50 to-blue-50 rounded-xl p-6">
+                        <h4 class="text-lg font-bold text-gray-900 mb-3">Politieke Orientatie</h4>
+                        <div class="flex items-center space-x-4">
+                            <div id="orientationBadge" class="px-4 py-2 rounded-full font-bold text-lg"></div>
+                            <div class="flex-1">
+                                <div class="text-sm text-gray-600 mb-1">Zekerheid</div>
+                                <div class="bg-gray-200 rounded-full h-3 overflow-hidden">
+                                    <div id="confidenceBar" class="h-full bg-gradient-to-r from-purple-500 to-blue-500 transition-all duration-500"></div>
+                                </div>
+                                <div class="text-xs text-gray-500 mt-1">
+                                    <span id="confidenceText">--</span>% zeker
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Reasoning -->
+                    <div class="bg-white border border-gray-200 rounded-xl p-6">
+                        <h4 class="text-lg font-bold text-gray-900 mb-3">Analyse Uitleg</h4>
+                        <p id="reasoningText" class="text-gray-700 leading-relaxed"></p>
+                    </div>
+                    
+                    <!-- Detailed Indicators -->
+                    <div class="bg-white border border-gray-200 rounded-xl p-6">
+                        <h4 class="text-lg font-bold text-gray-900 mb-4">Gedetailleerde Indicatoren</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="text-center">
+                                <div class="text-sm text-gray-600 mb-2">Economisch</div>
+                                <div id="economicIndicator" class="px-3 py-1 rounded-full text-sm font-medium"></div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-sm text-gray-600 mb-2">Sociaal</div>
+                                <div id="socialIndicator" class="px-3 py-1 rounded-full text-sm font-medium"></div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-sm text-gray-600 mb-2">Immigratie</div>
+                                <div id="immigrationIndicator" class="px-3 py-1 rounded-full text-sm font-medium"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Summary -->
+                    <div class="bg-gradient-to-r from-purple-50 to-indigo-50 rounded-xl p-6">
+                        <h4 class="text-lg font-bold text-gray-900 mb-3">Samenvatting</h4>
+                        <p id="summaryText" class="text-gray-700 leading-relaxed"></p>
+                    </div>
+                    
+                    <!-- Disclaimer -->
+                    <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-4">
+                        <div class="flex items-start">
+                            <svg class="w-5 h-5 text-yellow-600 mt-0.5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            <div class="text-sm text-yellow-800">
+                                <strong>Disclaimer:</strong> Deze analyse is gebaseerd op AI en dient als indicatie. Politieke standpunten zijn complex en deze tool geeft een vereenvoudigde weergave.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Modal Footer -->
+            <div class="bg-gray-50 px-6 py-4 border-t border-gray-200">
+                <div class="flex justify-end space-x-3">
+                    <button id="closeBiasModalFooter" class="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors">
+                        Sluiten
+                    </button>
+                    <button id="retryBiasAnalysis" class="px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg transition-colors hidden">
+                        Opnieuw proberen
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <?php if (isAdmin()): ?>
 <div class="fixed bottom-4 right-4 opacity-70 hover:opacity-100 z-50">
@@ -710,14 +865,7 @@ require_once 'views/templates/header.php'; ?>
     75% { transform: scale(1.1); }
 }
 
-/* Bookmark Button States */
-#bookmarkButton.bookmarked {
-    @apply bg-amber-50 border-amber-300 text-amber-600;
-}
 
-#bookmarkButton.bookmarked svg {
-    fill: currentColor;
-}
 
 /* Utility Classes */
 .line-clamp-2 {
@@ -881,42 +1029,7 @@ document.addEventListener('DOMContentLoaded', function() {
     likeButton?.addEventListener('click', () => handleLike(likeButton));
     heroLikeButton?.addEventListener('click', () => handleLike(heroLikeButton));
     
-    // Bookmark functionality
-    const bookmarkButton = document.getElementById('bookmarkButton');
-    const bookmarkedBlogs = JSON.parse(localStorage.getItem('bookmarkedBlogs') || '{}');
-    
-    function updateBookmarkState(isBookmarked) {
-        if (!bookmarkButton) return;
-        
-        if (isBookmarked) {
-            bookmarkButton.classList.add('bookmarked');
-        } else {
-            bookmarkButton.classList.remove('bookmarked');
-        }
-    }
-    
-    // Initialize bookmark state
-    if (slug) {
-        updateBookmarkState(bookmarkedBlogs[slug]);
-    }
-    
-    bookmarkButton?.addEventListener('click', function() {
-        if (bookmarkedBlogs[slug]) {
-            delete bookmarkedBlogs[slug];
-            updateBookmarkState(false);
-            showNotification('Bookmark verwijderd', 'info');
-        } else {
-            bookmarkedBlogs[slug] = {
-                title: '<?php echo addslashes($blog->title); ?>',
-                url: window.location.href,
-                date: new Date().toISOString()
-            };
-            updateBookmarkState(true);
-            showNotification('Blog opgeslagen in bookmarks', 'success');
-        }
-        
-        localStorage.setItem('bookmarkedBlogs', JSON.stringify(bookmarkedBlogs));
-    });
+
     
     // Newsletter Form
     const newsletterForm = document.getElementById('newsletter-form');
@@ -938,6 +1051,38 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initial progress update
     updateReadingProgress();
+    
+    // Bias Analysis Functionality
+    const biasButton = document.getElementById('biasButton');
+    const biasModal = document.getElementById('biasModal');
+    const closeBiasModal = document.getElementById('closeBiasModal');
+    const closeBiasModalFooter = document.getElementById('closeBiasModalFooter');
+    const retryBiasAnalysis = document.getElementById('retryBiasAnalysis');
+    
+    // Bias analysis event listeners
+    biasButton?.addEventListener('click', function() {
+        const slug = this.getAttribute('data-slug');
+        if (slug) {
+            showBiasModal();
+            performBiasAnalysis(slug);
+        }
+    });
+    
+    closeBiasModal?.addEventListener('click', hideBiasModal);
+    closeBiasModalFooter?.addEventListener('click', hideBiasModal);
+    retryBiasAnalysis?.addEventListener('click', function() {
+        const slug = biasButton?.getAttribute('data-slug');
+        if (slug) {
+            performBiasAnalysis(slug);
+        }
+    });
+    
+    // Close modal on background click
+    biasModal?.addEventListener('click', function(e) {
+        if (e.target === this) {
+            hideBiasModal();
+        }
+    });
 });
 
 // Notification System
@@ -970,6 +1115,152 @@ function showNotification(message, type = 'info') {
     }, 4000);
 }
 
+// Bias Analysis Functions
+function showBiasModal() {
+    const modal = document.getElementById('biasModal');
+    if (modal) {
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        
+        // Reset modal state
+        document.getElementById('biasLoading')?.classList.remove('hidden');
+        document.getElementById('biasError')?.classList.add('hidden');
+        document.getElementById('biasResults')?.classList.add('hidden');
+        document.getElementById('retryBiasAnalysis')?.classList.add('hidden');
+    }
+}
+
+function hideBiasModal() {
+    const modal = document.getElementById('biasModal');
+    if (modal) {
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+    }
+}
+
+async function performBiasAnalysis(slug) {
+    try {
+        // Show loading state
+        document.getElementById('biasLoading')?.classList.remove('hidden');
+        document.getElementById('biasError')?.classList.add('hidden');
+        document.getElementById('biasResults')?.classList.add('hidden');
+        document.getElementById('retryBiasAnalysis')?.classList.add('hidden');
+        
+        const formData = new FormData();
+        formData.append('slug', slug);
+        
+        const response = await fetch('<?php echo URLROOT; ?>/controllers/blogs/analyze-bias.php', {
+            method: 'POST',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: formData
+        });
+        
+        const data = await response.json();
+        
+        // Hide loading
+        document.getElementById('biasLoading')?.classList.add('hidden');
+        
+        if (data.success && data.analysis) {
+            showBiasResults(data.analysis);
+        } else {
+            showBiasError(data.error || 'Onbekende fout bij de analyse');
+        }
+        
+    } catch (error) {
+        console.error('Bias analysis error:', error);
+        document.getElementById('biasLoading')?.classList.add('hidden');
+        showBiasError('Netwerk fout: Kon geen verbinding maken met de server');
+    }
+}
+
+function showBiasResults(analysis) {
+    // Show results container
+    document.getElementById('biasResults')?.classList.remove('hidden');
+    
+    // Set orientation badge
+    const orientationBadge = document.getElementById('orientationBadge');
+    if (orientationBadge && analysis.orientation) {
+        const orientation = analysis.orientation.toLowerCase();
+        orientationBadge.textContent = getOrientationLabel(orientation);
+        orientationBadge.className = `px-4 py-2 rounded-full font-bold text-lg ${getOrientationColors(orientation)}`;
+    }
+    
+    // Set confidence
+    const confidenceBar = document.getElementById('confidenceBar');
+    const confidenceText = document.getElementById('confidenceText');
+    if (confidenceBar && confidenceText && analysis.confidence) {
+        confidenceBar.style.width = analysis.confidence + '%';
+        confidenceText.textContent = analysis.confidence;
+    }
+    
+    // Set reasoning
+    const reasoningText = document.getElementById('reasoningText');
+    if (reasoningText && analysis.reasoning) {
+        reasoningText.textContent = analysis.reasoning;
+    }
+    
+    // Set indicators
+    if (analysis.indicators) {
+        const economicIndicator = document.getElementById('economicIndicator');
+        if (economicIndicator && analysis.indicators.economic) {
+            const economic = analysis.indicators.economic.toLowerCase();
+            economicIndicator.textContent = getOrientationLabel(economic);
+            economicIndicator.className = `px-3 py-1 rounded-full text-sm font-medium ${getOrientationColors(economic)}`;
+        }
+        
+        const socialIndicator = document.getElementById('socialIndicator');
+        if (socialIndicator && analysis.indicators.social) {
+            const social = analysis.indicators.social.toLowerCase();
+            socialIndicator.textContent = getOrientationLabel(social);
+            socialIndicator.className = `px-3 py-1 rounded-full text-sm font-medium ${getOrientationColors(social)}`;
+        }
+        
+        const immigrationIndicator = document.getElementById('immigrationIndicator');
+        if (immigrationIndicator && analysis.indicators.immigration) {
+            const immigration = analysis.indicators.immigration.toLowerCase();
+            immigrationIndicator.textContent = getOrientationLabel(immigration);
+            immigrationIndicator.className = `px-3 py-1 rounded-full text-sm font-medium ${getOrientationColors(immigration)}`;
+        }
+    }
+    
+    // Set summary
+    const summaryText = document.getElementById('summaryText');
+    if (summaryText && analysis.summary) {
+        summaryText.textContent = analysis.summary;
+    }
+}
+
+function showBiasError(errorMessage) {
+    document.getElementById('biasError')?.classList.remove('hidden');
+    document.getElementById('retryBiasAnalysis')?.classList.remove('hidden');
+    
+    const errorMessageElement = document.getElementById('biasErrorMessage');
+    if (errorMessageElement) {
+        errorMessageElement.textContent = errorMessage;
+    }
+}
+
+function getOrientationLabel(orientation) {
+    const labels = {
+        'links': 'Links',
+        'rechts': 'Rechts', 
+        'centrum': 'Centrum',
+        'neutraal': 'Neutraal'
+    };
+    return labels[orientation] || orientation;
+}
+
+function getOrientationColors(orientation) {
+    const colors = {
+        'links': 'bg-red-100 text-red-800 border border-red-200',
+        'rechts': 'bg-blue-100 text-blue-800 border border-blue-200',
+        'centrum': 'bg-purple-100 text-purple-800 border border-purple-200',
+        'neutraal': 'bg-gray-100 text-gray-800 border border-gray-200'
+    };
+    return colors[orientation] || 'bg-gray-100 text-gray-800 border border-gray-200';
+}
 
 // Enhanced Share Functions
 function shareOnTwitter() {

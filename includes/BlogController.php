@@ -235,4 +235,68 @@ class BlogController {
         
         return $blog;
     }
+
+    /**
+     * Haal blog op voor bias analyse (zonder Markdown parsing)
+     */
+    public function getBySlugForAnalysis($slug) {
+        $this->db->query("SELECT blogs.*, users.username as author_name 
+                         FROM blogs 
+                         JOIN users ON blogs.author_id = users.id 
+                         WHERE blogs.slug = :slug");
+        $this->db->bind(':slug', $slug);
+        return $this->db->single();
+    }
+
+    /**
+     * Analyseer politieke bias van een blog artikel
+     */
+    public function analyzeBias($slug) {
+        try {
+            // Haal blog op zonder Markdown parsing
+            $blog = $this->getBySlugForAnalysis($slug);
+            
+            if (!$blog) {
+                return [
+                    'success' => false,
+                    'error' => 'Blog niet gevonden'
+                ];
+            }
+
+            // Initialiseer ChatGPT API
+            $chatGPT = new ChatGPTAPI();
+            
+            // Analyseer de bias
+            $result = $chatGPT->analyzePoliticalBias($blog->title, $blog->content);
+            
+            if ($result['success']) {
+                // Parse JSON response
+                $analysis = json_decode($result['content'], true);
+                
+                if (json_last_error() === JSON_ERROR_NONE) {
+                    return [
+                        'success' => true,
+                        'analysis' => $analysis
+                    ];
+                } else {
+                    return [
+                        'success' => false,
+                        'error' => 'Fout bij het verwerken van de AI analyse',
+                        'raw_response' => $result['content']
+                    ];
+                }
+            } else {
+                return [
+                    'success' => false,
+                    'error' => $result['error'] ?? 'Onbekende fout bij AI analyse'
+                ];
+            }
+            
+        } catch (Exception $e) {
+            return [
+                'success' => false,
+                'error' => 'Fout bij bias analyse: ' . $e->getMessage()
+            ];
+        }
+    }
 } 

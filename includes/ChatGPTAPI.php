@@ -238,6 +238,43 @@ Schrijf persoonlijk en bemoedigend. Begin met 'Op basis van jouw stemwijzer resu
     }
     
     /**
+     * Analyseer politieke bias van een blog artikel
+     */
+    public function analyzePoliticalBias($title, $content) {
+        $prompt = "Je bent een Nederlandse politieke expert gespecialiseerd in bias detectie. 
+
+Analyseer de volgende blog artikel op politieke orientatie:
+
+**Titel:** {$title}
+
+**Content:** " . substr($content, 0, 2000) . "
+
+Geef een gedetailleerde analyse in exact dit JSON formaat (geen extra tekst):
+
+{
+    \"orientation\": \"links|rechts|centrum\",
+    \"confidence\": 85,
+    \"reasoning\": \"Korte uitleg waarom deze classificatie is gekozen\",
+    \"indicators\": {
+        \"economic\": \"links|rechts|centrum\",
+        \"social\": \"links|rechts|centrum\",
+        \"immigration\": \"links|rechts|centrum|neutraal\"
+    },
+    \"summary\": \"Een beknopte samenvatting van de politieke standpunten in dit artikel\"
+}
+
+Criteria:
+- **Links**: Pro-sociale zekerheid, hogere belastingen voor rijken, milieubescherming, diversiteit, EU-integratie
+- **Rechts**: Vrije markt, lagere belastingen, traditionele waarden, strenge immigratie, nationale soevereiniteit  
+- **Centrum**: Gematigde standpunten, compromissen, pragmatische oplossingen
+
+Confidence score: 0-100 (hoe zeker ben je van de classificatie)
+Wees objectief en gebaseerd op de daadwerkelijke inhoud.";
+
+        return $this->makeAPICall($prompt);
+    }
+
+    /**
      * Test de API verbinding
      */
     public function testConnection() {
