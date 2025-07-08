@@ -448,17 +448,32 @@ require_once 'views/templates/header.php';
                                     <h2 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 mb-4 sm:mb-6 leading-tight" x-text="questions[currentStep].title"></h2>
                                     <p class="text-sm sm:text-base md:text-lg text-gray-600 leading-relaxed mb-4 sm:mb-6" x-text="questions[currentStep].description"></p>
                                     
-                                    <!-- Explanation Toggle -->
-                                    <button @click="showExplanation = !showExplanation"
-                                            class="inline-flex items-center px-3 sm:px-4 py-1.5 sm:py-2 bg-blue-50 hover:bg-blue-100 rounded-lg sm:rounded-xl text-blue-700 text-xs sm:text-sm font-medium transition-colors border border-blue-200/50">
-                                        <svg class="w-3 sm:w-4 h-3 sm:h-4 mr-1.5 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                        </svg>
-                                        <span>Meer uitleg</span>
-                                        <svg class="w-3 sm:w-4 h-3 sm:h-4 ml-1.5 sm:ml-2 transition-transform duration-200" :class="showExplanation ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                        </svg>
-                                    </button>
+                                    <!-- Explanation Toggles -->
+                                    <div class="flex items-center space-x-2 sm:space-x-3">
+                                        <button @click="showExplanation = !showExplanation"
+                                                class="inline-flex items-center px-3 sm:px-4 py-1.5 sm:py-2 bg-blue-50 hover:bg-blue-100 rounded-lg sm:rounded-xl text-blue-700 text-xs sm:text-sm font-medium transition-colors border border-blue-200/50">
+                                            <svg class="w-3 sm:w-4 h-3 sm:h-4 mr-1.5 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                            </svg>
+                                            <span>Basis uitleg</span>
+                                            <svg class="w-3 sm:w-4 h-3 sm:h-4 ml-1.5 sm:ml-2 transition-transform duration-200" :class="showExplanation ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                            </svg>
+                                        </button>
+                                        
+                                        <button @click="loadAIExplanation()" 
+                                                :disabled="loadingAIExplanation"
+                                                class="inline-flex items-center px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-purple-50 to-pink-50 hover:from-purple-100 hover:to-pink-100 rounded-lg sm:rounded-xl text-purple-700 text-xs sm:text-sm font-medium transition-colors border border-purple-200/50 disabled:opacity-50 disabled:cursor-not-allowed">
+                                            <svg x-show="!loadingAIExplanation" class="w-3 sm:w-4 h-3 sm:h-4 mr-1.5 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                                            </svg>
+                                            <svg x-show="loadingAIExplanation" class="animate-spin w-3 sm:w-4 h-3 sm:h-4 mr-1.5 sm:mr-2" fill="none" viewBox="0 0 24 24">
+                                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                            </svg>
+                                            <span x-text="loadingAIExplanation ? 'AI denkt na...' : 'AI Uitleg'"></span>
+                                        </button>
+                                    </div>
 
                                     <!-- Detailed Explanation Panel -->
                                     <div x-show="showExplanation" 
@@ -486,6 +501,44 @@ require_once 'views/templates/header.php';
                                                         Rechts
                                                     </h4>
                                                     <p class="text-red-700 text-xs sm:text-sm leading-relaxed" x-text="questions[currentStep].right_view"></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- AI Explanation Panel -->
+                                    <div x-show="showAIExplanation && aiExplanationContent" 
+                                         x-transition:enter="transition ease-out duration-300"
+                                         x-transition:enter-start="opacity-0 transform -translate-y-4"
+                                         x-transition:enter-end="opacity-100 transform translate-y-0"
+                                         class="mt-4 sm:mt-6 bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl sm:rounded-2xl border border-purple-200/30 overflow-hidden">
+                                        
+                                        <div class="p-4 sm:p-6">
+                                            <div class="flex items-center justify-between mb-3 sm:mb-4">
+                                                <h3 class="text-base sm:text-lg font-semibold text-purple-900 flex items-center">
+                                                    <svg class="w-5 h-5 mr-2 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                                                    </svg>
+                                                    AI Expert Uitleg
+                                                </h3>
+                                                <button @click="showAIExplanation = false" 
+                                                        class="p-2 rounded-full hover:bg-purple-100 transition-colors">
+                                                    <svg class="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                            
+                                            <div class="prose prose-purple max-w-none">
+                                                <p class="text-purple-800 leading-relaxed mb-0 text-sm sm:text-base whitespace-pre-line" x-text="aiExplanationContent"></p>
+                                            </div>
+                                            
+                                            <div class="mt-4 pt-4 border-t border-purple-200/50">
+                                                <div class="flex items-center text-xs text-purple-600">
+                                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                                    </svg>
+                                                    Deze uitleg is gegenereerd door AI en is bedoeld als aanvullende informatie
                                                 </div>
                                             </div>
                                         </div>
@@ -1013,11 +1066,13 @@ require_once 'views/templates/header.php';
                                     <div class="text-4xl font-bold text-gray-600 mb-2" x-text="finalResults[1]?.agreement + '%'"></div>
                                     <div class="text-sm text-gray-500 mb-6">overeenkomst</div>
                                     
-                                    <!-- Action Button -->
-                                    <button @click="showPartyExplanation(finalResults[1])" 
-                                            class="px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-xl font-medium transition-all duration-300 hover:shadow-lg">
-                                        Bekijk details
-                                    </button>
+                                    <!-- Action Buttons -->
+                                    <div class="flex flex-col gap-2 items-center justify-center">
+                                        <button @click="showPartyExplanation(finalResults[1])" 
+                                                class="px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-xl font-medium transition-all duration-300 hover:shadow-lg">
+                                            Bekijk details
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1062,11 +1117,33 @@ require_once 'views/templates/header.php';
                                     <div class="text-5xl font-bold text-yellow-600 mb-2" x-text="finalResults[0]?.agreement + '%'"></div>
                                     <div class="text-sm text-gray-600 mb-6">overeenkomst</div>
                                     
-                                    <!-- Action Button -->
-                                    <button @click="showPartyExplanation(finalResults[0])" 
-                                            class="px-8 py-4 bg-gradient-to-r from-yellow-500 to-amber-600 hover:from-yellow-600 hover:to-amber-700 text-white rounded-xl font-semibold transition-all duration-300 hover:shadow-xl shadow-lg shadow-yellow-500/25">
-                                        Ontdek waarom
-                                    </button>
+                                    <!-- Action Buttons -->
+                                    <div class="flex flex-col gap-3 items-center justify-center">
+                                        <button @click="showPartyExplanation(finalResults[0])" 
+                                                class="w-full max-w-xs px-6 py-3 bg-gradient-to-r from-yellow-500 to-amber-600 hover:from-yellow-600 hover:to-amber-700 text-white rounded-xl font-semibold transition-all duration-300 hover:shadow-xl shadow-lg shadow-yellow-500/25">
+                                            Bekijk details
+                                        </button>
+                                        
+                                        <!-- AI Uitleg Button - Verbeterde zichtbaarheid -->
+                                        <div class="w-full max-w-xs">
+                                            <button @click="loadPartyMatchExplanation(finalResults[0])" 
+                                                    :disabled="loadingAIExplanation"
+                                                    class="group w-full px-4 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white rounded-xl font-semibold shadow-xl shadow-purple-500/25 hover:shadow-2xl hover:shadow-purple-500/40 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105">
+                                                <div class="flex items-center justify-center space-x-2">
+                                                    <div class="flex-shrink-0">
+                                                        <svg x-show="!loadingAIExplanation" class="w-4 h-4 text-white drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                                                        </svg>
+                                                        <svg x-show="loadingAIExplanation" class="animate-spin w-4 h-4 text-white drop-shadow-sm" fill="none" viewBox="0 0 24 24">
+                                                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                                        </svg>
+                                                    </div>
+                                                    <span class="text-sm font-semibold text-center drop-shadow-sm" x-text="loadingAIExplanation ? 'AI analyseert...' : 'Waarom past dit bij mij?'"></span>
+                                                </div>
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1096,11 +1173,13 @@ require_once 'views/templates/header.php';
                                     <div class="text-4xl font-bold text-orange-600 mb-2" x-text="finalResults[2]?.agreement + '%'"></div>
                                     <div class="text-sm text-gray-500 mb-6">overeenkomst</div>
                                     
-                                    <!-- Action Button -->
-                                    <button @click="showPartyExplanation(finalResults[2])" 
-                                            class="px-6 py-3 bg-orange-100 hover:bg-orange-200 text-orange-800 rounded-xl font-medium transition-all duration-300 hover:shadow-lg">
-                                        Bekijk details
-                                    </button>
+                                    <!-- Action Buttons -->
+                                    <div class="flex flex-col gap-2 items-center justify-center">
+                                        <button @click="showPartyExplanation(finalResults[2])" 
+                                                class="px-6 py-3 bg-orange-100 hover:bg-orange-200 text-orange-800 rounded-xl font-medium transition-all duration-300 hover:shadow-lg">
+                                            Bekijk details
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1229,6 +1308,29 @@ require_once 'views/templates/header.php';
                         
                         <!-- Modal Content -->
                         <div class="p-8 overflow-y-auto max-h-[calc(90vh-120px)]">
+                            <!-- AI Explanation Section -->
+                            <div x-show="detailedParty?.aiExplanation" class="mb-8 bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl border border-purple-200/30 overflow-hidden">
+                                <div class="p-6">
+                                    <div class="flex items-center mb-4">
+                                        <svg class="w-6 h-6 mr-3 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                                        </svg>
+                                        <h4 class="text-xl font-bold text-purple-900">AI Expert Analyse: Waarom Past Dit Bij Jou?</h4>
+                                    </div>
+                                    <div class="prose prose-purple max-w-none">
+                                        <p class="text-purple-800 leading-relaxed whitespace-pre-line" x-text="detailedParty?.aiExplanation"></p>
+                                    </div>
+                                    <div class="mt-4 pt-4 border-t border-purple-200/50">
+                                        <div class="flex items-center text-sm text-purple-600">
+                                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                            </svg>
+                                            Deze analyse is gegenereerd door AI op basis van jouw antwoorden
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
                             <h4 class="text-xl font-bold text-gray-800 mb-6 flex items-center">
                                 <svg class="w-6 h-6 mr-3 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
@@ -1329,6 +1431,59 @@ require_once 'views/templates/header.php';
                     </div>
                 </div>
 
+                <!-- AI Political Advice Section -->
+                <div id="ai-advice-section" class="mb-12 bg-gradient-to-br from-purple-50 to-pink-50 rounded-3xl border border-purple-200/50 p-8 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-purple-100/20 to-pink-100/20"></div>
+                    
+                    <div class="relative z-10 text-center">
+                        <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-600 shadow-lg shadow-purple-500/25 mb-6">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                            </svg>
+                        </div>
+                        
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Persoonlijk AI Stemadvies</h3>
+                        <p class="text-lg text-gray-600 mb-6 max-w-2xl mx-auto">
+                            Krijg persoonlijk stemadvies van onze AI expert, gebaseerd op jouw unieke politieke profiel.
+                        </p>
+                        
+                        <!-- AI Advice Content -->
+                        <div x-show="aiAdviceContent" class="bg-white rounded-2xl border border-purple-200 p-6 mb-6 max-w-4xl mx-auto text-left">
+                            <div class="prose prose-purple max-w-none">
+                                <p class="text-gray-800 leading-relaxed whitespace-pre-line" x-text="aiAdviceContent"></p>
+                            </div>
+                        </div>
+                        
+                        <!-- Load AI Advice Button -->
+                        <div x-show="!aiAdviceContent">
+                            <button @click="loadPoliticalAdvice()" 
+                                    :disabled="loadingAIAdvice"
+                                    class="group px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white rounded-xl font-semibold transition-all duration-300 hover:shadow-xl shadow-lg shadow-purple-500/25 disabled:opacity-50 disabled:cursor-not-allowed">
+                                <div class="flex items-center justify-center space-x-3">
+                                    <svg x-show="!loadingAIAdvice" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                                    </svg>
+                                    <svg x-show="loadingAIAdvice" class="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                    <span x-text="loadingAIAdvice ? 'AI expert analyseert jouw profiel...' : 'Krijg Persoonlijk AI Stemadvies'"></span>
+                                </div>
+                            </button>
+                        </div>
+                        
+                        <!-- Disclaimer -->
+                        <div class="mt-6 text-sm text-purple-600">
+                            <div class="flex items-center justify-center">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                Dit advies is gegenereerd door AI en is bedoeld als aanvullende informatie bij je stemkeuze
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Share Link Section (Only show if we have a share URL) -->
                 <div x-show="shareUrl" class="mb-12 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-3xl border border-blue-200/50 p-8 relative overflow-hidden">
                     <div class="absolute inset-0 bg-gradient-to-br from-blue-100/20 to-indigo-100/20"></div>
@@ -1390,6 +1545,13 @@ function stemwijzer() {
         showExplanation: false,
         showPartyPositions: false,
         selectedParty: null,
+        
+        // ChatGPT functionaliteit
+        showAIExplanation: false,
+        aiExplanationContent: '',
+        loadingAIExplanation: false,
+        aiAdviceContent: '',
+        loadingAIAdvice: false,
         answers: {},
         eensParties: [],
         neutraalParties: [],
@@ -2205,6 +2367,131 @@ function stemwijzer() {
                 notification.classList.add('translate-x-full');
                 setTimeout(() => notification.remove(), 300);
             }, 5000);
+        },
+        
+        // ChatGPT functionaliteit
+        async loadAIExplanation() {
+            if (this.loadingAIExplanation) return;
+            
+            this.loadingAIExplanation = true;
+            this.aiExplanationContent = '';
+            
+            try {
+                const response = await fetch('/api/stemwijzer.php?action=explain-question', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        questionIndex: this.currentStep
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success && result.explanation.success) {
+                    this.aiExplanationContent = result.explanation.content;
+                    this.showAIExplanation = true;
+                } else {
+                    this.showNotification('Kon AI uitleg niet laden: ' + (result.explanation.error || result.error), 'error');
+                }
+            } catch (error) {
+                console.error('Fout bij laden AI uitleg:', error);
+                this.showNotification('Er ging iets mis bij het laden van de AI uitleg', 'error');
+            } finally {
+                this.loadingAIExplanation = false;
+            }
+        },
+        
+        async loadPartyMatchExplanation(party) {
+            if (!party || this.loadingAIExplanation) return;
+            
+            this.loadingAIExplanation = true;
+            
+            try {
+                const response = await fetch('/api/stemwijzer.php?action=explain-match', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        partyName: party.name,
+                        userAnswers: this.answers,
+                        matchPercentage: party.agreement
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success && result.explanation.success) {
+                    // Voeg AI uitleg toe aan de partij details
+                    party.aiExplanation = result.explanation.content;
+                    // Update ook de detailedParty als deze gelijk is aan de huidige party
+                    if (this.detailedParty && this.detailedParty.name === party.name) {
+                        this.detailedParty.aiExplanation = result.explanation.content;
+                    }
+                } else {
+                    this.showNotification('Kon partij uitleg niet laden: ' + (result.explanation.error || result.error), 'error');
+                }
+            } catch (error) {
+                console.error('Fout bij laden partij uitleg:', error);
+                this.showNotification('Er ging iets mis bij het laden van de partij uitleg', 'error');
+            } finally {
+                this.loadingAIExplanation = false;
+            }
+        },
+        
+        async loadPoliticalAdvice() {
+            if (this.loadingAIAdvice) return;
+            
+            this.loadingAIAdvice = true;
+            this.aiAdviceContent = '';
+            
+            try {
+                const response = await fetch('/api/stemwijzer.php?action=political-advice', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        personalityAnalysis: this.personalityAnalysis,
+                        topMatches: this.finalResults.slice(0, 3)
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success && result.advice.success) {
+                    this.aiAdviceContent = result.advice.content;
+                    
+                    // Auto-scroll naar AI advice sectie nadat content is geladen
+                    this.$nextTick(() => {
+                        setTimeout(() => {
+                            const aiAdviceSection = document.getElementById('ai-advice-section');
+                            if (aiAdviceSection) {
+                                aiAdviceSection.scrollIntoView({ 
+                                    behavior: 'smooth', 
+                                    block: 'center',
+                                    inline: 'nearest'
+                                });
+                                
+                                // Voeg een subtiele highlight effect toe
+                                aiAdviceSection.classList.add('ring-4', 'ring-purple-200', 'ring-opacity-50');
+                                setTimeout(() => {
+                                    aiAdviceSection.classList.remove('ring-4', 'ring-purple-200', 'ring-opacity-50');
+                                }, 2000);
+                            }
+                        }, 300); // Kleine vertraging zodat de content zichtbaar is
+                    });
+                } else {
+                    this.showNotification('Kon AI advies niet laden: ' + (result.advice.error || result.error), 'error');
+                }
+            } catch (error) {
+                console.error('Fout bij laden AI advies:', error);
+                this.showNotification('Er ging iets mis bij het laden van het AI advies', 'error');
+            } finally {
+                this.loadingAIAdvice = false;
+            }
         },
         
         // Keyboard navigation support

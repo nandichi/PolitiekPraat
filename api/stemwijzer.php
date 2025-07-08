@@ -8,9 +8,11 @@ header('Access-Control-Allow-Headers: Content-Type');
 require_once '../includes/config.php';
 require_once '../includes/Database.php';
 require_once '../includes/StemwijzerController.php';
+require_once '../includes/ChatGPTAPI.php';
 
-// Initialize controller
+// Initialize controllers
 $stemwijzerController = new StemwijzerController();
+$chatGPTAPI = new ChatGPTAPI();
 
 // Get the request method
 $method = $_SERVER['REQUEST_METHOD'];
@@ -124,12 +126,12 @@ try {
                     // Haal resultaten op
                     $results = $stemwijzerController->getResultsByShareId($shareId);
                     
-                    if ($results && isset($results['answers'])) {
+                    if ($results && isset($results->answers)) {
                         // Haal vragen op voor analyse
                         $stemwijzerData = $stemwijzerController->getStemwijzerData();
                         
                         // Bereken persoonlijkheidsanalyse
-                        $personalityAnalysis = $stemwijzerController->analyzePoliticalPersonality($results['answers'], $stemwijzerData['questions']);
+                        $personalityAnalysis = $stemwijzerController->analyzePoliticalPersonality($results->answers, $stemwijzerData['questions']);
                         
                         echo json_encode([
                             'success' => true,
@@ -162,6 +164,17 @@ try {
                             'answers_count' => count($testAnswers),
                             'results_count' => count($testResults)
                         ]
+                    ]);
+                    break;
+                    
+                case 'test-chatgpt':
+                    // Test ChatGPT API verbinding
+                    $testResult = $chatGPTAPI->testConnection();
+                    
+                    echo json_encode([
+                        'success' => true,
+                        'chatgpt_test' => $testResult,
+                        'message' => 'ChatGPT API test uitgevoerd'
                     ]);
                     break;
                     
@@ -254,6 +267,162 @@ try {
                             ]
                         ]);
                     }
+                    break;
+                    
+                case 'explain-question':
+                    // ChatGPT uitleg voor een specifieke vraag
+                    $input = json_decode(file_get_contents('php://input'), true);
+                    
+                    if (!$input) {
+                        http_response_code(400);
+                        echo json_encode([
+                            'success' => false,
+                            'error' => 'Invalid JSON input'
+                        ]);
+                        break;
+                    }
+                    
+                    $questionIndex = $input['questionIndex'] ?? null;
+                    
+                    if (is_null($questionIndex)) {
+                        http_response_code(400);
+                        echo json_encode([
+                            'success' => false,
+                            'error' => 'Question index is required'
+                        ]);
+                        break;
+                    }
+                    
+                    // Haal vragen data op
+                    $stemwijzerData = $stemwijzerController->getStemwijzerData();
+                    
+                    if (!isset($stemwijzerData['questions'][$questionIndex])) {
+                        http_response_code(404);
+                        echo json_encode([
+                            'success' => false,
+                            'error' => 'Question not found'
+                        ]);
+                        break;
+                    }
+                    
+                    $question = $stemwijzerData['questions'][$questionIndex];
+                    
+                    // Controleer of $question een object of array is
+                    if (is_object($question)) {
+                        $title = $question->title ?? '';
+                        $context = $question->context ?? '';
+                        $leftView = $question->left_view ?? '';
+                        $rightView = $question->right_view ?? '';
+                    } else {
+                        $title = $question['title'] ?? '';
+                        $context = $question['context'] ?? '';
+                        $leftView = $question['left_view'] ?? '';
+                        $rightView = $question['right_view'] ?? '';
+                    }
+                    
+                    // Vraag ChatGPT om uitleg
+                    $explanation = $chatGPTAPI->explainQuestion(
+                        $title,
+                        $context,
+                        $leftView,
+                        $rightView
+                    );
+                    
+                    echo json_encode([
+                        'success' => true,
+                        'explanation' => $explanation,
+                        'question_index' => $questionIndex,
+                        'question_title' => $title
+                    ]);
+                    break;
+                    
+                case 'explain-match':
+                    // ChatGPT uitleg waarom een partij bij iemand past
+                    $input = json_decode(file_get_contents('php://input'), true);
+                    
+                    if (!$input) {
+                        http_response_code(400);
+                        echo json_encode([
+                            'success' => false,
+                            'error' => 'Invalid JSON input'
+                        ]);
+                        break;
+                    }
+                    
+                    $partyName = $input['partyName'] ?? null;
+                    $userAnswers = $input['userAnswers'] ?? [];
+                    $matchPercentage = $input['matchPercentage'] ?? 0;
+                    
+                    if (empty($partyName)) {
+                        http_response_code(400);
+                        echo json_encode([
+                            'success' => false,
+                            'error' => 'Party name is required'
+                        ]);
+                        break;
+                    }
+                    
+                    if (empty($userAnswers)) {
+                        http_response_code(400);
+                        echo json_encode([
+                            'success' => false,
+                            'error' => 'User answers are required'
+                        ]);
+                        break;
+                    }
+                    
+                    // Haal vragen data op
+                    $stemwijzerData = $stemwijzerController->getStemwijzerData();
+                    
+                    // Vraag ChatGPT om partij match uitleg
+                    $explanation = $chatGPTAPI->explainPartyMatch(
+                        $partyName,
+                        $userAnswers,
+                        $stemwijzerData['questions'],
+                        $matchPercentage
+                    );
+                    
+                    echo json_encode([
+                        'success' => true,
+                        'explanation' => $explanation,
+                        'party_name' => $partyName,
+                        'match_percentage' => $matchPercentage
+                    ]);
+                    break;
+                    
+                case 'political-advice':
+                    // ChatGPT algemeen politiek advies
+                    $input = json_decode(file_get_contents('php://input'), true);
+                    
+                    if (!$input) {
+                        http_response_code(400);
+                        echo json_encode([
+                            'success' => false,
+                            'error' => 'Invalid JSON input'
+                        ]);
+                        break;
+                    }
+                    
+                    $personalityAnalysis = $input['personalityAnalysis'] ?? null;
+                    $topMatches = $input['topMatches'] ?? [];
+                    
+                    if (empty($personalityAnalysis) || empty($topMatches)) {
+                        http_response_code(400);
+                        echo json_encode([
+                            'success' => false,
+                            'error' => 'Personality analysis and top matches are required'
+                        ]);
+                        break;
+                    }
+                    
+                    // Vraag ChatGPT om algemeen politiek advies
+                    $advice = $chatGPTAPI->generatePoliticalAdvice($personalityAnalysis, $topMatches);
+                    
+                    echo json_encode([
+                        'success' => true,
+                        'advice' => $advice,
+                        'personality_type' => $personalityAnalysis['political_profile']['type'] ?? 'Onbekend'
+                    ]);
                     break;
                     
                 default:
