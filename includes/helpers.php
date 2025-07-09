@@ -148,66 +148,7 @@ if (!function_exists('getBlogAudioUrl')) {
     }
 }
 
-if (!function_exists('isTweedeKamerInReces')) {
-    /**
-     * Controleert of de Tweede Kamer momenteel in reces is
-     * 
-     * @return array Reces informatie met status, naam en datums
-     */
-    function isTweedeKamerInReces() {
-        $now = new DateTime();
-        $currentYear = $now->format('Y');
-        
-        // Officiële recesperiodes van de Tweede Kamer 2025-2026
-        $recesperiodes = [
-            // 2025
-            ['start' => '2025-07-04', 'end' => '2025-09-01', 'naam' => 'Zomerreces'],
-            ['start' => '2025-10-03', 'end' => '2025-10-29', 'naam' => 'Verkiezingsreces'],
-            ['start' => '2025-12-19', 'end' => '2026-01-12', 'naam' => 'Kerstreces'],
-            // 2026
-            ['start' => '2026-02-13', 'end' => '2026-02-23', 'naam' => 'Voorjaarsreces'],
-            ['start' => '2026-04-24', 'end' => '2026-05-11', 'naam' => 'Meireces'],
-            ['start' => '2026-07-03', 'end' => '2026-08-31', 'naam' => 'Zomerreces'],
-        ];
-        
-        foreach ($recesperiodes as $periode) {
-            $startDate = new DateTime($periode['start']);
-            $endDate = new DateTime($periode['end']);
-            
-            if ($now >= $startDate && $now <= $endDate) {
-                // Nederlandse maandnamen
-                $nederlandseMandn = [
-                    'January' => 'januari', 'February' => 'februari', 'March' => 'maart',
-                    'April' => 'april', 'May' => 'mei', 'June' => 'juni',
-                    'July' => 'juli', 'August' => 'augustus', 'September' => 'september',
-                    'October' => 'oktober', 'November' => 'november', 'December' => 'december'
-                ];
-                
-                $startFormatted = $startDate->format('j F Y');
-                $eindFormatted = $endDate->format('j F Y');
-                
-                foreach ($nederlandseMandn as $engels => $nederlands) {
-                    $startFormatted = str_replace($engels, $nederlands, $startFormatted);
-                    $eindFormatted = str_replace($engels, $nederlands, $eindFormatted);
-                }
-                
-                return [
-                    'inReces' => true,
-                    'naam' => $periode['naam'],
-                    'startDatum' => $startFormatted,
-                    'eindDatum' => $eindFormatted
-                ];
-            }
-        }
-        
-        return ['inReces' => false];
-    }
-}
 
-// Automatisch reces informatie initialiseren voor alle pagina's
-if (!isset($GLOBALS['recesInfo'])) {
-    $GLOBALS['recesInfo'] = isTweedeKamerInReces();
-}
 
 // Additional helper functions can be added here
 

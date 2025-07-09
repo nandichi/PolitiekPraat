@@ -30,8 +30,6 @@ function stripMarkdown($text) {
     return $text;
 }
 
-// Reces informatie wordt automatisch ingesteld door helpers.php
-
 // PERFORMANCE TODO: Implement server-side caching (e.g., Redis, Memcached) for database queries and API responses to significantly improve TTFB (Time To First Byte).
 $db = new Database();
 $newsAPI = new NewsAPI();
@@ -475,43 +473,16 @@ require_once 'views/templates/header.php';
                 
                 <!-- Gecentraliseerde content -->
                 <div class="text-center space-y-8 max-w-4xl mx-auto" data-aos="fade-up" data-aos-duration="1000">
-                    <!-- Stijlen voor de animatie van de wisselende titels in de hero sectie -->
-                    <style>
-                        .animated-text-container {
-                            position: relative;
-                        }
-                        .animated-text-item {
-                            position: absolute;
-                            width: 100%;
-                            left: 0;
-                            right: 0;
-                            opacity: 0;
-                            transform: translateY(30px);
-                            animation: text-cycle 12s infinite ease-in-out;
-                        }
-                        .animated-text-item:nth-child(1) { animation-delay: 0s; }
-                        .animated-text-item:nth-child(2) { animation-delay: 3s; }
-                        .animated-text-item:nth-child(3) { animation-delay: 6s; }
-                        .animated-text-item:nth-child(4) { animation-delay: 9s; }
 
-                        @keyframes text-cycle {
-                            0% { opacity: 0; transform: translateY(30px); }
-                            5%, 20% { opacity: 1; transform: translateY(0); }
-                            25%, 100% { opacity: 0; transform: translateY(-30px); }
-                        }
-                    </style>
                     <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold leading-tight tracking-tight">
-                        <span class="block bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent">Jouw stem in het</span>
-                        <span class="animated-text-container block h-32 sm:h-40 md:h-48 lg:h-60 relative">
-                            <span class="animated-text-item bg-gradient-to-r from-secondary via-primary to-secondary bg-clip-text text-transparent mt-2">politieke debat.</span>
-                            <span class="animated-text-item bg-gradient-to-r from-secondary via-primary to-secondary bg-clip-text text-transparent mt-2">hart van de democratie.</span>
-                            <span class="animated-text-item bg-gradient-to-r from-secondary via-primary to-secondary bg-clip-text text-transparent mt-2">gesprek over morgen.</span>
-                            <span class="animated-text-item bg-gradient-to-r from-secondary via-primary to-secondary bg-clip-text text-transparent mt-2">vormen van de toekomst.</span>
+                        <span class="block bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent mb-4">PolitiekPraat</span>
+                        <span class="block bg-gradient-to-r from-secondary via-primary to-secondary bg-clip-text text-transparent text-4xl sm:text-5xl md:text-6xl lg:text-7xl">
+                            Jouw politieke kompas
                         </span>
                     </h1>
                     
-                    <p class="text-xl sm:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                        Het platform voor open en constructieve discussie over actuele politieke thema's. Vorm je mening en bouw mee aan een sterker debat.
+                    <p class="text-xl sm:text-2xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                        Ontdek de Nederlandse politiek via blogs, nieuws en interactive tools
                     </p>
                     
                     <!-- Inline CSS voor kritieke button styling als fallback -->
@@ -578,21 +549,7 @@ require_once 'views/templates/header.php';
                         </a>
                     </div>
 
-                <!-- Stats/Features - Toegevoegd voor meer visuele interesse -->
-                <div class="grid grid-cols-3 gap-6 pt-12" data-aos="fade-up" data-aos-delay="300">
-                    <div class="text-center">
-                        <div class="text-3xl lg:text-4xl font-bold text-gray-900 mb-2">150+</div>
-                        <div class="text-sm text-gray-600">Artikelen</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-3xl lg:text-4xl font-bold text-gray-900 mb-2">20+</div>
-                        <div class="text-sm text-gray-600">Thema's</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-3xl lg:text-4xl font-bold text-gray-900 mb-2">5k+</div>
-                        <div class="text-sm text-gray-600">Lezers</div>
-                    </div>
-                </div>
+
             </div>
         </div>
     </section>
