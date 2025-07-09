@@ -469,7 +469,7 @@ require_once 'views/templates/header.php';
         }
         </style>
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="flex items-center justify-center min-h-screen lg:min-h-[calc(100vh-80px)] py-24">
+            <div class="flex items-center justify-center min-h-[75vh] lg:min-h-[calc(75vh-80px)] py-12 sm:py-16 lg:py-20">
                 
                 <!-- Gecentraliseerde content -->
                 <div class="text-center space-y-8 max-w-4xl mx-auto" data-aos="fade-up" data-aos-duration="1000">
