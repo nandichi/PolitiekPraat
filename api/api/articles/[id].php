@@ -1,33 +1,6 @@
 <?php
-header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type, Authorization');
-
-// Handle preflight OPTIONS request
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(200);
-    exit();
-}
-
-// Database configuratie
-define('DB_HOST', 'localhost');
-define('DB_USER', 'naoufal_politiekpraat_user');
-define('DB_PASS', 'Naoufal2004!');
-define('DB_NAME', 'naoufal_politiekpraat_db');
-
-try {
-    $pdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4", DB_USER, DB_PASS);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-} catch (PDOException $e) {
-    http_response_code(500);
-    echo json_encode([
-        'success' => false,
-        'error' => 'Database verbinding mislukt'
-    ]);
-    exit();
-}
+// Include common API configuration
+require_once '../config.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     // Get article ID from URL path
@@ -37,15 +10,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     
     // Validate article ID
     if (!is_numeric($articleId)) {
-        http_response_code(400);
-        echo json_encode([
-            'success' => false,
-            'error' => 'Ongeldig artikel ID'
-        ]);
-        exit();
+        sendErrorResponse(400, 'Ongeldig artikel ID');
     }
     
     try {
+        $database = getDatabase();
+        $pdo = $database->getConnection();
+        
         $query = "
             SELECT 
                 b.id,
@@ -66,30 +37,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         
         $stmt = $pdo->prepare($query);
         $stmt->execute([(int)$articleId]);
-        $article = $stmt->fetch();
+        $article = $stmt->fetch(PDO::FETCH_ASSOC);
         
         if (!$article) {
-            http_response_code(404);
-            echo json_encode([
-                'success' => false,
-                'error' => 'Artikel niet gevonden'
-            ]);
-            exit();
+            sendErrorResponse(404, 'Artikel niet gevonden');
         }
         
         // Calculate reading time if not set
-        if (!$article['reading_time']) {
-            $wordCount = str_word_count(strip_tags($article['content']));
-            $readingTime = max(1, ceil($wordCount / 200)); // Assuming 200 words per minute
-        } else {
-            $readingTime = (int)$article['reading_time'];
-        }
+        $readingTime = $article['reading_time'] ?: calculateReadingTime($article['content']);
         
         // Extract tags from content
         $tags = extractTags($article['content'], $article['category']);
         
         // Build full URL using slug
-        $url = "https://politiekpraat.nl/blog/" . $article['slug'];
+        $url = URLROOT . "/blog/" . $article['slug'];
         
         // Update view count
         $updateQuery = "UPDATE blogs SET views = views + 1 WHERE id = ?";
@@ -105,51 +66,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             'author' => $article['author'] ?: 'PolitiekPraat',
             'published_date' => $article['published_date'],
             'url' => $url,
-            'image_url' => $article['image_url'] ? "https://politiekpraat.nl/" . $article['image_url'] : null,
+            'image_url' => $article['image_url'] ? URLROOT . "/" . $article['image_url'] : null,
             'relevance_score' => 1.0,
-            'reading_time' => $readingTime,
+            'reading_time' => (int)$readingTime,
             'tags' => $tags
         ];
         
-        echo json_encode([
-            'success' => true,
+        sendSuccessResponse([
             'article' => $processedArticle
         ]);
         
     } catch (PDOException $e) {
-        http_response_code(500);
-        echo json_encode([
-            'success' => false,
-            'error' => 'Artikel ophalen mislukt: ' . $e->getMessage()
-        ]);
+        sendErrorResponse(500, 'Artikel ophalen mislukt: ' . $e->getMessage());
+    } catch (Exception $e) {
+        sendErrorResponse(500, 'Server fout: ' . $e->getMessage());
     }
     
 } else {
-    http_response_code(405);
-    echo json_encode([
-        'success' => false,
-        'error' => 'Alleen GET requests toegestaan'
-    ]);
-}
-
-function extractTags($content, $category) {
-    $tags = [$category];
-    
-    // Common political keywords
-    $keywords = [
-        'verkiezingen', 'stemmen', 'partij', 'coalitie', 'oppositie',
-        'kamer', 'minister', 'premier', 'kabinet', 'regering',
-        'europa', 'nederland', 'gemeenteraad', 'provincie'
-    ];
-    
-    $contentLower = strtolower(strip_tags($content));
-    
-    foreach ($keywords as $keyword) {
-        if (strpos($contentLower, $keyword) !== false) {
-            $tags[] = $keyword;
-        }
-    }
-    
-    return array_unique($tags);
+    sendErrorResponse(405, 'Alleen GET requests toegestaan');
 }
 ?> 
