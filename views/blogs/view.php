@@ -288,6 +288,22 @@ require_once 'views/templates/header.php'; ?>
                                         <span class="text-xs text-purple-600 group-hover:text-purple-700 transition-colors">Politieke Bias</span>
                                     </div>
                                 </button>
+
+                                <!-- Party Perspective Button -->
+                                <button id="partyPerspectiveButton" 
+                                        class="group relative flex items-center gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-orange-500/10 to-red-500/10 backdrop-blur-sm rounded-2xl shadow-lg border border-orange-200/50 hover:border-orange-300/60 transition-all duration-500 transform hover:scale-105 hover:shadow-xl"
+                                        data-slug="<?php echo $blog->slug; ?>"
+                                        aria-label="Bekijk partij perspectieven">
+                                    <div class="relative">
+                                        <svg class="w-6 h-6 text-orange-600 transition-all duration-300 group-hover:text-orange-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="flex flex-col items-start">
+                                        <span class="font-bold text-lg text-orange-700 group-hover:text-orange-800 transition-colors">Partij Reacties</span>
+                                        <span class="text-xs text-orange-600 group-hover:text-orange-700 transition-colors">AI Perspectieven</span>
+                                    </div>
+                                </button>
                             </div>
 
                             <!-- Divider -->
@@ -634,6 +650,294 @@ require_once 'views/templates/header.php'; ?>
                     </button>
                     <button id="retryBiasAnalysis" class="px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg transition-colors hidden">
                         Opnieuw proberen
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Party Perspective Modal -->
+<div id="partyModal" class="fixed inset-0 z-50 hidden">
+    <!-- Modal Overlay -->
+    <div class="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity"></div>
+    
+    <!-- Modal Content -->
+    <div class="fixed inset-0 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden">
+            <!-- Modal Header -->
+            <div class="bg-gradient-to-r from-orange-500 to-red-600 px-6 py-4">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="p-2 bg-white/20 rounded-lg">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white">Partij Perspectieven</h3>
+                            <p class="text-orange-100 text-sm">Kies een partij of leider voor hun AI-gegenereerde reactie</p>
+                        </div>
+                    </div>
+                    <button id="closePartyModal" class="p-2 hover:bg-white/20 rounded-lg transition-colors">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Modal Body -->
+            <div class="p-6 overflow-y-auto max-h-[70vh]">
+                <!-- Mode Toggle -->
+                <div class="flex justify-center mb-6">
+                    <div class="bg-gray-100 p-1 rounded-xl">
+                        <button id="partyModeBtn" type="button" class="px-4 py-2 bg-white text-gray-900 rounded-lg font-medium transition-all">
+                            Partij Standpunt
+                        </button>
+                        <button id="leaderModeBtn" type="button" class="px-4 py-2 text-gray-600 rounded-lg font-medium transition-all hover:text-gray-900">
+                            Leider Reactie
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Party Selection Grid -->
+                <div id="partySelectionGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-6">
+                    <!-- PVV -->
+                    <button type="button" class="party-select-btn" data-party="PVV">
+                        <div class="p-4 border-2 border-gray-200 rounded-xl hover:border-orange-300 hover:bg-orange-50 transition-all cursor-pointer group">
+                            <img src="https://i.ibb.co/DfR8pS2Y/403880390-713625330344634-198487231923339026-n.jpg" 
+                                 alt="PVV" 
+                                 class="w-16 h-16 mx-auto mb-2 object-contain">
+                            <h4 class="font-bold text-sm text-gray-900 group-hover:text-orange-700">PVV</h4>
+                            <p class="text-xs text-gray-600 mt-1 leader-name">Geert Wilders</p>
+                            <img src="/partijleiders/geert.jpg" alt="Geert Wilders" class="leader-photo w-12 h-12 rounded-full mx-auto mt-2 object-cover border-2 border-gray-200 hidden">
+                        </div>
+                    </button>
+                    
+                    <!-- VVD -->
+                    <button type="button" class="party-select-btn" data-party="VVD">
+                        <div class="p-4 border-2 border-gray-200 rounded-xl hover:border-blue-300 hover:bg-blue-50 transition-all cursor-pointer group">
+                            <img src="https://logo.clearbit.com/vvd.nl" 
+                                 alt="VVD" 
+                                 class="w-16 h-16 mx-auto mb-2 object-contain">
+                            <h4 class="font-bold text-sm text-gray-900 group-hover:text-blue-700">VVD</h4>
+                            <p class="text-xs text-gray-600 mt-1 leader-name">Dilan Yeşilgöz</p>
+                            <img src="/partijleiders/dilan.jpg" alt="Dilan Yeşilgöz" class="leader-photo w-12 h-12 rounded-full mx-auto mt-2 object-cover border-2 border-gray-200 hidden">
+                        </div>
+                    </button>
+                    
+                    <!-- GL-PvdA -->
+                    <button type="button" class="party-select-btn" data-party="GL-PvdA">
+                        <div class="p-4 border-2 border-gray-200 rounded-xl hover:border-green-300 hover:bg-green-50 transition-all cursor-pointer group">
+                            <img src="https://i.ibb.co/67hkc5Hv/gl-pvda.png" 
+                                 alt="GL-PvdA" 
+                                 class="w-16 h-16 mx-auto mb-2 object-contain">
+                            <h4 class="font-bold text-sm text-gray-900 group-hover:text-green-700">GL-PvdA</h4>
+                            <p class="text-xs text-gray-600 mt-1 leader-name">Frans Timmermans</p>
+                            <img src="/partijleiders/frans.jpg" alt="Frans Timmermans" class="leader-photo w-12 h-12 rounded-full mx-auto mt-2 object-cover border-2 border-gray-200 hidden">
+                        </div>
+                    </button>
+                    
+                    <!-- NSC -->
+                    <button type="button" class="party-select-btn" data-party="NSC">
+                        <div class="p-4 border-2 border-gray-200 rounded-xl hover:border-purple-300 hover:bg-purple-50 transition-all cursor-pointer group">
+                            <img src="https://i.ibb.co/YT2fJZb4/nsc.png" 
+                                 alt="NSC" 
+                                 class="w-16 h-16 mx-auto mb-2 object-contain">
+                            <h4 class="font-bold text-sm text-gray-900 group-hover:text-purple-700">NSC</h4>
+                            <p class="text-xs text-gray-600 mt-1 leader-name">Nicolien van Vroonhoven</p>
+                            <img src="https://i.ibb.co/NgY27GmZ/nicolien-van-vroonhoven-en-piete.jpg" alt="Nicolien van Vroonhoven" class="leader-photo w-12 h-12 rounded-full mx-auto mt-2 object-cover border-2 border-gray-200 hidden">
+                        </div>
+                    </button>
+                    
+                    <!-- BBB -->
+                    <button type="button" class="party-select-btn" data-party="BBB">
+                        <div class="p-4 border-2 border-gray-200 rounded-xl hover:border-yellow-300 hover:bg-yellow-50 transition-all cursor-pointer group">
+                            <img src="https://i.ibb.co/qMjw7jDV/bbb.png" 
+                                 alt="BBB" 
+                                 class="w-16 h-16 mx-auto mb-2 object-contain">
+                            <h4 class="font-bold text-sm text-gray-900 group-hover:text-yellow-700">BBB</h4>
+                            <p class="text-xs text-gray-600 mt-1 leader-name">Caroline van der Plas</p>
+                            <img src="/partijleiders/plas.jpg" alt="Caroline van der Plas" class="leader-photo w-12 h-12 rounded-full mx-auto mt-2 object-cover border-2 border-gray-200 hidden">
+                        </div>
+                    </button>
+                    
+                    <!-- D66 -->
+                    <button type="button" class="party-select-btn" data-party="D66">
+                        <div class="p-4 border-2 border-gray-200 rounded-xl hover:border-teal-300 hover:bg-teal-50 transition-all cursor-pointer group">
+                            <img src="https://logo.clearbit.com/d66.nl" 
+                                 alt="D66" 
+                                 class="w-16 h-16 mx-auto mb-2 object-contain">
+                            <h4 class="font-bold text-sm text-gray-900 group-hover:text-teal-700">D66</h4>
+                            <p class="text-xs text-gray-600 mt-1 leader-name">Rob Jetten</p>
+                            <img src="/partijleiders/rob.jpg" alt="Rob Jetten" class="leader-photo w-12 h-12 rounded-full mx-auto mt-2 object-cover border-2 border-gray-200 hidden">
+                        </div>
+                    </button>
+                    
+                    <!-- SP -->
+                    <button type="button" class="party-select-btn" data-party="SP">
+                        <div class="p-4 border-2 border-gray-200 rounded-xl hover:border-red-300 hover:bg-red-50 transition-all cursor-pointer group">
+                            <img src="https://logo.clearbit.com/sp.nl" 
+                                 alt="SP" 
+                                 class="w-16 h-16 mx-auto mb-2 object-contain">
+                            <h4 class="font-bold text-sm text-gray-900 group-hover:text-red-700">SP</h4>
+                            <p class="text-xs text-gray-600 mt-1 leader-name">Jimmy Dijk</p>
+                            <img src="/partijleiders/jimmy.jpg" alt="Jimmy Dijk" class="leader-photo w-12 h-12 rounded-full mx-auto mt-2 object-cover border-2 border-gray-200 hidden">
+                        </div>
+                    </button>
+                    
+                    <!-- PvdD -->
+                    <button type="button" class="party-select-btn" data-party="PvdD">
+                        <div class="p-4 border-2 border-gray-200 rounded-xl hover:border-lime-300 hover:bg-lime-50 transition-all cursor-pointer group">
+                            <img src="https://logo.clearbit.com/partijvoordedieren.nl" 
+                                 alt="PvdD" 
+                                 class="w-16 h-16 mx-auto mb-2 object-contain">
+                            <h4 class="font-bold text-sm text-gray-900 group-hover:text-lime-700">PvdD</h4>
+                            <p class="text-xs text-gray-600 mt-1 leader-name">Esther Ouwehand</p>
+                            <img src="/partijleiders/esther.jpg" alt="Esther Ouwehand" class="leader-photo w-12 h-12 rounded-full mx-auto mt-2 object-cover border-2 border-gray-200 hidden">
+                        </div>
+                    </button>
+                    
+                    <!-- CDA -->
+                    <button type="button" class="party-select-btn" data-party="CDA">
+                        <div class="p-4 border-2 border-gray-200 rounded-xl hover:border-sky-300 hover:bg-sky-50 transition-all cursor-pointer group">
+                            <img src="https://logo.clearbit.com/cda.nl" 
+                                 alt="CDA" 
+                                 class="w-16 h-16 mx-auto mb-2 object-contain">
+                            <h4 class="font-bold text-sm text-gray-900 group-hover:text-sky-700">CDA</h4>
+                            <p class="text-xs text-gray-600 mt-1 leader-name">Henri Bontenbal</p>
+                            <img src="/partijleiders/Henri.jpg" alt="Henri Bontenbal" class="leader-photo w-12 h-12 rounded-full mx-auto mt-2 object-cover border-2 border-gray-200 hidden">
+                        </div>
+                    </button>
+                    
+                    <!-- JA21 -->
+                    <button type="button" class="party-select-btn" data-party="JA21">
+                        <div class="p-4 border-2 border-gray-200 rounded-xl hover:border-indigo-300 hover:bg-indigo-50 transition-all cursor-pointer group">
+                            <img src="https://logo.clearbit.com/ja21.nl" 
+                                 alt="JA21" 
+                                 class="w-16 h-16 mx-auto mb-2 object-contain">
+                            <h4 class="font-bold text-sm text-gray-900 group-hover:text-indigo-700">JA21</h4>
+                            <p class="text-xs text-gray-600 mt-1 leader-name">Joost Eerdmans</p>
+                            <img src="/partijleiders/joost.jpg" alt="Joost Eerdmans" class="leader-photo w-12 h-12 rounded-full mx-auto mt-2 object-cover border-2 border-gray-200 hidden">
+                        </div>
+                    </button>
+                    
+                    <!-- SGP -->
+                    <button type="button" class="party-select-btn" data-party="SGP">
+                        <div class="p-4 border-2 border-gray-200 rounded-xl hover:border-gray-400 hover:bg-gray-50 transition-all cursor-pointer group">
+                            <img src="https://logo.clearbit.com/sgp.nl" 
+                                 alt="SGP" 
+                                 class="w-16 h-16 mx-auto mb-2 object-contain">
+                            <h4 class="font-bold text-sm text-gray-900 group-hover:text-gray-700">SGP</h4>
+                            <p class="text-xs text-gray-600 mt-1 leader-name">Chris Stoffer</p>
+                            <img src="/partijleiders/Chris.jpg" alt="Chris Stoffer" class="leader-photo w-12 h-12 rounded-full mx-auto mt-2 object-cover border-2 border-gray-200 hidden">
+                        </div>
+                    </button>
+                    
+                    <!-- FvD -->
+                    <button type="button" class="party-select-btn" data-party="FvD">
+                        <div class="p-4 border-2 border-gray-200 rounded-xl hover:border-amber-300 hover:bg-amber-50 transition-all cursor-pointer group">
+                            <img src="https://logo.clearbit.com/fvd.nl" 
+                                 alt="FvD" 
+                                 class="w-16 h-16 mx-auto mb-2 object-contain">
+                            <h4 class="font-bold text-sm text-gray-900 group-hover:text-amber-700">FvD</h4>
+                            <p class="text-xs text-gray-600 mt-1 leader-name">Thierry Baudet</p>
+                            <img src="/partijleiders/thierry.jpg" alt="Thierry Baudet" class="leader-photo w-12 h-12 rounded-full mx-auto mt-2 object-cover border-2 border-gray-200 hidden">
+                        </div>
+                    </button>
+                    
+                    <!-- DENK -->
+                    <button type="button" class="party-select-btn" data-party="DENK">
+                        <div class="p-4 border-2 border-gray-200 rounded-xl hover:border-cyan-300 hover:bg-cyan-50 transition-all cursor-pointer group">
+                            <img src="https://logo.clearbit.com/bewegingdenk.nl" 
+                                 alt="DENK" 
+                                 class="w-16 h-16 mx-auto mb-2 object-contain">
+                            <h4 class="font-bold text-sm text-gray-900 group-hover:text-cyan-700">DENK</h4>
+                            <p class="text-xs text-gray-600 mt-1 leader-name">Stephan van Baarle</p>
+                            <img src="/partijleiders/baarle.jpg" alt="Stephan van Baarle" class="leader-photo w-12 h-12 rounded-full mx-auto mt-2 object-cover border-2 border-gray-200 hidden">
+                        </div>
+                    </button>
+                    
+                    <!-- Volt -->
+                    <button type="button" class="party-select-btn" data-party="Volt">
+                        <div class="p-4 border-2 border-gray-200 rounded-xl hover:border-violet-300 hover:bg-violet-50 transition-all cursor-pointer group">
+                            <img src="https://logo.clearbit.com/voltnederland.org" 
+                                 alt="Volt" 
+                                 class="w-16 h-16 mx-auto mb-2 object-contain">
+                            <h4 class="font-bold text-sm text-gray-900 group-hover:text-violet-700">Volt</h4>
+                            <p class="text-xs text-gray-600 mt-1 leader-name">Laurens Dassen</p>
+                            <img src="/partijleiders/dassen.jpg" alt="Laurens Dassen" class="leader-photo w-12 h-12 rounded-full mx-auto mt-2 object-cover border-2 border-gray-200 hidden">
+                        </div>
+                    </button>
+                    
+                    <!-- CU -->
+                    <button type="button" class="party-select-btn" data-party="CU">
+                        <div class="p-4 border-2 border-gray-200 rounded-xl hover:border-emerald-300 hover:bg-emerald-50 transition-all cursor-pointer group">
+                            <img src="https://logo.clearbit.com/christenunie.nl" 
+                                 alt="CU" 
+                                 class="w-16 h-16 mx-auto mb-2 object-contain">
+                            <h4 class="font-bold text-sm text-gray-900 group-hover:text-emerald-700">CU</h4>
+                            <p class="text-xs text-gray-600 mt-1 leader-name">Mirjam Bikker</p>
+                            <img src="https://i.ibb.co/wh3wwQ66/Bikker.jpg" alt="Mirjam Bikker" class="leader-photo w-12 h-12 rounded-full mx-auto mt-2 object-cover border-2 border-gray-200 hidden">
+                        </div>
+                    </button>
+                </div>
+                
+                <!-- Loading State -->
+                <div id="partyLoading" class="hidden text-center py-8">
+                    <div class="inline-flex items-center space-x-3">
+                        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500"></div>
+                        <span class="text-gray-600 font-medium">Perspectief wordt gegenereerd...</span>
+                    </div>
+                    <p class="text-gray-500 text-sm mt-2">Dit kan een paar seconden duren</p>
+                </div>
+                
+                <!-- Error State -->
+                <div id="partyError" class="hidden">
+                    <div class="bg-red-50 border border-red-200 rounded-xl p-6">
+                        <div class="flex items-start">
+                            <svg class="w-6 h-6 text-red-500 mt-0.5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.5 0L4.232 15.5c-.77.833.192 2.5 1.732 2.5z"/>
+                            </svg>
+                            <div>
+                                <h4 class="text-red-800 font-medium mb-1">Genereren mislukt</h4>
+                                <p id="partyErrorMessage" class="text-red-700 text-sm"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Results -->
+                <div id="partyResults" class="hidden">
+                    <div class="bg-gradient-to-r from-gray-50 to-orange-50 rounded-xl p-6 mb-6">
+                        <div class="flex items-start space-x-4">
+                            <img id="partyResultLogo" src="" alt="" class="w-20 h-20 object-contain">
+                            <div class="flex-1">
+                                <h4 id="partyResultName" class="text-xl font-bold text-gray-900 mb-1"></h4>
+                                <p id="partyResultLeader" class="text-sm text-gray-600"></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="prose prose-lg max-w-none">
+                        <div id="partyResultContent" class="bg-white border border-gray-200 rounded-xl p-6"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Modal Footer -->
+            <div class="bg-gray-50 px-6 py-4 border-t border-gray-200">
+                <div class="flex justify-between items-center">
+                    <button id="backToPartySelection" class="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors hidden">
+                        <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                        </svg>
+                        Terug naar selectie
+                    </button>
+                    <div class="flex-1"></div>
+                    <button id="closePartyModalFooter" class="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors">
+                        Sluiten
                     </button>
                 </div>
             </div>
@@ -1077,13 +1381,308 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Close modal on background click
-    biasModal?.addEventListener('click', function(e) {
-        if (e.target === this) {
-            hideBiasModal();
-        }
-    });
-});
+         // Close modal on background click
+     biasModal?.addEventListener('click', function(e) {
+         if (e.target === this) {
+             hideBiasModal();
+         }
+     });
+     
+     // Party Perspective Functionality
+     const partyPerspectiveButton = document.getElementById('partyPerspectiveButton');
+     const partyModal = document.getElementById('partyModal');
+     const closePartyModal = document.getElementById('closePartyModal');
+     const closePartyModalFooter = document.getElementById('closePartyModalFooter');
+     const backToPartySelection = document.getElementById('backToPartySelection');
+     const partyModeBtn = document.getElementById('partyModeBtn');
+     const leaderModeBtn = document.getElementById('leaderModeBtn');
+     
+     let currentMode = 'party'; // 'party' or 'leader'
+     
+     // Party data with logos
+     const partyData = {
+         'PVV': {
+             name: 'Partij voor de Vrijheid',
+             leader: 'Geert Wilders',
+             logo: 'https://i.ibb.co/DfR8pS2Y/403880390-713625330344634-198487231923339026-n.jpg',
+             leaderPhoto: '/partijleiders/geert.jpg'
+         },
+         'VVD': {
+             name: 'Volkspartij voor Vrijheid en Democratie',
+             leader: 'Dilan Yeşilgöz-Zegerius',
+             logo: 'https://logo.clearbit.com/vvd.nl',
+             leaderPhoto: '/partijleiders/dilan.jpg'
+         },
+         'GL-PvdA': {
+             name: 'GroenLinks-PvdA',
+             leader: 'Frans Timmermans',
+             logo: 'https://i.ibb.co/67hkc5Hv/gl-pvda.png',
+             leaderPhoto: '/partijleiders/frans.jpg'
+         },
+         'NSC': {
+             name: 'Nieuw Sociaal Contract',
+             leader: 'Nicolien van Vroonhoven',
+             logo: 'https://i.ibb.co/YT2fJZb4/nsc.png',
+             leaderPhoto: 'https://i.ibb.co/NgY27GmZ/nicolien-van-vroonhoven-en-piete.jpg'
+         },
+         'BBB': {
+             name: 'BoerBurgerBeweging',
+             leader: 'Caroline van der Plas',
+             logo: 'https://i.ibb.co/qMjw7jDV/bbb.png',
+             leaderPhoto: '/partijleiders/plas.jpg'
+         },
+         'D66': {
+             name: 'Democraten 66',
+             leader: 'Rob Jetten',
+             logo: 'https://logo.clearbit.com/d66.nl',
+             leaderPhoto: '/partijleiders/rob.jpg'
+         },
+         'SP': {
+             name: 'Socialistische Partij',
+             leader: 'Jimmy Dijk',
+             logo: 'https://logo.clearbit.com/sp.nl',
+             leaderPhoto: '/partijleiders/jimmy.jpg'
+         },
+         'PvdD': {
+             name: 'Partij voor de Dieren',
+             leader: 'Esther Ouwehand',
+             logo: 'https://logo.clearbit.com/partijvoordedieren.nl',
+             leaderPhoto: '/partijleiders/esther.jpg'
+         },
+         'CDA': {
+             name: 'Christen-Democratisch Appèl',
+             leader: 'Henri Bontenbal',
+             logo: 'https://logo.clearbit.com/cda.nl',
+             leaderPhoto: '/partijleiders/Henri.jpg'
+         },
+         'JA21': {
+             name: 'Juiste Antwoord 2021',
+             leader: 'Joost Eerdmans',
+             logo: 'https://logo.clearbit.com/ja21.nl',
+             leaderPhoto: '/partijleiders/joost.jpg'
+         },
+         'SGP': {
+             name: 'Staatkundig Gereformeerde Partij',
+             leader: 'Chris Stoffer',
+             logo: 'https://logo.clearbit.com/sgp.nl',
+             leaderPhoto: '/partijleiders/Chris.jpg'
+         },
+         'FvD': {
+             name: 'Forum voor Democratie',
+             leader: 'Thierry Baudet',
+             logo: 'https://logo.clearbit.com/fvd.nl',
+             leaderPhoto: '/partijleiders/thierry.jpg'
+         },
+         'DENK': {
+             name: 'DENK',
+             leader: 'Stephan van Baarle',
+             logo: 'https://logo.clearbit.com/bewegingdenk.nl',
+             leaderPhoto: '/partijleiders/baarle.jpg'
+         },
+         'Volt': {
+             name: 'Volt Nederland',
+             leader: 'Laurens Dassen',
+             logo: 'https://logo.clearbit.com/voltnederland.org',
+             leaderPhoto: '/partijleiders/dassen.jpg'
+         },
+         'CU': {
+             name: 'ChristenUnie',
+             leader: 'Mirjam Bikker',
+             logo: 'https://logo.clearbit.com/christenunie.nl',
+             leaderPhoto: 'https://i.ibb.co/wh3wwQ66/Bikker.jpg'
+         }
+     };
+     
+     // Open party modal
+     partyPerspectiveButton?.addEventListener('click', function() {
+         showPartyModal();
+     });
+     
+     // Close party modal
+     closePartyModal?.addEventListener('click', hidePartyModal);
+     closePartyModalFooter?.addEventListener('click', hidePartyModal);
+     
+     // Background click to close
+     partyModal?.addEventListener('click', function(e) {
+         if (e.target === this) {
+             hidePartyModal();
+         }
+     });
+     
+     // Mode toggle
+     partyModeBtn?.addEventListener('click', function() {
+         currentMode = 'party';
+         updateModeButtons();
+         updateModeText();
+     });
+     
+     leaderModeBtn?.addEventListener('click', function() {
+         currentMode = 'leader';
+         updateModeButtons();
+         updateModeText();
+     });
+     
+     // Back button
+     backToPartySelection?.addEventListener('click', function() {
+         showPartySelection();
+     });
+     
+     // Party selection
+     document.querySelectorAll('.party-select-btn').forEach(btn => {
+         btn.addEventListener('click', function() {
+             const party = this.getAttribute('data-party');
+             if (party) {
+                 performPartyAnalysis(party, currentMode);
+             }
+         });
+     });
+     
+     function updateModeButtons() {
+         if (currentMode === 'party') {
+             partyModeBtn.classList.add('bg-white', 'text-gray-900');
+             partyModeBtn.classList.remove('text-gray-600');
+             leaderModeBtn.classList.remove('bg-white', 'text-gray-900');
+             leaderModeBtn.classList.add('text-gray-600');
+         } else {
+             leaderModeBtn.classList.add('bg-white', 'text-gray-900');
+             leaderModeBtn.classList.remove('text-gray-600');
+             partyModeBtn.classList.remove('bg-white', 'text-gray-900');
+             partyModeBtn.classList.add('text-gray-600');
+         }
+     }
+     
+     function updateModeText() {
+         const leaderNames = document.querySelectorAll('.leader-name');
+         const leaderPhotos = document.querySelectorAll('.leader-photo');
+         
+         if (currentMode === 'party') {
+             leaderNames.forEach(el => el.style.display = 'block');
+             leaderPhotos.forEach(el => el.classList.add('hidden'));
+         } else {
+             leaderNames.forEach(el => el.style.display = 'block');
+             leaderPhotos.forEach(el => el.classList.remove('hidden'));
+         }
+     }
+     
+     function showPartyModal() {
+         const modal = document.getElementById('partyModal');
+         if (modal) {
+             modal.classList.remove('hidden');
+             document.body.style.overflow = 'hidden';
+             showPartySelection();
+             // Ensure correct mode is shown
+             updateModeButtons();
+             updateModeText();
+         }
+     }
+     
+     function hidePartyModal() {
+         const modal = document.getElementById('partyModal');
+         if (modal) {
+             modal.classList.add('hidden');
+             document.body.style.overflow = '';
+         }
+     }
+     
+     function showPartySelection() {
+         document.getElementById('partySelectionGrid')?.classList.remove('hidden');
+         document.getElementById('partyLoading')?.classList.add('hidden');
+         document.getElementById('partyError')?.classList.add('hidden');
+         document.getElementById('partyResults')?.classList.add('hidden');
+         document.getElementById('backToPartySelection')?.classList.add('hidden');
+     }
+     
+     async function performPartyAnalysis(party, type) {
+         try {
+             // Hide selection, show loading
+             document.getElementById('partySelectionGrid')?.classList.add('hidden');
+             document.getElementById('partyLoading')?.classList.remove('hidden');
+             document.getElementById('partyError')?.classList.add('hidden');
+             document.getElementById('partyResults')?.classList.add('hidden');
+             
+             const slug = partyPerspectiveButton?.getAttribute('data-slug');
+             if (!slug) return;
+             
+             const formData = new FormData();
+             formData.append('slug', slug);
+             formData.append('party', party);
+             formData.append('type', type);
+             
+             const response = await fetch('<?php echo URLROOT; ?>/controllers/blogs/party-perspective.php', {
+                 method: 'POST',
+                 headers: {
+                     'X-Requested-With': 'XMLHttpRequest'
+                 },
+                 body: formData
+             });
+             
+             const data = await response.json();
+             
+             // Hide loading
+             document.getElementById('partyLoading')?.classList.add('hidden');
+             
+             if (data.success) {
+                 showPartyResults(data, party);
+             } else {
+                 showPartyError(data.error || 'Onbekende fout bij het genereren');
+             }
+             
+         } catch (error) {
+             console.error('Party analysis error:', error);
+             document.getElementById('partyLoading')?.classList.add('hidden');
+             showPartyError('Netwerk fout: Kon geen verbinding maken met de server');
+         }
+     }
+     
+     function showPartyResults(data, partyKey) {
+         const party = partyData[partyKey];
+         if (!party) return;
+         
+         // Show results container
+         document.getElementById('partyResults')?.classList.remove('hidden');
+         document.getElementById('backToPartySelection')?.classList.remove('hidden');
+         
+         // Set party info - show leader photo for leader mode, party logo for party mode
+         const logo = document.getElementById('partyResultLogo');
+         if (logo) {
+             if (data.type === 'leader' && party.leaderPhoto) {
+                 logo.src = party.leaderPhoto;
+                 logo.alt = party.leader;
+                 logo.className = 'w-20 h-20 object-cover rounded-full border-2 border-gray-300';
+             } else {
+                 logo.src = party.logo;
+                 logo.alt = party.name;
+                 logo.className = 'w-20 h-20 object-contain';
+             }
+         }
+         
+         const name = document.getElementById('partyResultName');
+         if (name) {
+             name.textContent = data.type === 'party' ? party.name : party.leader;
+         }
+         
+         const leader = document.getElementById('partyResultLeader');
+         if (leader) {
+             leader.textContent = data.type === 'party' ? 'Partijstandpunt' : `Partijleider ${party.name}`;
+         }
+         
+         // Set content
+         const content = document.getElementById('partyResultContent');
+         if (content) {
+             content.innerHTML = `<div class="text-gray-700 leading-relaxed whitespace-pre-wrap">${data.content}</div>`;
+         }
+     }
+     
+     function showPartyError(errorMessage) {
+         document.getElementById('partyError')?.classList.remove('hidden');
+         document.getElementById('backToPartySelection')?.classList.remove('hidden');
+         
+         const errorMessageElement = document.getElementById('partyErrorMessage');
+         if (errorMessageElement) {
+             errorMessageElement.textContent = errorMessage;
+         }
+     }
+ });
 
 // Notification System
 function showNotification(message, type = 'info') {

@@ -406,6 +406,375 @@ include_once BASE_PATH . '/views/templates/header.php';
         <!-- Bottom fade -->
         <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-slate-50 to-transparent"></div>
     </section>
+
+    <!-- Partijen Overzicht Sectie - Vergelijkbaar met peilingen -->
+    <section class="py-32 bg-gradient-to-b from-white via-slate-50 to-white relative overflow-hidden">
+        <!-- Premium decoratieve achtergrond -->
+        <div class="absolute inset-0">
+            <!-- Animated gradient spheres -->
+            <div class="absolute top-20 left-10 w-96 h-96 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-full blur-3xl animate-float"></div>
+            <div class="absolute top-60 right-16 w-80 h-80 bg-gradient-to-br from-secondary/8 to-primary-light/8 rounded-full blur-2xl animate-float-delayed"></div>
+            <div class="absolute bottom-32 left-1/3 w-72 h-72 bg-gradient-to-br from-primary-light/6 to-secondary-light/6 rounded-full blur-3xl animate-pulse-slow"></div>
+            
+            <!-- Geometric pattern overlay -->
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"40\" height=\"40\" viewBox=\"0 0 40 40\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg opacity=\"0.04\"%3E%3Cpath d=\"M20 0L20 40M0 20L40 20\" stroke=\"%23334155\" stroke-width=\"1\"%3E%3C/path%3E%3Ccircle cx=\"20\" cy=\"20\" r=\"2\" fill=\"%23334155\"%3E%3C/circle%3E%3C/g%3E%3C/svg%3E')] opacity-40"></div>
+            
+            <!-- Floating elements -->
+            <div class="absolute top-40 right-1/4 w-4 h-4 bg-primary/20 rounded-full animate-bounce"></div>
+            <div class="absolute bottom-1/3 left-1/4 w-6 h-6 bg-secondary/20 rounded-full animate-bounce animation-delay-75"></div>
+            <div class="absolute top-2/3 right-1/3 w-3 h-3 bg-primary-light/20 rounded-full animate-bounce animation-delay-150"></div>
+        </div>
+
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <!-- Uniforme header sectie -->
+            <div class="text-center mb-24 relative" data-aos="fade-up" data-aos-once="true">
+                <!-- Achtergrond tekst -->
+                <div class="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
+                    <span class="text-[120px] sm:text-[160px] lg:text-[200px] xl:text-[280px] font-black text-slate-100/30 select-none tracking-wider transform -rotate-2">PARTIJEN</span>
+                </div>
+                
+                <!-- Main content -->
+                <div class="relative z-10 space-y-8">
+                    <!-- Hoofdtitel -->
+                    <div class="space-y-6">
+                        <h2 class="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black text-slate-900 leading-tight tracking-tight">
+                            <span class="block mb-2">Partijen</span>
+                            <span class="bg-gradient-to-r from-primary-dark via-primary to-secondary bg-clip-text text-transparent animate-gradient bg-size-200">
+                                Ranglijst
+                            </span>
+                        </h2>
+                        
+                        <!-- Decoratieve lijn systeem -->
+                        <div class="flex items-center justify-center space-x-6 mt-8">
+                            <div class="w-16 h-0.5 bg-gradient-to-r from-transparent via-primary to-secondary"></div>
+                            <div class="relative">
+                                <div class="w-4 h-4 bg-primary rounded-full animate-pulse"></div>
+                                <div class="absolute inset-0 w-4 h-4 bg-primary rounded-full animate-ping opacity-30"></div>
+                            </div>
+                            <div class="w-32 h-0.5 bg-gradient-to-r from-secondary via-primary-light to-secondary-light"></div>
+                            <div class="relative">
+                                <div class="w-4 h-4 bg-secondary rounded-full animate-pulse animation-delay-300"></div>
+                                <div class="absolute inset-0 w-4 h-4 bg-secondary rounded-full animate-ping opacity-30 animation-delay-300"></div>
+                            </div>
+                            <div class="w-16 h-0.5 bg-gradient-to-r from-secondary-light via-primary-light to-transparent"></div>
+                        </div>
+                    </div>
+            
+                    <!-- Subtitel -->
+                    <p class="text-xl sm:text-2xl lg:text-3xl text-slate-600 max-w-4xl mx-auto leading-relaxed font-light">
+                        Overzicht van alle <span class="font-semibold text-primary">Nederlandse partijen</span> gesorteerd op <span class="font-semibold text-secondary">huidige zetels</span> en peilingen
+                    </p>
+                    
+                    <!-- Status indicator en AI knop -->
+                    <div class="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+                        <div class="inline-flex items-center px-6 py-3 bg-slate-900/5 backdrop-blur-sm rounded-full border border-slate-200/50 shadow-sm">
+                            <div class="flex items-center space-x-3">
+                                <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                </svg>
+                                <span class="text-sm font-medium text-slate-600">Actuele stand: Tweede Kamer 2023-2027</span>
+                            </div>
+                        </div>
+
+                        <!-- AI Analyse Knop -->
+                        <button id="ai-analysis-btn" class="group inline-flex items-center px-6 py-3 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 border border-white/20">
+                            <svg class="w-5 h-5 mr-2 group-hover:animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                            </svg>
+                            <span>AI Peiling Analyse</span>
+                            <div class="ml-2 w-1 h-1 bg-white rounded-full animate-ping"></div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <?php
+            // Sorteer partijen op huidige zetels (aflopend)
+            $sortedPartiesCurrentSeats = $parties;
+            uasort($sortedPartiesCurrentSeats, function($a, $b) {
+                return $b['current_seats'] - $a['current_seats'];
+            });
+
+            // Sorteer partijen op peiling zetels (aflopend)
+            $sortedPartiesPolling = $parties;
+            uasort($sortedPartiesPolling, function($a, $b) {
+                return $b['polling']['seats'] - $a['polling']['seats'];
+            });
+            ?>
+
+            <!-- Partijen data -->
+            <div class="grid grid-cols-1 xl:grid-cols-3 gap-16 items-start">
+                <!-- Linker kolom: Gecombineerde Zetelverdeling (spans 2 columns) -->
+                <div class="xl:col-span-2 relative" data-aos="fade-right">
+                    <div class="peiling-card group relative bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/20 overflow-hidden hover:shadow-3xl transition-all duration-500">
+                        <!-- Animated background gradient -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-primary/5 via-white to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                        
+                        <!-- Card header -->
+                        <div class="relative z-10 p-8">
+                            <div class="flex items-center justify-between mb-8">
+                                <div>
+                                    <h3 class="text-2xl sm:text-3xl font-black text-slate-900 mb-2">Zetelverdeling</h3>
+                                    <p class="text-slate-600 font-medium">Peilingen vs. Huidige zetels</p>
+                                </div>
+                                <div class="flex items-center space-x-4">
+                                    <div class="flex items-center space-x-2">
+                                        <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                                        <span class="text-sm font-medium text-slate-600">Live data</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Gecombineerde partijen tabel -->
+                            <div class="overflow-x-auto -mx-2">
+                                <table class="w-full border-collapse text-sm">
+                                    <thead>
+                                        <tr class="bg-gradient-to-r from-slate-50 via-white to-slate-50 border-b border-slate-200/50">
+                                            <th class="py-4 px-4 text-left font-bold text-slate-700 tracking-wide">Partij</th>
+                                            <th class="py-4 px-3 text-center font-bold text-slate-700 tracking-wide">
+                                                <span class="hidden sm:inline">Peiling</span>
+                                                <span class="sm:hidden">Peiling</span>
+                                            </th>
+                                            <th class="py-4 px-3 text-center font-bold text-slate-700 tracking-wide">
+                                                <span class="hidden sm:inline">Huidige zetels</span>
+                                                <span class="sm:hidden">Huidig</span>
+                                            </th>
+                                            <th class="py-4 px-3 text-center font-bold text-slate-700 tracking-wide">
+                                                <span class="hidden sm:inline">Verschil</span>
+                                                <span class="sm:hidden">+/-</span>
+                                            </th>
+                                            <th class="py-4 px-3 text-center font-bold text-slate-700 tracking-wide">
+                                                <span class="hidden sm:inline">Lijsttrekker</span>
+                                                <span class="sm:hidden">Leider</span>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach($sortedPartiesCurrentSeats as $partyKey => $party): 
+                                            $change = $party['polling']['seats'] - $party['current_seats'];
+                                            $changeClass = $change > 0 ? 'peiling-change-badge bg-emerald-100 text-emerald-800 border-emerald-200' : 
+                                                          ($change < 0 ? 'peiling-change-badge bg-red-100 text-red-800 border-red-200' : 
+                                                          'peiling-change-badge bg-slate-100 text-slate-600 border-slate-200');
+                                            $changeSymbol = $change > 0 ? '+' . $change : ($change < 0 ? $change : '0');
+                                        ?>
+                                        <tr class="peiling-table-row group border-b border-slate-100/50 hover:bg-gradient-to-r hover:from-primary/5 hover:via-white hover:to-secondary/5 transition-all duration-300">
+                                            <td class="py-4 px-4">
+                                                <div class="flex items-center group">
+                                                    <div class="peiling-party-indicator relative w-4 h-4 rounded-full mr-3 transition-transform duration-300 group-hover:scale-110" 
+                                                         style="background-color: <?php echo getPartyColor($partyKey); ?>">
+                                                        <div class="absolute inset-0 rounded-full animate-ping opacity-0 group-hover:opacity-30 transition-opacity duration-300" 
+                                                             style="background-color: <?php echo getPartyColor($partyKey); ?>"></div>
+                                                    </div>
+                                                    <div>
+                                                        <span class="font-bold text-slate-900 group-hover:text-slate-800 transition-colors duration-300"><?php echo $partyKey; ?></span>
+                                                        <br>
+                                                        <span class="text-xs text-slate-500 hidden sm:inline"><?php echo $party['name']; ?></span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="py-4 px-3 text-center">
+                                                <div class="inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-bold rounded-xl text-sm shadow-md hover:shadow-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-300 border border-blue-400/20">
+                                                    <?php echo $party['polling']['seats']; ?>
+                                                </div>
+                                            </td>
+                                            <td class="py-4 px-3 text-center">
+                                                <div class="inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r from-slate-700 to-slate-800 text-white font-bold rounded-xl text-sm shadow-md hover:shadow-lg hover:from-slate-800 hover:to-slate-900 transition-all duration-300 border border-slate-600/20">
+                                                    <?php echo $party['current_seats']; ?>
+                                                </div>
+                                            </td>
+                                            <td class="py-4 px-3 text-center">
+                                                <span class="<?php echo $changeClass; ?> inline-flex items-center px-3 py-1.5 rounded-full font-bold text-xs border transition-all duration-300">
+                                                    <?php echo $changeSymbol; ?>
+                                                </span>
+                                            </td>
+                                            <td class="py-4 px-3 text-center">
+                                                <span class="text-sm font-medium text-slate-600"><?php echo explode(' ', $party['leader'])[0]; ?></span>
+                                            </td>
+                                        </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <!-- Footer informatie -->
+                            <div class="mt-8 pt-6 border-t border-slate-200/50">
+                                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="flex items-center space-x-2">
+                                            <div class="w-3 h-3 bg-blue-600 rounded-full"></div>
+                                            <span class="text-sm font-medium text-slate-600">Peiling zetels</span>
+                                        </div>
+                                        <div class="flex items-center space-x-2">
+                                            <div class="w-3 h-3 bg-slate-900 rounded-full"></div>
+                                            <span class="text-sm font-medium text-slate-600">Huidige zetels (2023)</span>
+                                        </div>
+                                    </div>
+                                    <div class="text-sm text-slate-500 font-medium">
+                                        <span>Totaal: 150 zetels</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Shimmer effect -->
+                        <div class="absolute inset-0 -top-full bg-gradient-to-b from-transparent via-white/20 to-transparent transform skew-y-12 group-hover:animate-shimmer"></div>
+                    </div>
+                </div>
+                
+                <!-- Rechter kolom: Grootste Verschuivingen -->
+                <div class="relative" data-aos="fade-left">
+                    <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+                        <div class="p-4 sm:p-6">
+                            <div class="flex items-center justify-between mb-6">
+                                <div>
+                                    <h3 class="text-xl sm:text-2xl font-bold text-gray-900">Grootste Verschuivingen</h3>
+                                    <p class="text-gray-600 text-sm">Ten opzichte van 2023</p>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-3 h-3 bg-orange-500 rounded-full animate-pulse"></div>
+                                    <span class="text-sm font-medium text-slate-600">Trends</span>
+                                </div>
+                            </div>
+                            
+                            <?php
+                            // Sorteer partijen op absolute verandering (peiling vs huidig)
+                            $sortedByChange = $parties;
+                            uasort($sortedByChange, function($a, $b) {
+                                $changeA = abs($a['polling']['seats'] - $a['current_seats']);
+                                $changeB = abs($b['polling']['seats'] - $b['current_seats']);
+                                return $changeB - $changeA;
+                            });
+                            $topChanges = array_slice($sortedByChange, 0, 8, true);
+                            ?>
+                            
+                            <div class="space-y-3">
+                                <?php foreach($topChanges as $partyKey => $party): 
+                                    $change = $party['polling']['seats'] - $party['current_seats'];
+                                    if ($change == 0) continue;
+                                    
+                                    $isPositive = $change > 0;
+                                    $changeClass = $isPositive ? 'bg-green-100 text-green-800 border-green-200' : 'bg-red-100 text-red-800 border-red-200';
+                                    $changeIcon = $isPositive ? '↗' : '↘';
+                                    $changeSymbol = $isPositive ? '+' . $change : $change;
+                                ?>
+                                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors duration-200">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-3 h-3 rounded-full" style="background-color: <?php echo getPartyColor($partyKey); ?>"></div>
+                                        <div>
+                                            <span class="font-semibold text-gray-900 block"><?php echo $partyKey; ?></span>
+                                            <span class="text-xs text-gray-500"><?php echo $party['current_seats']; ?> → <?php echo $party['polling']['seats']; ?></span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <span class="<?php echo $changeClass; ?> inline-flex items-center px-3 py-1.5 rounded-full font-bold text-xs border">
+                                            <?php echo $changeIcon; ?> <?php echo abs($change); ?>
+                                        </span>
+                                    </div>
+                                </div>
+                                <?php endforeach; ?>
+                            </div>
+                            
+                            <!-- Stabiele partijen -->
+                            <div class="mt-6 pt-4 border-t border-gray-200">
+                                <h4 class="text-sm font-semibold text-gray-700 mb-3">Stabiele Partijen</h4>
+                                <div class="space-y-2">
+                                    <?php 
+                                    $stableParties = array_filter($parties, function($party) {
+                                        return ($party['polling']['seats'] - $party['current_seats']) == 0;
+                                    });
+                                    foreach($stableParties as $partyKey => $party):
+                                    ?>
+                                    <div class="flex items-center space-x-3 p-2 bg-gray-50 rounded-lg">
+                                        <div class="w-2 h-2 rounded-full" style="background-color: <?php echo getPartyColor($partyKey); ?>"></div>
+                                        <span class="text-sm font-medium text-gray-700"><?php echo $partyKey; ?></span>
+                                        <span class="text-xs text-gray-500 ml-auto"><?php echo $party['current_seats']; ?> zetels</span>
+                                    </div>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+                            
+                            <!-- Footer informatie -->
+                            <div class="mt-6 pt-4 border-t border-gray-200">
+                                <div class="flex items-center justify-between text-sm text-gray-500">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="flex items-center space-x-2">
+                                            <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                                            <span>Winst</span>
+                                        </div>
+                                        <div class="flex items-center space-x-2">
+                                            <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                                            <span>Verlies</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Analyse Modal -->
+    <div id="ai-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden opacity-0 transition-opacity duration-300">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-3xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden transform scale-95 transition-transform duration-300" id="ai-modal-content">
+                <!-- Modal Header -->
+                <div class="bg-gradient-to-r from-primary to-secondary p-6 text-white">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="p-2 bg-white/10 rounded-xl">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold">AI Peiling Analyse</h3>
+                                <p class="text-blue-100 text-sm">Intelligente analyse van de Nederlandse politieke situatie</p>
+                            </div>
+                        </div>
+                        <button id="close-ai-modal" class="p-2 hover:bg-white/10 rounded-lg transition-colors duration-200">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Modal Content -->
+                <div class="p-6 overflow-y-auto max-h-[calc(90vh-120px)]">
+                    <!-- Loading State -->
+                    <div id="ai-loading" class="flex flex-col items-center justify-center py-12">
+                        <div class="relative">
+                            <div class="w-16 h-16 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
+                            <div class="absolute inset-0 w-16 h-16 border-4 border-transparent border-r-secondary rounded-full animate-spin animation-delay-75"></div>
+                        </div>
+                        <p class="mt-4 text-slate-600 font-medium">AI analyseert de peilingen...</p>
+                        <p class="text-sm text-slate-500 mt-2">Dit kan even duren</p>
+                    </div>
+
+                    <!-- Content -->
+                    <div id="ai-content" class="hidden prose prose-slate max-w-none">
+                        <!-- AI gegenereerde content komt hier -->
+                    </div>
+
+                    <!-- Error State -->
+                    <div id="ai-error" class="hidden text-center py-12">
+                        <div class="w-16 h-16 mx-auto mb-4 bg-red-100 rounded-full flex items-center justify-center">
+                            <svg class="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <h4 class="text-lg font-semibold text-slate-900 mb-2">Er ging iets fout</h4>
+                        <p class="text-slate-600 mb-4">De AI-analyse kon niet worden geladen.</p>
+                        <button id="retry-ai-analysis" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors duration-200">
+                            Opnieuw proberen
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     
     <div class="container mx-auto px-4 max-w-7xl -mt-6 relative z-10">
         <!-- Enhanced Header & Controls Section -->
@@ -2384,6 +2753,128 @@ document.addEventListener('DOMContentLoaded', function() {
         if (event.target === leaderModal) {
             leaderModal.classList.add('hidden');
             document.body.style.overflow = '';
+        }
+    });
+
+    // AI Analysis functionality
+    const aiBtn = document.getElementById('ai-analysis-btn');
+    const aiModal = document.getElementById('ai-modal');
+    const aiModalContent = document.getElementById('ai-modal-content');
+    const closeAiModal = document.getElementById('close-ai-modal');
+    const aiLoading = document.getElementById('ai-loading');
+    const aiContent = document.getElementById('ai-content');
+    const aiError = document.getElementById('ai-error');
+    const retryBtn = document.getElementById('retry-ai-analysis');
+
+    function openAiModal() {
+        aiModal.classList.remove('hidden');
+        setTimeout(() => {
+            aiModal.classList.remove('opacity-0');
+            aiModalContent.classList.remove('scale-95');
+            aiModalContent.classList.add('scale-100');
+        }, 10);
+        document.body.style.overflow = 'hidden';
+        
+        // Start AI analysis
+        performAiAnalysis();
+    }
+
+    function closeAiModalFunc() {
+        aiModal.classList.add('opacity-0');
+        aiModalContent.classList.remove('scale-100');
+        aiModalContent.classList.add('scale-95');
+        setTimeout(() => {
+            aiModal.classList.add('hidden');
+            // Reset states
+            aiLoading.classList.remove('hidden');
+            aiContent.classList.add('hidden');
+            aiError.classList.add('hidden');
+        }, 300);
+        document.body.style.overflow = '';
+    }
+
+    function performAiAnalysis() {
+        // Show loading state
+        aiLoading.classList.remove('hidden');
+        aiContent.classList.add('hidden');
+        aiError.classList.add('hidden');
+
+        // Gather polling data for AI analysis
+        const pollingData = {
+            parties: <?php echo json_encode($parties); ?>,
+            date: new Date().toISOString().split('T')[0]
+        };
+
+        fetch('ajax/ai-polling-analysis.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(pollingData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            aiLoading.classList.add('hidden');
+            
+            if (data.success) {
+                aiContent.innerHTML = formatAiResponse(data.content);
+                aiContent.classList.remove('hidden');
+            } else {
+                showAiError();
+            }
+        })
+        .catch(error => {
+            console.error('AI Analysis error:', error);
+            aiLoading.classList.add('hidden');
+            showAiError();
+        });
+    }
+
+    function showAiError() {
+        aiError.classList.remove('hidden');
+        aiContent.classList.add('hidden');
+        aiLoading.classList.add('hidden');
+    }
+
+    function formatAiResponse(content) {
+        // Format the AI response with nice styling
+        const sections = content.split('\n\n');
+        let formattedContent = '';
+        
+        sections.forEach(section => {
+            if (section.trim()) {
+                if (section.includes('**') || section.includes('#')) {
+                    // Handle headers
+                    section = section.replace(/\*\*(.*?)\*\*/g, '<h3 class="text-lg font-bold text-slate-900 mt-6 mb-3">$1</h3>');
+                    section = section.replace(/### (.*)/g, '<h3 class="text-lg font-bold text-slate-900 mt-6 mb-3">$1</h3>');
+                    section = section.replace(/## (.*)/g, '<h2 class="text-xl font-bold text-slate-900 mt-8 mb-4">$1</h2>');
+                } else {
+                    // Regular paragraph
+                    section = `<p class="text-slate-700 leading-relaxed mb-4">${section}</p>`;
+                }
+                formattedContent += section;
+            }
+        });
+        
+        return formattedContent;
+    }
+
+    // Event listeners
+    aiBtn.addEventListener('click', openAiModal);
+    closeAiModal.addEventListener('click', closeAiModalFunc);
+    retryBtn.addEventListener('click', performAiAnalysis);
+
+    // Close modal when clicking outside
+    aiModal.addEventListener('click', function(e) {
+        if (e.target === aiModal) {
+            closeAiModalFunc();
+        }
+    });
+
+    // Escape key to close modal
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && !aiModal.classList.contains('hidden')) {
+            closeAiModalFunc();
         }
     });
 });

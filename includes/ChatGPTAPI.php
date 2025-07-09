@@ -275,6 +275,113 @@ Wees objectief en gebaseerd op de daadwerkelijke inhoud.";
     }
 
     /**
+     * Analyseer Nederlandse politieke peilingen en voorspel mogelijke kabinetten
+     */
+    public function analyzePollingData($partiesData) {
+        // Sorteer partijen op peiling zetels
+        uasort($partiesData, function($a, $b) {
+            return $b['polling']['seats'] - $a['polling']['seats'];
+        });
+
+        // Maak een samenvatting van de peilingen
+        $pollingSummary = "Huidige peilingen Nederlandse Tweede Kamer:\n\n";
+        foreach($partiesData as $key => $party) {
+            $change = $party['polling']['seats'] - $party['current_seats'];
+            $changeText = $change > 0 ? " (+" . $change . ")" : ($change < 0 ? " (" . $change . ")" : " (=)");
+            $pollingSummary .= "- {$key}: {$party['polling']['seats']} zetels{$changeText} (was {$party['current_seats']})\n";
+        }
+
+        $prompt = "Je bent een Nederlandse politieke expert en analist die diepgaande inzichten geeft over peilingen en kabinetsformatie.
+
+**ACTUELE PEILINGEN:**
+{$pollingSummary}
+
+Geef een uitgebreide analyse (400-500 woorden) over:
+
+## **Belangrijkste Trends**
+- Welke partijen winnen/verliezen het meest?
+- Wat betekenen deze verschuivingen voor het politieke landschap?
+
+## **Mogelijke Kabinetten**
+- Welke coalities zijn realistisch mogelijk? (minimaal 76 zetels)
+- Wat zijn de kansen op verschillende scenario's?
+- Welke combinaties zijn politiek haalbaar?
+
+## **Politieke Gevolgen**
+- Hoe beïnvloeden deze peilingen de machtsbalans?
+- Welke thema's worden belangrijker/minder belangrijk?
+- Wat betekent dit voor de komende periode?
+
+## **Vooruitblik**
+- Wat kunnen we verwachten de komende maanden?
+- Welke ontwikkelingen zijn cruciaal om in de gaten te houden?
+
+Schrijf in toegankelijke maar informatieve taal. Gebruik concrete voorbeelden en blijf objectief. Focus op politieke realiteiten en praktische gevolgen voor Nederland.";
+
+        return $this->makeAPICall($prompt);
+    }
+
+    /**
+     * Genereer perspectief van een politieke partij op een blog artikel
+     */
+    public function generatePartyPerspective($partyName, $partyInfo, $blogTitle, $blogContent) {
+        $prompt = "Je bent een woordvoerder van {$partyName}. Geef een reactie op het volgende blog artikel vanuit het perspectief van jouw partij.
+
+**Partij informatie:**
+{$partyInfo['description']}
+
+**Kernstandpunten:**
+- Immigratie: {$partyInfo['standpoints']['Immigratie']}
+- Klimaat: {$partyInfo['standpoints']['Klimaat']}
+- Zorg: {$partyInfo['standpoints']['Zorg']}
+- Energie: {$partyInfo['standpoints']['Energie']}
+
+**Blog artikel:**
+Titel: {$blogTitle}
+Inhoud: " . substr($blogContent, 0, 2000) . "
+
+Schrijf een reactie van 200-300 woorden waarin je:
+1. Reageert op de hoofdpunten van het artikel
+2. Het partijstandpunt duidelijk maakt
+3. Concrete voorstellen of kritiekpunten geeft
+4. De typische retoriek en toon van {$partyName} gebruikt
+
+Wees authentiek en gebruik de karakteristieke stijl van de partij. Eindig met een duidelijke boodschap die past bij de partijlijn.";
+
+        return $this->makeAPICall($prompt);
+    }
+
+    /**
+     * Genereer perspectief van een politieke leider op een blog artikel
+     */
+    public function generateLeaderPerspective($leaderName, $partyName, $partyInfo, $blogTitle, $blogContent) {
+        $prompt = "Je bent {$leaderName}, partijleider van {$partyName}. Geef een persoonlijke reactie op het volgende blog artikel.
+
+**Jouw achtergrond:**
+{$partyInfo['leader_info']}
+
+**Jouw partij standpunten:**
+- Immigratie: {$partyInfo['standpoints']['Immigratie']}
+- Klimaat: {$partyInfo['standpoints']['Klimaat']}
+- Zorg: {$partyInfo['standpoints']['Zorg']}
+- Energie: {$partyInfo['standpoints']['Energie']}
+
+**Blog artikel:**
+Titel: {$blogTitle}
+Inhoud: " . substr($blogContent, 0, 2000) . "
+
+Schrijf een persoonlijke reactie van 200-300 woorden waarin je:
+1. Vanuit jouw persoonlijke visie reageert
+2. Jouw leiderschapsstijl laat zien
+3. De partijlijn vertegenwoordigt maar met jouw eigen accent
+4. Concrete voorbeelden of persoonlijke ervaringen gebruikt waar relevant
+
+Gebruik de karakteristieke communicatiestijl van {$leaderName}. Wees direct, authentiek en overtuigend.";
+
+        return $this->makeAPICall($prompt);
+    }
+
+    /**
      * Test de API verbinding
      */
     public function testConnection() {
