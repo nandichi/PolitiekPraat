@@ -1,4 +1,11 @@
 <?php
+// Debugging: Toon errors als debug=true in de querystring
+if (isset($_GET['debug']) && $_GET['debug'] === 'true') {
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+}
+
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
@@ -10,15 +17,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();
 }
 
-// Include necessary files
-require_once dirname(__DIR__) . '/includes/config.php';
-require_once dirname(__DIR__) . '/includes/Database.php';
+// Absolute paden voor includes (werkt altijd, ook op live server)
+$basePath = realpath(__DIR__ . '/../');
+require_once $basePath . '/includes/config.php';
+require_once $basePath . '/includes/Database.php';
 
 class BlogsAPI {
     private $db;
+    public $lastError = null;
 
     public function __construct() {
-        $this->db = new Database();
+        try {
+            $this->db = new Database();
+        } catch (Exception $e) {
+            $this->lastError = $e->getMessage();
+        }
     }
 
     public function getAllBlogs() {
@@ -43,7 +56,6 @@ class BlogsAPI {
             
             $blogs = $this->db->resultSet();
             
-            // Verwerk de data voor veilige JSON output
             $processedBlogs = [];
             foreach ($blogs as $blog) {
                 $processedBlogs[] = [
@@ -69,6 +81,7 @@ class BlogsAPI {
             ];
             
         } catch (Exception $e) {
+            $this->lastError = $e->getMessage();
             return [
                 'success' => false,
                 'error' => 'Database error: ' . $e->getMessage(),
@@ -108,7 +121,6 @@ class BlogsAPI {
                 ];
             }
             
-            // Verhoog views
             $this->db->query("UPDATE blogs SET views = views + 1 WHERE id = :id");
             $this->db->bind(':id', $id);
             $this->db->execute();
@@ -134,6 +146,7 @@ class BlogsAPI {
             ];
             
         } catch (Exception $e) {
+            $this->lastError = $e->getMessage();
             return [
                 'success' => false,
                 'error' => 'Database error: ' . $e->getMessage(),
@@ -155,15 +168,27 @@ try {
             $blogId = $_GET['id'] ?? null;
             
             if ($blogId) {
-                // Haal specifieke blog op
                 $result = $blogsAPI->getBlogById($blogId);
             } else {
-                // Haal alle blogs op
                 $result = $blogsAPI->getAllBlogs();
             }
             
             if (!$result['success']) {
                 http_response_code(404);
+            }
+            
+            // Voeg debug info toe als debug=true
+            if (isset($_GET['debug']) && $_GET['debug'] === 'true') {
+                $result['debug'] = [
+                    'lastError' => $blogsAPI->lastError,
+                    'cwd' => getcwd(),
+                    'includes' => [
+                        'config' => $basePath . '/includes/config.php',
+                        'db' => $basePath . '/includes/Database.php'
+                    ],
+                    'php_version' => phpversion(),
+                    'server' => $_SERVER
+                ];
             }
             
             echo json_encode($result);
@@ -179,9 +204,16 @@ try {
     }
 } catch (Exception $e) {
     http_response_code(500);
-    echo json_encode([
+    $error = [
         'success' => false,
         'error' => 'Internal server error',
         'message' => 'Er is een interne server fout opgetreden'
-    ]);
+    ];
+    if (isset($_GET['debug']) && $_GET['debug'] === 'true') {
+        $error['debug'] = [
+            'exception' => $e->getMessage(),
+            'trace' => $e->getTraceAsString()
+        ];
+    }
+    echo json_encode($error);
 } 
