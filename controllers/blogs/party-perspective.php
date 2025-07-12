@@ -12,6 +12,74 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_SERVER['HTTP_X_REQUESTED_W
 // Set content type naar JSON
 header('Content-Type: application/json');
 
+/**
+ * Verkort blog content voor veilige API calls
+ */
+function truncateContentForAPI($content, $maxLength = 3000) {
+    if (empty($content)) {
+        return $content;
+    }
+    
+    // Strip Markdown syntax eerst
+    $content = stripMarkdownSyntax($content);
+    
+    // Als content al kort genoeg is, return direct
+    if (mb_strlen($content) <= $maxLength) {
+        return $content;
+    }
+    
+    // Verkort tot maxLength, maar eindig op een volledige zin
+    $truncated = mb_substr($content, 0, $maxLength);
+    
+    // Zoek de laatste punt, uitroepteken of vraagteken
+    $lastSentenceEnd = max(
+        mb_strrpos($truncated, '.'),
+        mb_strrpos($truncated, '!'),
+        mb_strrpos($truncated, '?')
+    );
+    
+    if ($lastSentenceEnd !== false && $lastSentenceEnd > $maxLength * 0.7) {
+        // Als we een goede zin-einde vinden binnen 70% van de lengte, gebruik die
+        $truncated = mb_substr($truncated, 0, $lastSentenceEnd + 1);
+    } else {
+        // Anders, zoek de laatste spatie om midden in een woord te voorkomen
+        $lastSpace = mb_strrpos($truncated, ' ');
+        if ($lastSpace !== false && $lastSpace > $maxLength * 0.8) {
+            $truncated = mb_substr($truncated, 0, $lastSpace);
+        }
+        $truncated .= '...';
+    }
+    
+    return trim($truncated);
+}
+
+/**
+ * Strip Markdown syntax voor betere content extractie
+ */
+function stripMarkdownSyntax($text) {
+    if (empty($text)) {
+        return $text;
+    }
+    
+    // Strip verschillende Markdown elementen
+    $text = preg_replace('/^#{1,6}\s+/m', '', $text); // Headers
+    $text = preg_replace('/\*\*(.*?)\*\*/', '$1', $text); // Bold
+    $text = preg_replace('/\*(.*?)\*/', '$1', $text); // Italic
+    $text = preg_replace('/`(.*?)`/', '$1', $text); // Inline code
+    $text = preg_replace('/\[(.*?)\]\(.*?\)/', '$1', $text); // Links
+    $text = preg_replace('/^\s*[-*+]\s+/m', '• ', $text); // Unordered lists
+    $text = preg_replace('/^\s*\d+\.\s+/m', '', $text); // Ordered lists
+    $text = preg_replace('/^>\s+/m', '', $text); // Blockquotes
+    $text = preg_replace('/```.*?```/s', '', $text); // Code blocks
+    $text = preg_replace('/^\s*---+\s*$/m', '', $text); // Horizontal rules
+    
+    // Vervang multiple whitespace met single space
+    $text = preg_replace('/\s+/', ' ', $text);
+    $text = preg_replace('/\n\s*\n/', "\n\n", $text);
+    
+    return trim($text);
+}
+
 try {
     // Controleer vereiste parameters
     if (!isset($_POST['slug']) || empty($_POST['slug'])) {
@@ -37,13 +105,13 @@ try {
             'leader' => 'Geert Wilders',
             'logo' => 'https://i.ibb.co/DfR8pS2Y/403880390-713625330344634-198487231923339026-n.jpg',
             'leader_photo' => '/partijleiders/geert.jpg',
-            'description' => 'De PVV is een uitgesproken rechtse partij die zich met volle overgave inzet voor het behoud van de Nederlandse identiteit en cultuur. Ze pleiten voor extreem strengere immigratieregels, een harde lijn tegen islamisering en een duidelijke terugtrekking uit Europese besluitvorming.',
-            'leader_info' => 'Geert Wilders leidt de PVV sinds 2006 en is een van de meest controversiële en herkenbare figuren in de Nederlandse politiek. Zijn scherpe uitspraken en gedurfde aanpak hebben hem zowel lovende als felle critici opgeleverd.',
+            'description' => 'De PVV is een rechtse partij die zich fel verzet tegen massa-immigratie en EU-bureaucratie.',
+            'leader_info' => 'Geert Wilders, sinds 2006 de onvermoeide leider van de PVV, staat bekend om zijn directe en oncompromis houding.',
             'standpoints' => [
-                'Immigratie' => 'Een strenger asielbeleid met een volledige asielstop',
-                'Klimaat' => 'Kritisch over ambitieuze klimaatmaatregelen als deze economische groei belemmeren',
-                'Zorg' => 'Afschaffen van het eigen risico in de zorg',
-                'Energie' => 'Voorstander van kernenergie als onderdeel van de energiemix'
+                'Immigratie' => 'Stoppen met massa-immigratie en asielinstroom',
+                'Klimaat' => 'Klimaatbeleid mag Nederlandse economie niet kapot maken',
+                'Zorg' => 'Afschaffen van het eigen risico',
+                'Energie' => 'Kernenergie als schone en betrouwbare energiebron'
             ]
         ],
         'VVD' => [
@@ -51,13 +119,13 @@ try {
             'leader' => 'Dilan Yeşilgöz-Zegerius',
             'logo' => 'https://logo.clearbit.com/vvd.nl',
             'leader_photo' => '/partijleiders/dilan.jpg',
-            'description' => 'De VVD is een dynamische rechtsliberale partij die inzet op individuele vrijheid, economische groei en een efficiënte overheid. Zij pleiten voor lagere belastingen, minder bureaucratie en een marktgerichte economie waarin ondernemerschap centraal staat.',
-            'leader_info' => 'Dilan Yeşilgöz-Zegerius, sinds 2023 partijleider, brengt een frisse wind in de VVD. Met haar achtergrond als minister van Justitie en Veiligheid weet zij complexe vraagstukken op een heldere en toegankelijke manier te presenteren.',
+            'description' => 'De VVD is een liberale partij die voorstander is van ondernemerschap, vrijheid en een sterke economie.',
+            'leader_info' => 'Dilan Yeşilgöz-Zegerius, partijleider sinds 2023, brengt een rijke ervaring mee als voormalig minister.',
             'standpoints' => [
-                'Immigratie' => 'Strengere selectie en beperking van asielaanvragen, met internationale samenwerking',
-                'Klimaat' => 'Ondersteunt klimaatmaatregelen maar niet ten koste van economische groei',
-                'Zorg' => 'Behoud van eigen risico om zorgkosten beheersbaar te houden',
-                'Energie' => 'Voorstander van kernenergie als aanvulling op duurzame bronnen'
+                'Immigratie' => 'Gecontroleerde immigratie met strenge integratie-eisen',
+                'Klimaat' => 'Marktconforme klimaatoplossingen zonder economische schade',
+                'Zorg' => 'Behoud van eigen risico voor kostenbewustzijn',
+                'Energie' => 'Kernenergie als onderdeel van duurzame energiemix'
             ]
         ],
         'GL-PvdA' => [
@@ -65,13 +133,13 @@ try {
             'leader' => 'Frans Timmermans',
             'logo' => 'https://i.ibb.co/67hkc5Hv/gl-pvda.png',
             'leader_photo' => '/partijleiders/frans.jpg',
-            'description' => 'GL-PvdA is een krachtige progressieve alliantie die zich inzet voor sociale rechtvaardigheid, duurzaamheid en gelijke kansen voor iedereen. Ze combineren de idealen van groen beleid met de solidariteit en maatschappelijke betrokkenheid van de PvdA.',
-            'leader_info' => 'Frans Timmermans, de lijsttrekker sinds 2023, brengt een schat aan internationale ervaring mee door zijn jarenlange betrokkenheid bij de Europese Commissie en de Europese Green Deal.',
+            'description' => 'De GroenLinks-PvdA alliantie staat voor een eerlijke en groene toekomst.',
+            'leader_info' => 'Frans Timmermans, voormalig Eurocommissaris, brengt internationale ervaring mee.',
             'standpoints' => [
-                'Immigratie' => 'Humanitaire principes moeten centraal staan in het asielbeleid',
-                'Klimaat' => 'Ambitieuze klimaatmaatregelen, ook als daar op korte termijn offers voor nodig zijn',
-                'Zorg' => 'Voorstander van afschaffing van het eigen risico voor gelijke toegang tot zorg',
-                'Energie' => 'Tegen kernenergie vanwege risico\'s en lange doorlooptijden'
+                'Immigratie' => 'Humaan asielbeleid met goede opvang en integratie',
+                'Klimaat' => 'Ambitieus klimaatbeleid met sociale rechtvaardigheid',
+                'Zorg' => 'Afschaffen van het eigen risico voor toegankelijke zorg',
+                'Energie' => 'Volledig duurzame energie, tegen kernenergie'
             ]
         ],
         'NSC' => [
@@ -79,13 +147,13 @@ try {
             'leader' => 'Nicolien van Vroonhoven',
             'logo' => 'https://i.ibb.co/YT2fJZb4/nsc.png',
             'leader_photo' => 'https://i.ibb.co/NgY27GmZ/nicolien-van-vroonhoven-en-piete.jpg',
-            'description' => 'NSC is een baanbrekende partij die staat voor transparantie, eerlijk bestuur en een fundamentele herwaardering van de democratische instituties. Zij leggen de nadruk op integriteit, een verantwoordelijke overheid en het herstel van het vertrouwen in de politiek.',
-            'leader_info' => 'Nicolien van Vroonhoven, de huidige leider van NSC, zet het werk van oprichter Pieter Omtzigt voort met dezelfde toewijding aan transparantie en integriteit.',
+            'description' => 'NSC wil de politiek vernieuwen met een nieuwe bestuurscultuur.',
+            'leader_info' => 'Nicolien van Vroonhoven, nieuwe partijleider, wil de politiek opnieuw uitvinden.',
             'standpoints' => [
-                'Immigratie' => 'Een doordacht asielbeleid dat zowel veiligheid als humanitaire zorg waarborgt',
-                'Klimaat' => 'Evenwichtige aanpak waarbij zowel klimaat als economie belangrijk zijn',
-                'Zorg' => 'Overweegt aanpassingen in plaats van volledige afschaffing van het eigen risico',
-                'Energie' => 'Open voor kernenergie als het bijdraagt aan een stabiele energiemix'
+                'Immigratie' => 'Realistisch asielbeleid met goede spreiding',
+                'Klimaat' => 'Pragmatische klimaatoplossingen',
+                'Zorg' => 'Verlaging van het eigen risico waar mogelijk',
+                'Energie' => 'Open voor kernenergie als transitie-oplossing'
             ]
         ],
         'BBB' => [
@@ -93,13 +161,13 @@ try {
             'leader' => 'Caroline van der Plas',
             'logo' => 'https://i.ibb.co/qMjw7jDV/bbb.png',
             'leader_photo' => '/partijleiders/plas.jpg',
-            'description' => 'BBB vertegenwoordigt de belangen van de agrarische sector en het platteland met een visie die traditie en innovatie combineert. Zij staan voor een duurzaam boerenbeleid, investeren in lokale gemeenschappen en streven ernaar de kloof tussen stad en platteland drastisch te verkleinen.',
-            'leader_info' => 'Caroline van der Plas is sinds 2019 de charismatische leider van BBB. Met een achtergrond in agrarische journalistiek en PR weet zij de zorgen en ambities van de boeren direct over te brengen.',
+            'description' => 'BBB vertegenwoordigt de belangen van boeren en het platteland.',
+            'leader_info' => 'Caroline van der Plas, oprichter van BBB, vecht voor boeren en platteland.',
             'standpoints' => [
-                'Immigratie' => 'Ondersteuning van een streng asielbeleid en beperking van de instroom',
-                'Klimaat' => 'Sceptisch over ingrijpende klimaatmaatregelen, vooral als deze de agrarische sector schaden',
-                'Zorg' => 'Voorstander van het verlagen van het eigen risico voor betere zorgtoegankelijkheid',
-                'Energie' => 'Ziet kernenergie als betrouwbaar onderdeel van de energietransitie'
+                'Immigratie' => 'Strenger asielbeleid om druk op voorzieningen te verminderen',
+                'Klimaat' => 'Klimaatbeleid mag boeren niet kapot maken',
+                'Zorg' => 'Verlaging van het eigen risico voor lagere inkomens',
+                'Energie' => 'Kernenergie als betrouwbare energiebron'
             ]
         ],
         'D66' => [
@@ -107,13 +175,13 @@ try {
             'leader' => 'Rob Jetten',
             'logo' => 'https://logo.clearbit.com/d66.nl',
             'leader_photo' => '/partijleiders/rob.jpg',
-            'description' => 'D66 staat voor een open, progressief-liberale samenleving waarin onderwijs, innovatie en democratische vernieuwing centraal staan. Ze pleiten voor een moderne overheid die inspeelt op de uitdagingen van de 21e eeuw.',
-            'leader_info' => 'Rob Jetten, die de leiding overnam na Sigrid Kaag, is een visionaire politicus met een indrukwekkende staat van dienst als voormalig minister voor Klimaat en Energie.',
+            'description' => 'D66 staat voor een open, progressief-liberale samenleving.',
+            'leader_info' => 'Rob Jetten, voormalig minister voor Klimaat en Energie.',
             'standpoints' => [
-                'Immigratie' => 'Humaan maar gestructureerd asielbeleid met veilige en legale routes',
-                'Klimaat' => 'Nederland moet een leidende rol spelen in de klimaattransitie',
-                'Zorg' => 'Voorstander van bevriezen eigen risico met een limiet per behandeling',
-                'Energie' => 'Kritisch over kernenergie, maar innovatie en veiligheid kunnen doorslaggevend zijn'
+                'Immigratie' => 'Humaan maar gestructureerd asielbeleid',
+                'Klimaat' => 'Nederland moet leidende rol spelen in klimaattransitie',
+                'Zorg' => 'Bevriezen eigen risico met limiet per behandeling',
+                'Energie' => 'Kritisch over kernenergie, maar open voor innovatie'
             ]
         ],
         'SP' => [
@@ -121,13 +189,13 @@ try {
             'leader' => 'Jimmy Dijk',
             'logo' => 'https://logo.clearbit.com/sp.nl',
             'leader_photo' => '/partijleiders/jimmy.jpg',
-            'description' => 'De SP is een vurige linkse partij die strijdbaar opkomt tegen sociale ongelijkheid en voor een krachtige verzorgingsstaat.',
-            'leader_info' => 'Jimmy Dijk, sinds 2023 de energieke leider van de SP, komt uit een achtergrond van lokale politiek en vakbewegingen.',
+            'description' => 'De SP strijdt tegen sociale ongelijkheid.',
+            'leader_info' => 'Jimmy Dijk, energieke leider uit lokale politiek.',
             'standpoints' => [
-                'Immigratie' => 'Verbetering van opvang en integratie is even belangrijk als beperking van instroom',
-                'Klimaat' => 'Klimaatmaatregelen moeten eerlijk worden verdeeld',
-                'Zorg' => 'Afschaffen van het eigen risico voor een eerlijker zorgsysteem',
-                'Energie' => 'Tegen investeringen in kerncentrales, liever inzetten op duurzame energie'
+                'Immigratie' => 'Verbetering van opvang en integratie',
+                'Klimaat' => 'Klimaatmaatregelen moeten eerlijk verdeeld',
+                'Zorg' => 'Afschaffen van het eigen risico',
+                'Energie' => 'Tegen kernenergie, voor duurzame energie'
             ]
         ],
         'PvdD' => [
@@ -135,13 +203,13 @@ try {
             'leader' => 'Esther Ouwehand',
             'logo' => 'https://logo.clearbit.com/partijvoordedieren.nl',
             'leader_photo' => '/partijleiders/esther.jpg',
-            'description' => 'De PvdD combineert dierenwelzijn met een brede visie op duurzaamheid en natuurbehoud.',
-            'leader_info' => 'Esther Ouwehand is sinds 2019 de drijvende kracht achter de PvdD.',
+            'description' => 'De PvdD combineert dierenwelzijn met duurzaamheid.',
+            'leader_info' => 'Esther Ouwehand, drijvende kracht achter de PvdD.',
             'standpoints' => [
-                'Immigratie' => 'Asielbeleid moet mensenrechten respecteren en aandacht hebben voor ecologische context',
-                'Klimaat' => 'Voorstander van radicaal klimaatbeleid, ongeacht economische kortetermijnnadelen',
-                'Zorg' => 'Zorg moet toegankelijk zijn zonder financiële drempels',
-                'Energie' => 'Kernenergie is verouderd, inzetten op hernieuwbare energiebronnen'
+                'Immigratie' => 'Asielbeleid moet mensenrechten respecteren',
+                'Klimaat' => 'Radicaal klimaatbeleid nodig',
+                'Zorg' => 'Zorg zonder financiële drempels',
+                'Energie' => 'Kernenergie is verouderd, hernieuwbaar is de toekomst'
             ]
         ],
         'CDA' => [
@@ -149,13 +217,13 @@ try {
             'leader' => 'Henri Bontenbal',
             'logo' => 'https://logo.clearbit.com/cda.nl',
             'leader_photo' => '/partijleiders/Henri.jpg',
-            'description' => 'Het CDA staat voor een samenleving gebaseerd op christendemocratische waarden, waarbij solidariteit, rentmeesterschap en gemeenschapszin centraal staan.',
-            'leader_info' => 'Henri Bontenbal, partijleider sinds 2023, brengt een rijke ervaring mee uit zowel de energiesector als zijn tijd als Tweede Kamerlid.',
+            'description' => 'Het CDA staat voor christendemocratische waarden.',
+            'leader_info' => 'Henri Bontenbal, ervaren politicus uit energiesector.',
             'standpoints' => [
-                'Immigratie' => 'Pleit voor een onderscheidend beleid met duidelijke scheiding tussen tijdelijke en permanente bescherming',
-                'Klimaat' => 'Combinatie van klimaatmaatregelen en behoud van economische stabiliteit',
-                'Zorg' => 'Voorstander van gerichte verlaging van het eigen risico',
-                'Energie' => 'Kernenergie als onderdeel van een brede energiemix, mits goed gereguleerd'
+                'Immigratie' => 'Onderscheidend beleid tussen tijdelijke en permanente bescherming',
+                'Klimaat' => 'Klimaatmaatregelen met behoud van economische stabiliteit',
+                'Zorg' => 'Gerichte verlaging van het eigen risico',
+                'Energie' => 'Kernenergie als onderdeel van energiemix'
             ]
         ],
         'JA21' => [
@@ -163,13 +231,13 @@ try {
             'leader' => 'Joost Eerdmans',
             'logo' => 'https://logo.clearbit.com/ja21.nl',
             'leader_photo' => '/partijleiders/joost.jpg',
-            'description' => 'JA21 is een conservatief-liberale partij die met een no-nonsense aanpak de politieke status quo uitdaagt.',
-            'leader_info' => 'Joost Eerdmans, medeoprichter en partijleider, brengt een kleurrijke en gedurfde achtergrond mee als voormalig wethouder en Kamerlid.',
+            'description' => 'JA21 is een conservatief-liberale partij.',
+            'leader_info' => 'Joost Eerdmans, medeoprichter met kleurrijke achtergrond.',
             'standpoints' => [
-                'Immigratie' => 'Ondersteuning van een restrictief asielbeleid met strikte toelatingscriteria',
-                'Klimaat' => 'Wil niet dat klimaatmaatregelen de economische groei te veel hinderen',
-                'Zorg' => 'Vindt een zekere mate van eigen bijdrage noodzakelijk voor efficiëntie',
-                'Energie' => 'Voorstander van kernenergie voor energiezekerheid en emissiereductie'
+                'Immigratie' => 'Restrictief asielbeleid met strikte criteria',
+                'Klimaat' => 'Klimaatmaatregelen mogen economie niet hinderen',
+                'Zorg' => 'Eigen bijdrage noodzakelijk voor efficiëntie',
+                'Energie' => 'Kernenergie voor energiezekerheid'
             ]
         ],
         'SGP' => [
@@ -177,13 +245,13 @@ try {
             'leader' => 'Chris Stoffer',
             'logo' => 'https://logo.clearbit.com/sgp.nl',
             'leader_photo' => '/partijleiders/Chris.jpg',
-            'description' => 'De SGP is een traditionele, christelijke partij die haar politiek baseert op strikte bijbelse principes en morele waarden.',
-            'leader_info' => 'Chris Stoffer leidt de SGP sinds 2023 en staat bekend om zijn compromisloze inzet voor christelijke waarden.',
+            'description' => 'De SGP baseert politiek op bijbelse principes.',
+            'leader_info' => 'Chris Stoffer, compromisloze inzet voor christelijke waarden.',
             'standpoints' => [
-                'Immigratie' => 'Voorstander van een zeer restrictief asielbeleid, waarbij nationale identiteit en veiligheid vooropstaan',
-                'Klimaat' => 'Vindt dat maatregelen verantwoord moeten zijn en de economie niet te zwaar mogen belasten',
-                'Zorg' => 'Eigen risico als middel om onnodig gebruik van zorg te beperken, met ruimte voor verlaging bij kwetsbare groepen',
-                'Energie' => 'Kernenergie als middel om de afhankelijkheid van fossiele brandstoffen te verminderen'
+                'Immigratie' => 'Zeer restrictief asielbeleid',
+                'Klimaat' => 'Verantwoorde maatregelen zonder economische schade',
+                'Zorg' => 'Eigen risico beperkt onnodig gebruik',
+                'Energie' => 'Kernenergie als alternatief voor fossiele brandstoffen'
             ]
         ],
         'FvD' => [
@@ -191,13 +259,13 @@ try {
             'leader' => 'Thierry Baudet',
             'logo' => 'https://logo.clearbit.com/fvd.nl',
             'leader_photo' => '/partijleiders/thierry.jpg',
-            'description' => 'FvD is een controversiële rechts-conservatieve partij die met felle retoriek opkomt voor nationale soevereiniteit en directe democratie.',
-            'leader_info' => 'Thierry Baudet, de oprichter van FvD in 2016, is een intellectueel en controversieel denker die met zijn scherpe analyses en provocerende uitspraken de gevestigde orde voortdurend uitdaagt.',
+            'description' => 'FvD is een rechts-conservatieve partij.',
+            'leader_info' => 'Thierry Baudet, intellectueel en controversieel denker.',
             'standpoints' => [
-                'Immigratie' => 'Pleit voor het beëindigen van het internationale asielkader en wil asielaanvragen sterk beperken',
-                'Klimaat' => 'Betwist de urgentie van de klimaatcrisis en wil geen maatregelen die de economie schaden',
-                'Zorg' => 'Voorstander van afschaffing van het eigen risico voor toegankelijke zorg',
-                'Energie' => 'Wil investeren in kernenergie als alternatief voor fossiele brandstoffen'
+                'Immigratie' => 'Beëindigen van internationaal asielkader',
+                'Klimaat' => 'Betwist urgentie van klimaatcrisis',
+                'Zorg' => 'Afschaffen van het eigen risico',
+                'Energie' => 'Investeren in kernenergie'
             ]
         ],
         'DENK' => [
@@ -205,13 +273,13 @@ try {
             'leader' => 'Stephan van Baarle',
             'logo' => 'https://logo.clearbit.com/bewegingdenk.nl',
             'leader_photo' => '/partijleiders/baarle.jpg',
-            'description' => 'DENK staat voor een inclusieve samenleving waarin iedereen, ongeacht achtergrond, gelijke kansen krijgt.',
-            'leader_info' => 'Stephan van Baarle, partijleider sinds 2021, komt uit een lokale politieke achtergrond en heeft zich altijd ingezet voor de rechten van minderheden.',
+            'description' => 'DENK staat voor inclusieve samenleving.',
+            'leader_info' => 'Stephan van Baarle, inzet voor rechten van minderheden.',
             'standpoints' => [
-                'Immigratie' => 'Kiest voor een humaan asielbeleid met aandacht voor solidariteit en internationale samenwerking',
-                'Klimaat' => 'Wil een genuanceerde aanpak waarbij zowel klimaat als economie worden meegenomen',
-                'Zorg' => 'Wil het eigen risico aanzienlijk verlagen om zorg voor iedereen bereikbaar te maken',
-                'Energie' => 'Staat open voor kernenergie als het veilig en verantwoord wordt ingezet'
+                'Immigratie' => 'Humaan asielbeleid met solidariteit',
+                'Klimaat' => 'Genuanceerde aanpak klimaat en economie',
+                'Zorg' => 'Eigen risico aanzienlijk verlagen',
+                'Energie' => 'Open voor veilige kernenergie'
             ]
         ],
         'Volt' => [
@@ -219,13 +287,13 @@ try {
             'leader' => 'Laurens Dassen',
             'logo' => 'https://logo.clearbit.com/voltnederland.org',
             'leader_photo' => '/partijleiders/dassen.jpg',
-            'description' => 'Volt Nederland is een vernieuwende pan-Europese partij die zich inzet voor een geïntegreerd en democratisch Europa.',
-            'leader_info' => 'Laurens Dassen, medeoprichter en partijleider, brengt met zijn achtergrond in de financiële sector en zijn sterke pro-Europese visie een frisse, internationale blik in de Nederlandse politiek.',
+            'description' => 'Volt Nederland is een pan-Europese partij.',
+            'leader_info' => 'Laurens Dassen, medeoprichter met financiële achtergrond.',
             'standpoints' => [
-                'Immigratie' => 'Staat voor een gemeenschappelijk Europees asielbeleid dat solidariteit tussen lidstaten bevordert',
-                'Klimaat' => 'Pleit voor ambitieuze maatregelen en gelooft dat de lange termijn voordelen opwegen tegen de korte termijn kosten',
-                'Zorg' => 'Open voor verlaging van het eigen risico, mits dit financieel haalbaar is',
-                'Energie' => 'Voorkeur voor hernieuwbare energie, maar open voor kernenergie bij strenge veiligheidseisen'
+                'Immigratie' => 'Gemeenschappelijk Europees asielbeleid',
+                'Klimaat' => 'Ambitieuze maatregelen voor lange termijn',
+                'Zorg' => 'Open voor verlaging eigen risico',
+                'Energie' => 'Voorkeur hernieuwbaar, open voor kernenergie'
             ]
         ],
         'CU' => [
@@ -233,13 +301,13 @@ try {
             'leader' => 'Mirjam Bikker',
             'logo' => 'https://logo.clearbit.com/christenunie.nl',
             'leader_photo' => 'https://i.ibb.co/wh3wwQ66/Bikker.jpg',
-            'description' => 'De ChristenUnie is een sociaal-christelijke partij die geloof en politiek combineert met een sterke focus op duurzaamheid, sociale rechtvaardigheid en gezinswaarden.',
-            'leader_info' => 'Mirjam Bikker, partijleider sinds 2023, staat bekend om haar doortastende en constructieve aanpak.',
+            'description' => 'De ChristenUnie is een sociaal-christelijke partij.',
+            'leader_info' => 'Mirjam Bikker, doortastende en constructieve aanpak.',
             'standpoints' => [
-                'Immigratie' => 'Een humaan asielbeleid met nadruk op veilige opvang en integratie',
+                'Immigratie' => 'Humaan asielbeleid met veilige opvang',
                 'Klimaat' => 'Ambitieuze klimaatdoelen vanuit rentmeesterschap',
-                'Zorg' => 'Verlaging van het eigen risico voor kwetsbare groepen',
-                'Energie' => 'Inzet op duurzame energie, kritisch op kernenergie'
+                'Zorg' => 'Verlaging eigen risico voor kwetsbare groepen',
+                'Energie' => 'Duurzame energie, kritisch op kernenergie'
             ]
         ]
     ];
@@ -263,16 +331,19 @@ try {
         throw new Exception('Blog niet gevonden');
     }
     
+    // Verkort blog content voor veilige API call
+    $truncatedContent = truncateContentForAPI($blog->content, 2500);
+    
     // Initialiseer ChatGPT API
     $chatGPT = new ChatGPTAPI();
     
-    // Genereer perspectief
+    // Genereer perspectief met verkorte content
     if ($type === 'party') {
         $result = $chatGPT->generatePartyPerspective(
             $partyData['name'],
             $partyData,
             $blog->title,
-            $blog->content
+            $truncatedContent
         );
     } else {
         $result = $chatGPT->generateLeaderPerspective(
@@ -280,7 +351,7 @@ try {
             $partyData['name'],
             $partyData,
             $blog->title,
-            $blog->content
+            $truncatedContent
         );
     }
     

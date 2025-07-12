@@ -241,13 +241,14 @@ Schrijf persoonlijk en bemoedigend. Begin met 'Op basis van jouw stemwijzer resu
      * Analyseer politieke bias van een blog artikel
      */
     public function analyzePoliticalBias($title, $content) {
+        // Content is al verkort door de controller, dus geen extra truncation nodig
         $prompt = "Je bent een Nederlandse politieke expert gespecialiseerd in bias detectie. 
 
 Analyseer de volgende blog artikel op politieke orientatie:
 
 **Titel:** {$title}
 
-**Content:** " . substr($content, 0, 2000) . "
+**Content:** {$content}
 
 Geef een gedetailleerde analyse in exact dit JSON formaat (geen extra tekst):
 
@@ -338,7 +339,7 @@ Schrijf in toegankelijke maar informatieve taal. Gebruik concrete voorbeelden en
 
 **Het artikel waar je op reageert:**
 Titel: {$blogTitle}
-Inhoud: " . substr($blogContent, 0, 2000) . "
+Inhoud: {$blogContent}
 
 Reageer als een echte Nederlandse politicus! Gebruik:
 - Emotionele reacties (frustratie, enthousiasme, verontwaardiging)
@@ -372,7 +373,7 @@ Denk aan hoe {$partyName} werkelijk zou reageren - boos, teleurgesteld, hoopvol,
 
 **Het artikel:**
 Titel: {$blogTitle}
-Inhoud: " . substr($blogContent, 0, 2000) . "
+Inhoud: {$blogContent}
 
 Reageer als {$leaderName} zelf! Gebruik jouw eigen karakteristieke manier van spreken:
 - Jouw persoonlijke stijl (direct, diplomatiek, fel, gemoedelijk?)
