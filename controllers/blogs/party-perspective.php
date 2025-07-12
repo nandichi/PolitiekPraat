@@ -22,31 +22,106 @@ function truncateContentForAPI($content, $maxLength = 3000) {
     
     // Strip Markdown syntax eerst
     $content = stripMarkdownSyntax($content);
+    $originalLength = mb_strlen($content);
     
     // Als content al kort genoeg is, return direct
-    if (mb_strlen($content) <= $maxLength) {
+    if ($originalLength <= $maxLength) {
         return $content;
     }
     
-    // Voor zeer lange content, probeer eerst een samenvatting te maken
-    if (mb_strlen($content) > $maxLength * 2) {
-        // Haal de eerste alinea (belangrijk voor context)
-        $firstParagraph = '';
-        $paragraphs = explode("\n\n", $content);
-        if (!empty($paragraphs[0])) {
-            $firstParagraph = $paragraphs[0] . "\n\n";
+    // Voor extreem lange artikelen (>15000 chars), gebruik een agressievere strategie
+    if ($originalLength > 15000) {
+        return createSummaryFromLongContent($content, $maxLength);
+    }
+    
+    // Voor zeer lange content (>6000 chars), gebruik een samenvatting strategie
+    if ($originalLength > 6000) {
+        return createSummaryFromContent($content, $maxLength);
+    }
+    
+    // Voor matig lange content, gebruik bestaande methode
+    return truncateNormalContent($content, $maxLength);
+}
+
+/**
+ * Creeër een samenvatting voor extreem lange artikelen
+ */
+function createSummaryFromLongContent($content, $maxLength) {
+    // Haal de eerste 3 alinea's (opening + context)
+    $paragraphs = explode("\n\n", $content);
+    $summary = '';
+    $usedParagraphs = 0;
+    
+    // Voeg eerste alinea's toe tot we 40% van maxLength hebben
+    $targetLength = $maxLength * 0.4;
+    foreach ($paragraphs as $paragraph) {
+        if (mb_strlen($summary . $paragraph) > $targetLength || $usedParagraphs >= 3) {
+            break;
         }
-        
-        // Verkort de rest van de content
-        $remainingLength = $maxLength - mb_strlen($firstParagraph);
-        if ($remainingLength > 200) {
-            $remainingContent = mb_substr($content, mb_strlen($firstParagraph), $remainingLength);
-            $content = $firstParagraph . $remainingContent;
-        } else {
-            $content = mb_substr($content, 0, $maxLength);
+        $summary .= trim($paragraph) . "\n\n";
+        $usedParagraphs++;
+    }
+    
+    // Voeg een selectie van zinnen toe uit de rest van het artikel
+    $remainingContent = implode("\n\n", array_slice($paragraphs, $usedParagraphs));
+    $sentences = explode('.', $remainingContent);
+    
+    // Selecteer elke 5e zin om een goede vertegenwoordiging te krijgen
+    $selectedSentences = [];
+    for ($i = 0; $i < count($sentences); $i += 5) {
+        if (!empty(trim($sentences[$i]))) {
+            $selectedSentences[] = trim($sentences[$i]) . '.';
+            if (mb_strlen(implode(' ', $selectedSentences)) > ($maxLength - mb_strlen($summary) - 100)) {
+                break;
+            }
         }
     }
     
+    $summary .= implode(' ', $selectedSentences);
+    
+    // Verkort tot maxLength indien nodig
+    if (mb_strlen($summary) > $maxLength) {
+        $summary = mb_substr($summary, 0, $maxLength - 3) . '...';
+    }
+    
+    return trim($summary);
+}
+
+/**
+ * Creeër een samenvatting voor lange artikelen
+ */
+function createSummaryFromContent($content, $maxLength) {
+    // Haal de eerste 2 alinea's
+    $paragraphs = explode("\n\n", $content);
+    $summary = '';
+    
+    // Voeg eerste 2 alinea's toe
+    for ($i = 0; $i < min(2, count($paragraphs)); $i++) {
+        if (mb_strlen($summary . $paragraphs[$i]) < $maxLength * 0.6) {
+            $summary .= trim($paragraphs[$i]) . "\n\n";
+        }
+    }
+    
+    // Voeg de laatste alinea toe (conclusie)
+    if (count($paragraphs) > 2) {
+        $lastParagraph = end($paragraphs);
+        if (mb_strlen($summary . $lastParagraph) < $maxLength) {
+            $summary .= "...\n\n" . trim($lastParagraph);
+        }
+    }
+    
+    // Verkort tot maxLength indien nodig
+    if (mb_strlen($summary) > $maxLength) {
+        $summary = mb_substr($summary, 0, $maxLength - 3) . '...';
+    }
+    
+    return trim($summary);
+}
+
+/**
+ * Verkort normale content
+ */
+function truncateNormalContent($content, $maxLength) {
     // Verkort tot maxLength, maar eindig op een volledige zin
     $truncated = mb_substr($content, 0, $maxLength);
     
@@ -350,12 +425,45 @@ try {
         throw new Exception('Blog niet gevonden');
     }
     
-    // Verkort blog content voor veilige API call - voor leider reacties gebruiken we een kortere limiet
-    $truncatedContent = truncateContentForAPI($blog->content, 1800);
+    // Bepaal de maximale lengte op basis van de originele artikel lengte
+    $originalLength = mb_strlen(stripMarkdownSyntax($blog->content));
+    $maxLength = 1200; // Default voor lange artikelen
+    
+    if ($originalLength > 20000) {
+        $maxLength = 800;  // Extreem lange artikelen (zoals China artikel)
+    } elseif ($originalLength > 10000) {
+        $maxLength = 1000; // Zeer lange artikelen
+    } elseif ($originalLength > 5000) {
+        $maxLength = 1200; // Lange artikelen
+    } else {
+        $maxLength = 1500; // Normale artikelen
+    }
+    
+    // Verkort blog content voor veilige API call
+    $truncatedContent = truncateContentForAPI($blog->content, $maxLength);
+    
+    // Extra fallback voor extreem lange artikelen - forceer een laatste verkorten indien nodig
+    if ($originalLength > 20000 && mb_strlen($truncatedContent) > 600) {
+        // Voor China-achtige artikelen: alleen de eerste 2 zinnen + titel
+        $sentences = explode('.', $truncatedContent);
+        $shortSummary = $blog->title . ". ";
+        $sentenceCount = 0;
+        foreach ($sentences as $sentence) {
+            if ($sentenceCount >= 2) break;
+            if (!empty(trim($sentence))) {
+                $shortSummary .= trim($sentence) . ". ";
+                $sentenceCount++;
+            }
+        }
+        $truncatedContent = trim($shortSummary);
+    }
+    
+    // Log voor debugging (kan later weggehaald worden)
+    error_log("Article length: $originalLength chars, Using maxLength: $maxLength, Final truncated to: " . mb_strlen($truncatedContent) . " chars");
     
     // Controleer of de blog content nog steeds te lang is
-    if (mb_strlen($truncatedContent) > 1800) {
-        throw new Exception('Blog artikel is te lang voor verwerking. Probeer een korter artikel.');
+    if (mb_strlen($truncatedContent) > $maxLength + 100) {
+        throw new Exception('Blog artikel is te complex voor verwerking. De AI kan dit artikel niet verwerken vanwege de lengte en complexiteit.');
     }
     
     // Initialiseer ChatGPT API

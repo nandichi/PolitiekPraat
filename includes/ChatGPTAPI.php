@@ -170,15 +170,17 @@ Schrijf persoonlijk en bemoedigend. Begin met 'Op basis van jouw stemwijzer resu
             'messages' => [
                 [
                     'role' => 'system', 
-                    'content' => 'Je bent een Nederlandse politieke expert die neutrale, informatieve uitleg geeft over politiek. Je schrijft in duidelijk Nederlands voor gewone burgers.'
+                    'content' => 'Je bent een Nederlandse politieke expert die korte, krachtige reacties geeft. Schrijf direct en emotioneel in duidelijk Nederlands.'
                 ],
                 [
                     'role' => 'user', 
                     'content' => $prompt
                 ]
             ],
-            'max_tokens' => 500,
-            'temperature' => 0.7
+            'max_tokens' => 400,
+            'temperature' => 0.8,
+            'presence_penalty' => 0.1,
+            'frequency_penalty' => 0.1
         ];
         
         $headers = [
@@ -360,22 +362,25 @@ Denk aan hoe {$partyName} werkelijk zou reageren - boos, teleurgesteld, hoopvol,
      * Genereer perspectief van een politieke leider op een blog artikel
      */
     public function generateLeaderPerspective($leaderName, $partyName, $partyInfo, $blogTitle, $blogContent) {
-        $prompt = "Je bent {$leaderName} van {$partyName}. Reageer authentiek op dit artikel:
+        // Bepaal of dit een samenvatting is van een lang artikel
+        $isLongArticle = (strpos($blogContent, '...') !== false || mb_strlen($blogContent) < 1000);
+        $contentNote = $isLongArticle ? " (Dit is een samenvatting van een langer artikel)" : "";
+        
+        $prompt = "Je bent {$leaderName} van {$partyName}. Reageer op dit artikel:
 
-**Artikel:** {$blogTitle}
+**Artikel:** {$blogTitle}{$contentNote}
 {$blogContent}
 
-**Jouw standpunten:**
-{$partyInfo['standpoints']['Immigratie']} | {$partyInfo['standpoints']['Klimaat']} | {$partyInfo['standpoints']['Zorg']}
+**Jouw kern standpunten:** {$partyInfo['standpoints']['Immigratie']} | {$partyInfo['standpoints']['Klimaat']}
 
-Reageer in 200-250 woorden als {$leaderName}:
-- Gebruik je eigen stijl en uitdrukkingen
-- Toon emotie (frustratie, enthousiasme, vastberadenheid)
-- Spreek Nederlandse kiezers direct aan
-- Begin direct met je reactie, geen inleiding
-- Verwijs naar 'gewone Nederlanders' waar relevant
+Reageer in 200 woorden als {$leaderName}:
+- Begin direct met je mening
+- Gebruik je eigen karakteristieke stijl  
+- Toon duidelijke emotie
+- Spreek 'gewone Nederlanders' aan
+- Focus op de belangrijkste punten uit het artikel
 
-Schrijf alsof je net uit een debat komt en emotioneel reageert op dit artikel.";
+Geen inleiding, direct je reactie.";
 
         return $this->makeAPICall($prompt);
     }

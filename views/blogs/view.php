@@ -1575,7 +1575,16 @@ document.addEventListener('DOMContentLoaded', function() {
              const loadingTimerElement = document.getElementById('loadingTimer');
              const timerDisplay = document.getElementById('timerDisplay');
              
-             // Show timer after 5 seconds
+             // Detect if this is likely a long article
+             const blogContent = document.getElementById('blog-content');
+             const isLongArticle = blogContent && blogContent.textContent.length > 10000;
+             
+             if (isLongArticle) {
+                 loadingMessage.textContent = 'Lang artikel wordt samengevat...';
+                 loadingSubMessage.textContent = 'De AI maakt een samenvatting voor de leider reactie';
+             }
+             
+             // Show timer after 3 seconds for long articles, 5 for normal
              setTimeout(() => {
                  loadingTimerElement.style.display = 'block';
                  timerInterval = setInterval(() => {
@@ -1583,18 +1592,21 @@ document.addEventListener('DOMContentLoaded', function() {
                      timerDisplay.textContent = loadingTimer;
                      
                      // Update messages based on elapsed time
-                     if (loadingTimer === 10) {
+                     if (loadingTimer === 8) {
                          loadingMessage.textContent = 'Artikel wordt geanalyseerd...';
-                         loadingSubMessage.textContent = 'Complexe artikelen hebben meer tijd nodig';
-                     } else if (loadingTimer === 20) {
+                         loadingSubMessage.textContent = isLongArticle ? 'Lange artikelen hebben extra verwerking nodig' : 'Complexe artikelen hebben meer tijd nodig';
+                     } else if (loadingTimer === 15) {
+                         loadingMessage.textContent = 'Reactie wordt gegenereerd...';
+                         loadingSubMessage.textContent = 'De AI creeërt een authentieke leider reactie';
+                     } else if (loadingTimer === 25) {
                          loadingMessage.textContent = 'Bijna klaar...';
-                         loadingSubMessage.textContent = 'De AI genereert een doordachte reactie';
-                     } else if (loadingTimer === 30) {
+                         loadingSubMessage.textContent = 'De laatste details worden toegevoegd';
+                     } else if (loadingTimer === 35) {
                          loadingMessage.textContent = 'Nog even geduld...';
                          loadingSubMessage.textContent = 'Dit artikel heeft veel inhoud om te verwerken';
                      }
                  }, 1000);
-             }, 5000);
+             }, isLongArticle ? 3000 : 5000);
              
              const slug = partyPerspectiveButton?.getAttribute('data-slug');
              if (!slug) return;
