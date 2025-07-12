@@ -28,6 +28,25 @@ function truncateContentForAPI($content, $maxLength = 3000) {
         return $content;
     }
     
+    // Voor zeer lange content, probeer eerst een samenvatting te maken
+    if (mb_strlen($content) > $maxLength * 2) {
+        // Haal de eerste alinea (belangrijk voor context)
+        $firstParagraph = '';
+        $paragraphs = explode("\n\n", $content);
+        if (!empty($paragraphs[0])) {
+            $firstParagraph = $paragraphs[0] . "\n\n";
+        }
+        
+        // Verkort de rest van de content
+        $remainingLength = $maxLength - mb_strlen($firstParagraph);
+        if ($remainingLength > 200) {
+            $remainingContent = mb_substr($content, mb_strlen($firstParagraph), $remainingLength);
+            $content = $firstParagraph . $remainingContent;
+        } else {
+            $content = mb_substr($content, 0, $maxLength);
+        }
+    }
+    
     // Verkort tot maxLength, maar eindig op een volledige zin
     $truncated = mb_substr($content, 0, $maxLength);
     
@@ -38,13 +57,13 @@ function truncateContentForAPI($content, $maxLength = 3000) {
         mb_strrpos($truncated, '?')
     );
     
-    if ($lastSentenceEnd !== false && $lastSentenceEnd > $maxLength * 0.7) {
-        // Als we een goede zin-einde vinden binnen 70% van de lengte, gebruik die
+    if ($lastSentenceEnd !== false && $lastSentenceEnd > $maxLength * 0.6) {
+        // Als we een goede zin-einde vinden binnen 60% van de lengte, gebruik die
         $truncated = mb_substr($truncated, 0, $lastSentenceEnd + 1);
     } else {
         // Anders, zoek de laatste spatie om midden in een woord te voorkomen
         $lastSpace = mb_strrpos($truncated, ' ');
-        if ($lastSpace !== false && $lastSpace > $maxLength * 0.8) {
+        if ($lastSpace !== false && $lastSpace > $maxLength * 0.7) {
             $truncated = mb_substr($truncated, 0, $lastSpace);
         }
         $truncated .= '...';
@@ -331,11 +350,20 @@ try {
         throw new Exception('Blog niet gevonden');
     }
     
-    // Verkort blog content voor veilige API call
-    $truncatedContent = truncateContentForAPI($blog->content, 2500);
+    // Verkort blog content voor veilige API call - voor leider reacties gebruiken we een kortere limiet
+    $truncatedContent = truncateContentForAPI($blog->content, 1800);
+    
+    // Controleer of de blog content nog steeds te lang is
+    if (mb_strlen($truncatedContent) > 1800) {
+        throw new Exception('Blog artikel is te lang voor verwerking. Probeer een korter artikel.');
+    }
     
     // Initialiseer ChatGPT API
-    $chatGPT = new ChatGPTAPI();
+    try {
+        $chatGPT = new ChatGPTAPI();
+    } catch (Exception $e) {
+        throw new Exception('AI-service is momenteel niet beschikbaar. Probeer het later opnieuw.');
+    }
     
     // Genereer perspectief met verkorte content
     if ($type === 'party') {
@@ -366,7 +394,18 @@ try {
             'type' => $type
         ], JSON_UNESCAPED_UNICODE);
     } else {
-        throw new Exception($result['error'] ?? 'Fout bij genereren perspectief');
+        // Specifieke error handling voor verschillende API fouten
+        $errorMessage = $result['error'] ?? 'Onbekende fout bij genereren perspectief';
+        
+        if (strpos($errorMessage, 'timeout') !== false) {
+            throw new Exception('De AI-service reageert niet snel genoeg. Het artikel is mogelijk te complex. Probeer het opnieuw.');
+        } elseif (strpos($errorMessage, 'rate limit') !== false) {
+            throw new Exception('Te veel verzoeken naar de AI-service. Wacht een moment en probeer het opnieuw.');
+        } elseif (strpos($errorMessage, 'content_filter') !== false) {
+            throw new Exception('De inhoud van het artikel kan niet verwerkt worden door de AI-service.');
+        } else {
+            throw new Exception('Kon leider reactie niet genereren: ' . $errorMessage);
+        }
     }
     
 } catch (Exception $e) {

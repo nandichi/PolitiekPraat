@@ -101,6 +101,25 @@ function truncateContentForAPI($content, $maxLength = 3000) {
         return $content;
     }
     
+    // Voor zeer lange content, probeer eerst een samenvatting te maken
+    if (mb_strlen($content) > $maxLength * 2) {
+        // Haal de eerste alinea (belangrijk voor context)
+        $firstParagraph = '';
+        $paragraphs = explode("\n\n", $content);
+        if (!empty($paragraphs[0])) {
+            $firstParagraph = $paragraphs[0] . "\n\n";
+        }
+        
+        // Verkort de rest van de content
+        $remainingLength = $maxLength - mb_strlen($firstParagraph);
+        if ($remainingLength > 200) {
+            $remainingContent = mb_substr($content, mb_strlen($firstParagraph), $remainingLength);
+            $content = $firstParagraph . $remainingContent;
+        } else {
+            $content = mb_substr($content, 0, $maxLength);
+        }
+    }
+    
     // Verkort tot maxLength, maar eindig op een volledige zin
     $truncated = mb_substr($content, 0, $maxLength);
     
@@ -111,13 +130,13 @@ function truncateContentForAPI($content, $maxLength = 3000) {
         mb_strrpos($truncated, '?')
     );
     
-    if ($lastSentenceEnd !== false && $lastSentenceEnd > $maxLength * 0.7) {
-        // Als we een goede zin-einde vinden binnen 70% van de lengte, gebruik die
+    if ($lastSentenceEnd !== false && $lastSentenceEnd > $maxLength * 0.6) {
+        // Als we een goede zin-einde vinden binnen 60% van de lengte, gebruik die
         $truncated = mb_substr($truncated, 0, $lastSentenceEnd + 1);
     } else {
         // Anders, zoek de laatste spatie om midden in een woord te voorkomen
         $lastSpace = mb_strrpos($truncated, ' ');
-        if ($lastSpace !== false && $lastSpace > $maxLength * 0.8) {
+        if ($lastSpace !== false && $lastSpace > $maxLength * 0.7) {
             $truncated = mb_substr($truncated, 0, $lastSpace);
         }
         $truncated .= '...';
@@ -175,7 +194,7 @@ try {
     }
     
     // Verkort blog content voor veilige API call
-    $truncatedContent = truncateContentForAPI($blog->content, 2500);
+    $truncatedContent = truncateContentForAPI($blog->content, 2000);
     
     // Initialiseer ChatGPT API
     $chatGPT = new ChatGPTAPI();

@@ -873,9 +873,12 @@ require_once 'views/templates/header.php'; ?>
                 <div id="partyLoading" class="hidden text-center py-8">
                     <div class="inline-flex items-center space-x-3">
                         <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500"></div>
-                        <span class="text-gray-600 font-medium">Perspectief wordt gegenereerd...</span>
+                        <span class="text-gray-600 font-medium" id="loadingMessage">Perspectief wordt gegenereerd...</span>
                     </div>
-                    <p class="text-gray-500 text-sm mt-2">Dit kan een paar seconden duren</p>
+                    <p class="text-gray-500 text-sm mt-2" id="loadingSubMessage">Dit kan een paar seconden duren</p>
+                    <div class="text-orange-500 text-sm mt-2" id="loadingTimer" style="display: none;">
+                        <span id="timerDisplay">0</span> seconden
+                    </div>
                 </div>
                 
                 <!-- Error State -->
@@ -1542,15 +1545,56 @@ document.addEventListener('DOMContentLoaded', function() {
          document.getElementById('partyError')?.classList.add('hidden');
          document.getElementById('partyResults')?.classList.add('hidden');
          document.getElementById('backToPartySelection')?.classList.add('hidden');
+         
+         // Reset loading state
+         const loadingMessage = document.getElementById('loadingMessage');
+         const loadingSubMessage = document.getElementById('loadingSubMessage');
+         const loadingTimerElement = document.getElementById('loadingTimer');
+         const timerDisplay = document.getElementById('timerDisplay');
+         
+         if (loadingMessage) loadingMessage.textContent = 'Perspectief wordt gegenereerd...';
+         if (loadingSubMessage) loadingSubMessage.textContent = 'Dit kan een paar seconden duren';
+         if (loadingTimerElement) loadingTimerElement.style.display = 'none';
+         if (timerDisplay) timerDisplay.textContent = '0';
      }
      
      async function performPartyAnalysis(party, type) {
+         let loadingTimer = 0;
+         let timerInterval;
+         
          try {
              // Hide selection, show loading
              document.getElementById('partySelectionGrid')?.classList.add('hidden');
              document.getElementById('partyLoading')?.classList.remove('hidden');
              document.getElementById('partyError')?.classList.add('hidden');
              document.getElementById('partyResults')?.classList.add('hidden');
+             
+             // Start loading timer
+             const loadingMessage = document.getElementById('loadingMessage');
+             const loadingSubMessage = document.getElementById('loadingSubMessage');
+             const loadingTimerElement = document.getElementById('loadingTimer');
+             const timerDisplay = document.getElementById('timerDisplay');
+             
+             // Show timer after 5 seconds
+             setTimeout(() => {
+                 loadingTimerElement.style.display = 'block';
+                 timerInterval = setInterval(() => {
+                     loadingTimer++;
+                     timerDisplay.textContent = loadingTimer;
+                     
+                     // Update messages based on elapsed time
+                     if (loadingTimer === 10) {
+                         loadingMessage.textContent = 'Artikel wordt geanalyseerd...';
+                         loadingSubMessage.textContent = 'Complexe artikelen hebben meer tijd nodig';
+                     } else if (loadingTimer === 20) {
+                         loadingMessage.textContent = 'Bijna klaar...';
+                         loadingSubMessage.textContent = 'De AI genereert een doordachte reactie';
+                     } else if (loadingTimer === 30) {
+                         loadingMessage.textContent = 'Nog even geduld...';
+                         loadingSubMessage.textContent = 'Dit artikel heeft veel inhoud om te verwerken';
+                     }
+                 }, 1000);
+             }, 5000);
              
              const slug = partyPerspectiveButton?.getAttribute('data-slug');
              if (!slug) return;
@@ -1570,6 +1614,11 @@ document.addEventListener('DOMContentLoaded', function() {
              
              const data = await response.json();
              
+             // Clear timer
+             if (timerInterval) {
+                 clearInterval(timerInterval);
+             }
+             
              // Hide loading
              document.getElementById('partyLoading')?.classList.add('hidden');
              
@@ -1581,6 +1630,12 @@ document.addEventListener('DOMContentLoaded', function() {
              
          } catch (error) {
              console.error('Party analysis error:', error);
+             
+             // Clear timer
+             if (timerInterval) {
+                 clearInterval(timerInterval);
+             }
+             
              document.getElementById('partyLoading')?.classList.add('hidden');
              showPartyError('Netwerk fout: Kon geen verbinding maken met de server');
          }
