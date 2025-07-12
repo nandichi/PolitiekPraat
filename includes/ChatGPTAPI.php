@@ -325,28 +325,32 @@ Schrijf in toegankelijke maar informatieve taal. Gebruik concrete voorbeelden en
      * Genereer perspectief van een politieke partij op een blog artikel
      */
     public function generatePartyPerspective($partyName, $partyInfo, $blogTitle, $blogContent) {
-        $prompt = "Je bent een woordvoerder van {$partyName}. Geef een reactie op het volgende blog artikel vanuit het perspectief van jouw partij.
+        $prompt = "Je bent een gepassioneerde woordvoerder van {$partyName} die net dit blog artikel heeft gelezen. Je reageert spontaan en emotioneel, precies zoals een echte politicus zou doen.
 
-**Partij informatie:**
+**Jouw partij achtergrond:**
 {$partyInfo['description']}
 
-**Kernstandpunten:**
+**Waar jullie voor staan:**
 - Immigratie: {$partyInfo['standpoints']['Immigratie']}
 - Klimaat: {$partyInfo['standpoints']['Klimaat']}
 - Zorg: {$partyInfo['standpoints']['Zorg']}
 - Energie: {$partyInfo['standpoints']['Energie']}
 
-**Blog artikel:**
+**Het artikel waar je op reageert:**
 Titel: {$blogTitle}
 Inhoud: " . substr($blogContent, 0, 2000) . "
 
-Schrijf een reactie van 200-300 woorden waarin je:
-1. Reageert op de hoofdpunten van het artikel
-2. Het partijstandpunt duidelijk maakt
-3. Concrete voorstellen of kritiekpunten geeft
-4. De typische retoriek en toon van {$partyName} gebruikt
+Reageer als een echte Nederlandse politicus! Gebruik:
+- Emotionele reacties (frustratie, enthousiasme, verontwaardiging)
+- Typische Nederlandse politieke uitdrukkingen (\"Dat is toch onvoorstelbaar!\", \"Wij zeggen al jaren dat...\", \"De kiezer verdient beter\")
+- Directe taal en sterke meningen
+- Verwijzingen naar 'gewone Nederlanders', 'hardwerkende families'
+- Kritiek op andere partijen waar relevant
+- Persoonlijke anekdotes of voorbeelden uit de praktijk
 
-Wees authentiek en gebruik de karakteristieke stijl van de partij. Eindig met een duidelijke boodschap die past bij de partijlijn.";
+Schrijf 200-300 woorden alsof je net uit een debat komt en emotioneel reageert op dit artikel. Begin direct met je reactie - geen inleiding. Wees echt menselijk, gebruik pauzes (...), uitroepen, en spreek de lezer direct aan.
+
+Denk aan hoe {$partyName} werkelijk zou reageren - boos, teleurgesteld, hoopvol, vastberaden? Laat die emotie doorkomen!";
 
         return $this->makeAPICall($prompt);
     }
@@ -355,28 +359,38 @@ Wees authentiek en gebruik de karakteristieke stijl van de partij. Eindig met ee
      * Genereer perspectief van een politieke leider op een blog artikel
      */
     public function generateLeaderPerspective($leaderName, $partyName, $partyInfo, $blogTitle, $blogContent) {
-        $prompt = "Je bent {$leaderName}, partijleider van {$partyName}. Geef een persoonlijke reactie op het volgende blog artikel.
+        $prompt = "Je bent {$leaderName}, partijleider van {$partyName}. Je leest dit blog artikel en reageert zoals je altijd doet - met passie, overtuiging en jouw eigen unieke stijl.
 
-**Jouw achtergrond:**
+**Wie je bent:**
 {$partyInfo['leader_info']}
 
-**Jouw partij standpunten:**
+**Waar jouw partij voor staat:**
 - Immigratie: {$partyInfo['standpoints']['Immigratie']}
 - Klimaat: {$partyInfo['standpoints']['Klimaat']}
 - Zorg: {$partyInfo['standpoints']['Zorg']}
 - Energie: {$partyInfo['standpoints']['Energie']}
 
-**Blog artikel:**
+**Het artikel:**
 Titel: {$blogTitle}
 Inhoud: " . substr($blogContent, 0, 2000) . "
 
-Schrijf een persoonlijke reactie van 200-300 woorden waarin je:
-1. Vanuit jouw persoonlijke visie reageert
-2. Jouw leiderschapsstijl laat zien
-3. De partijlijn vertegenwoordigt maar met jouw eigen accent
-4. Concrete voorbeelden of persoonlijke ervaringen gebruikt waar relevant
+Reageer als {$leaderName} zelf! Gebruik jouw eigen karakteristieke manier van spreken:
+- Jouw persoonlijke stijl (direct, diplomatiek, fel, gemoedelijk?)
+- Uitdrukkingen die jij vaak gebruikt
+- Jouw manier van argumenteren
+- Persoonlijke verhalen of ervaringen die je vaak deelt
+- Jouw emoties - waar word je boos om? Wat geeft je energie?
+- Hoe jij gewoonlijk andere partijen aanpakt
 
-Gebruik de karakteristieke communicatiestijl van {$leaderName}. Wees direct, authentiek en overtuigend.";
+Schrijf 200-300 woorden alsof je net in een interview zit en de interviewer je dit artikel voorlegt. Begin direct met je reactie - geen beleefdheidsfrases. Laat zien wie je bent!
+
+Denk aan:
+- Hoe reageer je als {$leaderName} op kritiek?
+- Wat zijn jouw vaste uitdrukkingen?
+- Hoe verdedig je jouw standpunten?
+- Wat is jouw unieke perspectief als leider?
+
+Wees echt menselijk - toon frustratie, enthousiasme, vastberadenheid, teleurstelling... wat {$leaderName} ook zou voelen bij dit artikel.";
 
         return $this->makeAPICall($prompt);
     }

@@ -300,7 +300,7 @@ require_once 'views/templates/header.php'; ?>
                                         </svg>
                                     </div>
                                     <div class="flex flex-col items-start">
-                                        <span class="font-bold text-lg text-orange-700 group-hover:text-orange-800 transition-colors">Partij Reacties</span>
+                                        <span class="font-bold text-lg text-orange-700 group-hover:text-orange-800 transition-colors">Leider Reacties</span>
                                         <span class="text-xs text-orange-600 group-hover:text-orange-700 transition-colors">AI Perspectieven</span>
                                     </div>
                                 </button>
@@ -675,8 +675,8 @@ require_once 'views/templates/header.php'; ?>
                             </svg>
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold text-white">Partij Perspectieven</h3>
-                            <p class="text-orange-100 text-sm">Kies een partij of leider voor hun AI-gegenereerde reactie</p>
+                            <h3 class="text-xl font-bold text-white">Leider Reacties</h3>
+                            <p class="text-orange-100 text-sm">Kies een partijleider voor hun AI-gegenereerde reactie</p>
                         </div>
                     </div>
                     <button id="closePartyModal" class="p-2 hover:bg-white/20 rounded-lg transition-colors">
@@ -689,18 +689,6 @@ require_once 'views/templates/header.php'; ?>
             
             <!-- Modal Body -->
             <div class="p-6 overflow-y-auto max-h-[70vh]">
-                <!-- Mode Toggle -->
-                <div class="flex justify-center mb-6">
-                    <div class="bg-gray-100 p-1 rounded-xl">
-                        <button id="partyModeBtn" type="button" class="px-4 py-2 bg-white text-gray-900 rounded-lg font-medium transition-all">
-                            Partij Standpunt
-                        </button>
-                        <button id="leaderModeBtn" type="button" class="px-4 py-2 text-gray-600 rounded-lg font-medium transition-all hover:text-gray-900">
-                            Leider Reactie
-                        </button>
-                    </div>
-                </div>
-                
                 <!-- Party Selection Grid -->
                 <div id="partySelectionGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-6">
                     <!-- PVV -->
@@ -1394,10 +1382,7 @@ document.addEventListener('DOMContentLoaded', function() {
      const closePartyModal = document.getElementById('closePartyModal');
      const closePartyModalFooter = document.getElementById('closePartyModalFooter');
      const backToPartySelection = document.getElementById('backToPartySelection');
-     const partyModeBtn = document.getElementById('partyModeBtn');
-     const leaderModeBtn = document.getElementById('leaderModeBtn');
-     
-     let currentMode = 'party'; // 'party' or 'leader'
+     let currentMode = 'leader'; // Always leader mode
      
      // Party data with logos
      const partyData = {
@@ -1509,18 +1494,7 @@ document.addEventListener('DOMContentLoaded', function() {
          }
      });
      
-     // Mode toggle
-     partyModeBtn?.addEventListener('click', function() {
-         currentMode = 'party';
-         updateModeButtons();
-         updateModeText();
-     });
-     
-     leaderModeBtn?.addEventListener('click', function() {
-         currentMode = 'leader';
-         updateModeButtons();
-         updateModeText();
-     });
+     // Mode toggle removed - always leader mode
      
      // Back button
      backToPartySelection?.addEventListener('click', function() {
@@ -1537,31 +1511,13 @@ document.addEventListener('DOMContentLoaded', function() {
          });
      });
      
-     function updateModeButtons() {
-         if (currentMode === 'party') {
-             partyModeBtn.classList.add('bg-white', 'text-gray-900');
-             partyModeBtn.classList.remove('text-gray-600');
-             leaderModeBtn.classList.remove('bg-white', 'text-gray-900');
-             leaderModeBtn.classList.add('text-gray-600');
-         } else {
-             leaderModeBtn.classList.add('bg-white', 'text-gray-900');
-             leaderModeBtn.classList.remove('text-gray-600');
-             partyModeBtn.classList.remove('bg-white', 'text-gray-900');
-             partyModeBtn.classList.add('text-gray-600');
-         }
-     }
-     
      function updateModeText() {
          const leaderNames = document.querySelectorAll('.leader-name');
          const leaderPhotos = document.querySelectorAll('.leader-photo');
          
-         if (currentMode === 'party') {
-             leaderNames.forEach(el => el.style.display = 'block');
-             leaderPhotos.forEach(el => el.classList.add('hidden'));
-         } else {
-             leaderNames.forEach(el => el.style.display = 'block');
-             leaderPhotos.forEach(el => el.classList.remove('hidden'));
-         }
+         // Always show leader mode
+         leaderNames.forEach(el => el.style.display = 'block');
+         leaderPhotos.forEach(el => el.classList.remove('hidden'));
      }
      
      function showPartyModal() {
@@ -1570,8 +1526,7 @@ document.addEventListener('DOMContentLoaded', function() {
              modal.classList.remove('hidden');
              document.body.style.overflow = 'hidden';
              showPartySelection();
-             // Ensure correct mode is shown
-             updateModeButtons();
+             // Ensure leader mode is shown
              updateModeText();
          }
      }
