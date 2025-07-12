@@ -815,14 +815,14 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                                     group-hover:scale-100 transition-transform duration-300"></div>
                     </a>
 
-                    <a href="<?php echo URLROOT; ?>/nieuws" 
+                    <!-- <a href="<?php echo URLROOT; ?>/nieuws" 
                        class="relative px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg 
                               transition-all duration-300 hover:text-primary hover:bg-primary/5
                               group">
                         <span class="relative z-10">Nieuws</span>
                         <div class="absolute inset-0 bg-primary/10 rounded-lg scale-0 
                                     group-hover:scale-100 transition-transform duration-300"></div>
-                    </a>
+                    </a> -->
 
                     <a href="<?php echo URLROOT; ?>/partijen" 
                        class="relative px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg 
