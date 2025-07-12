@@ -549,7 +549,7 @@ require_once 'views/templates/header.php';
                 <div class="text-center space-y-12 max-w-6xl mx-auto" data-aos="fade-up" data-aos-duration="1200">
                     <!-- Hoofdtitel met verbeterde effecten -->
                     <div class="space-y-6" data-aos="fade-up" data-aos-delay="400">
-                        <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black leading-tight tracking-tight">
+                        <h1 class="text-6xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black leading-tight tracking-tight">
                             <span class="block bg-gradient-to-r from-primary-dark via-primary to-secondary bg-clip-text text-transparent mb-4">
                                 PolitiekPraat
                             </span>
