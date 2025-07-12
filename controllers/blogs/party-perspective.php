@@ -13,165 +13,46 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_SERVER['HTTP_X_REQUESTED_W
 header('Content-Type: application/json');
 
 /**
- * Verkort blog content voor veilige API calls
+ * Maakt een beknopte en veilige samenvatting van blog content voor de AI.
+ * Deze functie vervangt de vorige, complexe truncate-logica.
  */
-function truncateContentForAPI($content, $maxLength = 3000) {
-    if (empty($content)) {
-        return $content;
+function getAISummaryForPerspective($title, $content) {
+    $cleanContent = stripMarkdownSyntaxForPerspective($content);
+    $length = mb_strlen($cleanContent);
+
+    // Voor extreem lange artikelen (> 5000 chars), geef alleen het thema.
+    if ($length > 5000) {
+        return "Geef een reactie op het algemene thema van een zeer diepgaand artikel met de titel: \"{$title}\".";
     }
-    
-    // Strip Markdown syntax eerst
-    $content = stripMarkdownSyntax($content);
-    $originalLength = mb_strlen($content);
-    
-    // Als content al kort genoeg is, return direct
-    if ($originalLength <= $maxLength) {
-        return $content;
+
+    // Voor lange artikelen, geef een samenvatting van het begin.
+    if ($length > 1500) {
+        $paragraphs = explode("\n\n", $cleanContent);
+        $summary = $paragraphs[0] ?? '';
+        if (isset($paragraphs[1])) {
+            $summary .= "\n\n" . $paragraphs[1];
+        }
+        return "Reageer op basis van de volgende samenvatting van een artikel genaamd \"{$title}\":\n\n" . mb_substr($summary, 0, 1200) . '...';
     }
-    
-    // Voor extreem lange artikelen (>15000 chars), gebruik een agressievere strategie
-    if ($originalLength > 15000) {
-        return createSummaryFromLongContent($content, $maxLength);
-    }
-    
-    // Voor zeer lange content (>6000 chars), gebruik een samenvatting strategie
-    if ($originalLength > 6000) {
-        return createSummaryFromContent($content, $maxLength);
-    }
-    
-    // Voor matig lange content, gebruik bestaande methode
-    return truncateNormalContent($content, $maxLength);
+
+    // Voor normale artikelen, gebruik de titel en volledige content.
+    return "Reageer op het volgende artikel met de titel \"{$title}\":\n\n" . $cleanContent;
 }
 
 /**
- * Creeër een samenvatting voor extreem lange artikelen
+ * Basis Markdown-stripper, geoptimaliseerd voor snelheid.
  */
-function createSummaryFromLongContent($content, $maxLength) {
-    // Haal de eerste 3 alinea's (opening + context)
-    $paragraphs = explode("\n\n", $content);
-    $summary = '';
-    $usedParagraphs = 0;
-    
-    // Voeg eerste alinea's toe tot we 40% van maxLength hebben
-    $targetLength = $maxLength * 0.4;
-    foreach ($paragraphs as $paragraph) {
-        if (mb_strlen($summary . $paragraph) > $targetLength || $usedParagraphs >= 3) {
-            break;
-        }
-        $summary .= trim($paragraph) . "\n\n";
-        $usedParagraphs++;
-    }
-    
-    // Voeg een selectie van zinnen toe uit de rest van het artikel
-    $remainingContent = implode("\n\n", array_slice($paragraphs, $usedParagraphs));
-    $sentences = explode('.', $remainingContent);
-    
-    // Selecteer elke 5e zin om een goede vertegenwoordiging te krijgen
-    $selectedSentences = [];
-    for ($i = 0; $i < count($sentences); $i += 5) {
-        if (!empty(trim($sentences[$i]))) {
-            $selectedSentences[] = trim($sentences[$i]) . '.';
-            if (mb_strlen(implode(' ', $selectedSentences)) > ($maxLength - mb_strlen($summary) - 100)) {
-                break;
-            }
-        }
-    }
-    
-    $summary .= implode(' ', $selectedSentences);
-    
-    // Verkort tot maxLength indien nodig
-    if (mb_strlen($summary) > $maxLength) {
-        $summary = mb_substr($summary, 0, $maxLength - 3) . '...';
-    }
-    
-    return trim($summary);
-}
-
-/**
- * Creeër een samenvatting voor lange artikelen
- */
-function createSummaryFromContent($content, $maxLength) {
-    // Haal de eerste 2 alinea's
-    $paragraphs = explode("\n\n", $content);
-    $summary = '';
-    
-    // Voeg eerste 2 alinea's toe
-    for ($i = 0; $i < min(2, count($paragraphs)); $i++) {
-        if (mb_strlen($summary . $paragraphs[$i]) < $maxLength * 0.6) {
-            $summary .= trim($paragraphs[$i]) . "\n\n";
-        }
-    }
-    
-    // Voeg de laatste alinea toe (conclusie)
-    if (count($paragraphs) > 2) {
-        $lastParagraph = end($paragraphs);
-        if (mb_strlen($summary . $lastParagraph) < $maxLength) {
-            $summary .= "...\n\n" . trim($lastParagraph);
-        }
-    }
-    
-    // Verkort tot maxLength indien nodig
-    if (mb_strlen($summary) > $maxLength) {
-        $summary = mb_substr($summary, 0, $maxLength - 3) . '...';
-    }
-    
-    return trim($summary);
-}
-
-/**
- * Verkort normale content
- */
-function truncateNormalContent($content, $maxLength) {
-    // Verkort tot maxLength, maar eindig op een volledige zin
-    $truncated = mb_substr($content, 0, $maxLength);
-    
-    // Zoek de laatste punt, uitroepteken of vraagteken
-    $lastSentenceEnd = max(
-        mb_strrpos($truncated, '.'),
-        mb_strrpos($truncated, '!'),
-        mb_strrpos($truncated, '?')
-    );
-    
-    if ($lastSentenceEnd !== false && $lastSentenceEnd > $maxLength * 0.6) {
-        // Als we een goede zin-einde vinden binnen 60% van de lengte, gebruik die
-        $truncated = mb_substr($truncated, 0, $lastSentenceEnd + 1);
-    } else {
-        // Anders, zoek de laatste spatie om midden in een woord te voorkomen
-        $lastSpace = mb_strrpos($truncated, ' ');
-        if ($lastSpace !== false && $lastSpace > $maxLength * 0.7) {
-            $truncated = mb_substr($truncated, 0, $lastSpace);
-        }
-        $truncated .= '...';
-    }
-    
-    return trim($truncated);
-}
-
-/**
- * Strip Markdown syntax voor betere content extractie
- */
-function stripMarkdownSyntax($text) {
+function stripMarkdownSyntaxForPerspective($text) {
     if (empty($text)) {
         return $text;
     }
-    
-    // Strip verschillende Markdown elementen
+    // Verwijder structurele markdown voor een schonere input.
     $text = preg_replace('/^#{1,6}\s+/m', '', $text); // Headers
-    $text = preg_replace('/\*\*(.*?)\*\*/', '$1', $text); // Bold
-    $text = preg_replace('/\*(.*?)\*/', '$1', $text); // Italic
-    $text = preg_replace('/`(.*?)`/', '$1', $text); // Inline code
+    $text = preg_replace('/(\*\*|__)(.*?)\1/', '$2', $text); // Bold
+    $text = preg_replace('/(\*|_)(.*?)\1/', '$2', $text); // Italic
     $text = preg_replace('/\[(.*?)\]\(.*?\)/', '$1', $text); // Links
-    $text = preg_replace('/^\s*[-*+]\s+/m', '• ', $text); // Unordered lists
-    $text = preg_replace('/^\s*\d+\.\s+/m', '', $text); // Ordered lists
-    $text = preg_replace('/^>\s+/m', '', $text); // Blockquotes
-    $text = preg_replace('/```.*?```/s', '', $text); // Code blocks
-    $text = preg_replace('/^\s*---+\s*$/m', '', $text); // Horizontal rules
-    
-    // Vervang multiple whitespace met single space
-    $text = preg_replace('/\s+/', ' ', $text);
-    $text = preg_replace('/\n\s*\n/', "\n\n", $text);
-    
-    return trim($text);
+    $text = preg_replace('/^(\s*[-*+]\s+|\s*\d+\.\s+|^>\s+)/m', '', $text); // Lists & Blockquotes
+    return trim(preg_replace('/\s+/', ' ', $text));
 }
 
 try {
@@ -425,45 +306,13 @@ try {
         throw new Exception('Blog niet gevonden');
     }
     
-    // Bepaal de maximale lengte op basis van de originele artikel lengte
-    $originalLength = mb_strlen(stripMarkdownSyntax($blog->content));
-    $maxLength = 1200; // Default voor lange artikelen
-    
-    if ($originalLength > 20000) {
-        $maxLength = 800;  // Extreem lange artikelen (zoals China artikel)
-    } elseif ($originalLength > 10000) {
-        $maxLength = 1000; // Zeer lange artikelen
-    } elseif ($originalLength > 5000) {
-        $maxLength = 1200; // Lange artikelen
-    } else {
-        $maxLength = 1500; // Normale artikelen
-    }
-    
-    // Verkort blog content voor veilige API call
-    $truncatedContent = truncateContentForAPI($blog->content, $maxLength);
-    
-    // Extra fallback voor extreem lange artikelen - forceer een laatste verkorten indien nodig
-    if ($originalLength > 20000 && mb_strlen($truncatedContent) > 600) {
-        // Voor China-achtige artikelen: alleen de eerste 2 zinnen + titel
-        $sentences = explode('.', $truncatedContent);
-        $shortSummary = $blog->title . ". ";
-        $sentenceCount = 0;
-        foreach ($sentences as $sentence) {
-            if ($sentenceCount >= 2) break;
-            if (!empty(trim($sentence))) {
-                $shortSummary .= trim($sentence) . ". ";
-                $sentenceCount++;
-            }
-        }
-        $truncatedContent = trim($shortSummary);
-    }
-    
-    // Log voor debugging (kan later weggehaald worden)
-    error_log("Article length: $originalLength chars, Using maxLength: $maxLength, Final truncated to: " . mb_strlen($truncatedContent) . " chars");
-    
-    // Controleer of de blog content nog steeds te lang is
-    if (mb_strlen($truncatedContent) > $maxLength + 100) {
-        throw new Exception('Blog artikel is te complex voor verwerking. De AI kan dit artikel niet verwerken vanwege de lengte en complexiteit.');
+    // Maak een veilige, korte samenvatting voor de AI.
+    $aiSummary = getAISummaryForPerspective($blog->title, $blog->content);
+
+    // Finale veiligheidscheck op de lengte.
+    if (mb_strlen($aiSummary) > 2500) {
+        error_log("Perspective API call afgebroken: Samenvatting is na verwerking nog te lang. Lengte: " . mb_strlen($aiSummary));
+        throw new Exception('Het artikel is te complex om een reactie op te genereren.');
     }
     
     // Initialiseer ChatGPT API
@@ -473,13 +322,13 @@ try {
         throw new Exception('AI-service is momenteel niet beschikbaar. Probeer het later opnieuw.');
     }
     
-    // Genereer perspectief met verkorte content
+    // Genereer perspectief met de veilige samenvatting
     if ($type === 'party') {
         $result = $chatGPT->generatePartyPerspective(
             $partyData['name'],
             $partyData,
             $blog->title,
-            $truncatedContent
+            $aiSummary
         );
     } else {
         $result = $chatGPT->generateLeaderPerspective(
@@ -487,7 +336,7 @@ try {
             $partyData['name'],
             $partyData,
             $blog->title,
-            $truncatedContent
+            $aiSummary
         );
     }
     

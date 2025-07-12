@@ -362,25 +362,18 @@ Denk aan hoe {$partyName} werkelijk zou reageren - boos, teleurgesteld, hoopvol,
      * Genereer perspectief van een politieke leider op een blog artikel
      */
     public function generateLeaderPerspective($leaderName, $partyName, $partyInfo, $blogTitle, $blogContent) {
-        // Bepaal of dit een samenvatting is van een lang artikel
-        $isLongArticle = (strpos($blogContent, '...') !== false || mb_strlen($blogContent) < 1000);
-        $contentNote = $isLongArticle ? " (Dit is een samenvatting van een langer artikel)" : "";
-        
-        $prompt = "Je bent {$leaderName} van {$partyName}. Reageer op dit artikel:
+        $prompt = "Je bent {$leaderName}, de partijleider van {$partyName}. Geef een krachtige, authentieke reactie op het volgende politieke onderwerp.
 
-**Artikel:** {$blogTitle}{$contentNote}
-{$blogContent}
+**Onderwerp / Samenvatting van Artikel:**
+'{$blogContent}'
 
-**Jouw kern standpunten:** {$partyInfo['standpoints']['Immigratie']} | {$partyInfo['standpoints']['Klimaat']}
+**Jouw missie:**
+Reageer in ongeveer 150-200 woorden alsof je in een interview bent. Wees trouw aan je eigen stijl en de standpunten van je partij.
+- **Jouw Standpunten:** Immigratie: '{$partyInfo['standpoints']['Immigratie']}'. Klimaat: '{$partyInfo['standpoints']['Klimaat']}'.
+- **Jouw Stijl:** Gebruik je bekende uitdrukkingen. Wees direct, emotioneel en overtuigend.
+- **Focus:** Spreek direct tot de Nederlandse kiezer. Begin meteen met je reactie, zonder inleiding.
 
-Reageer in 200 woorden als {$leaderName}:
-- Begin direct met je mening
-- Gebruik je eigen karakteristieke stijl  
-- Toon duidelijke emotie
-- Spreek 'gewone Nederlanders' aan
-- Focus op de belangrijkste punten uit het artikel
-
-Geen inleiding, direct je reactie.";
+Laat de passie zien die je hebt voor jouw zaak en voor Nederland.";
 
         return $this->makeAPICall($prompt);
     }
