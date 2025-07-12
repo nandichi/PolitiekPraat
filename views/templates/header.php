@@ -417,48 +417,84 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
             animation: shimmer 2.5s infinite;
         }
         
-        /* Navigation elements - enhanced */
+        /* Navigation elements - premium enhanced */
         .nav-link {
             position: relative;
-            transition: all 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            overflow: hidden;
         }
 
         .nav-link span {
             position: relative;
             z-index: 10;
+            transition: all 0.3s ease;
         }
 
-        .nav-link span::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, #c41e3a, #ff4d6d);
-            transform: scaleX(0);
-            transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-            transform-origin: right;
-        }
-
+        /* Premium hover background with subtle gradient */
         .nav-link::before {
             content: '';
             position: absolute;
-            inset: -4px;
-            border-radius: 10px;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.15));
+            inset: -2px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, 
+                rgba(26, 54, 93, 0.08) 0%, 
+                rgba(196, 30, 58, 0.05) 50%,
+                rgba(26, 54, 93, 0.08) 100%);
             opacity: 0;
             z-index: 0;
-            transition: opacity 0.5s ease;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            transform: scale(0.8);
         }
 
+        /* Animated underline effect */
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #c41e3a, #1a365d);
+            transform: translateX(-50%);
+            transition: width 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+            border-radius: 2px;
+        }
+
+        /* Subtle glow effect */
         .nav-link:hover::before {
             opacity: 1;
+            transform: scale(1);
+            box-shadow: 
+                0 4px 20px rgba(26, 54, 93, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
 
-        .nav-link:hover span::after {
-            transform: scaleX(1);
-            transform-origin: left;
+        .nav-link:hover::after {
+            width: 80%;
+        }
+
+        .nav-link:hover span {
+            transform: translateY(-1px);
+            color: #1a365d;
+        }
+
+        /* Active state styling */
+        .nav-link.active::before {
+            opacity: 1;
+            transform: scale(1);
+            background: linear-gradient(135deg, 
+                rgba(26, 54, 93, 0.12) 0%, 
+                rgba(196, 30, 58, 0.08) 50%,
+                rgba(26, 54, 93, 0.12) 100%);
+        }
+
+        .nav-link.active::after {
+            width: 80%;
+        }
+
+        .nav-link.active span {
+            color: #1a365d;
+            font-weight: 600;
         }
 
         .magic-link {
@@ -614,26 +650,54 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
             animation: shimmer 3s infinite;
         }
 
-        /* Enhanced dropdown styling */
+        /* Enhanced dropdown styling with glassmorphism */
         .dropdown-content {
             transform-origin: top center;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
             opacity: 0;
             visibility: hidden;
-            transform: translateY(-10px) scale(0.97);
+            transform: translateY(-15px) scale(0.95) rotateX(-5deg);
             pointer-events: none;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            box-shadow: 
+                0 25px 50px -12px rgba(0, 0, 0, 0.25),
+                0 0 0 1px rgba(255, 255, 255, 0.05),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             /* Add padding to create a hover gap */
             padding-top: 10px;
             margin-top: -10px;
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.95) 0%, 
+                rgba(255, 255, 255, 0.9) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .dropdown-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #1a365d, #c41e3a, #1a365d);
+            background-size: 200% 100%;
+            animation: gradient-flow 3s ease infinite;
         }
         
         .group:hover .dropdown-content,
         .dropdown-content.active {
             opacity: 1;
             visibility: visible;
-            transform: translateY(0) scale(1);
+            transform: translateY(0) scale(1) rotateX(0deg);
             pointer-events: auto;
+        }
+        
+        @keyframes gradient-flow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
 
         /* Modern header - significantly improved */
@@ -795,56 +859,37 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                         </div>
                     </a>
 
-                <!-- Desktop Navigation Links - Improved organization -->
+                <!-- Desktop Navigation Links - Premium enhanced -->
                 <div class="hidden md:flex items-center space-x-1 lg:space-x-2">
                     <a href="<?php echo URLROOT; ?>/" 
-                       class="relative px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg 
-                              transition-all duration-300 hover:text-primary hover:bg-primary/5
-                              group">
-                        <span class="relative z-10">Home</span>
-                        <div class="absolute inset-0 bg-primary/10 rounded-lg scale-0 
-                                    group-hover:scale-100 transition-transform duration-300"></div>
+                       class="nav-link px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg">
+                        <span>Home</span>
                     </a>
 
                     <a href="<?php echo URLROOT; ?>/blogs" 
-                       class="relative px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg 
-                              transition-all duration-300 hover:text-primary hover:bg-primary/5
-                              group">
-                        <span class="relative z-10">Blogs</span>
-                        <div class="absolute inset-0 bg-primary/10 rounded-lg scale-0 
-                                    group-hover:scale-100 transition-transform duration-300"></div>
+                       class="nav-link px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg">
+                        <span>Blogs</span>
                     </a>
 
                     <!-- <a href="<?php echo URLROOT; ?>/nieuws" 
-                       class="relative px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg 
-                              transition-all duration-300 hover:text-primary hover:bg-primary/5
-                              group">
-                        <span class="relative z-10">Nieuws</span>
-                        <div class="absolute inset-0 bg-primary/10 rounded-lg scale-0 
-                                    group-hover:scale-100 transition-transform duration-300"></div>
+                       class="nav-link px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg">
+                        <span>Nieuws</span>
                     </a> -->
 
                     <a href="<?php echo URLROOT; ?>/partijen" 
-                       class="relative px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg 
-                              transition-all duration-300 hover:text-primary hover:bg-primary/5
-                              group">
-                        <span class="relative z-10">Partijen</span>
-                        <div class="absolute inset-0 bg-primary/10 rounded-lg scale-0 
-                                    group-hover:scale-100 transition-transform duration-300"></div>
+                       class="nav-link px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg">
+                        <span>Partijen</span>
                     </a>
 
                     <!-- Tools Dropdown - New organized section -->
                     <div class="relative group">
-                        <button class="relative px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg 
-                                      transition-all duration-300 hover:text-primary hover:bg-primary/5
+                        <button class="nav-link px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg 
                                       flex items-center">
-                            <span class="relative z-10">Hulpmiddelen</span>
+                            <span>Hulpmiddelen</span>
                             <svg class="w-4 h-4 ml-2 transform transition-transform duration-300 group-hover:rotate-180" 
                                  fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                             </svg>
-                            <div class="absolute inset-0 bg-primary/10 rounded-lg scale-0 
-                                        group-hover:scale-100 transition-transform duration-300"></div>
                         </button>
 
                         <div class="absolute left-0 mt-3 w-64 dropdown-content z-50" style="margin-top: -5px; padding-top: 15px;">
@@ -853,43 +898,53 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                                 <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-secondary to-accent"></div>
                                 
                                 <a href="<?php echo URLROOT; ?>/stemwijzer" 
-                                   class="flex items-center px-3 py-3 rounded-lg transition-all duration-200
-                                          hover:bg-gray-50 group/item">
+                                   class="flex items-center px-3 py-3 rounded-lg transition-all duration-300
+                                          hover:bg-gradient-to-r hover:from-secondary/5 hover:to-secondary/10 
+                                          group/item relative overflow-hidden">
                                     <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-secondary/10
-                                              transition-all duration-200 group-hover/item:scale-110 group-hover/item:bg-secondary/20">
-                                        <svg class="w-5 h-5 text-secondary transition-all duration-200" 
+                                              transition-all duration-300 group-hover/item:scale-110 group-hover/item:bg-secondary/20
+                                              group-hover/item:shadow-lg group-hover/item:shadow-secondary/20">
+                                        <svg class="w-5 h-5 text-secondary transition-all duration-300 group-hover/item:scale-110" 
                                              fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                                   d="M9 5H7a2 2 0 00-2 2v11a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
                                         </svg>
                                     </div>
-                                    <div class="ml-3 flex-1">
+                                    <div class="ml-3 flex-1 transition-all duration-300 group-hover/item:translate-x-1">
                                         <div class="flex items-center">
-                                            <p class="text-sm font-semibold text-gray-800">Stemwijzer</p>
+                                            <p class="text-sm font-semibold text-gray-800 group-hover/item:text-secondary transition-colors duration-300">Stemwijzer</p>
                                             <span class="ml-2 px-2 py-0.5 text-xs font-bold bg-secondary text-white 
-                                                        rounded-full shadow-sm">2025</span>
+                                                        rounded-full shadow-sm transition-all duration-300
+                                                        group-hover/item:shadow-md group-hover/item:scale-105">2025</span>
                                         </div>
                                     </div>
+                                    <div class="absolute inset-0 bg-gradient-to-r from-secondary/5 to-transparent 
+                                               opacity-0 transition-opacity duration-300 group-hover/item:opacity-100"></div>
                                 </a>
 
                                 <a href="<?php echo URLROOT; ?>/programma-vergelijker" 
-                                   class="flex items-center px-3 py-3 mt-1 rounded-lg transition-all duration-200
-                                          hover:bg-gray-50 group/item">
+                                   class="flex items-center px-3 py-3 mt-1 rounded-lg transition-all duration-300
+                                          hover:bg-gradient-to-r hover:from-accent/5 hover:to-accent/10 
+                                          group/item relative overflow-hidden">
                                     <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-accent/10
-                                              transition-all duration-200 group-hover/item:scale-110 group-hover/item:bg-accent/20">
-                                        <svg class="w-5 h-5 text-accent transition-all duration-200" 
+                                              transition-all duration-300 group-hover/item:scale-110 group-hover/item:bg-accent/20
+                                              group-hover/item:shadow-lg group-hover/item:shadow-accent/20">
+                                        <svg class="w-5 h-5 text-accent transition-all duration-300 group-hover/item:scale-110" 
                                              fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                                   d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
                                         </svg>
                                     </div>
-                                    <div class="ml-3 flex-1">
+                                    <div class="ml-3 flex-1 transition-all duration-300 group-hover/item:translate-x-1">
                                         <div class="flex items-center">
-                                            <p class="text-sm font-semibold text-gray-800">Vergelijker</p>
+                                            <p class="text-sm font-semibold text-gray-800 group-hover/item:text-accent transition-colors duration-300">Vergelijker</p>
                                             <span class="ml-2 px-2 py-0.5 text-xs font-bold bg-accent text-white 
-                                                        rounded-full shadow-sm">Nieuw</span>
+                                                        rounded-full shadow-sm transition-all duration-300
+                                                        group-hover/item:shadow-md group-hover/item:scale-105">Nieuw</span>
                                         </div>
                                     </div>
+                                    <div class="absolute inset-0 bg-gradient-to-r from-accent/5 to-transparent 
+                                               opacity-0 transition-opacity duration-300 group-hover/item:opacity-100"></div>
                                 </a>
                             </div>
                         </div>
@@ -897,16 +952,13 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
 
                     <!-- Info Dropdown - Reorganized -->
                     <div class="relative group">
-                        <button class="relative px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg 
-                                      transition-all duration-300 hover:text-primary hover:bg-primary/5
+                        <button class="nav-link px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg 
                                       flex items-center">
-                            <span class="relative z-10">Info</span>
+                            <span>Info</span>
                             <svg class="w-4 h-4 ml-2 transform transition-transform duration-300 group-hover:rotate-180" 
                                  fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                             </svg>
-                            <div class="absolute inset-0 bg-primary/10 rounded-lg scale-0 
-                                        group-hover:scale-100 transition-transform duration-300"></div>
                         </button>
 
                         <div class="absolute left-0 mt-3 w-56 dropdown-content z-50" style="margin-top: -5px; padding-top: 15px;">
@@ -915,37 +967,45 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                                 <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-secondary to-accent"></div>
                                 
                                 <a href="<?php echo URLROOT; ?>/over-mij" 
-                                   class="flex items-center px-3 py-3 rounded-lg transition-all duration-200
-                                          hover:bg-gray-50 group/item">
+                                   class="flex items-center px-3 py-3 rounded-lg transition-all duration-300
+                                          hover:bg-gradient-to-r hover:from-primary/5 hover:to-primary/10 
+                                          group/item relative overflow-hidden">
                                     <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-primary/10
-                                              transition-all duration-200 group-hover/item:scale-110 group-hover/item:bg-primary/20">
-                                        <svg class="w-5 h-5 text-primary transition-all duration-200" 
+                                              transition-all duration-300 group-hover/item:scale-110 group-hover/item:bg-primary/20
+                                              group-hover/item:shadow-lg group-hover/item:shadow-primary/20">
+                                        <svg class="w-5 h-5 text-primary transition-all duration-300 group-hover/item:scale-110" 
                                              fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                                   d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                                         </svg>
                                     </div>
-                                    <div class="ml-3">
-                                        <p class="text-sm font-semibold text-gray-800">Over ons</p>
-                                        <p class="text-xs text-gray-500">Leer ons kennen</p>
+                                    <div class="ml-3 transition-all duration-300 group-hover/item:translate-x-1">
+                                        <p class="text-sm font-semibold text-gray-800 group-hover/item:text-primary transition-colors duration-300">Over ons</p>
+                                        <p class="text-xs text-gray-500 group-hover/item:text-primary/70 transition-colors duration-300">Leer ons kennen</p>
                                     </div>
+                                    <div class="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent 
+                                               opacity-0 transition-opacity duration-300 group-hover/item:opacity-100"></div>
                                 </a>
 
                                 <a href="<?php echo URLROOT; ?>/contact" 
-                                   class="flex items-center px-3 py-3 mt-1 rounded-lg transition-all duration-200
-                                          hover:bg-gray-50 group/item">
+                                   class="flex items-center px-3 py-3 mt-1 rounded-lg transition-all duration-300
+                                          hover:bg-gradient-to-r hover:from-secondary/5 hover:to-secondary/10 
+                                          group/item relative overflow-hidden">
                                     <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-secondary/10
-                                              transition-all duration-200 group-hover/item:scale-110 group-hover/item:bg-secondary/20">
-                                        <svg class="w-5 h-5 text-secondary transition-all duration-200" 
+                                              transition-all duration-300 group-hover/item:scale-110 group-hover/item:bg-secondary/20
+                                              group-hover/item:shadow-lg group-hover/item:shadow-secondary/20">
+                                        <svg class="w-5 h-5 text-secondary transition-all duration-300 group-hover/item:scale-110" 
                                              fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                                   d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                                         </svg>
                                     </div>
-                                    <div class="ml-3">
-                                        <p class="text-sm font-semibold text-gray-800">Contact</p>
-                                        <p class="text-xs text-gray-500">Neem contact op</p>
+                                    <div class="ml-3 transition-all duration-300 group-hover/item:translate-x-1">
+                                        <p class="text-sm font-semibold text-gray-800 group-hover/item:text-secondary transition-colors duration-300">Contact</p>
+                                        <p class="text-xs text-gray-500 group-hover/item:text-secondary/70 transition-colors duration-300">Neem contact op</p>
                                     </div>
+                                    <div class="absolute inset-0 bg-gradient-to-r from-secondary/5 to-transparent 
+                                               opacity-0 transition-opacity duration-300 group-hover/item:opacity-100"></div>
                                 </a>
                             </div>
                         </div>
@@ -1004,76 +1064,92 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                                     <div class="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-primary/30 via-secondary/30 to-primary/30"></div>
                                     
                                     <?php if($_SESSION['is_admin']): ?>
-                                        <a href="<?php echo URLROOT; ?>/admin/stemwijzer-dashboard.php" 
-                                           class="flex items-center px-3 py-2 rounded-lg
-                                                 transition-all duration-200 hover:bg-gray-50 group/item">
-                                            <div class="w-9 h-9 bg-primary/5 rounded-lg flex items-center justify-center
-                                                      transition-transform duration-200 group-hover/item:scale-110">
-                                                <svg class="w-5 h-5 text-primary transition-colors duration-200" 
-                                                     fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                            <a href="<?php echo URLROOT; ?>/admin/stemwijzer-dashboard.php" 
+                                       class="flex items-center px-3 py-2 rounded-lg
+                                             transition-all duration-300 hover:bg-gradient-to-r hover:from-primary/5 hover:to-primary/10 
+                                             group/item relative overflow-hidden">
+                                        <div class="w-9 h-9 bg-primary/5 rounded-lg flex items-center justify-center
+                                                  transition-all duration-300 group-hover/item:scale-110 group-hover/item:bg-primary/15
+                                                  group-hover/item:shadow-lg group-hover/item:shadow-primary/20">
+                                            <svg class="w-5 h-5 text-primary transition-all duration-300 group-hover/item:scale-110" 
+                                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                      d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                                          d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                                              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                                </svg>
-                                            </div>
-                                            <div class="ml-3">
-                                                <p class="text-sm font-medium text-gray-900">Dashboard</p>
-                                                <p class="text-xs text-gray-500">Beheer je website</p>
-                                            </div>
-                                        </a>
+                                                          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                            </svg>
+                                        </div>
+                                        <div class="ml-3 transition-all duration-300 group-hover/item:translate-x-1">
+                                            <p class="text-sm font-medium text-gray-900 group-hover/item:text-primary transition-colors duration-300">Dashboard</p>
+                                            <p class="text-xs text-gray-500 group-hover/item:text-primary/70 transition-colors duration-300">Beheer je website</p>
+                                        </div>
+                                        <div class="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent 
+                                                   opacity-0 transition-opacity duration-300 group-hover/item:opacity-100"></div>
+                                    </a>
                                     <?php endif; ?>
 
                                     <a href="<?php echo URLROOT; ?>/blogs/manage" 
                                        class="flex items-center px-3 py-2 rounded-lg
-                                              transition-all duration-200 hover:bg-gray-50 group/item">
+                                              transition-all duration-300 hover:bg-gradient-to-r hover:from-primary/5 hover:to-primary/10 
+                                              group/item relative overflow-hidden">
                                         <div class="w-9 h-9 bg-primary/5 rounded-lg flex items-center justify-center
-                                                  transition-transform duration-200 group-hover/item:scale-110">
-                                            <svg class="w-5 h-5 text-primary transition-colors duration-200" 
+                                                  transition-all duration-300 group-hover/item:scale-110 group-hover/item:bg-primary/15
+                                                  group-hover/item:shadow-lg group-hover/item:shadow-primary/20">
+                                            <svg class="w-5 h-5 text-primary transition-all duration-300 group-hover/item:scale-110" 
                                                  fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                                       d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                                             </svg>
                                         </div>
-                                        <div class="ml-3">
-                                            <p class="text-sm font-medium text-gray-900">Mijn Blogs</p>
-                                            <p class="text-xs text-gray-500">Beheer je blogs</p>
+                                        <div class="ml-3 transition-all duration-300 group-hover/item:translate-x-1">
+                                            <p class="text-sm font-medium text-gray-900 group-hover/item:text-primary transition-colors duration-300">Mijn Blogs</p>
+                                            <p class="text-xs text-gray-500 group-hover/item:text-primary/70 transition-colors duration-300">Beheer je blogs</p>
                                         </div>
+                                        <div class="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent 
+                                                   opacity-0 transition-opacity duration-300 group-hover/item:opacity-100"></div>
                                     </a>
 
                                     <a href="<?php echo URLROOT; ?>/profile" 
                                        class="flex items-center px-3 py-2 rounded-lg
-                                              transition-all duration-200 hover:bg-gray-50 group/item">
+                                              transition-all duration-300 hover:bg-gradient-to-r hover:from-secondary/5 hover:to-secondary/10 
+                                              group/item relative overflow-hidden">
                                         <div class="w-9 h-9 bg-secondary/5 rounded-lg flex items-center justify-center
-                                                  transition-transform duration-200 group-hover/item:scale-110">
-                                            <svg class="w-5 h-5 text-secondary transition-colors duration-200" 
+                                                  transition-all duration-300 group-hover/item:scale-110 group-hover/item:bg-secondary/15
+                                                  group-hover/item:shadow-lg group-hover/item:shadow-secondary/20">
+                                            <svg class="w-5 h-5 text-secondary transition-all duration-300 group-hover/item:scale-110" 
                                                  fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                                       d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                                             </svg>
                                         </div>
-                                        <div class="ml-3">
-                                            <p class="text-sm font-medium text-gray-900">Profiel</p>
-                                            <p class="text-xs text-gray-500">Beheer je account</p>
+                                        <div class="ml-3 transition-all duration-300 group-hover/item:translate-x-1">
+                                            <p class="text-sm font-medium text-gray-900 group-hover/item:text-secondary transition-colors duration-300">Profiel</p>
+                                            <p class="text-xs text-gray-500 group-hover/item:text-secondary/70 transition-colors duration-300">Beheer je account</p>
                                         </div>
+                                        <div class="absolute inset-0 bg-gradient-to-r from-secondary/5 to-transparent 
+                                                   opacity-0 transition-opacity duration-300 group-hover/item:opacity-100"></div>
                                     </a>
                                     <div class="mx-3 my-1.5 border-t border-gray-100"></div>
 
                                     <a href="<?php echo URLROOT; ?>/logout" 
                                        class="flex items-center px-3 py-2 rounded-lg
-                                             transition-all duration-200 hover:bg-red-50 group/item">
+                                             transition-all duration-300 hover:bg-gradient-to-r hover:from-red-50 hover:to-red-100 
+                                             group/item relative overflow-hidden">
                                         <div class="w-9 h-9 bg-red-500/5 rounded-lg flex items-center justify-center
-                                                  transition-transform duration-200 group-hover/item:scale-110">
-                                            <svg class="w-5 h-5 text-red-500 transition-colors duration-200" 
+                                                  transition-all duration-300 group-hover/item:scale-110 group-hover/item:bg-red-500/15
+                                                  group-hover/item:shadow-lg group-hover/item:shadow-red-500/20">
+                                            <svg class="w-5 h-5 text-red-500 transition-all duration-300 group-hover/item:scale-110" 
                                                  fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                                       d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
                                             </svg>
                                         </div>
-                                        <div class="ml-3">
-                                            <p class="text-sm font-medium text-red-600">Uitloggen</p>
-                                            <p class="text-xs text-red-400">Tot ziens!</p>
+                                        <div class="ml-3 transition-all duration-300 group-hover/item:translate-x-1">
+                                            <p class="text-sm font-medium text-red-600 group-hover/item:text-red-700 transition-colors duration-300">Uitloggen</p>
+                                            <p class="text-xs text-red-400 group-hover/item:text-red-500 transition-colors duration-300">Tot ziens!</p>
                                         </div>
+                                        <div class="absolute inset-0 bg-gradient-to-r from-red-500/5 to-transparent 
+                                                   opacity-0 transition-opacity duration-300 group-hover/item:opacity-100"></div>
                                     </a>
                                 </div>
                             </div>
@@ -1479,7 +1555,7 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                 }
             });
 
-            // Handle desktop dropdowns
+            // Handle desktop dropdowns with improved timing
             const dropdownGroups = document.querySelectorAll('.group');
             dropdownGroups.forEach(group => {
                 const button = group.querySelector('button');
@@ -1493,7 +1569,7 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                         dropdown.classList.add('dropdown-active');
                         dropdown.style.opacity = '1';
                         dropdown.style.visibility = 'visible';
-                        dropdown.style.transform = 'translateY(0) scale(1)';
+                        dropdown.style.transform = 'translateY(0) scale(1) rotateX(0deg)';
                         dropdown.style.pointerEvents = 'auto';
                     });
                     
@@ -1502,9 +1578,29 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                             dropdown.classList.remove('dropdown-active');
                             dropdown.style.opacity = '0';
                             dropdown.style.visibility = 'hidden';
-                            dropdown.style.transform = 'translateY(-10px) scale(0.97)';
+                            dropdown.style.transform = 'translateY(-15px) scale(0.95) rotateX(-5deg)';
                             dropdown.style.pointerEvents = 'none';
-                        }, 100);
+                        }, 150);
+                    });
+                    
+                    // Add keyboard support for accessibility
+                    button.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            if (dropdown.classList.contains('dropdown-active')) {
+                                dropdown.classList.remove('dropdown-active');
+                                dropdown.style.opacity = '0';
+                                dropdown.style.visibility = 'hidden';
+                                dropdown.style.transform = 'translateY(-15px) scale(0.95) rotateX(-5deg)';
+                                dropdown.style.pointerEvents = 'none';
+                            } else {
+                                dropdown.classList.add('dropdown-active');
+                                dropdown.style.opacity = '1';
+                                dropdown.style.visibility = 'visible';
+                                dropdown.style.transform = 'translateY(0) scale(1) rotateX(0deg)';
+                                dropdown.style.pointerEvents = 'auto';
+                            }
+                        }
                     });
                 }
             });
