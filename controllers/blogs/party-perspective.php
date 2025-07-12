@@ -13,46 +13,71 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_SERVER['HTTP_X_REQUESTED_W
 header('Content-Type: application/json');
 
 /**
- * Maakt een beknopte en veilige samenvatting van blog content voor de AI.
- * Deze functie vervangt de vorige, complexe truncate-logica.
+ * Verkort blog content voor veilige API calls
  */
-function getAISummaryForPerspective($title, $content) {
-    $cleanContent = stripMarkdownSyntaxForPerspective($content);
-    $length = mb_strlen($cleanContent);
-
-    // Voor extreem lange artikelen (> 5000 chars), geef alleen het thema.
-    if ($length > 5000) {
-        return "Geef een reactie op het algemene thema van een zeer diepgaand artikel met de titel: \"{$title}\".";
+function truncateContentForAPI($content, $maxLength = 3000) {
+    if (empty($content)) {
+        return $content;
     }
-
-    // Voor lange artikelen, geef een samenvatting van het begin.
-    if ($length > 1500) {
-        $paragraphs = explode("\n\n", $cleanContent);
-        $summary = $paragraphs[0] ?? '';
-        if (isset($paragraphs[1])) {
-            $summary .= "\n\n" . $paragraphs[1];
+    
+    // Strip Markdown syntax eerst
+    $content = stripMarkdownSyntax($content);
+    
+    // Als content al kort genoeg is, return direct
+    if (mb_strlen($content) <= $maxLength) {
+        return $content;
+    }
+    
+    // Verkort tot maxLength, maar eindig op een volledige zin
+    $truncated = mb_substr($content, 0, $maxLength);
+    
+    // Zoek de laatste punt, uitroepteken of vraagteken
+    $lastSentenceEnd = max(
+        mb_strrpos($truncated, '.'),
+        mb_strrpos($truncated, '!'),
+        mb_strrpos($truncated, '?')
+    );
+    
+    if ($lastSentenceEnd !== false && $lastSentenceEnd > $maxLength * 0.7) {
+        // Als we een goede zin-einde vinden binnen 70% van de lengte, gebruik die
+        $truncated = mb_substr($truncated, 0, $lastSentenceEnd + 1);
+    } else {
+        // Anders, zoek de laatste spatie om midden in een woord te voorkomen
+        $lastSpace = mb_strrpos($truncated, ' ');
+        if ($lastSpace !== false && $lastSpace > $maxLength * 0.8) {
+            $truncated = mb_substr($truncated, 0, $lastSpace);
         }
-        return "Reageer op basis van de volgende samenvatting van een artikel genaamd \"{$title}\":\n\n" . mb_substr($summary, 0, 1200) . '...';
+        $truncated .= '...';
     }
-
-    // Voor normale artikelen, gebruik de titel en volledige content.
-    return "Reageer op het volgende artikel met de titel \"{$title}\":\n\n" . $cleanContent;
+    
+    return trim($truncated);
 }
 
 /**
- * Basis Markdown-stripper, geoptimaliseerd voor snelheid.
+ * Strip Markdown syntax voor betere content extractie
  */
-function stripMarkdownSyntaxForPerspective($text) {
+function stripMarkdownSyntax($text) {
     if (empty($text)) {
         return $text;
     }
-    // Verwijder structurele markdown voor een schonere input.
+    
+    // Strip verschillende Markdown elementen
     $text = preg_replace('/^#{1,6}\s+/m', '', $text); // Headers
-    $text = preg_replace('/(\*\*|__)(.*?)\1/', '$2', $text); // Bold
-    $text = preg_replace('/(\*|_)(.*?)\1/', '$2', $text); // Italic
+    $text = preg_replace('/\*\*(.*?)\*\*/', '$1', $text); // Bold
+    $text = preg_replace('/\*(.*?)\*/', '$1', $text); // Italic
+    $text = preg_replace('/`(.*?)`/', '$1', $text); // Inline code
     $text = preg_replace('/\[(.*?)\]\(.*?\)/', '$1', $text); // Links
-    $text = preg_replace('/^(\s*[-*+]\s+|\s*\d+\.\s+|^>\s+)/m', '', $text); // Lists & Blockquotes
-    return trim(preg_replace('/\s+/', ' ', $text));
+    $text = preg_replace('/^\s*[-*+]\s+/m', '• ', $text); // Unordered lists
+    $text = preg_replace('/^\s*\d+\.\s+/m', '', $text); // Ordered lists
+    $text = preg_replace('/^>\s+/m', '', $text); // Blockquotes
+    $text = preg_replace('/```.*?```/s', '', $text); // Code blocks
+    $text = preg_replace('/^\s*---+\s*$/m', '', $text); // Horizontal rules
+    
+    // Vervang multiple whitespace met single space
+    $text = preg_replace('/\s+/', ' ', $text);
+    $text = preg_replace('/\n\s*\n/', "\n\n", $text);
+    
+    return trim($text);
 }
 
 try {
@@ -306,29 +331,19 @@ try {
         throw new Exception('Blog niet gevonden');
     }
     
-    // Maak een veilige, korte samenvatting voor de AI.
-    $aiSummary = getAISummaryForPerspective($blog->title, $blog->content);
-
-    // Finale veiligheidscheck op de lengte.
-    if (mb_strlen($aiSummary) > 2500) {
-        error_log("Perspective API call afgebroken: Samenvatting is na verwerking nog te lang. Lengte: " . mb_strlen($aiSummary));
-        throw new Exception('Het artikel is te complex om een reactie op te genereren.');
-    }
+    // Verkort blog content voor veilige API call
+    $truncatedContent = truncateContentForAPI($blog->content, 2500);
     
     // Initialiseer ChatGPT API
-    try {
-        $chatGPT = new ChatGPTAPI();
-    } catch (Exception $e) {
-        throw new Exception('AI-service is momenteel niet beschikbaar. Probeer het later opnieuw.');
-    }
+    $chatGPT = new ChatGPTAPI();
     
-    // Genereer perspectief met de veilige samenvatting
+    // Genereer perspectief met verkorte content
     if ($type === 'party') {
         $result = $chatGPT->generatePartyPerspective(
             $partyData['name'],
             $partyData,
             $blog->title,
-            $aiSummary
+            $truncatedContent
         );
     } else {
         $result = $chatGPT->generateLeaderPerspective(
@@ -336,7 +351,7 @@ try {
             $partyData['name'],
             $partyData,
             $blog->title,
-            $aiSummary
+            $truncatedContent
         );
     }
     
@@ -351,18 +366,7 @@ try {
             'type' => $type
         ], JSON_UNESCAPED_UNICODE);
     } else {
-        // Specifieke error handling voor verschillende API fouten
-        $errorMessage = $result['error'] ?? 'Onbekende fout bij genereren perspectief';
-        
-        if (strpos($errorMessage, 'timeout') !== false) {
-            throw new Exception('De AI-service reageert niet snel genoeg. Het artikel is mogelijk te complex. Probeer het opnieuw.');
-        } elseif (strpos($errorMessage, 'rate limit') !== false) {
-            throw new Exception('Te veel verzoeken naar de AI-service. Wacht een moment en probeer het opnieuw.');
-        } elseif (strpos($errorMessage, 'content_filter') !== false) {
-            throw new Exception('De inhoud van het artikel kan niet verwerkt worden door de AI-service.');
-        } else {
-            throw new Exception('Kon leider reactie niet genereren: ' . $errorMessage);
-        }
+        throw new Exception($result['error'] ?? 'Fout bij genereren perspectief');
     }
     
 } catch (Exception $e) {

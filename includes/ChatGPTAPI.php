@@ -170,7 +170,7 @@ Schrijf persoonlijk en bemoedigend. Begin met 'Op basis van jouw stemwijzer resu
             'messages' => [
                 [
                     'role' => 'system', 
-                    'content' => 'Je bent een Nederlandse politieke expert die korte, krachtige reacties geeft. Schrijf direct en emotioneel in duidelijk Nederlands.'
+                    'content' => 'Je bent een Nederlandse politieke expert die neutrale, informatieve uitleg geeft over politiek. Je schrijft in duidelijk Nederlands voor gewone burgers.'
                 ],
                 [
                     'role' => 'user', 
@@ -178,9 +178,7 @@ Schrijf persoonlijk en bemoedigend. Begin met 'Op basis van jouw stemwijzer resu
                 ]
             ],
             'max_tokens' => 400,
-            'temperature' => 0.8,
-            'presence_penalty' => 0.1,
-            'frequency_penalty' => 0.1
+            'temperature' => 0.7
         ];
         
         $headers = [
@@ -194,7 +192,7 @@ Schrijf persoonlijk en bemoedigend. Begin met 'Op basis van jouw stemwijzer resu
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 30);
         
         $response = curl_exec($ch);
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -362,18 +360,38 @@ Denk aan hoe {$partyName} werkelijk zou reageren - boos, teleurgesteld, hoopvol,
      * Genereer perspectief van een politieke leider op een blog artikel
      */
     public function generateLeaderPerspective($leaderName, $partyName, $partyInfo, $blogTitle, $blogContent) {
-        $prompt = "Je bent {$leaderName}, de partijleider van {$partyName}. Geef een krachtige, authentieke reactie op het volgende politieke onderwerp.
+        $prompt = "Je bent {$leaderName}, partijleider van {$partyName}. Je leest dit blog artikel en reageert zoals je altijd doet - met passie, overtuiging en jouw eigen unieke stijl.
 
-**Onderwerp / Samenvatting van Artikel:**
-'{$blogContent}'
+**Wie je bent:**
+{$partyInfo['leader_info']}
 
-**Jouw missie:**
-Reageer in ongeveer 150-200 woorden alsof je in een interview bent. Wees trouw aan je eigen stijl en de standpunten van je partij.
-- **Jouw Standpunten:** Immigratie: '{$partyInfo['standpoints']['Immigratie']}'. Klimaat: '{$partyInfo['standpoints']['Klimaat']}'.
-- **Jouw Stijl:** Gebruik je bekende uitdrukkingen. Wees direct, emotioneel en overtuigend.
-- **Focus:** Spreek direct tot de Nederlandse kiezer. Begin meteen met je reactie, zonder inleiding.
+**Waar jouw partij voor staat:**
+- Immigratie: {$partyInfo['standpoints']['Immigratie']}
+- Klimaat: {$partyInfo['standpoints']['Klimaat']}
+- Zorg: {$partyInfo['standpoints']['Zorg']}
+- Energie: {$partyInfo['standpoints']['Energie']}
 
-Laat de passie zien die je hebt voor jouw zaak en voor Nederland.";
+**Het artikel:**
+Titel: {$blogTitle}
+Inhoud: {$blogContent}
+
+Reageer als {$leaderName} zelf! Gebruik jouw eigen karakteristieke manier van spreken:
+- Jouw persoonlijke stijl (direct, diplomatiek, fel, gemoedelijk?)
+- Uitdrukkingen die jij vaak gebruikt
+- Jouw manier van argumenteren
+- Persoonlijke verhalen of ervaringen die je vaak deelt
+- Jouw emoties - waar word je boos om? Wat geeft je energie?
+- Hoe jij gewoonlijk andere partijen aanpakt
+
+Schrijf 200-300 woorden alsof je net in een interview zit en de interviewer je dit artikel voorlegt. Begin direct met je reactie - geen beleefdheidsfrases. Laat zien wie je bent!
+
+Denk aan:
+- Hoe reageer je als {$leaderName} op kritiek?
+- Wat zijn jouw vaste uitdrukkingen?
+- Hoe verdedig je jouw standpunten?
+- Wat is jouw unieke perspectief als leider?
+
+Wees echt menselijk - toon frustratie, enthousiasme, vastberadenheid, teleurstelling... wat {$leaderName} ook zou voelen bij dit artikel.";
 
         return $this->makeAPICall($prompt);
     }
