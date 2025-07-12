@@ -97,22 +97,31 @@ require_once 'views/templates/header.php'; ?>
     <article class="relative">
         <div class="container mx-auto px-3 sm:px-4 py-8 sm:py-16">
             <div class="max-w-4xl mx-auto">
-                <div class="bg-white rounded-2xl sm:rounded-3xl shadow-2xl border border-gray-100 overflow-hidden">
+                <!-- Enhanced Article Card -->
+                <div class="bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden backdrop-blur-sm">
                     
                     <!-- Video sectie (indien aanwezig) -->
                     <?php if ($blog->video_path || $blog->video_url): ?>
-                    <div class="relative">
+                    <div class="relative group">
                         <?php if ($blog->video_path): ?>
                             <!-- Lokaal geüploade video -->
-                            <div class="relative aspect-video bg-black">
-                                <video controls class="w-full h-full rounded-t-2xl sm:rounded-t-3xl" poster="<?php echo $blog->image_path ? getBlogImageUrl($blog->image_path) : ''; ?>">
+                            <div class="relative aspect-video bg-gradient-to-br from-gray-900 to-gray-800 rounded-t-3xl overflow-hidden">
+                                <video controls class="w-full h-full object-cover" poster="<?php echo $blog->image_path ? getBlogImageUrl($blog->image_path) : ''; ?>">
                                     <source src="<?php echo getBlogVideoUrl($blog->video_path); ?>" type="video/mp4">
                                     Je browser ondersteunt geen video weergave.
                                 </video>
+                                <!-- Video overlay controls -->
+                                <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                    <div class="bg-white/90 backdrop-blur-sm rounded-full p-4 transform scale-90 group-hover:scale-100 transition-transform duration-300">
+                                        <svg class="w-8 h-8 text-gray-800" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M8 5v14l11-7z"/>
+                                        </svg>
+                                    </div>
+                                </div>
                             </div>
                         <?php elseif ($blog->video_url): ?>
                             <!-- Embedded video (YouTube/Vimeo) -->
-                            <div class="relative aspect-video bg-black rounded-t-2xl sm:rounded-t-3xl overflow-hidden">
+                            <div class="relative aspect-video bg-gradient-to-br from-gray-900 to-gray-800 rounded-t-3xl overflow-hidden">
                                 <?php
                                 // YouTube URL omzetten naar embed URL
                                 if (preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/', $blog->video_url, $matches)) {
@@ -136,62 +145,110 @@ require_once 'views/templates/header.php'; ?>
                     </div>
                     <?php endif; ?>
 
-                    <!-- Podcast sectie (indien aanwezig) -->
+                    <!-- Enhanced Podcast sectie (indien aanwezig) -->
                     <?php if (!empty($blog->soundcloud_url)): ?>
-                    <div class="border-b border-gray-100">
-                        <div class="p-3 sm:p-4 bg-gradient-to-r from-orange-50/50 to-red-50/50">
-                            <!-- Header met NIEUW badge -->
-                            <div class="flex items-center justify-between mb-3">
-                                <div class="flex items-center gap-2">
-                                    <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-red-500 to-orange-500 text-white">
-                                        <span class="w-1.5 h-1.5 bg-white rounded-full mr-1.5 animate-pulse"></span>
-                                        NIEUW
-                                    </span>
-                                    <p class="text-sm font-medium text-gray-900">Luister ook naar de podcast</p>
+                    <div class="relative overflow-hidden">
+                        <!-- Audio Header -->
+                        <div class="bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 p-6">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-4">
+                                    <div class="relative">
+                                        <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+                                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
+                            </svg>
+                                        </div>
+                                        <div class="absolute -top-1 -right-1 w-6 h-6 bg-white text-red-500 rounded-full flex items-center justify-center">
+                                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xl font-bold text-white mb-1">🎙️ Podcast Editie</h3>
+                                        <p class="text-white/90 text-sm">Luister ook naar de audio versie</p>
+                                    </div>
                                 </div>
-                                
-                                <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
-                                </svg>
+                                <div class="hidden sm:flex items-center gap-2">
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full bg-white/20 text-white text-sm font-medium">
+                                        <span class="w-2 h-2 bg-white rounded-full mr-2 animate-pulse"></span>
+                                        LIVE
+                                    </span>
+                                </div>
                             </div>
-                            
-                            <!-- Compacte SoundCloud Player -->
-                            <div class="bg-white rounded-lg overflow-hidden shadow-sm border border-gray-100">
+                        </div>
+                        
+                        <!-- Enhanced SoundCloud Player -->
+                        <div class="bg-gradient-to-b from-gray-50 to-white p-6">
+                            <div class="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100">
                                 <?php
-                                // Compacte SoundCloud embed URL
-                                $soundcloudCompactUrl = 'https://w.soundcloud.com/player/?url=' . urlencode($blog->soundcloud_url) . '&color=%23ff5500&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false';
+                                // Enhanced SoundCloud embed URL
+                                $soundcloudEnhancedUrl = 'https://w.soundcloud.com/player/?url=' . urlencode($blog->soundcloud_url) . '&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true';
                                 ?>
                                 
                                 <iframe class="w-full border-0 soundcloud-iframe" 
-                                        height="120" 
+                                        height="166" 
                                         scrolling="no" 
                                         frameborder="no" 
                                         allow="autoplay" 
-                                        src="<?php echo htmlspecialchars($soundcloudCompactUrl); ?>">
+                                        src="<?php echo htmlspecialchars($soundcloudEnhancedUrl); ?>">
                                 </iframe>
+                            </div>
+                            
+                            <!-- Audio Controls -->
+                            <div class="flex items-center justify-center gap-4 mt-6">
+                                <button onclick="shareAudio()" class="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full hover:from-blue-600 hover:to-indigo-700 transition-all transform hover:scale-105">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"/>
+                                    </svg>
+                                    <span class="text-sm font-medium">Delen</span>
+                                </button>
+                                <button onclick="openInSoundCloud()" class="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-orange-500 to-red-600 text-white rounded-full hover:from-orange-600 hover:to-red-700 transition-all transform hover:scale-105">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M7 7h10v3l4-4-4-4v3H7z"/>
+                                    </svg>
+                                    <span class="text-sm font-medium">SoundCloud</span>
+                                </button>
                             </div>
                         </div>
                     </div>
                     
                     <?php elseif (!empty($blog->audio_path) || !empty($blog->audio_url)): ?>
-                    <!-- Fallback voor andere audio types -->
-                    <div class="border-b border-gray-100">
-                        <div class="p-3 sm:p-4 bg-gradient-to-r from-blue-50/50 to-indigo-50/50">
-                            <div class="flex items-center justify-between mb-3">
-                                <div class="flex items-center gap-2">
-                                    <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-blue-500 to-indigo-500 text-white">
-                                        <span class="w-1.5 h-1.5 bg-white rounded-full mr-1.5 animate-pulse"></span>
+                    <!-- Enhanced Fallback Audio Section -->
+                    <div class="relative overflow-hidden">
+                        <!-- Audio Header -->
+                        <div class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-6">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-4">
+                                    <div class="relative">
+                                        <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+                                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>
+                                            </svg>
+                                        </div>
+                                        <div class="absolute -top-1 -right-1 w-6 h-6 bg-white text-purple-500 rounded-full flex items-center justify-center">
+                                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xl font-bold text-white mb-1">🎵 Audio Versie</h3>
+                                        <p class="text-white/90 text-sm">Luister naar de podcast versie</p>
+                                    </div>
+                                </div>
+                                <div class="hidden sm:flex items-center gap-2">
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full bg-white/20 text-white text-sm font-medium">
+                                        <span class="w-2 h-2 bg-white rounded-full mr-2 animate-pulse"></span>
                                         AUDIO
                                     </span>
-                                    <p class="text-sm font-medium text-gray-900">Luister ook naar de podcast</p>
                                 </div>
-                                
-                                <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
-                                </svg>
                             </div>
-                            
-                            <div class="bg-white rounded-lg p-3 shadow-sm border border-gray-100">
+                        </div>
+                        
+                        <!-- Enhanced Audio Player -->
+                        <div class="bg-gradient-to-b from-gray-50 to-white p-6">
+                            <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
                                 <?php if (!empty($blog->audio_url)): ?>
                                     <?php
                                     // Extracteer file ID uit Google Drive URL
@@ -204,186 +261,375 @@ require_once 'views/templates/header.php'; ?>
                                     ?>
                                     
                                     <?php if ($fileId): ?>
-                                        <div class="text-center">
-                                            <button onclick="loadGoogleDrivePodcast('<?php echo $fileId; ?>')" class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-lg hover:from-blue-600 hover:to-indigo-600 transition-all duration-300 shadow-sm text-sm">
-                                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <div class="text-center space-y-4">
+                                            <div class="flex items-center justify-center gap-3">
+                                                <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                                                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h1m4 0h1m-6-8h12a2 2 0 012 2v8a2 2 0 01-2 2H6a2 2 0 01-2-2V8a2 2 0 012-2z"/>
+                                                    </svg>
+                                                </div>
+                                                <div>
+                                                    <h4 class="text-lg font-semibold text-gray-900">Google Drive Audio</h4>
+                                                    <p class="text-sm text-gray-600">Klik om af te spelen</p>
+                                                </div>
+                                            </div>
+                                            
+                                            <button onclick="loadGoogleDrivePodcast('<?php echo $fileId; ?>')" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
+                                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h1m4 0h1m-6-8h12a2 2 0 012 2v8a2 2 0 01-2 2H6a2 2 0 01-2-2V8a2 2 0 012-2z"/>
                                                 </svg>
-                                                Podcast afspelen
+                                                Podcast Afspelen
                                             </button>
-                                            <audio id="googleDrivePodcast" controls class="w-full mt-3" preload="none" style="display: none;">
+                                            
+                                            <audio id="googleDrivePodcast" controls class="w-full mt-4 rounded-lg shadow-md" preload="none" style="display: none;">
                                                 <source src="https://docs.google.com/uc?export=download&id=<?php echo $fileId; ?>" type="audio/mpeg">
                                             </audio>
                                         </div>
                                     <?php endif; ?>
                                     
                                 <?php elseif (!empty($blog->audio_path)): ?>
-                                    <audio controls class="w-full" preload="metadata">
-                                        <source src="<?php echo URLROOT . '/' . $blog->audio_path; ?>" type="audio/mpeg">
-                                        Je browser ondersteunt geen audio weergave.
-                                    </audio>
+                                    <div class="space-y-4">
+                                        <div class="flex items-center gap-3 mb-4">
+                                            <div class="w-12 h-12 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full flex items-center justify-center">
+                                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>
+                                                </svg>
+                                            </div>
+                                            <div>
+                                                <h4 class="text-lg font-semibold text-gray-900">Audio Podcast</h4>
+                                                <p class="text-sm text-gray-600">Luister naar de volledige audio versie</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="bg-gray-50 rounded-xl p-4">
+                                            <audio controls class="w-full rounded-lg" preload="metadata">
+                                                <source src="<?php echo URLROOT . '/' . $blog->audio_path; ?>" type="audio/mpeg">
+                                                Je browser ondersteunt geen audio weergave.
+                                            </audio>
+                                        </div>
+                                        
+                                        <!-- Audio Controls -->
+                                        <div class="flex items-center justify-center gap-3 pt-4">
+                                            <button onclick="changePlaybackSpeed()" class="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                                </svg>
+                                                <span class="text-sm font-medium">Snelheid</span>
+                                            </button>
+                                            <button onclick="downloadAudio()" class="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-green-500 to-teal-600 text-white rounded-full hover:from-green-600 hover:to-teal-700 transition-all transform hover:scale-105">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                                </svg>
+                                                <span class="text-sm font-medium">Download</span>
+                                            </button>
+                                        </div>
+                                    </div>
                                 <?php endif; ?>
                             </div>
                         </div>
                     </div>
                     <?php endif; ?>
 
-                    <!-- Content -->
-                    <div class="p-4 sm:p-6 lg:p-8 xl:p-12">
-                        <!-- Main Content -->
-                        <div id="blog-content" class="prose prose-sm sm:prose-lg max-w-none">
-                            <?php echo $blog->content; ?>
-                        </div>
-                    </div>
-
-                    <!-- Social Actions & Share -->
-                    <div class="px-4 sm:px-6 lg:px-8 xl:px-12 py-8 sm:py-10 bg-gradient-to-br from-slate-50 via-blue-50/80 to-indigo-50/60 border-t border-gray-200/50">
-                        <div class="max-w-4xl mx-auto">
-                            <!-- Action Buttons Row -->
-                            <div class="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-8 mb-8">
-                                <!-- Enhanced Like Button -->
-                                <button id="likeButton" 
-                                        class="group relative flex items-center gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-white/50 hover:border-red-200/60 transition-all duration-500 transform hover:scale-105 hover:shadow-xl"
-                                        data-slug="<?php echo $blog->slug; ?>"
-                                        aria-label="Like deze blog">
-                                    <div class="relative">
-                                        <svg class="w-6 h-6 transition-all duration-300 group-hover:text-red-500" 
-                                             viewBox="0 0 24 24"
-                                             fill="none"
-                                             stroke="currentColor"
-                                             stroke-width="2">
-                                            <path stroke-linecap="round" 
-                                                  stroke-linejoin="round" 
-                                                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
-                                            </path>
-                                        </svg>
-                                        <!-- Heart particles voor animatie -->
-                                        <div class="like-particles absolute inset-0 pointer-events-none">
-                                            <div class="particle"></div>
-                                            <div class="particle"></div>
-                                            <div class="particle"></div>
-                                            <div class="particle"></div>
-                                            <div class="particle"></div>
-                                            <div class="particle"></div>
+                    <!-- Enhanced Content -->
+                    <div class="relative">
+                        <!-- Content Header -->
+                        <div class="px-6 sm:px-8 lg:px-12 pt-8 pb-4 border-b border-gray-100">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-4">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-8 h-8 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center">
+                                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                            </svg>
                                         </div>
+                                        <span class="text-lg font-semibold text-gray-900">Artikel</span>
                                     </div>
-                                    <div class="flex flex-col items-start">
-                                        <span id="likeCount" class="font-bold text-lg text-gray-800 group-hover:text-red-500 transition-colors"><?php echo $blog->likes; ?></span>
-                                    </div>
-                                </button>
-
-                                <!-- Politieke Bias Detector Button -->
-                                <button id="biasButton" 
-                                        class="group relative flex items-center gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-purple-500/10 to-indigo-500/10 backdrop-blur-sm rounded-2xl shadow-lg border border-purple-200/50 hover:border-purple-300/60 transition-all duration-500 transform hover:scale-105 hover:shadow-xl"
-                                        data-slug="<?php echo $blog->slug; ?>"
-                                        aria-label="Analyseer politieke bias">
-                                    <div class="relative">
-                                        <svg class="w-6 h-6 text-purple-600 transition-all duration-300 group-hover:text-purple-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                                        </svg>
-                                    </div>
-                                    <div class="flex flex-col items-start">
-                                        <span class="font-bold text-lg text-purple-700 group-hover:text-purple-800 transition-colors">Politieke Bias</span>
-                                    </div>
-                                </button>
-
-                                <!-- Party Perspective Button -->
-                                <button id="partyPerspectiveButton" 
-                                        class="group relative flex items-center gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-orange-500/10 to-red-500/10 backdrop-blur-sm rounded-2xl shadow-lg border border-orange-200/50 hover:border-orange-300/60 transition-all duration-500 transform hover:scale-105 hover:shadow-xl"
-                                        data-slug="<?php echo $blog->slug; ?>"
-                                        aria-label="Bekijk partij perspectieven">
-                                    <div class="relative">
-                                        <svg class="w-6 h-6 text-orange-600 transition-all duration-300 group-hover:text-orange-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                        </svg>
-                                    </div>
-                                    <div class="flex flex-col items-start">
-                                        <span class="font-bold text-lg text-orange-700 group-hover:text-orange-800 transition-colors">Leider Reacties</span>
-                                    </div>
-                                </button>
-                            </div>
-
-                            <!-- Divider -->
-                            <div class="relative mb-8">
-                                <div class="absolute inset-0 flex items-center">
-                                    <div class="w-full border-t border-gray-300/50"></div>
                                 </div>
-                                <div class="relative flex justify-center text-sm">
-                                    <span class="bg-gradient-to-br from-slate-50 via-blue-50/80 to-indigo-50/60 px-4 text-gray-500 font-medium">Deel dit artikel</span>
+                                <div class="flex items-center gap-2 text-sm text-gray-500">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    <span><span id="reading-minutes-content">5</span> min lezen</span>
                                 </div>
-                            </div>
-
-                            <!-- Share Options -->
-                            <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
-                                <!-- Twitter/X share button -->
-                                <button onclick="window.open('https://twitter.com/intent/tweet?text=<?php echo urlencode($blog->title); ?>&url=<?php echo urlencode(URLROOT . '/blogs/' . $blog->slug); ?>', '_blank')" 
-                                        class="group flex items-center gap-2 px-4 py-3 bg-gradient-to-r from-sky-500 to-blue-500 text-white rounded-xl hover:from-sky-600 hover:to-blue-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
-                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
-                                    </svg>
-                                    <span class="hidden sm:inline font-medium">Twitter</span>
-                                </button>
-                                
-                                <!-- LinkedIn share button -->
-                                <button onclick="window.open('https://www.linkedin.com/sharing/share-offsite/?url=<?php echo urlencode(URLROOT . '/blogs/' . $blog->slug); ?>', '_blank')"
-                                        class="group flex items-center gap-2 px-4 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
-                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                                    </svg>
-                                    <span class="hidden sm:inline font-medium">LinkedIn</span>
-                                </button>
-                                
-                                <!-- Facebook share button -->
-                                <button onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode(URLROOT . '/blogs/' . $blog->slug); ?>', '_blank')"
-                                        class="group flex items-center gap-2 px-4 py-3 bg-gradient-to-r from-blue-800 to-indigo-800 text-white rounded-xl hover:from-blue-900 hover:to-indigo-900 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
-                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                                    </svg>
-                                    <span class="hidden sm:inline font-medium">Facebook</span>
-                                </button>
-                                
-                                <!-- Copy link button -->
-                                <button onclick="navigator.clipboard.writeText('<?php echo URLROOT . '/blogs/' . $blog->slug; ?>').then(() => showNotification('Link gekopieerd!', 'success'))"
-                                        class="group flex items-center gap-2 px-4 py-3 bg-gradient-to-r from-gray-600 to-gray-700 text-white rounded-xl hover:from-gray-700 hover:to-gray-800 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
-                                    </svg>
-                                    <span class="hidden sm:inline font-medium">Kopiëren</span>
-                                </button>
                             </div>
                         </div>
+                        
+                        <!-- Main Content -->
+                        <div class="px-6 sm:px-8 lg:px-12 xl:px-16 py-8">
+                            <div id="blog-content" class="prose prose-lg max-w-none">
+                                <?php echo $blog->content; ?>
+                            </div>
+                                                 </div>
                     </div>
                 </div>
             </div>
         </div>
     </article>
 
-
-
-    <!-- Newsletter Signup Section -->
-    <section class="py-12 sm:py-16 bg-gradient-to-r from-primary to-secondary">
-        <div class="container mx-auto px-3 sm:px-4">
-            <div class="max-w-4xl mx-auto text-center">
-                <div class="bg-white/10 backdrop-blur-lg rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-12 border border-white/20">
-                    <h3 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-3 sm:mb-4">Blijf op de hoogte</h3>
-                    <p class="text-base sm:text-xl text-white/90 mb-6 sm:mb-8 max-w-2xl mx-auto">
-                        Ontvang wekelijks de beste politieke analyses en updates direct in je inbox. Geen spam, alleen waardevolle content.
+    <!-- Enhanced Interactive Actions Section -->
+    <section class="relative py-12 sm:py-16 bg-gradient-to-br from-gray-50 via-white to-blue-50/30">
+        <!-- Background Pattern -->
+        <div class="absolute inset-0 opacity-30">
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23000000" fill-opacity="0.03"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-40"></div>
+        </div>
+        
+        <div class="container mx-auto px-4 relative">
+            <div class="max-w-6xl mx-auto">
+                
+                <!-- Section Header -->
+                <div class="text-center mb-12">
+                    <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-primary to-secondary rounded-full mb-6">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"/>
+                        </svg>
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+                        Interacteer met dit artikel
+                    </h2>
+                    <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                        Laat je stem horen en ontdek verschillende perspectieven op dit onderwerp
                     </p>
+                </div>
+
+                <!-- Enhanced Action Cards Grid -->
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
                     
-                    <form id="newsletter-form" class="flex flex-col sm:flex-row gap-3 sm:gap-4 max-w-lg mx-auto">
-                        <input type="email" 
-                               placeholder="je@email.com" 
-                               class="flex-grow px-4 sm:px-6 py-3 sm:py-4 rounded-full border-2 border-white/20 bg-white/10 backdrop-blur-sm text-white placeholder-white/70 focus:outline-none focus:border-white/50 transition-all duration-300 text-sm sm:text-base"
-                               required>
-                        <button type="submit" 
-                                class="px-6 sm:px-8 py-3 sm:py-4 bg-white text-primary font-semibold rounded-full hover:bg-gray-50 transition-all duration-300 transform hover:scale-105 shadow-lg text-sm sm:text-base">
-                            Aanmelden
+                    <!-- Enhanced Like Card -->
+                    <div class="group relative bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100 overflow-hidden">
+                        <!-- Gradient Background -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-red-500/5 via-pink-500/5 to-red-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        
+                        <!-- Content -->
+                        <div class="relative p-8">
+                            <div class="flex items-center justify-between mb-6">
+                                <div class="w-14 h-14 bg-gradient-to-r from-red-500 to-pink-600 rounded-2xl flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300">
+                                    <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                    </svg>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-3xl font-bold text-gray-900" id="likeCountDisplay"><?php echo $blog->likes; ?></span>
+                                    <span class="text-sm text-gray-500">likes</span>
+                                </div>
+                            </div>
+                            
+                            <h3 class="text-xl font-bold text-gray-900 mb-3">Vind je dit interessant?</h3>
+                            <p class="text-gray-600 mb-6 text-sm leading-relaxed">
+                                Laat anderen weten dat je dit artikel waardevol vindt door een like te geven
+                            </p>
+                            
+                            <button id="likeButton" 
+                                    class="w-full flex items-center justify-center gap-3 px-6 py-4 bg-gradient-to-r from-red-500 to-pink-600 text-white font-semibold rounded-xl hover:from-red-600 hover:to-pink-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                                    data-slug="<?php echo $blog->slug; ?>"
+                                    aria-label="Like deze blog">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                </svg>
+                                <span>Artikel leuk vinden</span>
+                                <!-- Heart particles voor animatie -->
+                                <div class="like-particles absolute inset-0 pointer-events-none">
+                                    <div class="particle"></div>
+                                    <div class="particle"></div>
+                                    <div class="particle"></div>
+                                    <div class="particle"></div>
+                                    <div class="particle"></div>
+                                    <div class="particle"></div>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Enhanced Bias Analysis Card -->
+                    <div class="group relative bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100 overflow-hidden">
+                        <!-- Gradient Background -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-indigo-500/5 to-purple-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        
+                        <!-- Content -->
+                        <div class="relative p-8">
+                            <div class="flex items-center justify-between mb-6">
+                                <div class="w-14 h-14 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-2xl flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300">
+                                    <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                                    </svg>
+                                </div>
+                                <div class="flex items-center gap-1">
+                                    <span class="inline-flex items-center px-2 py-1 rounded-full bg-purple-100 text-purple-800 text-xs font-medium">
+                                        AI-Powered
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <h3 class="text-xl font-bold text-gray-900 mb-3">Politieke Bias Analyse</h3>
+                            <p class="text-gray-600 mb-6 text-sm leading-relaxed">
+                                Laat AI de politieke oriëntatie en mogelijke bias in dit artikel analyseren
+                            </p>
+                            
+                            <button id="biasButton" 
+                                    class="w-full flex items-center justify-center gap-3 px-6 py-4 bg-gradient-to-r from-purple-500 to-indigo-600 text-white font-semibold rounded-xl hover:from-purple-600 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                                    data-slug="<?php echo $blog->slug; ?>"
+                                    aria-label="Analyseer politieke bias">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                                </svg>
+                                <span>Analyseer Bias</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Enhanced Party Perspective Card -->
+                    <div class="group relative bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100 overflow-hidden sm:col-span-2 lg:col-span-1">
+                        <!-- Gradient Background -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-orange-500/5 via-red-500/5 to-orange-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        
+                        <!-- Content -->
+                        <div class="relative p-8">
+                            <div class="flex items-center justify-between mb-6">
+                                <div class="w-14 h-14 bg-gradient-to-r from-orange-500 to-red-600 rounded-2xl flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300">
+                                    <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                    </svg>
+                                </div>
+                                <div class="flex items-center gap-1">
+                                    <span class="inline-flex items-center px-2 py-1 rounded-full bg-orange-100 text-orange-800 text-xs font-medium">
+                                        15 Partijen
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <h3 class="text-xl font-bold text-gray-900 mb-3">Partijleider Reacties</h3>
+                            <p class="text-gray-600 mb-6 text-sm leading-relaxed">
+                                Ontdek hoe verschillende partijleiders op dit onderwerp zouden reageren
+                            </p>
+                            
+                            <button id="partyPerspectiveButton" 
+                                    class="w-full flex items-center justify-center gap-3 px-6 py-4 bg-gradient-to-r from-orange-500 to-red-600 text-white font-semibold rounded-xl hover:from-orange-600 hover:to-red-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                                    data-slug="<?php echo $blog->slug; ?>"
+                                    aria-label="Bekijk partij perspectieven">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                </svg>
+                                <span>Bekijk Reacties</span>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Enhanced Share Section -->
+                <div class="relative">
+                    <!-- Decorative Divider -->
+                    <div class="flex items-center justify-center mb-12">
+                        <div class="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
+                        <div class="px-6">
+                            <div class="w-12 h-12 bg-gradient-to-r from-gray-600 to-gray-700 rounded-full flex items-center justify-center">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
+                    </div>
+
+                    <!-- Share Header -->
+                    <div class="text-center mb-8">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Deel dit artikel</h3>
+                        <p class="text-gray-600">Verspreidt waardevolle politieke inzichten</p>
+                    </div>
+
+                    <!-- Enhanced Share Buttons -->
+                    <div class="flex flex-wrap items-center justify-center gap-4">
+                        
+                        <!-- Twitter/X Enhanced -->
+                        <button onclick="window.open('https://twitter.com/intent/tweet?text=<?php echo urlencode($blog->title); ?>&url=<?php echo urlencode(URLROOT . '/blogs/' . $blog->slug); ?>', '_blank')" 
+                                class="group relative flex items-center gap-3 px-6 py-4 bg-gradient-to-r from-sky-500 to-blue-500 text-white rounded-2xl hover:from-sky-600 hover:to-blue-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl overflow-hidden">
+                            <!-- Background Effect -->
+                            <div class="absolute inset-0 bg-gradient-to-r from-sky-400 to-blue-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            
+                            <!-- Content -->
+                            <div class="relative flex items-center gap-3">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                                </svg>
+                                <div class="hidden sm:block">
+                                    <div class="font-semibold text-sm">Twitter</div>
+                                    <div class="text-xs text-sky-100">Deel op X</div>
+                                </div>
+                            </div>
                         </button>
-                    </form>
-                    
-                    <p class="text-xs sm:text-sm text-white/70 mt-3 sm:mt-4">
-                        Door je aan te melden ga je akkoord met onze <a href="#" class="underline hover:text-white">privacyverklaring</a>.
-                    </p>
+                        
+                        <!-- LinkedIn Enhanced -->
+                        <button onclick="window.open('https://www.linkedin.com/sharing/share-offsite/?url=<?php echo urlencode(URLROOT . '/blogs/' . $blog->slug); ?>', '_blank')"
+                                class="group relative flex items-center gap-3 px-6 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-2xl hover:from-blue-700 hover:to-blue-800 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl overflow-hidden">
+                            <!-- Background Effect -->
+                            <div class="absolute inset-0 bg-gradient-to-r from-blue-500 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            
+                            <!-- Content -->
+                            <div class="relative flex items-center gap-3">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                                </svg>
+                                <div class="hidden sm:block">
+                                    <div class="font-semibold text-sm">LinkedIn</div>
+                                    <div class="text-xs text-blue-100">Professioneel</div>
+                                </div>
+                            </div>
+                        </button>
+                        
+                        <!-- Facebook Enhanced -->
+                        <button onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode(URLROOT . '/blogs/' . $blog->slug); ?>', '_blank')"
+                                class="group relative flex items-center gap-3 px-6 py-4 bg-gradient-to-r from-blue-800 to-indigo-800 text-white rounded-2xl hover:from-blue-900 hover:to-indigo-900 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl overflow-hidden">
+                            <!-- Background Effect -->
+                            <div class="absolute inset-0 bg-gradient-to-r from-blue-700 to-indigo-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            
+                            <!-- Content -->
+                            <div class="relative flex items-center gap-3">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                                </svg>
+                                <div class="hidden sm:block">
+                                    <div class="font-semibold text-sm">Facebook</div>
+                                    <div class="text-xs text-blue-100">Sociale media</div>
+                                </div>
+                            </div>
+                        </button>
+                        
+                        <!-- WhatsApp Enhanced -->
+                        <button onclick="window.open('https://wa.me/?text=<?php echo urlencode($blog->title . ' - ' . URLROOT . '/blogs/' . $blog->slug); ?>', '_blank')"
+                                class="group relative flex items-center gap-3 px-6 py-4 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-2xl hover:from-green-600 hover:to-green-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl overflow-hidden">
+                            <!-- Background Effect -->
+                            <div class="absolute inset-0 bg-gradient-to-r from-green-400 to-green-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            
+                            <!-- Content -->
+                            <div class="relative flex items-center gap-3">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                                </svg>
+                                <div class="hidden sm:block">
+                                    <div class="font-semibold text-sm">WhatsApp</div>
+                                    <div class="text-xs text-green-100">Berichten</div>
+                                </div>
+                            </div>
+                        </button>
+                        
+                        <!-- Copy Link Enhanced -->
+                        <button onclick="navigator.clipboard.writeText('<?php echo URLROOT . '/blogs/' . $blog->slug; ?>').then(() => showNotification('Link gekopieerd!', 'success'))"
+                                class="group relative flex items-center gap-3 px-6 py-4 bg-gradient-to-r from-gray-600 to-gray-700 text-white rounded-2xl hover:from-gray-700 hover:to-gray-800 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl overflow-hidden">
+                            <!-- Background Effect -->
+                            <div class="absolute inset-0 bg-gradient-to-r from-gray-500 to-gray-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            
+                            <!-- Content -->
+                            <div class="relative flex items-center gap-3">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                </svg>
+                                <div class="hidden sm:block">
+                                    <div class="font-semibold text-sm">Kopiëren</div>
+                                    <div class="text-xs text-gray-100">Link delen</div>
+                                </div>
+                            </div>
+                        </button>
+                        
+                    </div>
                 </div>
             </div>
         </div>
@@ -1154,7 +1400,195 @@ require_once 'views/templates/header.php'; ?>
     75% { transform: scale(1.1); }
 }
 
+/* Enhanced Newsletter Section Animations */
+@keyframes float-slow {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-20px) rotate(180deg);
+    }
+}
 
+@keyframes float-medium {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-15px) rotate(120deg);
+    }
+}
+
+@keyframes float-fast {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-10px) rotate(90deg);
+    }
+}
+
+.animate-float-slow {
+    animation: float-slow 6s ease-in-out infinite;
+}
+
+.animate-float-medium {
+    animation: float-medium 4s ease-in-out infinite;
+}
+
+.animate-float-fast {
+    animation: float-fast 3s ease-in-out infinite;
+}
+
+/* Enhanced Audio Player Styling */
+.soundcloud-iframe {
+    border-radius: 0.75rem;
+    overflow: hidden;
+}
+
+/* Enhanced Form Styling */
+.newsletter-form input:focus {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.newsletter-form button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Enhanced Social Share Button Animations */
+.share-button {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.share-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.share-button:hover::before {
+    left: 100%;
+}
+
+.share-button:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+/* Enhanced Interactive Card Hover Effects */
+.interactive-card {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+}
+
+.interactive-card:hover {
+    transform: translateY(-8px) rotateX(5deg) rotateY(5deg);
+    box-shadow: 
+        0 25px 50px rgba(0, 0, 0, 0.15),
+        0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.interactive-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.interactive-card:hover::before {
+    opacity: 1;
+}
+
+/* Enhanced Modal Animations */
+.modal-enter {
+    animation: modalEnter 0.3s ease-out forwards;
+}
+
+.modal-exit {
+    animation: modalExit 0.3s ease-in forwards;
+}
+
+@keyframes modalEnter {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes modalExit {
+    from {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+    }
+}
+
+/* Enhanced Loading Animations */
+.loading-spinner {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.loading-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* Enhanced Typography Gradient Effects */
+.gradient-text {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Enhanced Audio Controls */
+.audio-controls button {
+    transition: all 0.3s ease;
+}
+
+.audio-controls button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
 
 /* Utility Classes */
 .line-clamp-2 {
@@ -1183,7 +1617,36 @@ require_once 'views/templates/header.php'; ?>
 /* Mobile SoundCloud Player Responsive */
 @media (max-width: 640px) {
     .soundcloud-iframe {
-        height: 100px !important;
+        height: 120px !important;
+    }
+}
+
+/* Enhanced Background Patterns */
+.bg-pattern-dots {
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+.bg-pattern-grid {
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+/* Enhanced Newsletter Success State */
+.newsletter-success {
+    animation: slideInFromBottom 0.5s ease-out forwards;
+}
+
+@keyframes slideInFromBottom {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
@@ -1324,13 +1787,179 @@ document.addEventListener('DOMContentLoaded', function() {
     const newsletterForm = document.getElementById('newsletter-form');
     newsletterForm?.addEventListener('submit', function(e) {
         e.preventDefault();
-        const email = this.querySelector('input[type="email"]').value;
         
-        // Simulate newsletter signup
-        showNotification('Bedankt voor je aanmelding! Je ontvangt een bevestigingsmail.', 'success');
-        this.reset();
+        // Enhanced form handling
+        const formData = new FormData(this);
+        const name = formData.get('name');
+        const email = formData.get('email');
+        const interests = formData.getAll('interests[]');
+        
+        // Show loading state
+        const submitButton = this.querySelector('button[type="submit"]');
+        const originalContent = submitButton.innerHTML;
+        submitButton.innerHTML = `
+            <span class="flex items-center justify-center gap-2">
+                <svg class="w-5 h-5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                </svg>
+                Bezig met aanmelden...
+            </span>
+        `;
+        submitButton.disabled = true;
+        
+        // Simulate newsletter signup (replace with actual API call)
+        setTimeout(() => {
+            // Show success message
+            const successDiv = document.getElementById('newsletter-success');
+            if (successDiv) {
+                successDiv.classList.remove('hidden');
+                successDiv.classList.add('newsletter-success');
+            }
+            
+            // Reset form
+            this.reset();
+            
+            // Reset button
+            submitButton.innerHTML = originalContent;
+            submitButton.disabled = false;
+            
+            // Hide form after success
+            setTimeout(() => {
+                this.style.opacity = '0.5';
+                this.style.pointerEvents = 'none';
+            }, 2000);
+            
+            showNotification('Welkom bij onze newsletter! 🎉', 'success');
+        }, 2000);
     });
     
+    // Enhanced Like functionality with improved UI feedback
+    const likeCountDisplay = document.getElementById('likeCountDisplay');
+    
+    async function handleLike(button) {
+        if (isProcessing) return;
+        
+        const action = likedBlogs[slug] ? 'unlike' : 'like';
+        isProcessing = true;
+        
+        // Enhanced visual feedback
+        button.style.transform = 'scale(0.95)';
+        
+        // Disable both buttons
+        if (likeButton) likeButton.disabled = true;
+        if (heroLikeButton) heroLikeButton.disabled = true;
+        
+        try {
+            const response = await fetch(`<?php echo URLROOT; ?>/blogs/like/${slug}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action })
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                // Update all counters with animation
+                const newCount = data.likes;
+                
+                // Animate the main counter
+                if (likeCountDisplay) {
+                    likeCountDisplay.style.transform = 'scale(1.2)';
+                    setTimeout(() => {
+                        likeCountDisplay.textContent = newCount;
+                        likeCountDisplay.style.transform = 'scale(1)';
+                    }, 150);
+                }
+                
+                // Update other counters
+                if (likeCount) {
+                    likeCount.style.transform = 'scale(1.1)';
+                    setTimeout(() => {
+                        likeCount.textContent = newCount;
+                        likeCount.style.transform = 'scale(1)';
+                    }, 150);
+                }
+                
+                if (heroLikeCount) {
+                    heroLikeCount.style.transform = 'scale(1.1)';
+                    setTimeout(() => {
+                        heroLikeCount.textContent = newCount + ' likes';
+                        heroLikeCount.style.transform = 'scale(1)';
+                    }, 150);
+                }
+                
+                if (action === 'like') {
+                    likedBlogs[slug] = true;
+                    updateLikeButtonState(true);
+                    
+                    // Confetti effect for likes
+                    createConfetti(button);
+                } else {
+                    delete likedBlogs[slug];
+                    updateLikeButtonState(false);
+                }
+                
+                localStorage.setItem('likedBlogs', JSON.stringify(likedBlogs));
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            showNotification('Er ging iets mis. Probeer het opnieuw.', 'error');
+        } finally {
+            isProcessing = false;
+            button.style.transform = 'scale(1)';
+            if (likeButton) likeButton.disabled = false;
+            if (heroLikeButton) heroLikeButton.disabled = false;
+        }
+    }
+    
+    // Enhanced confetti effect
+    function createConfetti(button) {
+        const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#f0932b', '#eb4d4b', '#6c5ce7'];
+        const buttonRect = button.getBoundingClientRect();
+        
+        for (let i = 0; i < 30; i++) {
+            setTimeout(() => {
+                const confetti = document.createElement('div');
+                confetti.style.position = 'fixed';
+                confetti.style.left = (buttonRect.left + buttonRect.width / 2) + 'px';
+                confetti.style.top = (buttonRect.top + buttonRect.height / 2) + 'px';
+                confetti.style.width = '8px';
+                confetti.style.height = '8px';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.borderRadius = '50%';
+                confetti.style.pointerEvents = 'none';
+                confetti.style.zIndex = '9999';
+                
+                document.body.appendChild(confetti);
+                
+                const angle = (Math.PI * 2 * i) / 30;
+                const velocity = 2 + Math.random() * 3;
+                const gravity = 0.1;
+                let vx = Math.cos(angle) * velocity;
+                let vy = Math.sin(angle) * velocity;
+                let x = 0;
+                let y = 0;
+                
+                const animate = () => {
+                    x += vx;
+                    y += vy;
+                    vy += gravity;
+                    
+                    confetti.style.transform = `translate(${x}px, ${y}px) rotate(${x}deg)`;
+                    confetti.style.opacity = Math.max(0, 1 - Math.abs(y) / 200);
+                    
+                    if (confetti.style.opacity > 0) {
+                        requestAnimationFrame(animate);
+                    } else {
+                        confetti.remove();
+                    }
+                };
+                
+                requestAnimationFrame(animate);
+            }, i * 50);
+        }
+    }
+
     // Initialize all functions
     calculateReadingTime();
     
@@ -1341,7 +1970,67 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initial progress update
     updateReadingProgress();
     
-    // Bias Analysis Functionality
+    // Enhanced Audio Sharing Functions
+    function shareAudio() {
+        <?php if (!empty($blog->soundcloud_url)): ?>
+        const audioTitle = '<?php echo addslashes($blog->title); ?> - Podcast';
+        const audioUrl = '<?php echo htmlspecialchars($blog->soundcloud_url); ?>';
+        
+        if (navigator.share) {
+            navigator.share({
+                title: audioTitle,
+                text: 'Luister naar deze interessante podcast:',
+                url: audioUrl
+            }).then(() => {
+                showNotification('Podcast gedeeld! 🎙️', 'success');
+            }).catch(() => {
+                fallbackShare(audioTitle, audioUrl);
+            });
+        } else {
+            fallbackShare(audioTitle, audioUrl);
+        }
+        <?php else: ?>
+        showNotification('Geen audio beschikbaar om te delen', 'error');
+        <?php endif; ?>
+    }
+    
+    function fallbackShare(title, url) {
+        // Copy to clipboard as fallback
+        const shareText = `${title} - ${url}`;
+        navigator.clipboard.writeText(shareText).then(() => {
+            showNotification('Audio link gekopieerd naar klembord! 📋', 'success');
+        }).catch(() => {
+            showNotification('Kon link niet kopiëren', 'error');
+        });
+    }
+    
+    function openInSoundCloud() {
+        <?php if (!empty($blog->soundcloud_url)): ?>
+        window.open('<?php echo htmlspecialchars($blog->soundcloud_url); ?>', '_blank');
+        showNotification('SoundCloud geopend in nieuw tabblad', 'success');
+        <?php endif; ?>
+    }
+
+    // Enhanced Reading Time Calculation
+    function calculateReadingTime() {
+        const content = document.getElementById('blog-content');
+        if (!content) return;
+        
+        const text = content.textContent || content.innerText;
+        const words = text.trim().split(/\s+/).length;
+        const wordsPerMinute = 200; // Dutch reading speed
+        const minutes = Math.ceil(words / wordsPerMinute);
+        
+        // Update all reading time displays
+        const readingTimeElements = document.querySelectorAll('#reading-minutes, #reading-minutes-content');
+        readingTimeElements.forEach(element => {
+            if (element) {
+                element.textContent = minutes;
+            }
+        });
+    }
+    
+    // Enhanced Bias Analysis Functionality
     const biasButton = document.getElementById('biasButton');
     const biasModal = document.getElementById('biasModal');
     const closeBiasModal = document.getElementById('closeBiasModal');
@@ -1491,8 +2180,6 @@ document.addEventListener('DOMContentLoaded', function() {
          }
      });
      
-     // Mode toggle removed - always leader mode
-     
      // Back button
      backToPartySelection?.addEventListener('click', function() {
          showPartySelection();
@@ -1521,6 +2208,7 @@ document.addEventListener('DOMContentLoaded', function() {
          const modal = document.getElementById('partyModal');
          if (modal) {
              modal.classList.remove('hidden');
+             modal.classList.add('modal-enter');
              document.body.style.overflow = 'hidden';
              showPartySelection();
              // Ensure leader mode is shown
@@ -1531,8 +2219,12 @@ document.addEventListener('DOMContentLoaded', function() {
      function hidePartyModal() {
          const modal = document.getElementById('partyModal');
          if (modal) {
-             modal.classList.add('hidden');
-             document.body.style.overflow = '';
+             modal.classList.add('modal-exit');
+             setTimeout(() => {
+                 modal.classList.add('hidden');
+                 modal.classList.remove('modal-enter', 'modal-exit');
+                 document.body.style.overflow = '';
+             }, 300);
          }
      }
      
