@@ -269,7 +269,6 @@ require_once 'views/templates/header.php'; ?>
                                     </div>
                                     <div class="flex flex-col items-start">
                                         <span id="likeCount" class="font-bold text-lg text-gray-800 group-hover:text-red-500 transition-colors"><?php echo $blog->likes; ?></span>
-                                        <span class="text-xs text-gray-500 group-hover:text-red-400 transition-colors">Likes</span>
                                     </div>
                                 </button>
 
@@ -284,8 +283,7 @@ require_once 'views/templates/header.php'; ?>
                                         </svg>
                                     </div>
                                     <div class="flex flex-col items-start">
-                                        <span class="font-bold text-lg text-purple-700 group-hover:text-purple-800 transition-colors">AI Analyse</span>
-                                        <span class="text-xs text-purple-600 group-hover:text-purple-700 transition-colors">Politieke Bias</span>
+                                        <span class="font-bold text-lg text-purple-700 group-hover:text-purple-800 transition-colors">Politieke Bias</span>
                                     </div>
                                 </button>
 
@@ -301,7 +299,6 @@ require_once 'views/templates/header.php'; ?>
                                     </div>
                                     <div class="flex flex-col items-start">
                                         <span class="font-bold text-lg text-orange-700 group-hover:text-orange-800 transition-colors">Leider Reacties</span>
-                                        <span class="text-xs text-orange-600 group-hover:text-orange-700 transition-colors">AI Perspectieven</span>
                                     </div>
                                 </button>
                             </div>
