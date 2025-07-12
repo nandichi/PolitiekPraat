@@ -343,15 +343,32 @@ require_once 'views/templates/header.php';
 ?>
 
 <main class="bg-gray-50 overflow-x-hidden">
-    <!-- Hero Section - Volledig responsive versie -->
-    <section class="new-hero-section bg-gray-50 font-sans">
-        <div class="absolute inset-0 z-0 opacity-50">
-            <div class="absolute inset-0 bg-gradient-to-r from-blue-50 to-indigo-50"></div>
-            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%22100%22%20height%3D%22100%22%20viewBox%3D%220%200%20100%20100%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M11%2018c3.866%200%207-3.134%207-7s-3.134-7-7-7-7%203.134-7%207%203.134%207%207%207zm48%2025c3.866%200%207-3.134%207-7s-3.134-7-7-7-7%203.134-7%207%203.134%207%207%207zM%2073%2077c3.866%200%207-3.134%207-7s-3.134-7-7-7-7%203.134-7%207%203.134%207%207%207z%22%20fill%3D%22%23e0e7ff%22%2F%3E%3C%2Fsvg%3E')] bg-repeat"></div>
+    <!-- Hero Section - Volledig herbouwde professionele versie -->
+    <section class="hero-section relative min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 overflow-hidden">
+        
+        <!-- Geavanceerde achtergrond met meerdere lagen -->
+        <div class="absolute inset-0 z-0">
+            <!-- Basis gradient -->
+            <div class="absolute inset-0 bg-gradient-to-br from-primary-dark/5 via-white to-secondary/5"></div>
+            
+            <!-- Animated mesh gradient -->
+            <div class="absolute inset-0 opacity-40">
+                <div class="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10 animate-pulse"></div>
+            </div>
+            
+            <!-- Geometric pattern overlay -->
+            <div class="absolute inset-0 opacity-30">
+                <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"80\" height=\"80\" viewBox=\"0 0 80 80\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg opacity=\"0.1\"%3E%3Cpath d=\"M40 0L40 80M0 40L80 40\" stroke=\"%23334155\" stroke-width=\"1\"%3E%3C/path%3E%3Ccircle cx=\"40\" cy=\"40\" r=\"2\" fill=\"%23334155\"%3E%3C/circle%3E%3C/g%3E%3C/svg%3E')]"></div>
+            </div>
+            
+            <!-- Glowing orbs -->
+            <div class="absolute top-20 left-20 w-72 h-72 bg-primary/20 rounded-full blur-3xl animate-pulse"></div>
+            <div class="absolute bottom-20 right-20 w-96 h-96 bg-secondary/15 rounded-full blur-3xl animate-pulse" style="animation-delay: 2s;"></div>
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-primary-light/10 rounded-full blur-3xl animate-pulse" style="animation-delay: 4s;"></div>
         </div>
         
-        <!-- Floating Partij Logo's -->
-        <div class="absolute inset-0 z-5 pointer-events-none overflow-hidden">
+        <!-- Floating Partij Logo's - Verbeterd -->
+        <div class="absolute inset-0 z-10 pointer-events-none overflow-hidden">
             <?php
             // Database van partij logo's
             $partyLogos = [
@@ -371,66 +388,98 @@ require_once 'views/templates/header.php';
                 'Volt' => 'https://logo.clearbit.com/voltnederland.org'
             ];
             
-            // Selecteer de belangrijkste partijen voor de floating logos
+            // Uitgebreide partijen configuratie
             $floatingPartijen = [
-                ['naam' => 'VVD', 'kleur' => '#FF9900', 'logo' => $partyLogos['VVD'], 'positie' => 'top-20 left-4 sm:left-16', 'delay' => '0s', 'duration' => '15s'],
-                ['naam' => 'PVV', 'kleur' => '#0078D7', 'logo' => $partyLogos['PVV'], 'positie' => 'top-32 right-4 sm:right-20', 'delay' => '2s', 'duration' => '18s'],
-                ['naam' => 'GL-PvdA', 'kleur' => '#008800', 'logo' => $partyLogos['GL-PvdA'], 'positie' => 'top-1/2 left-8 sm:left-24', 'delay' => '4s', 'duration' => '20s'],
-                ['naam' => 'CDA', 'kleur' => '#1E8449', 'logo' => $partyLogos['CDA'], 'positie' => 'bottom-32 right-6 sm:right-16', 'delay' => '1s', 'duration' => '16s'],
-                ['naam' => 'D66', 'kleur' => '#00B13C', 'logo' => $partyLogos['D66'], 'positie' => 'bottom-40 left-10 sm:left-32', 'delay' => '3s', 'duration' => '22s'],
-                ['naam' => 'SP', 'kleur' => '#EE0000', 'logo' => $partyLogos['SP'], 'positie' => 'top-40 right-12 sm:right-36', 'delay' => '5s', 'duration' => '17s'],
-                ['naam' => 'PvdD', 'kleur' => '#006400', 'logo' => $partyLogos['PvdD'], 'positie' => 'bottom-20 right-16 sm:right-28', 'delay' => '6s', 'duration' => '19s'],
-                ['naam' => 'Volt', 'kleur' => '#800080', 'logo' => $partyLogos['Volt'], 'positie' => 'top-56 left-6 sm:left-28', 'delay' => '7s', 'duration' => '21s'],
-                ['naam' => 'JA21', 'kleur' => '#000000', 'logo' => $partyLogos['JA21'], 'positie' => 'bottom-48 left-16 sm:left-44', 'delay' => '8s', 'duration' => '23s'],
-                ['naam' => 'SGP', 'kleur' => '#000000', 'logo' => $partyLogos['SGP'], 'positie' => 'top-64 right-8 sm:right-24', 'delay' => '9s', 'duration' => '25s'],
-                ['naam' => 'FvD', 'kleur' => '#000000', 'logo' => $partyLogos['FvD'], 'positie' => 'bottom-16 right-20 sm:right-48', 'delay' => '10s', 'duration' => '27s'],
-                ['naam' => 'DENK', 'kleur' => '#000000', 'logo' => $partyLogos['DENK'], 'positie' => 'top-72 left-14 sm:left-52', 'delay' => '11s', 'duration' => '29s']
+                ['naam' => 'VVD', 'kleur' => '#FF9900', 'logo' => $partyLogos['VVD'], 'positie' => 'top-24 left-8 sm:left-20', 'delay' => '0s', 'duration' => '20s', 'size' => 'large'],
+                ['naam' => 'PVV', 'kleur' => '#0078D7', 'logo' => $partyLogos['PVV'], 'positie' => 'top-40 right-8 sm:right-24', 'delay' => '3s', 'duration' => '22s', 'size' => 'large'],
+                ['naam' => 'GL-PvdA', 'kleur' => '#008800', 'logo' => $partyLogos['GL-PvdA'], 'positie' => 'top-1/2 left-12 sm:left-28', 'delay' => '6s', 'duration' => '24s', 'size' => 'medium'],
+                ['naam' => 'CDA', 'kleur' => '#1E8449', 'logo' => $partyLogos['CDA'], 'positie' => 'bottom-40 right-12 sm:right-20', 'delay' => '2s', 'duration' => '18s', 'size' => 'medium'],
+                ['naam' => 'D66', 'kleur' => '#00B13C', 'logo' => $partyLogos['D66'], 'positie' => 'bottom-56 left-16 sm:left-36', 'delay' => '4s', 'duration' => '26s', 'size' => 'medium'],
+                ['naam' => 'SP', 'kleur' => '#EE0000', 'logo' => $partyLogos['SP'], 'positie' => 'top-56 right-16 sm:right-40', 'delay' => '7s', 'duration' => '19s', 'size' => 'small'],
+                ['naam' => 'PvdD', 'kleur' => '#006400', 'logo' => $partyLogos['PvdD'], 'positie' => 'bottom-24 right-20 sm:right-32', 'delay' => '8s', 'duration' => '21s', 'size' => 'small'],
+                ['naam' => 'Volt', 'kleur' => '#800080', 'logo' => $partyLogos['Volt'], 'positie' => 'top-72 left-10 sm:left-32', 'delay' => '10s', 'duration' => '25s', 'size' => 'small'],
+                ['naam' => 'JA21', 'kleur' => '#4B0082', 'logo' => $partyLogos['JA21'], 'positie' => 'bottom-72 left-20 sm:left-48', 'delay' => '12s', 'duration' => '27s', 'size' => 'small'],
+                ['naam' => 'SGP', 'kleur' => '#ff7f00', 'logo' => $partyLogos['SGP'], 'positie' => 'top-80 right-12 sm:right-28', 'delay' => '14s', 'duration' => '29s', 'size' => 'small'],
+                ['naam' => 'FvD', 'kleur' => '#8B4513', 'logo' => $partyLogos['FvD'], 'positie' => 'bottom-16 right-24 sm:right-52', 'delay' => '16s', 'duration' => '31s', 'size' => 'small'],
+                ['naam' => 'DENK', 'kleur' => '#00BFFF', 'logo' => $partyLogos['DENK'], 'positie' => 'top-96 left-24 sm:left-56', 'delay' => '18s', 'duration' => '33s', 'size' => 'small']
             ];
             
             foreach($floatingPartijen as $index => $partij):
+                // Bepaal grootte op basis van size parameter
+                $sizeClasses = match($partij['size']) {
+                    'large' => 'w-16 h-16 sm:w-20 sm:h-20',
+                    'medium' => 'w-12 h-12 sm:w-16 sm:h-16',
+                    'small' => 'w-8 h-8 sm:w-12 sm:h-12',
+                    default => 'w-12 h-12 sm:w-16 sm:h-16'
+                };
+                
+                $logoSizeClasses = match($partij['size']) {
+                    'large' => 'w-10 h-10 sm:w-14 sm:h-14',
+                    'medium' => 'w-8 h-8 sm:w-10 sm:h-10',
+                    'small' => 'w-6 h-6 sm:w-8 sm:h-8',
+                    default => 'w-8 h-8 sm:w-10 sm:h-10'
+                };
             ?>
-                         <div class="absolute <?php echo $partij['positie']; ?> opacity-20 party-float-<?php echo $index; ?>" 
-                  style="animation: floating-<?php echo $index; ?> <?php echo $partij['duration']; ?> infinite linear; animation-delay: <?php echo $partij['delay']; ?>;">
-                 <!-- Partij logo container -->
-                 <div class="relative group">
-                     <!-- Glow effect -->
-                     <div class="absolute inset-0 w-12 h-12 sm:w-16 sm:h-16 rounded-2xl blur-md transform scale-110 group-hover:scale-125 transition-transform duration-500"
-                          style="background: <?php echo $partij['kleur']; ?>; opacity: 0.3;"></div>
-                     
-                     <!-- Main logo -->
-                     <div class="relative w-12 h-12 sm:w-16 sm:h-16 bg-white/95 backdrop-blur-sm rounded-2xl shadow-lg border border-white/30 flex items-center justify-center transform group-hover:rotate-12 transition-all duration-500 overflow-hidden">
-                                                 <!-- Logo afbeelding -->
-                         <div class="w-8 h-8 sm:w-12 sm:h-12 rounded-lg overflow-hidden transform group-hover:scale-110 transition-transform duration-300 flex items-center justify-center">
+            <div class="absolute <?php echo $partij['positie']; ?> opacity-15 hover:opacity-30 transition-opacity duration-500 party-float-<?php echo $index; ?>" 
+                 style="animation: floating-<?php echo $index; ?> <?php echo $partij['duration']; ?> infinite ease-in-out; animation-delay: <?php echo $partij['delay']; ?>;">
+                <!-- Partij logo container met verbeterde styling -->
+                <div class="relative group cursor-pointer">
+                    <!-- Multi-layer glow effect -->
+                    <div class="absolute inset-0 <?php echo $sizeClasses; ?> rounded-3xl blur-xl transform scale-125 group-hover:scale-150 transition-transform duration-700 opacity-40"
+                         style="background: linear-gradient(135deg, <?php echo $partij['kleur']; ?>, <?php echo $partij['kleur']; ?>80);"></div>
+                    
+                    <div class="absolute inset-0 <?php echo $sizeClasses; ?> rounded-3xl blur-md transform scale-110 group-hover:scale-125 transition-transform duration-500 opacity-60"
+                         style="background: <?php echo $partij['kleur']; ?>;"></div>
+                    
+                    <!-- Main logo container -->
+                    <div class="relative <?php echo $sizeClasses; ?> bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/50 flex items-center justify-center transform group-hover:rotate-12 group-hover:scale-110 transition-all duration-700 overflow-hidden">
+                        <!-- Shimmer effect -->
+                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent transform -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
+                        
+                        <!-- Logo afbeelding -->
+                        <div class="<?php echo $logoSizeClasses; ?> rounded-2xl overflow-hidden transform group-hover:scale-110 transition-transform duration-500 flex items-center justify-center relative z-10">
                             <img src="<?php echo $partij['logo']; ?>" 
                                  alt="<?php echo $partij['naam']; ?> logo"
-                                 class="w-full h-full object-contain transition-all duration-300 group-hover:brightness-110"
+                                 class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-110"
                                  onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
                                  loading="lazy">
-                            <!-- Fallback tekst als afbeelding niet laadt -->
-                            <div class="hidden w-full h-full rounded-lg font-black text-xs text-white items-center justify-center transform group-hover:scale-110 transition-transform duration-300"
-                                 style="background: linear-gradient(135deg, <?php echo $partij['kleur']; ?>, <?php echo $partij['kleur']; ?>88); text-shadow: 0 1px 2px rgba(0,0,0,0.3);">
+                            <!-- Fallback met gradient -->
+                            <div class="hidden w-full h-full rounded-2xl font-black text-white items-center justify-center transform group-hover:scale-110 transition-transform duration-500 text-center"
+                                 style="background: linear-gradient(135deg, <?php echo $partij['kleur']; ?>, <?php echo $partij['kleur']; ?>CC); text-shadow: 0 2px 4px rgba(0,0,0,0.4); font-size: <?php echo $partij['size'] === 'large' ? '14px' : ($partij['size'] === 'medium' ? '12px' : '10px'); ?>;">
                                 <?php 
-                                // Fallback afkorting
+                                // Optimized fallback text
                                 $afkorting = $partij['naam'];
                                 if (strpos($afkorting, '/') !== false) {
                                     $delen = explode('/', $afkorting);
-                                    echo substr($delen[0], 0, 2);
+                                    echo substr($delen[0], 0, 3);
                                 } else {
-                                    echo substr($afkorting, 0, min(3, strlen($afkorting)));
+                                    echo substr($afkorting, 0, min(4, strlen($afkorting)));
                                 }
                                 ?>
                             </div>
                         </div>
                         
-                        <!-- Floating particles -->
-                        <div class="absolute -top-1 -right-1 w-2 h-2 rounded-full animate-ping opacity-40"
-                             style="background: <?php echo $partij['kleur']; ?>;"></div>
+                        <!-- Animated border -->
+                        <div class="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                             style="background: linear-gradient(45deg, <?php echo $partij['kleur']; ?>, transparent, <?php echo $partij['kleur']; ?>); padding: 2px;">
+                            <div class="w-full h-full rounded-3xl bg-white/95"></div>
+                        </div>
                     </div>
                     
-                    <!-- Tooltip -->
-                    <div class="absolute -bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-                        <div class="bg-slate-900 text-white text-xs px-2 py-1 rounded shadow-lg whitespace-nowrap">
-                            <?php echo $partij['naam']; ?>
+                    <!-- Floating particles -->
+                    <div class="absolute -top-2 -right-2 w-3 h-3 rounded-full animate-ping opacity-60"
+                         style="background: <?php echo $partij['kleur']; ?>; animation-delay: 0.5s;"></div>
+                    <div class="absolute -bottom-2 -left-2 w-2 h-2 rounded-full animate-ping opacity-40"
+                         style="background: <?php echo $partij['kleur']; ?>; animation-delay: 1s;"></div>
+                    
+                    <!-- Enhanced tooltip -->
+                    <div class="absolute -bottom-12 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none z-50">
+                        <div class="relative">
+                            <div class="absolute inset-0 bg-slate-900 rounded-lg blur-sm"></div>
+                            <div class="relative bg-slate-900/95 backdrop-blur-sm text-white text-sm px-3 py-2 rounded-lg shadow-xl border border-slate-700 whitespace-nowrap">
+                                <div class="font-bold"><?php echo $partij['naam']; ?></div>
+                                <div class="text-xs text-slate-300">Nederlandse Politieke Partij</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -438,118 +487,168 @@ require_once 'views/templates/header.php';
             <?php endforeach; ?>
         </div>
 
-        <!-- CSS voor floating animaties -->
+        <!-- Geavanceerde CSS animaties -->
         <style>
+        /* Floating animaties voor partij logos */
         <?php foreach($floatingPartijen as $index => $partij): ?>
         @keyframes floating-<?php echo $index; ?> {
-            0% { transform: translateX(0px) translateY(0px) rotate(0deg); }
-            25% { transform: translateX(<?php echo 20 + ($index * 5); ?>px) translateY(-<?php echo 15 + ($index * 3); ?>px) rotate(<?php echo 2 + $index; ?>deg); }
-            50% { transform: translateX(-<?php echo 15 + ($index * 4); ?>px) translateY(<?php echo 20 + ($index * 2); ?>px) rotate(-<?php echo 3 + $index; ?>deg); }
-            75% { transform: translateX(<?php echo 25 + ($index * 3); ?>px) translateY(<?php echo 10 + ($index * 4); ?>px) rotate(<?php echo 1 + $index; ?>deg); }
-            100% { transform: translateX(0px) translateY(0px) rotate(0deg); }
+            0% { 
+                transform: translateX(0px) translateY(0px) rotate(0deg) scale(1); 
+            }
+            25% { 
+                transform: translateX(<?php echo 15 + ($index * 3); ?>px) translateY(-<?php echo 20 + ($index * 2); ?>px) rotate(<?php echo 5 + ($index * 2); ?>deg) scale(1.05); 
+            }
+            50% { 
+                transform: translateX(-<?php echo 10 + ($index * 3); ?>px) translateY(<?php echo 25 + ($index * 2); ?>px) rotate(-<?php echo 7 + ($index * 2); ?>deg) scale(0.95); 
+            }
+            75% { 
+                transform: translateX(<?php echo 20 + ($index * 2); ?>px) translateY(<?php echo 15 + ($index * 3); ?>px) rotate(<?php echo 3 + ($index * 2); ?>deg) scale(1.02); 
+            }
+            100% { 
+                transform: translateX(0px) translateY(0px) rotate(0deg) scale(1); 
+            }
         }
         <?php endforeach; ?>
         
-        @keyframes floating-extra {
-            0% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
-            100% { transform: translateY(0px) rotate(360deg); }
+        /* Additionele animaties */
+        @keyframes hero-pulse {
+            0%, 100% { opacity: 0.7; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
         }
         
-        .animate-spin-slow {
-            animation: spin 8s linear infinite;
+        @keyframes hero-float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
         }
         
-        .party-float-container {
-            animation-play-state: running;
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         
-        .party-float-container:hover {
-            animation-play-state: paused;
+        /* Responsieve aanpassingen */
+        @media (max-width: 768px) {
+            .party-float-container {
+                animation-duration: 15s !important;
+            }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            .party-float-container {
+                animation: none !important;
+            }
         }
         </style>
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="flex items-center justify-center min-h-[75vh] lg:min-h-[calc(75vh-80px)] py-12 sm:py-16 lg:py-20">
+        
+        <!-- Main content container -->
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
+            <div class="flex items-center justify-center min-h-screen py-20">
                 
-                <!-- Gecentraliseerde content -->
-                <div class="text-center space-y-8 max-w-4xl mx-auto" data-aos="fade-up" data-aos-duration="1000">
-
-                    <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold leading-tight tracking-tight">
-                        <span class="block bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent mb-4">PolitiekPraat</span>
-                        <span class="block bg-gradient-to-r from-secondary via-primary to-secondary bg-clip-text text-transparent text-4xl sm:text-5xl md:text-6xl lg:text-7xl">
-                            Jouw politieke kompas
-                        </span>
-                    </h1>
+                <!-- Gecentraliseerde content met verbeterde styling -->
+                <div class="text-center space-y-12 max-w-6xl mx-auto" data-aos="fade-up" data-aos-duration="1200">
+                    <!-- Hoofdtitel met verbeterde effecten -->
+                    <div class="space-y-6" data-aos="fade-up" data-aos-delay="400">
+                        <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black leading-tight tracking-tight">
+                            <span class="block bg-gradient-to-r from-primary-dark via-primary to-secondary bg-clip-text text-transparent mb-4">
+                                PolitiekPraat
+                            </span>
+                            <span class="block bg-gradient-to-r from-secondary-light via-secondary to-primary-light bg-clip-text text-transparent text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light">
+                                Jouw politieke kompas
+                            </span>
+                        </h1>
                     
-                    <p class="text-xl sm:text-2xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-                        Ontdek de Nederlandse politiek via blogs, nieuws en interactive tools
-                    </p>
+                    <!-- Verbeterde subtitle -->
+                    <div class="space-y-4" data-aos="fade-up" data-aos-delay="800">
+                        <p class="text-base sm:text-lg md:text-xl lg:text-2xl text-slate-600 max-w-4xl mx-auto leading-relaxed font-light">
+                            Ontdek de Nederlandse politiek via 
+                            <span class="font-bold text-primary">blogs</span>, 
+                            <span class="font-bold text-secondary">nieuws</span> en 
+                            <span class="font-bold text-primary-dark">interactieve tools</span>
+                        </p>
+                        
+                        <!-- Stats highlights -->
+                        <div class="grid grid-cols-3 gap-4 sm:gap-6 max-w-2xl mx-auto mt-8" data-aos="fade-up" data-aos-delay="1000">
+                            <div class="text-center">
+                                <div class="text-xl sm:text-2xl md:text-3xl font-bold text-primary">150+</div>
+                                <div class="text-xs sm:text-sm text-slate-500 uppercase tracking-wide">Blogs</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-xl sm:text-2xl md:text-3xl font-bold text-secondary">15</div>
+                                <div class="text-xs sm:text-sm text-slate-500 uppercase tracking-wide">Partijen</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-xl sm:text-2xl md:text-3xl font-bold text-primary-dark">25</div>
+                                <div class="text-xs sm:text-sm text-slate-500 uppercase tracking-wide">Stemwijzer vragen</div>
+                            </div>
+                        </div>
+                    </div>
                     
-                    <!-- Inline CSS voor kritieke button styling als fallback -->
-                    <style>
-                        .hero-btn-primary {
-                            display: inline-flex;
-                            align-items: center;
-                            padding: 1rem 2rem;
-                            background: linear-gradient(to right, #1a56db, #c41e3a);
-                            color: white;
-                            font-weight: 700;
-                            font-size: 1.125rem;
-                            border-radius: 0.75rem;
-                            transition: all 0.3s ease;
-                            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-                            transform: scale(1);
-                            position: relative;
-                            overflow: hidden;
-                            text-decoration: none;
-                        }
-                        .hero-btn-primary:hover {
-                            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-                            transform: scale(1.05);
-                        }
-                        .hero-btn-secondary {
-                            display: inline-flex;
-                            align-items: center;
-                            padding: 1rem 2rem;
-                            background: white;
-                            color: #111827;
-                            font-weight: 700;
-                            font-size: 1.125rem;
-                            border-radius: 0.75rem;
-                            border: 2px solid #e5e7eb;
-                            transition: all 0.3s ease;
-                            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-                            transform: scale(1);
-                            position: relative;
-                            overflow: hidden;
-                            text-decoration: none;
-                        }
-                        .hero-btn-secondary:hover {
-                            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-                            transform: scale(1.05);
-                            border-color: #1a56db;
-                            color: #1a56db;
-                        }
-                        @media (max-width: 640px) {
-                            .hero-btn-primary, .hero-btn-secondary {
-                                padding: 0.875rem 1.5rem;
-                                font-size: 1rem;
-                            }
-                        }
-                    </style>
-
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-                        <a href="<?php echo URLROOT; ?>/blogs" class="new-hero-cta-primary hero-btn-primary group">
-                            <span>Bekijk onze Blogs</span>
-                            <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                    <!-- Geavanceerde CTA buttons -->
+                    <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center pt-8" data-aos="fade-up" data-aos-delay="1200">
+                        <!-- Primary CTA -->
+                        <a href="<?php echo URLROOT; ?>/blogs" 
+                           class="group relative inline-flex items-center justify-center px-6 sm:px-8 md:px-12 py-3 sm:py-4 md:py-6 bg-gradient-to-r from-primary-dark via-primary to-secondary text-white font-bold text-base sm:text-lg md:text-xl rounded-xl sm:rounded-2xl transition-all duration-500 transform hover:scale-105 hover:shadow-2xl hover:shadow-primary/25 overflow-hidden">
+                            
+                            <!-- Animated background -->
+                            <div class="absolute inset-0 bg-gradient-to-r from-secondary via-primary to-primary-dark opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                            
+                            <!-- Content -->
+                            <div class="relative z-10 flex items-center">
+                                <svg class="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 mr-2 sm:mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+                                </svg>
+                                <span class="mr-2 sm:mr-3">Ontdek onze Blogs</span>
+                                <div class="relative">
+                                    <svg class="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 transform transition-transform duration-500 group-hover:translate-x-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                                    </svg>
+                                    <!-- Arrow trail -->
+                                    <svg class="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 absolute inset-0 transform translate-x-[-100%] opacity-0 group-hover:translate-x-8 group-hover:opacity-60 transition-all duration-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            
+                            <!-- Shimmer effect -->
+                            <div class="absolute inset-0 -top-full bg-gradient-to-b from-transparent via-white/20 to-transparent transform skew-y-12 group-hover:animate-shimmer"></div>
                         </a>
-                        <a href="<?php echo URLROOT; ?>/stemwijzer" class="new-hero-cta-secondary hero-btn-secondary group">
-                            <span>Ontdek je standpunt</span>
-                            <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                        
+                        <!-- Secondary CTA -->
+                        <a href="<?php echo URLROOT; ?>/stemwijzer" 
+                           class="group relative inline-flex items-center justify-center px-6 sm:px-8 md:px-12 py-3 sm:py-4 md:py-6 bg-white/90 backdrop-blur-sm text-slate-900 font-bold text-base sm:text-lg md:text-xl rounded-xl sm:rounded-2xl border-2 border-slate-200 transition-all duration-500 transform hover:scale-105 hover:shadow-2xl hover:shadow-slate-900/10 hover:border-primary overflow-hidden">
+                            
+                            <!-- Animated background -->
+                            <div class="absolute inset-0 bg-gradient-to-r from-primary-light/20 via-secondary-light/20 to-primary-light/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                            
+                            <!-- Content -->
+                            <div class="relative z-10 flex items-center">
+                                <svg class="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 mr-2 sm:mr-3 text-primary group-hover:text-primary-dark transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                <span class="mr-2 sm:mr-3 group-hover:text-primary-dark transition-colors duration-300">Start de Stemwijzer</span>
+                                <div class="relative">
+                                    <svg class="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 transform transition-transform duration-500 group-hover:translate-x-2 text-primary group-hover:text-primary-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            
+                            <!-- Shimmer effect -->
+                            <div class="absolute inset-0 -top-full bg-gradient-to-b from-transparent via-white/30 to-transparent transform skew-y-12 group-hover:animate-shimmer"></div>
                         </a>
                     </div>
-
-
+                    
+                    <!-- Additional features hint -->
+                    <div class="pt-8 text-center" data-aos="fade-up" data-aos-delay="1400">
+                        <p class="text-slate-500 text-lg">
+                            Ook beschikbaar: 
+                            <a href="<?php echo URLROOT; ?>/nieuws" class="text-primary hover:text-primary-dark font-semibold transition-colors duration-300">Politiek Nieuws</a>, 
+                            <a href="<?php echo URLROOT; ?>/partijen" class="text-secondary hover:text-secondary-dark font-semibold transition-colors duration-300">Partijoverzichten</a>, 
+                            <a href="<?php echo URLROOT; ?>/programma-vergelijker" class="text-primary hover:text-primary-dark font-semibold transition-colors duration-300">Programma Vergelijker</a>
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -576,14 +675,14 @@ require_once 'views/templates/header.php';
                     <div class="text-center mb-20 relative" data-aos="fade-up" data-aos-once="true">
                         <!-- Achtergrond tekst -->
                         <div class="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
-                            <span class="text-[120px] sm:text-[160px] lg:text-[200px] xl:text-[280px] font-black text-slate-100/30 select-none tracking-wider transform -rotate-2">BLOGS</span>
+                            <span class="text-[60px] sm:text-[80px] md:text-[100px] lg:text-[120px] xl:text-[160px] font-black text-slate-100/30 select-none tracking-wider transform -rotate-2">BLOGS</span>
                         </div>
                         
                                                 <!-- Main content -->
                         <div class="relative z-10 space-y-8">
                             <!-- Hoofdtitel -->
                             <div class="space-y-6">
-                                                            <h2 class="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black text-slate-900 leading-tight tracking-tight">
+                                                            <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black text-slate-900 leading-tight tracking-tight">
                                 <span class="block mb-2">Laatste</span>
                                 <span class="bg-gradient-to-r from-blue-600 via-red-600 to-blue-800 bg-clip-text text-transparent animate-gradient bg-size-200">
                                     Blogs
@@ -591,24 +690,24 @@ require_once 'views/templates/header.php';
                             </h2>
                             
                                 <!-- Decoratieve lijn systeem -->
-                                <div class="flex items-center justify-center space-x-6 mt-8">
-                                    <div class="w-16 h-0.5 bg-gradient-to-r from-transparent via-blue-500 to-blue-600"></div>
+                                <div class="flex items-center justify-center space-x-4 sm:space-x-6 mt-8">
+                                    <div class="w-12 sm:w-16 h-0.5 bg-gradient-to-r from-transparent via-blue-500 to-blue-600"></div>
                                     <div class="relative">
-                                        <div class="w-4 h-4 bg-blue-600 rounded-full animate-pulse"></div>
-                                        <div class="absolute inset-0 w-4 h-4 bg-blue-600 rounded-full animate-ping opacity-30"></div>
-                                        <div class="absolute inset-0 w-4 h-4 bg-blue-600 rounded-full animate-ping opacity-30"></div>
+                                        <div class="w-3 sm:w-4 h-3 sm:h-4 bg-blue-600 rounded-full animate-pulse"></div>
+                                        <div class="absolute inset-0 w-3 sm:w-4 h-3 sm:h-4 bg-blue-600 rounded-full animate-ping opacity-30"></div>
+                                        <div class="absolute inset-0 w-3 sm:w-4 h-3 sm:h-4 bg-blue-600 rounded-full animate-ping opacity-30"></div>
                                     </div>
-                                    <div class="w-32 h-0.5 bg-gradient-to-r from-blue-600 via-red-600 to-blue-800"></div>
+                                    <div class="w-20 sm:w-32 h-0.5 bg-gradient-to-r from-blue-600 via-red-600 to-blue-800"></div>
                                     <div class="relative">
-                                        <div class="w-4 h-4 bg-red-600 rounded-full animate-pulse animation-delay-300"></div>
-                                        <div class="absolute inset-0 w-4 h-4 bg-red-600 rounded-full animate-ping opacity-30 animation-delay-300"></div>
+                                        <div class="w-3 sm:w-4 h-3 sm:h-4 bg-red-600 rounded-full animate-pulse animation-delay-300"></div>
+                                        <div class="absolute inset-0 w-3 sm:w-4 h-3 sm:h-4 bg-red-600 rounded-full animate-ping opacity-30 animation-delay-300"></div>
                                     </div>
-                                    <div class="w-16 h-0.5 bg-gradient-to-r from-red-600 via-red-500 to-transparent"></div>
+                                    <div class="w-12 sm:w-16 h-0.5 bg-gradient-to-r from-red-600 via-red-500 to-transparent"></div>
                                 </div>
                             </div>
                             
                             <!-- Subtitel -->
-                            <p class="text-xl sm:text-2xl lg:text-3xl text-slate-600 max-w-4xl mx-auto leading-relaxed font-light">
+                            <p class="text-base sm:text-lg md:text-xl lg:text-2xl text-slate-600 max-w-4xl mx-auto leading-relaxed font-light">
                                 Ontdek mijn meest recente <span class="font-semibold text-blue-600">politieke analyses</span> en <span class="font-semibold text-red-600">diepgaande inzichten</span> over de Nederlandse politiek
                             </p>
                         </div>
@@ -853,7 +952,7 @@ require_once 'views/templates/header.php';
                         
                         <!-- Hoofdtitel -->
                         <div class="space-y-6">
-                            <h2 class="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 leading-tight tracking-tight">
+                            <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-slate-900 leading-tight tracking-tight">
                                 <span class="block mb-2">Ontdek jouw</span>
                                 <span class="bg-gradient-to-r from-blue-600 via-red-600 to-blue-800 bg-clip-text text-transparent animate-gradient bg-size-200">
                                     Politieke Match
@@ -861,35 +960,35 @@ require_once 'views/templates/header.php';
                             </h2>
                             
                             <!-- Decoratieve lijn -->
-                            <div class="flex items-center space-x-4">
-                                <div class="w-16 h-0.5 bg-gradient-to-r from-blue-500 to-red-600"></div>
-                                <div class="w-3 h-3 bg-blue-600 rounded-full animate-pulse"></div>
-                                <div class="w-24 h-0.5 bg-gradient-to-r from-red-600 to-blue-600"></div>
+                            <div class="flex items-center space-x-3 sm:space-x-4">
+                                <div class="w-12 sm:w-16 h-0.5 bg-gradient-to-r from-blue-500 to-red-600"></div>
+                                <div class="w-2 sm:w-3 h-2 sm:h-3 bg-blue-600 rounded-full animate-pulse"></div>
+                                <div class="w-16 sm:w-24 h-0.5 bg-gradient-to-r from-red-600 to-blue-600"></div>
                             </div>
                         </div>
                         
                         <!-- Verbeterde beschrijving -->
-                        <p class="text-xl lg:text-2xl text-slate-600 leading-relaxed">
+                        <p class="text-base sm:text-lg md:text-xl lg:text-2xl text-slate-600 leading-relaxed">
                             Beantwoord <span class="font-semibold text-blue-600"><?php echo $totalQuestions ?? '25'; ?> actuele vragen</span> en zie direct welke partij het beste bij jouw standpunten past.
                         </p>
                         
                         <!-- Verbeterde Features - Gestructureerde lijst -->
-                        <div class="space-y-4">
+                        <div class="space-y-3 sm:space-y-4">
                             <div class="flex items-center space-x-3">
-                                <div class="w-2 h-2 bg-blue-600 rounded-full"></div>
-                                <span class="text-lg text-slate-700"><strong>Persoonlijke match-percentages</strong> met alle partijen</span>
+                                <div class="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0"></div>
+                                <span class="text-sm sm:text-base md:text-lg text-slate-700"><strong>Persoonlijke match-percentages</strong> met alle partijen</span>
                             </div>
                             <div class="flex items-center space-x-3">
-                                <div class="w-2 h-2 bg-red-600 rounded-full"></div>
-                                <span class="text-lg text-slate-700"><strong>Korte uitleg</strong> bij elke vraag en waarom het belangrijk is</span>
+                                <div class="w-2 h-2 bg-red-600 rounded-full flex-shrink-0"></div>
+                                <span class="text-sm sm:text-base md:text-lg text-slate-700"><strong>Korte uitleg</strong> bij elke vraag en waarom het belangrijk is</span>
                             </div>
                             <div class="flex items-center space-x-3">
-                                <div class="w-2 h-2 bg-blue-600 rounded-full"></div>
-                                <span class="text-lg text-slate-700"><strong>In 5-10 minuten klaar</strong> en meteen resultaat</span>
+                                <div class="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0"></div>
+                                <span class="text-sm sm:text-base md:text-lg text-slate-700"><strong>In 5-10 minuten klaar</strong> en meteen resultaat</span>
                             </div>
                             <div class="flex items-center space-x-3">
-                                <div class="w-2 h-2 bg-red-600 rounded-full"></div>
-                                <span class="text-lg text-slate-700"><strong>100% anoniem</strong> - geen account nodig</span>
+                                <div class="w-2 h-2 bg-red-600 rounded-full flex-shrink-0"></div>
+                                <span class="text-sm sm:text-base md:text-lg text-slate-700"><strong>100% anoniem</strong> - geen account nodig</span>
                             </div>
                         </div>
                         
@@ -908,20 +1007,20 @@ require_once 'views/templates/header.php';
                                 
                                 <!-- Main button -->
                                 <a href="<?php echo URLROOT; ?>/stemwijzer" 
-                                   class="relative inline-flex items-center px-12 py-6 bg-gradient-to-r from-primary via-secondary to-primary text-white font-bold text-xl rounded-2xl transition-all duration-500 transform hover:scale-105 shadow-2xl hover:shadow-3xl group overflow-hidden">
+                                   class="relative inline-flex items-center px-6 sm:px-8 md:px-12 py-3 sm:py-4 md:py-6 bg-gradient-to-r from-primary via-secondary to-primary text-white font-bold text-sm sm:text-base md:text-lg lg:text-xl rounded-xl sm:rounded-2xl transition-all duration-500 transform hover:scale-105 shadow-2xl hover:shadow-3xl group overflow-hidden">
                                     
                                     <!-- Button content -->
                                     <div class="relative z-10 flex items-center">
-                                        <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg class="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 mr-2 sm:mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
                                         </svg>
-                                        <span class="mr-3">Start de Stemwijzer – Ontdek jouw match!</span>
+                                        <span class="mr-2 sm:mr-3">Start de Stemwijzer – Ontdek jouw match!</span>
                                         <div class="relative">
-                                            <svg class="w-6 h-6 transform transition-transform duration-500 group-hover:translate-x-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <svg class="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 transform transition-transform duration-500 group-hover:translate-x-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                                             </svg>
                                             <!-- Arrow trail effect -->
-                                            <svg class="w-6 h-6 absolute inset-0 transform translate-x-[-100%] opacity-0 group-hover:translate-x-8 group-hover:opacity-50 transition-all duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <svg class="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 absolute inset-0 transform translate-x-[-100%] opacity-0 group-hover:translate-x-8 group-hover:opacity-50 transition-all duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                                             </svg>
                                         </div>
@@ -1074,7 +1173,7 @@ require_once 'views/templates/header.php';
                         
                         <!-- Hoofdtitel -->
                         <div class="space-y-6">
-                            <h2 class="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 leading-tight tracking-tight">
+                            <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-slate-900 leading-tight tracking-tight">
                                 <span class="block mb-2">Vergelijk</span>
                                 <span class="bg-gradient-to-r from-blue-600 via-red-600 to-blue-800 bg-clip-text text-transparent animate-gradient bg-size-200">
                                     Partijstandpunten
@@ -1082,35 +1181,35 @@ require_once 'views/templates/header.php';
                             </h2>
                             
                             <!-- Decoratieve lijn -->
-                            <div class="flex items-center space-x-4">
-                                <div class="w-16 h-0.5 bg-gradient-to-r from-blue-500 to-red-600"></div>
-                                <div class="w-3 h-3 bg-blue-600 rounded-full animate-pulse"></div>
-                                <div class="w-24 h-0.5 bg-gradient-to-r from-red-600 to-blue-600"></div>
+                            <div class="flex items-center space-x-3 sm:space-x-4">
+                                <div class="w-12 sm:w-16 h-0.5 bg-gradient-to-r from-blue-500 to-red-600"></div>
+                                <div class="w-2 sm:w-3 h-2 sm:h-3 bg-blue-600 rounded-full animate-pulse"></div>
+                                <div class="w-16 sm:w-24 h-0.5 bg-gradient-to-r from-red-600 to-blue-600"></div>
                             </div>
                         </div>
                         
                         <!-- Verbeterde beschrijving -->
-                        <p class="text-xl lg:text-2xl text-slate-600 leading-relaxed">
+                        <p class="text-base sm:text-lg md:text-xl lg:text-2xl text-slate-600 leading-relaxed">
                             Bekijk de standpunten van <span class="font-semibold text-blue-600">15+ partijen</span> over 8 belangrijke thema's en maak een weloverwogen keuze.
                         </p>
                         
                         <!-- Verbeterde Features - Gestructureerde lijst -->
-                        <div class="space-y-4">
+                        <div class="space-y-3 sm:space-y-4">
                             <div class="flex items-center space-x-3">
-                                <div class="w-2 h-2 bg-blue-600 rounded-full"></div>
-                                <span class="text-lg text-slate-700"><strong>15+ partijen</strong> van groot tot klein</span>
+                                <div class="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0"></div>
+                                <span class="text-sm sm:text-base md:text-lg text-slate-700"><strong>15+ partijen</strong> van groot tot klein</span>
                             </div>
                             <div class="flex items-center space-x-3">
-                                <div class="w-2 h-2 bg-red-600 rounded-full"></div>
-                                <span class="text-lg text-slate-700"><strong>8 thema's</strong> klimaat, zorg, onderwijs, immigratie</span>
+                                <div class="w-2 h-2 bg-red-600 rounded-full flex-shrink-0"></div>
+                                <span class="text-sm sm:text-base md:text-lg text-slate-700"><strong>8 thema's</strong> klimaat, zorg, onderwijs, immigratie</span>
                             </div>
                             <div class="flex items-center space-x-3">
-                                <div class="w-2 h-2 bg-blue-600 rounded-full"></div>
-                                <span class="text-lg text-slate-700"><strong>Objectief en helder</strong> begrijpelijke uitleg zonder politieke kleur</span>
+                                <div class="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0"></div>
+                                <span class="text-sm sm:text-base md:text-lg text-slate-700"><strong>Objectief en helder</strong> begrijpelijke uitleg zonder politieke kleur</span>
                             </div>
                             <div class="flex items-center space-x-3">
-                                <div class="w-2 h-2 bg-red-600 rounded-full"></div>
-                                <span class="text-lg text-slate-700"><strong>Interactief</strong> filter, vergelijk en zie direct de verschillen</span>
+                                <div class="w-2 h-2 bg-red-600 rounded-full flex-shrink-0"></div>
+                                <span class="text-sm sm:text-base md:text-lg text-slate-700"><strong>Interactief</strong> filter, vergelijk en zie direct de verschillen</span>
                             </div>
                         </div>
                         
@@ -1129,20 +1228,20 @@ require_once 'views/templates/header.php';
                                 
                                 <!-- Main button -->
                                 <a href="<?php echo URLROOT; ?>/programma-vergelijker" 
-                                   class="relative inline-flex items-center px-12 py-6 bg-gradient-to-r from-primary via-secondary to-primary text-white font-bold text-xl rounded-2xl transition-all duration-500 transform hover:scale-105 shadow-2xl hover:shadow-3xl group overflow-hidden">
+                                   class="relative inline-flex items-center px-6 sm:px-8 md:px-12 py-3 sm:py-4 md:py-6 bg-gradient-to-r from-primary via-secondary to-primary text-white font-bold text-sm sm:text-base md:text-lg lg:text-xl rounded-xl sm:rounded-2xl transition-all duration-500 transform hover:scale-105 shadow-2xl hover:shadow-3xl group overflow-hidden">
                                     
                                     <!-- Button content -->
                                     <div class="relative z-10 flex items-center">
-                                        <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg class="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 mr-2 sm:mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
                                         </svg>
-                                        <span class="mr-3">Vergelijk nu partijen</span>
+                                        <span class="mr-2 sm:mr-3">Vergelijk nu partijen</span>
                                         <div class="relative">
-                                            <svg class="w-6 h-6 transform transition-transform duration-500 group-hover:translate-x-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <svg class="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 transform transition-transform duration-500 group-hover:translate-x-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                                             </svg>
                                             <!-- Arrow trail effect -->
-                                            <svg class="w-6 h-6 absolute inset-0 transform translate-x-[-100%] opacity-0 group-hover:translate-x-8 group-hover:opacity-50 transition-all duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <svg class="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 absolute inset-0 transform translate-x-[-100%] opacity-0 group-hover:translate-x-8 group-hover:opacity-50 transition-all duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                                             </svg>
                                         </div>
@@ -1299,16 +1398,16 @@ require_once 'views/templates/header.php';
             <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <!-- Uniforme header sectie -->
                 <div class="text-center mb-24 relative" data-aos="fade-up" data-aos-once="true">
-                    <!-- Achtergrond tekst -->
+                                        <!-- Achtergrond tekst -->
                     <div class="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
-                        <span class="text-[120px] sm:text-[160px] lg:text-[200px] xl:text-[280px] font-black text-slate-100/30 select-none tracking-wider transform -rotate-2">NIEUWS</span>
+                        <span class="text-[60px] sm:text-[80px] md:text-[100px] lg:text-[120px] xl:text-[160px] font-black text-slate-100/30 select-none tracking-wider transform -rotate-2">NIEUWS</span>
                     </div>
                     
                     <!-- Main content -->
                     <div class="relative z-10 space-y-8">
                         <!-- Hoofdtitel -->
                         <div class="space-y-6">
-                                                    <h2 class="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black text-slate-900 leading-tight tracking-tight">
+                            <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black text-slate-900 leading-tight tracking-tight">
                             <span class="block mb-2">Laatste</span>
                             <span class="bg-gradient-to-r from-blue-600 via-red-600 to-blue-800 bg-clip-text text-transparent animate-gradient bg-size-200">
                                 Politiek Nieuws
@@ -1316,34 +1415,34 @@ require_once 'views/templates/header.php';
                         </h2>
                             
                             <!-- Decoratieve lijn systeem -->
-                            <div class="flex items-center justify-center space-x-6 mt-8">
-                                <div class="w-16 h-0.5 bg-gradient-to-r from-transparent via-blue-500 to-blue-600"></div>
+                            <div class="flex items-center justify-center space-x-4 sm:space-x-6 mt-8">
+                                <div class="w-12 sm:w-16 h-0.5 bg-gradient-to-r from-transparent via-blue-500 to-blue-600"></div>
                                 <div class="relative">
-                                    <div class="w-4 h-4 bg-blue-600 rounded-full animate-pulse"></div>
-                                    <div class="absolute inset-0 w-4 h-4 bg-blue-600 rounded-full animate-ping opacity-30"></div>
+                                    <div class="w-3 sm:w-4 h-3 sm:h-4 bg-blue-600 rounded-full animate-pulse"></div>
+                                    <div class="absolute inset-0 w-3 sm:w-4 h-3 sm:h-4 bg-blue-600 rounded-full animate-ping opacity-30"></div>
                                 </div>
-                                <div class="w-32 h-0.5 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600"></div>
+                                <div class="w-20 sm:w-32 h-0.5 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600"></div>
                                 <div class="relative">
-                                    <div class="w-4 h-4 bg-indigo-600 rounded-full animate-pulse animation-delay-300"></div>
-                                    <div class="absolute inset-0 w-4 h-4 bg-indigo-600 rounded-full animate-ping opacity-30 animation-delay-300"></div>
+                                    <div class="w-3 sm:w-4 h-3 sm:h-4 bg-indigo-600 rounded-full animate-pulse animation-delay-300"></div>
+                                    <div class="absolute inset-0 w-3 sm:w-4 h-3 sm:h-4 bg-indigo-600 rounded-full animate-ping opacity-30 animation-delay-300"></div>
                                 </div>
-                                <div class="w-16 h-0.5 bg-gradient-to-r from-indigo-600 via-indigo-500 to-transparent"></div>
+                                <div class="w-12 sm:w-16 h-0.5 bg-gradient-to-r from-indigo-600 via-indigo-500 to-transparent"></div>
                             </div>
                         </div>
                         
                         <!-- Subtitel -->
-                        <p class="text-xl sm:text-2xl lg:text-3xl text-slate-600 max-w-4xl mx-auto leading-relaxed font-light">
+                        <p class="text-base sm:text-lg md:text-xl lg:text-2xl text-slate-600 max-w-4xl mx-auto leading-relaxed font-light">
                             Vergelijk <span class="font-semibold text-blue-600">progressieve</span> en <span class="font-semibold text-red-600">conservatieve</span> perspectieven op de laatste ontwikkelingen
                         </p>
                         
                         <!-- Status indicator -->
-                        <div class="inline-flex items-center px-6 py-3 bg-slate-900/5 backdrop-blur-sm rounded-full border border-slate-200/50 shadow-sm">
-                            <div class="flex items-center space-x-3">
+                        <div class="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-slate-900/5 backdrop-blur-sm rounded-full border border-slate-200/50 shadow-sm">
+                            <div class="flex items-center space-x-2 sm:space-x-3">
                                 <div class="relative">
-                                    <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                                    <div class="absolute inset-0 w-3 h-3 bg-green-500 rounded-full animate-ping opacity-50"></div>
+                                    <div class="w-2 sm:w-3 h-2 sm:h-3 bg-green-500 rounded-full animate-pulse"></div>
+                                    <div class="absolute inset-0 w-2 sm:w-3 h-2 sm:h-3 bg-green-500 rounded-full animate-ping opacity-50"></div>
                                 </div>
-                                <span class="text-sm font-medium text-slate-600">Laatste update: vandaag om 08:30</span>
+                                <span class="text-xs sm:text-sm font-medium text-slate-600">Laatste update: vandaag om 08:30</span>
                             </div>
                         </div>
                     </div>
@@ -1695,14 +1794,14 @@ require_once 'views/templates/header.php';
                 <div class="text-center mb-24 relative" data-aos="fade-up" data-aos-once="true">
                     <!-- Achtergrond tekst -->
                     <div class="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
-                        <span class="text-[120px] sm:text-[160px] lg:text-[200px] xl:text-[280px] font-black text-slate-100/30 select-none tracking-wider transform -rotate-2">POLLS</span>
+                        <span class="text-[60px] sm:text-[80px] md:text-[100px] lg:text-[120px] xl:text-[160px] font-black text-slate-100/30 select-none tracking-wider transform -rotate-2">POLLS</span>
                     </div>
                     
                     <!-- Main content -->
                     <div class="relative z-10 space-y-8">
                         <!-- Hoofdtitel -->
                         <div class="space-y-6">
-                            <h2 class="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black text-slate-900 leading-tight tracking-tight">
+                            <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black text-slate-900 leading-tight tracking-tight">
                                 <span class="block mb-2">Politieke</span>
                                 <span class="bg-gradient-to-r from-blue-600 via-red-600 to-blue-800 bg-clip-text text-transparent animate-gradient bg-size-200">
                                     Peilingen
@@ -1710,33 +1809,33 @@ require_once 'views/templates/header.php';
                     </h2>
                             
                             <!-- Decoratieve lijn systeem -->
-                            <div class="flex items-center justify-center space-x-6 mt-8">
-                                <div class="w-16 h-0.5 bg-gradient-to-r from-transparent via-blue-500 to-blue-600"></div>
+                            <div class="flex items-center justify-center space-x-4 sm:space-x-6 mt-8">
+                                <div class="w-12 sm:w-16 h-0.5 bg-gradient-to-r from-transparent via-blue-500 to-blue-600"></div>
                                 <div class="relative">
-                                    <div class="w-4 h-4 bg-blue-600 rounded-full animate-pulse"></div>
-                                    <div class="absolute inset-0 w-4 h-4 bg-blue-600 rounded-full animate-ping opacity-30"></div>
+                                    <div class="w-3 sm:w-4 h-3 sm:h-4 bg-blue-600 rounded-full animate-pulse"></div>
+                                    <div class="absolute inset-0 w-3 sm:w-4 h-3 sm:h-4 bg-blue-600 rounded-full animate-ping opacity-30"></div>
                                 </div>
-                                <div class="w-32 h-0.5 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600"></div>
+                                <div class="w-20 sm:w-32 h-0.5 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600"></div>
                                 <div class="relative">
-                                    <div class="w-4 h-4 bg-indigo-600 rounded-full animate-pulse animation-delay-300"></div>
-                                    <div class="absolute inset-0 w-4 h-4 bg-indigo-600 rounded-full animate-ping opacity-30 animation-delay-300"></div>
+                                    <div class="w-3 sm:w-4 h-3 sm:h-4 bg-indigo-600 rounded-full animate-pulse animation-delay-300"></div>
+                                    <div class="absolute inset-0 w-3 sm:w-4 h-3 sm:h-4 bg-indigo-600 rounded-full animate-ping opacity-30 animation-delay-300"></div>
                                 </div>
-                                <div class="w-16 h-0.5 bg-gradient-to-r from-indigo-600 via-indigo-500 to-transparent"></div>
+                                <div class="w-12 sm:w-16 h-0.5 bg-gradient-to-r from-indigo-600 via-indigo-500 to-transparent"></div>
                             </div>
                 </div>
                 
                         <!-- Subtitel -->
-                        <p class="text-xl sm:text-2xl lg:text-3xl text-slate-600 max-w-4xl mx-auto leading-relaxed font-light">
+                        <p class="text-base sm:text-lg md:text-xl lg:text-2xl text-slate-600 max-w-4xl mx-auto leading-relaxed font-light">
                             De nieuwste <span class="font-semibold text-blue-600">zetelverdeling</span> volgens recente peilingen van <span class="font-semibold text-red-600">7 juni 2025</span>
                         </p>
                         
                         <!-- Status indicator -->
-                        <div class="inline-flex items-center px-6 py-3 bg-slate-900/5 backdrop-blur-sm rounded-full border border-slate-200/50 shadow-sm">
-                            <div class="flex items-center space-x-3">
-                                <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-slate-900/5 backdrop-blur-sm rounded-full border border-slate-200/50 shadow-sm">
+                            <div class="flex items-center space-x-2 sm:space-x-3">
+                                <svg class="w-3 sm:w-4 h-3 sm:h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                                 </svg>
-                                <span class="text-sm font-medium text-slate-600">Bron: Peil.nl / Maurice de Hond</span>
+                                <span class="text-xs sm:text-sm font-medium text-slate-600">Bron: Peil.nl / Maurice de Hond</span>
                             </div>
                         </div>
                     </div>
@@ -2167,37 +2266,37 @@ require_once 'views/templates/header.php';
                         <div class="text-center mb-16 relative" data-aos="fade-up" data-aos-once="true">
                             <!-- Achtergrond tekst -->
                             <div class="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
-                                <span class="text-[80px] sm:text-[100px] lg:text-[120px] xl:text-[160px] font-black text-slate-100/30 select-none tracking-wider transform -rotate-2">PARTIJEN</span>
+                                <span class="text-[50px] sm:text-[60px] md:text-[80px] lg:text-[100px] xl:text-[120px] font-black text-slate-100/30 select-none tracking-wider transform -rotate-2">PARTIJEN</span>
                             </div>
                             
                             <!-- Main content -->
                             <div class="relative z-10 space-y-6">
                                 <!-- Hoofdtitel -->
                                 <div class="space-y-4">
-                                    <h2 class="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black text-slate-900 leading-tight tracking-tight">
+                                    <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-slate-900 leading-tight tracking-tight">
                                         <span class="bg-gradient-to-r from-blue-600 via-red-600 to-blue-800 bg-clip-text text-transparent animate-gradient bg-size-200">
                                     Politieke Partijen
                                 </span>
                             </h2>
                                     
                                     <!-- Decoratieve lijn systeem -->
-                                    <div class="flex items-center justify-center space-x-4 mt-6">
-                                        <div class="w-12 h-0.5 bg-gradient-to-r from-transparent via-blue-500 to-blue-600"></div>
+                                    <div class="flex items-center justify-center space-x-3 sm:space-x-4 mt-6">
+                                        <div class="w-8 sm:w-12 h-0.5 bg-gradient-to-r from-transparent via-blue-500 to-blue-600"></div>
                                         <div class="relative">
-                                            <div class="w-3 h-3 bg-blue-600 rounded-full animate-pulse"></div>
-                                            <div class="absolute inset-0 w-3 h-3 bg-blue-600 rounded-full animate-ping opacity-30"></div>
+                                            <div class="w-2 sm:w-3 h-2 sm:h-3 bg-blue-600 rounded-full animate-pulse"></div>
+                                            <div class="absolute inset-0 w-2 sm:w-3 h-2 sm:h-3 bg-blue-600 rounded-full animate-ping opacity-30"></div>
                                         </div>
-                                        <div class="w-24 h-0.5 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600"></div>
+                                        <div class="w-16 sm:w-24 h-0.5 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600"></div>
                                         <div class="relative">
-                                            <div class="w-3 h-3 bg-indigo-600 rounded-full animate-pulse animation-delay-300"></div>
-                                            <div class="absolute inset-0 w-3 h-3 bg-indigo-600 rounded-full animate-ping opacity-30 animation-delay-300"></div>
+                                            <div class="w-2 sm:w-3 h-2 sm:h-3 bg-indigo-600 rounded-full animate-pulse animation-delay-300"></div>
+                                            <div class="absolute inset-0 w-2 sm:w-3 h-2 sm:h-3 bg-indigo-600 rounded-full animate-ping opacity-30 animation-delay-300"></div>
                                         </div>
-                                        <div class="w-12 h-0.5 bg-gradient-to-r from-indigo-600 via-indigo-500 to-transparent"></div>
+                                        <div class="w-8 sm:w-12 h-0.5 bg-gradient-to-r from-indigo-600 via-indigo-500 to-transparent"></div>
                                     </div>
                                 </div>
                                 
                                 <!-- Subtitel -->
-                                <p class="text-lg sm:text-xl lg:text-2xl text-slate-600 max-w-3xl mx-auto leading-relaxed font-light">
+                                <p class="text-base sm:text-lg md:text-xl lg:text-2xl text-slate-600 max-w-3xl mx-auto leading-relaxed font-light">
                                     Verken alle <span class="font-semibold text-blue-600">politieke partijen</span> en hun <span class="font-semibold text-red-600">standpunten</span> op één overzichtelijke plek
                                 </p>
                             </div>
@@ -2277,14 +2376,14 @@ require_once 'views/templates/header.php';
                 <div class="text-center mb-16 relative" data-aos="fade-up" data-aos-once="true">
                     <!-- Achtergrond tekst -->
                     <div class="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
-                        <span class="text-[80px] sm:text-[100px] lg:text-[120px] xl:text-[160px] font-black text-slate-100/30 select-none tracking-wider transform -rotate-2">NEWS</span>
+                        <span class="text-[50px] sm:text-[60px] md:text-[80px] lg:text-[100px] xl:text-[120px] font-black text-slate-100/30 select-none tracking-wider transform -rotate-2">NEWS</span>
                 </div>
                 
                     <!-- Main content -->
                     <div class="relative z-10 space-y-6">
                         <!-- Hoofdtitel -->
                         <div class="space-y-4">
-                            <h2 class="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black text-slate-900 leading-tight tracking-tight">
+                            <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-slate-900 leading-tight tracking-tight">
                                 <span class="block mb-2">Mis nooit meer</span>
                                 <span class="bg-gradient-to-r from-blue-600 via-red-600 to-blue-800 bg-clip-text text-transparent animate-gradient bg-size-200">
                                     Politiek Nieuws
@@ -2292,23 +2391,23 @@ require_once 'views/templates/header.php';
                 </h2>
                 
                             <!-- Decoratieve lijn systeem -->
-                            <div class="flex items-center justify-center space-x-4 mt-6">
-                                <div class="w-12 h-0.5 bg-gradient-to-r from-transparent via-blue-500 to-blue-600"></div>
+                            <div class="flex items-center justify-center space-x-3 sm:space-x-4 mt-6">
+                                <div class="w-8 sm:w-12 h-0.5 bg-gradient-to-r from-transparent via-blue-500 to-blue-600"></div>
                                 <div class="relative">
-                                    <div class="w-3 h-3 bg-blue-600 rounded-full animate-pulse"></div>
-                                    <div class="absolute inset-0 w-3 h-3 bg-blue-600 rounded-full animate-ping opacity-30"></div>
+                                    <div class="w-2 sm:w-3 h-2 sm:h-3 bg-blue-600 rounded-full animate-pulse"></div>
+                                    <div class="absolute inset-0 w-2 sm:w-3 h-2 sm:h-3 bg-blue-600 rounded-full animate-ping opacity-30"></div>
                                 </div>
-                                <div class="w-24 h-0.5 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600"></div>
+                                <div class="w-16 sm:w-24 h-0.5 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600"></div>
                                 <div class="relative">
-                                    <div class="w-3 h-3 bg-indigo-600 rounded-full animate-pulse animation-delay-300"></div>
-                                    <div class="absolute inset-0 w-3 h-3 bg-indigo-600 rounded-full animate-ping opacity-30 animation-delay-300"></div>
+                                    <div class="w-2 sm:w-3 h-2 sm:h-3 bg-indigo-600 rounded-full animate-pulse animation-delay-300"></div>
+                                    <div class="absolute inset-0 w-2 sm:w-3 h-2 sm:h-3 bg-indigo-600 rounded-full animate-ping opacity-30 animation-delay-300"></div>
                                 </div>
-                                <div class="w-12 h-0.5 bg-gradient-to-r from-indigo-600 via-indigo-500 to-transparent"></div>
+                                <div class="w-8 sm:w-12 h-0.5 bg-gradient-to-r from-indigo-600 via-indigo-500 to-transparent"></div>
                             </div>
                         </div>
                         
                         <!-- Subtitel -->
-                        <p class="text-lg sm:text-xl lg:text-2xl text-slate-600 max-w-3xl mx-auto leading-relaxed font-light">
+                        <p class="text-base sm:text-lg md:text-xl lg:text-2xl text-slate-600 max-w-3xl mx-auto leading-relaxed font-light">
                             Ontvang direct een melding bij nieuwe <span class="font-semibold text-blue-600">blogs</span> en <span class="font-semibold text-red-600">politieke updates</span>
                         </p>
                     </div>
