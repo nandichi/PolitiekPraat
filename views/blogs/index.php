@@ -1,98 +1,273 @@
 <?php require_once 'views/templates/header.php'; ?>
 
 <main class="bg-gradient-to-b from-gray-50 to-white min-h-screen">
-    <!-- Modern Hero Section -->
-    <section class="relative bg-gradient-to-br from-primary-dark via-primary to-secondary py-24 overflow-hidden">
+    <!-- Modern Blog Hero Section -->
+    <section class="relative bg-gradient-to-br from-primary-dark via-primary to-secondary py-16 md:py-24 lg:py-32 overflow-hidden">
         <!-- Subtle background elements -->
         <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg opacity=\"0.03\"%3E%3Ccircle cx=\"30\" cy=\"30\" r=\"1.5\" fill=\"white\"/%3E%3Ccircle cx=\"0\" cy=\"30\" r=\"1\" fill=\"white\"/%3E%3Ccircle cx=\"60\" cy=\"30\" r=\"1\" fill=\"white\"/%3E%3Ccircle cx=\"30\" cy=\"0\" r=\"1\" fill=\"white\"/%3E%3Ccircle cx=\"30\" cy=\"60\" r=\"1\" fill=\"white\"/%3E%3C/g%3E%3C/svg%3E')] opacity-40"></div>
         
-        <!-- Ambient light effects -->
-        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl"></div>
-        <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-secondary/15 rounded-full blur-3xl"></div>
+        <!-- Floating Geometric Shapes - Responsive -->
+        <div class="absolute top-8 left-4 md:top-16 md:left-8 lg:top-20 lg:left-12 w-16 h-16 md:w-24 md:h-24 lg:w-32 lg:h-32 bg-gradient-to-br from-primary/30 to-secondary/30 rounded-3xl rotate-45 animate-bounce hidden sm:block" style="animation-duration: 6s; animation-delay: 0s;"></div>
+        <div class="absolute top-1/3 right-4 md:right-8 lg:right-16 w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 bg-gradient-to-tl from-secondary/25 to-primary/25 rounded-2xl rotate-12 animate-bounce hidden md:block" style="animation-duration: 8s; animation-delay: 2s;"></div>
+        <div class="absolute bottom-16 left-1/4 w-8 h-8 md:w-12 md:h-12 lg:w-16 lg:h-16 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-full animate-bounce hidden lg:block" style="animation-duration: 7s; animation-delay: 4s;"></div>
         
-        <div class="container mx-auto px-4 relative z-10">
-            <div class="max-w-5xl mx-auto">
-                <!-- Header badge -->
-                <div class="flex justify-center mb-8">
-                    <div class="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
-                        <div class="w-2 h-2 bg-secondary-light rounded-full mr-3 animate-pulse"></div>
-                        <span class="text-white/90 text-sm font-medium">Politieke inzichten</span>
-                    </div>
-                </div>
-                
-                <!-- Main title -->
-                <div class="text-center mb-12">
-                    <h1 class="text-5xl md:text-6xl lg:text-7xl font-black text-white mb-6 tracking-tight">
+        <!-- Ambient light effects -->
+        <div class="absolute top-1/4 left-1/4 w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 bg-primary/20 rounded-full blur-3xl animate-pulse"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-48 h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 bg-secondary/15 rounded-full blur-3xl animate-pulse" style="animation-delay: 2s;"></div>
+        
+        <!-- Main Content Container -->
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+                    
+                    <!-- Left Column - Main Content -->
+                    <div class="text-center lg:text-left space-y-6 lg:space-y-8 order-1 lg:order-1">
+                        
+                        <!-- Main Heading -->
+                        <div class="space-y-2 md:space-y-4">
+                                                        <h1 class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-white mb-4 md:mb-6 tracking-tight leading-tight">
                         Politieke
                         <span class="block bg-gradient-to-r from-secondary-light via-secondary to-primary-light bg-clip-text text-transparent">
                             Blogs
                         </span>
                     </h1>
-                    
-                    <p class="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed mb-8">
-                        Ontdek diepgaande analyses en persoonlijke inzichten over de Nederlandse politiek
-                    </p>
-                    
-                    <!-- Call to action button -->
-                    <?php if (isset($_SESSION['user_id'])): ?>
-                        <a href="<?php echo URLROOT; ?>/blogs/create" 
-                           class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-secondary to-secondary-dark text-white font-semibold rounded-2xl shadow-2xl hover:shadow-secondary/30 hover:-translate-y-1 transition-all duration-300 border border-white/20">
-                            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                            </svg>
-                            <span>Nieuwe Blog Schrijven</span>
-                        </a>
-                    <?php endif; ?>
-                </div>
-                
-                <!-- Quick stats -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
-                    <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
-                        <div class="text-center">
-                            <div class="text-3xl font-bold text-white mb-2"><?php echo count($blogs ?? []); ?></div>
-                            <div class="text-blue-200 text-sm uppercase tracking-wider">Blogs</div>
+                            
+                            <!-- Typing Animation Text -->
+                            <div class="text-base md:text-lg lg:text-xl text-blue-100 font-medium min-h-[1.5em] md:min-h-[2em]">
+                                <span id="typing-text" class="border-r-2 border-blue-300 animate-pulse"></span>
+                            </div>
+                        </div>
+                        
+                        <!-- Description -->
+                        <p class="text-base md:text-lg lg:text-xl text-blue-100 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                            Ontdek diepgaande analyses en persoonlijke inzichten over de Nederlandse politiek. Waar ideeën vorm krijgen en meningen botsen.
+                        </p>
+                        
+                        <!-- Action Buttons -->
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
+                            <?php if (isset($_SESSION['user_id'])): ?>
+                                <a href="<?php echo URLROOT; ?>/blogs/create" 
+                                   class="group relative inline-flex items-center justify-center px-6 py-3 md:px-8 md:py-4 bg-gradient-to-r from-secondary to-secondary-dark text-white font-semibold rounded-2xl shadow-2xl hover:shadow-secondary/30 hover:-translate-y-1 transition-all duration-300 overflow-hidden">
+                                    <!-- Shine Effect -->
+                                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                                    <svg class="w-5 h-5 mr-2 md:mr-3 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                                    </svg>
+                                    <span class="relative z-10 text-sm md:text-base">Schrijf je verhaal</span>
+                                </a>
+                            <?php endif; ?>
+                            
+                            <a href="#blogs" 
+                               class="group inline-flex items-center justify-center px-6 py-3 md:px-8 md:py-4 bg-white/10 backdrop-blur-lg text-white font-semibold rounded-2xl border border-white/20 hover:bg-white/20 hover:-translate-y-1 transition-all duration-300">
+                                <svg class="w-5 h-5 mr-2 md:mr-3 group-hover:animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                                </svg>
+                                <span class="text-sm md:text-base">Ontdek verhalen</span>
+                            </a>
                         </div>
                     </div>
                     
-                    <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
-                        <div class="text-center">
-                            <div class="text-3xl font-bold text-white mb-2">
-                                <?php 
-                                $recent_count = 0;
-                                $twelve_hours_ago = time() - (12 * 3600);
-                                foreach ($blogs ?? [] as $blog) {
-                                    if (strtotime($blog->published_at) > $twelve_hours_ago) {
-                                        $recent_count++;
-                                    }
-                                }
-                                echo $recent_count;
-                                ?>
-                            </div>
-                            <div class="text-blue-200 text-sm uppercase tracking-wider">Nieuw vandaag</div>
+                    <!-- Right Column - Featured Blog Spotlight -->
+                    <div class="relative order-2 lg:order-2 mb-8 lg:mb-0">
+                        <!-- Central Decorative Element -->
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="w-64 h-64 md:w-80 md:h-80 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full blur-3xl animate-pulse"></div>
                         </div>
-                    </div>
-                    
-                    <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
-                        <div class="text-center">
-                            <div class="text-3xl font-bold text-white mb-2">
-                                <?php 
-                                $total_likes = 0;
-                                foreach ($blogs ?? [] as $blog) {
-                                    $total_likes += $blog->likes ?? 0;
-                                }
-                                echo $total_likes;
-                                ?>
+                        
+                        <!-- Featured Blog Card -->
+                        <div class="relative max-w-lg mx-auto">
+                            <!-- Featured Blog Container -->
+                            <div class="bg-white/10 backdrop-blur-lg rounded-3xl p-6 md:p-8 border border-white/20 shadow-2xl hover:shadow-primary/30 transition-all duration-500 transform hover:-translate-y-1">
+                                <!-- Header -->
+                                <div class="text-center mb-6">
+                                    <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary-light/80 to-secondary/80 rounded-2xl mb-4 shadow-lg">
+                                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+                                        </svg>
+                                    </div>
+                                    <h3 class="text-xl md:text-2xl font-bold text-white mb-2">Uitgelichte Blog</h3>
+                                    <p class="text-blue-200 text-sm">Ontdek interessante politieke inzichten</p>
+                                </div>
+                                
+                                <!-- Featured Blog Content -->
+                                <div class="space-y-6">
+                                    <?php if (!empty($blogs)): ?>
+                                        <?php 
+                                        // Selecteer een featured blog (bijvoorbeeld de nieuwste of een met veel likes)
+                                        $featuredBlog = null;
+                                        $maxLikes = 0;
+                                        
+                                        // Zoek blog met meeste likes, of neem de nieuwste
+                                        foreach ($blogs as $blog) {
+                                            if (($blog->likes ?? 0) > $maxLikes) {
+                                                $maxLikes = $blog->likes ?? 0;
+                                                $featuredBlog = $blog;
+                                            }
+                                        }
+                                        
+                                        // Als geen blog likes heeft, neem de nieuwste
+                                        if (!$featuredBlog) {
+                                            $featuredBlog = $blogs[0];
+                                        }
+                                        ?>
+                                        
+                                        <!-- Featured Blog Display -->
+                                        <div class="text-center space-y-4">
+                                            <!-- Blog Title -->
+                                            <h4 class="text-white font-bold text-lg leading-tight">
+                                                <?php echo htmlspecialchars($featuredBlog->title); ?>
+                                            </h4>
+                                            
+                                            <!-- Blog Summary -->
+                                            <p class="text-blue-200 text-sm leading-relaxed">
+                                                <?php echo htmlspecialchars(substr($featuredBlog->summary, 0, 120)); ?>...
+                                            </p>
+                                            
+                                            <!-- Blog Stats -->
+                                            <div class="flex items-center justify-center space-x-4 text-white/80 text-xs">
+                                                <div class="flex items-center space-x-1">
+                                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                                    </svg>
+                                                    <span><?php echo $featuredBlog->likes ?? 0; ?> likes</span>
+                                                </div>
+                                                <div class="flex items-center space-x-1">
+                                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                                    </svg>
+                                                    <span><?php echo date('d M', strtotime($featuredBlog->published_at)); ?></span>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Read More Button -->
+                                            <div class="pt-4">
+                                                <a href="<?php echo URLROOT . '/blogs/view/' . $featuredBlog->slug; ?>" 
+                                                   class="group inline-flex items-center px-6 py-3 bg-gradient-to-r from-secondary to-secondary-dark text-white font-semibold rounded-2xl shadow-lg hover:shadow-secondary/30 hover:-translate-y-1 transition-all duration-300">
+                                                    <span class="text-sm">Lees volledig artikel</span>
+                                                    <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                                    </svg>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        
+                                    <?php else: ?>
+                                        <!-- No Blogs Available -->
+                                        <div class="text-center space-y-4">
+                                            <div class="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mx-auto">
+                                                <svg class="w-8 h-8 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2.5 2.5 0 00-2.5-2.5H15"></path>
+                                                </svg>
+                                            </div>
+                                            <h4 class="text-white font-bold text-lg">Binnenkort beschikbaar</h4>
+                                            <p class="text-blue-200 text-sm">
+                                                De eerste blogs zijn onderweg. Kom snel terug voor interessante politieke analyses en inzichten.
+                                            </p>
+                                        </div>
+                                    <?php endif; ?>
+                                    
+                                    <!-- Footer -->
+                                    <div class="pt-6 border-t border-white/10">
+                                        <div class="flex items-center justify-center space-x-3">
+                                            <div class="w-8 h-8 bg-gradient-to-br from-secondary-light/80 to-secondary/80 rounded-lg flex items-center justify-center">
+                                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                                                </svg>
+                                            </div>
+                                            <div class="text-center">
+                                                <p class="text-white font-semibold text-sm">Handmatig Geselecteerd</p>
+                                                <p class="text-blue-200 text-xs">Zorgvuldig uitgekozen voor kwaliteit</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="text-blue-200 text-sm uppercase tracking-wider">Totaal likes</div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         
-        <!-- Bottom fade -->
-        <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-gray-50 to-transparent"></div>
+        <!-- Bottom fade transition -->
+        <div class="absolute bottom-0 left-0 right-0 h-24 md:h-32 bg-gradient-to-t from-gray-50 to-transparent"></div>
     </section>
+    
+    <!-- Enhanced Scripts for AI Dashboard -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Typing Animation
+        const typingElement = document.getElementById('typing-text');
+        const texts = [
+            'Waar meningen worden gevormd...',
+            'Waar analyses diepgang krijgen...',
+            'Waar politiek toegankelijk wordt...',
+            'Waar ideeën tot leven komen...'
+        ];
+        
+        let textIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typingSpeed = 100;
+        
+        function typeText() {
+            const currentText = texts[textIndex];
+            
+            if (isDeleting) {
+                typingElement.textContent = currentText.substring(0, charIndex - 1);
+                charIndex--;
+                typingSpeed = 50;
+            } else {
+                typingElement.textContent = currentText.substring(0, charIndex + 1);
+                charIndex++;
+                typingSpeed = 100;
+            }
+            
+            if (!isDeleting && charIndex === currentText.length) {
+                typingSpeed = 2000;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                textIndex = (textIndex + 1) % texts.length;
+                typingSpeed = 500;
+            }
+            
+            setTimeout(typeText, typingSpeed);
+        }
+        
+        typeText();
+        
+        // Add subtle hover effects to featured blog
+        const featuredBlog = document.querySelector('.bg-white\\/10');
+        if (featuredBlog) {
+            featuredBlog.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px)';
+            });
+            
+            featuredBlog.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        }
+    });
+    
+    // Add CSS for fade-in animation
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes fade-in-up {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-fade-in-up {
+            animation: fade-in-up 0.6s ease-out forwards;
+        }
+    `;
+    document.head.appendChild(style);
+    </script>
 
     <!-- Blog Posts Grid -->
     <section class="py-12 relative z-10" id="blogs">

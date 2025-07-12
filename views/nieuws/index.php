@@ -1,66 +1,339 @@
 <main class="bg-gradient-to-b from-slate-50 to-white min-h-screen">
     <!-- Modern Hero Section -->
-    <section class="relative bg-gradient-to-br from-primary-dark via-primary to-secondary py-24 overflow-hidden">
+    <section class="relative bg-gradient-to-br from-primary-dark via-primary to-secondary py-16 md:py-24 lg:py-32 overflow-hidden">
         <!-- Subtle background elements -->
         <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg opacity=\"0.03\"%3E%3Ccircle cx=\"30\" cy=\"30\" r=\"1.5\" fill=\"white\"/%3E%3Ccircle cx=\"0\" cy=\"30\" r=\"1\" fill=\"white\"/%3E%3Ccircle cx=\"60\" cy=\"30\" r=\"1\" fill=\"white\"/%3E%3Ccircle cx=\"30\" cy=\"0\" r=\"1\" fill=\"white\"/%3E%3Ccircle cx=\"30\" cy=\"60\" r=\"1\" fill=\"white\"/%3E%3C/g%3E%3C/svg%3E')] opacity-40"></div>
         
-        <!-- Ambient light effects -->
-        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl"></div>
-        <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-secondary/15 rounded-full blur-3xl"></div>
+        <!-- Floating Geometric Shapes - Responsive -->
+        <div class="absolute top-8 left-4 md:top-16 md:left-8 lg:top-20 lg:left-12 w-16 h-16 md:w-24 md:h-24 lg:w-32 lg:h-32 bg-gradient-to-br from-primary/30 to-secondary/30 rounded-3xl rotate-45 animate-bounce hidden sm:block" style="animation-duration: 6s; animation-delay: 0s;"></div>
+        <div class="absolute top-1/3 right-4 md:right-8 lg:right-16 w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 bg-gradient-to-tl from-secondary/25 to-primary/25 rounded-2xl rotate-12 animate-bounce hidden md:block" style="animation-duration: 8s; animation-delay: 2s;"></div>
+        <div class="absolute bottom-16 left-1/4 w-8 h-8 md:w-12 md:h-12 lg:w-16 lg:h-16 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-full animate-bounce hidden lg:block" style="animation-duration: 7s; animation-delay: 4s;"></div>
         
-        <div class="container mx-auto px-4 relative z-10">
-            <div class="max-w-5xl mx-auto">
-                <!-- Header badge -->
-                <div class="flex justify-center mb-8">
-                    <div class="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
-                        <div class="w-2 h-2 bg-secondary-light rounded-full mr-3 animate-pulse"></div>
-                        <span class="text-white/90 text-sm font-medium">Live nieuwsupdates</span>
-                    </div>
-                </div>
-                
-                <!-- Main title -->
-                <div class="text-center mb-12">
-                    <h1 class="text-5xl md:text-6xl lg:text-7xl font-black text-white mb-6 tracking-tight">
-                        Politiek
-                        <span class="block bg-gradient-to-r from-secondary-light via-secondary to-primary-light bg-clip-text text-transparent">
-                            Nieuws
-                        </span>
-                    </h1>
+        <!-- Ambient light effects -->
+        <div class="absolute top-1/4 left-1/4 w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 bg-primary/20 rounded-full blur-3xl animate-pulse"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-48 h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 bg-secondary/15 rounded-full blur-3xl animate-pulse" style="animation-delay: 2s;"></div>
+        
+        <!-- Main Content Container -->
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
                     
-                    <p class="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
-                        Een gebalanceerd overzicht van het laatste nieuws, objectief gepresenteerd vanuit diverse politieke hoeken
-                    </p>
-                </div>
-                
-                <!-- Quick stats -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
-                    <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
-                        <div class="text-center">
-                            <div class="text-3xl font-bold text-white mb-2"><?php echo $stats['total_articles']; ?></div>
-                            <div class="text-blue-200 text-sm uppercase tracking-wider">Totaal artikelen</div>
+                    <!-- Left Column - Main Content -->
+                    <div class="text-center lg:text-left space-y-6 lg:space-y-8 order-1 lg:order-1">
+                        
+                        <!-- Header badge -->
+                        <div class="flex justify-center lg:justify-start mb-6">
+                            <div class="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
+                                <div class="w-2 h-2 bg-secondary-light rounded-full mr-3 animate-pulse"></div>
+                                <span class="text-white/90 text-sm font-medium">Live nieuwsupdates</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Main Heading -->
+                        <div class="space-y-2 md:space-y-4">
+                            <h1 class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-white mb-4 md:mb-6 tracking-tight leading-tight">
+                                Politiek
+                                <span class="block bg-gradient-to-r from-secondary-light via-secondary to-primary-light bg-clip-text text-transparent">
+                                    Nieuws
+                                </span>
+                            </h1>
+                            
+                            <!-- Typing Animation Text -->
+                            <div class="text-base md:text-lg lg:text-xl text-blue-100 font-medium min-h-[1.5em] md:min-h-[2em]">
+                                <span id="typing-text" class="border-r-2 border-blue-300 animate-pulse"></span>
+                            </div>
+                        </div>
+                        
+                        <!-- Description -->
+                        <p class="text-base md:text-lg lg:text-xl text-blue-100 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                            Een gebalanceerd overzicht van het laatste nieuws, objectief gepresenteerd vanuit diverse politieke hoeken
+                        </p>
+                        
+                        <!-- Action Buttons -->
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
+                            <a href="#artikelen" 
+                               class="group relative inline-flex items-center justify-center px-6 py-3 md:px-8 md:py-4 bg-gradient-to-r from-secondary to-secondary-dark text-white font-semibold rounded-2xl shadow-2xl hover:shadow-secondary/30 hover:-translate-y-1 transition-all duration-300 overflow-hidden">
+                                <!-- Shine Effect -->
+                                <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                                <svg class="w-5 h-5 mr-2 md:mr-3 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
+                                </svg>
+                                <span class="relative z-10 text-sm md:text-base">Bekijk nieuws</span>
+                            </a>
+                            
+                            <a href="?clear_cache=1#artikelen" 
+                               class="group inline-flex items-center justify-center px-6 py-3 md:px-8 md:py-4 bg-white/10 backdrop-blur-lg text-white font-semibold rounded-2xl border border-white/20 hover:bg-white/20 hover:-translate-y-1 transition-all duration-300">
+                                <svg class="w-5 h-5 mr-2 md:mr-3 transform group-hover:rotate-180 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                                </svg>
+                                <span class="text-sm md:text-base">Vernieuw data</span>
+                            </a>
                         </div>
                     </div>
                     
-                    <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
-                        <div class="text-center">
-                            <div class="text-3xl font-bold text-white mb-2"><?php echo $stats['progressive_count']; ?></div>
-                            <div class="text-blue-200 text-sm uppercase tracking-wider">Progressief</div>
+                    <!-- Right Column - Live News Dashboard -->
+                    <div class="relative order-2 lg:order-2 mb-8 lg:mb-0">
+                        <!-- Central Decorative Element -->
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="w-64 h-64 md:w-80 md:h-80 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full blur-3xl animate-pulse"></div>
                         </div>
-                    </div>
-                    
-                    <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
-                        <div class="text-center">
-                            <div class="text-3xl font-bold text-white mb-2"><?php echo $stats['conservative_count']; ?></div>
-                            <div class="text-blue-200 text-sm uppercase tracking-wider">Conservatief</div>
+                        
+                        <!-- Live News Dashboard -->
+                        <div class="relative max-w-lg mx-auto">
+                            <!-- Dashboard Container -->
+                            <div class="bg-white/10 backdrop-blur-lg rounded-3xl p-6 md:p-8 border border-white/20 shadow-2xl hover:shadow-primary/30 transition-all duration-500 transform hover:-translate-y-1">
+                                <!-- Header -->
+                                <div class="text-center mb-6">
+                                    <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary-light/80 to-secondary/80 rounded-2xl mb-4 shadow-lg">
+                                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                        </svg>
+                                    </div>
+                                    <h3 class="text-xl md:text-2xl font-bold text-white mb-2">Live Nieuws Dashboard</h3>
+                                    <p class="text-blue-200 text-sm">Real-time politieke updates</p>
+                                </div>
+                                
+                                <!-- Dashboard Stats -->
+                                <div class="space-y-4 mb-6">
+                                    <!-- Total Articles -->
+                                    <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-4 border border-white/10">
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center space-x-3">
+                                                <div class="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center">
+                                                    <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
+                                                    </svg>
+                                                </div>
+                                                <div>
+                                                    <p class="text-white font-semibold text-sm">Totaal artikelen</p>
+                                                    <p class="text-blue-200 text-xs">Alle beschikbare bronnen</p>
+                                                </div>
+                                            </div>
+                                            <div class="text-right">
+                                                <p class="text-2xl font-bold text-white" id="total-counter"><?php echo $stats['total_articles']; ?></p>
+                                                <p class="text-xs text-blue-300">+<span id="total-increment">0</span> vandaag</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Progressive Articles -->
+                                    <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-4 border border-white/10">
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center space-x-3">
+                                                <div class="w-10 h-10 bg-emerald-500/20 rounded-xl flex items-center justify-center">
+                                                    <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                                                    </svg>
+                                                </div>
+                                                <div>
+                                                    <p class="text-white font-semibold text-sm">Progressief</p>
+                                                    <p class="text-blue-200 text-xs">Vooruitstrevende berichtgeving</p>
+                                                </div>
+                                            </div>
+                                            <div class="text-right">
+                                                <p class="text-2xl font-bold text-white" id="progressive-counter"><?php echo $stats['progressive_count']; ?></p>
+                                                <p class="text-xs text-emerald-300">+<span id="progressive-increment">0</span> recent</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Conservative Articles -->
+                                    <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-4 border border-white/10">
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center space-x-3">
+                                                <div class="w-10 h-10 bg-red-500/20 rounded-xl flex items-center justify-center">
+                                                    <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                                                    </svg>
+                                                </div>
+                                                <div>
+                                                    <p class="text-white font-semibold text-sm">Conservatief</p>
+                                                    <p class="text-blue-200 text-xs">Traditionele berichtgeving</p>
+                                                </div>
+                                            </div>
+                                            <div class="text-right">
+                                                <p class="text-2xl font-bold text-white" id="conservative-counter"><?php echo $stats['conservative_count']; ?></p>
+                                                <p class="text-xs text-red-300">+<span id="conservative-increment">0</span> recent</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Live Activity Feed -->
+                                <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-4 border border-white/10">
+                                    <div class="flex items-center justify-between mb-4">
+                                        <h4 class="text-white font-bold text-sm">Live Activiteit</h4>
+                                        <div class="flex items-center space-x-2">
+                                            <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                                            <span class="text-green-400 text-xs font-medium">LIVE</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="space-y-2" id="live-activity">
+                                        <div class="flex items-center space-x-3 text-xs">
+                                            <div class="w-1 h-1 bg-blue-400 rounded-full animate-pulse"></div>
+                                            <span class="text-blue-200">Nieuwe artikelen worden geladen...</span>
+                                        </div>
+                                        <div class="flex items-center space-x-3 text-xs">
+                                            <div class="w-1 h-1 bg-emerald-400 rounded-full animate-pulse" style="animation-delay: 1s;"></div>
+                                            <span class="text-blue-200">Progressieve bronnen bijgewerkt</span>
+                                        </div>
+                                        <div class="flex items-center space-x-3 text-xs">
+                                            <div class="w-1 h-1 bg-red-400 rounded-full animate-pulse" style="animation-delay: 2s;"></div>
+                                            <span class="text-blue-200">Conservatieve analyses toegevoegd</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Footer -->
+                                <div class="pt-6 border-t border-white/10">
+                                    <div class="flex items-center justify-center space-x-3">
+                                        <div class="w-8 h-8 bg-gradient-to-br from-secondary-light/80 to-secondary/80 rounded-lg flex items-center justify-center">
+                                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                            </svg>
+                                        </div>
+                                        <div class="text-center">
+                                            <p class="text-white font-semibold text-sm">Real-time Updates</p>
+                                            <p class="text-blue-200 text-xs">Automatisch bijgewerkt elke minuut</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         
-        <!-- Bottom fade -->
-        <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-slate-50 to-transparent"></div>
+        <!-- Bottom fade transition -->
+        <div class="absolute bottom-0 left-0 right-0 h-24 md:h-32 bg-gradient-to-t from-slate-50 to-transparent"></div>
     </section>
+    
+    <!-- Enhanced Scripts for News Dashboard -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Typing Animation
+        const typingElement = document.getElementById('typing-text');
+        const texts = [
+            'Waar nieuws vorm krijgt...',
+            'Waar perspectieven botsen...',
+            'Waar objectiviteit centraal staat...',
+            'Waar waarheid boven alles gaat...'
+        ];
+        
+        let textIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typingSpeed = 100;
+        
+        function typeText() {
+            const currentText = texts[textIndex];
+            
+            if (isDeleting) {
+                typingElement.textContent = currentText.substring(0, charIndex - 1);
+                charIndex--;
+                typingSpeed = 50;
+            } else {
+                typingElement.textContent = currentText.substring(0, charIndex + 1);
+                charIndex++;
+                typingSpeed = 100;
+            }
+            
+            if (!isDeleting && charIndex === currentText.length) {
+                typingSpeed = 2000;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                textIndex = (textIndex + 1) % texts.length;
+                typingSpeed = 500;
+            }
+            
+            setTimeout(typeText, typingSpeed);
+        }
+        
+        typeText();
+        
+        // Live Dashboard Animation
+        const liveActivity = document.getElementById('live-activity');
+        const activities = [
+            { text: 'Nieuwe artikelen scannen...', color: 'blue' },
+            { text: 'Progressieve bronnen bijgewerkt', color: 'emerald' },
+            { text: 'Conservatieve analyses toegevoegd', color: 'red' },
+            { text: 'Trending topics geüpdatet', color: 'purple' },
+            { text: 'Nieuwsdata gesynchroniseerd', color: 'blue' },
+            { text: 'Bias-analyse voltooid', color: 'yellow' }
+        ];
+        
+        let activityIndex = 0;
+        
+        function updateLiveActivity() {
+            const activity = activities[activityIndex];
+            const newActivity = document.createElement('div');
+            newActivity.className = 'flex items-center space-x-3 text-xs';
+            newActivity.innerHTML = `
+                <div class="w-1 h-1 bg-${activity.color}-400 rounded-full animate-pulse"></div>
+                <span class="text-blue-200">${activity.text}</span>
+            `;
+            
+            liveActivity.appendChild(newActivity);
+            
+            // Keep only last 3 activities
+            if (liveActivity.children.length > 3) {
+                liveActivity.removeChild(liveActivity.firstChild);
+            }
+            
+            activityIndex = (activityIndex + 1) % activities.length;
+        }
+        
+        // Update activity every 3 seconds
+        setInterval(updateLiveActivity, 3000);
+        
+        // Animate counters
+        function animateCounter(elementId, increment) {
+            const element = document.getElementById(elementId);
+            if (element) {
+                const current = parseInt(element.textContent);
+                const random = Math.floor(Math.random() * 3) + 1;
+                element.textContent = current + random;
+                
+                // Update increment
+                const incrementElement = document.getElementById(increment);
+                if (incrementElement) {
+                    const currentIncrement = parseInt(incrementElement.textContent);
+                    incrementElement.textContent = currentIncrement + random;
+                }
+            }
+        }
+        
+        // Simulate counter updates every 30 seconds
+        setInterval(() => {
+            if (Math.random() > 0.7) { // 30% chance
+                animateCounter('total-counter', 'total-increment');
+            }
+            if (Math.random() > 0.8) { // 20% chance
+                animateCounter('progressive-counter', 'progressive-increment');
+            }
+            if (Math.random() > 0.8) { // 20% chance
+                animateCounter('conservative-counter', 'conservative-increment');
+            }
+        }, 30000);
+    });
+    </script>
 
     <!-- Modern Filter Section -->
     <section class="relative z-10 -mt-20 pb-16" id="artikelen">
@@ -493,6 +766,11 @@
 
 <!-- Modern Nieuws Styling -->
 <style>
+/* Smooth scrolling for the entire page */
+html {
+    scroll-behavior: smooth;
+}
+
 /* Utility classes voor line clamping */
 .line-clamp-3 {
     display: -webkit-box;
