@@ -873,7 +873,7 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
 
                     <a href="<?php echo URLROOT; ?>/partijen" 
                        class="nav-link px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg">
-                        <span>Peilingen</span>
+                        <span>Partijen</span>
                     </a>
 
                     <a href="<?php echo URLROOT; ?>/stemwijzer" 
