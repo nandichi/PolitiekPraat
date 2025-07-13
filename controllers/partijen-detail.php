@@ -94,7 +94,7 @@ include_once BASE_PATH . '/views/templates/header.php';
                         </div>
                         
                         <h1 class="text-4xl lg:text-6xl font-black text-white mb-4 tracking-tight">
-                            <?php echo htmlspecialchars($party['slug']); ?>
+                            <?php echo htmlspecialchars($party['name']); ?>
                         </h1>
                         
                         <p class="text-xl text-blue-100 mb-6 font-medium">
@@ -162,7 +162,7 @@ include_once BASE_PATH . '/views/templates/header.php';
                     <div class="grid lg:grid-cols-3 gap-8 items-center">
                         <div class="text-center lg:text-left">
                             <div class="w-32 h-32 mx-auto lg:mx-0 mb-4 rounded-full overflow-hidden border-4 shadow-2xl" 
-                                 style="border-color: <?php echo getPartyColor($party['slug']); ?>;">
+                                 style="border-color: <?php echo getPartyColor($partyKey); ?>;">
                                 <img src="<?php echo $party['leader_photo']; ?>" 
                                      alt="<?php echo htmlspecialchars($party['leader']); ?>" 
                                      class="w-full h-full object-cover">
@@ -194,17 +194,23 @@ include_once BASE_PATH . '/views/templates/header.php';
                         Standpunten
                     </h2>
                     <div class="grid md:grid-cols-2 gap-6">
-                        <?php foreach ($party['standpoints'] as $topic => $standpoint): ?>
-                            <div class="bg-gradient-to-r from-gray-50 to-gray-100 rounded-2xl p-6 border border-gray-200 hover:shadow-lg transition-all duration-300">
-                                <h3 class="text-xl font-bold text-gray-900 mb-3 flex items-center">
-                                    <div class="w-2 h-2 rounded-full mr-3" style="background-color: <?php echo getPartyColor($party['slug']); ?>"></div>
-                                    <?php echo htmlspecialchars($topic); ?>
-                                </h3>
-                                <p class="text-gray-700 leading-relaxed">
-                                    <?php echo htmlspecialchars($standpoint); ?>
-                                </p>
+                        <?php if (isset($party['standpoints']) && is_array($party['standpoints'])): ?>
+                            <?php foreach ($party['standpoints'] as $topic => $standpoint): ?>
+                                <div class="bg-gradient-to-r from-gray-50 to-gray-100 rounded-2xl p-6 border border-gray-200 hover:shadow-lg transition-all duration-300">
+                                    <h3 class="text-xl font-bold text-gray-900 mb-3 flex items-center">
+                                        <div class="w-2 h-2 rounded-full mr-3" style="background-color: <?php echo getPartyColor($partyKey); ?>"></div>
+                                        <?php echo htmlspecialchars($topic); ?>
+                                    </h3>
+                                    <p class="text-gray-700 leading-relaxed">
+                                        <?php echo htmlspecialchars($standpoint); ?>
+                                    </p>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <div class="col-span-2 text-center py-8">
+                                <p class="text-gray-500">Geen standpunten beschikbaar.</p>
                             </div>
-                        <?php endforeach; ?>
+                        <?php endif; ?>
                     </div>
                 </div>
             </section>
@@ -219,14 +225,14 @@ include_once BASE_PATH . '/views/templates/header.php';
                             Huidige Zetels
                         </h2>
                         <div class="text-center">
-                            <div class="text-6xl font-black mb-4" style="color: <?php echo getPartyColor($party['slug']); ?>">
+                            <div class="text-6xl font-black mb-4" style="color: <?php echo getPartyColor($partyKey); ?>">
                                 <?php echo $party['current_seats']; ?>
                             </div>
                             <p class="text-gray-600 text-lg">van 150 zetels in de Tweede Kamer</p>
                             <div class="mt-6">
                                 <div class="bg-gray-200 rounded-full h-3 overflow-hidden">
                                     <div class="h-full rounded-full transition-all duration-1000" 
-                                         style="width: <?php echo ($party['current_seats'] / 150) * 100; ?>%; background-color: <?php echo getPartyColor($party['slug']); ?>">
+                                         style="width: <?php echo ($party['current_seats'] / 150) * 100; ?>%; background-color: <?php echo getPartyColor($partyKey); ?>">
                                     </div>
                                 </div>
                                 <p class="text-sm text-gray-500 mt-2">
@@ -243,26 +249,34 @@ include_once BASE_PATH . '/views/templates/header.php';
                             Peilingen
                         </h2>
                         <div class="text-center">
-                            <div class="text-6xl font-black mb-4" style="color: <?php echo getPartyColor($party['slug']); ?>">
-                                <?php echo $party['polling']['seats']; ?>
-                            </div>
-                            <p class="text-gray-600 text-lg">verwachte zetels</p>
-                            
-                            <!-- Trend indicator -->
-                            <div class="mt-6">
-                                <?php 
-                                $change = $party['polling']['change'];
-                                $changeClass = $change > 0 ? 'text-green-600 bg-green-100' : ($change < 0 ? 'text-red-600 bg-red-100' : 'text-gray-600 bg-gray-100');
-                                $changeIcon = $change > 0 ? '↗' : ($change < 0 ? '↘' : '→');
-                                ?>
-                                <div class="inline-flex items-center px-4 py-2 rounded-full <?php echo $changeClass; ?> font-bold">
-                                    <span class="mr-2"><?php echo $changeIcon; ?></span>
-                                    <span><?php echo $change > 0 ? '+' : ''; ?><?php echo $change; ?></span>
+                            <?php if (isset($party['polling']['seats'])): ?>
+                                <div class="text-6xl font-black mb-4" style="color: <?php echo getPartyColor($partyKey); ?>">
+                                    <?php echo $party['polling']['seats']; ?>
                                 </div>
-                                <p class="text-sm text-gray-500 mt-2">
-                                    <?php echo $change > 0 ? 'Winst' : ($change < 0 ? 'Verlies' : 'Gelijk'); ?> ten opzichte van huidige zetels
-                                </p>
-                            </div>
+                                <p class="text-gray-600 text-lg">verwachte zetels</p>
+                                
+                                <!-- Trend indicator -->
+                                <?php if (isset($party['polling']['change'])): ?>
+                                    <div class="mt-6">
+                                        <?php 
+                                        $change = $party['polling']['change'];
+                                        $changeClass = $change > 0 ? 'text-green-600 bg-green-100' : ($change < 0 ? 'text-red-600 bg-red-100' : 'text-gray-600 bg-gray-100');
+                                        $changeIcon = $change > 0 ? '↗' : ($change < 0 ? '↘' : '→');
+                                        ?>
+                                        <div class="inline-flex items-center px-4 py-2 rounded-full <?php echo $changeClass; ?> font-bold">
+                                            <span class="mr-2"><?php echo $changeIcon; ?></span>
+                                            <span><?php echo $change > 0 ? '+' : ''; ?><?php echo $change; ?></span>
+                                        </div>
+                                        <p class="text-sm text-gray-500 mt-2">
+                                            <?php echo $change > 0 ? 'Winst' : ($change < 0 ? 'Verlies' : 'Gelijk'); ?> ten opzichte van huidige zetels
+                                        </p>
+                                    </div>
+                                <?php endif; ?>
+                            <?php else: ?>
+                                <div class="text-gray-500 py-8">
+                                    <p>Geen peilingdata beschikbaar.</p>
+                                </div>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -283,7 +297,7 @@ include_once BASE_PATH . '/views/templates/header.php';
                                 Links Perspectief
                             </h3>
                             <p class="text-blue-900 leading-relaxed">
-                                <?php echo htmlspecialchars($party['perspectives']['left']); ?>
+                                <?php echo htmlspecialchars($party['perspectives']['left'] ?? 'Geen perspectief beschikbaar.'); ?>
                             </p>
                         </div>
                         
@@ -294,7 +308,7 @@ include_once BASE_PATH . '/views/templates/header.php';
                                 Rechts Perspectief
                             </h3>
                             <p class="text-red-900 leading-relaxed">
-                                <?php echo htmlspecialchars($party['perspectives']['right']); ?>
+                                <?php echo htmlspecialchars($party['perspectives']['right'] ?? 'Geen perspectief beschikbaar.'); ?>
                             </p>
                         </div>
                     </div>
