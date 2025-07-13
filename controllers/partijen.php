@@ -19,308 +19,11 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 // Party information
-$parties = [
-    'PVV' => [
-        'name' => 'Partij voor de Vrijheid',
-        'leader' => 'Geert Wilders',
-        'logo' => 'https://i.ibb.co/DfR8pS2Y/403880390-713625330344634-198487231923339026-n.jpg',
-        'leader_photo' => '/partijleiders/geert.jpg',
-        'description' => 'De PVV is een uitgesproken rechtse partij die zich met volle overgave inzet voor het behoud van de Nederlandse identiteit en cultuur. Ze pleiten voor extreem strengere immigratieregels, een harde lijn tegen islamisering en een duidelijke terugtrekking uit Europese besluitvorming. Daarnaast staan zij voor meer directe democratie en een samenleving waarin veiligheid, traditie en nationale soevereiniteit vooropstaan. Ze profileren zich als de partij die de gevestigde orde uitdaagt en de stem van de gewone burger verdedigt tegen globaliserende trends.',
-        'leader_info' => 'Geert Wilders leidt de PVV sinds 2006 en is een van de meest controversiële en herkenbare figuren in de Nederlandse politiek. Zijn scherpe uitspraken en gedurfde aanpak hebben hem zowel lovende als felle critici opgeleverd. Na de opvallende verkiezingsresultaten van 2023 heeft hij de positie van zijn partij verder versterkt, wat hem een symbool maakt van verzet tegen wat hij ziet als een bedreiging van de nationale identiteit en soevereiniteit.',
-        'standpoints' => [
-            'Immigratie' => 'Een strenger asielbeleid met een volledige asielstop',
-            'Klimaat' => 'Kritisch over ambitieuze klimaatmaatregelen als deze economische groei belemmeren',
-            'Zorg' => 'Afschaffen van het eigen risico in de zorg',
-            'Energie' => 'Voorstander van kernenergie als onderdeel van de energiemix'
-        ],
-        'current_seats' => 37,
-        'polling' => ['seats' => 29, 'percentage' => 19.3, 'change' => -8],
-        'perspectives' => [
-            'left' => 'De PVV pleit voor afschaffing van het eigen risico in de zorg, wat de gezondheidszorg toegankelijker en betaalbaarder maakt voor alle burgers, vooral voor mensen met lagere inkomens.',
-            'right' => 'De PVV komt sterk op voor nationale soevereiniteit en strenger immigratiebeleid, wat aanhangers zien als bescherming van de Nederlandse cultuur en identiteit.'
-        ]
-    ],
-    'VVD' => [
-        'name' => 'Volkspartij voor Vrijheid en Democratie',
-        'leader' => 'Dilan Yeşilgöz-Zegerius',
-        'logo' => 'https://logo.clearbit.com/vvd.nl',
-        'leader_photo' => '/partijleiders/dilan.jpg',
-        'description' => 'De VVD is een dynamische rechtsliberale partij die inzet op individuele vrijheid, economische groei en een efficiënte overheid. Zij pleiten voor lagere belastingen, minder bureaucratie en een marktgerichte economie waarin ondernemerschap centraal staat. Met een focus op pragmatische oplossingen wil de partij een stabiele en toekomstgerichte samenleving creëren, waarin ruimte is voor zowel innovatie als traditionele waarden.',
-        'leader_info' => 'Dilan Yeşilgöz-Zegerius, sinds 2023 partijleider, brengt een frisse wind in de VVD. Met haar achtergrond als minister van Justitie en Veiligheid en haar ervaring in de lokale politiek weet zij complexe vraagstukken op een heldere en toegankelijke manier te presenteren. Haar modernisering van de partij en haar focus op zowel economische als maatschappelijke vernieuwing maken haar een inspirerende leider voor een nieuwe generatie kiezers.',
-        'standpoints' => [
-            'Immigratie' => 'Strengere selectie en beperking van asielaanvragen, met internationale samenwerking',
-            'Klimaat' => 'Ondersteunt klimaatmaatregelen maar niet ten koste van economische groei',
-            'Zorg' => 'Behoud van eigen risico om zorgkosten beheersbaar te houden',
-            'Energie' => 'Voorstander van kernenergie als aanvulling op duurzame bronnen'
-        ],
-        'current_seats' => 24,
-        'polling' => ['seats' => 20, 'percentage' => 13.3, 'change' => -4],
-        'perspectives' => [
-            'left' => 'De VVD steunt praktische klimaatmaatregelen en energietransitieplannen die de industrie niet vervreemden, waardoor een duurzamere economie mogelijk wordt zonder massaal banenverlies.',
-            'right' => 'De VVD bevordert economische groei, lagere belastingen en minder bureaucratie, wat ondernemerschap stimuleert en de markteconomie versterkt.'
-        ]
-    ],
-    'NSC' => [
-        'name' => 'Nieuw Sociaal Contract',
-        'leader' => 'Nicolien van Vroonhoven',
-        'logo' => 'https://i.ibb.co/YT2fJZb4/nsc.png',
-        'leader_photo' => 'https://i.ibb.co/NgY27GmZ/nicolien-van-vroonhoven-en-piete.jpg',
-        'description' => 'NSC is een baanbrekende partij die staat voor transparantie, eerlijk bestuur en een fundamentele herwaardering van de democratische instituties. Zij leggen de nadruk op integriteit, een verantwoordelijke overheid en het herstel van het vertrouwen in de politiek. Met een duidelijke agenda gericht op grondrechten, tegenmacht en publieke participatie wil NSC de politiek opnieuw in dienst stellen van de burger.',
-        'leader_info' => 'Nicolien van Vroonhoven, de huidige leider van NSC, zet het werk van oprichter Pieter Omtzigt voort met dezelfde toewijding aan transparantie en integriteit. Haar reputatie als een compromisloze waarheidsvinder en haar scherpe blik op systemische misstanden maken haar tot een symbool van integriteit en rechtvaardigheid. Zij streeft ernaar de politiek te zuiveren van gevestigde belangen en de macht terug te geven aan de gewone burger.',
-        'standpoints' => [
-            'Immigratie' => 'Een doordacht asielbeleid dat zowel veiligheid als humanitaire zorg waarborgt',
-            'Klimaat' => 'Evenwichtige aanpak waarbij zowel klimaat als economie belangrijk zijn',
-            'Zorg' => 'Overweegt aanpassingen in plaats van volledige afschaffing van het eigen risico',
-            'Energie' => 'Open voor kernenergie als het bijdraagt aan een stabiele energiemix'
-        ],
-        'current_seats' => 20,
-        'polling' => ['seats' => 0, 'percentage' => 0.0, 'change' => -20],
-        'perspectives' => [
-            'left' => 'NSC legt nadruk op overheidsverantwoording en transparantie, en strijdt tegen systematische onrechtvaardigheden zoals gezien in de toeslagenaffaire.',
-            'right' => 'Hun evenwichtige benadering van immigratie- en asielbeleid richt zich zowel op veiligheidsaspecten als humanitaire verplichtingen zonder middelen te overschrijden.'
-        ]
-    ],
-    'BBB' => [
-        'name' => 'BoerBurgerBeweging',
-        'leader' => 'Caroline van der Plas',
-        'logo' => 'https://i.ibb.co/qMjw7jDV/bbb.png',
-        'leader_photo' => '/partijleiders/plas.jpg',
-        'description' => 'BBB vertegenwoordigt de belangen van de agrarische sector en het platteland met een visie die traditie en innovatie combineert. Zij staan voor een duurzaam boerenbeleid, investeren in lokale gemeenschappen en streven ernaar de kloof tussen stad en platteland drastisch te verkleinen. De partij zet in op pragmatische oplossingen die zowel economische als ecologische duurzaamheid bevorderen, en fungeert als een brug tussen de landelijke waarden en de moderne samenleving.',
-        'leader_info' => 'Caroline van der Plas is sinds 2019 de charismatische leider van BBB. Met een achtergrond in agrarische journalistiek en PR weet zij de zorgen en ambities van de boeren direct over te brengen. Haar directe communicatiestijl en nauwe band met de landelijke gemeenschappen maken haar tot een krachtige stem voor een toekomst waarin het platteland en de agrarische sector centraal staan.',
-        'standpoints' => [
-            'Immigratie' => 'Ondersteuning van een streng asielbeleid en beperking van de instroom',
-            'Klimaat' => 'Sceptisch over ingrijpende klimaatmaatregelen, vooral als deze de agrarische sector schaden',
-            'Zorg' => 'Voorstander van het verlagen van het eigen risico voor betere zorgtoegankelijkheid',
-            'Energie' => 'Ziet kernenergie als betrouwbaar onderdeel van de energietransitie'
-        ],
-        'current_seats' => 7,
-        'polling' => ['seats' => 4, 'percentage' => 2.7, 'change' => -3],
-        'perspectives' => [
-            'left' => 'BBB pleit voor het behoud van plattelandsgemeenschappen en traditionele landbouwpraktijken, waarmee cultureel erfgoed en lokale economieën tegen globalisering worden beschermd.',
-            'right' => 'Ze verzetten zich tegen buitensporige milieuregels die boerenbestaan bedreigen en steunen een pragmatische balans tussen duurzaamheid en economische levensvatbaarheid.'
-        ]
-    ],
-    'GL-PvdA' => [
-        'name' => 'GroenLinks-PvdA',
-        'leader' => 'Frans Timmermans',
-        'logo' => 'https://i.ibb.co/67hkc5Hv/gl-pvda.png',
-        'leader_photo' => '/partijleiders/frans.jpg',
-        'description' => 'GL-PvdA is een krachtige progressieve alliantie die zich inzet voor sociale rechtvaardigheid, duurzaamheid en gelijke kansen voor iedereen. Ze combineren de idealen van groen beleid met de solidariteit en maatschappelijke betrokkenheid van de PvdA. Hun beleid richt zich op het aanpakken van klimaatverandering, het bevorderen van sociale inclusie en het versterken van internationale samenwerking voor een rechtvaardige wereld.',
-        'leader_info' => 'Frans Timmermans, de lijsttrekker sinds 2023, brengt een schat aan internationale ervaring mee door zijn jarenlange betrokkenheid bij de Europese Commissie en de Europese Green Deal. Zijn brede visie en toewijding aan duurzaamheid en sociale gelijkheid maken hem tot een sleutelfiguur in het vormgeven van een progressieve toekomst, zowel in Nederland als in Europa.',
-        'standpoints' => [
-            'Immigratie' => 'Humanitaire principes moeten centraal staan in het asielbeleid',
-            'Klimaat' => 'Ambitieuze klimaatmaatregelen, ook als daar op korte termijn offers voor nodig zijn',
-            'Zorg' => 'Voorstander van afschaffing van het eigen risico voor gelijke toegang tot zorg',
-            'Energie' => 'Tegen kernenergie vanwege risico\'s en lange doorlooptijden'
-        ],
-        'current_seats' => 25,
-        'polling' => ['seats' => 28, 'percentage' => 18.7, 'change' => +3],
-        'perspectives' => [
-            'left' => 'Dit verbond steunt ambitieus klimaatbeleid en sociale rechtvaardigheid, en strijdt voor gelijkheid en milieubescherming.',
-            'right' => 'Hun focus op sociale cohesie en gemeenschapskracht helpt sociale stabiliteit te behouden, wat een beter ondernemingsklimaat schept en maatschappelijke kosten reduceert.'
-        ]
-    ],
-    'D66' => [
-        'name' => 'Democraten 66',
-        'leader' => 'Rob Jetten',
-        'logo' => 'https://logo.clearbit.com/d66.nl',
-        'leader_photo' => '/partijleiders/rob.jpg',
-        'description' => 'D66 staat voor een open, progressief-liberale samenleving waarin onderwijs, innovatie en democratische vernieuwing centraal staan. Ze pleiten voor een moderne overheid die inspeelt op de uitdagingen van de 21e eeuw, waarbij individuele vrijheid en maatschappelijke verantwoordelijkheid hand in hand gaan. Hun beleid combineert economische modernisering met sociale inclusiviteit en een sterke Europese betrokkenheid.',
-        'leader_info' => 'Rob Jetten, die de leiding overnam na Sigrid Kaag, is een visionaire politicus met een indrukwekkende staat van dienst als voormalig minister voor Klimaat en Energie. Zijn strategische inzichten en nadruk op duurzame innovatie maken hem tot een inspirerende leider die Nederland wil positioneren als voorloper in zowel ecologische als technologische ontwikkelingen.',
-        'standpoints' => [
-            'Immigratie' => 'Humaan maar gestructureerd asielbeleid met veilige en legale routes',
-            'Klimaat' => 'Nederland moet een leidende rol spelen in de klimaattransitie',
-            'Zorg' => 'Voorstander van bevriezen eigen risico met een limiet per behandeling',
-            'Energie' => 'Kritisch over kernenergie, maar innovatie en veiligheid kunnen doorslaggevend zijn'
-        ],
-        'current_seats' => 9,
-        'polling' => ['seats' => 9, 'percentage' => 6.0, 'change' => 0],
-        'perspectives' => [
-            'left' => 'D66 pleit voor investering in onderwijs en wetenschap, bevordert gelijke kansen en innovatieve oplossingen voor maatschappelijke problemen.',
-            'right' => 'Hun nadruk op individuele vrijheid en progressief-liberale waarden stimuleert persoonlijke verantwoordelijkheid en modernisering van de economie.'
-        ]
-    ],
-    'SP' => [
-        'name' => 'Socialistische Partij',
-        'leader' => 'Jimmy Dijk',
-        'logo' => 'https://logo.clearbit.com/sp.nl',
-        'leader_photo' => '/partijleiders/jimmy.jpg',
-        'description' => 'De SP is een vurige linkse partij die strijdbaar opkomt tegen sociale ongelijkheid en voor een krachtige verzorgingsstaat. Ze pleiten voor een samenleving waarin publieke voorzieningen, zoals gezondheidszorg en onderwijs, voor iedereen toegankelijk zijn en waarin rijkdom eerlijk wordt herverdeeld. Met een sterke band met de arbeidersklasse en een grassroots mentaliteit zetten zij zich in voor radicale, maar rechtvaardige maatschappelijke veranderingen.',
-        'leader_info' => 'Jimmy Dijk, sinds 2023 de energieke leider van de SP, komt uit een achtergrond van lokale politiek en vakbewegingen. Zijn passie voor sociale rechtvaardigheid en zijn praktische benadering van complexe problemen maken hem een herkenbare en toegankelijke stem voor de minderbedeelden in de samenleving.',
-        'standpoints' => [
-            'Immigratie' => 'Verbetering van opvang en integratie is even belangrijk als beperking van instroom',
-            'Klimaat' => 'Klimaatmaatregelen moeten eerlijk worden verdeeld',
-            'Zorg' => 'Afschaffen van het eigen risico voor een eerlijker zorgsysteem',
-            'Energie' => 'Tegen investeringen in kerncentrales, liever inzetten op duurzame energie'
-        ],
-        'current_seats' => 5,
-        'polling' => ['seats' => 7, 'percentage' => 4.7, 'change' => 2],
-        'perspectives' => [
-            'left' => 'De SP vecht consequent tegen ongelijkheid en voor een robuust sociaal vangnet, en komt op voor de rechten van werknemers en economisch kwetsbare groepen.',
-            'right' => 'Hun benadering van politiek vanuit de basis en focus op het luisteren naar zorgen van gewone burgers helpt echte gemeenschapsproblemen aan te pakken.'
-        ]
-    ],
-    'PvdD' => [
-        'name' => 'Partij voor de Dieren',
-        'leader' => 'Esther Ouwehand',
-        'logo' => 'https://logo.clearbit.com/partijvoordedieren.nl',
-        'leader_photo' => '/partijleiders/esther.jpg',
-        'description' => 'De PvdD combineert dierenwelzijn met een brede visie op duurzaamheid en natuurbehoud. Ze pleiten voor een fundamentele herziening van ons economisch systeem om ecologische grenzen te respecteren en biodiversiteit te beschermen. Hun agenda is erop gericht de balans te herstellen tussen economische groei en milieubehoud, zodat mens en natuur in harmonie kunnen leven.',
-        'leader_info' => 'Esther Ouwehand is sinds 2019 de drijvende kracht achter de PvdD. Met jarenlange ervaring in de Tweede Kamer en een onvermoeibare inzet voor dierenrechten en milieukwesties, is zij uitgegroeid tot een symbool van radicale maar doordachte milieupolitiek. Haar leiderschap kenmerkt zich door een combinatie van idealisme en realisme, gericht op duurzame veranderingen.',
-        'standpoints' => [
-            'Immigratie' => 'Asielbeleid moet mensenrechten respecteren en aandacht hebben voor ecologische context',
-            'Klimaat' => 'Voorstander van radicaal klimaatbeleid, ongeacht economische kortetermijnnadelen',
-            'Zorg' => 'Zorg moet toegankelijk zijn zonder financiële drempels',
-            'Energie' => 'Kernenergie is verouderd, inzetten op hernieuwbare energiebronnen'
-        ],
-        'current_seats' => 3,
-        'polling' => ['seats' => 4, 'percentage' => 2.7, 'change' => +1],
-        'perspectives' => [
-            'left' => 'Naast dierenwelzijn pleit PvdD voor een fundamenteel ander economisch systeem dat ecologische grenzen en biodiversiteit respecteert.',
-            'right' => 'Hun focus op rentmeesterschap van de natuur sluit aan bij conservatieve tradities van zorgvuldig beheer van hulpbronnen en behoud voor toekomstige generaties.'
-        ]
-    ],
-    'CDA' => [
-        'name' => 'Christen-Democratisch Appèl',
-        'leader' => 'Henri Bontenbal',
-        'logo' => 'https://logo.clearbit.com/cda.nl',
-        'leader_photo' => '/partijleiders/Henri.jpg',
-        'description' => 'Het CDA staat voor een samenleving gebaseerd op christendemocratische waarden, waarbij solidariteit, rentmeesterschap en gemeenschapszin centraal staan. Ze streven naar een harmonieuze balans tussen economische groei en sociale rechtvaardigheid, met oog voor zowel traditionele waarden als moderne maatschappelijke ontwikkelingen. De partij zet zich in voor een zorgvuldige verdeling van verantwoordelijkheden, waarin familie en lokale gemeenschappen een cruciale rol spelen.',
-        'leader_info' => 'Henri Bontenbal, partijleider sinds 2023, brengt een rijke ervaring mee uit zowel de energiesector als zijn tijd als Tweede Kamerlid. Zijn pragmatische aanpak en diepgewortelde geloof in sociale samenhang maken hem tot een stabiele en betrouwbare leider, die traditie en modernisering moeiteloos combineert.',
-        'standpoints' => [
-            'Immigratie' => 'Pleit voor een onderscheidend beleid met duidelijke scheiding tussen tijdelijke en permanente bescherming',
-            'Klimaat' => 'Combinatie van klimaatmaatregelen en behoud van economische stabiliteit',
-            'Zorg' => 'Voorstander van gerichte verlaging van het eigen risico',
-            'Energie' => 'Kernenergie als onderdeel van een brede energiemix, mits goed gereguleerd'
-        ],
-        'current_seats' => 5,
-        'polling' => ['seats' => 21, 'percentage' => 14.0, 'change' => +16],
-        'perspectives' => [
-            'left' => 'CDA\'s nadruk op gemeenschapsverantwoordelijkheid en solidariteit bevordert sociale cohesie en zorg voor kwetsbare leden van de samenleving.',
-            'right' => 'Ze bevorderen familiewaarden en gemeenschapsinstellingen als essentiële fundamenten van een stabiele samenleving, waardoor minder staatsinterventie nodig is.'
-        ]
-    ],
-    'JA21' => [
-        'name' => 'Juiste Antwoord 2021',
-        'leader' => 'Joost Eerdmans',
-        'logo' => 'https://logo.clearbit.com/ja21.nl',
-        'leader_photo' => '/partijleiders/joost.jpg',
-        'description' => 'JA21 is een conservatief-liberale partij die met een no-nonsense aanpak de politieke status quo uitdaagt. Zij zetten zich in voor een streng immigratiebeleid, lagere belastingen en directe democratie, waarbij de belangen van de gewone burger centraal staan. Hun beleid is scherp en duidelijk, met een sterke nadruk op nationale veiligheid en soevereiniteit, en een kritische houding ten opzichte van overmatige EU-inmenging.',
-        'leader_info' => 'Joost Eerdmans, medeoprichter en partijleider, brengt een kleurrijke en gedurfde achtergrond mee als voormalig wethouder en Kamerlid. Zijn directe en soms provocatieve stijl, gecombineerd met een diepgewortelde overtuiging in de belangen van het nationale volk, maken hem een uitgesproken en herkenbare leider binnen de Nederlandse politiek.',
-        'standpoints' => [
-            'Immigratie' => 'Ondersteuning van een restrictief asielbeleid met strikte toelatingscriteria',
-            'Klimaat' => 'Wil niet dat klimaatmaatregelen de economische groei te veel hinderen',
-            'Zorg' => 'Vindt een zekere mate van eigen bijdrage noodzakelijk voor efficiëntie',
-            'Energie' => 'Voorstander van kernenergie voor energiezekerheid en emissiereductie'
-        ],
-        'current_seats' => 1,
-        'polling' => ['seats' => 10, 'percentage' => 6.7, 'change' => +9],
-        'perspectives' => [
-            'left' => 'Hun steun voor directe democratie geeft burgers meer inspraak in beleidsbeslissingen, wat mogelijk de participatie in het democratische proces vergroot.',
-            'right' => 'JA21 pleit voor lagere belastingen en duidelijk, rechtlijnig bestuur dat traditionele Nederlandse waarden respecteert.'
-        ]
-    ],
-    'SGP' => [
-        'name' => 'Staatkundig Gereformeerde Partij',
-        'leader' => 'Chris Stoffer',
-        'logo' => 'https://logo.clearbit.com/sgp.nl',
-        'leader_photo' => '/partijleiders/Chris.jpg',
-        'description' => 'De SGP is een traditionele, christelijke partij die haar politiek baseert op strikte bijbelse principes en morele waarden. Zij streven naar een samenleving waarin familie, integriteit en rentmeesterschap centraal staan en waar ethiek de basis vormt voor alle politieke besluiten. Met een nadruk op culturele continuïteit en verantwoordelijkheidsgevoel verzet de partij zich tegen moderne trends die volgens hen de kernwaarden bedreigen.',
-        'leader_info' => 'Chris Stoffer leidt de SGP sinds 2023 en staat bekend om zijn compromisloze inzet voor christelijke waarden. Zijn ervaring in zowel de publieke als de private sector geeft hem een uniek perspectief, waarbij hij altijd streeft naar een balans tussen idealen en praktische realiteit. Zijn leiderschap is doordrenkt van een diepe overtuiging dat traditie en geloof de basis vormen voor een stabiele samenleving.',
-        'standpoints' => [
-            'Immigratie' => 'Voorstander van een zeer restrictief asielbeleid, waarbij nationale identiteit en veiligheid vooropstaan',
-            'Klimaat' => 'Vindt dat maatregelen verantwoord moeten zijn en de economie niet te zwaar mogen belasten',
-            'Zorg' => 'Eigen risico als middel om onnodig gebruik van zorg te beperken, met ruimte voor verlaging bij kwetsbare groepen',
-            'Energie' => 'Kernenergie als middel om de afhankelijkheid van fossiele brandstoffen te verminderen'
-        ],
-        'current_seats' => 3,
-        'polling' => ['seats' => 4, 'percentage' => 2.7, 'change' => +1],
-        'perspectives' => [
-            'left' => 'Hoewel traditioneel conservatief, toont SGP sterke toewijding aan rentmeesterschap en verantwoord beheer van hulpbronnen.',
-            'right' => 'Hun onwankelbare toewijding aan morele waarden en gezinsgerichte beleidsmaatregelen bevordert stabiliteit en sociale orde.'
-        ]
-    ],
-    'FvD' => [
-        'name' => 'Forum voor Democratie',
-        'leader' => 'Thierry Baudet',
-        'logo' => 'https://logo.clearbit.com/fvd.nl',
-        'leader_photo' => '/partijleiders/thierry.jpg',
-        'description' => 'FvD is een controversiële rechts-conservatieve partij die met felle retoriek opkomt voor nationale soevereiniteit en directe democratie. Zij betwisten de heersende wetenschappelijke consensus over klimaatverandering, verwerpen de invloed van de EU en pleiten voor een drastische herinrichting van het immigratiebeleid. Hun uitgesproken en soms polariserende standpunten maken hen tot een constante bron van discussie en debat in de Nederlandse politieke arena.',
-        'leader_info' => 'Thierry Baudet, de oprichter van FvD in 2016, is een intellectueel en controversieel denker die met zijn scherpe analyses en provocerende uitspraken de gevestigde orde voortdurend uitdaagt. Zijn achtergrond als rechtsfilosoof en publicist heeft hem een reputatie opgeleverd als een felle criticus van de mainstream politiek, wat hem zowel aanhangers als tegenstanders oplevert.',
-        'standpoints' => [
-            'Immigratie' => 'Pleit voor het beëindigen van het internationale asielkader en wil asielaanvragen sterk beperken',
-            'Klimaat' => 'Betwist de urgentie van de klimaatcrisis en wil geen maatregelen die de economie schaden',
-            'Zorg' => 'Voorstander van afschaffing van het eigen risico voor toegankelijke zorg',
-            'Energie' => 'Wil investeren in kernenergie als alternatief voor fossiele brandstoffen'
-        ],
-        'current_seats' => 3,
-        'polling' => ['seats' => 4, 'percentage' => 2.7, 'change' => +1],
-        'perspectives' => [
-            'left' => 'FvD steunt afschaffing van het eigen risico in de zorg, wat de toegankelijkheid van gezondheidszorg voor alle burgers zou verbeteren, ongeacht inkomen.',
-            'right' => 'Hun pleidooi voor nationale soevereiniteit en democratische hervorming is gericht op het teruggeven van macht aan burgers en het beperken van bureaucratische overreach.'
-        ]
-    ],
-    'DENK' => [
-        'name' => 'DENK',
-        'leader' => 'Stephan van Baarle',
-        'logo' => 'https://logo.clearbit.com/bewegingdenk.nl',
-        'leader_photo' => '/partijleiders/baarle.jpg',
-        'description' => 'DENK staat voor een inclusieve samenleving waarin iedereen, ongeacht achtergrond, gelijke kansen krijgt. Zij strijden tegen systematische discriminatie en pleiten voor structurele maatregelen die sociale rechtvaardigheid en gelijkheid bevorderen. Door het aanwakkeren van maatschappelijke discussies en het bieden van een platform voor ondervertegenwoordigde stemmen, streeft DENK naar een samenleving waarin diversiteit een kracht is.',
-        'leader_info' => 'Stephan van Baarle, partijleider sinds 2021, komt uit een lokale politieke achtergrond en heeft zich altijd ingezet voor de rechten van minderheden. Zijn betrokkenheid bij burgerinitiatieven en zijn vastberadenheid om discriminatie tegen te gaan, maken hem tot een krachtige voorvechter van inclusiviteit en sociale gelijkheid in Nederland.',
-        'standpoints' => [
-            'Immigratie' => 'Kiest voor een humaan asielbeleid met aandacht voor solidariteit en internationale samenwerking',
-            'Klimaat' => 'Wil een genuanceerde aanpak waarbij zowel klimaat als economie worden meegenomen',
-            'Zorg' => 'Wil het eigen risico aanzienlijk verlagen om zorg voor iedereen bereikbaar te maken',
-            'Energie' => 'Staat open voor kernenergie als het veilig en verantwoord wordt ingezet'
-        ],
-        'current_seats' => 3,
-        'polling' => ['seats' => 4, 'percentage' => 2.7, 'change' => +1],
-        'perspectives' => [
-            'left' => 'DENK vecht consequent tegen discriminatie en voor gelijke kansen, en geeft een stem aan ondervertegenwoordigde gemeenschappen.',
-            'right' => 'Hun focus op integratiebeleid erkent het belang van sociale cohesie en gedeelde waarden in een diverse samenleving.'
-        ]
-    ],
-    'Volt' => [
-        'name' => 'Volt Nederland',
-        'leader' => 'Laurens Dassen',
-        'logo' => 'https://logo.clearbit.com/voltnederland.org',
-        'leader_photo' => '/partijleiders/dassen.jpg',
-        'description' => 'Volt Nederland is een vernieuwende pan-Europese partij die zich inzet voor een geïntegreerd en democratisch Europa. Zij pleiten voor een digitale transformatie, duurzame energieoplossingen en sociale gelijkheid over landsgrenzen heen. Hun visie is er een van verbondenheid en vooruitgang, waarbij ze geloven dat gezamenlijke Europese actie de sleutel is tot het oplossen van mondiale uitdagingen.',
-        'leader_info' => 'Laurens Dassen, medeoprichter en partijleider, brengt met zijn achtergrond in de financiële sector en zijn sterke pro-Europese visie een frisse, internationale blik in de Nederlandse politiek. Zijn doel is om de traditionele grenzen van nationale politiek te doorbreken en innovatieve, grensoverschrijdende oplossingen te stimuleren voor een toekomstbestendig Europa.',
-        'standpoints' => [
-            'Immigratie' => 'Staat voor een gemeenschappelijk Europees asielbeleid dat solidariteit tussen lidstaten bevordert',
-            'Klimaat' => 'Pleit voor ambitieuze maatregelen en gelooft dat de lange termijn voordelen opwegen tegen de korte termijn kosten',
-            'Zorg' => 'Open voor verlaging van het eigen risico, mits dit financieel haalbaar is',
-            'Energie' => 'Voorkeur voor hernieuwbare energie, maar open voor kernenergie bij strenge veiligheidseisen'
-        ],
-        'current_seats' => 2,
-        'polling' => ['seats' => 3, 'percentage' => 2.0, 'change' => +1],
-        'perspectives' => [
-            'left' => 'Volts pan-Europese benadering pakt transnationale uitdagingen zoals klimaatverandering en ongelijkheid aan door gecoördineerde actie.',
-            'right' => 'Hun nadruk op digitale transformatie en innovatie bevordert economische concurrentiekracht en modernisering.'
-        ]
-    ],
-    'CU' => [
-        'name' => 'ChristenUnie',
-        'leader' => 'Mirjam Bikker',
-        'logo' => 'https://logo.clearbit.com/christenunie.nl',
-        'leader_photo' => 'https://i.ibb.co/wh3wwQ66/Bikker.jpg',
-        'description' => 'De ChristenUnie is een sociaal-christelijke partij die geloof en politiek combineert met een sterke focus op duurzaamheid, sociale rechtvaardigheid en gezinswaarden. Ze streven naar een zorgzame samenleving waarin kwetsbare groepen worden beschermd en waarin rentmeesterschap voor de schepping centraal staat. De partij zoekt naar praktische oplossingen die zowel ethisch verantwoord als maatschappelijk relevant zijn.',
-        'leader_info' => 'Mirjam Bikker, partijleider sinds 2023, staat bekend om haar doortastende en constructieve aanpak. Met haar achtergrond als jurist en haar ervaring in de Eerste en Tweede Kamer, combineert ze diepgaande kennis met een warm hart voor sociale thema\'s. Haar leiderschap richt zich op verbinding en het bouwen van bruggen, zowel binnen als buiten de politiek.',
-        'standpoints' => [
-            'Immigratie' => 'Een humaan asielbeleid met nadruk op veilige opvang en integratie',
-            'Klimaat' => 'Ambitieuze klimaatdoelen vanuit rentmeesterschap',
-            'Zorg' => 'Verlaging van het eigen risico voor kwetsbare groepen',
-            'Energie' => 'Inzet op duurzame energie, kritisch op kernenergie'
-        ],
-        'current_seats' => 3,
-        'polling' => ['seats' => 3, 'percentage' => 2.0, 'change' => 0],
-        'perspectives' => [
-            'left' => 'De ChristenUnie legt sterke nadruk op sociale rechtvaardigheid, armoedebestrijding en milieubescherming, wat aansluit bij progressieve idealen.',
-            'right' => 'Hun focus op gezinswaarden, gemeenschapszin en ethisch ondernemerschap ondersteunt traditionele maatschappelijke structuren.'
-        ]
-    ]
-];
+require_once __DIR__ . '/../models/PartyModel.php';
+
+// Krijg alle partijen uit de database
+$partyModel = new PartyModel();
+$parties = $partyModel->getAllParties();
 
 // Include the header
 $title = "Politieke Partijen Overzicht";
@@ -1323,29 +1026,29 @@ include_once BASE_PATH . '/views/templates/header.php';
                     <footer class="p-6 pt-0">
                         <div class="grid grid-cols-2 gap-3">
                             <!-- Primary Action Button -->
-                            <button class="party-btn group relative overflow-hidden text-white font-bold py-3 px-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl" 
-                                    style="background: linear-gradient(135deg, <?php echo getPartyColor($partyKey); ?>, <?php echo adjustColorBrightness(getPartyColor($partyKey), -20); ?>);"
-                                    data-party="<?php echo htmlspecialchars($partyKey); ?>">
+                            <a href="<?php echo URLROOT; ?>/partijen/<?php echo $partyKey; ?>" 
+                               class="party-btn group relative overflow-hidden text-white font-bold py-3 px-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl block text-center" 
+                               style="background: linear-gradient(135deg, <?php echo getPartyColor($partyKey); ?>, <?php echo adjustColorBrightness(getPartyColor($partyKey), -20); ?>);">
                                 <!-- Shimmer Effect -->
                                 <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
                                 <span class="relative flex items-center justify-center space-x-2">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                                     </svg>
-                                    <span>Partij</span>
+                                    <span>Bekijk partij</span>
                                 </span>
-                            </button>
+                            </a>
                             
                             <!-- Secondary Action Button -->
-                            <button class="leader-btn group bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-3 px-4 rounded-xl transition-all duration-300 border-2 border-gray-200 hover:border-gray-300"
-                                    data-leader="<?php echo htmlspecialchars($partyKey); ?>">
+                            <a href="<?php echo URLROOT; ?>/partijen/<?php echo $partyKey; ?>" 
+                               class="leader-btn group bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-3 px-4 rounded-xl transition-all duration-300 border-2 border-gray-200 hover:border-gray-300 block text-center">
                                 <span class="flex items-center justify-center space-x-2">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                                     </svg>
-                                    <span>Leider</span>
+                                    <span>Meer info</span>
                                 </span>
-                            </button>
+                            </a>
                         </div>
                     </footer>
                     

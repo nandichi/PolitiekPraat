@@ -91,10 +91,14 @@ require_once '../views/templates/header.php';
                        class="bg-white/20 backdrop-blur-sm text-white px-6 py-3 rounded-xl hover:bg-white/30 transition-all duration-300 border border-white/30">
                         Vragen Beheren
                     </a>
-                    <a href="stemwijzer-partij-beheer.php" 
-                       class="bg-white text-indigo-600 px-6 py-3 rounded-xl hover:bg-blue-50 transition-all duration-300 font-semibold">
-                        Partijen Beheren
-                    </a>
+                                    <a href="stemwijzer-partij-beheer.php" 
+                   class="bg-white/20 backdrop-blur-sm text-white px-6 py-3 rounded-xl hover:bg-white/30 transition-all duration-300 border border-white/30">
+                    Stemwijzer Partijen
+                </a>
+                <a href="political-parties-beheer.php" 
+                   class="bg-white text-indigo-600 px-6 py-3 rounded-xl hover:bg-blue-50 transition-all duration-300 font-semibold">
+                    Partijen Beheren
+                </a>
                 </div>
             </div>
         </div>
@@ -378,6 +382,21 @@ require_once '../views/templates/header.php';
                         <div>
                             <h3 class="font-semibold text-gray-800">News Scraper</h3>
                             <p class="text-sm text-gray-600">Auto nieuws scraping</p>
+                        </div>
+                    </div>
+                </a>
+                
+                <a href="political-parties-beheer.php" 
+                   class="group p-6 bg-gradient-to-br from-violet-50 to-purple-50 border border-violet-200 rounded-xl hover:from-violet-100 hover:to-purple-100 transition-all duration-300 card-hover">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 bg-violet-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Partijen Beheer</h3>
+                            <p class="text-sm text-gray-600">Beheer politieke partijen</p>
                         </div>
                     </div>
                 </a>

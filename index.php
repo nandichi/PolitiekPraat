@@ -100,6 +100,10 @@ $router->add('resultaten/([a-zA-Z0-9]+)', function($shareId) {
     require_once 'controllers/resultaten.php';
 });
 $router->add('partijen', 'controllers/partijen.php');
+$router->add('partijen/([^/]+)', function($partySlug) {
+    $_GET['party'] = $partySlug;
+    require_once 'controllers/partijen-detail.php';
+});
 $router->add('programma-vergelijker', 'controllers/programma-vergelijker.php');
 
 // Get the requested URL
