@@ -1,4 +1,68 @@
-<?php require_once BASE_PATH . '/views/templates/header.php'; ?>
+<?php 
+// Check if this is an AJAX request
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest') {
+    // This is an AJAX request for like functionality
+    header('Content-Type: application/json');
+    
+    require_once '../../includes/config.php';
+    require_once '../../includes/Database.php';
+    
+    try {
+        if (!isset($_POST['slug']) || !isset($_POST['action'])) {
+            throw new Exception('Ontbrekende parameters');
+        }
+        
+        $slug = trim($_POST['slug']);
+        $action = trim($_POST['action']); // 'like' or 'unlike'
+        
+        if (!in_array($action, ['like', 'unlike'])) {
+            throw new Exception('Ongeldige actie');
+        }
+        
+        $db = new Database();
+        
+        // Get current likes count
+        $db->query("SELECT likes FROM blogs WHERE slug = :slug");
+        $db->bind(':slug', $slug);
+        $currentLikes = $db->single();
+        
+        if (!$currentLikes) {
+            throw new Exception('Blog niet gevonden');
+        }
+        
+        // Update likes based on action
+        $newLikes = $currentLikes->likes;
+        if ($action === 'like') {
+            $newLikes = max(0, $newLikes + 1);
+        } else {
+            $newLikes = max(0, $newLikes - 1);
+        }
+        
+        // Update in database
+        $db->query("UPDATE blogs SET likes = :likes WHERE slug = :slug");
+        $db->bind(':likes', $newLikes);
+        $db->bind(':slug', $slug);
+        $db->execute();
+        
+        echo json_encode([
+            'success' => true,
+            'likes' => $newLikes,
+            'action' => $action
+        ]);
+        
+    } catch (Exception $e) {
+        http_response_code(400);
+        echo json_encode([
+            'success' => false,
+            'error' => $e->getMessage()
+        ]);
+    }
+    
+    exit;
+}
+
+// Normal HTML page follows below
+require_once BASE_PATH . '/views/templates/header.php'; ?>
 
 <main class="min-h-screen py-8 relative z-10 bg-gradient-to-br from-gray-50 via-white to-gray-50">
     <!-- Decoratieve elementen -->

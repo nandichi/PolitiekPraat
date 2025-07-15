@@ -1667,8 +1667,30 @@ require_once 'views/templates/header.php'; ?>
 
 <!-- Enhanced JavaScript -->
 <script>
+// Global variables
+let isLikeProcessing = false;
+let likedBlogs = {};
+let currentBlogSlug = '<?php echo $blog->slug; ?>';
+
+// Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', function() {
-    // Reading Progress Bar
+    console.log('Blog view script loaded');
+    
+    // Initialize all components
+    initializeReadingProgress();
+    initializeReadingTime();
+    initializeLikeSystem();
+    initializeBiasAnalysis();
+    initializePartyPerspective();
+    initializeAudioFeatures();
+    
+    // Load liked blogs from localStorage
+    likedBlogs = JSON.parse(localStorage.getItem('likedBlogs') || '{}');
+    updateLikeButtonStates();
+});
+
+// Reading Progress Bar
+function initializeReadingProgress() {
     function updateReadingProgress() {
         const article = document.getElementById('blog-content');
         if (!article) return;
@@ -1682,683 +1704,268 @@ document.addEventListener('DOMContentLoaded', function() {
             ((scrollPosition + windowHeight - articleTop) / articleHeight) * 100
         ));
         
-        document.getElementById('reading-progress').style.width = progress + '%';
-    }
-    
-    // Reading Time Calculation
-    function calculateReadingTime() {
-        const content = document.getElementById('blog-content');
-        if (!content) return;
-        
-        const text = content.textContent || content.innerText;
-        const words = text.trim().split(/\s+/).length;
-        const wordsPerMinute = 200;
-        const minutes = Math.ceil(words / wordsPerMinute);
-        
-        const readingTimeElement = document.getElementById('reading-minutes');
-        if (readingTimeElement) {
-            readingTimeElement.textContent = minutes;
+        const progressBar = document.getElementById('reading-progress');
+        if (progressBar) {
+            progressBar.style.width = progress + '%';
         }
     }
     
-    // Like functionality
-    const likeButton = document.getElementById('likeButton');
-    const heroLikeButton = document.getElementById('heroLikeButton');
-    const likeCount = document.getElementById('likeCount');
-    const heroLikeCount = document.getElementById('hero-like-count');
-    const slug = likeButton?.dataset.slug || heroLikeButton?.dataset.slug;
-    let isProcessing = false;
-    
-    const likedBlogs = JSON.parse(localStorage.getItem('likedBlogs') || '{}');
-    
-    function updateLikeButtonState(isLiked) {
-        if (likeButton) {
-            if (isLiked) {
-                likeButton.classList.add('liked');
-            } else {
-                likeButton.classList.remove('liked');
-            }
-        }
-        
-        if (heroLikeButton) {
-            if (isLiked) {
-                heroLikeButton.classList.add('liked');
-            } else {
-                heroLikeButton.classList.remove('liked');
-            }
-        }
-    }
-    
-    async function handleLike(button) {
-        if (isProcessing) return;
-        
-        const action = likedBlogs[slug] ? 'unlike' : 'like';
-        isProcessing = true;
-        
-        // Disable both buttons
-        if (likeButton) likeButton.disabled = true;
-        if (heroLikeButton) heroLikeButton.disabled = true;
-        
-        try {
-            const response = await fetch(`<?php echo URLROOT; ?>/blogs/like/${slug}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ action })
-            });
-            
-            const data = await response.json();
-            
-            if (data.success) {
-                // Update both counters
-                if (likeCount) likeCount.textContent = data.likes;
-                if (heroLikeCount) heroLikeCount.textContent = data.likes + ' likes';
-                
-                if (action === 'like') {
-                    likedBlogs[slug] = true;
-                    updateLikeButtonState(true);
-                } else {
-                    delete likedBlogs[slug];
-                    updateLikeButtonState(false);
-                }
-                
-                localStorage.setItem('likedBlogs', JSON.stringify(likedBlogs));
-            }
-        } catch (error) {
-            console.error('Error:', error);
-        } finally {
-            isProcessing = false;
-            if (likeButton) likeButton.disabled = false;
-            if (heroLikeButton) heroLikeButton.disabled = false;
-        }
-    }
-    
-    // Initialize like state
-    if (slug) {
-        updateLikeButtonState(likedBlogs[slug]);
-    }
-    
-    // Add event listeners to both like buttons
-    likeButton?.addEventListener('click', () => handleLike(likeButton));
-    heroLikeButton?.addEventListener('click', () => handleLike(heroLikeButton));
-    
-
-    
-    // Newsletter Form
-    const newsletterForm = document.getElementById('newsletter-form');
-    newsletterForm?.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Enhanced form handling
-        const formData = new FormData(this);
-        const name = formData.get('name');
-        const email = formData.get('email');
-        const interests = formData.getAll('interests[]');
-        
-        // Show loading state
-        const submitButton = this.querySelector('button[type="submit"]');
-        const originalContent = submitButton.innerHTML;
-        submitButton.innerHTML = `
-            <span class="flex items-center justify-center gap-2">
-                <svg class="w-5 h-5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
-                </svg>
-                Bezig met aanmelden...
-            </span>
-        `;
-        submitButton.disabled = true;
-        
-        // Simulate newsletter signup (replace with actual API call)
-        setTimeout(() => {
-            // Show success message
-            const successDiv = document.getElementById('newsletter-success');
-            if (successDiv) {
-                successDiv.classList.remove('hidden');
-                successDiv.classList.add('newsletter-success');
-            }
-            
-            // Reset form
-            this.reset();
-            
-            // Reset button
-            submitButton.innerHTML = originalContent;
-            submitButton.disabled = false;
-            
-            // Hide form after success
-            setTimeout(() => {
-                this.style.opacity = '0.5';
-                this.style.pointerEvents = 'none';
-            }, 2000);
-            
-            showNotification('Welkom bij onze newsletter! 🎉', 'success');
-        }, 2000);
-    });
-    
-    // Enhanced Like functionality with improved UI feedback
-    const likeCountDisplay = document.getElementById('likeCountDisplay');
-    
-    async function handleLike(button) {
-        if (isProcessing) return;
-        
-        const action = likedBlogs[slug] ? 'unlike' : 'like';
-        isProcessing = true;
-        
-        // Enhanced visual feedback
-        button.style.transform = 'scale(0.95)';
-        
-        // Disable both buttons
-        if (likeButton) likeButton.disabled = true;
-        if (heroLikeButton) heroLikeButton.disabled = true;
-        
-        try {
-            const response = await fetch(`<?php echo URLROOT; ?>/blogs/like/${slug}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ action })
-            });
-            
-            const data = await response.json();
-            
-            if (data.success) {
-                // Update all counters with animation
-                const newCount = data.likes;
-                
-                // Animate the main counter
-                if (likeCountDisplay) {
-                    likeCountDisplay.style.transform = 'scale(1.2)';
-                    setTimeout(() => {
-                        likeCountDisplay.textContent = newCount;
-                        likeCountDisplay.style.transform = 'scale(1)';
-                    }, 150);
-                }
-                
-                // Update other counters
-                if (likeCount) {
-                    likeCount.style.transform = 'scale(1.1)';
-                    setTimeout(() => {
-                        likeCount.textContent = newCount;
-                        likeCount.style.transform = 'scale(1)';
-                    }, 150);
-                }
-                
-                if (heroLikeCount) {
-                    heroLikeCount.style.transform = 'scale(1.1)';
-                    setTimeout(() => {
-                        heroLikeCount.textContent = newCount + ' likes';
-                        heroLikeCount.style.transform = 'scale(1)';
-                    }, 150);
-                }
-                
-                if (action === 'like') {
-                    likedBlogs[slug] = true;
-                    updateLikeButtonState(true);
-                    
-                    // Confetti effect for likes
-                    createConfetti(button);
-                } else {
-                    delete likedBlogs[slug];
-                    updateLikeButtonState(false);
-                }
-                
-                localStorage.setItem('likedBlogs', JSON.stringify(likedBlogs));
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            showNotification('Er ging iets mis. Probeer het opnieuw.', 'error');
-        } finally {
-            isProcessing = false;
-            button.style.transform = 'scale(1)';
-            if (likeButton) likeButton.disabled = false;
-            if (heroLikeButton) heroLikeButton.disabled = false;
-        }
-    }
-    
-    // Enhanced confetti effect
-    function createConfetti(button) {
-        const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#f0932b', '#eb4d4b', '#6c5ce7'];
-        const buttonRect = button.getBoundingClientRect();
-        
-        for (let i = 0; i < 30; i++) {
-            setTimeout(() => {
-                const confetti = document.createElement('div');
-                confetti.style.position = 'fixed';
-                confetti.style.left = (buttonRect.left + buttonRect.width / 2) + 'px';
-                confetti.style.top = (buttonRect.top + buttonRect.height / 2) + 'px';
-                confetti.style.width = '8px';
-                confetti.style.height = '8px';
-                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                confetti.style.borderRadius = '50%';
-                confetti.style.pointerEvents = 'none';
-                confetti.style.zIndex = '9999';
-                
-                document.body.appendChild(confetti);
-                
-                const angle = (Math.PI * 2 * i) / 30;
-                const velocity = 2 + Math.random() * 3;
-                const gravity = 0.1;
-                let vx = Math.cos(angle) * velocity;
-                let vy = Math.sin(angle) * velocity;
-                let x = 0;
-                let y = 0;
-                
-                const animate = () => {
-                    x += vx;
-                    y += vy;
-                    vy += gravity;
-                    
-                    confetti.style.transform = `translate(${x}px, ${y}px) rotate(${x}deg)`;
-                    confetti.style.opacity = Math.max(0, 1 - Math.abs(y) / 200);
-                    
-                    if (confetti.style.opacity > 0) {
-                        requestAnimationFrame(animate);
-                    } else {
-                        confetti.remove();
-                    }
-                };
-                
-                requestAnimationFrame(animate);
-            }, i * 50);
-        }
-    }
-
-    // Initialize all functions
-    calculateReadingTime();
-    
-    // Add scroll listeners
     window.addEventListener('scroll', updateReadingProgress);
     window.addEventListener('resize', updateReadingProgress);
-    
-    // Initial progress update
     updateReadingProgress();
-    
-    // Enhanced Audio Sharing Functions
-    function shareAudio() {
-        <?php if (!empty($blog->soundcloud_url)): ?>
-        const audioTitle = '<?php echo addslashes($blog->title); ?> - Podcast';
-        const audioUrl = '<?php echo htmlspecialchars($blog->soundcloud_url); ?>';
-        
-        if (navigator.share) {
-            navigator.share({
-                title: audioTitle,
-                text: 'Luister naar deze interessante podcast:',
-                url: audioUrl
-            }).then(() => {
-                showNotification('Podcast gedeeld! 🎙️', 'success');
-            }).catch(() => {
-                fallbackShare(audioTitle, audioUrl);
-            });
-        } else {
-            fallbackShare(audioTitle, audioUrl);
-        }
-        <?php else: ?>
-        showNotification('Geen audio beschikbaar om te delen', 'error');
-        <?php endif; ?>
-    }
-    
-    function fallbackShare(title, url) {
-        // Copy to clipboard as fallback
-        const shareText = `${title} - ${url}`;
-        navigator.clipboard.writeText(shareText).then(() => {
-            showNotification('Audio link gekopieerd naar klembord! 📋', 'success');
-        }).catch(() => {
-            showNotification('Kon link niet kopiëren', 'error');
-        });
-    }
-    
-    function openInSoundCloud() {
-        <?php if (!empty($blog->soundcloud_url)): ?>
-        window.open('<?php echo htmlspecialchars($blog->soundcloud_url); ?>', '_blank');
-        showNotification('SoundCloud geopend in nieuw tabblad', 'success');
-        <?php endif; ?>
-    }
+}
 
-    // Enhanced Reading Time Calculation
-    function calculateReadingTime() {
-        const content = document.getElementById('blog-content');
-        if (!content) return;
-        
-        const text = content.textContent || content.innerText;
-        const words = text.trim().split(/\s+/).length;
-        const wordsPerMinute = 200; // Dutch reading speed
-        const minutes = Math.ceil(words / wordsPerMinute);
-        
-        // Update all reading time displays
-        const readingTimeElements = document.querySelectorAll('#reading-minutes, #reading-minutes-content');
-        readingTimeElements.forEach(element => {
-            if (element) {
-                element.textContent = minutes;
-            }
-        });
+// Reading Time Calculation
+function initializeReadingTime() {
+    const content = document.getElementById('blog-content');
+    if (!content) return;
+    
+    const text = content.textContent || content.innerText;
+    const words = text.trim().split(/\s+/).length;
+    const wordsPerMinute = 200;
+    const minutes = Math.ceil(words / wordsPerMinute);
+    
+    const readingTimeElements = document.querySelectorAll('#reading-minutes, #reading-minutes-content');
+    readingTimeElements.forEach(element => {
+        if (element) {
+            element.textContent = minutes;
+        }
+    });
+}
+
+// Like System
+function initializeLikeSystem() {
+    const likeButton = document.getElementById('likeButton');
+    const heroLikeButton = document.getElementById('heroLikeButton');
+    
+    if (likeButton) {
+        likeButton.addEventListener('click', handleLikeClick);
+        console.log('Like button event listener added');
     }
     
-    // Enhanced Bias Analysis Functionality
+    if (heroLikeButton) {
+        heroLikeButton.addEventListener('click', handleLikeClick);
+        console.log('Hero like button event listener added');
+    }
+}
+
+async function handleLikeClick(event) {
+    if (isLikeProcessing) {
+        console.log('Like already processing, ignoring click');
+        return;
+    }
+    
+    console.log('Like button clicked');
+    
+    const button = event.currentTarget;
+    const slug = button.getAttribute('data-slug') || currentBlogSlug;
+    
+    if (!slug) {
+        console.error('No slug found for like action');
+        showNotification('Er ging iets mis. Probeer het opnieuw.', 'error');
+        return;
+    }
+    
+    const action = likedBlogs[slug] ? 'unlike' : 'like';
+    isLikeProcessing = true;
+    
+    // Visual feedback
+    button.style.transform = 'scale(0.95)';
+    
+    // Disable buttons
+    const allLikeButtons = document.querySelectorAll('#likeButton, #heroLikeButton');
+    allLikeButtons.forEach(btn => btn.disabled = true);
+    
+    try {
+        console.log(`Performing ${action} action for slug: ${slug}`);
+        
+        // Check if like endpoint exists
+        const likeEndpoint = `<?php echo URLROOT; ?>/views/blogs/update_likes.php`;
+        
+        const formData = new FormData();
+        formData.append('slug', slug);
+        formData.append('action', action);
+        
+        const response = await fetch(likeEndpoint, {
+            method: 'POST',
+            body: formData
+        });
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        console.log('Like response:', data);
+        
+        if (data.success) {
+            // Update like counts
+            updateLikeCounts(data.likes);
+            
+            // Update local storage
+            if (action === 'like') {
+                likedBlogs[slug] = true;
+                showNotification('Artikel geliked! ❤️', 'success');
+                createConfetti(button);
+            } else {
+                delete likedBlogs[slug];
+                showNotification('Like verwijderd', 'info');
+            }
+            
+            localStorage.setItem('likedBlogs', JSON.stringify(likedBlogs));
+            updateLikeButtonStates();
+            
+        } else {
+            throw new Error(data.error || 'Onbekende fout');
+        }
+        
+    } catch (error) {
+        console.error('Like error:', error);
+        showNotification('Er ging iets mis bij het liken. Probeer het opnieuw.', 'error');
+    } finally {
+        isLikeProcessing = false;
+        button.style.transform = 'scale(1)';
+        allLikeButtons.forEach(btn => btn.disabled = false);
+    }
+}
+
+function updateLikeCounts(newCount) {
+    // Update all like count displays
+    const likeCountDisplay = document.getElementById('likeCountDisplay');
+    const heroLikeCount = document.getElementById('hero-like-count');
+    
+    if (likeCountDisplay) {
+        likeCountDisplay.style.transform = 'scale(1.2)';
+        setTimeout(() => {
+            likeCountDisplay.textContent = newCount;
+            likeCountDisplay.style.transform = 'scale(1)';
+        }, 150);
+    }
+    
+    if (heroLikeCount) {
+        heroLikeCount.style.transform = 'scale(1.1)';
+        setTimeout(() => {
+            heroLikeCount.textContent = newCount + ' likes';
+            heroLikeCount.style.transform = 'scale(1)';
+        }, 150);
+    }
+}
+
+function updateLikeButtonStates() {
+    const isLiked = likedBlogs[currentBlogSlug] || false;
+    const likeButton = document.getElementById('likeButton');
+    const heroLikeButton = document.getElementById('heroLikeButton');
+    
+    if (likeButton) {
+        if (isLiked) {
+            likeButton.classList.add('liked');
+        } else {
+            likeButton.classList.remove('liked');
+        }
+    }
+    
+    if (heroLikeButton) {
+        if (isLiked) {
+            heroLikeButton.classList.add('liked');
+        } else {
+            heroLikeButton.classList.remove('liked');
+        }
+    }
+}
+
+function createConfetti(button) {
+    const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#f0932b', '#eb4d4b', '#6c5ce7'];
+    const buttonRect = button.getBoundingClientRect();
+    
+    for (let i = 0; i < 20; i++) {
+        setTimeout(() => {
+            const confetti = document.createElement('div');
+            confetti.style.position = 'fixed';
+            confetti.style.left = (buttonRect.left + buttonRect.width / 2) + 'px';
+            confetti.style.top = (buttonRect.top + buttonRect.height / 2) + 'px';
+            confetti.style.width = '6px';
+            confetti.style.height = '6px';
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.borderRadius = '50%';
+            confetti.style.pointerEvents = 'none';
+            confetti.style.zIndex = '9999';
+            
+            document.body.appendChild(confetti);
+            
+            const angle = (Math.PI * 2 * i) / 20;
+            const velocity = 2 + Math.random() * 2;
+            const gravity = 0.1;
+            let vx = Math.cos(angle) * velocity;
+            let vy = Math.sin(angle) * velocity;
+            let x = 0;
+            let y = 0;
+            
+            const animate = () => {
+                x += vx;
+                y += vy;
+                vy += gravity;
+                
+                confetti.style.transform = `translate(${x}px, ${y}px) rotate(${x}deg)`;
+                confetti.style.opacity = Math.max(0, 1 - Math.abs(y) / 200);
+                
+                if (confetti.style.opacity > 0) {
+                    requestAnimationFrame(animate);
+                } else {
+                    confetti.remove();
+                }
+            };
+            
+            requestAnimationFrame(animate);
+        }, i * 30);
+    }
+}
+
+// Bias Analysis System
+function initializeBiasAnalysis() {
     const biasButton = document.getElementById('biasButton');
     const biasModal = document.getElementById('biasModal');
     const closeBiasModal = document.getElementById('closeBiasModal');
     const closeBiasModalFooter = document.getElementById('closeBiasModalFooter');
     const retryBiasAnalysis = document.getElementById('retryBiasAnalysis');
     
-    // Bias analysis event listeners
-    biasButton?.addEventListener('click', function() {
-        const slug = this.getAttribute('data-slug');
-        if (slug) {
-            showBiasModal();
-            performBiasAnalysis(slug);
-        }
-    });
+    if (biasButton) {
+        biasButton.addEventListener('click', function() {
+            console.log('Bias button clicked');
+            const slug = this.getAttribute('data-slug') || currentBlogSlug;
+            if (slug) {
+                showBiasModal();
+                performBiasAnalysis(slug);
+            }
+        });
+    }
     
-    closeBiasModal?.addEventListener('click', hideBiasModal);
-    closeBiasModalFooter?.addEventListener('click', hideBiasModal);
-    retryBiasAnalysis?.addEventListener('click', function() {
-        const slug = biasButton?.getAttribute('data-slug');
-        if (slug) {
-            performBiasAnalysis(slug);
-        }
-    });
+    if (closeBiasModal) {
+        closeBiasModal.addEventListener('click', hideBiasModal);
+    }
     
-         // Close modal on background click
-     biasModal?.addEventListener('click', function(e) {
-         if (e.target === this) {
-             hideBiasModal();
-         }
-     });
-     
-     // Party Perspective Functionality
-     const partyPerspectiveButton = document.getElementById('partyPerspectiveButton');
-     const partyModal = document.getElementById('partyModal');
-     const closePartyModal = document.getElementById('closePartyModal');
-     const closePartyModalFooter = document.getElementById('closePartyModalFooter');
-     const backToPartySelection = document.getElementById('backToPartySelection');
-     let currentMode = 'leader'; // Always leader mode
-     
-     // Party data with logos
-     const partyData = {
-         'PVV': {
-             name: 'Partij voor de Vrijheid',
-             leader: 'Geert Wilders',
-             logo: 'https://i.ibb.co/DfR8pS2Y/403880390-713625330344634-198487231923339026-n.jpg',
-             leaderPhoto: '/partijleiders/geert.jpg'
-         },
-         'VVD': {
-             name: 'Volkspartij voor Vrijheid en Democratie',
-             leader: 'Dilan Yeşilgöz-Zegerius',
-             logo: 'https://logo.clearbit.com/vvd.nl',
-             leaderPhoto: '/partijleiders/dilan.jpg'
-         },
-         'GL-PvdA': {
-             name: 'GroenLinks-PvdA',
-             leader: 'Frans Timmermans',
-             logo: 'https://i.ibb.co/67hkc5Hv/gl-pvda.png',
-             leaderPhoto: '/partijleiders/frans.jpg'
-         },
-         'NSC': {
-             name: 'Nieuw Sociaal Contract',
-             leader: 'Nicolien van Vroonhoven',
-             logo: 'https://i.ibb.co/YT2fJZb4/nsc.png',
-             leaderPhoto: 'https://i.ibb.co/NgY27GmZ/nicolien-van-vroonhoven-en-piete.jpg'
-         },
-         'BBB': {
-             name: 'BoerBurgerBeweging',
-             leader: 'Caroline van der Plas',
-             logo: 'https://i.ibb.co/qMjw7jDV/bbb.png',
-             leaderPhoto: '/partijleiders/plas.jpg'
-         },
-         'D66': {
-             name: 'Democraten 66',
-             leader: 'Rob Jetten',
-             logo: 'https://logo.clearbit.com/d66.nl',
-             leaderPhoto: '/partijleiders/rob.jpg'
-         },
-         'SP': {
-             name: 'Socialistische Partij',
-             leader: 'Jimmy Dijk',
-             logo: 'https://logo.clearbit.com/sp.nl',
-             leaderPhoto: '/partijleiders/jimmy.jpg'
-         },
-         'PvdD': {
-             name: 'Partij voor de Dieren',
-             leader: 'Esther Ouwehand',
-             logo: 'https://logo.clearbit.com/partijvoordedieren.nl',
-             leaderPhoto: '/partijleiders/esther.jpg'
-         },
-         'CDA': {
-             name: 'Christen-Democratisch Appèl',
-             leader: 'Henri Bontenbal',
-             logo: 'https://logo.clearbit.com/cda.nl',
-             leaderPhoto: '/partijleiders/Henri.jpg'
-         },
-         'JA21': {
-             name: 'Juiste Antwoord 2021',
-             leader: 'Joost Eerdmans',
-             logo: 'https://logo.clearbit.com/ja21.nl',
-             leaderPhoto: '/partijleiders/joost.jpg'
-         },
-         'SGP': {
-             name: 'Staatkundig Gereformeerde Partij',
-             leader: 'Chris Stoffer',
-             logo: 'https://logo.clearbit.com/sgp.nl',
-             leaderPhoto: '/partijleiders/Chris.jpg'
-         },
-         'FvD': {
-             name: 'Forum voor Democratie',
-             leader: 'Thierry Baudet',
-             logo: 'https://logo.clearbit.com/fvd.nl',
-             leaderPhoto: '/partijleiders/thierry.jpg'
-         },
-         'DENK': {
-             name: 'DENK',
-             leader: 'Stephan van Baarle',
-             logo: 'https://logo.clearbit.com/bewegingdenk.nl',
-             leaderPhoto: '/partijleiders/baarle.jpg'
-         },
-         'Volt': {
-             name: 'Volt Nederland',
-             leader: 'Laurens Dassen',
-             logo: 'https://logo.clearbit.com/voltnederland.org',
-             leaderPhoto: '/partijleiders/dassen.jpg'
-         },
-         'CU': {
-             name: 'ChristenUnie',
-             leader: 'Mirjam Bikker',
-             logo: 'https://logo.clearbit.com/christenunie.nl',
-             leaderPhoto: 'https://i.ibb.co/wh3wwQ66/Bikker.jpg'
-         }
-     };
-     
-     // Open party modal
-     partyPerspectiveButton?.addEventListener('click', function() {
-         showPartyModal();
-     });
-     
-     // Close party modal
-     closePartyModal?.addEventListener('click', hidePartyModal);
-     closePartyModalFooter?.addEventListener('click', hidePartyModal);
-     
-     // Background click to close
-     partyModal?.addEventListener('click', function(e) {
-         if (e.target === this) {
-             hidePartyModal();
-         }
-     });
-     
-     // Back button
-     backToPartySelection?.addEventListener('click', function() {
-         showPartySelection();
-     });
-     
-     // Party selection
-     document.querySelectorAll('.party-select-btn').forEach(btn => {
-         btn.addEventListener('click', function() {
-             const party = this.getAttribute('data-party');
-             if (party) {
-                 performPartyAnalysis(party, currentMode);
-             }
-         });
-     });
-     
-     function updateModeText() {
-         const leaderNames = document.querySelectorAll('.leader-name');
-         const leaderPhotos = document.querySelectorAll('.leader-photo');
-         
-         // Always show leader mode
-         leaderNames.forEach(el => el.style.display = 'block');
-         leaderPhotos.forEach(el => el.classList.remove('hidden'));
-     }
-     
-     function showPartyModal() {
-         const modal = document.getElementById('partyModal');
-         if (modal) {
-             modal.classList.remove('hidden');
-             modal.classList.add('modal-enter');
-             document.body.style.overflow = 'hidden';
-             showPartySelection();
-             // Ensure leader mode is shown
-             updateModeText();
-         }
-     }
-     
-     function hidePartyModal() {
-         const modal = document.getElementById('partyModal');
-         if (modal) {
-             modal.classList.add('modal-exit');
-             setTimeout(() => {
-                 modal.classList.add('hidden');
-                 modal.classList.remove('modal-enter', 'modal-exit');
-                 document.body.style.overflow = '';
-             }, 300);
-         }
-     }
-     
-     function showPartySelection() {
-         document.getElementById('partySelectionGrid')?.classList.remove('hidden');
-         document.getElementById('partyLoading')?.classList.add('hidden');
-         document.getElementById('partyError')?.classList.add('hidden');
-         document.getElementById('partyResults')?.classList.add('hidden');
-         document.getElementById('backToPartySelection')?.classList.add('hidden');
-     }
-     
-     async function performPartyAnalysis(party, type) {
-         try {
-             // Hide selection, show loading
-             document.getElementById('partySelectionGrid')?.classList.add('hidden');
-             document.getElementById('partyLoading')?.classList.remove('hidden');
-             document.getElementById('partyError')?.classList.add('hidden');
-             document.getElementById('partyResults')?.classList.add('hidden');
-             
-             const slug = partyPerspectiveButton?.getAttribute('data-slug');
-             if (!slug) return;
-             
-             const formData = new FormData();
-             formData.append('slug', slug);
-             formData.append('party', party);
-             formData.append('type', type);
-             
-             const response = await fetch('<?php echo URLROOT; ?>/controllers/blogs/party-perspective.php', {
-                 method: 'POST',
-                 headers: {
-                     'X-Requested-With': 'XMLHttpRequest'
-                 },
-                 body: formData
-             });
-             
-             const data = await response.json();
-             
-             // Hide loading
-             document.getElementById('partyLoading')?.classList.add('hidden');
-             
-             if (data.success) {
-                 showPartyResults(data, party);
-             } else {
-                 showPartyError(data.error || 'Onbekende fout bij het genereren');
-             }
-             
-         } catch (error) {
-             console.error('Party analysis error:', error);
-             document.getElementById('partyLoading')?.classList.add('hidden');
-             showPartyError('Netwerk fout: Kon geen verbinding maken met de server');
-         }
-     }
-     
-     function showPartyResults(data, partyKey) {
-         const party = partyData[partyKey];
-         if (!party) return;
-         
-         // Show results container
-         document.getElementById('partyResults')?.classList.remove('hidden');
-         document.getElementById('backToPartySelection')?.classList.remove('hidden');
-         
-         // Set party info - show leader photo for leader mode, party logo for party mode
-         const logo = document.getElementById('partyResultLogo');
-         if (logo) {
-             if (data.type === 'leader' && party.leaderPhoto) {
-                 logo.src = party.leaderPhoto;
-                 logo.alt = party.leader;
-                 logo.className = 'w-20 h-20 object-cover rounded-full border-2 border-gray-300';
-             } else {
-                 logo.src = party.logo;
-                 logo.alt = party.name;
-                 logo.className = 'w-20 h-20 object-contain';
-             }
-         }
-         
-         const name = document.getElementById('partyResultName');
-         if (name) {
-             name.textContent = data.type === 'party' ? party.name : party.leader;
-         }
-         
-         const leader = document.getElementById('partyResultLeader');
-         if (leader) {
-             leader.textContent = data.type === 'party' ? 'Partijstandpunt' : `Partijleider ${party.name}`;
-         }
-         
-         // Set content
-         const content = document.getElementById('partyResultContent');
-         if (content) {
-             content.innerHTML = `<div class="text-gray-700 leading-relaxed whitespace-pre-wrap">${data.content}</div>`;
-         }
-     }
-     
-     function showPartyError(errorMessage) {
-         document.getElementById('partyError')?.classList.remove('hidden');
-         document.getElementById('backToPartySelection')?.classList.remove('hidden');
-         
-         const errorMessageElement = document.getElementById('partyErrorMessage');
-         if (errorMessageElement) {
-             errorMessageElement.textContent = errorMessage;
-         }
-     }
- });
-
-// Notification System
-function showNotification(message, type = 'info') {
-    const notification = document.createElement('div');
-    notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg max-w-sm transform transition-all duration-300 translate-x-full`;
+    if (closeBiasModalFooter) {
+        closeBiasModalFooter.addEventListener('click', hideBiasModal);
+    }
     
-    const bgColors = {
-        success: 'bg-green-500',
-        error: 'bg-red-500',
-        info: 'bg-blue-500'
-    };
+    if (retryBiasAnalysis) {
+        retryBiasAnalysis.addEventListener('click', function() {
+            const slug = biasButton?.getAttribute('data-slug') || currentBlogSlug;
+            if (slug) {
+                performBiasAnalysis(slug);
+            }
+        });
+    }
     
-    notification.className += ` ${bgColors[type] || bgColors.info} text-white`;
-    notification.textContent = message;
-    
-    document.body.appendChild(notification);
-    
-    // Animate in
-    setTimeout(() => {
-        notification.classList.remove('translate-x-full');
-    }, 10);
-    
-    // Auto remove
-    setTimeout(() => {
-        notification.classList.add('translate-x-full');
-        setTimeout(() => {
-            document.body.removeChild(notification);
-        }, 300);
-    }, 4000);
+    // Close modal on background click
+    if (biasModal) {
+        biasModal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                hideBiasModal();
+            }
+        });
+    }
 }
 
-// Bias Analysis Functions
 function showBiasModal() {
     const modal = document.getElementById('biasModal');
     if (modal) {
@@ -2382,6 +1989,8 @@ function hideBiasModal() {
 }
 
 async function performBiasAnalysis(slug) {
+    console.log('Starting bias analysis for slug:', slug);
+    
     try {
         // Show loading state
         document.getElementById('biasLoading')?.classList.remove('hidden');
@@ -2400,7 +2009,12 @@ async function performBiasAnalysis(slug) {
             body: formData
         });
         
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
         const data = await response.json();
+        console.log('Bias analysis response:', data);
         
         // Hide loading
         document.getElementById('biasLoading')?.classList.add('hidden');
@@ -2414,11 +2028,13 @@ async function performBiasAnalysis(slug) {
     } catch (error) {
         console.error('Bias analysis error:', error);
         document.getElementById('biasLoading')?.classList.add('hidden');
-        showBiasError('Netwerk fout: Kon geen verbinding maken met de server');
+        showBiasError('Netwerk fout: Kon geen verbinding maken met de server. Controleer je internetverbinding en probeer het opnieuw.');
     }
 }
 
 function showBiasResults(analysis) {
+    console.log('Showing bias results:', analysis);
+    
     // Show results container
     document.getElementById('biasResults')?.classList.remove('hidden');
     
@@ -2446,32 +2062,24 @@ function showBiasResults(analysis) {
     
     // Set indicators
     if (analysis.indicators) {
-        const economicIndicator = document.getElementById('economicIndicator');
-        if (economicIndicator && analysis.indicators.economic) {
-            const economic = analysis.indicators.economic.toLowerCase();
-            economicIndicator.textContent = getOrientationLabel(economic);
-            economicIndicator.className = `px-3 py-1 rounded-full text-sm font-medium ${getOrientationColors(economic)}`;
-        }
-        
-        const socialIndicator = document.getElementById('socialIndicator');
-        if (socialIndicator && analysis.indicators.social) {
-            const social = analysis.indicators.social.toLowerCase();
-            socialIndicator.textContent = getOrientationLabel(social);
-            socialIndicator.className = `px-3 py-1 rounded-full text-sm font-medium ${getOrientationColors(social)}`;
-        }
-        
-        const immigrationIndicator = document.getElementById('immigrationIndicator');
-        if (immigrationIndicator && analysis.indicators.immigration) {
-            const immigration = analysis.indicators.immigration.toLowerCase();
-            immigrationIndicator.textContent = getOrientationLabel(immigration);
-            immigrationIndicator.className = `px-3 py-1 rounded-full text-sm font-medium ${getOrientationColors(immigration)}`;
-        }
+        setIndicator('economicIndicator', analysis.indicators.economic);
+        setIndicator('socialIndicator', analysis.indicators.social);
+        setIndicator('immigrationIndicator', analysis.indicators.immigration);
     }
     
     // Set summary
     const summaryText = document.getElementById('summaryText');
     if (summaryText && analysis.summary) {
         summaryText.textContent = analysis.summary;
+    }
+}
+
+function setIndicator(elementId, value) {
+    const element = document.getElementById(elementId);
+    if (element && value) {
+        const normalized = value.toLowerCase();
+        element.textContent = getOrientationLabel(normalized);
+        element.className = `px-3 py-1 rounded-full text-sm font-medium ${getOrientationColors(normalized)}`;
     }
 }
 
@@ -2505,7 +2113,234 @@ function getOrientationColors(orientation) {
     return colors[orientation] || 'bg-gray-100 text-gray-800 border border-gray-200';
 }
 
-// Enhanced Share Functions
+// Party Perspective System  
+function initializePartyPerspective() {
+    const partyPerspectiveButton = document.getElementById('partyPerspectiveButton');
+    const partyModal = document.getElementById('partyModal');
+    const closePartyModal = document.getElementById('closePartyModal');
+    const closePartyModalFooter = document.getElementById('closePartyModalFooter');
+    const backToPartySelection = document.getElementById('backToPartySelection');
+    
+    if (partyPerspectiveButton) {
+        partyPerspectiveButton.addEventListener('click', function() {
+            console.log('Party perspective button clicked');
+            showPartyModal();
+        });
+    }
+    
+    if (closePartyModal) {
+        closePartyModal.addEventListener('click', hidePartyModal);
+    }
+    
+    if (closePartyModalFooter) {
+        closePartyModalFooter.addEventListener('click', hidePartyModal);
+    }
+    
+    if (backToPartySelection) {
+        backToPartySelection.addEventListener('click', showPartySelection);
+    }
+    
+    // Background click to close
+    if (partyModal) {
+        partyModal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                hidePartyModal();
+            }
+        });
+    }
+    
+    // Party selection buttons
+    document.querySelectorAll('.party-select-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const party = this.getAttribute('data-party');
+            if (party) {
+                console.log('Party selected:', party);
+                performPartyAnalysis(party);
+            }
+        });
+    });
+}
+
+function showPartyModal() {
+    const modal = document.getElementById('partyModal');
+    if (modal) {
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        showPartySelection();
+    }
+}
+
+function hidePartyModal() {
+    const modal = document.getElementById('partyModal');
+    if (modal) {
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+    }
+}
+
+function showPartySelection() {
+    document.getElementById('partySelectionGrid')?.classList.remove('hidden');
+    document.getElementById('partyLoading')?.classList.add('hidden');
+    document.getElementById('partyError')?.classList.add('hidden');
+    document.getElementById('partyResults')?.classList.add('hidden');
+    document.getElementById('backToPartySelection')?.classList.add('hidden');
+}
+
+async function performPartyAnalysis(party) {
+    console.log('Starting party analysis for:', party);
+    
+    try {
+        // Hide selection, show loading
+        document.getElementById('partySelectionGrid')?.classList.add('hidden');
+        document.getElementById('partyLoading')?.classList.remove('hidden');
+        document.getElementById('partyError')?.classList.add('hidden');
+        document.getElementById('partyResults')?.classList.add('hidden');
+        
+        const slug = currentBlogSlug;
+        if (!slug) return;
+        
+        const formData = new FormData();
+        formData.append('slug', slug);
+        formData.append('party', party);
+        formData.append('type', 'leader');
+        
+        const response = await fetch('<?php echo URLROOT; ?>/controllers/blogs/party-perspective.php', {
+            method: 'POST',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: formData
+        });
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        console.log('Party analysis response:', data);
+        
+        // Hide loading
+        document.getElementById('partyLoading')?.classList.add('hidden');
+        
+        if (data.success) {
+            showPartyResults(data, party);
+        } else {
+            showPartyError(data.error || 'Onbekende fout bij het genereren');
+        }
+        
+    } catch (error) {
+        console.error('Party analysis error:', error);
+        document.getElementById('partyLoading')?.classList.add('hidden');
+        showPartyError('Netwerk fout: Kon geen verbinding maken met de server. Controleer je internetverbinding en probeer het opnieuw.');
+    }
+}
+
+function showPartyResults(data, partyKey) {
+    console.log('Showing party results for:', partyKey);
+    
+    const partyData = {
+        'PVV': { name: 'Partij voor de Vrijheid', leader: 'Geert Wilders', logo: 'https://i.ibb.co/DfR8pS2Y/403880390-713625330344634-198487231923339026-n.jpg', leaderPhoto: '/partijleiders/geert.jpg' },
+        'VVD': { name: 'Volkspartij voor Vrijheid en Democratie', leader: 'Dilan Yeşilgöz-Zegerius', logo: 'https://logo.clearbit.com/vvd.nl', leaderPhoto: '/partijleiders/dilan.jpg' },
+        'GL-PvdA': { name: 'GroenLinks-PvdA', leader: 'Frans Timmermans', logo: 'https://i.ibb.co/67hkc5Hv/gl-pvda.png', leaderPhoto: '/partijleiders/frans.jpg' },
+        'NSC': { name: 'Nieuw Sociaal Contract', leader: 'Nicolien van Vroonhoven', logo: 'https://i.ibb.co/YT2fJZb4/nsc.png', leaderPhoto: 'https://i.ibb.co/NgY27GmZ/nicolien-van-vroonhoven-en-piete.jpg' },
+        'BBB': { name: 'BoerBurgerBeweging', leader: 'Caroline van der Plas', logo: 'https://i.ibb.co/qMjw7jDV/bbb.png', leaderPhoto: '/partijleiders/plas.jpg' },
+        'D66': { name: 'Democraten 66', leader: 'Rob Jetten', logo: 'https://logo.clearbit.com/d66.nl', leaderPhoto: '/partijleiders/rob.jpg' },
+        'SP': { name: 'Socialistische Partij', leader: 'Jimmy Dijk', logo: 'https://logo.clearbit.com/sp.nl', leaderPhoto: '/partijleiders/jimmy.jpg' },
+        'PvdD': { name: 'Partij voor de Dieren', leader: 'Esther Ouwehand', logo: 'https://logo.clearbit.com/partijvoordedieren.nl', leaderPhoto: '/partijleiders/esther.jpg' },
+        'CDA': { name: 'Christen-Democratisch Appèl', leader: 'Henri Bontenbal', logo: 'https://logo.clearbit.com/cda.nl', leaderPhoto: '/partijleiders/Henri.jpg' },
+        'JA21': { name: 'Juiste Antwoord 2021', leader: 'Joost Eerdmans', logo: 'https://logo.clearbit.com/ja21.nl', leaderPhoto: '/partijleiders/joost.jpg' },
+        'SGP': { name: 'Staatkundig Gereformeerde Partij', leader: 'Chris Stoffer', logo: 'https://logo.clearbit.com/sgp.nl', leaderPhoto: '/partijleiders/Chris.jpg' },
+        'FvD': { name: 'Forum voor Democratie', leader: 'Thierry Baudet', logo: 'https://logo.clearbit.com/fvd.nl', leaderPhoto: '/partijleiders/thierry.jpg' },
+        'DENK': { name: 'DENK', leader: 'Stephan van Baarle', logo: 'https://logo.clearbit.com/bewegingdenk.nl', leaderPhoto: '/partijleiders/baarle.jpg' },
+        'Volt': { name: 'Volt Nederland', leader: 'Laurens Dassen', logo: 'https://logo.clearbit.com/voltnederland.org', leaderPhoto: '/partijleiders/dassen.jpg' },
+        'CU': { name: 'ChristenUnie', leader: 'Mirjam Bikker', logo: 'https://logo.clearbit.com/christenunie.nl', leaderPhoto: 'https://i.ibb.co/wh3wwQ66/Bikker.jpg' }
+    };
+    
+    const party = partyData[partyKey];
+    if (!party) return;
+    
+    // Show results container
+    document.getElementById('partyResults')?.classList.remove('hidden');
+    document.getElementById('backToPartySelection')?.classList.remove('hidden');
+    
+    // Set party info - show leader photo for leader mode
+    const logo = document.getElementById('partyResultLogo');
+    if (logo) {
+        logo.src = party.leaderPhoto;
+        logo.alt = party.leader;
+        logo.className = 'w-20 h-20 object-cover rounded-full border-2 border-gray-300';
+    }
+    
+    const name = document.getElementById('partyResultName');
+    if (name) {
+        name.textContent = party.leader;
+    }
+    
+    const leader = document.getElementById('partyResultLeader');
+    if (leader) {
+        leader.textContent = `Partijleider ${party.name}`;
+    }
+    
+    // Set content
+    const content = document.getElementById('partyResultContent');
+    if (content) {
+        content.innerHTML = `<div class="text-gray-700 leading-relaxed whitespace-pre-wrap">${data.content}</div>`;
+    }
+}
+
+function showPartyError(errorMessage) {
+    document.getElementById('partyError')?.classList.remove('hidden');
+    document.getElementById('backToPartySelection')?.classList.remove('hidden');
+    
+    const errorMessageElement = document.getElementById('partyErrorMessage');
+    if (errorMessageElement) {
+        errorMessageElement.textContent = errorMessage;
+    }
+}
+
+// Audio Features
+function initializeAudioFeatures() {
+    // Initialize any audio-related features
+    <?php if (!empty($blog->audio_path) || !empty($blog->audio_url)): ?>
+    console.log('Audio features initialized');
+    <?php endif; ?>
+}
+
+// Notification System
+function showNotification(message, type = 'info') {
+    console.log(`Notification: ${message} (${type})`);
+    
+    const notification = document.createElement('div');
+    notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg max-w-sm transform transition-all duration-300 translate-x-full`;
+    
+    const bgColors = {
+        success: 'bg-green-500',
+        error: 'bg-red-500',
+        info: 'bg-blue-500'
+    };
+    
+    notification.className += ` ${bgColors[type] || bgColors.info} text-white`;
+    notification.textContent = message;
+    
+    document.body.appendChild(notification);
+    
+    // Animate in
+    setTimeout(() => {
+        notification.classList.remove('translate-x-full');
+    }, 10);
+    
+    // Auto remove
+    setTimeout(() => {
+        notification.classList.add('translate-x-full');
+        setTimeout(() => {
+            if (notification.parentNode) {
+                document.body.removeChild(notification);
+            }
+        }, 300);
+    }, 4000);
+}
+
+// Utility functions for share buttons
 function shareOnTwitter() {
     const title = '<?php echo addslashes($blog->title); ?>';
     const url = window.location.href;
@@ -2519,12 +2354,9 @@ function shareOnTwitter() {
 }
 
 function shareOnLinkedIn() {
-    const title = '<?php echo addslashes($blog->title); ?>';
     const url = window.location.href;
-    const summary = '<?php echo addslashes($blog->summary); ?>';
-    
     window.open(
-        `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}&summary=${encodeURIComponent(summary)}`,
+        `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
         '_blank',
         'width=600,height=400'
     );
@@ -2532,7 +2364,6 @@ function shareOnLinkedIn() {
 
 function shareOnFacebook() {
     const url = window.location.href;
-    
     window.open(
         `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
         '_blank',
@@ -2550,224 +2381,5 @@ async function copyToClipboard() {
     }
 }
 
-// Audio Player Functionality
-<?php if (!empty($blog->audio_path) || !empty($blog->audio_url)): ?>
-let currentSpeed = 1;
-const speeds = [0.5, 0.75, 1, 1.25, 1.5, 2];
-
-// Google Drive Audio Loading Functionaliteit
-function loadGoogleDriveAudio(fileId) {
-    const audioElement = document.getElementById('googleDriveAudio');
-    const previewElement = document.getElementById('googleDrivePreview');
-    
-    if (!audioElement || !previewElement) return;
-    
-    // Toon loading state
-    previewElement.innerHTML = `
-        <div class="flex items-center justify-center p-6 bg-gray-50 rounded-lg">
-            <div class="text-center">
-                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-3"></div>
-                <p class="text-gray-600">Audio wordt geladen...</p>
-            </div>
-        </div>
-    `;
-    
-    // Probeer verschillende Google Drive URL formaten
-    const urls = [
-        `https://docs.google.com/uc?export=download&id=${fileId}`,
-        `https://drive.google.com/uc?export=download&id=${fileId}`,
-        `https://www.googleapis.com/drive/v3/files/${fileId}?alt=media&key=YOUR_API_KEY`
-    ];
-    
-    let urlIndex = 0;
-    
-    function tryNextUrl() {
-        if (urlIndex >= urls.length) {
-            // Als alle URLs falen, toon alternatieve opties
-            showGoogleDriveAlternatives(fileId);
-            return;
-        }
-        
-        const currentUrl = urls[urlIndex];
-        audioElement.src = currentUrl;
-        
-        // Event listeners voor deze poging
-        const onCanPlay = () => {
-            // Audio succesvol geladen
-            audioElement.style.display = 'block';
-            previewElement.style.display = 'none';
-            cleanup();
-            showNotification('Google Drive audio succesvol geladen!', 'success');
-        };
-        
-        const onError = () => {
-            urlIndex++;
-            cleanup();
-            tryNextUrl();
-        };
-        
-        const cleanup = () => {
-            audioElement.removeEventListener('canplay', onCanPlay);
-            audioElement.removeEventListener('error', onError);
-        };
-        
-        audioElement.addEventListener('canplay', onCanPlay);
-        audioElement.addEventListener('error', onError);
-        
-        // Timeout na 5 seconden
-        setTimeout(() => {
-            if (audioElement.style.display === 'none') {
-                urlIndex++;
-                cleanup();
-                tryNextUrl();
-            }
-        }, 5000);
-    }
-    
-    tryNextUrl();
-}
-
-function showGoogleDriveAlternatives(fileId) {
-    const previewElement = document.getElementById('googleDrivePreview');
-    if (!previewElement) return;
-    
-    previewElement.innerHTML = `
-        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
-            <div class="flex items-start">
-                <svg class="w-6 h-6 text-yellow-600 mt-0.5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.5 0L4.232 15.5c-.77.833.192 2.5 1.732 2.5z"/>
-                </svg>
-                <div class="flex-1">
-                    <h3 class="text-yellow-800 font-medium mb-2">Audio kan niet direct worden afgespeeld</h3>
-                    <p class="text-yellow-700 text-sm mb-4">
-                        Google Drive heeft beperkingen voor directe audio streaming. Gebruik een van de onderstaande opties:
-                    </p>
-                    <div class="space-y-3">
-                        <a href="https://drive.google.com/file/d/${fileId}/view" 
-                           target="_blank" 
-                           class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
-                            </svg>
-                            Luister in Google Drive
-                        </a>
-                        <button onclick="downloadGoogleDriveAudio('${fileId}')" 
-                                class="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors ml-3">
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                            </svg>
-                            Download Audio
-                        </button>
-                    </div>
-                    <div class="mt-4 p-3 bg-white border border-yellow-200 rounded">
-                        <p class="text-xs text-gray-600">
-                            <strong>Tip voor de auteur:</strong> Voor betere compatibiliteit, upload audio bestanden liever direct naar de website in plaats van Google Drive links te gebruiken.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
-}
-
-function downloadGoogleDriveAudio(fileId) {
-    const downloadUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
-    window.open(downloadUrl, '_blank');
-    showNotification('Audio download gestart via Google Drive', 'success');
-}
-
-function changePlaybackSpeed() {
-    const audioPlayer = document.querySelector('audio');
-    const speedButton = document.getElementById('speedButton');
-    const speedText = document.getElementById('speedText');
-    
-    if (!audioPlayer) return;
-    
-    // Find current speed index and move to next
-    const currentIndex = speeds.indexOf(currentSpeed);
-    const nextIndex = (currentIndex + 1) % speeds.length;
-    currentSpeed = speeds[nextIndex];
-    
-    // Update audio playback rate
-    audioPlayer.playbackRate = currentSpeed;
-    
-    // Update button text
-    speedText.textContent = currentSpeed + 'x';
-    
-    // Visual feedback
-    speedButton.classList.add('bg-primary', 'text-white');
-    setTimeout(() => {
-        speedButton.classList.remove('bg-primary', 'text-white');
-    }, 200);
-    
-    showNotification(`Afspeelsnelheid aangepast naar ${currentSpeed}x`, 'info');
-}
-
-function downloadAudio() {
-    <?php if (!empty($blog->soundcloud_url)): ?>
-        // Voor SoundCloud audio - open in nieuwe tab
-        window.open('<?php echo htmlspecialchars($blog->soundcloud_url); ?>', '_blank');
-        showNotification('SoundCloud audio geopend in nieuwe tab', 'success');
-    <?php elseif (!empty($blog->audio_url)): ?>
-        // Voor Google Drive audio
-        const audioUrl = '<?php echo htmlspecialchars($audioSrc ?? $blog->audio_url); ?>';
-        const filename = 'audio-<?php echo $blog->slug; ?>.mp3';
-        
-        // Open Google Drive download in nieuwe tab
-        window.open(audioUrl, '_blank');
-        showNotification('Audio download gestart via Google Drive', 'success');
-    <?php elseif (!empty($blog->audio_path)): ?>
-        // Voor lokaal geüploade audio
-        const audioPath = '<?php echo URLROOT . "/" . $blog->audio_path; ?>';
-        const filename = 'audio-<?php echo $blog->slug; ?>.mp3';
-        
-        // Create download link
-        const link = document.createElement('a');
-        link.href = audioPath;
-        link.download = filename;
-        link.style.display = 'none';
-        
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        
-        showNotification('Audio download gestart', 'success');
-    <?php else: ?>
-        showNotification('Geen audio beschikbaar voor download', 'error');
-    <?php endif; ?>
-}
-
-// Initialize audio player when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-    const audioPlayer = document.querySelector('audio');
-    
-    if (audioPlayer) {
-        // Add loading indicator
-        audioPlayer.addEventListener('loadstart', function() {
-            showNotification('Audio wordt geladen...', 'info');
-        });
-        
-        // Audio loaded successfully
-        audioPlayer.addEventListener('canplaythrough', function() {
-            console.log('Audio gereed voor afspelen');
-        });
-        
-        // Error handling
-        audioPlayer.addEventListener('error', function(e) {
-            console.error('Audio load error:', e);
-            showNotification('Er is een probleem met het laden van de audio', 'error');
-        });
-        
-        // Time update for progress tracking
-        audioPlayer.addEventListener('timeupdate', function() {
-            // Can be used for additional progress tracking if needed
-        });
-        
-        // Audio ended
-        audioPlayer.addEventListener('ended', function() {
-            showNotification('Audio afspelen voltooid', 'success');
-        });
-    }
-});
-<?php endif; ?>
+console.log('Blog view script fully loaded and initialized');
 </script>
