@@ -1,55 +1,11 @@
 RewriteEngine On
 
-# Handle CORS preflight requests
+# Enable error logging
 
-RewriteCond %{REQUEST_METHOD} OPTIONS
-RewriteRule ^(.\*)$ index.php [L]
+ErrorDocument 500 /api/index.php
+ErrorDocument 404 /api/index.php
 
-# API routing - route all requests to index.php except existing files
-
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_URI} !^/api/stemwijzer\.php
-RewriteRule ^(.\*)$ index.php [QSA,L]
-
-# Prevent direct access to endpoint files
-
-RewriteCond %{REQUEST_URI} ^/api/endpoints/
-RewriteRule ^(.\*)$ index.php [F,L]
-
-# Security: Block access to PHP files in includes directory
-
-RewriteCond %{REQUEST_URI} ^/api/includes/
-RewriteRule ^(.\*)$ - [F,L]
-
-# Set proper headers for API responses
-
-<IfModule mod_headers.c>
-    Header always set Access-Control-Allow-Origin "*"
-    Header always set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
-    Header always set Access-Control-Allow-Headers "Content-Type, Authorization, X-Requested-With"
-    Header always set Access-Control-Max-Age "3600"
-</IfModule>
-
-# Set JSON content type for API responses
-
-<IfModule mod_mime.c>
-    AddType application/json .json
-</IfModule>
-
-# Security headers
-
-<IfModule mod_headers.c>
-    Header always set X-Content-Type-Options "nosniff"
-    Header always set X-Frame-Options "DENY"
-    Header always set X-XSS-Protection "1; mode=block"
-</IfModule>
-
-# Disable directory browsing
-
-Options -Indexes
-
-# Hide sensitive files
+# Security: Block access to sensitive files
 
 <Files "\*.md">
 Order allow,deny
@@ -61,7 +17,61 @@ Order allow,deny
 Deny from all
 </Files>
 
-# Error handling
+<Files ".env">
+Order allow,deny
+Deny from all
+</Files>
 
-ErrorDocument 404 /api/index.php
-ErrorDocument 500 /api/index.php
+# CORS headers
+
+<IfModule mod_headers.c>
+    Header always set Access-Control-Allow-Origin "*"
+    Header always set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+    Header always set Access-Control-Allow-Headers "Content-Type, Authorization, X-Requested-With"
+    Header always set Access-Control-Max-Age "3600"
+    
+    # Security headers
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "DENY"
+    Header always set X-XSS-Protection "1; mode=block"
+</IfModule>
+
+# Handle CORS preflight requests (OPTIONS)
+
+RewriteCond %{REQUEST_METHOD} OPTIONS
+RewriteRule ^(.\*)$ index.php [L]
+
+# API routing - route all requests to index.php except existing files
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !^/api/stemwijzer\.php$
+RewriteRule ^(.*)$ index.php [QSA,L]
+
+# Block direct access to endpoint files
+
+RewriteCond %{REQUEST_URI} ^/api/endpoints/
+RewriteRule ^(.\*)$ index.php [F,L]
+
+# Block access to includes directory
+
+RewriteCond %{REQUEST_URI} ^/api/includes/
+RewriteRule ^(.\*)$ - [F,L]
+
+# Set JSON content type for API responses
+
+<IfModule mod_mime.c>
+    AddType application/json .json
+</IfModule>
+
+# Disable directory browsing
+
+Options -Indexes
+
+# PHP settings
+
+<IfModule mod_php.c>
+    php_flag display_errors Off
+    php_flag log_errors On
+    php_value error_log logs/php_errors.log
+</IfModule>
