@@ -241,7 +241,16 @@ Schrijf persoonlijk en bemoedigend. Begin met 'Op basis van jouw stemwijzer resu
      * Analyseer politieke bias van een blog artikel
      */
     public function analyzePoliticalBias($title, $content) {
-        // Content is al verkort door de controller, dus geen extra truncation nodig
+        // Check of content te lang is (meer dan 1500 karakters)
+        if (mb_strlen($content) > 1500) {
+            // Vat eerst samen
+            $summaryResult = $this->summarizeContent($title, $content);
+            if (!$summaryResult['success']) {
+                return $summaryResult;
+            }
+            $content = $summaryResult['content'];
+        }
+        
         $prompt = "Je bent een Nederlandse politieke expert gespecialiseerd in bias detectie. 
 
 Analyseer de volgende blog artikel op politieke orientatie:
@@ -266,13 +275,106 @@ Geef een gedetailleerde analyse in exact dit JSON formaat (geen extra tekst):
 
 Criteria:
 - **Links**: Pro-sociale zekerheid, hogere belastingen voor rijken, milieubescherming, diversiteit, EU-integratie
-- **Rechts**: Vrije markt, lagere belastingen, traditionele waarden, strenge immigratie, nationale soevereiniteit  
+- **Rechts**: Vrije markt, lagere belastingen, traditionelle waarden, strenge immigratie, nationale soevereiniteit  
 - **Centrum**: Gematigde standpunten, compromissen, pragmatische oplossingen
 
 Confidence score: 0-100 (hoe zeker ben je van de classificatie)
 Wees objectief en gebaseerd op de daadwerkelijke inhoud.";
 
         return $this->makeAPICall($prompt);
+    }
+
+    /**
+     * Vat lange content samen voor bias analyse
+     */
+    private function summarizeContent($title, $content) {
+        $prompt = "Je bent een Nederlandse politieke expert die artikelen samenvat voor bias analyse.
+
+Vat de volgende blog artikel samen in ongeveer 300-400 woorden. Behoud alle politieke standpunten, argumenten en nuances die belangrijk zijn voor bias detectie:
+
+**Titel:** {$title}
+
+**Content:** {$content}
+
+Schrijf een samenvatting die:
+1. Alle politieke standpunten behoudt
+2. De hoofdargumenten intact laat
+3. Emotionele toon en woordkeuze behoudt waar relevant voor bias
+4. Concrete beleidsvoorstellen of kritiek behoudt
+5. Verwijzingen naar partijen of politici behoudt
+
+Begin direct met de samenvatting - geen inleiding. Focus op politiek relevante inhoud.";
+
+        $data = [
+            'model' => $this->model,
+            'messages' => [
+                [
+                    'role' => 'system', 
+                    'content' => 'Je bent een Nederlandse politieke expert die artikelen samenvat voor analyse. Je behoudt alle politiek relevante informatie.'
+                ],
+                [
+                    'role' => 'user', 
+                    'content' => $prompt
+                ]
+            ],
+            'max_tokens' => 600,
+            'temperature' => 0.3
+        ];
+        
+        $headers = [
+            'Authorization: Bearer ' . $this->apiKey,
+            'Content-Type: application/json'
+        ];
+        
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $this->apiUrl);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+        
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $error = curl_error($ch);
+        curl_close($ch);
+        
+        if ($error) {
+            return [
+                'success' => false,
+                'error' => 'cURL error bij samenvatting: ' . $error
+            ];
+        }
+        
+        if ($httpCode !== 200) {
+            return [
+                'success' => false,
+                'error' => 'HTTP error bij samenvatting: ' . $httpCode,
+                'response' => $response
+            ];
+        }
+        
+        $decodedResponse = json_decode($response, true);
+        
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            return [
+                'success' => false,
+                'error' => 'JSON decode error bij samenvatting: ' . json_last_error_msg()
+            ];
+        }
+        
+        if (!isset($decodedResponse['choices'][0]['message']['content'])) {
+            return [
+                'success' => false,
+                'error' => 'Unexpected API response format bij samenvatting',
+                'response' => $decodedResponse
+            ];
+        }
+        
+        return [
+            'success' => true,
+            'content' => trim($decodedResponse['choices'][0]['message']['content'])
+        ];
     }
 
     /**
