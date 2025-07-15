@@ -1760,6 +1760,10 @@ async function handleLikeClick(event) {
     const button = event.currentTarget;
     const slug = button.getAttribute('data-slug') || currentBlogSlug;
     
+    console.log('Current blog slug:', currentBlogSlug);
+    console.log('Button slug:', slug);
+    console.log('LikedBlogs state:', likedBlogs);
+    
     if (!slug) {
         console.error('No slug found for like action');
         showNotification('Er ging iets mis. Probeer het opnieuw.', 'error');
@@ -1779,24 +1783,49 @@ async function handleLikeClick(event) {
     try {
         console.log(`Performing ${action} action for slug: ${slug}`);
         
-        // Check if like endpoint exists
+        // Create endpoint URL
         const likeEndpoint = `<?php echo URLROOT; ?>/views/blogs/update_likes.php`;
+        console.log('Like endpoint URL:', likeEndpoint);
         
         const formData = new FormData();
         formData.append('slug', slug);
         formData.append('action', action);
         
+        console.log('Sending FormData:', {
+            slug: formData.get('slug'),
+            action: formData.get('action')
+        });
+        
         const response = await fetch(likeEndpoint, {
             method: 'POST',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            },
             body: formData
         });
         
+        console.log('Response status:', response.status);
+        console.log('Response headers:', [...response.headers.entries()]);
+        
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            const errorText = await response.text();
+            console.error('Response error text:', errorText);
+            throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
         }
         
-        const data = await response.json();
-        console.log('Like response:', data);
+        const responseText = await response.text();
+        console.log('Raw response text:', responseText);
+        
+        let data;
+        try {
+            data = JSON.parse(responseText);
+        } catch (jsonError) {
+            console.error('JSON parse error:', jsonError);
+            console.error('Response was not valid JSON:', responseText);
+            throw new Error('Server response was not valid JSON');
+        }
+        
+        console.log('Parsed response data:', data);
         
         if (data.success) {
             // Update like counts
@@ -1820,7 +1849,7 @@ async function handleLikeClick(event) {
         }
         
     } catch (error) {
-        console.error('Like error:', error);
+        console.error('Like error details:', error);
         showNotification('Er ging iets mis bij het liken. Probeer het opnieuw.', 'error');
     } finally {
         isLikeProcessing = false;

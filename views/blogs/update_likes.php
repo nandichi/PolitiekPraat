@@ -1,34 +1,44 @@
 <?php 
-// Check if this is an AJAX request
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest') {
-    // This is an AJAX request for like functionality
-    header('Content-Type: application/json');
-    
+// Set content type early for all responses
+header('Content-Type: application/json');
+
+// Debug logging
+error_log("Like endpoint hit - Method: " . $_SERVER['REQUEST_METHOD']);
+error_log("Headers: " . print_r(getallheaders(), true));
+error_log("POST data: " . print_r($_POST, true));
+
+// Check if this is an AJAX request or regular POST
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Accept both AJAX and regular POST requests
     require_once '../../includes/config.php';
     require_once '../../includes/Database.php';
     
     try {
         if (!isset($_POST['slug']) || !isset($_POST['action'])) {
-            throw new Exception('Ontbrekende parameters');
+            throw new Exception('Ontbrekende parameters - slug: ' . (isset($_POST['slug']) ? 'aanwezig' : 'ontbreekt') . ', action: ' . (isset($_POST['action']) ? 'aanwezig' : 'ontbreekt'));
         }
         
         $slug = trim($_POST['slug']);
         $action = trim($_POST['action']); // 'like' or 'unlike'
         
+        error_log("Processing like action: $action for slug: $slug");
+        
         if (!in_array($action, ['like', 'unlike'])) {
-            throw new Exception('Ongeldige actie');
+            throw new Exception('Ongeldige actie: ' . $action);
         }
         
         $db = new Database();
         
         // Get current likes count
-        $db->query("SELECT likes FROM blogs WHERE slug = :slug");
+        $db->query("SELECT id, likes FROM blogs WHERE slug = :slug");
         $db->bind(':slug', $slug);
         $currentLikes = $db->single();
         
         if (!$currentLikes) {
-            throw new Exception('Blog niet gevonden');
+            throw new Exception('Blog niet gevonden voor slug: ' . $slug);
         }
+        
+        error_log("Current likes: " . $currentLikes->likes);
         
         // Update likes based on action
         $newLikes = $currentLikes->likes;
@@ -38,26 +48,51 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SERVER['HTTP_X_REQUESTED_WI
             $newLikes = max(0, $newLikes - 1);
         }
         
+        error_log("New likes: " . $newLikes);
+        
         // Update in database
         $db->query("UPDATE blogs SET likes = :likes WHERE slug = :slug");
         $db->bind(':likes', $newLikes);
         $db->bind(':slug', $slug);
-        $db->execute();
+        $result = $db->execute();
+        
+        if (!$result) {
+            throw new Exception('Database update mislukt');
+        }
+        
+        error_log("Like action successful");
         
         echo json_encode([
             'success' => true,
             'likes' => $newLikes,
-            'action' => $action
+            'action' => $action,
+            'debug' => [
+                'slug' => $slug,
+                'old_likes' => $currentLikes->likes,
+                'new_likes' => $newLikes
+            ]
         ]);
         
     } catch (Exception $e) {
+        error_log("Like error: " . $e->getMessage());
         http_response_code(400);
         echo json_encode([
             'success' => false,
-            'error' => $e->getMessage()
+            'error' => $e->getMessage(),
+            'debug' => [
+                'slug' => isset($_POST['slug']) ? $_POST['slug'] : 'not set',
+                'action' => isset($_POST['action']) ? $_POST['action'] : 'not set'
+            ]
         ]);
     }
     
+    exit;
+} else {
+    // Not a POST request, might be direct access - show error
+    echo json_encode([
+        'success' => false,
+        'error' => 'Only POST requests allowed'
+    ]);
     exit;
 }
 
