@@ -716,10 +716,10 @@ include_once BASE_PATH . '/views/templates/header.php';
                     
                     <!-- Sophisticated Action Footer -->
                     <footer class="p-6 pt-0">
-                        <div class="grid grid-cols-2 gap-3">
+                        <div class="w-full">
                             <!-- Primary Action Button -->
                             <a href="<?php echo URLROOT; ?>/partijen/<?php echo $partyKey; ?>" 
-                               class="party-btn group relative overflow-hidden text-white font-bold py-3 px-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl block text-center" 
+                               class="party-btn group relative overflow-hidden text-white font-bold py-3 px-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl block text-center w-full" 
                                style="background: linear-gradient(135deg, <?php echo getPartyColor($partyKey); ?>, <?php echo adjustColorBrightness(getPartyColor($partyKey), -20); ?>);">
                                 <!-- Shimmer Effect -->
                                 <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
@@ -728,17 +728,6 @@ include_once BASE_PATH . '/views/templates/header.php';
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                                     </svg>
                                     <span>Bekijk partij</span>
-                                </span>
-                            </a>
-                            
-                            <!-- Secondary Action Button -->
-                            <a href="<?php echo URLROOT; ?>/partijen/<?php echo $partyKey; ?>" 
-                               class="leader-btn group bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-3 px-4 rounded-xl transition-all duration-300 border-2 border-gray-200 hover:border-gray-300 block text-center">
-                                <span class="flex items-center justify-center space-x-2">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                                    </svg>
-                                    <span>Meer info</span>
                                 </span>
                             </a>
                         </div>
@@ -1561,80 +1550,15 @@ document.addEventListener('DOMContentLoaded', function() {
         };
     });
     
-    // Party buttons
+    // Party buttons - navigate to detail page
     document.querySelectorAll('.party-btn').forEach(button => {
         button.addEventListener('click', function() {
             const partyKey = this.getAttribute('data-party');
-            const party = partyData[partyKey];
-            
-            // Fill modal with party data
-            document.getElementById('party-modal-title').textContent = party.name;
-            document.getElementById('party-modal-logo').src = party.logo;
-            document.getElementById('party-modal-logo').alt = `${party.name} logo`;
-            document.getElementById('party-modal-abbr').textContent = partyKey;
-            document.getElementById('party-modal-name').textContent = party.name;
-            document.getElementById('party-modal-leader').textContent = party.leader;
-            document.getElementById('party-modal-leader-photo').src = party.leader_photo;
-            document.getElementById('party-modal-leader-photo').alt = party.leader;
-            document.getElementById('party-modal-description').textContent = party.description;
-            document.getElementById('party-modal-seats').textContent = party.current_seats;
-            document.getElementById('party-modal-polling').textContent = party.polling.seats;
-            
-            // Fill perspectives
-            document.getElementById('party-modal-left-perspective').textContent = party.perspectives.left;
-            document.getElementById('party-modal-right-perspective').textContent = party.perspectives.right;
-            
-            // Display polling trend
-            const trendElement = document.getElementById('party-modal-polling-trend');
-            const change = party.polling.change;
-            const changeClass = change > 0 ? 'text-green-600' : (change < 0 ? 'text-red-600' : 'text-yellow-600');
-            const changeIcon = change > 0 ? '↑' : (change < 0 ? '↓' : '→');
-            const changeText = change > 0 ? `+${change}` : change;
-            
-            trendElement.className = `text-sm font-medium ${changeClass}`;
-            trendElement.textContent = change !== 0 ? `Trend: ${changeIcon} ${changeText}` : 'Stabiel in peilingen';
-            
-            // Fill standpoints
-            const standpointsContainer = document.getElementById('party-modal-standpoints');
-            standpointsContainer.innerHTML = '';
-            
-            for (const [topic, standpoint] of Object.entries(party.standpoints)) {
-                const standpointEl = document.createElement('div');
-                standpointEl.className = 'bg-gray-50 p-4 rounded-xl border border-gray-200';
-                standpointEl.innerHTML = `
-                    <h4 class="font-semibold text-gray-800 mb-2">${topic}</h4>
-                    <p class="text-gray-600 text-sm">${standpoint}</p>
-                `;
-                standpointsContainer.appendChild(standpointEl);
-            }
-            
-            // Show modal
-            document.getElementById('party-modal').classList.remove('hidden');
-            document.body.style.overflow = 'hidden'; // Prevent scrolling
+            window.location.href = `<?php echo URLROOT; ?>/partijen/${partyKey}`;
         });
     });
     
-    // Leader buttons
-    document.querySelectorAll('.leader-btn').forEach(button => {
-        button.addEventListener('click', function() {
-            const partyKey = this.getAttribute('data-leader');
-            const party = partyData[partyKey];
-            
-            // Fill modal with leader data
-            document.getElementById('leader-modal-title').textContent = party.leader;
-            document.getElementById('leader-modal-photo').src = party.leader_photo;
-            document.getElementById('leader-modal-photo').alt = `${party.leader} foto`;
-            document.getElementById('leader-modal-party-logo').src = party.logo;
-            document.getElementById('leader-modal-party-logo').alt = `${party.name} logo`;
-            document.getElementById('leader-modal-party-name').textContent = party.name;
-            document.getElementById('leader-modal-party-abbr').textContent = partyKey;
-            document.getElementById('leader-modal-info').textContent = party.leader_info;
-            
-            // Show modal
-            document.getElementById('leader-modal').classList.remove('hidden');
-            document.body.style.overflow = 'hidden'; // Prevent scrolling
-        });
-    });
+
     
     // Close modal buttons
     document.querySelectorAll('.close-modal').forEach(button => {
@@ -1844,22 +1768,15 @@ document.addEventListener('DOMContentLoaded', function() {
                      </div>
                  </div>
                  
-                 <!-- Right Section: Actions (Fixed width) -->
-                 <div class="flex items-center space-x-3 w-56 justify-end">
-                     <button class="party-btn bg-gradient-to-r text-white font-semibold px-4 py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-300" 
+                 <!-- Right Section: Actions -->
+                 <div class="flex items-center justify-end">
+                     <button class="party-btn bg-gradient-to-r text-white font-semibold px-6 py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-300" 
                              style="background: linear-gradient(135deg, ${color}, ${adjustColorBrightness(color, -20)});"
                              data-party="${partyKey}">
                          <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                          </svg>
-                         Partij
-                     </button>
-                     <button class="leader-btn bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold px-4 py-2 rounded-lg border border-gray-200 hover:border-gray-300 transition-all duration-300"
-                             data-leader="${partyKey}">
-                         <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                         </svg>
-                         Leider
+                         Bekijk partij
                      </button>
                  </div>
              </div>
@@ -1882,78 +1799,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Helper function to attach event listeners to new buttons
     function attachButtonListeners(card) {
         const partyBtn = card.querySelector('.party-btn');
-        const leaderBtn = card.querySelector('.leader-btn');
         
         if (partyBtn) {
             partyBtn.addEventListener('click', function() {
+                // Navigate to party detail page instead of showing modal
                 const partyKey = this.getAttribute('data-party');
-                const party = partyData[partyKey];
-                
-                // Fill modal with party data (same as existing functionality)
-                document.getElementById('party-modal-title').textContent = party.name;
-                document.getElementById('party-modal-logo').src = party.logo;
-                document.getElementById('party-modal-logo').alt = `${party.name} logo`;
-                document.getElementById('party-modal-abbr').textContent = partyKey;
-                document.getElementById('party-modal-name').textContent = party.name;
-                document.getElementById('party-modal-leader').textContent = party.leader;
-                document.getElementById('party-modal-leader-photo').src = party.leader_photo;
-                document.getElementById('party-modal-leader-photo').alt = party.leader;
-                document.getElementById('party-modal-description').textContent = party.description;
-                document.getElementById('party-modal-seats').textContent = party.current_seats;
-                document.getElementById('party-modal-polling').textContent = party.polling.seats;
-                
-                // Fill perspectives
-                document.getElementById('party-modal-left-perspective').textContent = party.perspectives.left;
-                document.getElementById('party-modal-right-perspective').textContent = party.perspectives.right;
-                
-                // Display polling trend
-                const trendElement = document.getElementById('party-modal-polling-trend');
-                const change = party.polling.change;
-                const changeClass = change > 0 ? 'text-green-600' : (change < 0 ? 'text-red-600' : 'text-yellow-600');
-                const changeIcon = change > 0 ? '↑' : (change < 0 ? '↓' : '→');
-                const changeText = change > 0 ? `+${change}` : change;
-                
-                trendElement.className = `text-sm font-medium ${changeClass}`;
-                trendElement.textContent = change !== 0 ? `Trend: ${changeIcon} ${changeText}` : 'Stabiel in peilingen';
-                
-                // Fill standpoints
-                const standpointsContainer = document.getElementById('party-modal-standpoints');
-                standpointsContainer.innerHTML = '';
-                
-                for (const [topic, standpoint] of Object.entries(party.standpoints)) {
-                    const standpointEl = document.createElement('div');
-                    standpointEl.className = 'bg-gray-50 p-4 rounded-xl border border-gray-200';
-                    standpointEl.innerHTML = `
-                        <h4 class="font-semibold text-gray-800 mb-2">${topic}</h4>
-                        <p class="text-gray-600 text-sm">${standpoint}</p>
-                    `;
-                    standpointsContainer.appendChild(standpointEl);
-                }
-                
-                // Show modal
-                document.getElementById('party-modal').classList.remove('hidden');
-                document.body.style.overflow = 'hidden';
-            });
-        }
-        
-        if (leaderBtn) {
-            leaderBtn.addEventListener('click', function() {
-                const partyKey = this.getAttribute('data-leader');
-                const party = partyData[partyKey];
-                
-                // Fill modal with leader data
-                document.getElementById('leader-modal-title').textContent = party.leader;
-                document.getElementById('leader-modal-photo').src = party.leader_photo;
-                document.getElementById('leader-modal-photo').alt = `${party.leader} foto`;
-                document.getElementById('leader-modal-party-logo').src = party.logo;
-                document.getElementById('leader-modal-party-logo').alt = `${party.name} logo`;
-                document.getElementById('leader-modal-party-name').textContent = party.name;
-                document.getElementById('leader-modal-party-abbr').textContent = partyKey;
-                document.getElementById('leader-modal-info').textContent = party.leader_info;
-                
-                // Show modal
-                document.getElementById('leader-modal').classList.remove('hidden');
-                document.body.style.overflow = 'hidden';
+                window.location.href = `<?php echo URLROOT; ?>/partijen/${partyKey}`;
             });
         }
     }
@@ -2711,28 +2562,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.body.style.overflow = 'hidden';
         });
     });
-    
-    // Leader buttons for modals
-    document.querySelectorAll('.leader-btn').forEach(button => {
-        button.addEventListener('click', function() {
-            const partyKey = this.getAttribute('data-leader');
-            const party = partyData[partyKey];
-            
-            // Fill modal with leader data
-            document.getElementById('leader-modal-title').textContent = party.leader;
-            document.getElementById('leader-modal-photo').src = party.leader_photo;
-            document.getElementById('leader-modal-photo').alt = `${party.leader} foto`;
-            document.getElementById('leader-modal-party-logo').src = party.logo;
-            document.getElementById('leader-modal-party-logo').alt = `${party.name} logo`;
-            document.getElementById('leader-modal-party-name').textContent = party.name;
-            document.getElementById('leader-modal-party-abbr').textContent = partyKey;
-            document.getElementById('leader-modal-info').textContent = party.leader_info;
-            
-            // Show modal
-            document.getElementById('leader-modal').classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-        });
-    });
+
     
     // Close modal buttons
     document.querySelectorAll('.close-modal').forEach(button => {

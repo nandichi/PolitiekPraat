@@ -505,4 +505,257 @@ Wees echt menselijk - toon frustratie, enthousiasme, vastberadenheid, teleurstel
         $testPrompt = "Zeg gewoon 'Hallo, de ChatGPT API werkt!' in het Nederlands.";
         return $this->makeAPICall($testPrompt);
     }
+
+    /**
+     * Analyseer de voor- en nadelen van een politieke partij
+     */
+    public function analyzePartyProsAndCons($partyName, $partyData) {
+        $standpoints = '';
+        if (isset($partyData['standpoints']) && is_array($partyData['standpoints'])) {
+            foreach ($partyData['standpoints'] as $topic => $standpoint) {
+                $standpoints .= "- {$topic}: {$standpoint}\n";
+            }
+        }
+
+        $prompt = "Je bent een objectieve Nederlandse politieke analist die kritisch maar eerlijk naar politieke partijen kijkt.
+
+Analyseer {$partyName} en geef een genuanceerde beoordeling van hun voor- en nadelen.
+
+**Partij informatie:**
+Naam: {$partyName}
+Beschrijving: {$partyData['description']}
+Leider: {$partyData['leader']}
+Huidige zetels: {$partyData['current_seats']}
+Peilingen: {$partyData['polling']['seats']} zetels
+
+**Standpunten:**
+{$standpoints}
+
+Geef een gebalanceerde analyse in dit formaat:
+
+## **Voordelen van {$partyName}**
+[3-4 sterke punten met uitleg waarom deze positief zijn]
+
+## **Nadelen van {$partyName}**  
+[3-4 zwakke punten of kritieken met uitleg]
+
+## **Voor wie is deze partij geschikt?**
+[Beschrijf welke kiezers het best bij deze partij passen]
+
+## **Conclusie**
+[Korte, eerlijke samenvatting van de partij]
+
+Schrijf elke punt uit in 2-3 zinnen. Wees eerlijk over zowel sterke als zwakke punten. Gebruik concrete voorbeelden waar mogelijk. Blijf objectief en informatief - geen extreme kritiek of lofzang.
+
+Totaal ongeveer 300-400 woorden.";
+
+        return $this->makeAPICall($prompt);
+    }
+
+    /**
+     * Analyseer de voor- en nadelen van een partijleider
+     */
+    public function analyzeLeaderProsAndCons($leaderName, $partyName, $leaderInfo, $partyData) {
+        $prompt = "Je bent een objectieve Nederlandse politieke analist die kritisch naar politieke leiders kijkt.
+
+Analyseer {$leaderName} als partijleider van {$partyName} en geef een eerlijke beoordeling van zijn/haar sterke en zwakke punten.
+
+**Leider informatie:**
+Naam: {$leaderName}
+Partij: {$partyName}
+Achtergrond: {$leaderInfo}
+Huidige positie: Partijleider van {$partyName} ({$partyData['current_seats']} zetels)
+
+Geef een gebalanceerde analyse in dit formaat:
+
+## ✅ **Sterke punten van {$leaderName}**
+[3-4 positieve eigenschappen als leider met uitleg]
+
+## ❌ **Zwakke punten van {$leaderName}**
+[3-4 kritieken of verbeterpunten met uitleg]
+
+## 🗣️ **Leiderschapsstijl**
+[Beschrijf hoe hij/zij de partij leidt en communiceert]
+
+## 📊 **Politieke Impact**
+[Wat heeft hij/zij bereikt voor de partij en Nederland?]
+
+Schrijf elke punt uit in 2-3 zinnen. Wees eerlijk over zowel positieve als negatieve aspecten. Gebruik concrete voorbeelden uit de Nederlandse politiek waar mogelijk. Blijf respectvol maar kritisch.
+
+Focus op:
+- Communicatievaardigheden
+- Politieke ervaring
+- Leiderschapskwaliteiten  
+- Beleidsinhoudelijke kennis
+- Electorale aantrekkingskracht
+- Controverses (indien van toepassing)
+
+Totaal ongeveer 300-400 woorden.";
+
+        return $this->makeAPICall($prompt);
+    }
+
+    /**
+     * Genereer kiezer profiel voor een politieke partij
+     */
+    public function generateVoterProfile($partyName, $partyData) {
+        $standpoints = '';
+        if (isset($partyData['standpoints']) && is_array($partyData['standpoints'])) {
+            foreach ($partyData['standpoints'] as $topic => $standpoint) {
+                $standpoints .= "- {$topic}: {$standpoint}\n";
+            }
+        }
+
+        $prompt = "Je bent een Nederlandse politieke socioloog en dataanalist die kiezersgedrag bestudeert.
+
+Maak een gedetailleerd profiel van de typische {$partyName} kiezer op basis van demografische data, polls en verkiezingsresultaten.
+
+**Partij informatie:**
+Naam: {$partyName}
+Beschrijving: {$partyData['description']}
+Leider: {$partyData['leader']}
+Huidige zetels: {$partyData['current_seats']}
+Peilingen: {$partyData['polling']['seats']} zetels
+
+**Standpunten:**
+{$standpoints}
+
+Creëer een uitgebreid kiezersprofiel in dit formaat:
+
+## 👥 **Demografisch Profiel**
+- Leeftijd en geslacht verdeling
+- Opleidingsniveau en beroepen
+- Inkomensniveau en woonsituatie
+- Geografische spreiding in Nederland
+
+## 🧠 **Psychografisch Profiel**
+- Waarden en overtuigingen
+- Levensstijl en prioriteiten
+- Politieke attitudes en engagement
+- Media consumptie en informatiebronnen
+
+## 💭 **Motivaties & Zorgen**
+- Hoofdredenen om op {$partyName} te stemmen
+- Grootste politieke zorgen en frustraties
+- Verwachtingen van de regering
+- Hoop voor de toekomst van Nederland
+
+## 🎯 **Typische Kiezer Persona**
+[Beschrijf 2-3 concrete voorbeelden van typische kiezers met namen, leeftijden en achtergronden]
+
+Baseer je analyse op Nederlandse verkiezingsdata, peilingen en sociologisch onderzoek. Wees specifiek en realistisch. Gebruik concrete percentages en trends waar mogelijk.
+
+Totaal ongeveer 400-500 woorden.";
+
+        return $this->makeAPICall($prompt);
+    }
+
+    /**
+     * Genereer politieke timeline voor een partij
+     */
+    public function generatePoliticalTimeline($partyName, $partyData) {
+        $prompt = "Je bent een Nederlandse politieke historicus die partijgeschiedenissen documenteert.
+
+Creëer een chronologische timeline van belangrijke momenten voor {$partyName} vanaf de oprichting tot nu.
+
+**Partij informatie:**
+Naam: {$partyName}
+Beschrijving: {$partyData['description']}
+Huidige leider: {$partyData['leader']}
+Huidige zetels: {$partyData['current_seats']}
+
+Maak een timeline in dit formaat:
+
+## 📅 **Politieke Timeline van {$partyName}**
+
+### **Oprichting & Beginjaren**
+[Jaar van oprichting, oprichters, oorspronkelijke ideologie]
+
+### **Belangrijke Mijlpalen**
+[Chronologische lijst van 8-10 cruciale momenten, elk met jaartal en uitleg]
+
+### **Leiderschapswisselingen**
+[Overzicht van partijleiders door de jaren heen]
+
+### **Electorale Hoogte- en Dieptepunten**
+[Beste en slechtste verkiezingsresultaten met context]
+
+### **Beleidsevolutie**
+[Hoe zijn hun standpunten veranderd over tijd?]
+
+### **Recente Ontwikkelingen**
+[Laatste 5 jaar: wat is er gebeurd?]
+
+Focus op:
+- Verkiezingsresultaten en doorbraken
+- Belangrijke beleidsstandpunten en -wijzigingen
+- Coalities en regeringsdeelnames
+- Controverses en crises
+- Leiderschapswisselingen
+- Fusies of splitsingen
+- Invloedrijke speeches of momenten
+
+Gebruik concrete jaartallen en wees historisch accuraat. Elke mijlpaal moet 2-3 zinnen uitleg krijgen.
+
+Totaal ongeveer 400-500 woorden.";
+
+        return $this->makeAPICall($prompt);
+    }
+
+    /**
+     * Beantwoord specifieke vragen over een politieke partij
+     */
+    public function answerPartyQuestion($question, $partyName, $partyData) {
+        $standpoints = '';
+        if (isset($partyData['standpoints']) && is_array($partyData['standpoints'])) {
+            foreach ($partyData['standpoints'] as $topic => $standpoint) {
+                $standpoints .= "- {$topic}: {$standpoint}\n";
+            }
+        }
+
+        $prompt = "Je bent een Nederlandse politieke expert die specialistische kennis heeft over alle Nederlandse politieke partijen.
+
+Een gebruiker stelt de volgende vraag over {$partyName}:
+
+**VRAAG:** {$question}
+
+**Partij informatie om de vraag te beantwoorden:**
+Naam: {$partyName}
+Beschrijving: {$partyData['description']}
+Leider: {$partyData['leader']}
+Leider info: {$partyData['leader_info']}
+Huidige zetels: {$partyData['current_seats']}
+Peilingen: {$partyData['polling']['seats']} zetels
+
+**Standpunten:**
+{$standpoints}
+
+Beantwoord de vraag uitgebreid en informatief in dit formaat:
+
+## 📋 **Antwoord**
+[Direct antwoord op de gestelde vraag in 2-3 alinea's]
+
+## 🔍 **Achtergrond & Context**
+[Relevante achtergrond informatie en context]
+
+## 📊 **Vergelijking**
+[Hoe verschilt {$partyName} hierop van andere grote Nederlandse partijen?]
+
+## 💡 **Praktische Gevolgen**
+[Wat zou dit betekenen als {$partyName} aan de macht komt?]
+
+Richtlijnen:
+- Geef concrete, feitelijke antwoorden
+- Gebruik voorbeelden uit verkiezingsprogramma's
+- Vergelijk met andere partijen waar relevant
+- Wees objectief en evenwichtig
+- Cite specifieke standpunten of uitspraken
+- Leg complexe onderwerpen uit in begrijpelijke taal
+
+Als de vraag niet beantwoord kan worden met de beschikbare informatie, zeg dit eerlijk.
+
+Totaal ongeveer 300-400 woorden.";
+
+        return $this->makeAPICall($prompt);
+    }
 } 
