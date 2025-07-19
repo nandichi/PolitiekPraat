@@ -105,6 +105,11 @@ $router->add('partijen/([^/]+)', function($partySlug) {
     require_once 'controllers/partijen-detail.php';
 });
 $router->add('programma-vergelijker', 'controllers/programma-vergelijker.php');
+$router->add('amerikaanse-verkiezingen', 'controllers/amerikaanse-verkiezingen.php');
+$router->add('amerikaanse-verkiezingen/([0-9]+)', function($jaar) {
+    $_GET['jaar'] = $jaar;
+    require_once 'controllers/amerikaanse-verkiezingen.php';
+});
 
 // Get the requested URL
 $request = $_SERVER['REQUEST_URI'];

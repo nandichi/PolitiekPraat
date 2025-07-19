@@ -41,7 +41,10 @@ $metaDescriptions = [
     'blogs-create' => 'Schrijf en publiceer je eigen politieke blog op PolitiekPraat. Deel je expertise, mening en analyses over Nederlandse politiek met onze actieve community.',
     'blogs-manage' => 'Beheer je gepubliceerde blogs op PolitiekPraat. Bewerk, update of verwijder je politieke artikelen en bekijk uitgebreide statistieken over lezers en reacties.',
     'forum-create' => 'Start een nieuwe discussie in het PolitiekPraat forum. Deel politieke onderwerpen die je bezighouden en nodig anderen uit voor een respectvol debat.',
-    'resultaten' => 'Ontdek je stemwijzer resultaten en zie welke Nederlandse politieke partijen het beste aansluiten bij jouw persoonlijke standpunten en waarden.'
+    'resultaten' => 'Ontdek je stemwijzer resultaten en zie welke Nederlandse politieke partijen het beste aansluiten bij jouw persoonlijke standpunten en waarden.',
+    
+    // Amerikaanse verkiezingen
+    'amerikaanse-verkiezingen' => 'Ontdek de complete geschiedenis van Amerikaanse presidentsverkiezingen van 1789 tot heden. Van George Washington tot Joe Biden - alle verkiezingen, statistieken en presidentiële races in detail.'
 ];
 
 // Define keywords for each page - Uitgebreide versie voor alle pagina's
@@ -86,7 +89,10 @@ $metaKeywords = [
     'blogs-create' => 'blog schrijven, artikel publiceren, politieke mening, PolitiekPraat, auteur, content',
     'blogs-manage' => 'blogs beheren, artikelen bewerken, schrijver, PolitiekPraat, content management',
     'forum-create' => 'discussie starten, forum, onderwerp, politiek debat, PolitiekPraat, community',
-    'resultaten' => 'stemwijzer resultaten, politieke match, partijen, verkiezingen, stemadvies, PolitiekPraat'
+    'resultaten' => 'stemwijzer resultaten, politieke match, partijen, verkiezingen, stemadvies, PolitiekPraat',
+    
+    // Amerikaanse verkiezingen
+    'amerikaanse-verkiezingen' => 'Amerikaanse verkiezingen, presidentsverkiezingen, verkiezingsgeschiedenis, George Washington, Joe Biden, kiesmannen, Democrats, Republicans, Electoral College, presidenten, verkiezingen geschiedenis'
 ];
 
 // Get current page from URL - Verbeterde detectie voor alle pagina types
@@ -140,6 +146,9 @@ if (empty($pathSegments[0])) {
             break;
         case 'resultaten':
             $currentPage = 'resultaten';
+            break;
+        case 'amerikaanse-verkiezingen':
+            $currentPage = 'amerikaanse-verkiezingen';
             break;
         case 'newsletter':
             if (isset($pathSegments[1])) {
@@ -836,10 +845,10 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
         /* Enhanced dropdown styling with glassmorphism */
         .dropdown-content {
             transform-origin: top center;
-            transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+            transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
             opacity: 0;
             visibility: hidden;
-            transform: translateY(-15px) scale(0.95) rotateX(-5deg);
+            transform: translateY(-10px) scale(0.98);
             pointer-events: none;
             box-shadow: 
                 0 25px 50px -12px rgba(0, 0, 0, 0.25),
@@ -847,15 +856,15 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                 inset 0 1px 0 rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            /* Add padding to create a hover gap */
-            padding-top: 10px;
-            margin-top: -10px;
+            /* Verbeterde positioning - onder de button */
+            top: calc(100% + 5px);
             background: linear-gradient(135deg, 
-                rgba(255, 255, 255, 0.95) 0%, 
-                rgba(255, 255, 255, 0.9) 100%);
+                rgba(255, 255, 255, 0.98) 0%, 
+                rgba(255, 255, 255, 0.95) 100%);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            position: relative;
+            position: absolute;
             overflow: hidden;
+            z-index: 9999;
         }
         
         .dropdown-content::before {
@@ -871,11 +880,69 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
         }
         
         .group:hover .dropdown-content,
+        .dropdown-content:hover,
         .dropdown-content.active {
             opacity: 1;
             visibility: visible;
-            transform: translateY(0) scale(1) rotateX(0deg);
+            transform: translateY(0) scale(1);
             pointer-events: auto;
+        }
+        
+        /* Verbeterde dropdown hover states */
+        .dropdown-trigger {
+            position: relative;
+        }
+        
+        .dropdown-trigger:hover .dropdown-content,
+        .dropdown-trigger:focus-within .dropdown-content {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+        
+        /* Anti-flicker hover gebied - boven de dropdown */
+        .dropdown-content::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 0;
+            right: 0;
+            height: 10px;
+            background: transparent;
+            z-index: 1;
+        }
+        
+        /* Zorg ervoor dat content boven de transparante hover gebied blijft */
+        .dropdown-content > * {
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Verbeterde anti-flicker en smoother transitions */
+        .dropdown-trigger {
+            transition: all 0.2s ease;
+        }
+        
+        .dropdown-trigger:hover {
+            z-index: 10000;
+        }
+        
+        /* Hover delay voor betere UX */
+        .dropdown-content {
+            transition-delay: 0ms;
+        }
+        
+        .dropdown-trigger:not(:hover) .dropdown-content {
+            transition-delay: 150ms;
+        }
+        
+        /* Extra stabiliteit voor dropdown */
+        .dropdown-content:hover {
+            opacity: 1 !important;
+            visibility: visible !important;
+            transform: translateY(0) scale(1) !important;
+            pointer-events: auto !important;
         }
         
         @keyframes gradient-flow {
@@ -1002,7 +1069,7 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
  
 
     <!-- Main Navigation - Completely redesigned -->
-    <nav class="relative z-20 sticky top-0">
+    <nav class="relative z-50 sticky top-0">
         <!-- Modern header with clean design -->
         <div class="bg-white shadow-lg border-b-2 border-primary/10">
             <!-- Top accent bar -->
@@ -1042,42 +1109,204 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                         </div>
                     </a>
 
-                <!-- Desktop Navigation Links - Herorderd en verbeterd -->
+                <!-- Desktop Navigation Links - Modern Dropdown Structure -->
                 <div class="hidden md:flex items-center space-x-1 lg:space-x-2">
                     <a href="<?php echo URLROOT; ?>/" 
                        class="nav-link px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg">
                         <span>Home</span>
                     </a>
 
-                    <a href="<?php echo URLROOT; ?>/blogs" 
-                       class="nav-link px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg">
-                        <span>Blogs</span>
-                    </a>
+                    <!-- Verkiezingen Dropdown -->
+                    <div class="relative dropdown-trigger group">
+                        <button class="nav-link px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg flex items-center space-x-1">
+                            <span>Verkiezingen</span>
+                            <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" 
+                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        
+                        <div class="dropdown-content absolute left-0 w-72 bg-white rounded-xl shadow-xl py-2 px-1.5 border border-gray-100">
+                            <a href="<?php echo URLROOT; ?>/stemwijzer" 
+                               class="flex items-center justify-between px-3 py-3 rounded-lg hover:bg-secondary/5 transition-all duration-300 group/item">
+                                <div class="flex items-center">
+                                    <div class="w-10 h-10 bg-secondary/10 rounded-xl flex items-center justify-center mr-3 group-hover/item:bg-secondary/20 transition-colors duration-300">
+                                        <svg class="w-5 h-5 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v11a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-semibold text-gray-900">Stemwijzer</div>
+                                        <div class="text-xs text-gray-500">Ontdek jouw politieke match</div>
+                                    </div>
+                                </div>
+                                <span class="inline-flex items-center px-2 py-1 text-xs font-semibold bg-secondary text-white rounded-full">2025</span>
+                            </a>
+                            
+                            <div class="mx-2 my-1 border-t border-gray-100"></div>
+                            
+                            <a href="<?php echo URLROOT; ?>/programma-vergelijker" 
+                               class="flex items-center justify-between px-3 py-3 rounded-lg hover:bg-accent/5 transition-all duration-300 group/item">
+                                <div class="flex items-center">
+                                    <div class="w-10 h-10 bg-accent/10 rounded-xl flex items-center justify-center mr-3 group-hover/item:bg-accent/20 transition-colors duration-300">
+                                        <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-semibold text-gray-900">Programma Vergelijker</div>
+                                        <div class="text-xs text-gray-500">Vergelijk partijprogramma's</div>
+                                    </div>
+                                </div>
+                                <span class="inline-flex items-center px-2 py-1 text-xs font-semibold bg-accent text-white rounded-full">Nieuw</span>
+                            </a>
+                            
+                            <div class="mx-2 my-1 border-t border-gray-100"></div>
+                            
+                            <!-- Amerikaanse Verkiezingen met Amerikaanse styling -->
+                            <a href="<?php echo URLROOT; ?>/amerikaanse-verkiezingen" 
+                               class="flex items-center justify-between px-3 py-3 rounded-lg hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 transition-all duration-300 group/item relative overflow-hidden">
+                                <div class="flex items-center">
+                                    <div class="w-10 h-10 bg-gradient-to-r from-red-500 to-blue-600 rounded-xl flex items-center justify-center mr-3 group-hover/item:scale-110 transition-transform duration-300 shadow-sm">
+                                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3l1.09 2.09L15 6l-1.91 1.09L12 9l-1.09-1.91L9 6l1.91-1.09L12 3zm-6 6l.69 1.31L8 11l-1.31.69L6 13l-.69-1.31L4 11l1.31-.69L6 9zm12 0l.69 1.31L20 11l-1.31.69L18 13l-.69-1.31L16 11l1.31-.69L18 9zm-6 6l.69 1.31L14 17l-1.31.69L12 19l-.69-1.31L10 17l1.31-.69L12 15z"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-semibold bg-gradient-to-r from-red-600 via-purple-600 to-blue-600 bg-clip-text text-transparent">
+                                            Amerikaanse Verkiezingen
+                                        </div>
+                                        <div class="text-xs text-gray-500">235 jaar democratische geschiedenis</div>
+                                    </div>
+                                </div>
+                                <span class="inline-flex items-center px-2 py-1 text-xs font-semibold bg-gradient-to-r from-red-500 to-blue-500 text-white rounded-full">🇺🇸</span>
+                                <div class="absolute inset-0 bg-gradient-to-r from-red-100/10 to-blue-100/10 opacity-0 group-hover/item:opacity-100 transition-opacity duration-300"></div>
+                            </a>
+                        </div>
+                    </div>
 
-                    <a href="<?php echo URLROOT; ?>/partijen" 
-                       class="nav-link px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg">
-                        <span>Partijen</span>
-                    </a>
+                    <!-- Nieuws & Content Dropdown -->
+                    <div class="relative dropdown-trigger group">
+                        <button class="nav-link px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg flex items-center space-x-1">
+                            <span>Nieuws & Blogs</span>
+                            <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" 
+                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        
+                        <div class="dropdown-content absolute left-0 w-60 bg-white rounded-xl shadow-xl py-2 px-1.5 border border-gray-100">
+                            <a href="<?php echo URLROOT; ?>/blogs" 
+                               class="flex items-center px-3 py-3 rounded-lg hover:bg-primary/5 transition-all duration-300 group/item">
+                                <div class="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center mr-3 group-hover/item:bg-primary/20 transition-colors duration-300">
+                                    <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1M19 20a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0h4"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-semibold text-gray-900">Politieke Blogs</div>
+                                    <div class="text-xs text-gray-500">Expert analyses & meningen</div>
+                                </div>
+                            </a>
+                            
+                            <div class="mx-2 my-1 border-t border-gray-100"></div>
+                            
+                            <a href="<?php echo URLROOT; ?>/nieuws" 
+                               class="flex items-center px-3 py-3 rounded-lg hover:bg-secondary/5 transition-all duration-300 group/item">
+                                <div class="w-10 h-10 bg-secondary/10 rounded-xl flex items-center justify-center mr-3 group-hover/item:bg-secondary/20 transition-colors duration-300">
+                                    <svg class="w-5 h-5 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1M19 20a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0h4"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-semibold text-gray-900">Politiek Nieuws</div>
+                                    <div class="text-xs text-gray-500">Laatste ontwikkelingen</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
 
-                    <a href="<?php echo URLROOT; ?>/stemwijzer" 
-                       class="nav-link px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg flex items-center">
-                        <span>Stemwijzer</span>
-                    </a>
+                    <!-- Politiek Dropdown -->
+                    <div class="relative dropdown-trigger group">
+                        <button class="nav-link px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg flex items-center space-x-1">
+                            <span>Politiek</span>
+                            <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" 
+                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        
+                        <div class="dropdown-content absolute left-0 w-56 bg-white rounded-xl shadow-xl py-2 px-1.5 border border-gray-100">
+                            <a href="<?php echo URLROOT; ?>/partijen" 
+                               class="flex items-center px-3 py-3 rounded-lg hover:bg-primary/5 transition-all duration-300 group/item">
+                                <div class="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center mr-3 group-hover/item:bg-primary/20 transition-colors duration-300">
+                                    <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-semibold text-gray-900">Politieke Partijen</div>
+                                    <div class="text-xs text-gray-500">Overzicht & standpunten</div>
+                                </div>
+                            </a>
+                            
+                            <div class="mx-2 my-1 border-t border-gray-100"></div>
+                            
+                            <a href="<?php echo URLROOT; ?>/themas" 
+                               class="flex items-center px-3 py-3 rounded-lg hover:bg-accent/5 transition-all duration-300 group/item">
+                                <div class="w-10 h-10 bg-accent/10 rounded-xl flex items-center justify-center mr-3 group-hover/item:bg-accent/20 transition-colors duration-300">
+                                    <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-semibold text-gray-900">Politieke Thema's</div>
+                                    <div class="text-xs text-gray-500">Onderwerpen & analyses</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
 
-                    <a href="<?php echo URLROOT; ?>/programma-vergelijker" 
-                       class="nav-link px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg flex items-center">
-                        <span>Vergelijker</span>
-                    </a>
-
-                    <a href="<?php echo URLROOT; ?>/over-mij" 
-                       class="nav-link px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg">
-                        <span>Over ons</span>
-                    </a>
-
-                    <a href="<?php echo URLROOT; ?>/contact" 
-                       class="nav-link px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg">
-                        <span>Contact</span>
-                    </a>
+                    <!-- Info Dropdown -->
+                    <div class="relative dropdown-trigger group">
+                        <button class="nav-link px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg flex items-center space-x-1">
+                            <span>Info</span>
+                            <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" 
+                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        
+                        <div class="dropdown-content absolute right-0 w-48 bg-white rounded-xl shadow-xl py-2 px-1.5 border border-gray-100">
+                            <a href="<?php echo URLROOT; ?>/over-mij" 
+                               class="flex items-center px-3 py-3 rounded-lg hover:bg-primary/5 transition-all duration-300 group/item">
+                                <div class="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center mr-3 group-hover/item:bg-primary/20 transition-colors duration-300">
+                                    <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-semibold text-gray-900">Over Ons</div>
+                                    <div class="text-xs text-gray-500">Missie & visie</div>
+                                </div>
+                            </a>
+                            
+                            <div class="mx-2 my-1 border-t border-gray-100"></div>
+                            
+                            <a href="<?php echo URLROOT; ?>/contact" 
+                               class="flex items-center px-3 py-3 rounded-lg hover:bg-secondary/5 transition-all duration-300 group/item">
+                                <div class="w-10 h-10 bg-secondary/10 rounded-xl flex items-center justify-center mr-3 group-hover/item:bg-secondary/20 transition-colors duration-300">
+                                    <svg class="w-5 h-5 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-semibold text-gray-900">Contact</div>
+                                    <div class="text-xs text-gray-500">Neem contact op</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Auth Buttons - Modern clean design -->
@@ -1254,7 +1483,7 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
     </nav>
 
     <!-- Mobile Menu - Fixed overlay and animations -->
-    <div class="md:hidden fixed inset-0 z-50 transition-all duration-300 opacity-0 invisible pointer-events-none" 
+    <div class="md:hidden fixed inset-0 z-[60] transition-all duration-300 opacity-0 invisible pointer-events-none" 
          id="mobile-menu-overlay">
         <!-- Backdrop -->
         <div class="absolute inset-0 bg-black/50 backdrop-blur-md transition-opacity duration-300"
@@ -1308,6 +1537,19 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                         <span class="font-medium">Blogs</span>
                     </a>
 
+                    <a href="<?php echo URLROOT; ?>/nieuws" 
+                       class="flex items-center text-gray-700 hover:text-primary p-3 rounded-lg transition-all duration-300 
+                              hover:bg-secondary/5 group">
+                        <div class="mr-3 p-2 bg-secondary/10 rounded-lg transition-all duration-300 
+                                    group-hover:bg-secondary/20 group-hover:scale-110">
+                            <svg class="w-5 h-5 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                      d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1M19 20a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0h4"/>
+                            </svg>
+                        </div>
+                        <span class="font-medium">Nieuws</span>
+                    </a>
+
                     <a href="<?php echo URLROOT; ?>/partijen" 
                        class="flex items-center text-gray-700 hover:text-primary p-3 rounded-lg transition-all duration-300 
                               hover:bg-primary/5 group">
@@ -1320,6 +1562,22 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                         </div>
                         <span class="font-medium">Partijen</span>
                     </a>
+
+                    <a href="<?php echo URLROOT; ?>/themas" 
+                       class="flex items-center text-gray-700 hover:text-primary p-3 rounded-lg transition-all duration-300 
+                              hover:bg-accent/5 group">
+                        <div class="mr-3 p-2 bg-accent/10 rounded-lg transition-all duration-300 
+                                    group-hover:bg-accent/20 group-hover:scale-110">
+                            <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                      d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+                            </svg>
+                        </div>
+                        <span class="font-medium">Thema's</span>
+                    </a>
+
+                    <!-- Divider voor verkiezingssectie -->
+                    <div class="mx-3 my-2 border-t border-gray-200"></div>
 
                     <a href="<?php echo URLROOT; ?>/stemwijzer" 
                        class="flex items-center text-gray-700 hover:text-primary p-3 rounded-lg transition-all duration-300 
@@ -1358,6 +1616,32 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                             </span>
                         </span>
                     </a>
+
+                    <!-- Amerikaanse Verkiezingen - Mobile met Amerikaanse styling -->
+                    <a href="<?php echo URLROOT; ?>/amerikaanse-verkiezingen" 
+                       class="flex items-center text-gray-700 hover:text-primary p-3 rounded-lg transition-all duration-300 
+                              hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 group relative overflow-hidden">
+                        <div class="mr-3 p-2 bg-gradient-to-r from-red-500 to-blue-600 rounded-lg transition-all duration-300 
+                                    group-hover:scale-110 shadow-sm">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                      d="M12 3l1.09 2.09L15 6l-1.91 1.09L12 9l-1.09-1.91L9 6l1.91-1.09L12 3zm-6 6l.69 1.31L8 11l-1.31.69L6 13l-.69-1.31L4 11l1.31-.69L6 9zm12 0l.69 1.31L20 11l-1.31.69L18 13l-.69-1.31L16 11l1.31-.69L18 9zm-6 6l.69 1.31L14 17l-1.31.69L12 19l-.69-1.31L10 17l1.31-.69L12 15z"/>
+                            </svg>
+                        </div>
+                        <span class="font-medium flex items-center">
+                            <span class="bg-gradient-to-r from-red-600 via-purple-600 to-blue-600 bg-clip-text text-transparent">
+                                Amerikaanse Verkiezingen
+                            </span>
+                            <span class="ml-2 inline-flex items-center px-2 py-0.5 text-xs font-medium 
+                                        bg-gradient-to-r from-red-500 to-blue-500 text-white rounded-full">
+                                🇺🇸
+                            </span>
+                        </span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-red-100/10 to-blue-100/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </a>
+
+                    <!-- Divider voor duidelijke scheiding -->
+                    <div class="mx-3 my-2 border-t border-gray-200"></div>
 
                     <a href="<?php echo URLROOT; ?>/over-mij" 
                        class="flex items-center text-gray-700 hover:text-primary p-3 rounded-lg transition-all duration-300 
@@ -1632,13 +1916,13 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                                 dropdown.classList.remove('dropdown-active');
                                 dropdown.style.opacity = '0';
                                 dropdown.style.visibility = 'hidden';
-                                dropdown.style.transform = 'translateY(-15px) scale(0.95) rotateX(-5deg)';
+                                dropdown.style.transform = 'translateY(-10px) scale(0.98)';
                                 dropdown.style.pointerEvents = 'none';
                             } else {
                                 dropdown.classList.add('dropdown-active');
                                 dropdown.style.opacity = '1';
                                 dropdown.style.visibility = 'visible';
-                                dropdown.style.transform = 'translateY(0) scale(1) rotateX(0deg)';
+                                dropdown.style.transform = 'translateY(0) scale(1)';
                                 dropdown.style.pointerEvents = 'auto';
                             }
                         }
