@@ -1,7 +1,7 @@
 <?php 
 // Voeg dynamische meta tags toe voor deze specifieke blog
 $pageTitle = htmlspecialchars($blog->title) . ' | PolitiekPraat';
-$pageDescription = htmlspecialchars($blog->summary);
+$pageDescription = htmlspecialchars(stripMarkdownForSocialMedia($blog->summary, 160));
 $pageImage = $blog->image_path ? getBlogImageUrl($blog->image_path) : URLROOT . '/public/img/og-image.jpg';
 
 // Voeg deze variabelen toe aan $data voor de header

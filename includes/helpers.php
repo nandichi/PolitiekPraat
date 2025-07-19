@@ -148,6 +148,65 @@ if (!function_exists('getBlogAudioUrl')) {
     }
 }
 
+if (!function_exists('stripMarkdownForSocialMedia')) {
+    /**
+     * Strips markdown formatting from text for use in social media meta descriptions
+     * 
+     * @param string $text The text with markdown formatting
+     * @param int $maxLength Maximum length of the cleaned text (default: 160)
+     * @return string Clean text without markdown formatting
+     */
+    function stripMarkdownForSocialMedia($text, $maxLength = 160) {
+        if (empty($text)) {
+            return '';
+        }
+        
+        // Remove markdown headers (# ## ### etc.)
+        $text = preg_replace('/^#{1,6}\s+/m', '', $text);
+        
+        // Remove bold/italic formatting (**text**, *text*, __text__, _text_)
+        $text = preg_replace('/(\*{1,2}|_{1,2})(.*?)\1/', '$2', $text);
+        
+        // Remove links [text](url) - keep just the text
+        $text = preg_replace('/\[([^\]]+)\]\([^)]+\)/', '$1', $text);
+        
+        // Remove images ![alt](url)
+        $text = preg_replace('/!\[([^\]]*)\]\([^)]+\)/', '', $text);
+        
+        // Remove code blocks (```code```)
+        $text = preg_replace('/```[^`]*```/', '', $text);
+        
+        // Remove inline code (`code`)
+        $text = preg_replace('/`([^`]+)`/', '$1', $text);
+        
+        // Remove blockquotes (> text)
+        $text = preg_replace('/^>\s+/m', '', $text);
+        
+        // Remove horizontal rules (--- or ***)
+        $text = preg_replace('/^(-{3,}|\*{3,})$/m', '', $text);
+        
+        // Remove list markers (- * +)
+        $text = preg_replace('/^[\s]*[-\*\+]\s+/m', '', $text);
+        
+        // Remove numbered list markers (1. 2. etc.)
+        $text = preg_replace('/^\s*\d+\.\s+/m', '', $text);
+        
+        // Remove HTML tags if any
+        $text = strip_tags($text);
+        
+        // Clean up extra whitespace
+        $text = preg_replace('/\s+/', ' ', $text);
+        $text = trim($text);
+        
+        // Truncate to max length and add ellipsis if needed
+        if (strlen($text) > $maxLength) {
+            $text = substr($text, 0, $maxLength - 3) . '...';
+        }
+        
+        return $text;
+    }
+}
+
 
 
 // Additional helper functions can be added here
