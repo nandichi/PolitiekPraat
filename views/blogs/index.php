@@ -141,7 +141,7 @@
                                             
                                             <!-- Read More Button -->
                                             <div class="pt-4">
-                                                <a href="<?php echo URLROOT . '/blogs/view/' . $featuredBlog->slug; ?>" 
+                                                <a href="<?php echo URLROOT . '/blogs/' . $featuredBlog->slug; ?>" 
                                                    class="group inline-flex items-center px-6 py-3 bg-gradient-to-r from-secondary to-secondary-dark text-white font-semibold rounded-2xl shadow-lg hover:shadow-secondary/30 hover:-translate-y-1 transition-all duration-300">
                                                     <span class="text-sm">Lees volledig artikel</span>
                                                     <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -299,7 +299,7 @@
                             <div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5 pointer-events-none"></div>
                         <?php endif; ?>
 
-                        <a href="<?php echo URLROOT . '/blogs/view/' . $blog->slug; ?>" class="block relative">
+                                                    <a href="<?php echo URLROOT . '/blogs/' . $blog->slug; ?>" class="block relative">
                             <?php if ($blog->image_path): ?>
                                 <div class="relative h-52 overflow-hidden">
                                     <img src="<?php echo getBlogImageUrl($blog->image_path); ?>" 

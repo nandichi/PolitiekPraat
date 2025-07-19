@@ -126,7 +126,7 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                             <div class="flex space-x-3">
-                                                <a href="<?php echo URLROOT; ?>/blogs/view/<?php echo $blog->slug; ?>" 
+                                                <a href="<?php echo URLROOT; ?>/blogs/<?php echo $blog->slug; ?>" 
                                                    class="group inline-flex items-center px-3 py-2 border border-gray-200 rounded-lg text-gray-600 bg-white hover:bg-gray-50 transition-colors">
                                                     <svg class="w-4 h-4 mr-1.5 text-gray-400 group-hover:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
@@ -205,7 +205,7 @@
                                             </div>
                                         </div>
                                         <div class="flex flex-wrap gap-2">
-                                            <a href="<?php echo URLROOT; ?>/blogs/view/<?php echo $blog->slug; ?>" 
+                                            <a href="<?php echo URLROOT; ?>/blogs/<?php echo $blog->slug; ?>" 
                                                class="group inline-flex items-center px-2 py-1 border border-gray-200 rounded-md text-xs text-gray-600 bg-white hover:bg-gray-50 transition-colors">
                                                 <svg class="w-3 h-3 mr-1 text-gray-400 group-hover:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>

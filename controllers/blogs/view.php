@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['user_id'])) {
         $db->bind(':content', $content);
         
         if ($db->execute()) {
-            header('Location: ' . URLROOT . '/blogs/view/' . $blog->slug . '#comments');
+            header('Location: ' . URLROOT . '/blogs/' . $blog->slug . '#comments');
             exit;
         } else {
             $comment_error = 'Er is iets misgegaan bij het plaatsen van je reactie';
@@ -85,7 +85,7 @@ require_once BASE_PATH . '/views/templates/header.php';
             <h2 class="text-2xl font-bold mb-8">Reacties (<?php echo count($comments); ?>)</h2>
 
             <?php if(isset($_SESSION['user_id'])): ?>
-                <form method="POST" action="<?php echo URLROOT; ?>/blogs/view/<?php echo $blog->slug; ?>#comments" 
+                <form method="POST" action="<?php echo URLROOT; ?>/blogs/<?php echo $blog->slug; ?>#comments" 
                       class="mb-8">
                     <?php if ($comment_error): ?>
                         <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">

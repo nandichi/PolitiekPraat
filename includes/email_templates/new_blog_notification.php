@@ -2,7 +2,7 @@
 function getNewBlogNotificationTemplate($email, $blog_title, $blog_summary, $blog_slug, $blog_image, $author_name) {
     // Base URL of the website
     $baseUrl = "https://" . $_SERVER['HTTP_HOST'];
-    $blogUrl = $baseUrl . "/blogs/view/" . $blog_slug;
+    $blogUrl = $baseUrl . "/blogs/" . $blog_slug;
     $unsubscribeUrl = $baseUrl . "/newsletter/unsubscribe?email=" . urlencode($email);
     
     // Formateer de datum in Nederlands

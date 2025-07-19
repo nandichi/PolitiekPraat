@@ -186,7 +186,7 @@ class Newsletter extends Controller {
                     $blog->image_path,
                     $blog->author_name
                 );
-                $mail->AltBody = "Nieuw artikel op PolitiekPraat: {$blog->title}\n\nGeschreven door: {$blog->author_name}\n\n{$blog->summary}\n\nLees verder op: " . URLROOT . "/blogs/view/{$blog->slug}";
+                $mail->AltBody = "Nieuw artikel op PolitiekPraat: {$blog->title}\n\nGeschreven door: {$blog->author_name}\n\n{$blog->summary}\n\nLees verder op: " . URLROOT . "/blogs/{$blog->slug}";
                 
                 $mail->send();
                 

@@ -667,7 +667,7 @@ require_once 'views/templates/header.php'; ?>
                     ?>
                         <article class="group bg-white rounded-xl sm:rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
                             <div class="relative">
-                                <a href="<?php echo URLROOT . '/blogs/view/' . $relatedBlog->slug; ?>" class="block">
+                                <a href="<?php echo URLROOT . '/blogs/' . $relatedBlog->slug; ?>" class="block">
                                     <?php if ($relatedBlog->image_path): ?>
                                         <div class="relative h-40 sm:h-48 overflow-hidden">
                                             <img src="<?php echo getBlogImageUrl($relatedBlog->image_path); ?>" 
@@ -715,7 +715,7 @@ require_once 'views/templates/header.php'; ?>
                                 </div>
 
                                 <!-- Title & Summary -->
-                                <a href="<?php echo URLROOT . '/blogs/view/' . $relatedBlog->slug; ?>" class="block">
+                                <a href="<?php echo URLROOT . '/blogs/' . $relatedBlog->slug; ?>" class="block">
                                     <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3 group-hover:text-primary transition-colors duration-300 line-clamp-2">
                                         <?php echo htmlspecialchars($relatedBlog->title); ?>
                                     </h3>
@@ -727,7 +727,7 @@ require_once 'views/templates/header.php'; ?>
                                 
                                 <!-- Footer -->
                                 <div class="flex items-center justify-between pt-3 sm:pt-4 border-t border-gray-100">
-                                    <a href="<?php echo URLROOT . '/blogs/view/' . $relatedBlog->slug; ?>" 
+                                    <a href="<?php echo URLROOT . '/blogs/' . $relatedBlog->slug; ?>" 
                                        class="inline-flex items-center text-primary font-medium text-xs sm:text-sm hover:text-primary-dark transition-colors">
                                         Lees verder
                                         <svg class="w-3 sm:w-4 h-3 sm:h-4 ml-1 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">

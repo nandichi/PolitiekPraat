@@ -35,10 +35,11 @@ $static_pages = [
     ['url' => 'over-mij', 'changefreq' => 'monthly', 'priority' => '0.3'],
     ['url' => 'nieuws', 'changefreq' => 'daily', 'priority' => '0.8'],
     ['url' => 'stemwijzer', 'changefreq' => 'weekly', 'priority' => '0.8'],
+    ['url' => 'partijen', 'changefreq' => 'weekly', 'priority' => '0.7'],
+    ['url' => 'programma-vergelijker', 'changefreq' => 'weekly', 'priority' => '0.8'],
     ['url' => 'login', 'changefreq' => 'monthly', 'priority' => '0.5'],
     ['url' => 'register', 'changefreq' => 'monthly', 'priority' => '0.5'],
     ['url' => 'profile', 'changefreq' => 'weekly', 'priority' => '0.6'],
-    ['url' => 'partijen', 'changefreq' => 'weekly', 'priority' => '0.7'],
 ];
 
 foreach ($static_pages as $page) {
@@ -51,98 +52,110 @@ foreach ($static_pages as $page) {
 }
 
 // Add blog posts with featured images
-$query = "SELECT bp.slug, bp.updated_at, bp.title, bp.featured_image 
-          FROM blog_posts bp 
-          WHERE bp.status = 'published' 
-          ORDER BY bp.updated_at DESC";
-$blogs = $db->query($query)->fetchAll(PDO::FETCH_ASSOC);
+$query = "SELECT b.slug, b.published_at, b.title, b.image_path as featured_image 
+          FROM blogs b 
+          ORDER BY b.published_at DESC";
+$blogs = $db->query($query)->resultSet();
 
 foreach ($blogs as $blog) {
     echo "  <url>\n";
-    echo "    <loc>" . $domain . "/blogs/view/" . htmlspecialchars($blog['slug']) . "</loc>\n";
-    echo "    <lastmod>" . date('c', strtotime($blog['updated_at'])) . "</lastmod>\n";
+    echo "    <loc>" . $domain . "/blogs/" . htmlspecialchars($blog->slug) . "</loc>\n";
+    echo "    <lastmod>" . date('c', strtotime($blog->published_at)) . "</lastmod>\n";
     echo "    <changefreq>weekly</changefreq>\n";
     echo "    <priority>0.6</priority>\n";
     
     // Add featured image if available
-    if (!empty($blog['featured_image'])) {
+    if (!empty($blog->featured_image)) {
         echo "    <image:image>\n";
-        echo "      <image:loc>" . $domain . "/" . htmlspecialchars($blog['featured_image']) . "</image:loc>\n";
-        echo "      <image:title>" . htmlspecialchars($blog['title']) . "</image:title>\n";
-        echo "      <image:caption>" . htmlspecialchars($blog['title']) . "</image:caption>\n";
+        echo "      <image:loc>" . $domain . "/" . htmlspecialchars($blog->featured_image) . "</image:loc>\n";
+        echo "      <image:title>" . htmlspecialchars($blog->title) . "</image:title>\n";
+        echo "      <image:caption>" . htmlspecialchars($blog->title) . "</image:caption>\n";
         echo "    </image:image>\n";
     }
     
     echo "  </url>\n";
 }
 
-// Add forum topics
-$query = "SELECT slug, updated_at FROM forum_topics WHERE status = 'active' ORDER BY updated_at DESC";
-$topics = $db->query($query)->fetchAll(PDO::FETCH_ASSOC);
+// Add forum topics (commented out - table may not exist)
+// $query = "SELECT slug, updated_at FROM forum_topics WHERE status = 'active' ORDER BY updated_at DESC";
+// $topics = $db->query($query)->resultSet();
 
-foreach ($topics as $topic) {
+// foreach ($topics as $topic) {
+//     echo "  <url>\n";
+//     echo "    <loc>" . $domain . "/forum/topic/" . htmlspecialchars($topic->slug) . "</loc>\n";
+//     echo "    <lastmod>" . date('c', strtotime($topic->updated_at)) . "</lastmod>\n";
+//     echo "    <changefreq>daily</changefreq>\n";
+//     echo "    <priority>0.6</priority>\n";
+//     echo "  </url>\n";
+// }
+
+// Add themas (belangrijkste politieke thema's)
+$thema_slugs = [
+    'klimaat-en-energie',
+    'economie-en-financien',
+    'onderwijs',
+    'zorg-en-welzijn',
+    'migratie-en-asiel',
+    'veiligheid-en-justitie',
+    'europa',
+    'defensie',
+    'landbouw-en-natuur',
+    'wonen',
+    'mobiliteit-en-verkeer',
+    'digitalisering'
+];
+
+foreach ($thema_slugs as $slug) {
     echo "  <url>\n";
-    echo "    <loc>" . $domain . "/forum/topic/" . htmlspecialchars($topic['slug']) . "</loc>\n";
-    echo "    <lastmod>" . date('c', strtotime($topic['updated_at'])) . "</lastmod>\n";
-    echo "    <changefreq>daily</changefreq>\n";
-    echo "    <priority>0.6</priority>\n";
-    echo "  </url>\n";
-}
-
-// Add themas
-$query = "SELECT slug, updated_at, name FROM themas ORDER BY id";
-$themas = $db->query($query)->fetchAll(PDO::FETCH_ASSOC);
-
-foreach ($themas as $thema) {
-    echo "  <url>\n";
-    echo "    <loc>" . $domain . "/thema/" . htmlspecialchars($thema['slug']) . "</loc>\n";
-    echo "    <lastmod>" . (isset($thema['updated_at']) ? date('c', strtotime($thema['updated_at'])) : $current_date) . "</lastmod>\n";
+    echo "    <loc>" . $domain . "/thema/" . htmlspecialchars($slug) . "</loc>\n";
+    echo "    <lastmod>" . $current_date . "</lastmod>\n";
     echo "    <changefreq>weekly</changefreq>\n";
     echo "    <priority>0.6</priority>\n";
     echo "  </url>\n";
 }
 
-// Add nieuws items with images
-$query = "SELECT slug, published_at, title, image FROM nieuws_items WHERE status = 'published' ORDER BY published_at DESC";
-$news = $db->query($query)->fetchAll(PDO::FETCH_ASSOC);
+// Add nieuws items with images (commented out - table may not exist)
+// $query = "SELECT slug, published_at, title, image FROM nieuws_items WHERE status = 'published' ORDER BY published_at DESC";
+// $news = $db->query($query)->resultSet();
 
-foreach ($news as $item) {
-    echo "  <url>\n";
-    echo "    <loc>" . $domain . "/nieuws/artikel/" . htmlspecialchars($item['slug']) . "</loc>\n";
-    echo "    <lastmod>" . date('c', strtotime($item['published_at'])) . "</lastmod>\n";
-    echo "    <changefreq>monthly</changefreq>\n";
-    echo "    <priority>0.6</priority>\n";
+// foreach ($news as $item) {
+//     echo "  <url>\n";
+//     echo "    <loc>" . $domain . "/nieuws/artikel/" . htmlspecialchars($item->slug) . "</loc>\n";
+//     echo "    <lastmod>" . date('c', strtotime($item->published_at)) . "</lastmod>\n";
+//     echo "    <changefreq>monthly</changefreq>\n";
+//     echo "    <priority>0.6</priority>\n";
     
-    // Add news image if available
-    if (!empty($item['image'])) {
-        echo "    <image:image>\n";
-        echo "      <image:loc>" . $domain . "/" . htmlspecialchars($item['image']) . "</image:loc>\n";
-        echo "      <image:title>" . htmlspecialchars($item['title']) . "</image:title>\n";
-        echo "      <image:caption>" . htmlspecialchars($item['title']) . "</image:caption>\n";
-        echo "    </image:image>\n";
+//     // Add news image if available
+//     if (!empty($item->image)) {
+//         echo "    <image:image>\n";
+//         echo "      <image:loc>" . $domain . "/" . htmlspecialchars($item->image) . "</image:loc>\n";
+//         echo "      <image:title>" . htmlspecialchars($item->title) . "</image:title>\n";
+//         echo "      <image:caption>" . htmlspecialchars($item->title) . "</image:caption>\n";
+//         echo "    </image:image>\n";
         
-        // Add news-specific tags
-        echo "    <news:news>\n";
-        echo "      <news:publication>\n";
-        echo "        <news:name>PolitiekPraat</news:name>\n";
-        echo "        <news:language>nl</news:language>\n";
-        echo "      </news:publication>\n";
-        echo "      <news:publication_date>" . date('c', strtotime($item['published_at'])) . "</news:publication_date>\n";
-        echo "      <news:title>" . htmlspecialchars($item['title']) . "</news:title>\n";
-        echo "    </news:news>\n";
-    }
+//         // Add news-specific tags
+//         echo "    <news:news>\n";
+//         echo "      <news:publication>\n";
+//         echo "        <news:name>PolitiekPraat</news:name>\n";
+//         echo "        <news:language>nl</news:language>\n";
+//         echo "      </news:publication>\n";
+//         echo "      <news:publication_date>" . date('c', strtotime($item->published_at)) . "</news:publication_date>\n";
+//         echo "      <news:title>" . htmlspecialchars($item->title) . "</news:title>\n";
+//         echo "    </news:news>\n";
+//     }
     
-    echo "  </url>\n";
-}
+//     echo "  </url>\n";
+// }
 
-// Add politieke partijen
-$query = "SELECT slug, updated_at, name FROM partijen ORDER BY id";
-$partijen = $db->query($query)->fetchAll(PDO::FETCH_ASSOC);
+// Add politieke partijen (hardcoded from PoliticalParties class)
+$partijen_slugs = [
+    'pvv', 'gl-pvda', 'vvd', 'nsc', 'd66', 'bbb', 'cda', 'sp', 'fvd', 'pvdd', 'volt', 'ja21', 'sgp', 'denk'
+];
 
-foreach ($partijen as $partij) {
+foreach ($partijen_slugs as $slug) {
     echo "  <url>\n";
-    echo "    <loc>" . $domain . "/partij/" . htmlspecialchars($partij['slug']) . "</loc>\n";
-    echo "    <lastmod>" . (isset($partij['updated_at']) ? date('c', strtotime($partij['updated_at'])) : $current_date) . "</lastmod>\n";
+    echo "    <loc>" . $domain . "/partijen/" . htmlspecialchars($slug) . "</loc>\n";
+    echo "    <lastmod>" . $current_date . "</lastmod>\n";
     echo "    <changefreq>weekly</changefreq>\n";
     echo "    <priority>0.7</priority>\n";
     echo "  </url>\n";

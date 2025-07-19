@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $db->bind(':author_id', $_SESSION['user_id']);
         
         if ($db->execute()) {
-            header('Location: ' . URLROOT . '/blogs/view/' . $slug);
+            header('Location: ' . URLROOT . '/blogs/' . $slug);
             exit;
         } else {
             $error = 'Er is iets misgegaan bij het aanmaken van je blog';

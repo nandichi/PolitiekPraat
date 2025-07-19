@@ -157,7 +157,7 @@ require_once BASE_PATH . '/views/templates/header.php'; ?>
                                 </span>
                             </div>
                         </div>
-                        <a href="<?php echo URLROOT; ?>/blogs/view/<?php echo $blog->id; ?>" 
+                        <a href="<?php echo URLROOT; ?>/blogs/<?php echo $blog->id; ?>" 
                            class="ml-2 sm:ml-4 flex-shrink-0 p-2 text-gray-500 hover:text-primary transition-colors rounded-full hover:bg-gray-100" 
                            title="Bekijk blog">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

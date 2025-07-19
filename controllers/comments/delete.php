@@ -27,7 +27,7 @@ if (!$comment) {
 
 // Controleer of gebruiker de eigenaar is of admin
 if ($_SESSION['user_id'] != $comment->user_id && !$_SESSION['is_admin']) {
-    header('Location: ' . URLROOT . '/blogs/view/' . $comment->blog_slug);
+    header('Location: ' . URLROOT . '/blogs/' . $comment->blog_slug);
     exit;
 }
 
@@ -37,5 +37,5 @@ $db->bind(':id', $params['id']);
 $db->execute();
 
 // Redirect terug naar blog
-header('Location: ' . URLROOT . '/blogs/view/' . $comment->blog_slug . '#comments');
+    header('Location: ' . URLROOT . '/blogs/' . $comment->blog_slug . '#comments');
 exit; 

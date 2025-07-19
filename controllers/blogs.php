@@ -221,6 +221,9 @@ class BlogsController {
                 $newsletterController = new Newsletter();
                 $newsletterController->sendNewBlogNotifications($blogId);
                 
+                // Automatically regenerate sitemap
+                $this->regenerateSitemap();
+                
                 // Redirect to blogs page
                 header('Location: ' . URLROOT . '/blogs');
                 exit;
@@ -517,6 +520,9 @@ class BlogsController {
             ];
             
             if ($this->blogModel->update($data)) {
+                // Automatically regenerate sitemap after blog update
+                $this->regenerateSitemap();
+                
                 header('Location: ' . URLROOT . '/blogs/manage');
                 exit;
             } else {
@@ -564,6 +570,9 @@ class BlogsController {
             if (!empty($blog->audio_path) && file_exists(BASE_PATH . '/' . $blog->audio_path)) {
                 unlink(BASE_PATH . '/' . $blog->audio_path);
             }
+            
+            // Automatically regenerate sitemap after blog deletion
+            $this->regenerateSitemap();
         }
         
         header('Location: ' . URLROOT . '/blogs/manage');
@@ -637,6 +646,45 @@ class BlogsController {
         } else {
             http_response_code(400);
             echo json_encode(['success' => false, 'message' => 'Kon like niet verwerken']);
+        }
+    }
+    
+    private function regenerateSitemap() {
+        try {
+            // Voer het sitemap generatie script uit
+            $output = shell_exec('cd ' . BASE_PATH . ' && php generate-sitemap.php > sitemap.xml 2>&1');
+            
+            // Log voor debugging
+            error_log("Sitemap automatically regenerated after new blog post");
+            
+            // Optioneel: ping Google om de nieuwe sitemap te melden
+            $this->pingGoogleSitemap();
+            
+        } catch (Exception $e) {
+            // Log de fout maar laat de blog posting niet falen
+            error_log("Failed to regenerate sitemap: " . $e->getMessage());
+        }
+    }
+    
+    private function pingGoogleSitemap() {
+        try {
+            // Ping Google Search Console om nieuwe sitemap te melden
+            $sitemapUrl = urlencode('https://politiekpraat.nl/sitemap.xml');
+            $pingUrl = "https://www.google.com/ping?sitemap=" . $sitemapUrl;
+            
+            // Maak een non-blocking HTTP request
+            $context = stream_context_create([
+                'http' => [
+                    'timeout' => 5, // 5 seconden timeout
+                    'ignore_errors' => true
+                ]
+            ]);
+            
+            $result = file_get_contents($pingUrl, false, $context);
+            error_log("Google sitemap ping sent successfully");
+            
+        } catch (Exception $e) {
+            error_log("Failed to ping Google sitemap: " . $e->getMessage());
         }
     }
 } 

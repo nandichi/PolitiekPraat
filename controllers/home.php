@@ -753,7 +753,7 @@ require_once 'views/templates/header.php';
                                     </div>
                                 <?php endif; ?>
 
-                                <a href="<?php echo URLROOT . '/blogs/view/' . $blog->slug; ?>" class="block relative h-full">
+                                <a href="<?php echo URLROOT . '/blogs/' . $blog->slug; ?>" class="block relative h-full">
                                     <!-- Image sectie -->
                                     <div class="relative h-64 lg:h-72 overflow-hidden">
                                         <?php if ($blog->image_path): ?>

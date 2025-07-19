@@ -70,13 +70,13 @@ $router->add('blogs/updateLikes/([0-9]+)', function($id) {
     $controller = new BlogsController();
     $controller->updateLikes($id);
 });
-$router->add('blogs/view/([^/]+)', function($slug) {
-    $controller = new BlogsController();
-    $controller->view($slug);
-});
 $router->add('blogs/like/([^/]+)', function($slug) {
     $controller = new BlogsController();
     $controller->handleLike($slug);
+});
+$router->add('blogs/([^/]+)', function($slug) {
+    $controller = new BlogsController();
+    $controller->view($slug);
 });
 $router->add('forum', 'controllers/forum.php');
 $router->add('forum/create', 'controllers/forum/create.php');
