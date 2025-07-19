@@ -338,7 +338,7 @@
     <section class="py-16 md:py-20 bg-gradient-to-br from-primary to-secondary relative overflow-hidden" id="statistieken">
         <!-- Capitol building silhouette -->
         <div class="absolute inset-0 opacity-10">
-            <div class="w-full h-full bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');"></div>
+            <div class="w-full h-full bg-cover bg-center" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/4/4f/US_Capitol_west_side.JPG');"></div>
         </div>
         
         <!-- American flag pattern -->

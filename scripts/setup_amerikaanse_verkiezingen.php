@@ -4,17 +4,50 @@
  * Inclusief velden voor foto URLs.
  *
  * Voer uit met: php scripts/setup_amerikaanse_verkiezingen.php
+ * Of ga naar: https://jouwdomain.nl/scripts/setup_amerikaanse_verkiezingen.php
  */
+
+// Check of script via web wordt uitgevoerd
+$isWebExecution = isset($_SERVER['HTTP_HOST']);
+
+if ($isWebExecution) {
+    // Web interface styling
+    echo "<!DOCTYPE html><html><head><title>Amerikaanse Verkiezingen Setup</title>";
+    echo "<style>body{font-family: Arial; max-width: 800px; margin: 50px auto; padding: 20px;} ";
+    echo ".success{color: green;} .error{color: red;} .info{color: blue;} pre{background: #f5f5f5; padding: 10px; border-radius: 5px;}</style></head><body>";
+    echo "<h1>🇺🇸 Amerikaanse Verkiezingen Database Setup</h1>";
+    
+    // Override for web - automatisch ja antwoorden op overschrijf vraag
+    if (isset($_GET['confirm']) && $_GET['confirm'] === 'yes') {
+        $autoConfirm = true;
+    } else {
+        $autoConfirm = false;
+    }
+} else {
+    $autoConfirm = false;
+}
 
 require_once __DIR__ . '/../includes/config.php';
 require_once __DIR__ . '/../includes/Database.php';
 
 try {
     $db = new Database();
-    echo "Database verbinding succesvol!\n";
+    
+    // Output functie voor zowel CLI als web
+    function outputMessage($message, $type = 'info') {
+        global $isWebExecution;
+        if ($isWebExecution) {
+            echo "<div class='$type'>" . nl2br(htmlspecialchars($message)) . "</div>";
+            if ($type === 'info') echo "<br>";
+        } else {
+            echo $message . "\n";
+        }
+    }
+    
+    outputMessage("Database verbinding succesvol!", 'success');
 
     // Stap 1: Maak de tabel aan
-    echo "\n=== Stap 1: Database tabel aanmaken ===\n";
+    outputMessage("=== Stap 1: Database tabel aanmaken ===", 'info');
     
     // De tabel wordt uitgebreid met winnaar_foto_url en verliezer_foto_url
     $createTableSQL = "
@@ -52,34 +85,43 @@ try {
     
     $db->query($createTableSQL);
     $db->execute();
-    echo "✓ Tabel 'amerikaanse_verkiezingen' succesvol aangemaakt/bijgewerkt met fotovelden\n";
+    outputMessage("✓ Tabel 'amerikaanse_verkiezingen' succesvol aangemaakt/bijgewerkt met fotovelden", 'success');
 
     // Stap 2: Controleer of er al data in de tabel staat
-    echo "\n=== Stap 2: Data controle ===\n";
+    outputMessage("=== Stap 2: Data controle ===", 'info');
     
     $db->query("SELECT COUNT(*) as count FROM amerikaanse_verkiezingen");
     $result = $db->single();
     $existing_count = $result->count;
     
-    echo "Bestaande verkiezingen in database: $existing_count\n";
+    outputMessage("Bestaande verkiezingen in database: $existing_count", 'info');
     
     if ($existing_count > 0) {
-        echo "Er staan al verkiezingen in de database. Wil je deze overschrijven? (y/N): ";
-        $handle = fopen ("php://stdin","r");
-        $line = fgets($handle);
-        if (trim($line) !== 'y' && trim($line) !== 'Y') {
-            echo "Script gestopt. Geen data toegevoegd.\n";
+        if ($isWebExecution && !$autoConfirm) {
+            // Web interface - toon bevestiging link
+            outputMessage("Er staan al $existing_count verkiezingen in de database.", 'info');
+            echo "<p><a href='?confirm=yes' style='background: #dc3545; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;'>✅ Ja, overschrijf bestaande data</a></p>";
+            echo "<p><a href='../admin/dashboard.php' style='background: #6c757d; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;'>❌ Nee, ga terug</a></p>";
+            echo "</body></html>";
             exit(0);
+        } elseif (!$isWebExecution) {
+            echo "Er staan al verkiezingen in de database. Wil je deze overschrijven? (y/N): ";
+            $handle = fopen ("php://stdin","r");
+            $line = fgets($handle);
+            if (trim($line) !== 'y' && trim($line) !== 'Y') {
+                outputMessage("Script gestopt. Geen data toegevoegd.", 'info');
+                exit(0);
+            }
         }
         
         // Verwijder bestaande data
         $db->query("TRUNCATE TABLE amerikaanse_verkiezingen");
         $db->execute();
-        echo "✓ Bestaande data verwijderd\n";
+        outputMessage("✓ Bestaande data verwijderd", 'success');
     }
 
     // Stap 3: Voeg de data toe
-    echo "\n=== Stap 3: Data toevoegen (1900-2024) ===\n";
+    outputMessage("=== Stap 3: Data toevoegen (1900-2024) ===", 'info');
     
     // Data van 2024 tot 1900, inclusief placeholder URLs voor foto's
     // LET OP: Vervang de 'placehold.co' URLs met echte URLs naar de foto's.
@@ -478,41 +520,65 @@ try {
             $db->bind(23, $verkiezing['verliezer_foto_url']);
             
             if ($db->execute()) {
-                echo "✓ Verkiezing {$verkiezing['jaar']} toegevoegd\n";
+                outputMessage("✓ Verkiezing {$verkiezing['jaar']} toegevoegd", 'success');
                 $successCount++;
             } else {
-                echo "✗ Fout bij toevoegen verkiezing {$verkiezing['jaar']}\n";
+                outputMessage("✗ Fout bij toevoegen verkiezing {$verkiezing['jaar']}", 'error');
             }
         } catch (Exception $e) {
-            echo "✗ Fout bij verkiezing {$verkiezing['jaar']}: " . $e->getMessage() . "\n";
+            outputMessage("✗ Fout bij verkiezing {$verkiezing['jaar']}: " . $e->getMessage(), 'error');
         }
     }
 
     // Stap 4: Controleer resultaat
-    echo "\n=== Stap 4: Resultaat ===\n";
+    outputMessage("=== Stap 4: Resultaat ===", 'info');
     
     $db->query("SELECT COUNT(*) as count FROM amerikaanse_verkiezingen");
     $result = $db->single();
     $total_count = $result->count;
     
-    echo "✓ Script voltooid!\n";
-    echo "✓ $successCount van " . count($verkiezingenData) . " verkiezingen succesvol toegevoegd\n";
-    echo "✓ Totaal verkiezingen in database: $total_count\n";
+    outputMessage("✓ Script voltooid!", 'success');
+    outputMessage("✓ $successCount van " . count($verkiezingenData) . " verkiezingen succesvol toegevoegd", 'success');
+    outputMessage("✓ Totaal verkiezingen in database: $total_count", 'success');
     
     // Toon overzicht
-    echo "\n=== Overzicht verkiezingen ===\n";
+    outputMessage("=== Overzicht verkiezingen ===", 'info');
     $db->query("SELECT jaar, winnaar, winnaar_partij FROM amerikaanse_verkiezingen ORDER BY jaar DESC");
     $verkiezingen = $db->resultSet();
     
-    foreach ($verkiezingen as $verkiezing) {
-        echo "- {$verkiezing->jaar}: {$verkiezing->winnaar} ({$verkiezing->winnaar_partij})\n";
+    if ($isWebExecution) {
+        echo "<pre>";
     }
     
-    echo "\n✅ Setup voltooid! Je kunt nu de applicatie gebruiken.\n";
+    foreach ($verkiezingen as $verkiezing) {
+        $line = "- {$verkiezing->jaar}: {$verkiezing->winnaar} ({$verkiezing->winnaar_partij})";
+        if ($isWebExecution) {
+            echo htmlspecialchars($line) . "\n";
+        } else {
+            echo $line . "\n";
+        }
+    }
+    
+    if ($isWebExecution) {
+        echo "</pre>";
+    }
+    
+    outputMessage("✅ Setup voltooid! Je kunt nu de applicatie gebruiken.", 'success');
+    
+    if ($isWebExecution) {
+        echo "<p><a href='../admin/dashboard.php' style='background: #28a745; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;'>🏠 Terug naar Admin Dashboard</a></p>";
+        echo "</body></html>";
+    }
 
 } catch (Exception $e) {
-    echo "❌ FOUT: " . $e->getMessage() . "\n";
-    echo "Stack trace:\n" . $e->getTraceAsString() . "\n";
+    outputMessage("❌ FOUT: " . $e->getMessage(), 'error');
+    if (!$isWebExecution) {
+        echo "Stack trace:\n" . $e->getTraceAsString() . "\n";
+    } else {
+        echo "<details><summary>Stack trace (klik om te tonen)</summary><pre>" . htmlspecialchars($e->getTraceAsString()) . "</pre></details>";
+        echo "<p><a href='../admin/dashboard.php' style='background: #dc3545; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;'>🏠 Terug naar Admin Dashboard</a></p>";
+        echo "</body></html>";
+    }
     exit(1);
 }
 ?>
