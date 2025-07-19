@@ -50,6 +50,30 @@ class AmerikaanseVerkiezingenController {
         require_once BASE_PATH . '/views/amerikaanse-verkiezingen/detail.php';
     }
 
+    public function presidenten() {
+        // Haal alle presidenten op uit de database
+        $presidenten = $this->verkiezingenModel->getAllPresidenten();
+        
+        // Haal presidenten per periode op
+        $presidentenPerPeriode = $this->verkiezingenModel->getPresidentenPerPeriode();
+        
+        // Haal familie dynastieën op
+        $familieDynastieen = $this->verkiezingenModel->getFamilieDynastieen();
+        
+        // Haal statistieken op
+        $presidentenStatistieken = $this->verkiezingenModel->getPresidentenStatistieken();
+        
+        // Als er geen data in database is, gebruik fallback data
+        if (empty($presidenten)) {
+            $presidenten = $this->getFallbackPresidenten();
+            $presidentenPerPeriode = $this->groeperPresidentenPerPeriode($presidenten);
+            $familieDynastieen = $this->getFallbackFamilieDynastieen();
+            $presidentenStatistieken = $this->getFallbackPresidentenStatistieken();
+        }
+        
+        require_once BASE_PATH . '/views/amerikaanse-verkiezingen/presidenten.php';
+    }
+
     private function groeperVerkiezingenPerPeriode($verkiezingen) {
         $periodes = [
             'Moderne Era (2000-heden)' => [],
@@ -208,13 +232,145 @@ class AmerikaanseVerkiezingenController {
             'democratic_overwinningen' => 2
         ];
     }
+    
+    // ==========================================
+    // PRESIDENTEN FALLBACK FUNCTIES
+    // ==========================================
+    
+    private function getFallbackPresidenten() {
+        return [
+            (object)[
+                'president_nummer' => 1,
+                'naam' => 'George Washington',
+                'volledige_naam' => 'George Washington',
+                'bijnaam' => 'Father of His Country',
+                'partij' => 'Unaffiliated',
+                'periode_start' => '1789-04-30',
+                'periode_eind' => '1797-03-04',
+                'geboren' => '1732-02-22',
+                'overleden' => '1799-12-14',
+                'geboorteplaats' => 'Westmoreland County, Virginia',
+                'vice_president' => 'John Adams',
+                'foto_url' => 'https://upload.wikimedia.org/wikipedia/commons/b/b6/Gilbert_Stuart_Williamstown_Portrait_of_George_Washington.jpg',
+                'biografie' => 'George Washington was de eerste president van de Verenigde Staten en wordt beschouwd als een van de founding fathers.',
+                'prestaties' => ['Eerste president van de Verenigde Staten', 'Leidde Continental Army', 'Presideerde Constitutional Convention'],
+                'fun_facts' => ['Enige president unaniem gekozen', 'Nooit inwoner van Washington D.C.', 'Rijkste president ooit'],
+                'echtgenote' => 'Martha Dandridge Custis Washington',
+                'familie_connecties' => 'Verre neef van Robert E. Lee',
+                'leeftijd_bij_aantreden' => 57,
+                'jaren_in_functie' => 8
+            ],
+            (object)[
+                'president_nummer' => 2,
+                'naam' => 'John Adams',
+                'volledige_naam' => 'John Adams',
+                'bijnaam' => 'Atlas of Independence',
+                'partij' => 'Federalist',
+                'periode_start' => '1797-03-04',
+                'periode_eind' => '1801-03-04',
+                'geboren' => '1735-10-30',
+                'overleden' => '1826-07-04',
+                'geboorteplaats' => 'Braintree, Massachusetts',
+                'vice_president' => 'Thomas Jefferson',
+                'foto_url' => 'https://upload.wikimedia.org/wikipedia/commons/e/e4/John_Adams_A18236.jpg',
+                'biografie' => 'John Adams was de tweede president en vader van John Quincy Adams.',
+                'prestaties' => ['Eerste vice-president', 'Voorkwam oorlog met Frankrijk', 'Vader van Amerikaanse diplomatie'],
+                'fun_facts' => ['Stierf op dezelfde dag als Jefferson', 'Eerste president in Witte Huis', 'Zoon werd ook president'],
+                'echtgenote' => 'Abigail Smith Adams',
+                'familie_connecties' => 'Vader van John Quincy Adams (6e president)',
+                'leeftijd_bij_aantreden' => 61,
+                'jaren_in_functie' => 4
+            ],
+            (object)[
+                'president_nummer' => 46,
+                'naam' => 'Joe Biden',
+                'volledige_naam' => 'Joseph Robinette Biden Jr.',
+                'bijnaam' => 'Amtrak Joe',
+                'partij' => 'Democratic',
+                'periode_start' => '2021-01-20',
+                'periode_eind' => null,
+                'geboren' => '1942-11-20',
+                'overleden' => null,
+                'geboorteplaats' => 'Scranton, Pennsylvania',
+                'vice_president' => 'Kamala Harris',
+                'foto_url' => 'https://upload.wikimedia.org/wikipedia/commons/6/68/Joe_Biden_presidential_portrait.jpg',
+                'biografie' => 'Joe Biden is de 46e en huidige president van de Verenigde Staten.',
+                'prestaties' => ['Oudste president ooit geïnaugureerd', '36 jaar Senator', 'Vice-president onder Obama'],
+                'fun_facts' => ['Jongste senator ooit gekozen', 'Gebruikt trein dagelijks 36 jaar', 'Eerste katholieke president sinds JFK'],
+                'echtgenote' => 'Jill Tracy Jacobs Biden',
+                'familie_connecties' => 'Geen directe presidentiële familie',
+                'leeftijd_bij_aantreden' => 78,
+                'jaren_in_functie' => 3,
+                'is_huidig' => true
+            ]
+        ];
+    }
+    
+    private function groeperPresidentenPerPeriode($presidenten) {
+        $periodes = [
+            'Moderne Era (1993-heden)' => [],
+            'Late 20e Eeuw (1945-1993)' => [],
+            'Vroege 20e Eeuw (1901-1945)' => [],
+            'Founding Era (1789-1900)' => []
+        ];
+        
+        foreach ($presidenten as $president) {
+            $startJaar = date('Y', strtotime($president->periode_start));
+            
+            if ($startJaar >= 1993) {
+                $periodes['Moderne Era (1993-heden)'][] = $president;
+            } elseif ($startJaar >= 1945) {
+                $periodes['Late 20e Eeuw (1945-1993)'][] = $president;
+            } elseif ($startJaar >= 1901) {
+                $periodes['Vroege 20e Eeuw (1901-1945)'][] = $president;
+            } else {
+                $periodes['Founding Era (1789-1900)'][] = $president;
+            }
+        }
+        
+        return array_filter($periodes, function($presidenten) {
+            return !empty($presidenten);
+        });
+    }
+    
+    private function getFallbackFamilieDynastieen() {
+        return [
+            'Adams Familie' => [
+                (object)[
+                    'naam' => 'John Adams',
+                    'president_nummer' => 2,
+                    'familie_connecties' => 'Vader van John Quincy Adams'
+                ],
+                (object)[
+                    'naam' => 'John Quincy Adams', 
+                    'president_nummer' => 6,
+                    'familie_connecties' => 'Zoon van John Adams'
+                ]
+            ]
+        ];
+    }
+    
+    private function getFallbackPresidentenStatistieken() {
+        return (object)[
+            'totaal_presidenten' => 46,
+            'gemiddelde_leeftijd' => 55.4,
+            'jongste_leeftijd' => 42,
+            'oudste_leeftijd' => 78,
+            'gemiddelde_termijn_jaren' => 5.2,
+            'nog_levend' => 5,
+            'republican_presidenten' => 19,
+            'democratic_presidenten' => 16
+        ];
+    }
 }
 
 // Instantieer de controller
 $verkiezingenController = new AmerikaanseVerkiezingenController();
 
 // Bepaal de actie op basis van URL parameters
-if (isset($_GET['jaar'])) {
+if (isset($_GET['actie']) && $_GET['actie'] === 'presidenten') {
+    $verkiezingenController->presidenten();
+} elseif (isset($_GET['jaar'])) {
     $verkiezingenController->detail($_GET['jaar']);
 } else {
     $verkiezingenController->index();

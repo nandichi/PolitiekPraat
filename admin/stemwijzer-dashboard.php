@@ -401,6 +401,22 @@ require_once '../views/templates/header.php';
                     </div>
                 </a>
                 
+                <a href="presidenten-beheer.php" 
+                   class="group p-6 bg-gradient-to-br from-red-50 to-blue-50 border border-red-200 rounded-xl hover:from-red-100 hover:to-blue-100 transition-all duration-300 card-hover">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 bg-gradient-to-r from-red-500 to-blue-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2 2v0"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m-4-4l4-4 4 4"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-gray-800">🇺🇸 Presidenten Beheer</h3>
+                            <p class="text-sm text-gray-600">Amerikaanse presidenten database</p>
+                        </div>
+                    </div>
+                </a>
+                
                 <a href="api-test.php" 
                    class="group p-6 bg-gradient-to-br from-cyan-50 to-blue-50 border border-cyan-200 rounded-xl hover:from-cyan-100 hover:to-blue-100 transition-all duration-300 card-hover">
                     <div class="flex items-center space-x-4">
