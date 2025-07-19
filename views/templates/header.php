@@ -1,34 +1,217 @@
 <?php
-// Dynamic meta descriptions based on current page
+// Dynamic meta descriptions based on current page - Uitgebreide versie met alle pagina's
 $metaDescriptions = [
-    'home' => 'Ontdek het laatste politieke nieuws, blogs en analyses op Politiekpraat. Blijf op de hoogte van de Nederlandse politiek en neem deel aan het debat.',
-    'blogs' => 'Lees en deel politieke blogs over actuele thema\'s. Van ervaren schrijvers tot nieuwe stemmen in het politieke debat.',
-    'nieuws' => 'Het laatste politieke nieuws uit betrouwbare bronnen, zowel progressief als conservatief. Blijf geïnformeerd over de Nederlandse politiek.',
-    'stemwijzer' => 'Doe de stemwijzer 2025 en ontdek welke partij het beste bij jouw standpunten past. Objectief en onafhankelijk advies.',
-    'programma-vergelijker' => 'Vergelijk de verkiezingsprogramma\'s van Nederlandse politieke partijen over belangrijke thema\'s zoals klimaat, zorg en economie.',
-    'forum' => 'Discussieer mee over politieke onderwerpen in ons forum. Deel je mening en ga in gesprek met anderen over de Nederlandse politiek.',
-    'contact' => 'Neem contact op met PolitiekPlatform. We staan klaar om je vragen te beantwoorden en feedback te ontvangen.'
+    // Hoofdpagina's
+    'home' => 'Ontdek het laatste politieke nieuws, expert blogs en stemhulp op PolitiekPraat. Jouw platform voor Nederlandse politiek, verkiezingen en democratisch debat.',
+    'blogs' => 'Lees politieke blogs van experts en ervaren columnisten over actuele Nederlandse thema\'s. Deel je mening en ontdek nieuwe perspectieven op de politiek.',
+    'nieuws' => 'Het laatste Nederlandse politieke nieuws uit betrouwbare bronnen. Blijf dagelijks geïnformeerd over regering, oppositie en belangrijke ontwikkelingen.',
+    'stemwijzer' => 'Doe de interactieve stemwijzer 2025 en ontdek welke politieke partij het beste aansluit bij jouw standpunten. Objectief stemadvies en partijvergelijking.',
+    'programma-vergelijker' => 'Vergelijk verkiezingsprogramma\'s van alle Nederlandse partijen op thema\'s als klimaat, zorg, economie en onderwijs. Maak een geïnformeerde stemkeuze.',
+    'partijen' => 'Volledig overzicht van Nederlandse politieke partijen met hun standpunten, lijsttrekkers en verkiezingsprogramma\'s. Van VVD tot PvdA en alle anderen.',
+    'themas' => 'Verdiep je in actuele politieke thema\'s als klimaatbeleid, gezondheidszorg en economie. Analyses, standpunten en expert discussies over Nederlandse politiek.',
+    'forum' => 'Discussieer mee in het politieke forum van PolitiekPraat. Deel je mening over actuele onderwerpen en ga respectvol in debat met andere gebruikers.',
+    'contact' => 'Neem contact op met het PolitiekPraat team voor vragen, feedback of suggesties. Ons contactformulier zorgt voor snelle en persoonlijke ondersteuning.',
+    'over-mij' => 'Leer meer over PolitiekPraat en onze missie om Nederlandse politiek toegankelijk te maken. Ontdek wie we zijn en waarom we dit platform hebben opgericht.',
+    
+    // Authenticatie pagina's
+    'login' => 'Log in op je PolitiekPraat account om blogs te schrijven, deel te nemen aan discussies en je stemwijzer resultaten op te slaan. Veilig en eenvoudig inloggen.',
+    'register' => 'Maak gratis een account aan bij PolitiekPraat. Krijg toegang tot extra functies, schrijf blogs en doe mee aan politieke discussies in onze community.',
+    'logout' => 'Je bent succesvol uitgelogd van PolitiekPraat. Bedankt voor je bezoek en tot ziens. Log opnieuw in wanneer je toegang wilt tot je persoonlijke account.',
+    
+    // Profiel pagina's
+    'profile' => 'Bekijk en beheer je PolitiekPraat profiel. Zie je geschreven blogs, stemwijzer historie en persoonlijke instellingen. Pas je gegevens aan naar wens.',
+    'profile-edit' => 'Bewerk je PolitiekPraat profiel en persoonlijke gegevens. Wijzig je bio, profielfoto en account instellingen om je profiel up-to-date te houden.',
+    
+    // Dynamische pagina's - templates
+    'blog-detail' => 'Lees deze politieke blog met expert analyse over actuele Nederlandse thema\'s. Reageer, deel en discussieer mee over belangrijke ontwikkelingen.',
+    'partij-detail' => 'Ontdek alles over deze Nederlandse politieke partij: standpunten, verkiezingsprogramma, lijsttrekker en historie. Vergelijk met andere partijen.',
+    'thema-detail' => 'Verdiep je in dit specifieke politieke thema met analyses, standpunten van partijen en expert commentaar. Blijf geïnformeerd over actuele ontwikkelingen.',
+    'stemwijzer-resultaten' => 'Bekijk je persoonlijke stemwijzer resultaten en ontdek welke partijen het beste bij jouw politieke voorkeuren passen. Deel je resultaten met vrienden.',
+    
+    // Newsletter gerelateerd
+    'newsletter-subscribe' => 'Meld je aan voor de PolitiekPraat nieuwsbrief en ontvang wekelijks het belangrijkste politieke nieuws, analyses en nieuwe blogs direct in je mailbox.',
+    'newsletter-unsubscribe' => 'Uitschrijven van de PolitiekPraat nieuwsbrief. We vinden het jammer dat je gaat, maar respecteren je keuze. Je kunt je altijd weer aanmelden.',
+    'newsletter-unsubscribe-success' => 'Je bent succesvol uitgeschreven van de PolitiekPraat nieuwsbrief. We hopen je in de toekomst weer te mogen verwelkomen als actieve lezer en abonnee.',
+    'newsletter-unsubscribe-error' => 'Er is een fout opgetreden bij het uitschrijven van de PolitiekPraat nieuwsbrief. Probeer het opnieuw of neem contact met ons op voor persoonlijke hulp.',
+    
+    // Foutpagina's
+    '404' => 'De pagina die je zoekt bestaat niet of is verplaatst. Ga terug naar de homepage van PolitiekPraat en ontdek ons actuele politieke nieuws en blogs.',
+    
+    // Specifieke secties
+    'blogs-create' => 'Schrijf en publiceer je eigen politieke blog op PolitiekPraat. Deel je expertise, mening en analyses over Nederlandse politiek met onze actieve community.',
+    'blogs-manage' => 'Beheer je gepubliceerde blogs op PolitiekPraat. Bewerk, update of verwijder je politieke artikelen en bekijk uitgebreide statistieken over lezers en reacties.',
+    'forum-create' => 'Start een nieuwe discussie in het PolitiekPraat forum. Deel politieke onderwerpen die je bezighouden en nodig anderen uit voor een respectvol debat.',
+    'resultaten' => 'Ontdek je stemwijzer resultaten en zie welke Nederlandse politieke partijen het beste aansluiten bij jouw persoonlijke standpunten en waarden.'
 ];
 
-// Define keywords for each page
+// Define keywords for each page - Uitgebreide versie voor alle pagina's
 $metaKeywords = [
-    'home' => 'politiek, nieuws, blogs, Nederland, politieke partijen, democratie, verkiezingen, overheid, Nederlandse politiek, Haags nieuws, Politiek Praat',
-    'blogs' => 'politieke blogs, opinieartikelen, politieke analyses, Nederlandse politiek, politiek commentaar, verkiezingen, columnisten, Politiek Praat',
-    'nieuws' => 'politiek nieuws, Nederlands nieuws, Haags nieuws, regering, oppositie, kabinet, ministeries, Tweede Kamer, Politiek Praat',
-    'stemwijzer' => 'stemwijzer, politieke keuze, verkiezingen, stemhulp, kieskompas, partijkeuze, verkiezingen 2025, stemadvies, Politiek Praat',
-    'programma-vergelijker' => 'verkiezingsprogramma vergelijker, partijen vergelijken, politieke standpunten, programma\'s, Nederlandse partijen, verkiezingen, Politiek Praat',
-    'forum' => 'politiek forum, politieke discussie, debat, meningen, Nederlandse politiek, politieke standpunten, actuele discussies, Politiek Praat',
-    'contact' => 'contact, vragen, feedback, hulp, informatie, Politiek Praat, bereikbaarheid'
+    // Hoofdpagina's
+    'home' => 'politiek, nieuws, blogs, Nederland, politieke partijen, democratie, verkiezingen, overheid, Nederlandse politiek, Haags nieuws, PolitiekPraat',
+    'blogs' => 'politieke blogs, opinieartikelen, politieke analyses, Nederlandse politiek, politiek commentaar, verkiezingen, columnisten, PolitiekPraat',
+    'nieuws' => 'politiek nieuws, Nederlands nieuws, Haags nieuws, regering, oppositie, kabinet, ministeries, Tweede Kamer, PolitiekPraat',
+    'stemwijzer' => 'stemwijzer, stemwijzer 2025, politieke keuze, verkiezingen, stemhulp, kieskompas, partijkeuze, verkiezingen 2025, stemadvies, PolitiekPraat',
+    'programma-vergelijker' => 'verkiezingsprogramma vergelijker, partijen vergelijken, politieke standpunten, programma\'s, Nederlandse partijen, verkiezingen, PolitiekPraat',
+    'partijen' => 'politieke partijen Nederland, VVD, PvdA, VVD, CDA, D66, PVV, GroenLinks, partijoverzicht, lijsttrekkers, PolitiekPraat',
+    'themas' => 'politieke thema\'s, klimaat, zorg, economie, onderwijs, immigratie, standpunten, analyses, Nederlandse politiek, PolitiekPraat',
+    'forum' => 'politiek forum, politieke discussie, debat, meningen, Nederlandse politiek, politieke standpunten, actuele discussies, PolitiekPraat',
+    'contact' => 'contact, vragen, feedback, hulp, informatie, PolitiekPraat, bereikbaarheid, klantenservice',
+    'over-mij' => 'over ons, missie, visie, team, PolitiekPraat, Nederlandse politiek, platform, democratie, transparantie',
+    
+    // Authenticatie pagina's
+    'login' => 'inloggen, account, gebruiker, aanmelden, PolitiekPraat, toegang, profiel, veilig',
+    'register' => 'registreren, account aanmaken, gratis, lid worden, PolitiekPraat, community, politiek',
+    'logout' => 'uitloggen, afmelden, account, veiligheid, PolitiekPraat, sessie',
+    
+    // Profiel pagina's
+    'profile' => 'profiel, account, gebruiker, blogs, stemwijzer, geschiedenis, instellingen, PolitiekPraat',
+    'profile-edit' => 'profiel bewerken, account wijzigen, gegevens, instellingen, privacy, PolitiekPraat',
+    
+    // Dynamische pagina's - templates
+    'blog-detail' => 'politieke blog, artikel, analyse, standpunt, mening, Nederlandse politiek, commentaar, PolitiekPraat',
+    'partij-detail' => 'politieke partij, standpunten, verkiezingsprogramma, lijsttrekker, Nederlandse politiek, partijinformatie, PolitiekPraat',
+    'thema-detail' => 'politiek thema, standpunten, analyse, klimaat, zorg, economie, Nederlandse politiek, PolitiekPraat',
+    'stemwijzer-resultaten' => 'stemwijzer resultaten, politieke match, partijadvies, verkiezingen, stemkeuze, PolitiekPraat',
+    
+    // Newsletter gerelateerd
+    'newsletter-subscribe' => 'nieuwsbrief, aanmelden, politiek nieuws, updates, PolitiekPraat, email',
+    'newsletter-unsubscribe' => 'nieuwsbrief afmelden, uitschrijven, PolitiekPraat, email',
+    'newsletter-unsubscribe-success' => 'uitgeschreven, nieuwsbrief, succesvol, PolitiekPraat',
+    'newsletter-unsubscribe-error' => 'fout, probleem, nieuwsbrief, uitschrijven, PolitiekPraat',
+    
+    // Foutpagina's
+    '404' => 'pagina niet gevonden, fout, 404, PolitiekPraat, homepage, navigatie',
+    
+    // Specifieke secties
+    'blogs-create' => 'blog schrijven, artikel publiceren, politieke mening, PolitiekPraat, auteur, content',
+    'blogs-manage' => 'blogs beheren, artikelen bewerken, schrijver, PolitiekPraat, content management',
+    'forum-create' => 'discussie starten, forum, onderwerp, politiek debat, PolitiekPraat, community',
+    'resultaten' => 'stemwijzer resultaten, politieke match, partijen, verkiezingen, stemadvies, PolitiekPraat'
 ];
 
-// Get current page from URL
-$currentPage = basename($_SERVER['PHP_SELF'], '.php');
+// Get current page from URL - Verbeterde detectie voor alle pagina types
+$requestUri = $_SERVER['REQUEST_URI'];
+$requestPath = parse_url($requestUri, PHP_URL_PATH);
+$pathSegments = explode('/', trim($requestPath, '/'));
+
+// Bepaal de huidige pagina op basis van URL structuur
+$currentPage = 'home'; // default
+
+if (empty($pathSegments[0])) {
+    $currentPage = 'home';
+} else {
+    switch ($pathSegments[0]) {
+        case 'blogs':
+            if (isset($pathSegments[1])) {
+                if ($pathSegments[1] === 'create') {
+                    $currentPage = 'blogs-create';
+                } elseif ($pathSegments[1] === 'manage') {
+                    $currentPage = 'blogs-manage';
+                } else {
+                    $currentPage = 'blog-detail';
+                }
+            } else {
+                $currentPage = 'blogs';
+            }
+            break;
+        case 'partijen':
+            if (isset($pathSegments[1])) {
+                $currentPage = 'partij-detail';
+            } else {
+                $currentPage = 'partijen';
+            }
+            break;
+        case 'thema':
+            $currentPage = 'thema-detail';
+            break;
+        case 'forum':
+            if (isset($pathSegments[1]) && $pathSegments[1] === 'create') {
+                $currentPage = 'forum-create';
+            } else {
+                $currentPage = 'forum';
+            }
+            break;
+        case 'profile':
+            if (isset($pathSegments[1]) && $pathSegments[1] === 'edit') {
+                $currentPage = 'profile-edit';
+            } else {
+                $currentPage = 'profile';
+            }
+            break;
+        case 'resultaten':
+            $currentPage = 'resultaten';
+            break;
+        case 'newsletter':
+            if (isset($pathSegments[1])) {
+                if ($pathSegments[1] === 'unsubscribe-success') {
+                    $currentPage = 'newsletter-unsubscribe-success';
+                } elseif ($pathSegments[1] === 'unsubscribe-error') {
+                    $currentPage = 'newsletter-unsubscribe-error';
+                } elseif ($pathSegments[1] === 'unsubscribe') {
+                    $currentPage = 'newsletter-unsubscribe';
+                } else {
+                    $currentPage = 'newsletter-subscribe';
+                }
+            } else {
+                $currentPage = 'newsletter-subscribe';
+            }
+            break;
+        default:
+            // Voor alle andere pagina's, gebruik de eerste segment als pagina naam
+            $currentPage = $pathSegments[0];
+            break;
+    }
+}
+
+// Fallback voor pagina's die mogelijk via basename worden gedetecteerd
+if (!isset($metaDescriptions[$currentPage])) {
+    $fileBasedPage = basename($_SERVER['PHP_SELF'], '.php');
+    if (isset($metaDescriptions[$fileBasedPage])) {
+        $currentPage = $fileBasedPage;
+    }
+}
+
 $metaDescription = $metaDescriptions[$currentPage] ?? $metaDescriptions['home'];
 $metaKeyword = $metaKeywords[$currentPage] ?? $metaKeywords['home'];
 
+// Functie om dynamische meta descriptions te genereren voor specifieke content
+function generateDynamicMetaDescription($type, $data, $fallback) {
+    switch ($type) {
+        case 'blog-detail':
+            if (isset($data['title'], $data['content'])) {
+                $excerpt = strip_tags($data['content']);
+                $excerpt = substr($excerpt, 0, 120);
+                $excerpt = substr($excerpt, 0, strrpos($excerpt, ' '));
+                return $excerpt . ' - Lees meer op PolitiekPraat.';
+            }
+            break;
+        case 'partij-detail':
+            if (isset($data['party_name'])) {
+                return "Ontdek de standpunten, verkiezingsprogramma en lijsttrekker van {$data['party_name']}. Vergelijk met andere Nederlandse politieke partijen op PolitiekPraat.";
+            }
+            break;
+        case 'thema-detail':
+            if (isset($data['theme_name'])) {
+                return "Verdiep je in het politieke thema {$data['theme_name']}. Bekijk standpunten van alle Nederlandse partijen en expert analyses op PolitiekPraat.";
+            }
+            break;
+    }
+    return $fallback;
+}
+
 // Controleer of we specifieke meta data hebben voor deze pagina (bijv. voor blogs)
-$metaTitle = isset($data['title']) ? $data['title'] : (SITENAME . ' - Politiek voor iedereen');
-$metaDescription = isset($data['description']) ? $data['description'] : $metaDescription;
+$metaTitle = isset($data['title']) ? $data['title'] . ' - ' . SITENAME : (SITENAME . ' - Politiek voor iedereen');
+
+// Genereer dynamische meta description indien mogelijk
+if (isset($data['description'])) {
+    $metaDescription = $data['description'];
+} elseif (in_array($currentPage, ['blog-detail', 'partij-detail', 'thema-detail']) && isset($data)) {
+    $metaDescription = generateDynamicMetaDescription($currentPage, $data, $metaDescription);
+} else {
+    // Gebruik de standaard meta description voor de pagina
+    $metaDescription = $metaDescription;
+}
+
 $metaKeyword = isset($data['keywords']) ? $data['keywords'] : $metaKeyword;
 $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og-image.jpg');
 ?>
