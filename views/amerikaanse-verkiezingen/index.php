@@ -105,7 +105,7 @@
     <section class="py-16 md:py-20 bg-gradient-to-b from-white to-slate-50 relative" id="verkiezingen-overzicht">
         <!-- White House Background -->
         <div class="absolute inset-0 opacity-5">
-            <div class="w-full h-full bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1571079570759-8cdf96b1fad1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');"></div>
+            <div class="w-full h-full bg-cover bg-center" style="background-image: url('https://media.architecturaldigest.com/photos/6559735fb796d428bef00d25/3:2/w_5568,h_3712,c_limit/GettyImages-1731443210.jpg');"></div>
         </div>
         
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
