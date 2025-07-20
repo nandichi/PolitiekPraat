@@ -114,6 +114,15 @@ $router->add('amerikaanse-verkiezingen/([0-9]+)', function($jaar) {
     $_GET['jaar'] = $jaar;
     require_once 'controllers/amerikaanse-verkiezingen.php';
 });
+$router->add('nederlandse-verkiezingen', 'controllers/nederlandse-verkiezingen.php');
+$router->add('nederlandse-verkiezingen/ministers-presidenten', function() {
+    $_GET['actie'] = 'ministers-presidenten';
+    require_once 'controllers/nederlandse-verkiezingen.php';
+});
+$router->add('nederlandse-verkiezingen/([0-9]+)', function($jaar) {
+    $_GET['jaar'] = $jaar;
+    require_once 'controllers/nederlandse-verkiezingen.php';
+});
 
 // Get the requested URL
 $request = $_SERVER['REQUEST_URI'];

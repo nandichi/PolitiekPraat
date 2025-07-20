@@ -44,7 +44,10 @@ $metaDescriptions = [
     'resultaten' => 'Ontdek je stemwijzer resultaten en zie welke Nederlandse politieke partijen het beste aansluiten bij jouw persoonlijke standpunten en waarden.',
     
     // Amerikaanse verkiezingen
-    'amerikaanse-verkiezingen' => 'Ontdek de complete geschiedenis van Amerikaanse presidentsverkiezingen van 1789 tot heden. Van George Washington tot Joe Biden - alle verkiezingen, statistieken en presidentiële races in detail.'
+    'amerikaanse-verkiezingen' => 'Ontdek de complete geschiedenis van Amerikaanse presidentsverkiezingen van 1789 tot heden. Van George Washington tot Joe Biden - alle verkiezingen, statistieken en presidentiële races in detail.',
+    
+    // Nederlandse verkiezingen
+    'nederlandse-verkiezingen' => 'Verken 175 jaar Nederlandse democratie en parlementaire geschiedenis. Van Thorbeckiaanse grondwet tot moderne coalitiekabinetten - alle verkiezingen, ministers-presidenten en politieke ontwikkelingen.'
 ];
 
 // Define keywords for each page - Uitgebreide versie voor alle pagina's
@@ -92,7 +95,10 @@ $metaKeywords = [
     'resultaten' => 'stemwijzer resultaten, politieke match, partijen, verkiezingen, stemadvies, PolitiekPraat',
     
     // Amerikaanse verkiezingen
-    'amerikaanse-verkiezingen' => 'Amerikaanse verkiezingen, presidentsverkiezingen, verkiezingsgeschiedenis, George Washington, Joe Biden, kiesmannen, Democrats, Republicans, Electoral College, presidenten, verkiezingen geschiedenis'
+    'amerikaanse-verkiezingen' => 'Amerikaanse verkiezingen, presidentsverkiezingen, verkiezingsgeschiedenis, George Washington, Joe Biden, kiesmannen, Democrats, Republicans, Electoral College, presidenten, verkiezingen geschiedenis',
+    
+    // Nederlandse verkiezingen
+    'nederlandse-verkiezingen' => 'Nederlandse verkiezingen, Tweede Kamer verkiezingen, Nederlandse democratie, ministers-presidenten, politieke geschiedenis, Thorbeckiaanse grondwet, coalitiekabinetten, parlementaire democratie, Nederlandse politiek, verkiezingsgeschiedenis'
 ];
 
 // Get current page from URL - Verbeterde detectie voor alle pagina types
@@ -149,6 +155,9 @@ if (empty($pathSegments[0])) {
             break;
         case 'amerikaanse-verkiezingen':
             $currentPage = 'amerikaanse-verkiezingen';
+            break;
+        case 'nederlandse-verkiezingen':
+            $currentPage = 'nederlandse-verkiezingen';
             break;
         case 'newsletter':
             if (isset($pathSegments[1])) {
@@ -226,6 +235,8 @@ $metaKeyword = isset($data['keywords']) ? $data['keywords'] : $metaKeyword;
 // Specifieke meta images voor bepaalde pagina's
 if ($currentPage === 'amerikaanse-verkiezingen') {
     $metaImage = 'https://ichef.bbci.co.uk/images/ic/640x360/p0jzn3xt.jpg';
+} elseif ($currentPage === 'nederlandse-verkiezingen') {
+    $metaImage = 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Den_Haag_Binnenhof_Hofvijver.jpg/640px-Den_Haag_Binnenhof_Hofvijver.jpg';
 } else {
     $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og-image.jpg');
 }
@@ -1185,6 +1196,23 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
                                 </div>
                                 <span class="inline-flex items-center px-2 py-1 text-xs font-semibold bg-primary text-white rounded-full">USA</span>
                             </a>
+                            
+                            <!-- Nederlandse Verkiezingen - Consistent met andere items -->
+                            <a href="<?php echo URLROOT; ?>/nederlandse-verkiezingen" 
+                            class="flex items-center justify-between px-3 py-3 rounded-lg hover:bg-orange-500/5 transition-all duration-300 group/item">
+                                <div class="flex items-center">
+                                    <div class="w-10 h-10 bg-orange-500/10 rounded-xl flex items-center justify-center mr-3 group-hover/item:bg-orange-500/20 transition-colors duration-300">
+                                        <svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-semibold text-gray-900">Nederlandse Verkiezingen</div>
+                                        <div class="text-xs text-gray-500">175 jaar democratie</div>
+                                    </div>
+                                </div>
+                                <span class="inline-flex items-center px-2 py-1 text-xs font-semibold bg-orange-500 text-white rounded-full">NL</span>
+                            </a>
                         </div>
                     </div>
 
@@ -1636,6 +1664,26 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
                             <span class="ml-2 inline-flex items-center px-2 py-0.5 text-xs font-medium 
                                         bg-primary text-white rounded-full">
                                 USA
+                            </span>
+                        </span>
+                    </a>
+
+                    <!-- Nederlandse Verkiezingen - Mobile consistent met desktop -->
+                    <a href="<?php echo URLROOT; ?>/nederlandse-verkiezingen" 
+                       class="flex items-center text-gray-700 hover:text-orange-600 p-3 rounded-lg transition-all duration-300 
+                              hover:bg-orange-500/5 group">
+                        <div class="mr-3 p-2 bg-orange-500/10 rounded-lg transition-all duration-300 
+                                    group-hover:bg-orange-500/20 group-hover:scale-110">
+                            <svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                      d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                            </svg>
+                        </div>
+                        <span class="font-medium flex items-center">
+                            Nederlandse Verkiezingen
+                            <span class="ml-2 inline-flex items-center px-2 py-0.5 text-xs font-medium 
+                                        bg-orange-500 text-white rounded-full">
+                                NL
                             </span>
                         </span>
                     </a>

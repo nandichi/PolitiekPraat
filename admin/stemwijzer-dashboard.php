@@ -447,6 +447,22 @@ require_once '../views/templates/header.php';
                         </div>
                     </div>
                 </a>
+                
+                <a href="../scripts/run_nederlandse_verkiezingen_migration.php" 
+                   class="group p-6 bg-gradient-to-br from-orange-50 to-yellow-50 border border-orange-200 rounded-xl hover:from-orange-100 hover:to-yellow-100 transition-all duration-300 card-hover">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2 2v0"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 9l3 3 3-3"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-gray-800">🇳🇱 Nederlandse Verkiezingen</h3>
+                            <p class="text-sm text-gray-600">Setup Nederlandse verkiezingen database</p>
+                        </div>
+                    </div>
+                </a>
             </div>
         </div>
     </div>
