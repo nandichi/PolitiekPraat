@@ -241,6 +241,23 @@ $latest_blogs = $db->resultSet();
 $db->query("SELECT * FROM amerikaanse_verkiezingen ORDER BY jaar DESC LIMIT 4");
 $amerikaanse_verkiezingen = $db->resultSet();
 
+// Haal Nederlandse verkiezingen data op (laatste 4 verkiezingen)
+$db->query("SELECT * FROM nederlandse_verkiezingen ORDER BY jaar DESC LIMIT 4");
+$nederlandse_verkiezingen = $db->resultSet();
+
+// Parse Nederlandse verkiezingen data
+foreach ($nederlandse_verkiezingen as $verkiezing) {
+    // Parse partij uitslagen voor grootste partij info
+    if (!empty($verkiezing->partij_uitslagen)) {
+        $partijUitslagen = json_decode($verkiezing->partij_uitslagen);
+        if ($partijUitslagen && count($partijUitslagen) > 0) {
+            $verkiezing->grootste_partij = $partijUitslagen[0]->partij ?? null;
+            $verkiezing->grootste_partij_zetels = $partijUitslagen[0]->zetels ?? null;
+            $verkiezing->grootste_partij_percentage = $partijUitslagen[0]->percentage ?? null;
+        }
+    }
+}
+
 // Haal de populairste blogs op voor de hero sectie
 $db->query("SELECT blogs.*, users.username as author_name, users.profile_photo 
            FROM blogs 
@@ -1329,6 +1346,250 @@ require_once 'views/templates/header.php';
                         <div class="absolute -top-8 -left-8 w-20 h-20 bg-gradient-to-br from-blue-400/20 to-primary/20 rounded-2xl backdrop-blur-sm rotate-12 animate-float opacity-60"></div>
                         <div class="absolute -bottom-8 -right-8 w-16 h-16 bg-gradient-to-br from-red-400/20 to-secondary/20 rounded-2xl backdrop-blur-sm -rotate-12 animate-float opacity-60" style="animation-delay: -2s;"></div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+     <!-- Nederlandse Verkiezingen Section -->
+    <section class="py-32 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-700 relative overflow-hidden">
+        <!-- Nederlandse achtergrond decoraties -->
+        <div class="absolute inset-0">
+            <!-- Nederlandse kroon pattern -->
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTUgMTZMMTIgMTJoNS41bC0uNS00aDRMMTEgMTJoNmwtMiA0em03LjUtOEwxMiA0bC41IDR6IiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMDUpIi8+PC9zdmc+')] opacity-30"></div>
+            
+            <!-- Nederlandse accent stripes -->
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-500/60 via-transparent to-blue-500/60 opacity-40"></div>
+            <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500/60 via-transparent to-orange-500/60 opacity-40"></div>
+            
+            <!-- Floating elements met betere contrast -->
+            <div class="absolute top-20 left-10 w-32 h-32 bg-orange-500/20 rounded-full blur-2xl animate-float"></div>
+            <div class="absolute top-40 right-20 w-24 h-24 bg-blue-500/20 rounded-full blur-xl animate-float-delayed"></div>
+            <div class="absolute bottom-32 left-1/4 w-40 h-40 bg-slate-600/30 rounded-full blur-3xl animate-pulse"></div>
+        </div>
+
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <!-- Header sectie -->
+            <div class="text-center mb-20 relative" data-aos="fade-up" data-aos-once="true">
+                <!-- Achtergrond tekst -->
+                <div class="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
+                    <span class="text-[60px] sm:text-[80px] md:text-[100px] lg:text-[120px] xl:text-[160px] font-black text-white/10 select-none tracking-wider">NL</span>
+                </div>
+                
+                <!-- Main content -->
+                <div class="relative z-10 space-y-8">
+                    <!-- Nederlandse kroon decoratie -->
+                    <div class="flex justify-center mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-br from-orange-400 via-orange-500 to-orange-600 rounded-full flex items-center justify-center shadow-2xl border-4 border-white/20">
+                            <svg class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M5 16L3 12h5.5l-.5-4h4L11 12h6l-2 4zm7.5-8L12 4l.5 4z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    <!-- Hoofdtitel -->
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black leading-tight tracking-tight">
+                        <span class="bg-gradient-to-r from-orange-400 via-orange-300 to-blue-400 bg-clip-text text-transparent animate-gradient bg-size-200">
+                            Nederlandse Verkiezingen
+                        </span>
+                    </h2>
+                    
+                    <!-- Decoratieve lijn systeem met Nederlandse kleuren -->
+                    <div class="flex items-center justify-center space-x-4 sm:space-x-6 mt-8">
+                        <div class="w-12 sm:w-16 h-0.5 bg-gradient-to-r from-transparent via-orange-400 to-orange-500"></div>
+                        <div class="relative">
+                            <div class="w-3 sm:w-4 h-3 sm:h-4 bg-orange-400 rounded-full animate-pulse"></div>
+                            <div class="absolute inset-0 w-3 sm:w-4 h-3 sm:h-4 bg-orange-400 rounded-full animate-ping opacity-30"></div>
+                        </div>
+                        <div class="w-20 sm:w-32 h-0.5 bg-gradient-to-r from-orange-500 via-slate-300 to-blue-500"></div>
+                        <div class="relative">
+                            <div class="w-3 sm:w-4 h-3 sm:h-4 bg-blue-400 rounded-full animate-pulse animation-delay-300"></div>
+                            <div class="absolute inset-0 w-3 sm:w-4 h-3 sm:h-4 bg-blue-400 rounded-full animate-ping opacity-30 animation-delay-300"></div>
+                        </div>
+                        <div class="w-12 sm:w-16 h-0.5 bg-gradient-to-r from-blue-500 via-blue-400 to-transparent"></div>
+                    </div>
+                    
+                    <!-- Subtitel -->
+                    <p class="text-base sm:text-lg md:text-xl lg:text-2xl text-slate-200 max-w-4xl mx-auto leading-relaxed font-light">
+                        Ontdek 175 jaar <span class="font-semibold text-orange-300">Nederlandse democratie</span> en hun <span class="font-semibold text-blue-300">invloed</span> op de samenleving
+                    </p>
+                </div>
+            </div>
+
+            <!-- Nederlandse verkiezingen timeline -->
+            <?php if (!empty($nederlandse_verkiezingen)): ?>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8" data-aos="fade-up" data-aos-delay="200">
+                <?php foreach($nederlandse_verkiezingen as $index => $verkiezing): ?>
+                <div class="group relative bg-slate-800/80 backdrop-blur-sm rounded-3xl overflow-hidden border border-slate-600/40 hover:border-orange-400/60 transition-all duration-700 hover:transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-orange-500/20" 
+                     data-aos="fade-up" 
+                     data-aos-delay="<?php echo 300 + ($index * 150); ?>">
+                    
+                    <!-- Top accent met Nederlandse kleuren -->
+                    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-orange-500 via-orange-300 to-blue-500"></div>
+                    
+                    <!-- Nederlandse vlag corner -->
+                    <div class="absolute top-3 right-3 w-8 h-6 rounded-sm opacity-40 group-hover:opacity-70 transition-opacity duration-300">
+                        <div class="w-full h-2 bg-orange-500"></div>
+                        <div class="w-full h-2 bg-slate-200"></div>
+                        <div class="w-full h-2 bg-blue-600"></div>
+                    </div>
+                    
+                    <!-- Content -->
+                    <div class="p-8">
+                        <!-- Jaar en grootste partij -->
+                        <div class="flex items-center space-x-4 mb-6">
+                            <!-- Jaar badge -->
+                            <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-orange-500 to-blue-600 rounded-full shadow-xl">
+                                <span class="text-white font-black text-lg"><?php echo substr($verkiezing->jaar, -2); ?></span>
+                            </div>
+                            
+                            <!-- Verkiezing info -->
+                            <div class="flex-1">
+                                <div class="inline-flex items-center px-3 py-1 bg-slate-700/60 rounded-full border border-slate-600/40">
+                                    <span class="text-slate-100 font-bold text-sm"><?php echo $verkiezing->jaar; ?></span>
+                                </div>
+                                <div class="text-xs text-orange-300 mt-1">Tweede Kamerverkiezing</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Grootste partij info -->
+                        <div class="space-y-4 mb-6">
+                            <h3 class="text-xl font-bold text-slate-100 line-clamp-2">
+                                <?php echo htmlspecialchars($verkiezing->grootste_partij ?? 'Onbekend'); ?>
+                            </h3>
+                            
+                            <div class="flex items-center space-x-2">
+                                <div class="w-3 h-3 bg-orange-400 rounded-full"></div>
+                                <span class="text-slate-300 text-sm font-medium">
+                                    Grootste partij
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <!-- Statistics -->
+                        <div class="space-y-3">
+                            <!-- Zetels -->
+                            <div class="flex justify-between items-center">
+                                <span class="text-slate-400 text-sm">Zetels</span>
+                                <span class="text-slate-100 font-bold"><?php echo $verkiezing->grootste_partij_zetels ?? 'N/A'; ?>/150</span>
+                            </div>
+                            
+                            <!-- Percentage -->
+                            <div class="flex justify-between items-center">
+                                <span class="text-slate-400 text-sm">Stemmen</span>
+                                <span class="text-slate-100 font-bold"><?php echo $verkiezing->grootste_partij_percentage ? number_format($verkiezing->grootste_partij_percentage, 1) . '%' : 'N/A'; ?></span>
+                            </div>
+                            
+                            <!-- Minister-president -->
+                            <div class="flex justify-between items-center">
+                                <span class="text-slate-400 text-sm">Minister-president</span>
+                                <span class="text-slate-100 font-bold text-xs"><?php echo htmlspecialchars($verkiezing->minister_president ?? 'N/A'); ?></span>
+                            </div>
+                            
+                            <!-- Opkomst -->
+                            <div class="flex justify-between items-center">
+                                <span class="text-slate-400 text-sm">Opkomst</span>
+                                <span class="text-slate-100 font-bold"><?php echo $verkiezing->opkomst_percentage ? number_format($verkiezing->opkomst_percentage, 1) . '%' : 'N/A'; ?></span>
+                            </div>
+                            
+                            <!-- Progress bar voor zetels -->
+                            <?php if ($verkiezing->grootste_partij_zetels): ?>
+                            <div class="mt-4">
+                                <div class="w-full bg-slate-700/60 rounded-full h-2">
+                                    <div class="bg-gradient-to-r from-orange-400 to-orange-500 h-2 rounded-full transition-all duration-1000" 
+                                         style="width: <?php echo ($verkiezing->grootste_partij_zetels / 150) * 100; ?>%">
+                                    </div>
+                                </div>
+                                <div class="flex justify-between text-xs text-slate-400 mt-1">
+                                    <span>0</span>
+                                    <span>150</span>
+                                </div>
+                            </div>
+                            <?php endif; ?>
+                        </div>
+                        
+                        <!-- Hover overlay -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-orange-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+            </div>
+            <?php else: ?>
+            <!-- Placeholder als er geen data is -->
+            <div class="text-center py-16">
+                <div class="inline-flex items-center justify-center w-24 h-24 bg-slate-700/60 rounded-full mb-6 border border-slate-600/40">
+                    <svg class="w-12 h-12 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold text-slate-100 mb-4">Nederlandse verkiezingsdata wordt geladen</h3>
+                <p class="text-slate-400">Nederlandse verkiezingsgegevens zijn momenteel niet beschikbaar.</p>
+            </div>
+            <?php endif; ?>
+
+            <!-- Nederlandse CTA sectie met twee buttons -->
+            <div class="text-center mt-20" data-aos="fade-up" data-aos-delay="600">
+                <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center">
+                    <!-- Nederlandse verkiezingen button -->
+                    <a href="<?php echo URLROOT; ?>/nederlandse-verkiezingen" 
+                       class="relative inline-flex items-center px-8 py-4 bg-gradient-to-r from-orange-500 via-orange-400 to-orange-500 text-white font-bold text-lg rounded-2xl transition-all duration-500 transform hover:scale-105 shadow-2xl hover:shadow-orange-500/25 group overflow-hidden">
+                        
+                        <!-- Nederlandse kroon icon -->
+                        <svg class="w-6 h-6 mr-3" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M5 16L3 12h5.5l-.5-4h4L11 12h6l-2 4zm7.5-8L12 4l.5 4z"/>
+                        </svg>
+                        
+                        <!-- Button content -->
+                        <div class="relative z-10 flex items-center">
+                            <span class="mr-3">Nederlandse verkiezingen</span>
+                            <svg class="w-5 h-5 transform transition-transform duration-500 group-hover:translate-x-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                        </div>
+                        
+                        <!-- Shimmer effect -->
+                        <div class="absolute inset-0 -top-full bg-gradient-to-b from-transparent via-white/30 to-transparent transform skew-y-12 group-hover:animate-shimmer"></div>
+                    </a>
+                    
+                    <!-- Ministers-presidenten button -->
+                    <a href="<?php echo URLROOT; ?>/nederlandse-verkiezingen/ministers-presidenten" 
+                       class="relative inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 via-blue-500 to-blue-600 text-white font-bold text-lg rounded-2xl transition-all duration-500 transform hover:scale-105 shadow-2xl hover:shadow-blue-500/25 group overflow-hidden">
+                        
+                        <!-- Person icon -->
+                        <svg class="w-6 h-6 mr-3" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                        </svg>
+                        
+                        <!-- Button content -->
+                        <div class="relative z-10 flex items-center">
+                            <span class="mr-3">Ministers-presidenten</span>
+                            <svg class="w-5 h-5 transform transition-transform duration-500 group-hover:translate-x-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                        </div>
+                        
+                        <!-- Shimmer effect -->
+                        <div class="absolute inset-0 -top-full bg-gradient-to-b from-transparent via-white/30 to-transparent transform skew-y-12 group-hover:animate-shimmer"></div>
+                    </a>
+                </div>
+                
+                <!-- Supporting stats -->
+                <?php if (!empty($nederlandse_verkiezingen)): ?>
+                <p class="mt-6 text-slate-300 text-sm">
+                    <span class="font-semibold text-slate-100"><?php echo count($nederlandse_verkiezingen); ?></span> verkiezingen weergegeven • 
+                    <span class="font-semibold text-slate-100">Sinds 1848</span> beschikbaar
+                </p>
+                <?php endif; ?>
+                
+                <!-- Nederlandse decorative elements -->
+                <div class="flex items-center justify-center mt-6">
+                    <div class="flex-1 h-px bg-gradient-to-r from-transparent via-orange-400 to-transparent"></div>
+                    <div class="mx-4 flex space-x-1">
+                        <div class="w-2 h-2 bg-orange-500 rounded-full"></div>
+                        <div class="w-2 h-2 bg-white rounded-full"></div>
+                        <div class="w-2 h-2 bg-blue-600 rounded-full"></div>
+                    </div>
+                    <div class="flex-1 h-px bg-gradient-to-r from-transparent via-blue-400 to-transparent"></div>
                 </div>
             </div>
         </div>
