@@ -7,7 +7,7 @@
         <div class="absolute inset-0">
             <!-- BBC Election Data Visualization Background -->
             <div class="absolute inset-0 bg-cover bg-center bg-no-repeat" 
-                 style="background-image: url('https://ichef.bbci.co.uk/ace/standard/976/cpsprodpb/9802/production/_133541983_fbg2ani_.png');">
+                 style="background-image: url('https://ichef.bbci.co.uk/images/ic/640x360/p0jzn3xt.jpg');">
             </div>
             
             <!-- Dark Gradient Overlay for Better Text Readability -->
@@ -112,6 +112,8 @@
         </div>
     </section>
 
+    
+
     <!-- American Landmarks Introduction Section -->
     <section class="py-16 md:py-20 bg-gradient-to-b from-white to-slate-50 relative" id="verkiezingen-overzicht">
         <!-- White House Background -->
@@ -170,6 +172,191 @@
                         <h3 class="text-xl font-bold text-gray-900 mb-2">Digitale Tijd</h3>
                         <p class="text-gray-600 text-sm">1960-heden</p>
                         <p class="text-gray-500 text-sm mt-2">TV-debatten, internet campagnes en sociale media</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+      <!-- Presidents Gallery Preview Section -->
+    <section class="py-16 md:py-20 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 relative overflow-hidden">
+        <!-- Presidential backdrop -->
+        <div class="absolute inset-0 opacity-10">
+            <div class="w-full h-full bg-cover bg-center" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Mount_Rushmore_detail_view_%28100MP%29.jpg/1200px-Mount_Rushmore_detail_view_%28100MP%29.jpg');"></div>
+        </div>
+        
+        <!-- American presidential seal pattern -->
+        <div class="absolute top-0 left-0 w-96 h-96 opacity-5 -translate-x-48 -translate-y-48">
+            <svg viewBox="0 0 200 200" class="w-full h-full">
+                <circle cx="100" cy="100" r="90" fill="none" stroke="currentColor" stroke-width="2"/>
+                <circle cx="100" cy="100" r="60" fill="none" stroke="currentColor" stroke-width="1"/>
+                <circle cx="100" cy="100" r="30" fill="none" stroke="currentColor" stroke-width="1"/>
+            </svg>
+        </div>
+        
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="max-w-7xl mx-auto">
+                <!-- Section Header -->
+                <div class="text-center mb-12 md:mb-16">
+                    <div class="inline-flex items-center px-6 py-3 bg-white/20 backdrop-blur-sm rounded-full mb-6">
+                        <svg class="w-6 h-6 text-white mr-3" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                        </svg>
+                        <span class="text-white font-semibold">Presidents Gallery</span>
+                    </div>
+                    <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
+                        Ontmoet de <span class="bg-gradient-to-r from-yellow-300 via-white to-yellow-300 bg-clip-text text-transparent">46 presidenten</span>
+                    </h2>
+                    <p class="text-lg md:text-xl text-blue-100 leading-relaxed max-w-4xl mx-auto">
+                        Van George Washington, de vader van de natie, tot Joe Biden, de huidige president. 
+                        Ontdek de leiders die Amerika vormden door meer dan twee eeuwen geschiedenis.
+                    </p>
+                </div>
+
+                <!-- Featured Presidents Preview -->
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-6 mb-12">
+                    <!-- Washington -->
+                    <div class="group text-center">
+                        <div class="relative mb-3">
+                            <div class="w-20 h-20 md:w-24 md:h-24 mx-auto rounded-full bg-gradient-to-br from-amber-400 to-yellow-500 p-1 group-hover:scale-110 transition-all duration-300">
+                                <div class="w-full h-full rounded-full bg-cover bg-center" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Gilbert_Stuart_Williamstown_Portrait_of_George_Washington.jpg/256px-Gilbert_Stuart_Williamstown_Portrait_of_George_Washington.jpg');"></div>
+                            </div>
+                            <div class="absolute -bottom-1 left-1/2 transform -translate-x-1/2 bg-white text-gray-900 text-xs font-bold px-2 py-1 rounded-full">1</div>
+                        </div>
+                        <div class="text-white text-sm font-medium">G. Washington</div>
+                        <div class="text-blue-200 text-xs">1789-1797</div>
+                    </div>
+
+                    <!-- Lincoln -->
+                    <div class="group text-center">
+                        <div class="relative mb-3">
+                            <div class="w-20 h-20 md:w-24 md:h-24 mx-auto rounded-full bg-gradient-to-br from-amber-400 to-yellow-500 p-1 group-hover:scale-110 transition-all duration-300">
+                                <div class="w-full h-full rounded-full bg-cover bg-center" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Abraham_Lincoln_O-77_matte_collodion_print.jpg/256px-Abraham_Lincoln_O-77_matte_collodion_print.jpg');"></div>
+                            </div>
+                            <div class="absolute -bottom-1 left-1/2 transform -translate-x-1/2 bg-white text-gray-900 text-xs font-bold px-2 py-1 rounded-full">16</div>
+                        </div>
+                        <div class="text-white text-sm font-medium">A. Lincoln</div>
+                        <div class="text-blue-200 text-xs">1861-1865</div>
+                    </div>
+
+                    <!-- Roosevelt -->
+                    <div class="group text-center">
+                        <div class="relative mb-3">
+                            <div class="w-20 h-20 md:w-24 md:h-24 mx-auto rounded-full bg-gradient-to-br from-amber-400 to-yellow-500 p-1 group-hover:scale-110 transition-all duration-300">
+                                <div class="w-full h-full rounded-full bg-cover bg-center" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/FDR_1944_Color_Portrait.jpg/256px-FDR_1944_Color_Portrait.jpg');"></div>
+                            </div>
+                            <div class="absolute -bottom-1 left-1/2 transform -translate-x-1/2 bg-white text-gray-900 text-xs font-bold px-2 py-1 rounded-full">32</div>
+                        </div>
+                        <div class="text-white text-sm font-medium">F.D. Roosevelt</div>
+                        <div class="text-blue-200 text-xs">1933-1945</div>
+                    </div>
+
+                    <!-- Kennedy -->
+                    <div class="group text-center">
+                        <div class="relative mb-3">
+                            <div class="w-20 h-20 md:w-24 md:h-24 mx-auto rounded-full bg-gradient-to-br from-amber-400 to-yellow-500 p-1 group-hover:scale-110 transition-all duration-300">
+                                <div class="w-full h-full rounded-full bg-cover bg-center" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/John_F._Kennedy%2C_White_House_color_photo_portrait.jpg/256px-John_F._Kennedy%2C_White_House_color_photo_portrait.jpg');"></div>
+                            </div>
+                            <div class="absolute -bottom-1 left-1/2 transform -translate-x-1/2 bg-white text-gray-900 text-xs font-bold px-2 py-1 rounded-full">35</div>
+                        </div>
+                        <div class="text-white text-sm font-medium">J.F. Kennedy</div>
+                        <div class="text-blue-200 text-xs">1961-1963</div>
+                    </div>
+
+                    <!-- Obama -->
+                    <div class="group text-center">
+                        <div class="relative mb-3">
+                            <div class="w-20 h-20 md:w-24 md:h-24 mx-auto rounded-full bg-gradient-to-br from-amber-400 to-yellow-500 p-1 group-hover:scale-110 transition-all duration-300">
+                                <div class="w-full h-full rounded-full bg-cover bg-center" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/President_Barack_Obama.jpg/256px-President_Barack_Obama.jpg');"></div>
+                            </div>
+                            <div class="absolute -bottom-1 left-1/2 transform -translate-x-1/2 bg-white text-gray-900 text-xs font-bold px-2 py-1 rounded-full">44</div>
+                        </div>
+                        <div class="text-white text-sm font-medium">B. Obama</div>
+                        <div class="text-blue-200 text-xs">2009-2017</div>
+                    </div>
+
+                    <!-- Biden -->
+                    <div class="group text-center">
+                        <div class="relative mb-3">
+                            <div class="w-20 h-20 md:w-24 md:h-24 mx-auto rounded-full bg-gradient-to-br from-amber-400 to-yellow-500 p-1 group-hover:scale-110 transition-all duration-300">
+                                <div class="w-full h-full rounded-full bg-cover bg-center" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Joe_Biden_presidential_portrait.jpg/256px-Joe_Biden_presidential_portrait.jpg');"></div>
+                            </div>
+                            <div class="absolute -bottom-1 left-1/2 transform -translate-x-1/2 bg-white text-gray-900 text-xs font-bold px-2 py-1 rounded-full">46</div>
+                        </div>
+                        <div class="text-white text-sm font-medium">J. Biden</div>
+                        <div class="text-blue-200 text-xs">2021-heden</div>
+                    </div>
+                </div>
+
+                <!-- Presidential Stats -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+                    <div class="text-center bg-white/10 backdrop-blur-md rounded-xl p-6 border border-white/20">
+                        <div class="text-3xl md:text-4xl font-black text-white mb-2">46</div>
+                        <div class="text-blue-100 text-sm">Presidenten</div>
+                        <div class="text-blue-200 text-xs mt-1">Washington - Biden</div>
+                    </div>
+                    <div class="text-center bg-white/10 backdrop-blur-md rounded-xl p-6 border border-white/20">
+                        <div class="text-3xl md:text-4xl font-black text-white mb-2">235</div>
+                        <div class="text-blue-100 text-sm">Jaar</div>
+                        <div class="text-blue-200 text-xs mt-1">1789 - 2024</div>
+                    </div>
+                    <div class="text-center bg-white/10 backdrop-blur-md rounded-xl p-6 border border-white/20">
+                        <div class="text-3xl md:text-4xl font-black text-white mb-2">4</div>
+                        <div class="text-blue-100 text-sm">Vermoord</div>
+                        <div class="text-blue-200 text-xs mt-1">Lincoln, Garfield, McKinley, Kennedy</div>
+                    </div>
+                    <div class="text-center bg-white/10 backdrop-blur-md rounded-xl p-6 border border-white/20">
+                        <div class="text-3xl md:text-4xl font-black text-white mb-2">1</div>
+                        <div class="text-blue-100 text-sm">Afgetreden</div>
+                        <div class="text-blue-200 text-xs mt-1">Nixon (1974)</div>
+                    </div>
+                </div>
+
+                <!-- Call to Action -->
+                <div class="text-center">
+                    <div class="mb-6">
+                        <h3 class="text-2xl md:text-3xl font-bold text-white mb-3">
+                            Ontdek alle 46 presidenten
+                        </h3>
+                        <p class="text-blue-100 text-lg max-w-2xl mx-auto">
+                            Van hun achtergrond en prestaties tot hun impact op de Amerikaanse geschiedenis. 
+                            Bekijk gedetailleerde profielen, biografieën en presidentiële prestaties.
+                        </p>
+                    </div>
+                    
+                    <a href="<?= URLROOT ?>/amerikaanse-verkiezingen/presidenten" 
+                       class="group inline-flex items-center justify-center px-8 md:px-12 py-4 md:py-5 bg-gradient-to-r from-yellow-500 via-yellow-400 to-amber-500 text-gray-900 font-bold text-lg rounded-full hover:from-yellow-400 hover:to-amber-400 transition-all duration-300 shadow-2xl hover:shadow-yellow-500/25 transform hover:-translate-y-1 hover:scale-105">
+                        <svg class="w-6 h-6 mr-3" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                        </svg>
+                        <span>Bekijk alle presidenten</span>
+                        <svg class="ml-3 w-6 h-6 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                        </svg>
+                    </a>
+                    
+                    <!-- Secondary actions -->
+                    <div class="mt-6 flex flex-col sm:flex-row gap-3 justify-center items-center">
+                        <div class="inline-flex items-center text-blue-200 text-sm">
+                            <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                            </svg>
+                            Uitgebreide biografieën
+                        </div>
+                        <div class="hidden sm:block w-1 h-1 bg-blue-300 rounded-full"></div>
+                        <div class="inline-flex items-center text-blue-200 text-sm">
+                            <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 2 2h8c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 18H8v-2h4v2zm0-4H8v-2h4v2zm0-4H8V8h4v4z"/>
+                            </svg>
+                            Presidentiële prestaties
+                        </div>
+                        <div class="hidden sm:block w-1 h-1 bg-blue-300 rounded-full"></div>
+                        <div class="inline-flex items-center text-blue-200 text-sm">
+                            <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                            </svg>
+                            Historische context
+                        </div>
                     </div>
                 </div>
             </div>
@@ -344,6 +531,8 @@
             </div>
         </div>
     </section>
+
+  
 
     <!-- Enhanced Statistics Section with Capitol building background -->
     <section class="py-16 md:py-20 bg-gradient-to-br from-primary to-secondary relative overflow-hidden" id="statistieken">
