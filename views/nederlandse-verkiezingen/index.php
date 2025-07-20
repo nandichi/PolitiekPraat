@@ -7,7 +7,7 @@
         <div class="absolute inset-0">
             <!-- Dutch Parliament (Binnenhof) Background -->
             <div class="absolute inset-0 bg-cover bg-center bg-no-repeat" 
-                 style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Den_Haag_Binnenhof_Hofvijver.jpg/640px-Den_Haag_Binnenhof_Hofvijver.jpg');">
+                 style="background-image: url('https://prod-img.noordhollandsdagblad.nl/public/incoming/kyzgdy-73aa9f36-d0f0-11ee-ae00-0218eaf05005.jpg/alternates/SIXTEEN_NINE_1200/73aa9f36-d0f0-11ee-ae00-0218eaf05005.jpg');">
             </div>
             
             <!-- Dark Gradient Overlay for Better Text Readability -->
