@@ -915,14 +915,50 @@
                                     </div>
                                     
                                     <div class="space-y-4">
-                                        <?php foreach ($verkiezing->tv_debatten as $debat): ?>
+                                        <?php 
+                                        // Handle both array and string formats
+                                        $debatten = [];
+                                        if (is_array($verkiezing->tv_debatten)) {
+                                            $debatten = $verkiezing->tv_debatten;
+                                        } elseif (is_string($verkiezing->tv_debatten)) {
+                                            // If it's a string, treat it as a single debat
+                                            $debatten = [(object)['naam' => $verkiezing->tv_debatten]];
+                                        }
+                                        ?>
+                                        
+                                        <?php foreach ($debatten as $debat): ?>
                                             <div class="bg-gradient-to-r from-red-50 to-pink-50 rounded-xl p-4 border border-red-200">
-                                                <div class="font-semibold text-gray-900 mb-1"><?= htmlspecialchars($debat->naam ?? $debat) ?></div>
-                                                <?php if (isset($debat->datum)): ?>
-                                                    <div class="text-sm text-red-600"><?= htmlspecialchars($debat->datum) ?></div>
-                                                <?php endif; ?>
-                                                <?php if (isset($debat->omroep)): ?>
-                                                    <div class="text-sm text-gray-600"><?= htmlspecialchars($debat->omroep) ?></div>
+                                                <div class="flex items-start justify-between">
+                                                    <div class="flex-1">
+                                                        <div class="font-semibold text-gray-900 mb-1"><?= htmlspecialchars($debat->naam ?? $debat) ?></div>
+                                                        <?php if (isset($debat->datum) && !empty($debat->datum)): ?>
+                                                            <div class="text-sm text-red-600 mb-1"><?= htmlspecialchars($debat->datum) ?></div>
+                                                        <?php endif; ?>
+                                                        <?php if (isset($debat->omroep) && !empty($debat->omroep)): ?>
+                                                            <div class="text-sm text-gray-600"><?= htmlspecialchars($debat->omroep) ?></div>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                    
+                                                    <?php if (isset($debat->youtube_url) && !empty($debat->youtube_url)): ?>
+                                                        <div class="ml-4">
+                                                            <a href="<?= htmlspecialchars($debat->youtube_url) ?>" 
+                                                               target="_blank" 
+                                                               rel="noopener noreferrer"
+                                                               class="inline-flex items-center px-3 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-lg transition-colors duration-200 shadow-sm hover:shadow-md">
+                                                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                                                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                                                                </svg>
+                                                                <span class="hidden sm:inline">Bekijk Debat</span>
+                                                                <span class="sm:hidden">Video</span>
+                                                            </a>
+                                                        </div>
+                                                    <?php endif; ?>
+                                                </div>
+                                                
+                                                <?php if (isset($debat->beschrijving) && !empty($debat->beschrijving)): ?>
+                                                    <div class="mt-2 text-sm text-gray-600">
+                                                        <?= htmlspecialchars($debat->beschrijving) ?>
+                                                    </div>
                                                 <?php endif; ?>
                                             </div>
                                         <?php endforeach; ?>
