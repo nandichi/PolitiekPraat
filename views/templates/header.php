@@ -222,7 +222,13 @@ if (isset($data['description'])) {
 }
 
 $metaKeyword = isset($data['keywords']) ? $data['keywords'] : $metaKeyword;
-$metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og-image.jpg');
+
+// Specifieke meta images voor bepaalde pagina's
+if ($currentPage === 'amerikaanse-verkiezingen') {
+    $metaImage = 'https://ichef.bbci.co.uk/images/ic/640x360/p0jzn3xt.jpg';
+} else {
+    $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og-image.jpg');
+}
 ?>
 
 <!DOCTYPE html>
