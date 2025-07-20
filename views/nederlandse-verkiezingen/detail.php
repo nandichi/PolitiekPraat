@@ -924,36 +924,117 @@
                                             // If it's a string, treat it as a single debat
                                             $debatten = [(object)['naam' => $verkiezing->tv_debatten]];
                                         }
+                                        
+                                        // Function to detect YouTube URL
+                                        function extractYouTubeUrl($text) {
+                                            if (preg_match('/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/', $text, $matches)) {
+                                                return 'https://www.youtube.com/watch?v=' . $matches[1];
+                                            }
+                                            return null;
+                                        }
+                                        
+                                        function isOnlyYouTubeUrl($text) {
+                                            $text = trim($text);
+                                            return preg_match('/^(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)[a-zA-Z0-9_-]+$/', $text);
+                                        }
                                         ?>
                                         
                                         <?php foreach ($debatten as $debat): ?>
+                                            <?php 
+                                            $debatText = $debat->naam ?? $debat;
+                                            $youtubeUrl = null;
+                                            $displayName = $debatText;
+                                            
+                                            // Check if this debat has a youtube_url property
+                                            if (isset($debat->youtube_url) && !empty($debat->youtube_url)) {
+                                                $youtubeUrl = $debat->youtube_url;
+                                            } else {
+                                                // Try to extract YouTube URL from the text
+                                                $youtubeUrl = extractYouTubeUrl($debatText);
+                                                
+                                                // If the entire text is just a YouTube URL, give it a generic name
+                                                if (isOnlyYouTubeUrl($debatText)) {
+                                                    $displayName = "TV Verkiezingsdebat";
+                                                }
+                                            }
+                                            ?>
+                                            
                                             <div class="bg-gradient-to-r from-red-50 to-pink-50 rounded-xl p-4 border border-red-200">
-                                                <div class="flex items-start justify-between">
-                                                    <div class="flex-1">
-                                                        <div class="font-semibold text-gray-900 mb-1"><?= htmlspecialchars($debat->naam ?? $debat) ?></div>
-                                                        <?php if (isset($debat->datum) && !empty($debat->datum)): ?>
-                                                            <div class="text-sm text-red-600 mb-1"><?= htmlspecialchars($debat->datum) ?></div>
-                                                        <?php endif; ?>
-                                                        <?php if (isset($debat->omroep) && !empty($debat->omroep)): ?>
-                                                            <div class="text-sm text-gray-600"><?= htmlspecialchars($debat->omroep) ?></div>
-                                                        <?php endif; ?>
-                                                    </div>
-                                                    
-                                                    <?php if (isset($debat->youtube_url) && !empty($debat->youtube_url)): ?>
-                                                        <div class="ml-4">
-                                                            <a href="<?= htmlspecialchars($debat->youtube_url) ?>" 
+                                                <?php if ($youtubeUrl): ?>
+                                                    <!-- YouTube Video Card -->
+                                                    <div class="space-y-3">
+                                                        <div class="flex items-start justify-between">
+                                                            <div class="flex-1">
+                                                                <div class="font-semibold text-gray-900 mb-1"><?= htmlspecialchars($displayName) ?></div>
+                                                                <?php if (isset($debat->datum) && !empty($debat->datum)): ?>
+                                                                    <div class="text-sm text-red-600 mb-1"><?= htmlspecialchars($debat->datum) ?></div>
+                                                                <?php endif; ?>
+                                                                <?php if (isset($debat->omroep) && !empty($debat->omroep)): ?>
+                                                                    <div class="text-sm text-gray-600"><?= htmlspecialchars($debat->omroep) ?></div>
+                                                                <?php endif; ?>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <!-- YouTube Video Preview -->
+                                                        <div class="relative group cursor-pointer" onclick="window.open('<?= htmlspecialchars($youtubeUrl) ?>', '_blank')">
+                                                            <?php 
+                                                            // Extract video ID for thumbnail
+                                                            preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/', $youtubeUrl, $matches);
+                                                            $videoId = $matches[1] ?? '';
+                                                            $thumbnailUrl = "https://img.youtube.com/vi/{$videoId}/maxresdefault.jpg";
+                                                            ?>
+                                                            
+                                                            <div class="aspect-video bg-gray-900 rounded-xl overflow-hidden relative">
+                                                                <img src="<?= $thumbnailUrl ?>" 
+                                                                     alt="YouTube Video Thumbnail" 
+                                                                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                                                     onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjkwIiB2aWV3Qm94PSIwIDAgMTIwIDkwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cmVjdCB3aWR0aD0iMTIwIiBoZWlnaHQ9IjkwIiBmaWxsPSIjMzMzMzMzIi8+CjxwYXRoIGQ9Ik00OCAzNkw3MiA0NUw0OCA1NFYzNloiIGZpbGw9IndoaXRlIi8+Cjwvc3ZnPgo='">
+                                                                
+                                                                <!-- Play Button Overlay -->
+                                                                <div class="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/30 transition-colors duration-300">
+                                                                    <div class="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform duration-300">
+                                                                        <svg class="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                                                                            <path d="M8 5v14l11-7z"/>
+                                                                        </svg>
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                                <!-- YouTube Logo -->
+                                                                <div class="absolute top-3 right-3 bg-red-600 rounded px-2 py-1">
+                                                                    <svg class="w-6 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                                                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                                                                    </svg>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <!-- Watch Button -->
+                                                        <div class="flex justify-center">
+                                                            <a href="<?= htmlspecialchars($youtubeUrl) ?>" 
                                                                target="_blank" 
                                                                rel="noopener noreferrer"
-                                                               class="inline-flex items-center px-3 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-lg transition-colors duration-200 shadow-sm hover:shadow-md">
-                                                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                                               class="inline-flex items-center px-4 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-105">
+                                                                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
                                                                     <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
                                                                 </svg>
-                                                                <span class="hidden sm:inline">Bekijk Debat</span>
-                                                                <span class="sm:hidden">Video</span>
+                                                                <span>Bekijk op YouTube</span>
                                                             </a>
                                                         </div>
-                                                    <?php endif; ?>
-                                                </div>
+                                                    </div>
+                                                <?php else: ?>
+                                                    <!-- Regular Debat Card -->
+                                                    <div class="flex items-start justify-between">
+                                                        <div class="flex-1">
+                                                            <div class="font-semibold text-gray-900 mb-1"><?= htmlspecialchars($displayName) ?></div>
+                                                            <?php if (isset($debat->datum) && !empty($debat->datum)): ?>
+                                                                <div class="text-sm text-red-600 mb-1"><?= htmlspecialchars($debat->datum) ?></div>
+                                                            <?php endif; ?>
+                                                            <?php if (isset($debat->omroep) && !empty($debat->omroep)): ?>
+                                                                <div class="text-sm text-gray-600"><?= htmlspecialchars($debat->omroep) ?></div>
+                                                            <?php endif; ?>
+                                                        </div>
+                                                    </div>
+                                                <?php endif; ?>
                                                 
                                                 <?php if (isset($debat->beschrijving) && !empty($debat->beschrijving)): ?>
                                                     <div class="mt-2 text-sm text-gray-600">
