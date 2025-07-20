@@ -948,18 +948,16 @@
                                             // Check if this debat has a youtube_url property
                                             if (isset($debat->youtube_url) && !empty($debat->youtube_url)) {
                                                 $youtubeUrl = $debat->youtube_url;
+                                                // If we have a separate youtube_url field, keep the original name
                                             } else {
                                                 // Try to extract YouTube URL from the text
                                                 $youtubeUrl = extractYouTubeUrl($debatText);
                                                 
-                                                // If the entire text is just a YouTube URL, give it a generic name and hide URL
-                                                if (isOnlyYouTubeUrl($debatText)) {
+                                                // If we found a YouTube URL in the text, use generic name
+                                                if ($youtubeUrl) {
                                                     $displayName = "TV Verkiezingsdebat";
                                                 }
                                             }
-                                            
-                                            // Don't show debat if it's only a YouTube URL without proper embedded player
-                                            $showAsRegularDebat = !$youtubeUrl || (!isOnlyYouTubeUrl($debatText) && !isset($debat->youtube_url));
                                             ?>
                                             
                                             <?php if ($youtubeUrl): ?>
@@ -1069,8 +1067,8 @@
                                                         </div>
                                                     <?php endif; ?>
                                                 </div>
-                                            <?php elseif (!isOnlyYouTubeUrl($debatText)): ?>
-                                                <!-- Regular Debat Card (only show if not just a YouTube URL) -->
+                                            <?php else: ?>
+                                                <!-- Regular Debat Card (no YouTube URL found) -->
                                                 <div class="bg-gradient-to-r from-red-50 to-pink-50 rounded-xl p-4 border border-red-200">
                                                     <div class="flex items-start justify-between">
                                                         <div class="flex-1">
