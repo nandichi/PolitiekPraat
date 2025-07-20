@@ -147,7 +147,7 @@
                     </div>
                     
                     <!-- Election Overview Stats with Nederlandse accents -->
-                    <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 md:p-8 border-2 border-white/20 max-w-4xl mx-auto">
+                    <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 md:p-8 border-2 border-white/20 max-w-4xl mx-auto mb-8">
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
                             <div class="bg-orange-500/20 rounded-xl p-4 border border-orange-400/30">
                                 <div class="text-2xl md:text-3xl font-bold text-white mb-1"><?= $verkiezing->totaal_zetels ?? 150 ?></div>
@@ -163,11 +163,193 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <!-- Election Context Information -->
+                    <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 md:p-8 border-2 border-white/20 max-w-4xl mx-auto">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
+                            <?php if (isset($verkiezing->verkiezings_aanleiding) && !empty($verkiezing->verkiezings_aanleiding)): ?>
+                                <div class="bg-red-500/20 rounded-xl p-4 border border-red-400/30">
+                                    <div class="text-lg font-bold text-white mb-1"><?= ucfirst($verkiezing->verkiezings_aanleiding) ?></div>
+                                    <div class="text-red-200 text-sm font-medium">Verkiezingsreden</div>
+                                </div>
+                            <?php endif; ?>
+                            
+                            <?php if (isset($verkiezing->kabinet_type) && !empty($verkiezing->kabinet_type)): ?>
+                                <div class="bg-purple-500/20 rounded-xl p-4 border border-purple-400/30">
+                                    <div class="text-lg font-bold text-white mb-1"><?= ucfirst($verkiezing->kabinet_type) ?></div>
+                                    <div class="text-purple-200 text-sm font-medium">Kabinet Type</div>
+                                </div>
+                            <?php endif; ?>
+                            
+                            <?php if (isset($verkiezing->formatie_duur_dagen) && !empty($verkiezing->formatie_duur_dagen)): ?>
+                                <div class="bg-yellow-500/20 rounded-xl p-4 border border-yellow-400/30">
+                                    <div class="text-lg font-bold text-white mb-1"><?= $verkiezing->formatie_duur_dagen ?> dagen</div>
+                                    <div class="text-yellow-200 text-sm font-medium">Formatie Duur</div>
+                                </div>
+                            <?php endif; ?>
+                            
+                            <?php if (isset($verkiezing->aantal_partijen_tk) && !empty($verkiezing->aantal_partijen_tk)): ?>
+                                <div class="bg-green-500/20 rounded-xl p-4 border border-green-400/30">
+                                    <div class="text-lg font-bold text-white mb-1"><?= $verkiezing->aantal_partijen_tk ?></div>
+                                    <div class="text-green-200 text-sm font-medium">Partijen in TK</div>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Kabinet Photo Section -->
+    <?php if (isset($verkiezing->foto_url) && !empty($verkiezing->foto_url)): ?>
+        <section class="py-16 md:py-20 bg-gradient-to-b from-white to-slate-50">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="max-w-6xl mx-auto">
+                    <div class="text-center mb-12">
+                        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                            Kabinet <?= htmlspecialchars($verkiezing->kabinet_naam ?? $verkiezing->jaar) ?>
+                        </h2>
+                        <p class="text-lg text-gray-600">
+                            Het kabinet onder leiding van <?= htmlspecialchars($verkiezing->minister_president) ?>
+                        </p>
+                    </div>
+                    
+                    <div class="relative group">
+                        <!-- Glow effect -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-3xl blur-2xl opacity-50 group-hover:opacity-70 transition-all duration-500"></div>
+                        
+                        <!-- Photo container -->
+                        <div class="relative bg-white rounded-3xl p-4 md:p-6 shadow-2xl border border-gray-100 overflow-hidden">
+                            <div class="aspect-video w-full overflow-hidden rounded-2xl">
+                                <img src="<?= htmlspecialchars($verkiezing->foto_url) ?>" 
+                                     alt="Kabinet <?= htmlspecialchars($verkiezing->kabinet_naam ?? $verkiezing->jaar) ?> - <?= htmlspecialchars($verkiezing->minister_president) ?>" 
+                                     class="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-700">
+                            </div>
+                            
+                            <!-- Photo caption -->
+                            <div class="mt-4 text-center">
+                                <h3 class="text-xl font-bold text-gray-900 mb-2">
+                                    Kabinet <?= htmlspecialchars($verkiezing->kabinet_naam ?? $verkiezing->jaar) ?>
+                                </h3>
+                                <p class="text-gray-600">
+                                    Minister-president: <?= htmlspecialchars($verkiezing->minister_president) ?> (<?= htmlspecialchars($verkiezing->minister_president_partij) ?>)
+                                </p>
+                                
+                                <?php if (isset($verkiezing->coalitie_partijen) && !empty($verkiezing->coalitie_partijen)): ?>
+                                    <div class="mt-3">
+                                        <div class="text-sm text-gray-500 mb-2">Coalitie:</div>
+                                        <div class="flex flex-wrap justify-center gap-2">
+                                            <?php foreach ($verkiezing->coalitie_partijen as $partij): ?>
+                                                <span class="inline-block px-3 py-1 text-xs font-semibold text-primary bg-primary/10 rounded-full border border-primary/20">
+                                                    <?= htmlspecialchars($partij) ?>
+                                                </span>
+                                            <?php endforeach; ?>
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
+                                
+                                <?php if (isset($verkiezing->kabinet_start_datum) && !empty($verkiezing->kabinet_start_datum)): ?>
+                                    <div class="mt-3 text-sm text-gray-500">
+                                        <?php 
+                                        $startDatum = date('j F Y', strtotime($verkiezing->kabinet_start_datum));
+                                        $eindDatum = isset($verkiezing->kabinet_eind_datum) && !empty($verkiezing->kabinet_eind_datum) 
+                                            ? date('j F Y', strtotime($verkiezing->kabinet_eind_datum)) 
+                                            : 'heden';
+                                        ?>
+                                        Periode: <?= $startDatum ?> - <?= $eindDatum ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    <?php endif; ?>
+    
+    <!-- Winners and Losers Section -->
+    <?php if ((isset($verkiezing->grootste_winnaar) && !empty($verkiezing->grootste_winnaar)) || (isset($verkiezing->grootste_verliezer) && !empty($verkiezing->grootste_verliezer))): ?>
+        <section class="py-16 md:py-20 bg-gradient-to-br from-slate-50 to-white">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="max-w-6xl mx-auto">
+                    <div class="text-center mb-12">
+                        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                            Verkiezingsdynamiek
+                        </h2>
+                        <p class="text-lg text-gray-600">Grootste winnaars en verliezers van deze verkiezing</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <?php if (isset($verkiezing->grootste_winnaar) && !empty($verkiezing->grootste_winnaar)): ?>
+                            <div class="relative group">
+                                <div class="absolute inset-0 bg-gradient-to-br from-green-200 to-emerald-300 rounded-3xl blur-xl opacity-30 group-hover:opacity-50 transition-all duration-300"></div>
+                                <div class="relative bg-gradient-to-br from-green-50 to-emerald-50 rounded-3xl p-6 md:p-8 border-2 border-green-200 shadow-xl hover:shadow-2xl transition-all duration-300">
+                                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                                        <div class="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg flex items-center">
+                                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                                            </svg>
+                                            GROOTSTE WINNAAR
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="pt-6 text-center">
+                                        <h3 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+                                            <?= htmlspecialchars($verkiezing->grootste_winnaar) ?>
+                                        </h3>
+                                        <div class="text-lg text-green-700 mb-6 font-semibold">
+                                            Zetelwinst
+                                        </div>
+                                        
+                                        <div class="bg-white/80 rounded-xl p-6 border border-green-200">
+                                            <div class="text-4xl font-bold text-green-600 mb-2">
+                                                +<?= $verkiezing->grootste_winnaar_aantal ?>
+                                            </div>
+                                            <div class="text-sm text-gray-600 font-medium">Extra zetels gewonnen</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                        
+                        <?php if (isset($verkiezing->grootste_verliezer) && !empty($verkiezing->grootste_verliezer)): ?>
+                            <div class="relative group">
+                                <div class="absolute inset-0 bg-gradient-to-br from-red-200 to-pink-300 rounded-3xl blur-xl opacity-30 group-hover:opacity-50 transition-all duration-300"></div>
+                                <div class="relative bg-gradient-to-br from-red-50 to-pink-50 rounded-3xl p-6 md:p-8 border-2 border-red-200 shadow-xl hover:shadow-2xl transition-all duration-300">
+                                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                                        <div class="bg-gradient-to-r from-red-500 to-pink-600 text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg flex items-center">
+                                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"></path>
+                                            </svg>
+                                            GROOTSTE VERLIEZER
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="pt-6 text-center">
+                                        <h3 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+                                            <?= htmlspecialchars($verkiezing->grootste_verliezer) ?>
+                                        </h3>
+                                        <div class="text-lg text-red-700 mb-6 font-semibold">
+                                            Zetelverlies
+                                        </div>
+                                        
+                                        <div class="bg-white/80 rounded-xl p-6 border border-red-200">
+                                            <div class="text-4xl font-bold text-red-600 mb-2">
+                                                <?= $verkiezing->grootste_verliezer_aantal ?>
+                                            </div>
+                                            <div class="text-sm text-gray-600 font-medium">Zetels verloren</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </section>
+    <?php endif; ?>
+    
     <!-- Election Results Section -->
     <section class="py-16 md:py-20 bg-white">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -530,6 +712,20 @@
                                             </div>
                                         </div>
                                     <?php endif; ?>
+                                    
+                                    <?php if (isset($verkiezing->kabinet_eind_datum) && !empty($verkiezing->kabinet_eind_datum)): ?>
+                                        <div class="flex items-center p-4 bg-gradient-to-r from-red-500/5 to-red-500/10 rounded-xl">
+                                            <div class="w-10 h-10 bg-red-500/20 rounded-lg flex items-center justify-center mr-4">
+                                                <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                                </svg>
+                                            </div>
+                                            <div>
+                                                <div class="font-bold text-gray-900 text-lg">Kabinet einde</div>
+                                                <div class="text-red-500 font-semibold"><?= date('j F Y', strtotime($verkiezing->kabinet_eind_datum)) ?></div>
+                                            </div>
+                                        </div>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>
@@ -557,6 +753,63 @@
                                                 </span>
                                             </div>
                                         <?php endforeach; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                        
+                        <!-- Nieuwe en Verdwenen Partijen -->
+                        <?php if ((isset($verkiezing->nieuwe_partijen) && !empty($verkiezing->nieuwe_partijen)) || (isset($verkiezing->verdwenen_partijen) && !empty($verkiezing->verdwenen_partijen))): ?>
+                            <div class="relative group">
+                                <div class="absolute inset-0 bg-gradient-to-br from-purple-100/50 to-pink-100/50 rounded-3xl blur-xl opacity-70 group-hover:opacity-100 transition-all duration-300"></div>
+                                <div class="relative bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-300">
+                                    <div class="flex items-center mb-6">
+                                        <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center mr-4">
+                                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                                            </svg>
+                                        </div>
+                                        <h3 class="text-2xl font-bold text-gray-900">Partij Veranderingen</h3>
+                                    </div>
+                                    
+                                    <div class="space-y-6">
+                                        <?php if (isset($verkiezing->nieuwe_partijen) && !empty($verkiezing->nieuwe_partijen)): ?>
+                                            <div>
+                                                <h4 class="text-lg font-semibold text-gray-800 mb-3 flex items-center">
+                                                    <svg class="w-5 h-5 text-green-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                                    </svg>
+                                                    Nieuwe Partijen in de Tweede Kamer
+                                                </h4>
+                                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                                    <?php foreach ($verkiezing->nieuwe_partijen as $partij): ?>
+                                                        <span class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-semibold bg-green-100 text-green-800 border border-green-200">
+                                                            <span class="w-2 h-2 bg-green-600 rounded-full mr-2"></span>
+                                                            <?= htmlspecialchars($partij) ?>
+                                                        </span>
+                                                    <?php endforeach; ?>
+                                                </div>
+                                            </div>
+                                        <?php endif; ?>
+                                        
+                                        <?php if (isset($verkiezing->verdwenen_partijen) && !empty($verkiezing->verdwenen_partijen)): ?>
+                                            <div>
+                                                <h4 class="text-lg font-semibold text-gray-800 mb-3 flex items-center">
+                                                    <svg class="w-5 h-5 text-red-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                                    </svg>
+                                                    Verdwenen uit de Tweede Kamer
+                                                </h4>
+                                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                                    <?php foreach ($verkiezing->verdwenen_partijen as $partij): ?>
+                                                        <span class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-semibold bg-red-100 text-red-800 border border-red-200">
+                                                            <span class="w-2 h-2 bg-red-600 rounded-full mr-2"></span>
+                                                            <?= htmlspecialchars($partij) ?>
+                                                        </span>
+                                                    <?php endforeach; ?>
+                                                </div>
+                                            </div>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                             </div>
@@ -610,6 +863,67 @@
                                 </div>
                             </div>
                         <?php endif; ?>
+                        
+                        <!-- Lijsttrekkers -->
+                        <?php if (isset($verkiezing->lijsttrekkers) && !empty($verkiezing->lijsttrekkers)): ?>
+                            <div class="relative group">
+                                <div class="absolute inset-0 bg-gradient-to-br from-indigo-100/50 to-purple-100/50 rounded-3xl blur-xl opacity-70 group-hover:opacity-100 transition-all duration-300"></div>
+                                <div class="relative bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-300">
+                                    <div class="flex items-center mb-6">
+                                        <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center mr-4">
+                                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                            </svg>
+                                        </div>
+                                        <h3 class="text-2xl font-bold text-gray-900">Lijsttrekkers</h3>
+                                    </div>
+                                    
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                                        <?php foreach ($verkiezing->lijsttrekkers as $lijsttrekker): ?>
+                                            <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl p-4 border border-indigo-200">
+                                                <div class="text-center">
+                                                    <div class="font-semibold text-gray-900"><?= htmlspecialchars($lijsttrekker->naam ?? $lijsttrekker) ?></div>
+                                                    <?php if (isset($lijsttrekker->partij)): ?>
+                                                        <div class="text-sm text-indigo-600 font-medium"><?= htmlspecialchars($lijsttrekker->partij) ?></div>
+                                                    <?php endif; ?>
+                                                </div>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                        
+                        <!-- TV Debatten -->
+                        <?php if (isset($verkiezing->tv_debatten) && !empty($verkiezing->tv_debatten)): ?>
+                            <div class="relative group">
+                                <div class="absolute inset-0 bg-gradient-to-br from-red-100/50 to-pink-100/50 rounded-3xl blur-xl opacity-70 group-hover:opacity-100 transition-all duration-300"></div>
+                                <div class="relative bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-300">
+                                    <div class="flex items-center mb-6">
+                                        <div class="w-12 h-12 bg-gradient-to-br from-red-500 to-pink-600 rounded-xl flex items-center justify-center mr-4">
+                                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                            </svg>
+                                        </div>
+                                        <h3 class="text-2xl font-bold text-gray-900">TV Debatten</h3>
+                                    </div>
+                                    
+                                    <div class="space-y-4">
+                                        <?php foreach ($verkiezing->tv_debatten as $debat): ?>
+                                            <div class="bg-gradient-to-r from-red-50 to-pink-50 rounded-xl p-4 border border-red-200">
+                                                <div class="font-semibold text-gray-900 mb-1"><?= htmlspecialchars($debat->naam ?? $debat) ?></div>
+                                                <?php if (isset($debat->datum)): ?>
+                                                    <div class="text-sm text-red-600"><?= htmlspecialchars($debat->datum) ?></div>
+                                                <?php endif; ?>
+                                                <?php if (isset($debat->omroep)): ?>
+                                                    <div class="text-sm text-gray-600"><?= htmlspecialchars($debat->omroep) ?></div>
+                                                <?php endif; ?>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
                 
@@ -635,6 +949,47 @@
                                             <?= nl2br(htmlspecialchars($verkiezing->beschrijving)) ?>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif; ?>
+                
+                <!-- Bronnen -->
+                <?php if (isset($verkiezing->bronnen) && !empty($verkiezing->bronnen)): ?>
+                    <div class="mt-16">
+                        <div class="relative group">
+                            <div class="absolute inset-0 bg-gradient-to-br from-gray-200/50 to-gray-300/50 rounded-3xl blur-xl opacity-70 group-hover:opacity-100 transition-all duration-300"></div>
+                            <div class="relative bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-300 max-w-4xl mx-auto">
+                                <div class="flex items-center mb-6">
+                                    <div class="w-12 h-12 bg-gradient-to-br from-gray-500 to-gray-600 rounded-xl flex items-center justify-center mr-4">
+                                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                        </svg>
+                                    </div>
+                                    <h3 class="text-2xl font-bold text-gray-900">Bronnen & Referenties</h3>
+                                </div>
+                                
+                                <div class="space-y-3">
+                                    <?php foreach ($verkiezing->bronnen as $bron): ?>
+                                        <div class="flex items-start p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-gray-100 transition-colors">
+                                            <svg class="w-4 h-4 text-gray-500 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+                                            </svg>
+                                            <?php if (is_object($bron) && isset($bron->naam)): ?>
+                                                <div>
+                                                    <div class="font-medium text-gray-900"><?= htmlspecialchars($bron->naam) ?></div>
+                                                    <?php if (isset($bron->url)): ?>
+                                                        <a href="<?= htmlspecialchars($bron->url) ?>" target="_blank" class="text-sm text-blue-600 hover:text-blue-800 underline">
+                                                            <?= htmlspecialchars($bron->url) ?>
+                                                        </a>
+                                                    <?php endif; ?>
+                                                </div>
+                                            <?php else: ?>
+                                                <span class="text-gray-800 font-medium"><?= htmlspecialchars($bron) ?></span>
+                                            <?php endif; ?>
+                                        </div>
+                                    <?php endforeach; ?>
                                 </div>
                             </div>
                         </div>

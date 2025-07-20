@@ -122,7 +122,13 @@ try {
                    JSON_UNQUOTE(JSON_EXTRACT(nv.coalitie_partijen, '$')) as coalitie_partijen_raw,
                    JSON_UNQUOTE(JSON_EXTRACT(nv.oppositie_partijen, '$')) as oppositie_partijen_raw,
                    JSON_UNQUOTE(JSON_EXTRACT(nv.belangrijkste_themas, '$')) as belangrijkste_themas_raw,
-                   JSON_UNQUOTE(JSON_EXTRACT(nv.nieuwe_partijen, '$')) as nieuwe_partijen_raw
+                   JSON_UNQUOTE(JSON_EXTRACT(nv.nieuwe_partijen, '$')) as nieuwe_partijen_raw,
+                   JSON_UNQUOTE(JSON_EXTRACT(nv.verdwenen_partijen, '$')) as verdwenen_partijen_raw,
+                   JSON_UNQUOTE(JSON_EXTRACT(nv.kiesdrempel_gehaald, '$')) as kiesdrempel_gehaald_raw,
+                   JSON_UNQUOTE(JSON_EXTRACT(nv.kiesdrempel_gemist, '$')) as kiesdrempel_gemist_raw,
+                   JSON_UNQUOTE(JSON_EXTRACT(nv.lijsttrekkers, '$')) as lijsttrekkers_raw,
+                   JSON_UNQUOTE(JSON_EXTRACT(nv.tv_debatten, '$')) as tv_debatten_raw,
+                   JSON_UNQUOTE(JSON_EXTRACT(nv.bronnen, '$')) as bronnen_raw
             FROM nederlandse_verkiezingen nv 
             WHERE nv.jaar = :jaar
         ";
@@ -166,6 +172,24 @@ try {
         }
         if (!empty($verkiezing->nieuwe_partijen_raw)) {
             $verkiezing->nieuwe_partijen = json_decode($verkiezing->nieuwe_partijen_raw);
+        }
+        if (!empty($verkiezing->verdwenen_partijen_raw)) {
+            $verkiezing->verdwenen_partijen = json_decode($verkiezing->verdwenen_partijen_raw);
+        }
+        if (!empty($verkiezing->kiesdrempel_gehaald_raw)) {
+            $verkiezing->kiesdrempel_gehaald = json_decode($verkiezing->kiesdrempel_gehaald_raw);
+        }
+        if (!empty($verkiezing->kiesdrempel_gemist_raw)) {
+            $verkiezing->kiesdrempel_gemist = json_decode($verkiezing->kiesdrempel_gemist_raw);
+        }
+        if (!empty($verkiezing->lijsttrekkers_raw)) {
+            $verkiezing->lijsttrekkers = json_decode($verkiezing->lijsttrekkers_raw);
+        }
+        if (!empty($verkiezing->tv_debatten_raw)) {
+            $verkiezing->tv_debatten = json_decode($verkiezing->tv_debatten_raw);
+        }
+        if (!empty($verkiezing->bronnen_raw)) {
+            $verkiezing->bronnen = json_decode($verkiezing->bronnen_raw);
         }
         
         // Fetch related elections (previous and next)
