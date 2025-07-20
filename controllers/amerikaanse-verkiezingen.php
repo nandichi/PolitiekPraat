@@ -19,6 +19,9 @@ class AmerikaanseVerkiezingenController {
         // Haal statistieken op
         $statistieken = $this->verkiezingenModel->getStatistieken();
         
+        // Haal key figures presidenten op voor timeline sectie
+        $keyFiguresPresidenten = $this->getKeyFiguresPresidenten();
+        
         // Als er geen data in database is, gebruik fallback data
         if (empty($verkiezingen)) {
             $verkiezingen = $this->getFallbackVerkiezingen();
@@ -360,6 +363,106 @@ class AmerikaanseVerkiezingenController {
             'nog_levend' => 5,
             'republican_presidenten' => 19,
             'democratic_presidenten' => 16
+        ];
+    }
+    
+    /**
+     * Haal key figures presidenten op voor timeline sectie
+     */
+    private function getKeyFiguresPresidenten() {
+        try {
+            // Haal alle presidenten op
+            $presidenten = $this->verkiezingenModel->getAllPresidenten();
+            
+            if (!empty($presidenten)) {
+                // Zoek specifieke presidenten per periode
+                $keyFigures = [
+                    'vroege_republiek' => [],
+                    'industriele_era' => [],
+                    'digitale_revolutie' => []
+                ];
+                
+                foreach ($presidenten as $president) {
+                    // Vroege Republiek (1789-1860): Washington, Jefferson, Lincoln
+                    if (in_array($president->president_nummer, [1, 3, 16])) {
+                        $keyFigures['vroege_republiek'][] = $president;
+                    }
+                    // Industriële Era (1860-1960): Theodore Roosevelt, Franklin Roosevelt, Truman  
+                    elseif (in_array($president->president_nummer, [26, 32, 33])) {
+                        $keyFigures['industriele_era'][] = $president;
+                    }
+                    // Digitale Revolutie (1960-heden): Kennedy, Obama, Biden
+                    elseif (in_array($president->president_nummer, [35, 44, 46])) {
+                        $keyFigures['digitale_revolutie'][] = $president;
+                    }
+                }
+                
+                return $keyFigures;
+            }
+        } catch (Exception $e) {
+            error_log("getKeyFiguresPresidenten fout: " . $e->getMessage());
+        }
+        
+        // Fallback: gebruik fallback presidenten als database niet beschikbaar is
+        return $this->getFallbackKeyFiguresPresidenten();
+    }
+    
+    /**
+     * Fallback key figures presidenten data
+     */
+    private function getFallbackKeyFiguresPresidenten() {
+        return [
+            'vroege_republiek' => [
+                (object)[
+                    'president_nummer' => 1,
+                    'naam' => 'George Washington',
+                    'foto_url' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Gilbert_Stuart_Williamstown_Portrait_of_George_Washington.jpg/256px-Gilbert_Stuart_Williamstown_Portrait_of_George_Washington.jpg'
+                ],
+                (object)[
+                    'president_nummer' => 3,
+                    'naam' => 'Thomas Jefferson',
+                    'foto_url' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Thomas_Jefferson_by_Rembrandt_Peale%2C_1800.jpg/256px-Thomas_Jefferson_by_Rembrandt_Peale%2C_1800.jpg'
+                ],
+                (object)[
+                    'president_nummer' => 16,
+                    'naam' => 'Abraham Lincoln',
+                    'foto_url' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Abraham_Lincoln_O-77_matte_collodion_print.jpg/256px-Abraham_Lincoln_O-77_matte_collodion_print.jpg'
+                ]
+            ],
+            'industriele_era' => [
+                (object)[
+                    'president_nummer' => 26,
+                    'naam' => 'Theodore Roosevelt',
+                    'foto_url' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/President_Roosevelt_-_Pach_Bros.jpg/256px-President_Roosevelt_-_Pach_Bros.jpg'
+                ],
+                (object)[
+                    'president_nummer' => 32,
+                    'naam' => 'Franklin D. Roosevelt',
+                    'foto_url' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/FDR_1944_Color_Portrait.jpg/256px-FDR_1944_Color_Portrait.jpg'
+                ],
+                (object)[
+                    'president_nummer' => 33,
+                    'naam' => 'Harry S. Truman',
+                    'foto_url' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/TRUMAN_58-766-06_%28cropped%29.jpg/256px-TRUMAN_58-766-06_%28cropped%29.jpg'
+                ]
+            ],
+            'digitale_revolutie' => [
+                (object)[
+                    'president_nummer' => 35,
+                    'naam' => 'John F. Kennedy',
+                    'foto_url' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/John_F._Kennedy%2C_White_House_color_photo_portrait.jpg/256px-John_F._Kennedy%2C_White_House_color_photo_portrait.jpg'
+                ],
+                (object)[
+                    'president_nummer' => 44,
+                    'naam' => 'Barack Obama',
+                    'foto_url' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/President_Barack_Obama.jpg/256px-President_Barack_Obama.jpg'
+                ],
+                (object)[
+                    'president_nummer' => 46,
+                    'naam' => 'Joe Biden',
+                    'foto_url' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Joe_Biden_presidential_portrait.jpg/256px-Joe_Biden_presidential_portrait.jpg'
+                ]
+            ]
         ];
     }
 }

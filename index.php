@@ -104,7 +104,7 @@ $router->add('partijen/([^/]+)', function($partySlug) {
     $_GET['party'] = $partySlug;
     require_once 'controllers/partijen-detail.php';
 });
-$router->add('programma-vergelijker', 'controllers/programma-vergelijker.php');
+$router->add('politiek-kompas', 'controllers/politiek-kompas.php');
 $router->add('amerikaanse-verkiezingen', 'controllers/amerikaanse-verkiezingen.php');
 $router->add('amerikaanse-verkiezingen/presidenten', function() {
     $_GET['actie'] = 'presidenten';

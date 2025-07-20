@@ -1414,7 +1414,7 @@ $parties = [
             'themes' => $themes
         ];
 
-        require_once 'views/programma-vergelijker/index.php';
+        require_once 'views/politiek-kompas/index.php';
     }
 }
 

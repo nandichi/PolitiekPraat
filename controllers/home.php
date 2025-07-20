@@ -649,7 +649,7 @@ require_once 'views/templates/header.php';
                             Ook beschikbaar: 
                             <a href="<?php echo URLROOT; ?>/nieuws" class="text-primary hover:text-primary-dark font-semibold transition-colors duration-300">Politiek Nieuws</a>, 
                             <a href="<?php echo URLROOT; ?>/partijen" class="text-secondary hover:text-secondary-dark font-semibold transition-colors duration-300">Partijoverzichten</a>, 
-                            <a href="<?php echo URLROOT; ?>/programma-vergelijker" class="text-primary hover:text-primary-dark font-semibold transition-colors duration-300">Programma Vergelijker</a>
+                            <a href="<?php echo URLROOT; ?>/politiek-kompas" class="text-primary hover:text-primary-dark font-semibold transition-colors duration-300">Politiek Kompas</a>
                         </p>
                     </div>
                 </div>
@@ -1088,11 +1088,10 @@ require_once 'views/templates/header.php';
             <!-- CTA sectie -->
             <div class="text-center mt-20" data-aos="fade-up" data-aos-delay="600">
                 <a href="<?php echo URLROOT; ?>/amerikaanse-verkiezingen" 
-                   class="relative inline-flex items-center px-12 py-6 bg-gradient-to-r from-red-600 via-white to-blue-600 text-blue-900 font-bold text-lg rounded-2xl transition-all duration-500 transform hover:scale-105 shadow-2xl hover:shadow-3xl group overflow-hidden">
+                   class="relative inline-flex items-center px-12 py-6 bg-gradient-to-r from-primary via-secondary to-primary text-white font-bold text-lg rounded-2xl transition-all duration-500 transform hover:scale-105 shadow-2xl hover:shadow-3xl group overflow-hidden">
                     
                     <!-- Button content -->
                     <div class="relative z-10 flex items-center">
-                        <!-- Mini vlag icon -->
                         <span class="mr-3">Ontdek alle verkiezingen</span>
                         <svg class="w-6 h-6 transform transition-transform duration-500 group-hover:translate-x-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
@@ -1106,8 +1105,8 @@ require_once 'views/templates/header.php';
                 <!-- Supporting stats -->
                 <?php if (!empty($amerikaanse_verkiezingen)): ?>
                 <p class="mt-6 text-blue-200 text-sm">
-                    <span class="font-semibold text-red-300"><?php echo count($amerikaanse_verkiezingen); ?></span> verkiezingen weergegeven • 
-                    <span class="font-semibold text-blue-300">Sinds 1789</span> beschikbaar
+                    <span class="font-semibold text-white"><?php echo count($amerikaanse_verkiezingen); ?></span> verkiezingen weergegeven • 
+                    <span class="font-semibold text-white">Sinds 1789</span> beschikbaar
                 </p>
                 <?php endif; ?>
             </div>
@@ -1335,7 +1334,7 @@ require_once 'views/templates/header.php';
         </div>
     </section>
 
-    <!-- Programma Vergelijker Section - Consistent met Stemwijzer styling -->
+    <!-- Politiek Kompas Section - Consistent met Stemwijzer styling -->
     <section class="py-24 bg-gradient-to-br from-blue-50 via-slate-50 to-red-50 relative overflow-hidden">
         <!-- Decoratieve achtergrond elementen -->
         <div class="absolute inset-0">
@@ -1418,7 +1417,7 @@ require_once 'views/templates/header.php';
                                 <div class="absolute -inset-1 bg-gradient-to-r from-primary via-secondary to-primary rounded-2xl blur opacity-40 animate-pulse"></div>
                                 
                                 <!-- Main button -->
-                                <a href="<?php echo URLROOT; ?>/programma-vergelijker" 
+                                <a href="<?php echo URLROOT; ?>/politiek-kompas" 
                                    class="relative inline-flex items-center px-6 sm:px-8 md:px-12 py-3 sm:py-4 md:py-6 bg-gradient-to-r from-primary via-secondary to-primary text-white font-bold text-sm sm:text-base md:text-lg lg:text-xl rounded-xl sm:rounded-2xl transition-all duration-500 transform hover:scale-105 shadow-2xl hover:shadow-3xl group overflow-hidden">
                                     
                                     <!-- Button content -->
@@ -1426,7 +1425,7 @@ require_once 'views/templates/header.php';
                                         <svg class="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 mr-2 sm:mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
                                         </svg>
-                                        <span class="mr-2 sm:mr-3">Vergelijk nu partijen</span>
+                                        <span class="mr-2 sm:mr-3">Ontdek je politieke kompas</span>
                                         <div class="relative">
                                             <svg class="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 transform transition-transform duration-500 group-hover:translate-x-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
@@ -1464,7 +1463,7 @@ require_once 'views/templates/header.php';
                                             </svg>
                                         </div>
                                         <div>
-                                            <h3 class="text-lg font-bold text-white">Programma Vergelijker</h3>
+                                            <h3 class="text-lg font-bold text-white">Politiek Kompas</h3>
                                             <p class="text-indigo-100 text-sm">Thema: Klimaat & Energie</p>
                                         </div>
                                     </div>

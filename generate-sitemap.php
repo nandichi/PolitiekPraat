@@ -36,7 +36,7 @@ $static_pages = [
     ['url' => 'nieuws', 'changefreq' => 'daily', 'priority' => '0.8'],
     ['url' => 'stemwijzer', 'changefreq' => 'weekly', 'priority' => '0.8'],
     ['url' => 'partijen', 'changefreq' => 'weekly', 'priority' => '0.7'],
-    ['url' => 'programma-vergelijker', 'changefreq' => 'weekly', 'priority' => '0.8'],
+    ['url' => 'politiek-kompas', 'changefreq' => 'weekly', 'priority' => '0.8'],
     ['url' => 'login', 'changefreq' => 'monthly', 'priority' => '0.5'],
     ['url' => 'register', 'changefreq' => 'monthly', 'priority' => '0.5'],
     ['url' => 'profile', 'changefreq' => 'weekly', 'priority' => '0.6'],

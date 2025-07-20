@@ -6,7 +6,7 @@ $metaDescriptions = [
     'blogs' => 'Lees politieke blogs van experts en ervaren columnisten over actuele Nederlandse thema\'s. Deel je mening en ontdek nieuwe perspectieven op de politiek.',
     'nieuws' => 'Het laatste Nederlandse politieke nieuws uit betrouwbare bronnen. Blijf dagelijks geïnformeerd over regering, oppositie en belangrijke ontwikkelingen.',
     'stemwijzer' => 'Doe de interactieve stemwijzer 2025 en ontdek welke politieke partij het beste aansluit bij jouw standpunten. Objectief stemadvies en partijvergelijking.',
-    'programma-vergelijker' => 'Vergelijk verkiezingsprogramma\'s van alle Nederlandse partijen op thema\'s als klimaat, zorg, economie en onderwijs. Maak een geïnformeerde stemkeuze.',
+    'politiek-kompas' => 'Ontdek jouw politieke kompas door partijstandpunten te vergelijken op thema\'s als klimaat, zorg, economie en onderwijs. Maak een geïnformeerde stemkeuze.',
     'partijen' => 'Volledig overzicht van Nederlandse politieke partijen met hun standpunten, lijsttrekkers en verkiezingsprogramma\'s. Van VVD tot PvdA en alle anderen.',
     'themas' => 'Verdiep je in actuele politieke thema\'s als klimaatbeleid, gezondheidszorg en economie. Analyses, standpunten en expert discussies over Nederlandse politiek.',
     'forum' => 'Discussieer mee in het politieke forum van PolitiekPraat. Deel je mening over actuele onderwerpen en ga respectvol in debat met andere gebruikers.',
@@ -54,7 +54,7 @@ $metaKeywords = [
     'blogs' => 'politieke blogs, opinieartikelen, politieke analyses, Nederlandse politiek, politiek commentaar, verkiezingen, columnisten, PolitiekPraat',
     'nieuws' => 'politiek nieuws, Nederlands nieuws, Haags nieuws, regering, oppositie, kabinet, ministeries, Tweede Kamer, PolitiekPraat',
     'stemwijzer' => 'stemwijzer, stemwijzer 2025, politieke keuze, verkiezingen, stemhulp, kieskompas, partijkeuze, verkiezingen 2025, stemadvies, PolitiekPraat',
-    'programma-vergelijker' => 'verkiezingsprogramma vergelijker, partijen vergelijken, politieke standpunten, programma\'s, Nederlandse partijen, verkiezingen, PolitiekPraat',
+    'politiek-kompas' => 'politiek kompas, partijen vergelijken, politieke standpunten, stemadvies, Nederlandse partijen, verkiezingen, PolitiekPraat',
     'partijen' => 'politieke partijen Nederland, VVD, PvdA, VVD, CDA, D66, PVV, GroenLinks, partijoverzicht, lijsttrekkers, PolitiekPraat',
     'themas' => 'politieke thema\'s, klimaat, zorg, economie, onderwijs, immigratie, standpunten, analyses, Nederlandse politiek, PolitiekPraat',
     'forum' => 'politiek forum, politieke discussie, debat, meningen, Nederlandse politiek, politieke standpunten, actuele discussies, PolitiekPraat',
@@ -1145,7 +1145,7 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                             
                             <div class="mx-2 my-1 border-t border-gray-100"></div>
                             
-                            <a href="<?php echo URLROOT; ?>/programma-vergelijker" 
+                            <a href="<?php echo URLROOT; ?>/politiek-kompas" 
                                class="flex items-center justify-between px-3 py-3 rounded-lg hover:bg-accent/5 transition-all duration-300 group/item">
                                 <div class="flex items-center">
                                     <div class="w-10 h-10 bg-accent/10 rounded-xl flex items-center justify-center mr-3 group-hover/item:bg-accent/20 transition-colors duration-300">
@@ -1154,8 +1154,8 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                                         </svg>
                                     </div>
                                     <div>
-                                        <div class="text-sm font-semibold text-gray-900">Programma Vergelijker</div>
-                                        <div class="text-xs text-gray-500">Vergelijk partijprogramma's</div>
+                                        <div class="text-sm font-semibold text-gray-900">Politiek Kompas</div>
+                                        <div class="text-xs text-gray-500">Vergelijk partijstandpunten</div>
                                     </div>
                                 </div>
                                 <span class="inline-flex items-center px-2 py-1 text-xs font-semibold bg-accent text-white rounded-full">Nieuw</span>
@@ -1163,24 +1163,21 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                             
                             <div class="mx-2 my-1 border-t border-gray-100"></div>
                             
-                            <!-- Amerikaanse Verkiezingen met Amerikaanse styling -->
+                            <!-- Amerikaanse Verkiezingen - Consistent met andere items -->
                             <a href="<?php echo URLROOT; ?>/amerikaanse-verkiezingen" 
-                               class="flex items-center justify-between px-3 py-3 rounded-lg hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 transition-all duration-300 group/item relative overflow-hidden">
+                            class="flex items-center justify-between px-3 py-3 rounded-lg hover:bg-primary/5 transition-all duration-300 group/item">
                                 <div class="flex items-center">
-                                    <div class="w-10 h-10 bg-gradient-to-r from-red-500 to-blue-600 rounded-xl flex items-center justify-center mr-3 group-hover/item:scale-110 transition-transform duration-300 shadow-sm">
-                                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3l1.09 2.09L15 6l-1.91 1.09L12 9l-1.09-1.91L9 6l1.91-1.09L12 3zm-6 6l.69 1.31L8 11l-1.31.69L6 13l-.69-1.31L4 11l1.31-.69L6 9zm12 0l.69 1.31L20 11l-1.31.69L18 13l-.69-1.31L16 11l1.31-.69L18 9zm-6 6l.69 1.31L14 17l-1.31.69L12 19l-.69-1.31L10 17l1.31-.69L12 15z"/>
+                                    <div class="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center mr-3 group-hover/item:bg-primary/20 transition-colors duration-300">
+                                        <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
                                         </svg>
                                     </div>
                                     <div>
-                                        <div class="text-sm font-semibold bg-gradient-to-r from-red-600 via-purple-600 to-blue-600 bg-clip-text text-transparent">
-                                            Amerikaanse Verkiezingen
-                                        </div>
-                                        <div class="text-xs text-gray-500">235 jaar democratische geschiedenis</div>
+                                        <div class="text-sm font-semibold text-gray-900">Amerikaanse Verkiezingen</div>
+                                        <div class="text-xs text-gray-500">235 jaar democratie</div>
                                     </div>
                                 </div>
-                                <span class="inline-flex items-center px-2 py-1 text-xs font-semibold bg-gradient-to-r from-red-500 to-blue-500 text-white rounded-full">🇺🇸</span>
-                                <div class="absolute inset-0 bg-gradient-to-r from-red-100/10 to-blue-100/10 opacity-0 group-hover/item:opacity-100 transition-opacity duration-300"></div>
+                                <span class="inline-flex items-center px-2 py-1 text-xs font-semibold bg-primary text-white rounded-full">USA</span>
                             </a>
                         </div>
                     </div>
@@ -1598,7 +1595,7 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                         </span>
                     </a>
 
-                    <a href="<?php echo URLROOT; ?>/programma-vergelijker" 
+                    <a href="<?php echo URLROOT; ?>/politiek-kompas" 
                        class="flex items-center text-gray-700 hover:text-primary p-3 rounded-lg transition-all duration-300 
                               hover:bg-accent/5 group">
                         <div class="mr-3 p-2 bg-accent/10 rounded-lg transition-all duration-300 
@@ -1609,7 +1606,7 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                             </svg>
                         </div>
                         <span class="font-medium flex items-center">
-                            Programma Vergelijker
+                            Politiek Kompas
                             <span class="ml-2 inline-flex items-center px-2 py-0.5 text-xs font-medium 
                                         bg-accent text-white rounded-full">
                                 Nieuw
@@ -1617,27 +1614,24 @@ $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og
                         </span>
                     </a>
 
-                    <!-- Amerikaanse Verkiezingen - Mobile met Amerikaanse styling -->
+                    <!-- Amerikaanse Verkiezingen - Mobile consistent met desktop -->
                     <a href="<?php echo URLROOT; ?>/amerikaanse-verkiezingen" 
                        class="flex items-center text-gray-700 hover:text-primary p-3 rounded-lg transition-all duration-300 
-                              hover:bg-gradient-to-r hover:from-red-50 hover:to-blue-50 group relative overflow-hidden">
-                        <div class="mr-3 p-2 bg-gradient-to-r from-red-500 to-blue-600 rounded-lg transition-all duration-300 
-                                    group-hover:scale-110 shadow-sm">
-                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              hover:bg-primary/5 group">
+                        <div class="mr-3 p-2 bg-primary/10 rounded-lg transition-all duration-300 
+                                    group-hover:bg-primary/20 group-hover:scale-110">
+                            <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                      d="M12 3l1.09 2.09L15 6l-1.91 1.09L12 9l-1.09-1.91L9 6l1.91-1.09L12 3zm-6 6l.69 1.31L8 11l-1.31.69L6 13l-.69-1.31L4 11l1.31-.69L6 9zm12 0l.69 1.31L20 11l-1.31.69L18 13l-.69-1.31L16 11l1.31-.69L18 9zm-6 6l.69 1.31L14 17l-1.31.69L12 19l-.69-1.31L10 17l1.31-.69L12 15z"/>
+                                      d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
                             </svg>
                         </div>
                         <span class="font-medium flex items-center">
-                            <span class="bg-gradient-to-r from-red-600 via-purple-600 to-blue-600 bg-clip-text text-transparent">
-                                Amerikaanse Verkiezingen
-                            </span>
+                            Amerikaanse Verkiezingen
                             <span class="ml-2 inline-flex items-center px-2 py-0.5 text-xs font-medium 
-                                        bg-gradient-to-r from-red-500 to-blue-500 text-white rounded-full">
-                                🇺🇸
+                                        bg-primary text-white rounded-full">
+                                USA
                             </span>
                         </span>
-                        <div class="absolute inset-0 bg-gradient-to-r from-red-100/10 to-blue-100/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </a>
 
                     <!-- Divider voor duidelijke scheiding -->

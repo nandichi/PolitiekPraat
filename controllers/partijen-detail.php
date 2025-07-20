@@ -821,7 +821,7 @@ $partyColorDark = lightenColor($partyColor, -20);
                                     <p class="text-gray-600 text-sm">Ontdek welke partij bij je past</p>
                                 </a>
                                 
-                                <a href="<?php echo URLROOT; ?>/programma-vergelijker" 
+                                <a href="<?php echo URLROOT; ?>/politiek-kompas" 
                                    class="group bg-white rounded-2xl p-6 border border-gray-200 hover:border-gray-300 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
                                     <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-green-50 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                                         <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">

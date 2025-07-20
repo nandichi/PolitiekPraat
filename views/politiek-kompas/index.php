@@ -16,16 +16,16 @@
                 <div class="flex justify-center mb-8">
                     <div class="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
                         <div class="w-2 h-2 bg-secondary-light rounded-full mr-3 animate-pulse"></div>
-                        <span class="text-white/90 text-sm font-medium">Programma analyse tool</span>
+                        <span class="text-white/90 text-sm font-medium">Politiek kompas tool</span>
                     </div>
                 </div>
                 
                 <!-- Main title -->
                 <div class="text-center mb-12">
                     <h1 class="text-5xl md:text-6xl lg:text-7xl font-black text-white mb-6 tracking-tight">
-                        Programma
+                        Politiek
                         <span class="block bg-gradient-to-r from-secondary-light via-secondary to-primary-light bg-clip-text text-transparent">
-                            Vergelijker
+                            Kompas
                         </span>
                     </h1>
                     

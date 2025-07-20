@@ -112,7 +112,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="<?php echo URLROOT; ?>/programma-vergelijker" 
+                                <a href="<?php echo URLROOT; ?>/politiek-kompas" 
                                    class="group flex items-center text-gray-600 hover:text-primary transition-colors duration-300">
                                     <span class="w-2 h-2 bg-secondary rounded-full mr-3 transform scale-0 group-hover:scale-100 transition-transform duration-300"></span>
                                     Vergelijker
