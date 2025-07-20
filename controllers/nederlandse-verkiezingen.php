@@ -14,7 +14,7 @@ try {
                    YEAR(nmp.periode_start) as start_jaar,
                    YEAR(COALESCE(nmp.periode_eind, CURDATE())) as eind_jaar
             FROM nederlandse_ministers_presidenten nmp 
-            ORDER BY nmp.periode_start ASC
+            ORDER BY nmp.periode_start DESC
         ";
         
         $presidentenStmt = $pdo->prepare($presidentenQuery);
@@ -69,6 +69,23 @@ try {
             
             $presidentenPerEra[$era][] = $president;
         }
+        
+        // Sorteer era's van nieuw naar oud
+        $eraOrder = [
+            'Digitale Era & Polarisatie (2001-heden)',
+            'Ontzuiling & Modernisering (1981-2000)',
+            'Wederopbouw & Verzuiling (1946-1980)',
+            'Interbellum & WOII (1918-1945)',
+            'Vroege Democratie (1848-1917)'
+        ];
+        
+        $gesorteerdePresidentenPerEra = [];
+        foreach ($eraOrder as $era) {
+            if (isset($presidentenPerEra[$era])) {
+                $gesorteerdePresidentenPerEra[$era] = $presidentenPerEra[$era];
+            }
+        }
+        $presidentenPerEra = $gesorteerdePresidentenPerEra;
         
         // Fetch statistics about ministers-presidenten
         $presidentenStatistiekenQuery = "
@@ -185,7 +202,7 @@ try {
                 ELSE 'Vroege Democratie (1848-1917)'
             END as periode
         FROM nederlandse_verkiezingen nv 
-        ORDER BY nv.jaar ASC
+        ORDER BY nv.jaar DESC
     ";
     
     $verkiezingenStmt = $pdo->prepare($verkiezingenPerPeriodeQuery);
@@ -223,6 +240,23 @@ try {
         
         $verkiezingenPerPeriode[$verkiezing->periode][] = $verkiezing;
     }
+    
+    // Sorteer era's van nieuw naar oud
+    $eraOrder = [
+        'Digitale Era & Polarisatie (2001-heden)',
+        'Ontzuiling & Modernisering (1981-2000)',
+        'Wederopbouw & Verzuiling (1946-1980)',
+        'Interbellum & WOII (1918-1945)',
+        'Vroege Democratie (1848-1917)'
+    ];
+    
+    $gesorteerdeVerkiezingenPerPeriode = [];
+    foreach ($eraOrder as $era) {
+        if (isset($verkiezingenPerPeriode[$era])) {
+            $gesorteerdeVerkiezingenPerPeriode[$era] = $verkiezingenPerPeriode[$era];
+        }
+    }
+    $verkiezingenPerPeriode = $gesorteerdeVerkiezingenPerPeriode;
     
     // Fetch algemene statistieken
     $statistiekenQuery = "

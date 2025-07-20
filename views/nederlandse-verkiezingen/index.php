@@ -575,9 +575,9 @@
                             
                             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                                 <?php foreach ($verkiezingen as $verkiezing): ?>
-                                    <div class="group">
+                                    <div class="group h-full">
                                         <a href="<?= URLROOT ?>/nederlandse-verkiezingen/<?= $verkiezing->jaar ?>" 
-                                           class="block bg-white rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-3 border-2 border-orange-200/30 hover:border-orange-400/50 overflow-hidden relative">
+                                           class="block bg-white rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-3 border-2 border-orange-200/30 hover:border-orange-400/50 overflow-hidden relative h-full flex flex-col">
                                             
                                             <!-- Nederlandse vlag corner -->
                                             <div class="absolute top-3 right-3 w-8 h-6 rounded-sm opacity-30 group-hover:opacity-60 transition-opacity duration-300">
@@ -602,7 +602,7 @@
                                             </div>
                                             
                                             <!-- Winner Info -->
-                                            <div class="p-6">
+                                            <div class="p-6 flex-1 flex flex-col">
                                                 <div class="text-center mb-4">
                                                     <div class="text-lg font-bold text-gray-900 mb-1">
                                                         <?= htmlspecialchars($verkiezing->grootste_partij ?? 'Onbekend') ?>
@@ -625,32 +625,35 @@
                                                     <div class="text-xs text-gray-500"><?= htmlspecialchars($verkiezing->minister_president_partij) ?></div>
                                                 </div>
                                                 
-                                                <!-- Quick Stats -->
-                                                <div class="space-y-2 text-center text-sm text-gray-500">
-                                                    <div class="flex items-center justify-center">
-                                                        <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
-                                                            <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                                                        </svg>
-                                                        <?= $verkiezing->grootste_partij_percentage ? number_format($verkiezing->grootste_partij_percentage, 1) . '% van de stemmen' : 'Percentage onbekend' ?>
+                                                <!-- Bottom section with stats and button -->
+                                                <div class="mt-auto">
+                                                    <!-- Quick Stats -->
+                                                    <div class="space-y-2 text-center text-sm text-gray-500 mb-4">
+                                                        <div class="flex items-center justify-center">
+                                                            <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                                                                <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                                            </svg>
+                                                            <?= $verkiezing->grootste_partij_percentage ? number_format($verkiezing->grootste_partij_percentage, 1) . '% van de stemmen' : 'Percentage onbekend' ?>
+                                                        </div>
+                                                        <div class="flex items-center justify-center">
+                                                            <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                                                                <path d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zm4 18v-6h2.5l-2.54-7.63A2.99 2.99 0 0018.05 7H16c-.8 0-1.54.37-2.01.99L11 12v7h2v5h2v-5h4v5h1v-5h0zM12.5 11.5c.83 0 1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5S11 9.17 11 10s.67 1.5 1.5 1.5zM5.5 6c1.11 0 2-.89 2-2s-.89-2-2-2-2 .89-2 2 .89 2 2 2zm1.5 2h-4c-.83 0-1.5.67-1.5 1.5S2.17 11 3 11h1v8h2v-8h1c.83 0 1.5-.67 1.5-1.5S7.83 8 7 8z"/>
+                                                            </svg>
+                                                            <?= number_format($verkiezing->opkomst_percentage, 1) ?>% opkomst
+                                                        </div>
                                                     </div>
-                                                    <div class="flex items-center justify-center">
-                                                        <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
-                                                            <path d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zm4 18v-6h2.5l-2.54-7.63A2.99 2.99 0 0018.05 7H16c-.8 0-1.54.37-2.01.99L11 12v7h2v5h2v-5h4v5h1v-5h0zM12.5 11.5c.83 0 1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5S11 9.17 11 10s.67 1.5 1.5 1.5zM5.5 6c1.11 0 2-.89 2-2s-.89-2-2-2-2 .89-2 2 .89 2 2 2zm1.5 2h-4c-.83 0-1.5.67-1.5 1.5S2.17 11 3 11h1v8h2v-8h1c.83 0 1.5-.67 1.5-1.5S7.83 8 7 8z"/>
-                                                        </svg>
-                                                        <?= number_format($verkiezing->opkomst_percentage, 1) ?>% opkomst
+                                                    
+                                                    <!-- View Details Button -->
+                                                    <div class="px-6 pb-6">
+                                                        <div class="w-full text-center py-3 px-4 bg-gradient-to-r from-gray-50 to-gray-100 text-gray-700 rounded-lg group-hover:from-primary group-hover:to-secondary group-hover:text-white transition-all duration-300 border border-gray-200 group-hover:border-transparent">
+                                                            <span class="text-sm font-medium flex items-center justify-center">
+                                                                <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                                                                    <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                                                                </svg>
+                                                                Bekijk details
+                                                            </span>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <!-- View Details Button -->
-                                            <div class="px-6 pb-6">
-                                                <div class="w-full text-center py-3 px-4 bg-gradient-to-r from-gray-50 to-gray-100 text-gray-700 rounded-lg group-hover:from-primary group-hover:to-secondary group-hover:text-white transition-all duration-300 border border-gray-200 group-hover:border-transparent">
-                                                    <span class="text-sm font-medium flex items-center justify-center">
-                                                        <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
-                                                            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
-                                                        </svg>
-                                                        Bekijk details
-                                                    </span>
                                                 </div>
                                             </div>
                                         </a>

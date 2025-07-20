@@ -133,8 +133,8 @@
                             <!-- Presidents Grid -->
                             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                 <?php foreach ($presidenten as $president): ?>
-                                    <div class="group">
-                                        <div class="bg-white rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-3 border-2 border-orange-200/30 hover:border-orange-400/50 overflow-hidden">
+                                    <div class="group h-full">
+                                        <div class="bg-white rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-3 border-2 border-orange-200/30 hover:border-orange-400/50 overflow-hidden h-full flex flex-col">
                                             
                                             <!-- President Header with Nederlandse styling -->
                                             <div class="bg-gradient-to-r from-orange-500 via-primary to-blue-600 p-6 text-center relative">
@@ -174,7 +174,7 @@
                                             </div>
                                             
                                             <!-- President Details -->
-                                            <div class="p-6">
+                                            <div class="p-6 flex-1 flex flex-col">
                                                 <!-- Term Period -->
                                                 <div class="mb-4">
                                                     <div class="text-sm text-gray-600 mb-1">Termijn</div>
@@ -200,39 +200,46 @@
                                                 </div>
                                                 
                                                 <!-- Biography Preview -->
-                                                <?php if (!empty($president->biografie)): ?>
-                                                <div class="text-sm text-gray-600 leading-relaxed">
-                                                    <?= htmlspecialchars(substr($president->biografie, 0, 120)) ?>...
-                                                </div>
-                                                <?php endif; ?>
-                                                
-                                                <!-- Status Badge -->
-                                                <div class="mt-4 flex justify-center">
-                                                    <?php if ($president->is_huidig): ?>
-                                                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 border border-green-200">
-                                                            <svg class="w-3 h-3 mr-1" viewBox="0 0 24 24" fill="currentColor">
-                                                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                                                            </svg>
-                                                            Huidig
-                                                        </span>
+                                                <div class="flex-1 mb-4">
+                                                    <?php if (!empty($president->biografie)): ?>
+                                                    <div class="text-sm text-gray-600 leading-relaxed h-12 overflow-hidden">
+                                                        <?= htmlspecialchars(substr($president->biografie, 0, 120)) ?>...
+                                                    </div>
                                                     <?php else: ?>
-                                                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600 border border-gray-200">
-                                                            Voormalig MP
-                                                        </span>
+                                                    <div class="h-12"></div>
                                                     <?php endif; ?>
                                                 </div>
                                                 
-                                                <!-- View Details Button -->
-                                                <div class="mt-4">
-                                                    <button onclick="openPresidentModal(<?= htmlspecialchars(json_encode($president)) ?>)" 
-                                                            class="w-full text-center py-2 px-3 bg-gradient-to-r from-gray-50 to-gray-100 text-gray-700 rounded-lg group-hover:from-primary group-hover:to-secondary group-hover:text-white transition-all duration-300 border border-gray-200 group-hover:border-transparent cursor-pointer">
-                                                        <span class="text-sm font-medium flex items-center justify-center">
-                                                            <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
-                                                                <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
-                                                            </svg>
-                                                            Bekijk details
-                                                        </span>
-                                                    </button>
+                                                <!-- Footer section - Status Badge and Button -->
+                                                <div class="mt-auto">
+                                                    <!-- Status Badge -->
+                                                    <div class="mb-4 flex justify-center">
+                                                        <?php if ($president->is_huidig): ?>
+                                                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 border border-green-200">
+                                                                <svg class="w-3 h-3 mr-1" viewBox="0 0 24 24" fill="currentColor">
+                                                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                                                </svg>
+                                                                Huidig
+                                                            </span>
+                                                        <?php else: ?>
+                                                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600 border border-gray-200">
+                                                                Voormalig MP
+                                                            </span>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                    
+                                                    <!-- View Details Button -->
+                                                    <div>
+                                                        <button onclick="openPresidentModal(<?= htmlspecialchars(json_encode($president)) ?>)" 
+                                                                class="w-full text-center py-2 px-3 bg-gradient-to-r from-gray-50 to-gray-100 text-gray-700 rounded-lg group-hover:from-primary group-hover:to-secondary group-hover:text-white transition-all duration-300 border border-gray-200 group-hover:border-transparent cursor-pointer">
+                                                            <span class="text-sm font-medium flex items-center justify-center">
+                                                                <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                                                                    <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                                                                </svg>
+                                                                Bekijk details
+                                                            </span>
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -434,25 +441,25 @@ function openPresidentModal(president) {
                         
                         <!-- MP Info -->
                         <div class="flex-1 text-center sm:text-left">
-                            <div class="inline-flex items-center px-2 py-1 sm:px-3 bg-white/20 backdrop-blur-sm rounded-full text-white text-xs font-medium mb-2 sm:mb-3 border border-white/30">
+                            <div class="inline-flex items-center px-2 py-1 sm:px-3 bg-white/20 backdrop-blur-sm rounded-full text-black text-xs font-medium mb-2 sm:mb-3 border border-white/30">
                                 <svg class="w-3 h-3 mr-1" viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
                                 </svg>
                                 #${president.minister_president_nummer} Minister-president van Nederland
                             </div>
-                            <h2 class="text-xl sm:text-2xl lg:text-4xl font-black text-white mb-1 sm:mb-2 leading-tight">${president.naam}</h2>
-                            ${president.bijnaam ? `<div class="text-sm sm:text-lg lg:text-xl text-blue-100 italic mb-1 sm:mb-2">"${president.bijnaam}"</div>` : ''}
+                            <h2 class="text-xl sm:text-2xl lg:text-4xl font-black text-black mb-1 sm:mb-2 leading-tight">${president.naam}</h2>
+                            ${president.bijnaam ? `<div class="text-sm sm:text-lg lg:text-xl text-black italic mb-1 sm:mb-2">"${president.bijnaam}"</div>` : ''}
                             
                             <!-- MP Stats -->
                             <div class="flex flex-wrap justify-center sm:justify-start gap-2 sm:gap-3 mt-3 sm:mt-4">
                                 <div class="bg-white/20 backdrop-blur-sm rounded-full px-2 py-1 sm:px-3 sm:py-1 border border-white/30">
-                                    <span class="text-white text-xs sm:text-sm font-medium">${president.partij}</span>
+                                    <span class="text-black text-xs sm:text-sm font-medium">${president.partij}</span>
                                 </div>
                                 <div class="bg-white/20 backdrop-blur-sm rounded-full px-2 py-1 sm:px-3 sm:py-1 border border-white/30">
-                                    <span class="text-white text-xs sm:text-sm font-medium">${new Date(president.periode_start).getFullYear()} - ${president.periode_eind ? new Date(president.periode_eind).getFullYear() : 'heden'}</span>
+                                    <span class="text-black text-xs sm:text-sm font-medium">${new Date(president.periode_start).getFullYear()} - ${president.periode_eind ? new Date(president.periode_eind).getFullYear() : 'heden'}</span>
                                 </div>
                                 <div class="bg-white/20 backdrop-blur-sm rounded-full px-2 py-1 sm:px-3 sm:py-1 border border-white/30">
-                                    <span class="text-white text-xs sm:text-sm font-medium">${Math.round(president.dagen_in_functie / 365 * 10) / 10} jaar</span>
+                                    <span class="text-black text-xs sm:text-sm font-medium">${Math.round(president.dagen_in_functie / 365 * 10) / 10} jaar</span>
                                 </div>
                             </div>
                         </div>
