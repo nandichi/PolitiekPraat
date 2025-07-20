@@ -51,17 +51,18 @@
                             <div class="absolute inset-0 bg-gradient-to-r from-orange-400/20 to-orange-500/20 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-300"></div>
                             <div class="relative bg-white/15 backdrop-blur-md rounded-3xl p-8 border-2 border-orange-400/40 hover:border-orange-400/60 transition-all duration-300 shadow-2xl">
                                 <!-- Winner Crown with Nederlandse colors -->
-                                <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                                    <div class="bg-gradient-to-r from-orange-500 to-orange-600 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg border border-orange-400/30">
-                                        <svg class="w-4 h-4 inline mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
+                                    <div class="bg-gradient-to-r from-orange-500 to-orange-600 text-white px-2 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-bold shadow-lg border border-orange-400/30 whitespace-nowrap">
+                                        <svg class="w-3 h-3 sm:w-4 sm:h-4 inline mr-1" fill="currentColor" viewBox="0 0 20 20">
                                             <path d="M5 16L3 12h5.5l-.5-4h4L11 12h6l-2 4zm7.5-8L12 4l.5 4z"/>
                                         </svg>
-                                        GROOTSTE NEDERLANDSE PARTIJ
+                                        <span class="hidden sm:inline">GROOTSTE NEDERLANDSE PARTIJ</span>
+                                        <span class="sm:hidden">GROOTSTE PARTIJ</span>
                                     </div>
                                 </div>
                                 
                                 <div class="text-center">
-                                    <h3 class="text-2xl md:text-3xl font-black text-white mb-2">
+                                    <h3 class="text-2xl md:text-3xl font-black text-white mb-2 break-words leading-tight">
                                         <?= htmlspecialchars($verkiezing->grootste_partij ?? 'Onbekend') ?>
                                     </h3>
                                     <div class="text-lg text-orange-200 mb-6 font-semibold">
@@ -94,14 +95,15 @@
                             <div class="absolute inset-0 bg-gradient-to-r from-blue-400/20 to-blue-500/20 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-300"></div>
                             <div class="relative bg-white/15 backdrop-blur-md rounded-3xl p-8 border-2 border-blue-400/40 hover:border-blue-400/60 transition-all duration-300 shadow-2xl">
                                 <!-- Runner-up Badge with Nederlandse styling -->
-                                <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                                    <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg border border-blue-400/30">
-                                        TWEEDE NEDERLANDSE PARTIJ
+                                <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
+                                    <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-2 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-bold shadow-lg border border-blue-400/30 whitespace-nowrap">
+                                        <span class="hidden sm:inline">TWEEDE NEDERLANDSE PARTIJ</span>
+                                        <span class="sm:hidden">TWEEDE PARTIJ</span>
                                     </div>
                                 </div>
                                 
                                 <div class="text-center">
-                                    <h3 class="text-2xl md:text-3xl font-black text-white mb-2">
+                                    <h3 class="text-2xl md:text-3xl font-black text-white mb-2 break-words leading-tight">
                                         <?= htmlspecialchars($verkiezing->tweede_partij ?? 'Onbekend') ?>
                                     </h3>
                                     <div class="text-lg text-blue-200 mb-6 font-semibold">
@@ -132,10 +134,10 @@
                                 </svg>
                                 Nederlandse Minister-president
                             </h3>
-                            <div class="text-3xl font-black text-white mb-2">
+                            <div class="text-3xl font-black text-white mb-2 break-words leading-tight">
                                 <?= htmlspecialchars($verkiezing->minister_president) ?>
                             </div>
-                            <div class="text-lg text-orange-200 mb-4">
+                            <div class="text-lg text-orange-200 mb-4 break-words">
                                 <?= htmlspecialchars($verkiezing->minister_president_partij) ?>
                             </div>
                             <?php if (isset($verkiezing->kabinet_naam) && !empty($verkiezing->kabinet_naam)): ?>
@@ -285,17 +287,18 @@
                             <div class="relative group">
                                 <div class="absolute inset-0 bg-gradient-to-br from-green-200 to-emerald-300 rounded-3xl blur-xl opacity-30 group-hover:opacity-50 transition-all duration-300"></div>
                                 <div class="relative bg-gradient-to-br from-green-50 to-emerald-50 rounded-3xl p-6 md:p-8 border-2 border-green-200 shadow-xl hover:shadow-2xl transition-all duration-300">
-                                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                                        <div class="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg flex items-center">
-                                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
+                                        <div class="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-3 sm:px-6 py-2 rounded-full text-xs sm:text-sm font-bold shadow-lg flex items-center whitespace-nowrap">
+                                            <svg class="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
                                             </svg>
-                                            GROOTSTE WINNAAR
+                                            <span class="hidden sm:inline">GROOTSTE WINNAAR</span>
+                                            <span class="sm:hidden">WINNAAR</span>
                                         </div>
                                     </div>
                                     
                                     <div class="pt-6 text-center">
-                                        <h3 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+                                        <h3 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2 break-words leading-tight">
                                             <?= htmlspecialchars($verkiezing->grootste_winnaar) ?>
                                         </h3>
                                         <div class="text-lg text-green-700 mb-6 font-semibold">
@@ -317,17 +320,18 @@
                             <div class="relative group">
                                 <div class="absolute inset-0 bg-gradient-to-br from-red-200 to-pink-300 rounded-3xl blur-xl opacity-30 group-hover:opacity-50 transition-all duration-300"></div>
                                 <div class="relative bg-gradient-to-br from-red-50 to-pink-50 rounded-3xl p-6 md:p-8 border-2 border-red-200 shadow-xl hover:shadow-2xl transition-all duration-300">
-                                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                                        <div class="bg-gradient-to-r from-red-500 to-pink-600 text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg flex items-center">
-                                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
+                                        <div class="bg-gradient-to-r from-red-500 to-pink-600 text-white px-3 sm:px-6 py-2 rounded-full text-xs sm:text-sm font-bold shadow-lg flex items-center whitespace-nowrap">
+                                            <svg class="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"></path>
                                             </svg>
-                                            GROOTSTE VERLIEZER
+                                            <span class="hidden sm:inline">GROOTSTE VERLIEZER</span>
+                                            <span class="sm:hidden">VERLIEZER</span>
                                         </div>
                                     </div>
                                     
                                     <div class="pt-6 text-center">
-                                        <h3 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+                                        <h3 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2 break-words leading-tight">
                                             <?= htmlspecialchars($verkiezing->grootste_verliezer) ?>
                                         </h3>
                                         <div class="text-lg text-red-700 mb-6 font-semibold">
@@ -364,18 +368,19 @@
                         <div class="absolute inset-0 bg-gradient-to-br from-orange-200 to-orange-300 rounded-3xl blur-xl opacity-30 group-hover:opacity-50 transition-all duration-300"></div>
                         <div class="relative bg-gradient-to-br from-orange-50 to-orange-50 rounded-3xl p-6 md:p-8 border-2 border-orange-200 shadow-xl hover:shadow-2xl transition-all duration-300">
                             <!-- Winner Badge -->
-                            <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                                <div class="bg-gradient-to-r from-orange-500 to-orange-600 text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg">
-                                    <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
+                                <div class="bg-gradient-to-r from-orange-500 to-orange-600 text-white px-3 sm:px-6 py-2 rounded-full text-xs sm:text-sm font-bold shadow-lg whitespace-nowrap">
+                                    <svg class="w-3 h-3 sm:w-4 sm:h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg>
-                                    GROOTSTE PARTIJ
+                                    <span class="hidden sm:inline">GROOTSTE PARTIJ</span>
+                                    <span class="sm:hidden">WINNAAR</span>
                                 </div>
                             </div>
                             
                             <div class="pt-6">
                                 <div class="text-center">
-                                    <h3 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+                                    <h3 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2 break-words leading-tight">
                                         <?= htmlspecialchars($verkiezing->grootste_partij ?? 'Onbekend') ?>
                                     </h3>
                                     <div class="text-lg text-orange-700 mb-6 font-semibold">
@@ -408,15 +413,16 @@
                         <div class="absolute inset-0 bg-gradient-to-br from-blue-200 to-blue-300 rounded-3xl blur-xl opacity-30 group-hover:opacity-50 transition-all duration-300"></div>
                         <div class="relative bg-gradient-to-br from-blue-50 to-blue-50 rounded-3xl p-6 md:p-8 border-2 border-blue-200 shadow-xl hover:shadow-2xl transition-all duration-300">
                             <!-- Runner-up Badge -->
-                            <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                                <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg">
-                                    TWEEDE PARTIJ
+                            <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
+                                <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-3 sm:px-6 py-2 rounded-full text-xs sm:text-sm font-bold shadow-lg whitespace-nowrap">
+                                    <span class="hidden sm:inline">TWEEDE PARTIJ</span>
+                                    <span class="sm:hidden">TWEEDE</span>
                                 </div>
                             </div>
                             
                             <div class="pt-6">
                                 <div class="text-center">
-                                    <h3 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+                                    <h3 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2 break-words leading-tight">
                                         <?= htmlspecialchars($verkiezing->tweede_partij ?? 'Onbekend') ?>
                                     </h3>
                                     <div class="text-lg text-blue-700 mb-6 font-semibold">
@@ -472,8 +478,8 @@
                                 
                                 <div class="grid grid-cols-2 gap-3">
                                     <?php foreach ($verkiezing->coalitie_partijen as $partij): ?>
-                                        <div class="flex items-center justify-center bg-green-100 rounded-lg px-3 py-2">
-                                            <span class="text-green-700 font-semibold text-sm text-center">
+                                        <div class="flex items-center justify-center bg-green-100 rounded-lg px-3 py-2 min-h-[3rem]">
+                                            <span class="text-green-700 font-semibold text-sm text-center break-words leading-tight">
                                                 <?= htmlspecialchars($partij) ?>
                                             </span>
                                         </div>
@@ -498,8 +504,8 @@
                                     
                                     <div class="grid grid-cols-2 gap-3">
                                         <?php foreach ($verkiezing->oppositie_partijen as $partij): ?>
-                                            <div class="flex items-center justify-center bg-red-100 rounded-lg px-3 py-2">
-                                                <span class="text-red-700 font-semibold text-sm text-center">
+                                            <div class="flex items-center justify-center bg-red-100 rounded-lg px-3 py-2 min-h-[3rem]">
+                                                <span class="text-red-700 font-semibold text-sm text-center break-words leading-tight">
                                                     <?= htmlspecialchars($partij) ?>
                                                 </span>
                                             </div>
@@ -567,7 +573,7 @@
                                         </div>
                                         
                                         <div class="text-center pt-2">
-                                            <h4 class="text-lg font-bold text-gray-900 mb-1"><?= htmlspecialchars($partij->partij) ?></h4>
+                                            <h4 class="text-lg font-bold text-gray-900 mb-1 break-words leading-tight"><?= htmlspecialchars($partij->partij) ?></h4>
                                             
                                             <div class="grid grid-cols-2 gap-3 mb-3">
                                                 <div class="<?= $lightColors[$colorIndex] ?> rounded-lg p-2">
@@ -622,7 +628,7 @@
                                         <?php $colorIndex = $index % count($colors); ?>
                                         <div class="flex items-center">
                                             <div class="w-3 h-3 <?= $colors[$colorIndex] ?> rounded-full mr-2 flex-shrink-0"></div>
-                                            <span class="text-gray-700"><?= htmlspecialchars($partij->partij) ?></span>
+                                            <span class="text-gray-700 break-words"><?= htmlspecialchars($partij->partij) ?></span>
                                         </div>
                                     <?php endforeach; ?>
                                 </div>
@@ -783,9 +789,9 @@
                                                 </h4>
                                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                                     <?php foreach ($verkiezing->nieuwe_partijen as $partij): ?>
-                                                        <span class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-semibold bg-green-100 text-green-800 border border-green-200">
-                                                            <span class="w-2 h-2 bg-green-600 rounded-full mr-2"></span>
-                                                            <?= htmlspecialchars($partij) ?>
+                                                        <span class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-semibold bg-green-100 text-green-800 border border-green-200 break-words">
+                                                            <span class="w-2 h-2 bg-green-600 rounded-full mr-2 flex-shrink-0"></span>
+                                                            <span class="break-words"><?= htmlspecialchars($partij) ?></span>
                                                         </span>
                                                     <?php endforeach; ?>
                                                 </div>
@@ -802,9 +808,9 @@
                                                 </h4>
                                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                                     <?php foreach ($verkiezing->verdwenen_partijen as $partij): ?>
-                                                        <span class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-semibold bg-red-100 text-red-800 border border-red-200">
-                                                            <span class="w-2 h-2 bg-red-600 rounded-full mr-2"></span>
-                                                            <?= htmlspecialchars($partij) ?>
+                                                        <span class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-semibold bg-red-100 text-red-800 border border-red-200 break-words">
+                                                            <span class="w-2 h-2 bg-red-600 rounded-full mr-2 flex-shrink-0"></span>
+                                                            <span class="break-words"><?= htmlspecialchars($partij) ?></span>
                                                         </span>
                                                     <?php endforeach; ?>
                                                 </div>
@@ -882,9 +888,9 @@
                                         <?php foreach ($verkiezing->lijsttrekkers as $lijsttrekker): ?>
                                             <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl p-4 border border-indigo-200">
                                                 <div class="text-center">
-                                                    <div class="font-semibold text-gray-900"><?= htmlspecialchars($lijsttrekker->naam ?? $lijsttrekker) ?></div>
+                                                    <div class="font-semibold text-gray-900 break-words"><?= htmlspecialchars($lijsttrekker->naam ?? $lijsttrekker) ?></div>
                                                     <?php if (isset($lijsttrekker->partij)): ?>
-                                                        <div class="text-sm text-indigo-600 font-medium"><?= htmlspecialchars($lijsttrekker->partij) ?></div>
+                                                        <div class="text-sm text-indigo-600 font-medium break-words"><?= htmlspecialchars($lijsttrekker->partij) ?></div>
                                                     <?php endif; ?>
                                                 </div>
                                             </div>
@@ -1038,13 +1044,13 @@
                                             <?= $gerelateerdeVerkiezingen['vorige']->jaar ?>
                                         </div>
                                         
-                                        <div class="text-xl font-bold text-white mb-2">
+                                        <div class="text-xl font-bold text-white mb-2 break-words">
                                             <?= htmlspecialchars($gerelateerdeVerkiezingen['vorige']->grootste_partij ?? 'Onbekend') ?>
                                         </div>
                                         <div class="text-blue-200 mb-2">
                                             Grootste partij
                                         </div>
-                                        <div class="text-sm text-blue-100">
+                                        <div class="text-sm text-blue-100 break-words">
                                             MP: <?= htmlspecialchars($gerelateerdeVerkiezingen['vorige']->minister_president) ?>
                                         </div>
                                     </div>
@@ -1072,13 +1078,13 @@
                                             <?= $gerelateerdeVerkiezingen['volgende']->jaar ?>
                                         </div>
                                         
-                                        <div class="text-xl font-bold text-white mb-2">
+                                        <div class="text-xl font-bold text-white mb-2 break-words">
                                             <?= htmlspecialchars($gerelateerdeVerkiezingen['volgende']->grootste_partij ?? 'Onbekend') ?>
                                         </div>
                                         <div class="text-blue-200 mb-2">
                                             Grootste partij
                                         </div>
-                                        <div class="text-sm text-blue-100">
+                                        <div class="text-sm text-blue-100 break-words">
                                             MP: <?= htmlspecialchars($gerelateerdeVerkiezingen['volgende']->minister_president) ?>
                                         </div>
                                     </div>
