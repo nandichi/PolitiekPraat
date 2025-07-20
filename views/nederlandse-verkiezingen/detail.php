@@ -975,50 +975,89 @@
                                                             </div>
                                                         </div>
                                                         
-                                                        <!-- YouTube Video Preview -->
-                                                        <div class="relative group cursor-pointer" onclick="window.open('<?= htmlspecialchars($youtubeUrl) ?>', '_blank')">
+                                                        <!-- YouTube Video Player -->
+                                                        <div class="space-y-3">
                                                             <?php 
-                                                            // Extract video ID for thumbnail
+                                                            // Extract video ID for player
                                                             preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/', $youtubeUrl, $matches);
                                                             $videoId = $matches[1] ?? '';
                                                             $thumbnailUrl = "https://img.youtube.com/vi/{$videoId}/maxresdefault.jpg";
+                                                            $uniqueId = 'video_' . $videoId . '_' . uniqid();
                                                             ?>
                                                             
-                                                            <div class="aspect-video bg-gray-900 rounded-xl overflow-hidden relative">
-                                                                <img src="<?= $thumbnailUrl ?>" 
-                                                                     alt="YouTube Video Thumbnail" 
-                                                                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                                                                     onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjkwIiB2aWV3Qm94PSIwIDAgMTIwIDkwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cmVjdCB3aWR0aD0iMTIwIiBoZWlnaHQ9IjkwIiBmaWxsPSIjMzMzMzMzIi8+CjxwYXRoIGQ9Ik00OCAzNkw3MiA0NUw0OCA1NFYzNloiIGZpbGw9IndoaXRlIi8+Cjwvc3ZnPgo='">
-                                                                
-                                                                <!-- Play Button Overlay -->
-                                                                <div class="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/30 transition-colors duration-300">
-                                                                    <div class="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform duration-300">
-                                                                        <svg class="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-                                                                            <path d="M8 5v14l11-7z"/>
+                                                            <!-- Video Preview (shows initially) -->
+                                                            <div id="<?= $uniqueId ?>_preview" class="relative group cursor-pointer" onclick="loadYouTubePlayer('<?= $videoId ?>', '<?= $uniqueId ?>')">
+                                                                <div class="aspect-video bg-gray-900 rounded-xl overflow-hidden relative">
+                                                                    <img src="<?= $thumbnailUrl ?>" 
+                                                                         alt="YouTube Video Thumbnail" 
+                                                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                                                         onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjkwIiB2aWV3Qm94PSIwIDAgMTIwIDkwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cmVjdCB3aWR0aD0iMTIwIiBoZWlnaHQ9IjkwIiBmaWxsPSIjMzMzMzMzIi8+CjxwYXRoIGQ9Ik00OCAzNkw3MiA0NUw0OCA1NFYzNloiIGZpbGw9IndoaXRlIi8+Cjwvc3ZnPgo='">
+                                                                    
+                                                                    <!-- Play Button Overlay -->
+                                                                    <div class="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/30 transition-colors duration-300">
+                                                                        <div class="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform duration-300">
+                                                                            <svg class="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                                                                                <path d="M8 5v14l11-7z"/>
+                                                                            </svg>
+                                                                        </div>
+                                                                    </div>
+                                                                    
+                                                                    <!-- YouTube Logo -->
+                                                                    <div class="absolute top-3 right-3 bg-red-600 rounded px-2 py-1">
+                                                                        <svg class="w-6 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                                                            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
                                                                         </svg>
                                                                     </div>
-                                                                </div>
-                                                                
-                                                                <!-- YouTube Logo -->
-                                                                <div class="absolute top-3 right-3 bg-red-600 rounded px-2 py-1">
-                                                                    <svg class="w-6 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
-                                                                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                                                                    </svg>
+                                                                    
+                                                                    <!-- Play Tekst -->
+                                                                    <div class="absolute bottom-4 left-4 bg-black/70 text-white px-3 py-1 rounded-lg text-sm font-medium">
+                                                                        Klik om af te spelen
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        
-                                                        <!-- Watch Button -->
-                                                        <div class="flex justify-center">
-                                                            <a href="<?= htmlspecialchars($youtubeUrl) ?>" 
-                                                               target="_blank" 
-                                                               rel="noopener noreferrer"
-                                                               class="inline-flex items-center px-4 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-105">
-                                                                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                                                                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                                                                </svg>
-                                                                <span>Bekijk op YouTube</span>
-                                                            </a>
+                                                            
+                                                            <!-- YouTube Player (hidden initially) -->
+                                                            <div id="<?= $uniqueId ?>_player" class="hidden">
+                                                                <div class="aspect-video bg-gray-900 rounded-xl overflow-hidden relative">
+                                                                    <iframe id="<?= $uniqueId ?>_iframe"
+                                                                            class="w-full h-full"
+                                                                            src=""
+                                                                            title="YouTube video player"
+                                                                            frameborder="0"
+                                                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                                                            referrerpolicy="strict-origin-when-cross-origin"
+                                                                            allowfullscreen>
+                                                                    </iframe>
+                                                                </div>
+                                                                
+                                                                <!-- Player Controls -->
+                                                                <div class="flex items-center justify-between mt-3 px-2">
+                                                                    <div class="flex items-center space-x-3">
+                                                                        <button onclick="toggleVideo('<?= $uniqueId ?>')" 
+                                                                                class="flex items-center px-3 py-1 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg text-sm transition-colors duration-200">
+                                                                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 10a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z"></path>
+                                                                            </svg>
+                                                                            Stop
+                                                                        </button>
+                                                                        
+                                                                        <span class="text-xs text-gray-500">
+                                                                            🎥 Embedded YouTube Player
+                                                                        </span>
+                                                                    </div>
+                                                                    
+                                                                    <a href="<?= htmlspecialchars($youtubeUrl) ?>" 
+                                                                       target="_blank" 
+                                                                       rel="noopener noreferrer"
+                                                                       class="flex items-center px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm transition-colors duration-200">
+                                                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                                                                        </svg>
+                                                                        YouTube
+                                                                    </a>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 <?php else: ?>
@@ -1225,5 +1264,80 @@
         </section>
     <?php endif; ?>
 </main>
+
+<script>
+// YouTube Player Functions
+function loadYouTubePlayer(videoId, uniqueId) {
+    const preview = document.getElementById(uniqueId + '_preview');
+    const player = document.getElementById(uniqueId + '_player');
+    const iframe = document.getElementById(uniqueId + '_iframe');
+    
+    // Hide preview and show player
+    preview.classList.add('hidden');
+    player.classList.remove('hidden');
+    
+    // Set the iframe source to start playing
+    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&fs=1`;
+    
+    // Smooth scroll to video if it's not fully visible
+    setTimeout(() => {
+        player.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'nearest' 
+        });
+    }, 200);
+}
+
+function toggleVideo(uniqueId) {
+    const preview = document.getElementById(uniqueId + '_preview');
+    const player = document.getElementById(uniqueId + '_player');
+    const iframe = document.getElementById(uniqueId + '_iframe');
+    
+    // Stop the video by clearing the src
+    iframe.src = '';
+    
+    // Show preview and hide player
+    player.classList.add('hidden');
+    preview.classList.remove('hidden');
+    
+    // Smooth scroll back to thumbnail
+    setTimeout(() => {
+        preview.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'nearest' 
+        });
+    }, 200);
+}
+
+// Auto-stop videos when scrolling away (performance optimization)
+let lastScrollTime = 0;
+window.addEventListener('scroll', function() {
+    const now = Date.now();
+    if (now - lastScrollTime > 1000) { // Throttle to every second
+        lastScrollTime = now;
+        
+        const players = document.querySelectorAll('[id$="_player"]:not(.hidden)');
+        players.forEach(player => {
+            const rect = player.getBoundingClientRect();
+            const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+            
+            // If video is completely out of view, optionally pause it
+            if (!isVisible && (rect.bottom < -200 || rect.top > window.innerHeight + 200)) {
+                // Video is far out of view - could pause here if desired
+                // For now, we'll keep it playing to avoid interrupting user experience
+            }
+        });
+    }
+});
+
+// Handle page unload to clean up
+window.addEventListener('beforeunload', function() {
+    // Clear all iframe sources to stop videos
+    const iframes = document.querySelectorAll('[id$="_iframe"]');
+    iframes.forEach(iframe => {
+        iframe.src = '';
+    });
+});
+</script>
 
 <?php require_once BASE_PATH . '/views/templates/footer.php'; ?> 
