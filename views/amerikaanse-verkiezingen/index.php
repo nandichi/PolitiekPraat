@@ -109,15 +109,7 @@
             <div class="max-w-7xl mx-auto">
                 <!-- Enhanced Header Section -->
                 <div class="text-center mb-16 md:mb-20">
-                    <!-- Premium badge with pulsing effect -->
-                    <div class="inline-flex items-center px-8 py-4 bg-white/20 backdrop-blur-md rounded-full mb-8 border border-white/30 shadow-2xl hover:bg-white/25 transition-all duration-300 group">
-                        <div class="w-3 h-3 bg-secondary-light rounded-full animate-pulse mr-4"></div>
-                        <svg class="w-7 h-7 text-white mr-4 group-hover:scale-110 transition-transform duration-300" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 3l1.09 2.09L15 6l-1.91 1.09L12 9l-1.09-1.91L9 6l1.91-1.09L12 3zm-6 6l.69 1.31L8 11l-1.31.69L6 13l-.69-1.31L4 11l1.31-.69L6 9zm12 0l.69 1.31L20 11l-1.31.69L18 13l-.69-1.31L16 11l1.31-.69L18 9zm-6 6l.69 1.31L14 17l-1.31.69L12 19l-.69-1.31L10 17l1.31-.69L12 15z"/>
-                        </svg>
-                        <span class="text-white font-bold text-lg tracking-wide">235 jaar democratische evolutie</span>
-                        <div class="w-3 h-3 bg-primary-light rounded-full animate-pulse ml-4"></div>
-                    </div>
+
                     
                     <!-- Main title with advanced gradient -->
                     <h2 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-8 leading-tight">
@@ -891,16 +883,6 @@
             <div class="max-w-7xl mx-auto">
                 <!-- Enhanced Header Section -->
                 <div class="text-center mb-20 md:mb-24">
-                    <!-- Premium badge with constitutional styling -->
-                    <div class="inline-flex items-center px-10 py-5 bg-gradient-to-r from-primary/10 via-white/80 to-secondary/10 backdrop-blur-md rounded-full mb-10 border border-primary/20 shadow-2xl hover:shadow-primary/10 transition-all duration-300 group">
-                        <div class="w-4 h-4 bg-amber-400 rounded-full animate-pulse mr-4"></div>
-                        <svg class="w-8 h-8 text-primary mr-4 group-hover:scale-110 transition-transform duration-300" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 3l1.09 2.09L15 6l-1.91 1.09L12 9l-1.09-1.91L9 6l1.91-1.09L12 3zm-6 6l.69 1.31L8 11l-1.31.69L6 13l-.69-1.31L4 11l1.31-.69L6 9zm12 0l.69 1.31L20 11l-1.31.69L18 13l-.69-1.31L16 11l1.31-.69L18 9zm-6 6l.69 1.31L14 17l-1.31.69L12 19l-.69-1.31L10 17l1.31-.69L12 15z"/>
-                        </svg>
-                        <span class="text-primary font-bold text-xl tracking-wide">Het unieke Amerikaanse systeem</span>
-                        <div class="w-4 h-4 bg-secondary rounded-full animate-pulse ml-4"></div>
-                    </div>
-                    
                     <!-- Revolutionary title with constitutional gradient -->
                     <h2 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-10 leading-tight">
                         <span class="block text-gray-900 mb-2">Hoe kiest Amerika</span>
