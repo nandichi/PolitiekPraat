@@ -952,15 +952,19 @@
                                                 // Try to extract YouTube URL from the text
                                                 $youtubeUrl = extractYouTubeUrl($debatText);
                                                 
-                                                // If the entire text is just a YouTube URL, give it a generic name
+                                                // If the entire text is just a YouTube URL, give it a generic name and hide URL
                                                 if (isOnlyYouTubeUrl($debatText)) {
                                                     $displayName = "TV Verkiezingsdebat";
                                                 }
                                             }
+                                            
+                                            // Don't show debat if it's only a YouTube URL without proper embedded player
+                                            $showAsRegularDebat = !$youtubeUrl || (!isOnlyYouTubeUrl($debatText) && !isset($debat->youtube_url));
                                             ?>
                                             
-                                            <div class="bg-gradient-to-r from-red-50 to-pink-50 rounded-xl p-4 border border-red-200">
-                                                <?php if ($youtubeUrl): ?>
+                                            <?php if ($youtubeUrl): ?>
+                                                <!-- Only show this debat if it has a proper YouTube URL -->
+                                                <div class="bg-gradient-to-r from-red-50 to-pink-50 rounded-xl p-4 border border-red-200">
                                                     <!-- YouTube Video Card -->
                                                     <div class="space-y-3">
                                                         <div class="flex items-start justify-between">
@@ -1042,9 +1046,7 @@
                                                                             Stop
                                                                         </button>
                                                                         
-                                                                        <span class="text-xs text-gray-500">
-                                                                            🎥 Embedded YouTube Player
-                                                                        </span>
+
                                                                     </div>
                                                                     
                                                                     <a href="<?= htmlspecialchars($youtubeUrl) ?>" 
@@ -1060,8 +1062,16 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                <?php else: ?>
-                                                    <!-- Regular Debat Card -->
+                                                    
+                                                    <?php if (isset($debat->beschrijving) && !empty($debat->beschrijving)): ?>
+                                                        <div class="mt-2 text-sm text-gray-600">
+                                                            <?= htmlspecialchars($debat->beschrijving) ?>
+                                                        </div>
+                                                    <?php endif; ?>
+                                                </div>
+                                            <?php elseif (!isOnlyYouTubeUrl($debatText)): ?>
+                                                <!-- Regular Debat Card (only show if not just a YouTube URL) -->
+                                                <div class="bg-gradient-to-r from-red-50 to-pink-50 rounded-xl p-4 border border-red-200">
                                                     <div class="flex items-start justify-between">
                                                         <div class="flex-1">
                                                             <div class="font-semibold text-gray-900 mb-1"><?= htmlspecialchars($displayName) ?></div>
@@ -1073,14 +1083,14 @@
                                                             <?php endif; ?>
                                                         </div>
                                                     </div>
-                                                <?php endif; ?>
-                                                
-                                                <?php if (isset($debat->beschrijving) && !empty($debat->beschrijving)): ?>
-                                                    <div class="mt-2 text-sm text-gray-600">
-                                                        <?= htmlspecialchars($debat->beschrijving) ?>
-                                                    </div>
-                                                <?php endif; ?>
-                                            </div>
+                                                    
+                                                    <?php if (isset($debat->beschrijving) && !empty($debat->beschrijving)): ?>
+                                                        <div class="mt-2 text-sm text-gray-600">
+                                                            <?= htmlspecialchars($debat->beschrijving) ?>
+                                                        </div>
+                                                    <?php endif; ?>
+                                                </div>
+                                            <?php endif; ?>
                                         <?php endforeach; ?>
                                     </div>
                                 </div>
