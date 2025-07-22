@@ -67,164 +67,285 @@
     <!-- Main Comparison Tool -->
     <section class="relative -mt-12 pb-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-white rounded-3xl shadow-2xl border border-slate-200/50 overflow-hidden backdrop-blur-sm">
+            <!-- Glassmorphism Container -->
+            <div class="relative bg-white/70 backdrop-blur-xl rounded-4xl shadow-2xl border border-white/20 overflow-hidden">
+                <!-- Background Effects -->
+                <div class="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5"></div>
+                <div class="absolute top-0 left-1/4 w-96 h-32 bg-primary/10 rounded-full blur-3xl"></div>
+                <div class="absolute bottom-0 right-1/4 w-80 h-24 bg-secondary/10 rounded-full blur-3xl"></div>
                 
-                <!-- Selection Panel -->
-                <div class="bg-gradient-to-br from-slate-50 to-blue-50/30 p-6 sm:p-8 lg:p-10">
+                <!-- Progress Indicator -->
+                <div class="relative z-10 px-6 sm:px-8 lg:px-10 pt-8 pb-6">
+                    <div class="flex items-center justify-center mb-8">
+                        <div class="flex items-center space-x-4">
+                            <!-- Step 1: Partijen -->
+                            <div class="flex items-center">
+                                <div id="step-1-indicator" class="w-10 h-10 rounded-2xl border-2 border-primary/30 bg-primary/10 flex items-center justify-center transition-all duration-300">
+                                    <svg class="w-5 h-5 text-primary/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                                    </svg>
+                                </div>
+                                <span class="hidden sm:block ml-3 text-sm font-medium text-slate-600">Partijen</span>
+                            </div>
+                            
+                            <div class="w-12 h-px bg-gradient-to-r from-primary/30 to-secondary/30"></div>
+                            
+                            <!-- Step 2: Thema's -->
+                            <div class="flex items-center">
+                                <div id="step-2-indicator" class="w-10 h-10 rounded-2xl border-2 border-secondary/30 bg-secondary/10 flex items-center justify-center transition-all duration-300">
+                                    <svg class="w-5 h-5 text-secondary/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+                                    </svg>
+                                </div>
+                                <span class="hidden sm:block ml-3 text-sm font-medium text-slate-600">Thema's</span>
+                            </div>
+                            
+                            <div class="w-12 h-px bg-gradient-to-r from-secondary/30 to-primary/30"></div>
+                            
+                            <!-- Step 3: Vergelijken -->
+                            <div class="flex items-center">
+                                <div id="step-3-indicator" class="w-10 h-10 rounded-2xl border-2 border-slate-300 bg-slate-50 flex items-center justify-center transition-all duration-300">
+                                    <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                    </svg>
+                                </div>
+                                <span class="hidden sm:block ml-3 text-sm font-medium text-slate-600">Vergelijk</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Selection Interface -->
+                <div class="relative z-10 px-6 sm:px-8 lg:px-10 pb-8">
+                    
+                    <!-- Selection Summary Bar -->
+                    <div class="mb-8 bg-white/50 backdrop-blur-sm rounded-3xl p-6 border border-white/30">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <!-- Selected Parties Display -->
+                            <div>
+                                <div class="flex items-center justify-between mb-4">
+                                    <h4 class="font-bold text-slate-800 flex items-center">
+                                        <span class="w-3 h-3 bg-primary rounded-full mr-2"></span>
+                                        Geselecteerde Partijen
+                                        <span id="party-count" class="ml-2 px-2 py-1 bg-primary/10 text-primary text-sm rounded-full font-medium">0</span>
+                                    </h4>
+                                    <button id="clear-parties" class="text-sm text-slate-500 hover:text-slate-700 transition-colors hidden">
+                                        Wissen
+                                    </button>
+                                </div>
+                                <div id="selected-parties-display" class="flex flex-wrap gap-2 min-h-[2.5rem] items-center">
+                                    <span class="text-sm text-slate-500 italic">Geen partijen geselecteerd</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Selected Themes Display -->
+                            <div>
+                                <div class="flex items-center justify-between mb-4">
+                                    <h4 class="font-bold text-slate-800 flex items-center">
+                                        <span class="w-3 h-3 bg-secondary rounded-full mr-2"></span>
+                                        Geselecteerde Thema's
+                                        <span id="theme-count" class="ml-2 px-2 py-1 bg-secondary/10 text-secondary text-sm rounded-full font-medium">0</span>
+                                    </h4>
+                                    <button id="clear-themes" class="text-sm text-slate-500 hover:text-slate-700 transition-colors hidden">
+                                        Wissen
+                                    </button>
+                                </div>
+                                <div id="selected-themes-display" class="flex flex-wrap gap-2 min-h-[2.5rem] items-center">
+                                    <span class="text-sm text-slate-500 italic">Geen thema's geselecteerd</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Main Selection Grid -->
                     <div class="grid lg:grid-cols-2 gap-8 lg:gap-12">
                         
                         <!-- Party Selection -->
                         <div class="space-y-6">
-                            <div class="flex items-center space-x-4">
-                                <div class="w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-2xl flex items-center justify-center shadow-lg">
-                                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                              d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                            <div class="text-center lg:text-left">
+                                <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary to-primary-dark rounded-3xl mb-4 shadow-lg">
+                                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
                                     </svg>
                                 </div>
-                                <div>
-                                    <h3 class="text-xl sm:text-2xl font-bold text-slate-800">Selecteer Partijen</h3>
-                                    <p class="text-slate-500 text-sm">Kies minimaal 2 partijen om te vergelijken</p>
-                                </div>
+                                <h3 class="text-2xl sm:text-3xl font-black text-slate-800 mb-2">Kies Partijen</h3>
+                                <p class="text-slate-600">Selecteer minimaal 2 partijen om te vergelijken</p>
                             </div>
                             
+                            <!-- Party Grid -->
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="party-selector">
                                 <?php foreach($data['parties'] as $key => $party): ?>
-                                    <label class="group relative flex items-center p-4 rounded-2xl bg-white border-2 border-slate-200 
-                                                 hover:border-blue-300 hover:shadow-lg cursor-pointer transition-all duration-300 
-                                                 hover:scale-[1.02] focus-within:border-blue-400 focus-within:ring-4 focus-within:ring-blue-100">
-                                        <input type="checkbox" 
-                                               class="party-checkbox sr-only" 
-                                                                                      data-party="<?php echo $key; ?>" 
-                                       data-color="<?php echo $party['color']; ?>">
-                                
-                                <!-- Custom Checkbox -->
-                                <div class="w-5 h-5 border-2 border-slate-300 rounded-lg mr-4 flex items-center justify-center
-                                           group-hover:border-primary transition-colors duration-200 flex-shrink-0">
-                                    <svg class="w-3 h-3 text-primary opacity-0 group-has-[:checked]:opacity-100 transition-opacity duration-200" 
-                                         fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                                    </svg>
-                                </div>
+                                    <div class="party-card group relative bg-white/70 backdrop-blur-sm rounded-2xl border-2 border-slate-200/50 
+                                               hover:border-primary/50 hover:shadow-lg cursor-pointer transition-all duration-300 
+                                               hover:scale-[1.02] hover:-translate-y-1" 
+                                         data-party="<?php echo $key; ?>" 
+                                         data-color="<?php echo $party['color']; ?>"
+                                         data-name="<?php echo $party['name']; ?>"
+                                         data-logo="<?php echo $party['logo']; ?>"
+                                         data-seats="<?php echo $party['current_seats']; ?>">
                                         
-                                        <div class="flex items-center space-x-3 flex-1 min-w-0">
-                                            <img src="<?php echo $party['logo']; ?>" 
-                                                 alt="<?php echo $party['name']; ?>" 
-                                                 class="w-10 h-10 rounded-xl object-cover border-2 border-slate-200 
-                                                       group-hover:border-slate-300 transition-all duration-300"
-                                                 onerror="this.style.display='none'">
-                                            <div class="flex-1 min-w-0">
-                                                                                            <div class="font-semibold text-slate-800 group-hover:text-primary 
-                                                       transition-colors duration-300 truncate text-sm sm:text-base">
-                                                <?php echo $key; ?>
-                                            </div>
-                                                <div class="text-xs text-slate-500">
-                                                    <?php echo $party['current_seats']; ?> zetels
+                                        <!-- Selection Status -->
+                                        <div class="absolute -top-2 -right-2 w-6 h-6 bg-primary rounded-full border-2 border-white 
+                                                   opacity-0 scale-0 transition-all duration-300 flex items-center justify-center party-check">
+                                            <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                            </svg>
+                                        </div>
+                                        
+                                        <div class="p-4">
+                                            <div class="flex items-center space-x-3">
+                                                <div class="relative">
+                                                    <img src="<?php echo $party['logo']; ?>" 
+                                                         alt="<?php echo $party['name']; ?>" 
+                                                         class="w-12 h-12 rounded-xl object-cover border-2 border-slate-200 
+                                                               group-hover:border-primary/30 transition-all duration-300"
+                                                         onerror="this.style.display='none'">
+                                                    <div class="absolute inset-0 bg-primary/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                                </div>
+                                                <div class="flex-1 min-w-0">
+                                                    <div class="font-bold text-slate-800 group-hover:text-primary 
+                                                               transition-colors duration-300 text-sm sm:text-base truncate">
+                                                        <?php echo $key; ?>
+                                                    </div>
+                                                    <div class="text-xs text-slate-500 flex items-center">
+                                                        <span class="w-2 h-2 rounded-full mr-1" style="background-color: <?php echo $party['color']; ?>"></span>
+                                                        <?php echo $party['current_seats']; ?> zetels
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                         
-                                                                            <!-- Selection Indicator -->
-                                    <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-primary/10 to-secondary/10 
-                                               opacity-0 group-has-[:checked]:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
-                                    </label>
+                                        <!-- Hover Effect -->
+                                        <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-primary/5 to-primary-dark/5 
+                                                   opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+                                    </div>
                                 <?php endforeach; ?>
                             </div>
                         </div>
 
                         <!-- Theme Selection -->
                         <div class="space-y-6">
-                                                        <div class="flex flex-col space-y-4 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
-                                <div class="flex items-center space-x-4">
-                                     <div class="w-12 h-12 bg-gradient-to-br from-secondary to-primary rounded-2xl flex items-center justify-center shadow-lg">
-                                         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                                   d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
-                                         </svg>
-                                     </div>
-                                    <div>
-                                        <h3 class="text-xl sm:text-2xl font-bold text-slate-800">Selecteer Thema's</h3>
-                                        <p class="text-slate-500 text-sm">Kies de onderwerpen die je wilt vergelijken</p>
-                                    </div>
-                                </div>
-                                <button id="select-all-themes" 
-                                        class="group inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r from-primary to-secondary 
-                                              text-white font-medium rounded-xl shadow-lg hover:shadow-xl 
-                                              transform hover:scale-105 active:scale-95 transition-all duration-300 
-                                              text-sm whitespace-nowrap flex-shrink-0">
-                                    <svg class="w-4 h-4 mr-2 group-hover:rotate-12 transition-transform duration-300" 
-                                         fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                              d="M5 13l4 4L19 7"/>
+                            <div class="text-center lg:text-left">
+                                <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-secondary to-secondary-light rounded-3xl mb-4 shadow-lg">
+                                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
                                     </svg>
-                                    <span id="select-all-text">Alle selecteren</span>
-                                </button>
+                                </div>
+                                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
+                                    <div>
+                                        <h3 class="text-2xl sm:text-3xl font-black text-slate-800 mb-2">Kies Thema's</h3>
+                                        <p class="text-slate-600">Selecteer de onderwerpen voor vergelijking</p>
+                                    </div>
+                                    <button id="select-all-themes" 
+                                            class="group inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r from-secondary to-secondary-light 
+                                                  text-white font-medium rounded-xl shadow-lg hover:shadow-xl 
+                                                  transform hover:scale-105 active:scale-95 transition-all duration-300 
+                                                  text-sm whitespace-nowrap">
+                                        <svg class="w-4 h-4 mr-2 group-hover:rotate-12 transition-transform duration-300" 
+                                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                        </svg>
+                                        <span id="select-all-text">Alle selecteren</span>
+                                    </button>
+                                </div>
                             </div>
                             
+                            <!-- Theme Grid -->
                             <div class="space-y-3" id="theme-selector">
                                 <?php foreach($data['themes'] as $key => $theme): ?>
-                                    <label class="group relative flex items-center p-4 rounded-2xl bg-white border-2 border-slate-200 
-                                                 hover:border-indigo-300 hover:shadow-lg cursor-pointer transition-all duration-300 
-                                                 hover:scale-[1.02] focus-within:border-indigo-400 focus-within:ring-4 focus-within:ring-indigo-100">
-                                        <input type="checkbox" 
-                                               class="theme-checkbox sr-only" 
-                                               data-theme="<?php echo $key; ?>">
+                                    <div class="theme-card group relative bg-white/70 backdrop-blur-sm rounded-2xl border-2 border-slate-200/50 
+                                               hover:border-secondary/50 hover:shadow-lg cursor-pointer transition-all duration-300 
+                                               hover:scale-[1.02] hover:-translate-y-1" 
+                                         data-theme="<?php echo $key; ?>"
+                                         data-title="<?php echo $theme['title']; ?>"
+                                         data-icon="<?php echo $theme['icon']; ?>"
+                                         data-description="<?php echo $theme['description']; ?>">
                                         
-                                                                                 <!-- Custom Checkbox -->
-                                         <div class="w-5 h-5 border-2 border-slate-300 rounded-lg mr-4 flex items-center justify-center
-                                                    group-hover:border-secondary transition-colors duration-200 flex-shrink-0">
-                                             <svg class="w-3 h-3 text-secondary opacity-0 group-has-[:checked]:opacity-100 transition-opacity duration-200" 
-                                                  fill="currentColor" viewBox="0 0 20 20">
-                                                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                                             </svg>
-                                         </div>
+                                        <!-- Selection Status -->
+                                        <div class="absolute -top-2 -right-2 w-6 h-6 bg-secondary rounded-full border-2 border-white 
+                                                   opacity-0 scale-0 transition-all duration-300 flex items-center justify-center theme-check">
+                                            <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                            </svg>
+                                        </div>
                                         
-                                        <div class="flex items-center space-x-4 flex-1 min-w-0">
-                                            <span class="text-2xl sm:text-3xl group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
-                                                <?php echo $theme['icon']; ?>
-                                            </span>
-                                            <div class="flex-1 min-w-0">
-                                                                                                 <div class="font-semibold text-slate-800 group-hover:text-secondary 
-                                                            transition-colors duration-300 text-sm sm:text-base">
-                                                     <?php echo $theme['title']; ?>
-                                                 </div>
-                                                <p class="text-xs sm:text-sm text-slate-500 mt-1 line-clamp-2">
-                                                    <?php echo $theme['description']; ?>
-                                                </p>
+                                        <div class="p-4">
+                                            <div class="flex items-start space-x-4">
+                                                <div class="text-3xl group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
+                                                    <?php echo $theme['icon']; ?>
+                                                </div>
+                                                <div class="flex-1 min-w-0">
+                                                    <div class="font-bold text-slate-800 group-hover:text-secondary 
+                                                               transition-colors duration-300 text-base sm:text-lg mb-1">
+                                                        <?php echo $theme['title']; ?>
+                                                    </div>
+                                                    <p class="text-sm text-slate-600 line-clamp-2 leading-relaxed">
+                                                        <?php echo $theme['description']; ?>
+                                                    </p>
+                                                </div>
                                             </div>
                                         </div>
                                         
-                                        <!-- Selection Indicator -->
-                                        <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-indigo-500/10 to-purple-500/10 
-                                                   opacity-0 group-has-[:checked]:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
-                                    </label>
+                                        <!-- Hover Effect -->
+                                        <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-secondary/5 to-secondary-light/5 
+                                                   opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+                                    </div>
                                 <?php endforeach; ?>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Compare Button -->
-                    <div class="mt-10 text-center">
-                        <button id="compare-btn" 
-                                class="group inline-flex items-center px-8 py-4 bg-gradient-to-r from-primary via-secondary to-primary 
-                                      text-white font-bold rounded-2xl shadow-xl hover:shadow-2xl 
-                                      transform hover:scale-105 active:scale-95 transition-all duration-300 
-                                      disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none
-                                      disabled:hover:shadow-xl text-sm sm:text-base">
-                            <svg class="w-5 h-5 sm:w-6 sm:h-6 mr-3 group-hover:rotate-12 transition-transform duration-300" 
-                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                      d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                            </svg>
-                            <span id="button-text">Vergelijk Standpunten</span>
-                        </button>
-                        <p class="text-xs text-slate-500 mt-2">Selecteer minimaal 2 partijen en 1 thema</p>
+                    <!-- Compare Action -->
+                    <div class="mt-12 text-center">
+                        <div class="inline-flex flex-col items-center space-y-4">
+                            <!-- Ready Indicator -->
+                            <div id="ready-indicator" class="hidden animate-bounce">
+                                <div class="w-3 h-3 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
+                            </div>
+                            
+                            <!-- Compare Button -->
+                            <button id="compare-btn" 
+                                    class="group relative overflow-hidden px-10 py-5 bg-gradient-to-r from-primary via-secondary to-primary 
+                                          text-white font-black rounded-3xl shadow-2xl hover:shadow-3xl 
+                                          transform hover:scale-105 active:scale-95 transition-all duration-500 
+                                          disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none
+                                          disabled:hover:shadow-2xl text-lg">
+                                
+                                <!-- Animated Background -->
+                                <div class="absolute inset-0 bg-gradient-to-r from-primary-dark via-primary to-secondary-light opacity-0 
+                                           group-hover:opacity-100 transition-opacity duration-500"></div>
+                                
+                                <!-- Button Content -->
+                                <div class="relative z-10 flex items-center">
+                                    <svg class="w-6 h-6 mr-3 group-hover:rotate-12 transition-transform duration-300" 
+                                         fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                              d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                    </svg>
+                                    <span id="button-text">Vergelijk Standpunten</span>
+                                </div>
+                                
+                                <!-- Shimmer Effect -->
+                                <div class="absolute inset-0 -top-1 -left-1 bg-gradient-to-r from-transparent via-white/25 to-transparent 
+                                           transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
+                            </button>
+                            
+                            <!-- Help Text -->
+                            <div id="help-text" class="text-sm text-slate-500 max-w-md">
+                                <div class="flex items-center justify-center space-x-2">
+                                    <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    <span>Selecteer minimaal 2 partijen en 1 thema om te beginnen</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Comparison Results -->
-                <div id="comparison-results" class="hidden">
-                    <div class="border-t border-slate-200 p-6 sm:p-8 lg:p-10">
+                <div id="comparison-results" class="hidden relative z-10">
+                    <div class="border-t border-white/20 bg-gradient-to-br from-slate-50/80 to-blue-50/40 backdrop-blur-sm p-6 sm:p-8 lg:p-10">
                         <div id="results-content"></div>
                     </div>
                 </div>
@@ -355,21 +476,174 @@
 </div>
 
 <style>
-/* Custom Checkbox Styles */
-.group:has(.party-checkbox:checked) {
-    @apply border-blue-400 shadow-lg;
+/* Modern Glassmorphism and Card Styles */
+.rounded-4xl {
+    border-radius: 2rem;
 }
 
-.group:has(.theme-checkbox:checked) {
-    @apply border-indigo-400 shadow-lg;
+/* Selection Cards */
+.party-card.selected {
+    border-color: var(--primary);
+    background: linear-gradient(135deg, rgba(var(--primary), 0.05) 0%, rgba(var(--primary-dark), 0.08) 100%);
+    transform: scale(1.02) translateY(-2px);
+    box-shadow: 0 12px 24px -8px rgba(var(--primary), 0.3);
 }
 
-.group:has(.party-checkbox:checked) .w-5.h-5 {
-    @apply bg-blue-600 border-blue-600;
+.theme-card.selected {
+    border-color: var(--secondary);
+    background: linear-gradient(135deg, rgba(var(--secondary), 0.05) 0%, rgba(var(--secondary-light), 0.08) 100%);
+    transform: scale(1.02) translateY(-2px);
+    box-shadow: 0 12px 24px -8px rgba(var(--secondary), 0.3);
 }
 
-.group:has(.theme-checkbox:checked) .w-5.h-5 {
-    @apply bg-indigo-600 border-indigo-600;
+.party-card.selected .party-check,
+.theme-card.selected .theme-check {
+    opacity: 1;
+    scale: 1;
+}
+
+/* Selection Chips/Tags */
+.selection-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 0.75rem;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #475569;
+    box-shadow: 0 4px 8px -2px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: slideInScale 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.selection-chip:hover {
+    transform: translateY(-1px) scale(1.02);
+    box-shadow: 0 6px 12px -2px rgba(0, 0, 0, 0.15);
+}
+
+.selection-chip.party-chip {
+    background: linear-gradient(135deg, rgba(var(--primary), 0.15) 0%, rgba(var(--primary), 0.05) 100%);
+    border-color: rgba(var(--primary), 0.3);
+    color: var(--primary-dark);
+}
+
+.selection-chip.theme-chip {
+    background: linear-gradient(135deg, rgba(var(--secondary), 0.15) 0%, rgba(var(--secondary), 0.05) 100%);
+    border-color: rgba(var(--secondary), 0.3);
+    color: var(--secondary-dark);
+}
+
+.selection-chip .chip-logo {
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 0.375rem;
+    margin-right: 0.5rem;
+    object-fit: cover;
+}
+
+.selection-chip .chip-icon {
+    font-size: 1rem;
+    margin-right: 0.375rem;
+}
+
+.selection-chip .chip-remove {
+    margin-left: 0.5rem;
+    padding: 0.125rem;
+    border-radius: 0.25rem;
+    color: #64748b;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.selection-chip .chip-remove:hover {
+    background: rgba(0, 0, 0, 0.1);
+    color: #ef4444;
+}
+
+/* Progress Indicators */
+.step-indicator.active {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    border-color: var(--primary);
+    box-shadow: 0 4px 12px -4px rgba(var(--primary), 0.4);
+}
+
+.step-indicator.active svg {
+    color: white;
+}
+
+.step-indicator.theme.active {
+    background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-light) 100%);
+    border-color: var(--secondary);
+    box-shadow: 0 4px 12px -4px rgba(var(--secondary), 0.4);
+}
+
+.step-indicator.completed {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    border-color: #10b981;
+    box-shadow: 0 4px 12px -4px rgba(16, 185, 129, 0.4);
+}
+
+.step-indicator.completed svg {
+    color: white;
+}
+
+/* Enhanced Button Animations */
+.shadow-3xl {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+#compare-btn:disabled {
+    background: linear-gradient(135deg, #94a3b8 0%, #64748b 100%);
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+#compare-btn:not(:disabled):hover .shimmer-effect {
+    animation: shimmer 1.5s ease-in-out;
+}
+
+/* Animations */
+@keyframes slideInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.8) translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%) skewX(-12deg);
+    }
+    100% {
+        transform: translateX(200%) skewX(-12deg);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse-glow {
+    0%, 100% {
+        box-shadow: 0 0 8px rgba(var(--primary), 0.3);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(var(--primary), 0.6);
+    }
 }
 
 /* Line clamp utility */
@@ -380,48 +654,64 @@
     overflow: hidden;
 }
 
-/* Loading animation */
-@keyframes pulse {
-    0%, 100% {
-        opacity: 1;
-    }
-    50% {
-        opacity: 0.5;
-    }
-}
-
+/* Enhanced loading states */
 .loading {
     animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-/* Slide animations for details */
+.loading-shimmer {
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    background-size: 200% 100%;
+    animation: shimmer-loading 1.5s infinite;
+}
+
+@keyframes shimmer-loading {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+/* Slide animations for results */
 @keyframes slideDown {
     from {
         opacity: 0;
-        max-height: 0;
-        transform: translateY(-10px);
+        transform: translateY(-10px) scaleY(0.95);
     }
     to {
         opacity: 1;
-        max-height: 500px;
-        transform: translateY(0);
+        transform: translateY(0) scaleY(1);
     }
 }
 
 @keyframes slideUp {
     from {
         opacity: 1;
-        max-height: 500px;
-        transform: translateY(0);
+        transform: translateY(0) scaleY(1);
     }
     to {
         opacity: 0;
-        max-height: 0;
-        transform: translateY(-10px);
+        transform: translateY(-10px) scaleY(0.95);
     }
 }
 
-/* Feasibility badge styling */
+/* Details container styling */
+.details-container {
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.details-container.expanding {
+    animation: slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.details-container.collapsing {
+    animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Feasibility badges */
 .feasibility-badge {
     transition: all 0.2s ease;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -432,7 +722,6 @@
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
-/* Feasibility color variants */
 .feasibility-haalbaar {
     background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
     color: #065f46;
@@ -451,16 +740,52 @@
     border: 1px solid #ef4444;
 }
 
-/* Details section styling */
-.details-section {
-    transition: all 0.3s ease;
-}
-
-/* Responsive improvements */
+/* Enhanced responsive design */
 @media (max-width: 640px) {
     .text-4xl { font-size: 2.5rem; }
     .text-5xl { font-size: 3rem; }
     .text-6xl { font-size: 3.5rem; }
+    
+    .selection-chip {
+        font-size: 0.75rem;
+        padding: 0.375rem 0.625rem;
+    }
+    
+    .selection-chip .chip-logo {
+        width: 1rem;
+        height: 1rem;
+    }
+}
+
+/* Smooth staggered animations */
+.party-card, .theme-card {
+    animation: fadeInUp 0.6s ease-out backwards;
+}
+
+.party-card:nth-child(1) { animation-delay: 0.05s; }
+.party-card:nth-child(2) { animation-delay: 0.1s; }
+.party-card:nth-child(3) { animation-delay: 0.15s; }
+.party-card:nth-child(4) { animation-delay: 0.2s; }
+.party-card:nth-child(5) { animation-delay: 0.25s; }
+.party-card:nth-child(6) { animation-delay: 0.3s; }
+
+.theme-card:nth-child(1) { animation-delay: 0.1s; }
+.theme-card:nth-child(2) { animation-delay: 0.15s; }
+.theme-card:nth-child(3) { animation-delay: 0.2s; }
+.theme-card:nth-child(4) { animation-delay: 0.25s; }
+.theme-card:nth-child(5) { animation-delay: 0.3s; }
+.theme-card:nth-child(6) { animation-delay: 0.35s; }
+
+/* Focus and accessibility improvements */
+.party-card:focus-visible,
+.theme-card:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+.selection-chip:focus-visible {
+    outline: 2px solid var(--secondary);
+    outline-offset: 2px;
 }
 </style>
 
@@ -469,62 +794,255 @@ document.addEventListener('DOMContentLoaded', function() {
     const parties = <?php echo json_encode($data['parties']); ?>;
     const themes = <?php echo json_encode($data['themes']); ?>;
     
+    // UI Elements
     const compareBtn = document.getElementById('compare-btn');
     const resultsDiv = document.getElementById('comparison-results');
     const resultsContent = document.getElementById('results-content');
     const buttonText = document.getElementById('button-text');
+    const helpText = document.getElementById('help-text');
+    const readyIndicator = document.getElementById('ready-indicator');
     
-    // Quick compare functionality
-    document.querySelectorAll('.quick-compare').forEach(button => {
-        button.addEventListener('click', function() {
-            const selectedParties = this.dataset.parties.split(',');
-            const selectedThemes = this.dataset.themes.split(',');
-            
-            // Clear all checkboxes first
-            document.querySelectorAll('.party-checkbox, .theme-checkbox').forEach(cb => {
-                cb.checked = false;
+    // Selection displays
+    const partyCountEl = document.getElementById('party-count');
+    const themeCountEl = document.getElementById('theme-count');
+    const selectedPartiesDisplay = document.getElementById('selected-parties-display');
+    const selectedThemesDisplay = document.getElementById('selected-themes-display');
+    const clearPartiesBtn = document.getElementById('clear-parties');
+    const clearThemesBtn = document.getElementById('clear-themes');
+    
+    // Progress indicators
+    const step1Indicator = document.getElementById('step-1-indicator');
+    const step2Indicator = document.getElementById('step-2-indicator');
+    const step3Indicator = document.getElementById('step-3-indicator');
+    
+    // Selection state
+    let selectedParties = new Set();
+    let selectedThemes = new Set();
+    
+    // Card selection handlers
+    function initializeSelectionHandlers() {
+        // Party card selection
+        document.querySelectorAll('.party-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const partyKey = this.dataset.party;
+                
+                if (selectedParties.has(partyKey)) {
+                    selectedParties.delete(partyKey);
+                    this.classList.remove('selected');
+                } else {
+                    selectedParties.add(partyKey);
+                    this.classList.add('selected');
+                }
+                
+                updateUI();
             });
             
-            // Check the selected checkboxes
-            document.querySelectorAll('.party-checkbox').forEach(cb => {
-                cb.checked = selectedParties.includes(cb.dataset.party);
-            });
-            
-            document.querySelectorAll('.theme-checkbox').forEach(cb => {
-                cb.checked = selectedThemes.includes(cb.dataset.theme);
-            });
-            
-            // Trigger comparison
-            updateCompareButton();
-            performComparison();
-            
-            // Smooth scroll to comparison tool
-            document.querySelector('#comparison-results').scrollIntoView({ 
-                behavior: 'smooth', 
-                block: 'start',
-                inline: 'nearest'
+            // Keyboard support
+            card.setAttribute('tabindex', '0');
+            card.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.click();
+                }
             });
         });
-    });
-    
-    // Enable/disable compare button
-    function updateCompareButton() {
-        const selectedParties = Array.from(document.querySelectorAll('.party-checkbox:checked'));
-        const selectedThemes = Array.from(document.querySelectorAll('.theme-checkbox:checked'));
         
-        const canCompare = selectedParties.length >= 2 && selectedThemes.length >= 1;
+        // Theme card selection
+        document.querySelectorAll('.theme-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const themeKey = this.dataset.theme;
+                
+                if (selectedThemes.has(themeKey)) {
+                    selectedThemes.delete(themeKey);
+                    this.classList.remove('selected');
+                } else {
+                    selectedThemes.add(themeKey);
+                    this.classList.add('selected');
+                }
+                
+                updateUI();
+            });
+            
+            // Keyboard support
+            card.setAttribute('tabindex', '0');
+            card.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.click();
+                }
+            });
+        });
+    }
+    
+    // Create selection chip
+    function createSelectionChip(type, key, data) {
+        const chip = document.createElement('div');
+        chip.className = `selection-chip ${type}-chip`;
+        chip.dataset.key = key;
+        
+        if (type === 'party') {
+            chip.innerHTML = `
+                <img src="${data.logo}" alt="${data.name}" class="chip-logo" onerror="this.style.display='none'">
+                <span>${key}</span>
+                <svg class="chip-remove w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            `;
+        } else {
+            chip.innerHTML = `
+                <span class="chip-icon">${data.icon}</span>
+                <span>${data.title}</span>
+                <svg class="chip-remove w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            `;
+        }
+        
+        // Add remove functionality
+        chip.querySelector('.chip-remove').addEventListener('click', function(e) {
+            e.stopPropagation();
+            
+            if (type === 'party') {
+                selectedParties.delete(key);
+                document.querySelector(`[data-party="${key}"]`).classList.remove('selected');
+            } else {
+                selectedThemes.delete(key);
+                document.querySelector(`[data-theme="${key}"]`).classList.remove('selected');
+            }
+            
+            updateUI();
+        });
+        
+        return chip;
+    }
+    
+    // Update UI based on current selection
+    function updateUI() {
+        updateSelectionDisplay();
+        updateProgressIndicators();
+        updateCompareButton();
+        updateHelpText();
+        updateClearButtons();
+    }
+    
+    // Update selection display chips
+    function updateSelectionDisplay() {
+        // Update party count and display
+        partyCountEl.textContent = selectedParties.size;
+        selectedPartiesDisplay.innerHTML = '';
+        
+        if (selectedParties.size === 0) {
+            selectedPartiesDisplay.innerHTML = '<span class="text-sm text-slate-500 italic">Geen partijen geselecteerd</span>';
+        } else {
+            selectedParties.forEach(partyKey => {
+                const chip = createSelectionChip('party', partyKey, parties[partyKey]);
+                selectedPartiesDisplay.appendChild(chip);
+            });
+        }
+        
+        // Update theme count and display
+        themeCountEl.textContent = selectedThemes.size;
+        selectedThemesDisplay.innerHTML = '';
+        
+        if (selectedThemes.size === 0) {
+            selectedThemesDisplay.innerHTML = '<span class="text-sm text-slate-500 italic">Geen thema\'s geselecteerd</span>';
+        } else {
+            selectedThemes.forEach(themeKey => {
+                const chip = createSelectionChip('theme', themeKey, themes[themeKey]);
+                selectedThemesDisplay.appendChild(chip);
+            });
+        }
+    }
+    
+    // Update progress indicators
+    function updateProgressIndicators() {
+        // Step 1: Partijen
+        if (selectedParties.size >= 2) {
+            step1Indicator.classList.add('completed');
+            step1Indicator.classList.remove('active');
+        } else if (selectedParties.size > 0) {
+            step1Indicator.classList.add('active');
+            step1Indicator.classList.remove('completed');
+        } else {
+            step1Indicator.classList.remove('active', 'completed');
+        }
+        
+        // Step 2: Thema's
+        if (selectedThemes.size >= 1) {
+            step2Indicator.classList.add('completed', 'theme');
+            step2Indicator.classList.remove('active');
+        } else {
+            step2Indicator.classList.remove('completed');
+            step2Indicator.classList.add('active', 'theme');
+        }
+        
+        // Step 3: Vergelijken
+        const canCompare = selectedParties.size >= 2 && selectedThemes.size >= 1;
+        if (canCompare) {
+            step3Indicator.classList.add('completed');
+            step3Indicator.classList.remove('active');
+            readyIndicator.classList.remove('hidden');
+        } else {
+            step3Indicator.classList.remove('completed');
+            readyIndicator.classList.add('hidden');
+        }
+    }
+    
+    // Update compare button
+    function updateCompareButton() {
+        const canCompare = selectedParties.size >= 2 && selectedThemes.size >= 1;
         compareBtn.disabled = !canCompare;
         
         if (canCompare) {
-            buttonText.textContent = `Vergelijk ${selectedParties.length} partijen op ${selectedThemes.length} thema${selectedThemes.length === 1 ? '' : 's'}`;
+            buttonText.textContent = `Vergelijk ${selectedParties.size} partijen op ${selectedThemes.size} thema${selectedThemes.size === 1 ? '' : 's'}`;
         } else {
             buttonText.textContent = 'Vergelijk Standpunten';
         }
     }
     
-    // Listen for checkbox changes
-    document.querySelectorAll('.party-checkbox, .theme-checkbox').forEach(checkbox => {
-        checkbox.addEventListener('change', updateCompareButton);
+    // Update help text
+    function updateHelpText() {
+        const partiesNeeded = Math.max(0, 2 - selectedParties.size);
+        const themesNeeded = Math.max(0, 1 - selectedThemes.size);
+        
+        let message = '';
+        if (partiesNeeded > 0 && themesNeeded > 0) {
+            message = `Selecteer nog ${partiesNeeded} partij${partiesNeeded === 1 ? '' : 'en'} en ${themesNeeded} thema om te beginnen`;
+        } else if (partiesNeeded > 0) {
+            message = `Selecteer nog ${partiesNeeded} partij${partiesNeeded === 1 ? '' : 'en'} om te beginnen`;
+        } else if (themesNeeded > 0) {
+            message = `Selecteer nog ${themesNeeded} thema om te beginnen`;
+        } else {
+            message = 'Alles klaar! Klik op de knop om te vergelijken';
+        }
+        
+        const helpSpan = helpText.querySelector('span');
+        if (helpSpan) {
+            helpSpan.textContent = message;
+        }
+    }
+    
+    // Update clear buttons visibility
+    function updateClearButtons() {
+        clearPartiesBtn.classList.toggle('hidden', selectedParties.size === 0);
+        clearThemesBtn.classList.toggle('hidden', selectedThemes.size === 0);
+    }
+    
+    // Clear button handlers
+    clearPartiesBtn.addEventListener('click', function() {
+        selectedParties.clear();
+        document.querySelectorAll('.party-card.selected').forEach(card => {
+            card.classList.remove('selected');
+        });
+        updateUI();
+    });
+    
+    clearThemesBtn.addEventListener('click', function() {
+        selectedThemes.clear();
+        document.querySelectorAll('.theme-card.selected').forEach(card => {
+            card.classList.remove('selected');
+        });
+        updateUI();
     });
     
     // Select all themes functionality
@@ -532,66 +1050,102 @@ document.addEventListener('DOMContentLoaded', function() {
     const selectAllText = document.getElementById('select-all-text');
     
     selectAllThemesBtn.addEventListener('click', function() {
-        const themeCheckboxes = document.querySelectorAll('.theme-checkbox');
-        const checkedThemes = document.querySelectorAll('.theme-checkbox:checked');
-        const allSelected = checkedThemes.length === themeCheckboxes.length;
+        const totalThemes = Object.keys(themes).length;
+        const allSelected = selectedThemes.size === totalThemes;
         
-        themeCheckboxes.forEach(checkbox => {
-            checkbox.checked = !allSelected;
-        });
-        
-        // Update button text and icon
         if (allSelected) {
+            // Deselect all
+            selectedThemes.clear();
+            document.querySelectorAll('.theme-card.selected').forEach(card => {
+                card.classList.remove('selected');
+            });
             selectAllText.textContent = 'Alle selecteren';
         } else {
+            // Select all
+            Object.keys(themes).forEach(themeKey => {
+                selectedThemes.add(themeKey);
+                document.querySelector(`[data-theme="${themeKey}"]`).classList.add('selected');
+            });
             selectAllText.textContent = 'Alle deselecteren';
         }
         
-        updateCompareButton();
+        updateUI();
     });
     
-    // Update select all button text based on current selection
+    // Update select all button text
     function updateSelectAllButton() {
-        const themeCheckboxes = document.querySelectorAll('.theme-checkbox');
-        const checkedThemes = document.querySelectorAll('.theme-checkbox:checked');
-        const allSelected = checkedThemes.length === themeCheckboxes.length;
-        
-        if (allSelected && themeCheckboxes.length > 0) {
-            selectAllText.textContent = 'Alle deselecteren';
-        } else {
-            selectAllText.textContent = 'Alle selecteren';
-        }
+        const totalThemes = Object.keys(themes).length;
+        const allSelected = selectedThemes.size === totalThemes;
+        selectAllText.textContent = allSelected ? 'Alle deselecteren' : 'Alle selecteren';
     }
     
-    // Update select all button when individual checkboxes change
-    document.querySelectorAll('.theme-checkbox').forEach(checkbox => {
-        checkbox.addEventListener('change', updateSelectAllButton);
+    // Quick compare functionality
+    document.querySelectorAll('.quick-compare').forEach(button => {
+        button.addEventListener('click', function() {
+            const quickParties = this.dataset.parties.split(',');
+            const quickThemes = this.dataset.themes.split(',');
+            
+            // Clear current selections
+            selectedParties.clear();
+            selectedThemes.clear();
+            document.querySelectorAll('.party-card.selected, .theme-card.selected').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Set new selections
+            quickParties.forEach(party => {
+                if (parties[party]) {
+                    selectedParties.add(party);
+                    document.querySelector(`[data-party="${party}"]`)?.classList.add('selected');
+                }
+            });
+            
+            quickThemes.forEach(theme => {
+                if (themes[theme]) {
+                    selectedThemes.add(theme);
+                    document.querySelector(`[data-theme="${theme}"]`)?.classList.add('selected');
+                }
+            });
+            
+            updateUI();
+            
+            // Trigger comparison
+            setTimeout(() => {
+                performComparison();
+                
+                // Smooth scroll to comparison tool
+                document.querySelector('#comparison-results').scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start',
+                    inline: 'nearest'
+                });
+            }, 300);
+        });
     });
     
     // Perform comparison
     function performComparison() {
-        const selectedParties = Array.from(document.querySelectorAll('.party-checkbox:checked'))
-            .map(cb => cb.dataset.party);
-        const selectedThemes = Array.from(document.querySelectorAll('.theme-checkbox:checked'))
-            .map(cb => cb.dataset.theme);
-        
-        if (selectedParties.length < 2 || selectedThemes.length < 1) {
+        if (selectedParties.size < 2 || selectedThemes.size < 1) {
             return;
         }
         
         // Show loading state
         buttonText.textContent = 'Vergelijking laden...';
         compareBtn.disabled = true;
+        compareBtn.classList.add('loading-shimmer');
         
         setTimeout(() => {
             let html = '<div class="space-y-8">';
             
-            selectedThemes.forEach((themeKey, themeIndex) => {
+            const selectedThemesList = Array.from(selectedThemes);
+            const selectedPartiesList = Array.from(selectedParties);
+            
+            selectedThemesList.forEach((themeKey, themeIndex) => {
                 const theme = themes[themeKey];
                 html += `
                     <div class="bg-gradient-to-br from-slate-50 to-blue-50/30 rounded-3xl p-6 sm:p-8 border border-slate-200/50 
                              shadow-lg hover:shadow-xl transition-all duration-300" 
-                         style="animation-delay: ${themeIndex * 100}ms">
+                         style="animation: fadeInUp 0.6s ease-out backwards; animation-delay: ${themeIndex * 100}ms">
                         <div class="flex flex-col sm:flex-row sm:items-center mb-8 space-y-4 sm:space-y-0">
                             <div class="flex items-center space-x-4">
                                 <div class="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl 
@@ -608,7 +1162,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <div class="grid gap-4 lg:gap-6">
                 `;
                 
-                selectedParties.forEach((partyKey, partyIndex) => {
+                selectedPartiesList.forEach((partyKey, partyIndex) => {
                     const party = parties[partyKey];
                     const standpoint = party.standpoints[themeKey];
                     
@@ -623,7 +1177,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     html += `
                         <div class="bg-white rounded-2xl p-4 sm:p-6 border-l-4 shadow-md hover:shadow-lg 
                                    transition-all duration-300 transform hover:scale-[1.01]" 
-                             style="border-left-color: ${party.color}; animation-delay: ${(themeIndex * selectedParties.length + partyIndex) * 50}ms">
+                             style="border-left-color: ${party.color}; animation: fadeInUp 0.6s ease-out backwards; animation-delay: ${(themeIndex * selectedPartiesList.length + partyIndex) * 50}ms">
                             <div class="flex flex-col sm:flex-row sm:items-start space-y-3 sm:space-y-0 sm:space-x-4">
                                 <img src="${party.logo}" alt="${party.name}" 
                                      class="w-14 h-14 rounded-xl object-cover border-2 border-slate-200 flex-shrink-0 mx-auto sm:mx-0"
@@ -643,41 +1197,43 @@ document.addEventListener('DOMContentLoaded', function() {
                                         <p class="text-slate-700 leading-relaxed text-sm sm:text-base">${summary}</p>
                                         
                                         ${details ? `
-                                            <div id="details_${uniqueId}" class="hidden mt-4 space-y-4 border-t border-slate-200 pt-4">
-                                                <div>
-                                                    <h5 class="font-semibold text-slate-800 mb-2 flex items-center">
-                                                        <svg class="w-4 h-4 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                                        </svg>
-                                                        Gedetailleerde plannen
-                                                    </h5>
-                                                    <p class="text-slate-600 text-sm leading-relaxed">${details}</p>
-                                                </div>
-                                                
-                                                ${feasibility ? `
-                                                    <div class="bg-slate-50 rounded-xl p-4">
-                                                        <h5 class="font-semibold text-slate-800 mb-3 flex items-center">
-                                                            <svg class="w-4 h-4 mr-2 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                            <div id="details_${uniqueId}" class="details-container hidden mt-4 border-t border-slate-200 pt-4">
+                                                <div class="space-y-4">
+                                                    <div>
+                                                        <h5 class="font-semibold text-slate-800 mb-2 flex items-center">
+                                                            <svg class="w-4 h-4 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                                             </svg>
-                                                            Haalbaarheidsanalyse
+                                                            Gedetailleerde plannen
                                                         </h5>
-                                                        <div class="grid sm:grid-cols-2 gap-3 text-sm">
-                                                            <div>
-                                                                <span class="font-medium text-slate-700">Realiseerbaarheid:</span>
-                                                                <p class="text-slate-600 mt-1">${feasibility.explanation}</p>
-                                                            </div>
-                                                            <div>
-                                                                <span class="font-medium text-slate-700">Kosten/Baten:</span>
-                                                                <p class="text-slate-600 mt-1">${feasibility.costs}</p>
-                                                            </div>
-                                                            <div class="sm:col-span-2">
-                                                                <span class="font-medium text-slate-700">Tijdslijn:</span>
-                                                                <p class="text-slate-600 mt-1">${feasibility.timeline}</p>
+                                                        <p class="text-slate-600 text-sm leading-relaxed">${details}</p>
+                                                    </div>
+                                                    
+                                                    ${feasibility ? `
+                                                        <div class="bg-slate-50 rounded-xl p-4">
+                                                            <h5 class="font-semibold text-slate-800 mb-3 flex items-center">
+                                                                <svg class="w-4 h-4 mr-2 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                                                </svg>
+                                                                Haalbaarheidsanalyse
+                                                            </h5>
+                                                            <div class="grid sm:grid-cols-2 gap-3 text-sm">
+                                                                <div>
+                                                                    <span class="font-medium text-slate-700">Realiseerbaarheid:</span>
+                                                                    <p class="text-slate-600 mt-1">${feasibility.explanation}</p>
+                                                                </div>
+                                                                <div>
+                                                                    <span class="font-medium text-slate-700">Kosten/Baten:</span>
+                                                                    <p class="text-slate-600 mt-1">${feasibility.costs}</p>
+                                                                </div>
+                                                                <div class="sm:col-span-2">
+                                                                    <span class="font-medium text-slate-700">Tijdslijn:</span>
+                                                                    <p class="text-slate-600 mt-1">${feasibility.timeline}</p>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                ` : ''}
+                                                    ` : ''}
+                                                </div>
                                             </div>
                                             
                                             <button onclick="toggleDetails('${uniqueId}')" 
@@ -709,6 +1265,7 @@ document.addEventListener('DOMContentLoaded', function() {
             resultsDiv.classList.remove('hidden');
             
             // Reset button
+            compareBtn.classList.remove('loading-shimmer');
             updateCompareButton();
             
             // Smooth scroll to results
@@ -726,11 +1283,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Compare button click
     compareBtn.addEventListener('click', performComparison);
     
-    // Initial state
-    updateCompareButton();
+    // Initialize
+    initializeSelectionHandlers();
+    updateUI();
     updateSelectAllButton();
     
-    // Feasibility color mapping
+    // Helper functions
     window.getFeasibilityColor = function(score) {
         switch(score.toLowerCase()) {
             case 'haalbaar': 
@@ -744,49 +1302,52 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
     
-    // Toggle details function
     window.toggleDetails = function(uniqueId) {
         const detailsDiv = document.getElementById(`details_${uniqueId}`);
         const toggleText = document.getElementById(`toggle_text_${uniqueId}`);
         const toggleIcon = document.getElementById(`toggle_icon_${uniqueId}`);
         
+        // Prevent multiple rapid clicks
+        if (detailsDiv.dataset.animating === 'true') {
+            return;
+        }
+        
+        detailsDiv.dataset.animating = 'true';
+        
         if (detailsDiv.classList.contains('hidden')) {
+            // Expanding
             detailsDiv.classList.remove('hidden');
-            detailsDiv.style.animation = 'slideDown 0.3s ease-out';
+            detailsDiv.classList.remove('collapsing');
+            detailsDiv.classList.add('expanding');
+            
+            // Force reflow to ensure the element is visible before animation
+            detailsDiv.offsetHeight;
+            
             toggleText.textContent = 'Lees minder';
             toggleIcon.style.transform = 'rotate(180deg)';
-        } else {
-            detailsDiv.style.animation = 'slideUp 0.3s ease-out';
+            
+            // Clean up after animation
             setTimeout(() => {
-                detailsDiv.classList.add('hidden');
+                detailsDiv.classList.remove('expanding');
+                detailsDiv.dataset.animating = 'false';
             }, 300);
+            
+        } else {
+            // Collapsing
+            detailsDiv.classList.remove('expanding');
+            detailsDiv.classList.add('collapsing');
+            
             toggleText.textContent = 'Lees meer';
             toggleIcon.style.transform = 'rotate(0deg)';
+            
+            // Hide after animation completes
+            setTimeout(() => {
+                detailsDiv.classList.add('hidden');
+                detailsDiv.classList.remove('collapsing');
+                detailsDiv.dataset.animating = 'false';
+            }, 300);
         }
     };
-    
-    // Add animation classes for staggered entrance
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-    
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    }, observerOptions);
-    
-    // Observe all animatable elements
-    document.querySelectorAll('[data-aos]').forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(20px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(el);
-    });
 });
 </script>
 
