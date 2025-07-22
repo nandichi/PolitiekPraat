@@ -267,12 +267,57 @@ $partyColorDark = lightenColor($partyColor, -20);
                                 
                                 <div class="grid grid-cols-2 gap-6 pt-6">
                                     <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
-                                        <h3 class="font-bold text-gray-900 mb-2">Politieke Ervaring</h3>
-                                        <p class="text-gray-600 text-sm">Leider sinds de oprichting van de partij</p>
+                                        <h3 class="font-bold text-gray-900 mb-2">Parlementaire Status</h3>
+                                        <p class="text-gray-600 text-sm">
+                                            <?php 
+                                            if ($party['current_seats'] >= 20) {
+                                                echo "Grote partij";
+                                            } elseif ($party['current_seats'] >= 10) {
+                                                echo "Middelgrote partij";
+                                            } else {
+                                                echo "Kleine partij";
+                                            }
+                                            ?> in de Tweede Kamer
+                                        </p>
                                     </div>
                                     <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
-                                        <h3 class="font-bold text-gray-900 mb-2">Zetelvertegenwoordiging</h3>
-                                        <p class="text-gray-600 text-sm"><?php echo $party['current_seats']; ?> zetels in de Tweede Kamer</p>
+                                        <h3 class="font-bold text-gray-900 mb-2">Politieke Positie</h3>
+                                        <p class="text-gray-600 text-sm">
+                                            <?php 
+                                            // Bepaal positie gebaseerd op partij
+                                            $position = '';
+                                            switch($partyKey) {
+                                                case 'SP':
+                                                case 'GL-PvdA':
+                                                case 'PvdD':
+                                                case 'DENK':
+                                                case 'Volt':
+                                                    $position = 'Linkse partij';
+                                                    break;
+                                                case 'D66':
+                                                case 'CU':
+                                                    $position = 'Centrumpartij';
+                                                    break;
+                                                case 'VVD':
+                                                case 'CDA':
+                                                case 'NSC':
+                                                    $position = 'Centrum-rechtse partij';
+                                                    break;
+                                                case 'PVV':
+                                                case 'FvD':
+                                                case 'JA21':
+                                                case 'SGP':
+                                                    $position = 'Rechtse partij';
+                                                    break;
+                                                case 'BBB':
+                                                    $position = 'Agrarische belangenpartij';
+                                                    break;
+                                                default:
+                                                    $position = 'Nederlandse politieke partij';
+                                            }
+                                            echo $position;
+                                            ?>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
