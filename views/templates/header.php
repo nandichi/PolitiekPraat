@@ -238,7 +238,8 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
 } elseif ($currentPage === 'nederlandse-verkiezingen') {
     $metaImage = 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Den_Haag_Binnenhof_Hofvijver.jpg/640px-Den_Haag_Binnenhof_Hofvijver.jpg';
 } else {
-    $metaImage = isset($data['image']) ? $data['image'] : (URLROOT . '/public/img/og-image.jpg');
+    // Voor de homepage en andere pagina's gebruik het website logo als fallback
+    $metaImage = isset($data['image']) && !empty($data['image']) ? $data['image'] : (URLROOT . 'metadata-foto.png');
 }
 ?>
 
