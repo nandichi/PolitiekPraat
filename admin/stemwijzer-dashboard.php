@@ -448,66 +448,69 @@ require_once '../views/templates/header.php';
                     </div>
                 </a>
                 
-                <a href="../scripts/run_nederlandse_verkiezingen_migration.php" 
-                   class="group p-6 bg-gradient-to-br from-orange-50 to-yellow-50 border border-orange-200 rounded-xl hover:from-orange-100 hover:to-yellow-100 transition-all duration-300 card-hover">
-                    <div class="flex items-center space-x-4">
-                        <div class="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2 2v0"/>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 9l3 3 3-3"/>
-                            </svg>
+                <!-- Tijdelijk verborgen scripts -->
+                <div style="display: none;">
+                    <a href="../scripts/run_nederlandse_verkiezingen_migration.php" 
+                       class="group p-6 bg-gradient-to-br from-orange-50 to-yellow-50 border border-orange-200 rounded-xl hover:from-orange-100 hover:to-yellow-100 transition-all duration-300 card-hover">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2 2v0"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 9l3 3 3-3"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-800">🇳🇱 Nederlandse Verkiezingen</h3>
+                                <p class="text-sm text-gray-600">Setup Nederlandse verkiezingen database</p>
+                            </div>
                         </div>
-                        <div>
-                            <h3 class="font-semibold text-gray-800">🇳🇱 Nederlandse Verkiezingen</h3>
-                            <p class="text-sm text-gray-600">Setup Nederlandse verkiezingen database</p>
+                    </a>
+                    
+                    <a href="../scripts/run_anonymous_comments_migration.php" 
+                       class="group p-6 bg-gradient-to-br from-slate-50 to-gray-50 border border-slate-200 rounded-xl hover:from-slate-100 hover:to-gray-100 transition-all duration-300 card-hover">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-gradient-to-r from-slate-500 to-gray-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-800">💬 Anonieme Comments</h3>
+                                <p class="text-sm text-gray-600">Setup anonieme reacties database</p>
+                            </div>
                         </div>
-                    </div>
-                </a>
-                
-                <a href="../scripts/run_anonymous_comments_migration.php" 
-                   class="group p-6 bg-gradient-to-br from-slate-50 to-gray-50 border border-slate-200 rounded-xl hover:from-slate-100 hover:to-gray-100 transition-all duration-300 card-hover">
-                    <div class="flex items-center space-x-4">
-                        <div class="w-12 h-12 bg-gradient-to-r from-slate-500 to-gray-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
-                            </svg>
+                    </a>
+                    
+                    <a href="test-comments-beheer.php" 
+                       class="group p-6 bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-200 rounded-xl hover:from-emerald-100 hover:to-teal-100 transition-all duration-300 card-hover">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-800">🎭 Test Reacties</h3>
+                                <p class="text-sm text-gray-600">Beheer realistische test reacties</p>
+                            </div>
                         </div>
-                        <div>
-                            <h3 class="font-semibold text-gray-800">💬 Anonieme Comments</h3>
-                            <p class="text-sm text-gray-600">Setup anonieme reacties database</p>
+                    </a>
+                    
+                    <a href="../scripts/run_comment_likes_migration.php" 
+                       class="group p-6 bg-gradient-to-br from-rose-50 to-pink-50 border border-rose-200 rounded-xl hover:from-rose-100 hover:to-pink-100 transition-all duration-300 card-hover">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-gradient-to-r from-rose-500 to-pink-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-800">❤️ Comment Likes</h3>
+                                <p class="text-sm text-gray-600">Setup "liked by creator" functie</p>
+                            </div>
                         </div>
-                    </div>
-                </a>
-                
-                <a href="test-comments-beheer.php" 
-                   class="group p-6 bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-200 rounded-xl hover:from-emerald-100 hover:to-teal-100 transition-all duration-300 card-hover">
-                    <div class="flex items-center space-x-4">
-                        <div class="w-12 h-12 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/>
-                            </svg>
-                        </div>
-                        <div>
-                            <h3 class="font-semibold text-gray-800">🎭 Test Reacties</h3>
-                            <p class="text-sm text-gray-600">Beheer realistische test reacties</p>
-                        </div>
-                    </div>
-                </a>
-                
-                <a href="../scripts/run_comment_likes_migration.php" 
-                   class="group p-6 bg-gradient-to-br from-rose-50 to-pink-50 border border-rose-200 rounded-xl hover:from-rose-100 hover:to-pink-100 transition-all duration-300 card-hover">
-                    <div class="flex items-center space-x-4">
-                        <div class="w-12 h-12 bg-gradient-to-r from-rose-500 to-pink-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                            </svg>
-                        </div>
-                        <div>
-                            <h3 class="font-semibold text-gray-800">❤️ Comment Likes</h3>
-                            <p class="text-sm text-gray-600">Setup "liked by creator" functie</p>
-                        </div>
-                    </div>
-                </a>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
