@@ -1232,7 +1232,7 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
                                class="flex items-center px-3 py-3 rounded-lg hover:bg-primary/5 transition-all duration-300 group/item">
                                 <div class="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center mr-3 group-hover/item:bg-primary/20 transition-colors duration-300">
                                     <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1M19 20a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0h4"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
                                     </svg>
                                 </div>
                                 <div>
@@ -1247,7 +1247,7 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
                                class="flex items-center px-3 py-3 rounded-lg hover:bg-secondary/5 transition-all duration-300 group/item">
                                 <div class="w-10 h-10 bg-secondary/10 rounded-xl flex items-center justify-center mr-3 group-hover/item:bg-secondary/20 transition-colors duration-300">
                                     <svg class="w-5 h-5 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1M19 20a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0h4"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m0 0v10a2 2 0 01-2 2h-5m-4 0V5a2 2 0 014 0v2M7 7h3m-3 4h3m-3 4h3"/>
                                     </svg>
                                 </div>
                                 <div>
@@ -1563,7 +1563,7 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
                                     group-hover:bg-primary/20 group-hover:scale-110">
                             <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                      d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1M19 20a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0h4"/>
+                                      d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
                             </svg>
                         </div>
                         <span class="font-medium">Blogs</span>
@@ -1576,7 +1576,7 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
                                     group-hover:bg-secondary/20 group-hover:scale-110">
                             <svg class="w-5 h-5 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                      d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1M19 20a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0h4"/>
+                                      d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m0 0v10a2 2 0 01-2 2h-5m-4 0V5a2 2 0 014 0v2M7 7h3m-3 4h3m-3 4h3"/>
                             </svg>
                         </div>
                         <span class="font-medium">Nieuws</span>
