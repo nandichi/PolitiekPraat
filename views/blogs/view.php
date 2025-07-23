@@ -699,14 +699,14 @@ require_once 'views/templates/header.php'; ?>
                 
                 <!-- Section Header -->
                 <div class="text-center mb-12">
-                    <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full mb-6">
+                    <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-primary to-secondary rounded-full mb-6">
                         <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
                         </svg>
                     </div>
-                    <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-                        Reacties
-                        <span class="inline-block bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-lg px-3 py-1 rounded-full ml-2" id="commentCount">
+                    <h2 class="flex items-center justify-center text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+                        <span>Reacties</span>
+                        <span class="inline-flex items-center bg-gradient-to-r from-primary to-secondary text-white text-lg px-3 py-1 rounded-full ml-3" id="commentCount">
                             <?php echo count($comments); ?>
                         </span>
                     </h2>
@@ -716,7 +716,7 @@ require_once 'views/templates/header.php'; ?>
                 </div>
 
                 <!-- Comment Form -->
-                <div class="bg-gradient-to-br from-gray-50 to-blue-50/30 rounded-2xl p-6 mb-12 border border-gray-200">
+                <div class="bg-gradient-to-br from-gray-50 to-primary/5 rounded-2xl p-6 mb-12 border border-gray-200">
                     <form method="POST" action="<?php echo URLROOT; ?>/blogs/<?php echo $blog->slug; ?>#comments" class="space-y-6">
                         
                         <?php if ($comment_error): ?>
@@ -746,7 +746,7 @@ require_once 'views/templates/header.php'; ?>
                                        id="anonymous_name" 
                                        placeholder="Bijv. Jan, Marie, Alex..."
                                        maxlength="100"
-                                       class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary transition-colors duration-200"
                                        value="<?php echo isset($_POST['anonymous_name']) ? htmlspecialchars($_POST['anonymous_name']) : ''; ?>"
                                        required>
                                 <p class="text-sm text-gray-500 mt-2 flex items-center">
@@ -758,14 +758,14 @@ require_once 'views/templates/header.php'; ?>
                             </div>
                         <?php else: ?>
                             <!-- Logged in user info -->
-                            <div class="bg-blue-50 border border-blue-200 rounded-xl p-4">
-                                <div class="flex items-center">
-                                    <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center mr-3">
+                                                    <div class="bg-primary/5 border border-primary/20 rounded-xl p-4">
+                            <div class="flex items-center">
+                                <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center mr-3">
                                         <span class="text-white font-semibold"><?php echo substr($_SESSION['username'], 0, 1); ?></span>
                                     </div>
                                     <div>
-                                        <p class="text-sm font-medium text-blue-900">Reactie plaatsen als:</p>
-                                        <p class="text-blue-700"><?php echo htmlspecialchars($_SESSION['username']); ?></p>
+                                                                            <p class="text-sm font-medium text-primary">Reactie plaatsen als:</p>
+                                    <p class="text-primary/70"><?php echo htmlspecialchars($_SESSION['username']); ?></p>
                                     </div>
                                 </div>
                             </div>
@@ -783,7 +783,7 @@ require_once 'views/templates/header.php'; ?>
                                       id="content" 
                                       rows="5"
                                       placeholder="Deel je mening over dit artikel. Houd het respectvol en constructief..."
-                                      class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 resize-none"
+                                      class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary transition-colors duration-200 resize-none"
                                       required><?php echo isset($_POST['content']) ? htmlspecialchars($_POST['content']) : ''; ?></textarea>
                             <div class="flex justify-between items-center mt-2">
                                 <p class="text-sm text-gray-500">Minimaal 10 karakters</p>
@@ -794,7 +794,7 @@ require_once 'views/templates/header.php'; ?>
                         <!-- Submit Button -->
                         <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
                             <button type="submit" 
-                                    class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold rounded-xl hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                                    class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-xl hover:from-primary-dark hover:to-secondary-dark transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
                                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
                                 </svg>
@@ -818,17 +818,24 @@ require_once 'views/templates/header.php'; ?>
                         </div>
                     <?php else: ?>
                         <div class="space-y-6">
-                            <?php foreach($comments as $comment): 
+                            <?php 
+                            $totalComments = count($comments);
+                            $showLoadMore = $totalComments > 5;
+                            
+                            foreach($comments as $index => $comment): 
                                 // Check if comment is liked by creator for special styling
                                 $isLikedByCreator = $comment->is_liked_by_author;
+                                
+                                // Add class to hide comments after first 5
+                                $hiddenClass = $index >= 5 ? 'hidden comment-hidden' : '';
                             ?>
-                                <div class="<?php echo $isLikedByCreator ? 'bg-gradient-to-r from-red-50 via-pink-50 to-red-50 border-2 border-red-300 shadow-xl ring-2 ring-red-200 ring-opacity-50' : 'bg-white border border-gray-200 shadow-sm'; ?> rounded-2xl overflow-hidden transition-all duration-500 <?php echo $isLikedByCreator ? 'transform hover:scale-[1.02] hover:shadow-2xl' : 'hover:shadow-md'; ?>">
+                                <div class="<?php echo $isLikedByCreator ? 'bg-gradient-to-r from-red-50 via-pink-50 to-red-50 border-2 border-red-300 shadow-xl ring-2 ring-red-200 ring-opacity-50' : 'bg-white border border-gray-200 shadow-sm'; ?> rounded-2xl overflow-hidden transition-all duration-500 <?php echo $isLikedByCreator ? 'transform hover:scale-[1.02] hover:shadow-2xl' : 'hover:shadow-md'; ?> <?php echo $hiddenClass; ?>">
                                     <!-- Comment Header -->
-                                    <div class="px-6 py-4 <?php echo $isLikedByCreator ? 'bg-gradient-to-r from-red-100 via-pink-100 to-red-100 border-b border-red-200' : 'bg-gradient-to-r from-gray-50 to-blue-50/30 border-b border-gray-100'; ?>">
+                                    <div class="px-6 py-4 <?php echo $isLikedByCreator ? 'bg-gradient-to-r from-red-100 via-pink-100 to-red-100 border-b border-red-200' : 'bg-gradient-to-r from-gray-50 to-primary/5 border-b border-gray-100'; ?>">
                                         <div class="flex items-center justify-between">
                                             <div class="flex items-center space-x-3">
                                                 <!-- Avatar -->
-                                                <div class="w-10 h-10 rounded-full flex items-center justify-center <?php echo $comment->author_type === 'anonymous' ? 'bg-gradient-to-r from-gray-400 to-gray-500' : 'bg-gradient-to-r from-blue-500 to-indigo-600'; ?>">
+                                                <div class="w-10 h-10 rounded-full flex items-center justify-center <?php echo $comment->author_type === 'anonymous' ? 'bg-gradient-to-r from-gray-400 to-gray-500' : 'bg-gradient-to-r from-primary to-secondary'; ?>">
                                                     <span class="text-white font-semibold text-sm">
                                                         <?php echo substr($comment->author_name, 0, 1); ?>
                                                     </span>
@@ -848,7 +855,7 @@ require_once 'views/templates/header.php'; ?>
                                                                 Gast
                                                             </span>
                                                         <?php else: ?>
-                                                            <span class="inline-flex items-center px-2 py-1 rounded-full bg-blue-100 text-blue-600 text-xs font-medium">
+                                                            <span class="inline-flex items-center px-2 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium">
                                                                 <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                                                 </svg>
@@ -946,6 +953,24 @@ require_once 'views/templates/header.php'; ?>
                                     </div>
                                 </div>
                             <?php endforeach; ?>
+                            
+                            <?php if($showLoadMore): ?>
+                                <!-- Load More Button -->
+                                <div class="text-center pt-6" id="loadMoreContainer">
+                                    <button 
+                                        id="loadMoreComments" 
+                                        class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-xl hover:from-primary-dark hover:to-secondary-dark transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl border border-primary"
+                                    >
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+                                        </svg>
+                                        <span>Bekijk meer reacties</span>
+                                        <span class="bg-white/20 px-2 py-1 rounded-full text-sm">
+                                            <?php echo $totalComments - 5; ?>
+                                        </span>
+                                    </button>
+                                </div>
+                            <?php endif; ?>
                         </div>
                     <?php endif; ?>
                 </div>
@@ -954,27 +979,40 @@ require_once 'views/templates/header.php'; ?>
     </section>
 
     <!-- Enhanced Related Blogs Section -->
-    <section class="py-16 sm:py-20 bg-gradient-to-br from-gray-50 via-blue-50/30 to-indigo-50/20">
-        <div class="container mx-auto px-3 sm:px-4">
-            <div class="max-w-6xl mx-auto">
+    <section class="relative py-20 sm:py-28 bg-gradient-to-br from-primary/5 via-white to-secondary/5 overflow-hidden">
+        <!-- Background Elements -->
+        <div class="absolute inset-0">
+            <div class="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl opacity-20 -translate-y-32 translate-x-32"></div>
+            <div class="absolute bottom-0 left-0 w-80 h-80 bg-secondary/10 rounded-full blur-3xl opacity-20 translate-y-32 -translate-x-32"></div>
+        </div>
+
+        <div class="container mx-auto px-4 sm:px-6 relative z-10">
+            <div class="max-w-7xl mx-auto">
                 <!-- Section Header -->
-                <div class="text-center mb-12 sm:mb-16">
-                    <div class="inline-flex items-center px-3 sm:px-4 py-1.5 sm:py-2 bg-primary/10 text-primary rounded-full text-xs sm:text-sm font-medium mb-3 sm:mb-4">
-                        <svg class="w-3 sm:w-4 h-3 sm:h-4 mr-1.5 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                <div class="text-center mb-16 sm:mb-20">
+                    <!-- Badge -->
+                    <div class="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-primary/10 via-primary/5 to-secondary/10 border border-primary/20 rounded-full text-sm sm:text-base font-bold text-primary mb-6 sm:mb-8 shadow-lg backdrop-blur-sm">
+                        <svg class="w-4 sm:w-5 h-4 sm:h-5 mr-2 sm:mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
                         </svg>
-                        Gerelateerde Artikelen
+                        <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Meer Politiekpraat</span>
                     </div>
-                    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-                        Meer politieke inzichten
+
+                    <!-- Title -->
+                    <h2 class="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black text-gray-900 mb-6 sm:mb-8 leading-tight">
+                        <span class="bg-gradient-to-r from-primary via-primary-dark to-secondary bg-clip-text text-transparent">
+                            Verdiep je kennis
+                        </span>
                     </h2>
-                    <p class="text-base sm:text-xl text-gray-600 max-w-2xl mx-auto">
-                        Verdiep je kennis met deze geselecteerde artikelen over actuele politieke ontwikkelingen
+
+                    <!-- Subtitle -->
+                    <p class="text-lg sm:text-xl lg:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                        Ontdek meer waardevolle politieke inzichten en analyses die je helpen de complexe wereld van de politiek beter te begrijpen
                     </p>
                 </div>
 
                 <!-- Related Blogs Grid -->
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 lg:gap-12">
                     <?php 
                     // Haal andere blogs op (maximaal 7 om er zeker van te zijn dat we 6 hebben na filtering)
                     $otherBlogs = (new BlogController())->getAll(7);
@@ -983,81 +1021,124 @@ require_once 'views/templates/header.php'; ?>
                         if ($relatedBlog->slug !== $blog->slug && $count < 6): 
                             $count++;
                     ?>
-                        <article class="group bg-white rounded-xl sm:rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
-                            <div class="relative">
-                                <a href="<?php echo URLROOT . '/blogs/' . $relatedBlog->slug; ?>" class="block">
-                                    <?php if ($relatedBlog->image_path): ?>
-                                        <div class="relative h-40 sm:h-48 overflow-hidden">
-                                            <img src="<?php echo getBlogImageUrl($relatedBlog->image_path); ?>" 
-                                                 alt="<?php echo htmlspecialchars($relatedBlog->title); ?>"
-                                                 class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
-                                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                                        </div>
-                                    <?php else: ?>
-                                        <div class="h-40 sm:h-48 bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
-                                            <svg class="w-12 sm:w-16 h-12 sm:h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
-                                            </svg>
+                        <article class="group relative bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl border border-gray-100/50 overflow-hidden hover:shadow-2xl transition-all duration-700 transform hover:-translate-y-4 hover:scale-[1.02]">
+                            <!-- Gradient Border Effect -->
+                            <div class="absolute inset-0 bg-gradient-to-r from-primary/20 via-transparent to-secondary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
+                            
+                            <div class="relative z-10">
+                                <!-- Image Container -->
+                                <div class="relative overflow-hidden rounded-t-3xl">
+                                    <a href="<?php echo URLROOT . '/blogs/' . $relatedBlog->slug; ?>" class="block">
+                                        <?php if ($relatedBlog->image_path): ?>
+                                            <div class="relative h-48 sm:h-56 lg:h-64">
+                                                <img src="<?php echo getBlogImageUrl($relatedBlog->image_path); ?>" 
+                                                     alt="<?php echo htmlspecialchars($relatedBlog->title); ?>"
+                                                     class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                                                <!-- Overlay Gradient -->
+                                                <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                                <!-- Shine Effect -->
+                                                <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 opacity-0 group-hover:opacity-100 transition-all duration-700 transform -translate-x-full group-hover:translate-x-full"></div>
+                                            </div>
+                                        <?php else: ?>
+                                            <div class="h-48 sm:h-56 lg:h-64 bg-gradient-to-br from-primary/15 via-primary/5 to-secondary/15 flex items-center justify-center relative overflow-hidden">
+                                                <!-- Animated Background Pattern -->
+                                                <div class="absolute inset-0 opacity-10">
+                                                    <div class="absolute top-0 left-0 w-32 h-32 bg-primary rounded-full blur-xl opacity-50 group-hover:scale-150 transition-transform duration-1000"></div>
+                                                    <div class="absolute bottom-0 right-0 w-24 h-24 bg-secondary rounded-full blur-xl opacity-50 group-hover:scale-150 transition-transform duration-1000 delay-200"></div>
+                                                </div>
+                                                <svg class="w-16 sm:w-20 h-16 sm:h-20 text-primary/60 relative z-10 group-hover:text-primary transition-colors duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
+                                                </svg>
+                                            </div>
+                                        <?php endif; ?>
+                                    </a>
+
+                                    <!-- New Badge -->
+                                    <?php 
+                                    $published_time = strtotime($relatedBlog->published_at);
+                                    $twelve_hours_ago = time() - (12 * 3600);
+                                    if ($published_time > $twelve_hours_ago): 
+                                    ?>
+                                        <div class="absolute top-4 sm:top-6 right-4 sm:right-6 z-20">
+                                            <div class="relative">
+                                                <span class="inline-flex items-center px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-gradient-to-r from-primary to-secondary text-white text-xs sm:text-sm font-bold shadow-xl border border-white/20">
+                                                    <span class="w-2 h-2 bg-white rounded-full mr-2 animate-pulse"></span>
+                                                    NIEUW
+                                                </span>
+                                                <!-- Glow Effect -->
+                                                <div class="absolute inset-0 bg-gradient-to-r from-primary to-secondary rounded-full blur opacity-75 animate-pulse"></div>
+                                            </div>
                                         </div>
                                     <?php endif; ?>
-                                </a>
-
-                                <!-- New Badge -->
-                                <?php 
-                                $published_time = strtotime($relatedBlog->published_at);
-                                $twelve_hours_ago = time() - (12 * 3600);
-                                if ($published_time > $twelve_hours_ago): 
-                                ?>
-                                    <div class="absolute top-3 sm:top-4 right-3 sm:right-4 z-10">
-                                        <span class="inline-flex items-center px-2 sm:px-3 py-1 rounded-full bg-gradient-to-r from-primary to-secondary text-white text-xs font-bold shadow-lg">
-                                            <span class="w-1.5 sm:w-2 h-1.5 sm:h-2 bg-white rounded-full mr-1.5 sm:mr-2 animate-pulse"></span>
-                                            NIEUW
-                                        </span>
-                                    </div>
-                                <?php endif; ?>
-                            </div>
-
-                            <div class="p-4 sm:p-6">
-                                <!-- Meta Info -->
-                                <div class="flex items-center justify-between mb-3 sm:mb-4 text-xs sm:text-sm text-gray-500">
-                                    <div class="flex items-center space-x-2">
-                                        <div class="w-5 sm:w-6 h-5 sm:h-6 bg-primary/10 rounded-full flex items-center justify-center">
-                                            <span class="text-xs font-semibold text-primary"><?php echo substr($relatedBlog->author_name, 0, 1); ?></span>
-                                        </div>
-                                        <span class="truncate"><?php echo htmlspecialchars($relatedBlog->author_name); ?></span>
-                                    </div>
-                                    <span><?php 
-                                        $formatter = new IntlDateFormatter('nl_NL', IntlDateFormatter::MEDIUM, IntlDateFormatter::NONE);
-                                        echo str_replace('.', '', $formatter->format(strtotime($relatedBlog->published_at))); 
-                                    ?></span>
                                 </div>
 
-                                <!-- Title & Summary -->
-                                <a href="<?php echo URLROOT . '/blogs/' . $relatedBlog->slug; ?>" class="block">
-                                    <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3 group-hover:text-primary transition-colors duration-300 line-clamp-2">
-                                        <?php echo htmlspecialchars($relatedBlog->title); ?>
-                                    </h3>
-                                </a>
-                                
-                                <p class="text-gray-600 text-xs sm:text-sm line-clamp-3 mb-3 sm:mb-4">
-                                    <?php echo htmlspecialchars($relatedBlog->summary); ?>
-                                </p>
-                                
-                                <!-- Footer -->
-                                <div class="flex items-center justify-between pt-3 sm:pt-4 border-t border-gray-100">
-                                    <a href="<?php echo URLROOT . '/blogs/' . $relatedBlog->slug; ?>" 
-                                       class="inline-flex items-center text-primary font-medium text-xs sm:text-sm hover:text-primary-dark transition-colors">
-                                        Lees verder
-                                        <svg class="w-3 sm:w-4 h-3 sm:h-4 ml-1 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                                        </svg>
+                                <!-- Content -->
+                                <div class="p-6 sm:p-8">
+                                    <!-- Meta Info -->
+                                    <div class="flex items-center justify-between mb-4 sm:mb-6">
+                                        <div class="flex items-center space-x-3">
+                                            <div class="relative">
+                                                <div class="w-8 sm:w-10 h-8 sm:h-10 rounded-full overflow-hidden border-2 border-primary/20 shadow-md">
+                                                    <img src="<?php echo URLROOT; ?>/public/images/naoufal-foto.jpg" 
+                                                         onerror="if(this.src !== '<?php echo URLROOT; ?>/images/naoufal-foto.jpg') this.src='<?php echo URLROOT; ?>/images/naoufal-foto.jpg'; else if(this.src !== '<?php echo URLROOT; ?>/public/images/profiles/naoufal-foto.jpg') this.src='<?php echo URLROOT; ?>/public/images/profiles/naoufal-foto.jpg';"
+                                                         alt="<?php echo htmlspecialchars($relatedBlog->author_name); ?>"
+                                                         class="w-full h-full object-cover">
+                                                </div>
+                                                <div class="absolute inset-0 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-full blur opacity-50"></div>
+                                            </div>
+                                            <div>
+                                                <p class="text-sm sm:text-base font-semibold text-gray-700 truncate max-w-24 sm:max-w-32">
+                                                    <?php echo htmlspecialchars($relatedBlog->author_name); ?>
+                                                </p>
+                                                <p class="text-xs sm:text-sm text-gray-500">
+                                                    <?php 
+                                                        $formatter = new IntlDateFormatter('nl_NL', IntlDateFormatter::MEDIUM, IntlDateFormatter::NONE);
+                                                        echo str_replace('.', '', $formatter->format(strtotime($relatedBlog->published_at))); 
+                                                    ?>
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <!-- Likes -->
+                                        <div class="flex items-center space-x-1 px-3 py-1 bg-gray-50 rounded-full">
+                                            <svg class="w-4 h-4 text-red-500" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                            </svg>
+                                            <span class="text-sm font-medium text-gray-600">
+                                                <?php echo (isset($relatedBlog->likes) && $relatedBlog->likes > 0) ? $relatedBlog->likes : '0'; ?>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Title -->
+                                    <a href="<?php echo URLROOT . '/blogs/' . $relatedBlog->slug; ?>" class="block group/title">
+                                        <h3 class="text-xl sm:text-2xl font-bold text-gray-900 mb-3 sm:mb-4 line-clamp-2 group-hover:text-primary transition-colors duration-300 leading-tight">
+                                            <?php echo htmlspecialchars($relatedBlog->title); ?>
+                                        </h3>
                                     </a>
                                     
-                                    <div class="flex items-center text-gray-400 text-xs">
-                                        <svg class="w-3 sm:w-4 h-3 sm:h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-                                        </svg>
-                                        <span><?php echo (isset($relatedBlog->likes) && $relatedBlog->likes > 0) ? $relatedBlog->likes : '0'; ?></span>
+                                    <!-- Summary -->
+                                    <p class="text-gray-600 text-sm sm:text-base line-clamp-3 mb-6 leading-relaxed">
+                                        <?php echo htmlspecialchars($relatedBlog->summary); ?>
+                                    </p>
+                                    
+                                    <!-- Read More Button -->
+                                    <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+                                        <a href="<?php echo URLROOT . '/blogs/' . $relatedBlog->slug; ?>" 
+                                           class="group/btn inline-flex items-center px-4 py-2 bg-gradient-to-r from-primary/10 to-secondary/10 hover:from-primary hover:to-secondary text-primary hover:text-white font-bold rounded-full transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg">
+                                            <span class="text-sm sm:text-base">Lees artikel</span>
+                                            <svg class="w-4 h-4 ml-2 transform group-hover/btn:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                            </svg>
+                                        </a>
+
+                                        <!-- Reading Time -->
+                                        <div class="flex items-center text-gray-400 text-xs sm:text-sm">
+                                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                            </svg>
+                                            <span>3 min</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1068,15 +1149,29 @@ require_once 'views/templates/header.php'; ?>
                     ?>
                 </div>
 
-                <!-- View All Button -->
-                <div class="text-center mt-8 sm:mt-12">
-                    <a href="<?php echo URLROOT; ?>/blogs" 
-                       class="inline-flex items-center px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-full hover:shadow-lg transition-all duration-300 transform hover:scale-105 text-sm sm:text-base">
-                        <svg class="w-4 sm:w-5 h-4 sm:h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0l-4 4m4-4l-4-4"></path>
-                        </svg>
-                        Bekijk alle blogs
-                    </a>
+                <!-- Call to Action -->
+                <div class="text-center mt-16 sm:mt-20">
+                    <div class="inline-flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
+                        <a href="<?php echo URLROOT; ?>/blogs" 
+                           class="group relative inline-flex items-center px-8 sm:px-10 py-4 sm:py-5 bg-gradient-to-r from-primary via-primary-dark to-secondary text-white font-bold text-base sm:text-lg rounded-full shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:scale-105 overflow-hidden">
+                            <!-- Animated Background -->
+                            <div class="absolute inset-0 bg-gradient-to-r from-secondary via-primary to-primary-dark opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                            <!-- Shimmer Effect -->
+                            <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 opacity-0 group-hover:opacity-100 transition-all duration-700 transform -translate-x-full group-hover:translate-x-full"></div>
+                            
+                            <span class="relative z-10 mr-3">Ontdek alle artikelen</span>
+                            <svg class="relative z-10 w-5 sm:w-6 h-5 sm:h-6 transform group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                        </a>
+
+                        <div class="flex items-center text-gray-600 text-sm sm:text-base">
+                            <svg class="w-5 h-5 mr-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <span>Wekelijks nieuwe inzichten</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -2842,7 +2937,7 @@ async function handleCommentLike(event) {
                 const commentContainer = button.closest('.rounded-2xl');
                 const commentHeader = commentContainer.querySelector('.px-6.py-4');
                 commentContainer.className = 'bg-white border border-gray-200 shadow-sm rounded-2xl overflow-hidden transition-all duration-500 hover:shadow-md';
-                commentHeader.className = 'px-6 py-4 bg-gradient-to-r from-gray-50 to-blue-50/30 border-b border-gray-100';
+                commentHeader.className = 'px-6 py-4 bg-gradient-to-r from-gray-50 to-primary/5 border-b border-gray-100';
                 
                 // Remove liked badge
                 const actionsDiv = button.closest('.flex');
@@ -2955,9 +3050,48 @@ function createSparkleEffect(commentContainer) {
     }
 }
 
+// Load More Comments Functionality
+function initializeLoadMoreComments() {
+    const loadMoreBtn = document.getElementById('loadMoreComments');
+    const loadMoreContainer = document.getElementById('loadMoreContainer');
+    
+    if (loadMoreBtn) {
+        loadMoreBtn.addEventListener('click', function() {
+            // Find all hidden comments
+            const hiddenComments = document.querySelectorAll('.comment-hidden');
+            
+            // Show all hidden comments with animation
+            hiddenComments.forEach((comment, index) => {
+                setTimeout(() => {
+                    comment.classList.remove('hidden', 'comment-hidden');
+                    comment.style.opacity = '0';
+                    comment.style.transform = 'translateY(20px)';
+                    
+                    // Animate in
+                    setTimeout(() => {
+                        comment.style.transition = 'all 0.5s ease-out';
+                        comment.style.opacity = '1';
+                        comment.style.transform = 'translateY(0)';
+                    }, 50);
+                }, index * 100); // Stagger animation
+            });
+            
+            // Hide the load more button with animation
+            loadMoreContainer.style.transition = 'all 0.3s ease-out';
+            loadMoreContainer.style.opacity = '0';
+            loadMoreContainer.style.transform = 'translateY(-10px)';
+            
+            setTimeout(() => {
+                loadMoreContainer.style.display = 'none';
+            }, 300);
+        });
+    }
+}
+
 // Initialize comment likes when page loads
 document.addEventListener('DOMContentLoaded', function() {
     initializeCommentLikes();
+    initializeLoadMoreComments();
 });
 
 console.log('Blog view script fully loaded and initialized');
