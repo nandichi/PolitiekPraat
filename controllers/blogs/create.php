@@ -57,64 +57,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $db->bind(':author_id', $_SESSION['user_id']);
         
         if ($db->execute()) {
-            $blog_id = $db->lastInsertId();
-            
-            // Verwerk poll data indien aanwezig
-            if (isset($_POST['poll_question']) && !empty(trim($_POST['poll_question']))) {
-                $poll_question = filter_input(INPUT_POST, 'poll_question', FILTER_SANITIZE_SPECIAL_CHARS);
-                $poll_description = filter_input(INPUT_POST, 'poll_description', FILTER_SANITIZE_SPECIAL_CHARS);
-                $poll_type = filter_input(INPUT_POST, 'poll_type', FILTER_SANITIZE_SPECIAL_CHARS);
-                $poll_show_results = filter_input(INPUT_POST, 'poll_show_results', FILTER_SANITIZE_SPECIAL_CHARS);
-                $poll_options = $_POST['poll_options'] ?? [];
-                
-                // Filter lege opties eruit
-                $poll_options = array_filter($poll_options, function($option) {
-                    return !empty(trim($option));
-                });
-                
-                // Controleer of er minimaal 2 opties zijn
-                if (count($poll_options) >= 2) {
-                    try {
-                        // Begin transactie voor poll data
-                        $db->beginTransaction();
-                        
-                        // Voeg poll toe
-                        $db->query("INSERT INTO blog_polls (blog_id, question, description, poll_type, show_results) 
-                                   VALUES (:blog_id, :question, :description, :poll_type, :show_results)");
-                        $db->bind(':blog_id', $blog_id);
-                        $db->bind(':question', $poll_question);
-                        $db->bind(':description', $poll_description);
-                        $db->bind(':poll_type', $poll_type ?: 'single');
-                        $db->bind(':show_results', $poll_show_results ?: 'after_vote');
-                        $db->execute();
-                        
-                        $poll_id = $db->lastInsertId();
-                        
-                        // Voeg poll opties toe
-                        foreach ($poll_options as $index => $option_text) {
-                            $option_text = filter_var(trim($option_text), FILTER_SANITIZE_SPECIAL_CHARS);
-                            if (!empty($option_text)) {
-                                $db->query("INSERT INTO poll_options (poll_id, option_text, option_order) 
-                                           VALUES (:poll_id, :option_text, :option_order)");
-                                $db->bind(':poll_id', $poll_id);
-                                $db->bind(':option_text', $option_text);
-                                $db->bind(':option_order', $index + 1);
-                                $db->execute();
-                            }
-                        }
-                        
-                        $db->commit();
-                    } catch (Exception $e) {
-                        $db->rollback();
-                        $error = 'Er is iets misgegaan bij het opslaan van de poll';
-                    }
-                }
-            }
-            
-            if (empty($error)) {
-                header('Location: ' . URLROOT . '/blogs/' . $slug);
-                exit;
-            }
+            header('Location: ' . URLROOT . '/blogs/' . $slug);
+            exit;
         } else {
             $error = 'Er is iets misgegaan bij het aanmaken van je blog';
         }
