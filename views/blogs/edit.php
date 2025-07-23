@@ -202,6 +202,208 @@
                         <?php endif; ?>
                     </div>
 
+                    <!-- Poll Sectie -->
+                    <div class="mb-10" data-aos="fade-up" data-aos-delay="350">
+                        <?php
+                        // Check if blog already has a poll
+                        $db = new Database();
+                        $db->query("SELECT * FROM blog_polls WHERE blog_id = :blog_id");
+                        $db->bind(':blog_id', $blog->id);
+                        $existingPoll = $db->single();
+                        ?>
+                        
+                        <label class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                            <svg class="w-5 h-5 text-primary mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                            </svg>
+                            Poll toevoegen aan blog
+                        </label>
+                        
+                        <!-- Poll Toggle Switch -->
+                        <div class="mb-6">
+                            <div class="flex items-center justify-between p-4 bg-gradient-to-r from-primary/5 to-secondary/5 rounded-xl border border-gray-100">
+                                <div class="flex items-center space-x-3">
+                                    <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                    </svg>
+                                    <div>
+                                        <h3 class="font-medium text-gray-800">
+                                            <?= $existingPoll ? 'Poll bewerken' : 'Poll toevoegen' ?>
+                                        </h3>
+                                        <p class="text-sm text-gray-600">
+                                            <?= $existingPoll ? 'Pas de bestaande poll aan of verwijder deze' : 'Voeg een interactieve poll toe aan je blog' ?>
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center space-x-3">
+                                    <?php if ($existingPoll): ?>
+                                        <span class="px-3 py-1 bg-green-100 text-green-800 text-xs font-medium rounded-full">
+                                            Poll actief
+                                        </span>
+                                    <?php endif; ?>
+                                    
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" 
+                                               id="enablePoll" 
+                                               class="sr-only peer" 
+                                               <?= $existingPoll ? 'checked' : '' ?>
+                                               onchange="togglePollSection()">
+                                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Poll Configuration Section -->
+                        <div id="pollSection" class="<?= $existingPoll ? '' : 'hidden' ?> space-y-6 bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
+                            <!-- Poll Question -->
+                            <div>
+                                <label for="pollQuestion" class="block text-sm font-medium text-gray-700 mb-2">
+                                    Wat is je stelling of vraag?
+                                </label>
+                                <div class="relative group">
+                                    <textarea name="poll_question" 
+                                              id="pollQuestion" 
+                                              rows="3"
+                                              class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition-all duration-300 bg-gray-50/50 resize-none"
+                                              placeholder="Bijv. Wat vind jij van de nieuwe belastingplannen?"><?= $existingPoll ? htmlspecialchars($existingPoll->question) : '' ?></textarea>
+                                    <div class="absolute inset-0 bg-primary/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+                                </div>
+                            </div>
+
+                            <!-- Poll Options -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label for="pollOptionA" class="block text-sm font-medium text-gray-700 mb-2">
+                                        <span class="inline-flex items-center">
+                                            <span class="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-xs font-bold mr-2">A</span>
+                                            Eerste antwoordoptie
+                                        </span>
+                                    </label>
+                                    <div class="relative group">
+                                        <input type="text" 
+                                               name="poll_option_a" 
+                                               id="pollOptionA" 
+                                               class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition-all duration-300 bg-gray-50/50"
+                                               placeholder="Bijv. Helemaal mee eens"
+                                               value="<?= $existingPoll ? htmlspecialchars($existingPoll->option_a) : '' ?>">
+                                        <div class="absolute inset-0 bg-primary/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label for="pollOptionB" class="block text-sm font-medium text-gray-700 mb-2">
+                                        <span class="inline-flex items-center">
+                                            <span class="w-6 h-6 bg-secondary text-white rounded-full flex items-center justify-center text-xs font-bold mr-2">B</span>
+                                            Tweede antwoordoptie
+                                        </span>
+                                    </label>
+                                    <div class="relative group">
+                                        <input type="text" 
+                                               name="poll_option_b" 
+                                               id="pollOptionB" 
+                                               class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition-all duration-300 bg-gray-50/50"
+                                               placeholder="Bijv. Helemaal niet eens"
+                                               value="<?= $existingPoll ? htmlspecialchars($existingPoll->option_b) : '' ?>">
+                                        <div class="absolute inset-0 bg-primary/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <?php if ($existingPoll): ?>
+                            <!-- Current Poll Stats -->
+                            <div class="bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl p-4">
+                                <h4 class="font-medium text-gray-800 mb-3 flex items-center">
+                                    <svg class="w-5 h-5 text-primary mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                    </svg>
+                                    Huidige resultaten
+                                </h4>
+                                <div class="space-y-3">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm font-medium text-gray-700"><?= htmlspecialchars($existingPoll->option_a) ?></span>
+                                        <span class="text-sm text-gray-600">
+                                            <?= $existingPoll->option_a_votes ?> stemmen
+                                            (<?= $existingPoll->total_votes > 0 ? round(($existingPoll->option_a_votes / $existingPoll->total_votes) * 100, 1) : 0 ?>%)
+                                        </span>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm font-medium text-gray-700"><?= htmlspecialchars($existingPoll->option_b) ?></span>
+                                        <span class="text-sm text-gray-600">
+                                            <?= $existingPoll->option_b_votes ?> stemmen
+                                            (<?= $existingPoll->total_votes > 0 ? round(($existingPoll->option_b_votes / $existingPoll->total_votes) * 100, 1) : 0 ?>%)
+                                        </span>
+                                    </div>
+                                    <div class="pt-2 border-t border-gray-200">
+                                        <span class="text-sm font-medium text-gray-800">
+                                            Totaal: <?= $existingPoll->total_votes ?> stemmen
+                                        </span>
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-4 flex items-center justify-between">
+                                    <span class="text-xs text-gray-500">
+                                        Poll aangemaakt op <?= date('d-m-Y H:i', strtotime($existingPoll->created_at)) ?>
+                                    </span>
+                                    <label class="flex items-center space-x-2">
+                                        <input type="checkbox" 
+                                               name="delete_poll" 
+                                               id="deletePoll"
+                                               class="w-4 h-4 text-red-600 focus:ring-red-500 border-gray-300 rounded"
+                                               onchange="confirmPollDeletion()">
+                                        <span class="text-xs text-red-600">Poll verwijderen</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <?php endif; ?>
+
+                            <!-- Poll Preview -->
+                            <div id="pollPreview" class="bg-gradient-to-br from-primary/5 via-white to-secondary/5 rounded-xl p-6 border border-gray-100">
+                                <h4 class="font-medium text-gray-800 mb-4 flex items-center">
+                                    <svg class="w-5 h-5 text-primary mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                    </svg>
+                                    Live preview
+                                </h4>
+                                <div class="bg-white rounded-lg p-4 shadow-sm border">
+                                    <h5 id="previewQuestion" class="font-semibold text-gray-800 mb-4">
+                                        <?= $existingPoll ? htmlspecialchars($existingPoll->question) : 'Je poll vraag verschijnt hier...' ?>
+                                    </h5>
+                                    <div class="space-y-3">
+                                        <button type="button" class="w-full p-3 text-left bg-gradient-to-r from-primary/10 to-primary/5 hover:from-primary/20 hover:to-primary/10 rounded-lg border border-primary/20 transition-all">
+                                            <span id="previewOptionA" class="font-medium text-gray-800">
+                                                <?= $existingPoll ? htmlspecialchars($existingPoll->option_a) : 'Optie A verschijnt hier...' ?>
+                                            </span>
+                                        </button>
+                                        <button type="button" class="w-full p-3 text-left bg-gradient-to-r from-secondary/10 to-secondary/5 hover:from-secondary/20 hover:to-secondary/10 rounded-lg border border-secondary/20 transition-all">
+                                            <span id="previewOptionB" class="font-medium text-gray-800">
+                                                <?= $existingPoll ? htmlspecialchars($existingPoll->option_b) : 'Optie B verschijnt hier...' ?>
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Poll Tips -->
+                            <div class="bg-primary/5 rounded-xl p-4">
+                                <div class="flex items-start">
+                                    <svg class="w-5 h-5 text-primary mt-0.5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    <div>
+                                        <p class="text-sm text-gray-600">
+                                            <span class="font-medium text-gray-900">Tips voor goede polls:</span> 
+                                            Stel duidelijke, neutrale vragen. Zorg dat beide antwoordopties evenwichtig zijn. 
+                                            Lezers kunnen maar één keer stemmen per browser.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Content Editor Sectie - volledig herontworpen met markdown knoppen -->
                     <div class="mt-10" data-aos="fade-up" data-aos-delay="300">
                         <div class="mb-6">
@@ -536,7 +738,84 @@ document.addEventListener('DOMContentLoaded', function() {
             this.parentElement.classList.remove('shadow-sm');
         });
     });
+
+    // Poll functionaliteit
+    setupPollFunctionality();
 });
+
+// Poll functionaliteit buiten DOMContentLoaded omdat het door onclick wordt aangeroepen
+function togglePollSection() {
+    const pollSection = document.getElementById('pollSection');
+    const enablePollCheckbox = document.getElementById('enablePoll');
+    
+    if (enablePollCheckbox.checked) {
+        pollSection.classList.remove('hidden');
+        pollSection.style.opacity = '0';
+        pollSection.style.transform = 'translateY(-10px)';
+        
+        setTimeout(() => {
+            pollSection.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+            pollSection.style.opacity = '1';
+            pollSection.style.transform = 'translateY(0)';
+        }, 10);
+    } else {
+        pollSection.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+        pollSection.style.opacity = '0';
+        pollSection.style.transform = 'translateY(-10px)';
+        
+        setTimeout(() => {
+            pollSection.classList.add('hidden');
+        }, 300);
+    }
+}
+
+function confirmPollDeletion() {
+    const deleteCheckbox = document.getElementById('deletePoll');
+    const pollInputs = document.querySelectorAll('#pollSection input[type="text"], #pollSection textarea');
+    
+    if (deleteCheckbox.checked) {
+        if (confirm('Weet je zeker dat je deze poll wilt verwijderen? Alle stemmen gaan verloren.')) {
+            // Disable poll inputs om verwarring te voorkomen
+            pollInputs.forEach(input => {
+                input.disabled = true;
+                input.style.opacity = '0.5';
+            });
+        } else {
+            deleteCheckbox.checked = false;
+        }
+    } else {
+        // Re-enable inputs
+        pollInputs.forEach(input => {
+            input.disabled = false;
+            input.style.opacity = '1';
+        });
+    }
+}
+
+function setupPollFunctionality() {
+    const pollQuestion = document.getElementById('pollQuestion');
+    const pollOptionA = document.getElementById('pollOptionA');
+    const pollOptionB = document.getElementById('pollOptionB');
+    const previewQuestion = document.getElementById('previewQuestion');
+    const previewOptionA = document.getElementById('previewOptionA');
+    const previewOptionB = document.getElementById('previewOptionB');
+
+    // Real-time preview updates
+    function updatePollPreview() {
+        const question = pollQuestion.value.trim();
+        const optionA = pollOptionA.value.trim();
+        const optionB = pollOptionB.value.trim();
+
+        previewQuestion.textContent = question || 'Je poll vraag verschijnt hier...';
+        previewOptionA.textContent = optionA || 'Optie A verschijnt hier...';
+        previewOptionB.textContent = optionB || 'Optie B verschijnt hier...';
+    }
+
+    // Event listeners voor live preview
+    if (pollQuestion) pollQuestion.addEventListener('input', updatePollPreview);
+    if (pollOptionA) pollOptionA.addEventListener('input', updatePollPreview);
+    if (pollOptionB) pollOptionB.addEventListener('input', updatePollPreview);
+}
 </script>
 
 <?php require_once BASE_PATH . '/views/templates/footer.php'; ?> 

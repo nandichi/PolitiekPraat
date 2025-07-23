@@ -475,4 +475,47 @@ class BlogController {
         
         return hash('sha256', $userAgent . $acceptLang . $acceptEnc);
     }
+
+    public function updatePoll($pollId, $question, $optionA, $optionB) {
+        try {
+            $this->db->query("UPDATE blog_polls SET 
+                             question = :question,
+                             option_a = :option_a,
+                             option_b = :option_b,
+                             updated_at = NOW()
+                             WHERE id = :poll_id");
+            
+            $this->db->bind(':poll_id', $pollId);
+            $this->db->bind(':question', trim($question));
+            $this->db->bind(':option_a', trim($optionA));
+            $this->db->bind(':option_b', trim($optionB));
+            
+            return $this->db->execute();
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    public function deletePoll($pollId) {
+        try {
+            $this->db->beginTransaction();
+            
+            // Delete poll votes first (foreign key constraint)
+            $this->db->query("DELETE FROM blog_poll_votes WHERE poll_id = :poll_id");
+            $this->db->bind(':poll_id', $pollId);
+            $this->db->execute();
+            
+            // Delete poll
+            $this->db->query("DELETE FROM blog_polls WHERE id = :poll_id");
+            $this->db->bind(':poll_id', $pollId);
+            $this->db->execute();
+            
+            $this->db->commit();
+            return true;
+        } catch (Exception $e) {
+            $this->db->rollback();
+            return false;
+        }
+    }
+
 } 

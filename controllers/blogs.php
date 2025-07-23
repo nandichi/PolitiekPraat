@@ -512,6 +512,29 @@ class BlogsController {
                 }
             }
             
+            // Handle poll updates
+            $pollQuestion = isset($_POST['poll_question']) ? trim($_POST['poll_question']) : '';
+            $pollOptionA = isset($_POST['poll_option_a']) ? trim($_POST['poll_option_a']) : '';
+            $pollOptionB = isset($_POST['poll_option_b']) ? trim($_POST['poll_option_b']) : '';
+            $deletePoll = isset($_POST['delete_poll']) && $_POST['delete_poll'] === 'on';
+            $enablePoll = isset($_POST['enable_poll']) && $_POST['enable_poll'] === 'on';
+            
+            // Check if blog already has a poll
+            $existingPoll = $this->blogModel->getPollByBlogId($id);
+            
+            if ($deletePoll && $existingPoll) {
+                // Delete existing poll
+                $this->blogModel->deletePoll($existingPoll->id);
+            } elseif (!empty($pollQuestion) && !empty($pollOptionA) && !empty($pollOptionB)) {
+                if ($existingPoll) {
+                    // Update existing poll
+                    $this->blogModel->updatePoll($existingPoll->id, $pollQuestion, $pollOptionA, $pollOptionB);
+                } else {
+                    // Create new poll
+                    $this->blogModel->createPoll($id, $pollQuestion, $pollOptionA, $pollOptionB);
+                }
+            }
+
             $data = [
                 'id' => $id,
                 'title' => trim($_POST['title']),
