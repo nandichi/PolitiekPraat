@@ -462,6 +462,21 @@ require_once '../views/templates/header.php';
                         </div>
                     </div>
                 </a>
+
+                    <a href="test-comments-beheer.php" 
+                       class="group p-6 bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-200 rounded-xl hover:from-emerald-100 hover:to-teal-100 transition-all duration-300 card-hover">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-800">🎭 Test Reacties</h3>
+                                <p class="text-sm text-gray-600">Beheer realistische test reacties</p>
+                            </div>
+                        </div>
+                    </a>
                 
                 <a href="#" onclick="createPollTables()" 
                    class="group p-6 bg-gradient-to-br from-lime-50 to-green-50 border border-lime-200 rounded-xl hover:from-lime-100 hover:to-green-100 transition-all duration-300 card-hover">
@@ -507,21 +522,6 @@ require_once '../views/templates/header.php';
                             <div>
                                 <h3 class="font-semibold text-gray-800">💬 Anonieme Comments</h3>
                                 <p class="text-sm text-gray-600">Setup anonieme reacties database</p>
-                            </div>
-                        </div>
-                    </a>
-                    
-                    <a href="test-comments-beheer.php" 
-                       class="group p-6 bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-200 rounded-xl hover:from-emerald-100 hover:to-teal-100 transition-all duration-300 card-hover">
-                        <div class="flex items-center space-x-4">
-                            <div class="w-12 h-12 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <h3 class="font-semibold text-gray-800">🎭 Test Reacties</h3>
-                                <p class="text-sm text-gray-600">Beheer realistische test reacties</p>
                             </div>
                         </div>
                     </a>
