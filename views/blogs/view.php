@@ -11,14 +11,16 @@ $data = [
     'image' => $pageImage
 ];
 
-// Haal comments op (zowel van ingelogde als anonieme gebruikers)
+// Haal comments op (zowel van ingelogde als anonieme gebruikers) met like info
 $db = new Database();
 $db->query("SELECT comments.*, 
            COALESCE(users.username, comments.anonymous_name) as author_name,
            CASE 
                WHEN comments.user_id IS NOT NULL THEN 'registered'
                ELSE 'anonymous'
-           END as author_type
+           END as author_type,
+           comments.is_liked_by_author,
+           comments.likes_count
            FROM comments 
            LEFT JOIN users ON comments.user_id = users.id 
            WHERE comments.blog_id = :blog_id 
@@ -816,10 +818,13 @@ require_once 'views/templates/header.php'; ?>
                         </div>
                     <?php else: ?>
                         <div class="space-y-6">
-                            <?php foreach($comments as $comment): ?>
-                                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow duration-300">
+                            <?php foreach($comments as $comment): 
+                                // Check if comment is liked by creator for special styling
+                                $isLikedByCreator = $comment->is_liked_by_author;
+                            ?>
+                                <div class="<?php echo $isLikedByCreator ? 'bg-gradient-to-r from-red-50 via-pink-50 to-red-50 border-2 border-red-300 shadow-xl ring-2 ring-red-200 ring-opacity-50' : 'bg-white border border-gray-200 shadow-sm'; ?> rounded-2xl overflow-hidden transition-all duration-500 <?php echo $isLikedByCreator ? 'transform hover:scale-[1.02] hover:shadow-2xl' : 'hover:shadow-md'; ?>">
                                     <!-- Comment Header -->
-                                    <div class="px-6 py-4 bg-gradient-to-r from-gray-50 to-blue-50/30 border-b border-gray-100">
+                                    <div class="px-6 py-4 <?php echo $isLikedByCreator ? 'bg-gradient-to-r from-red-100 via-pink-100 to-red-100 border-b border-red-200' : 'bg-gradient-to-r from-gray-50 to-blue-50/30 border-b border-gray-100'; ?>">
                                         <div class="flex items-center justify-between">
                                             <div class="flex items-center space-x-3">
                                                 <!-- Avatar -->
@@ -894,8 +899,49 @@ require_once 'views/templates/header.php'; ?>
                                     
                                     <!-- Comment Content -->
                                     <div class="px-6 py-5">
-                                        <div class="prose prose-sm max-w-none text-gray-700 leading-relaxed">
+                                        <div class="prose prose-sm max-w-none text-gray-700 leading-relaxed mb-4">
                                             <?php echo nl2br(htmlspecialchars($comment->content)); ?>
+                                        </div>
+                                        
+                                        <!-- Comment Actions -->
+                                        <div class="flex items-center justify-between pt-3 border-t border-gray-100">
+                                            <div class="flex items-center gap-3">
+                                                <!-- Leuk Gevonden Door Auteur Badge -->
+                                                <?php if ($comment->is_liked_by_author): ?>
+                                                    <div class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-red-500 to-pink-600 border border-red-400 rounded-full shadow-lg">
+                                                        <svg class="w-4 h-4 text-white animate-pulse" fill="currentColor" viewBox="0 0 24 24">
+                                                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                                        </svg>
+                                                        <span class="text-white text-sm font-bold">Leuk gevonden door auteur</span>
+                                                    </div>
+                                                <?php endif; ?>
+                                                
+                                                <!-- Like Count (if > 0) -->
+                                                <?php if ($comment->likes_count > 0): ?>
+                                                    <span class="text-gray-500 text-sm">
+                                                        <?php echo $comment->likes_count; ?> <?php echo $comment->likes_count == 1 ? 'like' : 'likes'; ?>
+                                                    </span>
+                                                <?php endif; ?>
+                                            </div>
+                                            
+                                            <!-- Author Like Button -->
+                                            <?php if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $blog->author_id): ?>
+                                                <button type="button" 
+                                                        class="comment-like-btn inline-flex items-center gap-2 px-3 py-2 rounded-lg transition-all hover:bg-gray-50 <?php echo $comment->is_liked_by_author ? 'text-red-600' : 'text-gray-500 hover:text-red-600'; ?>"
+                                                        data-comment-id="<?php echo $comment->id; ?>"
+                                                        data-liked="<?php echo $comment->is_liked_by_author ? 'true' : 'false'; ?>"
+                                                        title="<?php echo $comment->is_liked_by_author ? 'Reactie niet meer leuk vinden' : 'Reactie leuk vinden'; ?>">
+                                                    <svg class="w-5 h-5 transition-all <?php echo $comment->is_liked_by_author ? 'scale-110' : ''; ?>" 
+                                                         fill="<?php echo $comment->is_liked_by_author ? 'currentColor' : 'none'; ?>" 
+                                                         stroke="currentColor" 
+                                                         viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                                                    </svg>
+                                                    <span class="text-sm font-medium">
+                                                        <?php echo $comment->is_liked_by_author ? 'Leuk gevonden' : 'Leuk vinden'; ?>
+                                                    </span>
+                                                </button>
+                                            <?php endif; ?>
                                         </div>
                                     </div>
                                 </div>
@@ -2703,6 +2749,216 @@ if (contentTextarea && charCount) {
     contentTextarea.addEventListener('input', updateCharCount);
     updateCharCount();
 }
+
+// Comment like functionality
+function initializeCommentLikes() {
+    const likeButtons = document.querySelectorAll('.comment-like-btn');
+    
+    likeButtons.forEach(button => {
+        button.addEventListener('click', handleCommentLike);
+    });
+}
+
+async function handleCommentLike(event) {
+    const button = event.currentTarget;
+    const commentId = button.getAttribute('data-comment-id');
+    const isLiked = button.getAttribute('data-liked') === 'true';
+    const action = isLiked ? 'unlike' : 'like';
+    
+    // Disable button during request
+    button.disabled = true;
+    
+    try {
+        const response = await fetch('<?php echo URLROOT; ?>/ajax/comment-like.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                comment_id: parseInt(commentId),
+                action: action
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            // Update button state
+            const isNowLiked = data.is_liked;
+            button.setAttribute('data-liked', isNowLiked.toString());
+            
+            const svg = button.querySelector('svg');
+            const span = button.querySelector('span');
+            
+            if (isNowLiked) {
+                // Liked state
+                button.classList.remove('text-gray-500', 'hover:text-red-600');
+                button.classList.add('text-red-600');
+                svg.setAttribute('fill', 'currentColor');
+                svg.classList.add('scale-110');
+                span.textContent = 'Leuk gevonden';
+                button.title = 'Reactie niet meer leuk vinden';
+                
+                // Add liked badge if not exists and update comment styling
+                const commentContainer = button.closest('.rounded-2xl');
+                const commentHeader = commentContainer.querySelector('.px-6.py-4');
+                const actionsDiv = button.closest('.flex');
+                const badgeContainer = actionsDiv.querySelector('.flex.items-center.gap-3');
+                
+                // Update comment container styling
+                commentContainer.className = 'bg-gradient-to-r from-red-50 via-pink-50 to-red-50 border-2 border-red-300 shadow-xl ring-2 ring-red-200 ring-opacity-50 rounded-2xl overflow-hidden transition-all duration-500 transform hover:scale-[1.02] hover:shadow-2xl';
+                
+                // Update header styling
+                commentHeader.className = 'px-6 py-4 bg-gradient-to-r from-red-100 via-pink-100 to-red-100 border-b border-red-200';
+                
+                if (!badgeContainer.querySelector('.bg-gradient-to-r.from-red-500')) {
+                    const badge = document.createElement('div');
+                    badge.className = 'inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-red-500 to-pink-600 border border-red-400 rounded-full shadow-lg creator-liked-badge';
+                    badge.innerHTML = `
+                        <svg class="w-4 h-4 text-white animate-pulse" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                        </svg>
+                                                 <span class="text-white text-sm font-bold">Leuk gevonden door auteur</span>
+                    `;
+                    badgeContainer.appendChild(badge);
+                }
+                
+                // Add like animation and special effects
+                createLikeAnimation(button);
+                
+                // Add sparkle effect to the comment
+                createSparkleEffect(commentContainer);
+                
+            } else {
+                // Unliked state
+                button.classList.remove('text-red-600');
+                button.classList.add('text-gray-500', 'hover:text-red-600');
+                svg.setAttribute('fill', 'none');
+                svg.classList.remove('scale-110');
+                span.textContent = 'Leuk vinden';
+                button.title = 'Reactie leuk vinden';
+                
+                // Reset comment container styling
+                const commentContainer = button.closest('.rounded-2xl');
+                const commentHeader = commentContainer.querySelector('.px-6.py-4');
+                commentContainer.className = 'bg-white border border-gray-200 shadow-sm rounded-2xl overflow-hidden transition-all duration-500 hover:shadow-md';
+                commentHeader.className = 'px-6 py-4 bg-gradient-to-r from-gray-50 to-blue-50/30 border-b border-gray-100';
+                
+                // Remove liked badge
+                const actionsDiv = button.closest('.flex');
+                const badgeContainer = actionsDiv.querySelector('.flex.items-center.gap-3');
+                const badge = badgeContainer.querySelector('.creator-liked-badge');
+                if (badge) {
+                    badge.remove();
+                }
+            }
+            
+            // Show success message
+            const message = isNowLiked ? 'Reactie gemarkeerd als leuk gevonden!' : 'Reactie niet meer leuk gevonden';
+            showNotification(message, 'success');
+            
+        } else {
+            throw new Error(data.error || 'Unknown error');
+        }
+        
+    } catch (error) {
+        console.error('Comment like error:', error);
+        showNotification('Er ging iets mis bij het liken van de reactie', 'error');
+    } finally {
+        button.disabled = false;
+    }
+}
+
+function createLikeAnimation(button) {
+    // Create floating hearts animation
+    const hearts = ['❤️', '💖', '💕', '💗', '💘', '💝'];
+    
+    for (let i = 0; i < 8; i++) {
+        setTimeout(() => {
+            const heart = document.createElement('div');
+            heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+            heart.className = 'absolute pointer-events-none text-lg';
+            heart.style.left = '50%';
+            heart.style.top = '50%';
+            heart.style.transform = 'translate(-50%, -50%)';
+            heart.style.zIndex = '9999';
+            
+            button.appendChild(heart);
+            
+            // Animate heart
+            const angle = (Math.PI * 2 * i) / 8;
+            const distance = 40 + Math.random() * 30;
+            const duration = 1200 + Math.random() * 600;
+            
+            heart.animate([
+                {
+                    transform: 'translate(-50%, -50%) scale(0) rotate(0deg)',
+                    opacity: 1
+                },
+                {
+                    transform: `translate(${Math.cos(angle) * distance - 50}%, ${Math.sin(angle) * distance - 50}%) scale(1.2) rotate(360deg)`,
+                    opacity: 0
+                }
+            ], {
+                duration: duration,
+                easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+            }).onfinish = () => heart.remove();
+            
+        }, i * 80);
+    }
+}
+
+function createSparkleEffect(commentContainer) {
+    // Create sparkle effects around the comment
+    const sparkles = ['✨', '💫', '🌟', '⭐'];
+    
+    for (let i = 0; i < 12; i++) {
+        setTimeout(() => {
+            const sparkle = document.createElement('div');
+            sparkle.textContent = sparkles[Math.floor(Math.random() * sparkles.length)];
+            sparkle.className = 'absolute pointer-events-none text-sm';
+            sparkle.style.zIndex = '9998';
+            
+            // Random position around the comment
+            const rect = commentContainer.getBoundingClientRect();
+            const x = Math.random() * rect.width;
+            const y = Math.random() * rect.height;
+            sparkle.style.left = x + 'px';
+            sparkle.style.top = y + 'px';
+            
+            commentContainer.appendChild(sparkle);
+            
+            // Animate sparkle
+            const moveX = (Math.random() - 0.5) * 60;
+            const moveY = (Math.random() - 0.5) * 60;
+            const duration = 1500 + Math.random() * 1000;
+            
+            sparkle.animate([
+                {
+                    transform: 'scale(0) rotate(0deg)',
+                    opacity: 1
+                },
+                {
+                    transform: `translate(${moveX}px, ${moveY}px) scale(1.5) rotate(180deg)`,
+                    opacity: 0.7
+                },
+                {
+                    transform: `translate(${moveX * 2}px, ${moveY * 2}px) scale(0) rotate(360deg)`,
+                    opacity: 0
+                }
+            ], {
+                duration: duration,
+                easing: 'ease-out'
+            }).onfinish = () => sparkle.remove();
+            
+        }, i * 120);
+    }
+}
+
+// Initialize comment likes when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    initializeCommentLikes();
+});
 
 console.log('Blog view script fully loaded and initialized');
 </script>

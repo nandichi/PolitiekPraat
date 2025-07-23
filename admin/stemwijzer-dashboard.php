@@ -493,6 +493,21 @@ require_once '../views/templates/header.php';
                         </div>
                     </div>
                 </a>
+                
+                <a href="../scripts/run_comment_likes_migration.php" 
+                   class="group p-6 bg-gradient-to-br from-rose-50 to-pink-50 border border-rose-200 rounded-xl hover:from-rose-100 hover:to-pink-100 transition-all duration-300 card-hover">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 bg-gradient-to-r from-rose-500 to-pink-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-gray-800">❤️ Comment Likes</h3>
+                            <p class="text-sm text-gray-600">Setup "liked by creator" functie</p>
+                        </div>
+                    </div>
+                </a>
             </div>
         </div>
     </div>
