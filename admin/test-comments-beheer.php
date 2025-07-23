@@ -12,55 +12,7 @@ $db = new Database();
 $message = '';
 $error = '';
 
-// Functie voor realistische timing met onregelmatige intervallen
-function generateRealisticTimeOffset($max_hours, $max_seconds = null) {
-    if ($max_seconds !== null) {
-        // Voor nieuwere blogs: gebruik maximum seconden
-        $max_offset = min($max_seconds, $max_hours * 3600);
-    } else {
-        // Voor oudere blogs: gebruik maximum uren
-        $max_offset = $max_hours * 3600;
-    }
-    
-    // Genereer natuurlijke intervallen (niet op hele uren/minuten)
-    $patterns = [
-        // Snelle reacties (binnen 1 uur)
-        ['min' => 300, 'max' => 3600, 'weight' => 30], // 5 min - 1 uur
-        // Normale reacties (1-6 uur)  
-        ['min' => 3600, 'max' => 21600, 'weight' => 40], // 1-6 uur
-        // Late reacties (6+ uur)
-        ['min' => 21600, 'max' => $max_offset, 'weight' => 30], // 6 uur - max
-    ];
-    
-    // Kies een patroon op basis van gewichten
-    $total_weight = array_sum(array_column($patterns, 'weight'));
-    $random = rand(1, $total_weight);
-    $current_weight = 0;
-    
-    foreach ($patterns as $pattern) {
-        $current_weight += $pattern['weight'];
-        if ($random <= $current_weight && $pattern['max'] <= $max_offset) {
-            // Genereer random tijd binnen dit patroon
-            $base_time = rand($pattern['min'], min($pattern['max'], $max_offset));
-            
-            // Voeg onregelmatige minuten en seconden toe
-            $extra_minutes = rand(0, 59); // Random minuten
-            $extra_seconds = rand(0, 59); // Random seconden
-            
-            $final_time = $base_time + ($extra_minutes * 60) + $extra_seconds;
-            
-            // Zorg ervoor dat we binnen de limiet blijven
-            return min($final_time, $max_offset);
-        }
-    }
-    
-    // Fallback: volledig random binnen de limiet
-    $base_time = rand(300, $max_offset); // Minimaal 5 minuten
-    $extra_minutes = rand(0, 59);
-    $extra_seconds = rand(0, 59);
-    
-    return min($base_time + ($extra_minutes * 60) + $extra_seconds, $max_offset);
-}
+
 
 // Verwerk formulier voor nieuwe test reactie
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_comment'])) {
@@ -76,21 +28,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_comment'])) {
         $blog = $db->single();
         
         if ($blog) {
-            // Bereken natuurlijke random tijdstip met onregelmatige intervallen
+            // Genereer random tijd tussen blog publicatie en maximum tijd
             $blog_time = strtotime($blog->published_at);
-            $max_time = $blog_time + ($delay_hours * 3600);
             $current_time = time();
+            $max_time = $blog_time + ($delay_hours * 3600); // Blog tijd + delay uren
             
-            // Maak realistische random timing met onregelmatige intervallen
-            if ($current_time > $max_time) {
-                // Blog is oud genoeg, genereer random tijd binnen de periode
-                $random_offset = generateRealisticTimeOffset($delay_hours);
-                $comment_time = date('Y-m-d H:i:s', $blog_time + $random_offset);
+            // Gebruik het minimum van huidige tijd en max_time als eindpunt
+            $end_time = min($current_time, $max_time);
+            
+            // Zorg ervoor dat we een geldige tijdspanne hebben
+            if ($end_time > $blog_time) {
+                // Genereer random tijdstip tussen blog publicatie en eindtijd
+                $random_timestamp = rand($blog_time, $end_time);
+                $comment_time = date('Y-m-d H:i:s', $random_timestamp);
             } else {
-                // Blog is nieuw, genereer tijd tussen publicatie en nu
-                $max_offset = $current_time - $blog_time;
-                $random_offset = generateRealisticTimeOffset(floor($max_offset / 3600), $max_offset);
-                $comment_time = date('Y-m-d H:i:s', $blog_time + $random_offset);
+                // Blog is in de toekomst? Gebruik huidige tijd
+                $comment_time = date('Y-m-d H:i:s', $current_time);
             }
             
             // Plaats de reactie
@@ -323,7 +276,7 @@ require_once '../views/templates/header.php';
                             <option value="168">168 uur (1 week)</option>
                         </select>
                         <p class="text-sm text-gray-500 mt-1">
-                            Reactie wordt op een natuurlijk, onregelmatig tijdstip geplaatst (bijv. 2u 17min na publicatie)
+                            Reactie wordt op een random tijdstip geplaatst tussen blog publicatie en nu (max. geselecteerde uren)
                         </p>
                     </div>
 

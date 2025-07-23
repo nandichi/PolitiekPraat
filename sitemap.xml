@@ -6,91 +6,97 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://politiekpraat.nl/</loc>
-    <lastmod>2025-07-19T11:39:28+00:00</lastmod>
+    <lastmod>2025-07-23T13:39:23+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://politiekpraat.nl/home</loc>
-    <lastmod>2025-07-19T11:39:28+00:00</lastmod>
+    <lastmod>2025-07-23T13:39:23+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://politiekpraat.nl/stemwijzer</loc>
-    <lastmod>2025-07-19T11:39:28+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.95</priority>
-  </url>
-  <url>
     <loc>https://politiekpraat.nl/blogs</loc>
-    <lastmod>2025-07-19T11:39:28+00:00</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://politiekpraat.nl/nieuws</loc>
-    <lastmod>2025-07-19T11:39:28+00:00</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://politiekpraat.nl/politiek-kompas</loc>
-    <lastmod>2025-07-19T11:39:28+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://politiekpraat.nl/partijen</loc>
-    <lastmod>2025-07-19T11:39:28+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://politiekpraat.nl/themas</loc>
-    <lastmod>2025-07-19T11:39:28+00:00</lastmod>
+    <lastmod>2025-07-23T13:39:23+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://politiekpraat.nl/forum</loc>
-    <lastmod>2025-07-19T11:39:28+00:00</lastmod>
+    <lastmod>2025-07-23T13:39:23+00:00</lastmod>
     <changefreq>daily</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://politiekpraat.nl/register</loc>
-    <lastmod>2025-07-19T11:39:28+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://politiekpraat.nl/contact</loc>
-    <lastmod>2025-07-19T11:39:28+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://politiekpraat.nl/login</loc>
-    <lastmod>2025-07-19T11:39:28+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://politiekpraat.nl/profile</loc>
-    <lastmod>2025-07-19T11:39:28+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://politiekpraat.nl/over-mij</loc>
-    <lastmod>2025-07-19T11:39:28+00:00</lastmod>
+    <lastmod>2025-07-23T13:39:23+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://politiekpraat.nl/themas</loc>
+    <lastmod>2025-07-23T13:39:23+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://politiekpraat.nl/over-mij</loc>
+    <lastmod>2025-07-23T13:39:23+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://politiekpraat.nl/nieuws</loc>
+    <lastmod>2025-07-23T13:39:23+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://politiekpraat.nl/stemwijzer</loc>
+    <lastmod>2025-07-23T13:39:23+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://politiekpraat.nl/partijen</loc>
+    <lastmod>2025-07-23T13:39:23+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://politiekpraat.nl/politiek-kompas</loc>
+    <lastmod>2025-07-23T13:39:23+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://politiekpraat.nl/login</loc>
+    <lastmod>2025-07-23T13:39:23+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://politiekpraat.nl/register</loc>
+    <lastmod>2025-07-23T13:39:23+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://politiekpraat.nl/profile</loc>
+    <lastmod>2025-07-23T13:39:23+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://politiekpraat.nl/blogs/stetste</loc>
+    <lastmod>2025-07-23T14:39:23+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://politiekpraat.nl/blogs/dag-na-bevrijdingsdag-waarom-vrijheid-meer-is-dan-een-feest</loc>
-    <lastmod>2025-05-06T18:34:17+00:00</lastmod>
+    <lastmod>2025-05-06T17:34:17+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -101,7 +107,7 @@
   </url>
   <url>
     <loc>https://politiekpraat.nl/blogs/waarom-nederlanders-klaar-zijn-met-het-kabinet-schoof-een-analyse-van-de-peilingen</loc>
-    <lastmod>2025-04-27T11:29:15+00:00</lastmod>
+    <lastmod>2025-04-27T10:29:15+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -112,7 +118,7 @@
   </url>
   <url>
     <loc>https://politiekpraat.nl/blogs/stikstof-in-2035-halveren-te-laat-voor-de-natuur</loc>
-    <lastmod>2025-04-23T22:30:31+00:00</lastmod>
+    <lastmod>2025-04-23T21:30:31+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -123,7 +129,7 @@
   </url>
   <url>
     <loc>https://politiekpraat.nl/blogs/pensioenpaniek-bij-nsc-vernietigende-kritiek-op-plan-splijt-kabinet</loc>
-    <lastmod>2025-04-23T19:09:58+00:00</lastmod>
+    <lastmod>2025-04-23T18:09:58+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -134,7 +140,7 @@
   </url>
   <url>
     <loc>https://politiekpraat.nl/blogs/voorjaarsnota-2025-een-kritische-blik-op-bezuinigingen-en-prioriteiten</loc>
-    <lastmod>2025-04-18T16:06:06+00:00</lastmod>
+    <lastmod>2025-04-18T15:06:06+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -145,7 +151,7 @@
   </url>
   <url>
     <loc>https://politiekpraat.nl/blogs/rob-jetten-over-een-slagvaardigere-overheid-minder-regels-meer-resultaat</loc>
-    <lastmod>2025-04-13T09:12:53+00:00</lastmod>
+    <lastmod>2025-04-13T08:12:53+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -156,7 +162,7 @@
   </url>
   <url>
     <loc>https://politiekpraat.nl/blogs/eu-aan-trump-s-heffingen-ontsnapt-werkelijke-winst-of-schijnsucces</loc>
-    <lastmod>2025-04-10T07:50:39+00:00</lastmod>
+    <lastmod>2025-04-10T06:50:39+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -167,7 +173,7 @@
   </url>
   <url>
     <loc>https://politiekpraat.nl/blogs/dood-hulpverleners-in-gaza-minister-veldkamp-roept-ambassadeur-op-het-matje</loc>
-    <lastmod>2025-04-08T18:50:48+00:00</lastmod>
+    <lastmod>2025-04-08T17:50:48+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -178,7 +184,7 @@
   </url>
   <url>
     <loc>https://politiekpraat.nl/blogs/verkrachting-opschorting-en-privilege-een-zaak-die-belgi-verdeelt</loc>
-    <lastmod>2025-04-06T18:13:57+00:00</lastmod>
+    <lastmod>2025-04-06T17:13:57+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -189,7 +195,7 @@
   </url>
   <url>
     <loc>https://politiekpraat.nl/blogs/den-haag-op-losse-schroeven-faber-en-wilders-maken-het-kabinet-kapot</loc>
-    <lastmod>2025-04-01T22:30:23+00:00</lastmod>
+    <lastmod>2025-04-01T20:30:23+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -200,7 +206,7 @@
   </url>
   <url>
     <loc>https://politiekpraat.nl/blogs/geen-lintjes-wel-chaos-faber-faalt-weer</loc>
-    <lastmod>2025-03-31T08:30:03+00:00</lastmod>
+    <lastmod>2025-03-31T06:30:03+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -211,7 +217,7 @@
   </url>
   <url>
     <loc>https://politiekpraat.nl/blogs/doge-en-musk-slimme-besparing-of-gevaarlijk-experiment</loc>
-    <lastmod>2025-03-23T16:30:20+00:00</lastmod>
+    <lastmod>2025-03-23T15:30:20+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -222,7 +228,7 @@
   </url>
   <url>
     <loc>https://politiekpraat.nl/blogs/wie-is-mahmoud-khalil-en-waarom-is-hij-gearresteerd</loc>
-    <lastmod>2025-03-17T07:30:56+00:00</lastmod>
+    <lastmod>2025-03-17T06:30:56+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -233,7 +239,7 @@
   </url>
   <url>
     <loc>https://politiekpraat.nl/blogs/waarom-het-eu-miljardenplan-voor-oekra-ne-voor-spanning-zorgt-in-den-haag</loc>
-    <lastmod>2025-03-12T22:12:35+00:00</lastmod>
+    <lastmod>2025-03-12T21:12:35+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -244,7 +250,7 @@
   </url>
   <url>
     <loc>https://politiekpraat.nl/blogs/3-5-miljard-voor-oekra-ne-eerst-ruzie-nu-goed-gesprek-hoe-geloofwaardig-is-dat</loc>
-    <lastmod>2025-03-10T09:29:13+00:00</lastmod>
+    <lastmod>2025-03-10T08:29:13+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -255,7 +261,7 @@
   </url>
   <url>
     <loc>https://politiekpraat.nl/blogs/is-democratie-dood</loc>
-    <lastmod>2025-03-08T11:59:36+00:00</lastmod>
+    <lastmod>2025-03-08T10:59:36+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -266,7 +272,7 @@
   </url>
   <url>
     <loc>https://politiekpraat.nl/blogs/waarom-houdt-het-kabinet-vast-aan-fabers-omstreden-plannen</loc>
-    <lastmod>2025-03-07T18:00:00+00:00</lastmod>
+    <lastmod>2025-03-07T17:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -277,7 +283,7 @@
   </url>
   <url>
     <loc>https://politiekpraat.nl/blogs/oorlog-ontrafeld-het-echte-verhaal-tussen-oekra-ne-en-rusland</loc>
-    <lastmod>2025-03-02T08:05:21+00:00</lastmod>
+    <lastmod>2025-03-02T07:05:21+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -288,7 +294,7 @@
   </url>
   <url>
     <loc>https://politiekpraat.nl/blogs/amerika-laat-oekra-ne-vallen-trumps-gevaarlijke-spel-met-de-wereldorde</loc>
-    <lastmod>2025-02-28T22:22:33+00:00</lastmod>
+    <lastmod>2025-02-28T21:22:33+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -299,7 +305,7 @@
   </url>
   <url>
     <loc>https://politiekpraat.nl/blogs/trump-wil-25-importheffingen-op-europese-producten-wat-kan-europa-doen</loc>
-    <lastmod>2025-02-26T21:51:01+00:00</lastmod>
+    <lastmod>2025-02-26T20:51:01+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -310,7 +316,7 @@
   </url>
   <url>
     <loc>https://politiekpraat.nl/blogs/trump-s-verraderlijke-grondstoffendeal-hoe-de-vs-oekra-ne-misbruikt-en-zelensky-onterecht-aanvalt</loc>
-    <lastmod>2025-02-25T23:40:45+00:00</lastmod>
+    <lastmod>2025-02-25T22:40:45+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -321,7 +327,7 @@
   </url>
   <url>
     <loc>https://politiekpraat.nl/blogs/duitse-verkiezingen-2025-rechts-rukt-op-democratie-onder-druk</loc>
-    <lastmod>2025-02-25T12:18:19+00:00</lastmod>
+    <lastmod>2025-02-25T11:18:19+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -453,157 +459,157 @@
   </url>
   <url>
     <loc>https://politiekpraat.nl/thema/klimaat-en-energie</loc>
-    <lastmod>2025-07-19T11:39:28+00:00</lastmod>
+    <lastmod>2025-07-23T13:39:23+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://politiekpraat.nl/thema/economie-en-financien</loc>
-    <lastmod>2025-07-19T11:39:28+00:00</lastmod>
+    <lastmod>2025-07-23T13:39:23+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://politiekpraat.nl/thema/onderwijs</loc>
-    <lastmod>2025-07-19T11:39:28+00:00</lastmod>
+    <lastmod>2025-07-23T13:39:23+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://politiekpraat.nl/thema/zorg-en-welzijn</loc>
-    <lastmod>2025-07-19T11:39:28+00:00</lastmod>
+    <lastmod>2025-07-23T13:39:23+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://politiekpraat.nl/thema/migratie-en-asiel</loc>
-    <lastmod>2025-07-19T11:39:28+00:00</lastmod>
+    <lastmod>2025-07-23T13:39:23+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://politiekpraat.nl/thema/veiligheid-en-justitie</loc>
-    <lastmod>2025-07-19T11:39:28+00:00</lastmod>
+    <lastmod>2025-07-23T13:39:23+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://politiekpraat.nl/thema/europa</loc>
-    <lastmod>2025-07-19T11:39:28+00:00</lastmod>
+    <lastmod>2025-07-23T13:39:23+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://politiekpraat.nl/thema/defensie</loc>
-    <lastmod>2025-07-19T11:39:28+00:00</lastmod>
+    <lastmod>2025-07-23T13:39:23+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://politiekpraat.nl/thema/landbouw-en-natuur</loc>
-    <lastmod>2025-07-19T11:39:28+00:00</lastmod>
+    <lastmod>2025-07-23T13:39:23+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://politiekpraat.nl/thema/wonen</loc>
-    <lastmod>2025-07-19T11:39:28+00:00</lastmod>
+    <lastmod>2025-07-23T13:39:23+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://politiekpraat.nl/thema/mobiliteit-en-verkeer</loc>
-    <lastmod>2025-07-19T11:39:28+00:00</lastmod>
+    <lastmod>2025-07-23T13:39:23+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://politiekpraat.nl/thema/digitalisering</loc>
-    <lastmod>2025-07-19T11:39:28+00:00</lastmod>
+    <lastmod>2025-07-23T13:39:23+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://politiekpraat.nl/partijen/pvv</loc>
-    <lastmod>2025-07-19T11:39:28+00:00</lastmod>
+    <lastmod>2025-07-23T13:39:23+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://politiekpraat.nl/partijen/gl-pvda</loc>
-    <lastmod>2025-07-19T11:39:28+00:00</lastmod>
+    <lastmod>2025-07-23T13:39:23+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://politiekpraat.nl/partijen/vvd</loc>
-    <lastmod>2025-07-19T11:39:28+00:00</lastmod>
+    <lastmod>2025-07-23T13:39:23+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://politiekpraat.nl/partijen/nsc</loc>
-    <lastmod>2025-07-19T11:39:28+00:00</lastmod>
+    <lastmod>2025-07-23T13:39:23+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://politiekpraat.nl/partijen/d66</loc>
-    <lastmod>2025-07-19T11:39:28+00:00</lastmod>
+    <lastmod>2025-07-23T13:39:23+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://politiekpraat.nl/partijen/bbb</loc>
-    <lastmod>2025-07-19T11:39:28+00:00</lastmod>
+    <lastmod>2025-07-23T13:39:23+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://politiekpraat.nl/partijen/cda</loc>
-    <lastmod>2025-07-19T11:39:28+00:00</lastmod>
+    <lastmod>2025-07-23T13:39:23+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://politiekpraat.nl/partijen/sp</loc>
-    <lastmod>2025-07-19T11:39:28+00:00</lastmod>
+    <lastmod>2025-07-23T13:39:23+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://politiekpraat.nl/partijen/fvd</loc>
-    <lastmod>2025-07-19T11:39:28+00:00</lastmod>
+    <lastmod>2025-07-23T13:39:23+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://politiekpraat.nl/partijen/pvdd</loc>
-    <lastmod>2025-07-19T11:39:28+00:00</lastmod>
+    <lastmod>2025-07-23T13:39:23+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://politiekpraat.nl/partijen/volt</loc>
-    <lastmod>2025-07-19T11:39:28+00:00</lastmod>
+    <lastmod>2025-07-23T13:39:23+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://politiekpraat.nl/partijen/ja21</loc>
-    <lastmod>2025-07-19T11:39:28+00:00</lastmod>
+    <lastmod>2025-07-23T13:39:23+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://politiekpraat.nl/partijen/sgp</loc>
-    <lastmod>2025-07-19T11:39:28+00:00</lastmod>
+    <lastmod>2025-07-23T13:39:23+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://politiekpraat.nl/partijen/denk</loc>
-    <lastmod>2025-07-19T11:39:28+00:00</lastmod>
+    <lastmod>2025-07-23T13:39:23+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
