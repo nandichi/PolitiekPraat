@@ -472,11 +472,13 @@ require_once 'views/templates/header.php'; ?>
                                                                     </span>
                                                                 <?php endif; ?>
                                                             </div>
-                                                            <div class="flex items-center justify-between sm:justify-end gap-2 sm:gap-3">
-                                                                <span class="text-lg sm:text-xl font-bold text-blue-600"><?php echo $blog->poll->option_a_percentage; ?>%</span>
-                                                                <span class="text-xs sm:text-sm text-gray-500"><?php echo $blog->poll->option_a_votes; ?> <?php echo $blog->poll->option_a_votes === 1 ? 'stem' : 'stemmen'; ?></span>
+                                                            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-end gap-2 sm:gap-3">
+                                                                <div class="flex items-center gap-2">
+                                                                    <span class="text-lg sm:text-xl font-bold text-blue-600"><?php echo $blog->poll->option_a_percentage; ?>%</span>
+                                                                    <span class="text-xs sm:text-sm text-gray-500 whitespace-nowrap"><?php echo $blog->poll->option_a_votes; ?> <?php echo $blog->poll->option_a_votes === 1 ? 'stem' : 'stemmen'; ?></span>
+                                                                </div>
                                                                 <?php if ($blog->poll->user_choice === 'A'): ?>
-                                                                    <span class="sm:hidden inline-flex items-center px-2 py-1 rounded-full bg-blue-100 text-blue-800 text-xs font-semibold">
+                                                                    <span class="inline-flex items-center px-2 py-1 rounded-full bg-blue-100 text-blue-800 text-xs font-semibold self-start sm:self-auto">
                                                                         <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 24 24">
                                                                             <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                                                         </svg>
@@ -505,11 +507,13 @@ require_once 'views/templates/header.php'; ?>
                                                                     </span>
                                                                 <?php endif; ?>
                                                             </div>
-                                                            <div class="flex items-center justify-between sm:justify-end gap-2 sm:gap-3">
-                                                                <span class="text-lg sm:text-xl font-bold text-red-600"><?php echo $blog->poll->option_b_percentage; ?>%</span>
-                                                                <span class="text-xs sm:text-sm text-gray-500"><?php echo $blog->poll->option_b_votes; ?> <?php echo $blog->poll->option_b_votes === 1 ? 'stem' : 'stemmen'; ?></span>
+                                                            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-end gap-2 sm:gap-3">
+                                                                <div class="flex items-center gap-2">
+                                                                    <span class="text-lg sm:text-xl font-bold text-red-600"><?php echo $blog->poll->option_b_percentage; ?>%</span>
+                                                                    <span class="text-xs sm:text-sm text-gray-500 whitespace-nowrap"><?php echo $blog->poll->option_b_votes; ?> <?php echo $blog->poll->option_b_votes === 1 ? 'stem' : 'stemmen'; ?></span>
+                                                                </div>
                                                                 <?php if ($blog->poll->user_choice === 'B'): ?>
-                                                                    <span class="sm:hidden inline-flex items-center px-2 py-1 rounded-full bg-red-100 text-red-800 text-xs font-semibold">
+                                                                    <span class="inline-flex items-center px-2 py-1 rounded-full bg-red-100 text-red-800 text-xs font-semibold self-start sm:self-auto">
                                                                         <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 24 24">
                                                                             <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                                                         </svg>
