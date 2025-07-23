@@ -13,7 +13,11 @@ if (!isset($params['id'])) {
 $db = new Database();
 
 // Haal comment op
-$db->query("SELECT comments.*, blogs.slug as blog_slug 
+$db->query("SELECT comments.*, blogs.slug as blog_slug,
+           CASE 
+               WHEN comments.user_id IS NOT NULL THEN 'registered'
+               ELSE 'anonymous'
+           END as author_type
            FROM comments 
            JOIN blogs ON comments.blog_id = blogs.id 
            WHERE comments.id = :id");
@@ -26,7 +30,13 @@ if (!$comment) {
 }
 
 // Controleer of gebruiker de eigenaar is of admin
-if ($_SESSION['user_id'] != $comment->user_id && !$_SESSION['is_admin']) {
+// Anonieme comments kunnen alleen door admins worden verwijderd
+if ($comment->author_type === 'anonymous') {
+    if (!$_SESSION['is_admin']) {
+        header('Location: ' . URLROOT . '/blogs/' . $comment->blog_slug);
+        exit;
+    }
+} elseif ($_SESSION['user_id'] != $comment->user_id && !$_SESSION['is_admin']) {
     header('Location: ' . URLROOT . '/blogs/' . $comment->blog_slug);
     exit;
 }

@@ -463,6 +463,21 @@ require_once '../views/templates/header.php';
                         </div>
                     </div>
                 </a>
+                
+                <a href="../scripts/run_anonymous_comments_migration.php" 
+                   class="group p-6 bg-gradient-to-br from-slate-50 to-gray-50 border border-slate-200 rounded-xl hover:from-slate-100 hover:to-gray-100 transition-all duration-300 card-hover">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 bg-gradient-to-r from-slate-500 to-gray-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-gray-800">💬 Anonieme Comments</h3>
+                            <p class="text-sm text-gray-600">Setup anonieme reacties database</p>
+                        </div>
+                    </div>
+                </a>
             </div>
         </div>
     </div>

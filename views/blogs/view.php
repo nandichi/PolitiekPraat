@@ -11,6 +11,61 @@ $data = [
     'image' => $pageImage
 ];
 
+// Haal comments op (zowel van ingelogde als anonieme gebruikers)
+$db = new Database();
+$db->query("SELECT comments.*, 
+           COALESCE(users.username, comments.anonymous_name) as author_name,
+           CASE 
+               WHEN comments.user_id IS NOT NULL THEN 'registered'
+               ELSE 'anonymous'
+           END as author_type
+           FROM comments 
+           LEFT JOIN users ON comments.user_id = users.id 
+           WHERE comments.blog_id = :blog_id 
+           ORDER BY comments.created_at DESC");
+$db->bind(':blog_id', $blog->id);
+$comments = $db->resultSet();
+
+// Comment toevoegen (zowel voor ingelogde als anonieme gebruikers)
+$comment_error = '';
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['content'])) {
+    $content = filter_input(INPUT_POST, 'content', FILTER_SANITIZE_SPECIAL_CHARS);
+    $anonymous_name = isset($_POST['anonymous_name']) ? filter_input(INPUT_POST, 'anonymous_name', FILTER_SANITIZE_SPECIAL_CHARS) : '';
+    
+    if (empty($content)) {
+        $comment_error = 'Vul een reactie in';
+    } elseif (!isset($_SESSION['user_id']) && empty($anonymous_name)) {
+        $comment_error = 'Vul je naam in';
+    } elseif (!isset($_SESSION['user_id']) && strlen($anonymous_name) > 100) {
+        $comment_error = 'Naam mag maximaal 100 karakters zijn';
+    } elseif (strlen($content) < 10) {
+        $comment_error = 'Reactie moet minimaal 10 karakters zijn';
+    } elseif (strlen($content) > 1000) {
+        $comment_error = 'Reactie mag maximaal 1000 karakters zijn';
+    } else {
+        if (isset($_SESSION['user_id'])) {
+            // Ingelogde gebruiker
+            $db->query("INSERT INTO comments (blog_id, user_id, content) VALUES (:blog_id, :user_id, :content)");
+            $db->bind(':blog_id', $blog->id);
+            $db->bind(':user_id', $_SESSION['user_id']);
+            $db->bind(':content', $content);
+        } else {
+            // Anonieme gebruiker
+            $db->query("INSERT INTO comments (blog_id, anonymous_name, content) VALUES (:blog_id, :anonymous_name, :content)");
+            $db->bind(':blog_id', $blog->id);
+            $db->bind(':anonymous_name', $anonymous_name);
+            $db->bind(':content', $content);
+        }
+        
+        if ($db->execute()) {
+            header('Location: ' . URLROOT . '/blogs/' . $blog->slug . '#comments');
+            exit;
+        } else {
+            $comment_error = 'Er is iets misgegaan bij het plaatsen van je reactie';
+        }
+    }
+}
+
 require_once 'views/templates/header.php'; ?>
 
 <!-- Reading Progress Bar -->
@@ -630,6 +685,232 @@ require_once 'views/templates/header.php'; ?>
                         </button>
                         
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enhanced Comments Section -->
+    <section class="py-16 sm:py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                
+                <!-- Section Header -->
+                <div class="text-center mb-12">
+                    <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full mb-6">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                        </svg>
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+                        Reacties
+                        <span class="inline-block bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-lg px-3 py-1 rounded-full ml-2" id="commentCount">
+                            <?php echo count($comments); ?>
+                        </span>
+                    </h2>
+                    <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                        Deel je mening over dit artikel. Je kunt anoniem reageren zonder account aan te maken.
+                    </p>
+                </div>
+
+                <!-- Comment Form -->
+                <div class="bg-gradient-to-br from-gray-50 to-blue-50/30 rounded-2xl p-6 mb-12 border border-gray-200">
+                    <form method="POST" action="<?php echo URLROOT; ?>/blogs/<?php echo $blog->slug; ?>#comments" class="space-y-6">
+                        
+                        <?php if ($comment_error): ?>
+                            <div class="bg-red-50 border border-red-200 rounded-xl p-4">
+                                <div class="flex items-start">
+                                    <svg class="w-5 h-5 text-red-500 mt-0.5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.5 0L4.232 15.5c-.77.833.192 2.5 1.732 2.5z"/>
+                                    </svg>
+                                    <div class="text-red-800 text-sm">
+                                        <?php echo htmlspecialchars($comment_error); ?>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+
+                        <?php if(!isset($_SESSION['user_id'])): ?>
+                            <!-- Anonymous Name Field -->
+                            <div>
+                                <label for="anonymous_name" class="block text-sm font-medium text-gray-700 mb-2">
+                                    <svg class="w-5 h-5 inline mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                    </svg>
+                                    Jouw naam *
+                                </label>
+                                <input type="text" 
+                                       name="anonymous_name" 
+                                       id="anonymous_name" 
+                                       placeholder="Bijv. Jan, Marie, Alex..."
+                                       maxlength="100"
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+                                       value="<?php echo isset($_POST['anonymous_name']) ? htmlspecialchars($_POST['anonymous_name']) : ''; ?>"
+                                       required>
+                                <p class="text-sm text-gray-500 mt-2 flex items-center">
+                                    <svg class="w-4 h-4 mr-1 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                    </svg>
+                                    Geen account nodig - reageer direct anoniem
+                                </p>
+                            </div>
+                        <?php else: ?>
+                            <!-- Logged in user info -->
+                            <div class="bg-blue-50 border border-blue-200 rounded-xl p-4">
+                                <div class="flex items-center">
+                                    <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center mr-3">
+                                        <span class="text-white font-semibold"><?php echo substr($_SESSION['username'], 0, 1); ?></span>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-medium text-blue-900">Reactie plaatsen als:</p>
+                                        <p class="text-blue-700"><?php echo htmlspecialchars($_SESSION['username']); ?></p>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+
+                        <!-- Comment Content -->
+                        <div>
+                            <label for="content" class="block text-sm font-medium text-gray-700 mb-2">
+                                <svg class="w-5 h-5 inline mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                                </svg>
+                                Jouw reactie *
+                            </label>
+                            <textarea name="content" 
+                                      id="content" 
+                                      rows="5"
+                                      placeholder="Deel je mening over dit artikel. Houd het respectvol en constructief..."
+                                      class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 resize-none"
+                                      required><?php echo isset($_POST['content']) ? htmlspecialchars($_POST['content']) : ''; ?></textarea>
+                            <div class="flex justify-between items-center mt-2">
+                                <p class="text-sm text-gray-500">Minimaal 10 karakters</p>
+                                <span class="text-sm text-gray-400" id="charCount">0/1000</span>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                            <button type="submit" 
+                                    class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold rounded-xl hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+                                </svg>
+                                Plaats Reactie
+                            </button>
+                            
+                            <?php if(!isset($_SESSION['user_id'])): ?>
+                                <div class="text-sm text-gray-600 text-center sm:text-left">
+                                    Heb je een account? 
+                                    <a href="<?php echo URLROOT; ?>/login" class="text-blue-600 hover:text-blue-700 font-medium">Log hier in</a> 
+                                    of 
+                                    <a href="<?php echo URLROOT; ?>/register" class="text-blue-600 hover:text-blue-700 font-medium">maak een account aan</a>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Comments List -->
+                <div id="comments">
+                    <?php if(empty($comments)): ?>
+                        <div class="text-center py-12">
+                            <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-2">Nog geen reacties</h3>
+                            <p class="text-gray-600 mb-6">Wees de eerste die reageert op dit artikel!</p>
+                        </div>
+                    <?php else: ?>
+                        <div class="space-y-6">
+                            <?php foreach($comments as $comment): ?>
+                                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow duration-300">
+                                    <!-- Comment Header -->
+                                    <div class="px-6 py-4 bg-gradient-to-r from-gray-50 to-blue-50/30 border-b border-gray-100">
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center space-x-3">
+                                                <!-- Avatar -->
+                                                <div class="w-10 h-10 rounded-full flex items-center justify-center <?php echo $comment->author_type === 'anonymous' ? 'bg-gradient-to-r from-gray-400 to-gray-500' : 'bg-gradient-to-r from-blue-500 to-indigo-600'; ?>">
+                                                    <span class="text-white font-semibold text-sm">
+                                                        <?php echo substr($comment->author_name, 0, 1); ?>
+                                                    </span>
+                                                </div>
+                                                
+                                                <!-- Author Info -->
+                                                <div>
+                                                    <div class="flex items-center gap-2">
+                                                        <span class="font-semibold text-gray-900">
+                                                            <?php echo htmlspecialchars($comment->author_name); ?>
+                                                        </span>
+                                                        <?php if($comment->author_type === 'anonymous'): ?>
+                                                            <span class="inline-flex items-center px-2 py-1 rounded-full bg-gray-100 text-gray-600 text-xs font-medium">
+                                                                <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                                                </svg>
+                                                                Gast
+                                                            </span>
+                                                        <?php else: ?>
+                                                            <span class="inline-flex items-center px-2 py-1 rounded-full bg-blue-100 text-blue-600 text-xs font-medium">
+                                                                <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                                                </svg>
+                                                                Lid
+                                                            </span>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                    <span class="text-sm text-gray-500">
+                                                        <?php 
+                                                        $formatter = new IntlDateFormatter('nl_NL', IntlDateFormatter::MEDIUM, IntlDateFormatter::SHORT);
+                                                        echo $formatter->format(strtotime($comment->created_at)); 
+                                                        ?>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Delete Button -->
+                                            <?php if(isset($_SESSION['user_id']) && $comment->author_type === 'registered' && 
+                                                    ($_SESSION['user_id'] == $comment->user_id || $_SESSION['is_admin'])): ?>
+                                                <form method="POST" 
+                                                      action="<?php echo URLROOT; ?>/comments/delete/<?php echo $comment->id; ?>"
+                                                      class="inline">
+                                                    <button type="submit" 
+                                                            class="text-red-600 hover:text-red-700 p-2 rounded-lg hover:bg-red-50 transition-colors"
+                                                            onclick="return confirm('Weet je zeker dat je deze reactie wilt verwijderen?')"
+                                                            title="Reactie verwijderen">
+                                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                                        </svg>
+                                                    </button>
+                                                </form>
+                                            <?php elseif(isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
+                                                <form method="POST" 
+                                                      action="<?php echo URLROOT; ?>/comments/delete/<?php echo $comment->id; ?>"
+                                                      class="inline">
+                                                    <button type="submit" 
+                                                            class="text-red-600 hover:text-red-700 p-2 rounded-lg hover:bg-red-50 transition-colors"
+                                                            onclick="return confirm('Weet je zeker dat je deze reactie wilt verwijderen? (Admin actie)')"
+                                                            title="Reactie verwijderen (Admin)">
+                                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                                        </svg>
+                                                    </button>
+                                                </form>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Comment Content -->
+                                    <div class="px-6 py-5">
+                                        <div class="prose prose-sm max-w-none text-gray-700 leading-relaxed">
+                                            <?php echo nl2br(htmlspecialchars($comment->content)); ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -2408,6 +2689,28 @@ async function copyToClipboard() {
         console.error('Kon link niet kopiëren:', err);
         showNotification('Kon link niet kopiëren', 'error');
     }
+}
+
+// Character count for comment textarea
+const contentTextarea = document.getElementById('content');
+const charCount = document.getElementById('charCount');
+
+if (contentTextarea && charCount) {
+    function updateCharCount() {
+        const length = contentTextarea.value.length;
+        charCount.textContent = `${length}/1000`;
+        
+        if (length > 1000) {
+            charCount.classList.add('text-red-500');
+            charCount.classList.remove('text-gray-400');
+        } else {
+            charCount.classList.remove('text-red-500');
+            charCount.classList.add('text-gray-400');
+        }
+    }
+    
+    contentTextarea.addEventListener('input', updateCharCount);
+    updateCharCount();
 }
 
 console.log('Blog view script fully loaded and initialized');
