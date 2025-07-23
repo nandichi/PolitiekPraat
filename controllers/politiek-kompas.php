@@ -50,7 +50,7 @@ class ProgrammaVergelijkerController {
             'Veiligheid' => [
                 'title' => 'Veiligheid',
                 'description' => 'Politie en criminaliteitsbestrijding',
-                'icon' => '🛡️'
+                'icon' => '👮'
             ]
         ];
 

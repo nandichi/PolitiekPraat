@@ -24,6 +24,73 @@ $db->query("UPDATE blogs SET views = views + 1 WHERE id = :id");
 $db->bind(':id', $blog->id);
 $db->execute();
 
+// Haal poll data op indien aanwezig
+$poll = null;
+$poll_options = [];
+$poll_results = [];
+$user_voted = false;
+$user_vote_option_id = null;
+
+$db->query("SELECT * FROM blog_polls WHERE blog_id = :blog_id AND is_active = 1");
+$db->bind(':blog_id', $blog->id);
+$poll = $db->single();
+
+if ($poll) {
+    // Haal poll opties op
+    $db->query("SELECT * FROM poll_options WHERE poll_id = :poll_id ORDER BY option_order");
+    $db->bind(':poll_id', $poll->id);
+    $poll_options = $db->resultSet();
+    
+    // Check if current user has voted
+    $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
+    $session_id = isset($_SESSION['poll_session_id']) ? $_SESSION['poll_session_id'] : null;
+    
+    if ($user_id) {
+        $db->query("SELECT option_id FROM poll_votes WHERE poll_id = :poll_id AND user_id = :user_id");
+        $db->bind(':poll_id', $poll->id);
+        $db->bind(':user_id', $user_id);
+        $userVote = $db->single();
+        if ($userVote) {
+            $user_voted = true;
+            $user_vote_option_id = $userVote->option_id;
+        }
+    } elseif ($session_id) {
+        $db->query("SELECT option_id FROM poll_votes WHERE poll_id = :poll_id AND session_id = :session_id");
+        $db->bind(':poll_id', $poll->id);
+        $db->bind(':session_id', $session_id);
+        $userVote = $db->single();
+        if ($userVote) {
+            $user_voted = true;
+            $user_vote_option_id = $userVote->option_id;
+        }
+    }
+    
+    // Get poll results if user has voted or if results should always be shown
+    if ($user_voted || $poll->show_results === 'always') {
+        $db->query("SELECT po.id, po.option_text, po.option_order,
+                           COUNT(pv.id) as vote_count
+                    FROM poll_options po
+                    LEFT JOIN poll_votes pv ON po.id = pv.option_id
+                    WHERE po.poll_id = :poll_id
+                    GROUP BY po.id, po.option_text, po.option_order
+                    ORDER BY po.option_order");
+        $db->bind(':poll_id', $poll->id);
+        $results = $db->resultSet();
+        
+        $total_votes = array_sum(array_column($results, 'vote_count'));
+        
+        foreach ($results as $result) {
+            $percentage = $total_votes > 0 ? round(($result->vote_count / $total_votes) * 100, 1) : 0;
+            $poll_results[] = [
+                'id' => $result->id,
+                'text' => $result->option_text,
+                'votes' => $result->vote_count,
+                'percentage' => $percentage
+            ];
+        }
+    }
+}
+
 // Haal comments op (zowel van ingelogde als anonieme gebruikers)
 $db->query("SELECT comments.*, 
            COALESCE(users.username, comments.anonymous_name) as author_name,

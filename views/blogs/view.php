@@ -423,6 +423,124 @@ require_once 'views/templates/header.php'; ?>
         </div>
     </article>
 
+    <!-- Poll Section -->
+    <?php if ($poll): ?>
+    <section class="relative py-12 sm:py-16 bg-gradient-to-br from-secondary/5 via-white to-primary/5">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-white rounded-3xl shadow-xl border border-secondary/20 overflow-hidden">
+                    <!-- Poll Header -->
+                    <div class="bg-gradient-to-r from-secondary via-secondary/90 to-primary px-6 sm:px-8 py-6">
+                        <div class="flex items-center gap-3 mb-2">
+                            <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl sm:text-2xl font-bold text-white">Poll</h3>
+                        </div>
+                        <h4 class="text-lg text-white/90 font-medium"><?php echo htmlspecialchars($poll->question); ?></h4>
+                        <?php if ($poll->description): ?>
+                            <p class="text-white/80 mt-2 text-sm"><?php echo htmlspecialchars($poll->description); ?></p>
+                        <?php endif; ?>
+                    </div>
+
+                    <!-- Poll Content -->
+                    <div class="p-6 sm:p-8">
+                        <?php if (!$user_voted && $poll->show_results !== 'always'): ?>
+                            <!-- Voting Interface -->
+                            <div id="pollVoting">
+                                <p class="text-gray-600 mb-6 text-center">Selecteer jouw keuze en stem!</p>
+                                <div class="space-y-3 mb-6">
+                                    <?php foreach ($poll_options as $option): ?>
+                                        <label class="group block cursor-pointer">
+                                            <div class="flex items-center p-4 bg-gray-50 hover:bg-secondary/5 border border-gray-200 hover:border-secondary/30 rounded-xl transition-all duration-300">
+                                                <input type="radio" 
+                                                       name="poll_option" 
+                                                       value="<?php echo $option->id; ?>"
+                                                       class="w-5 h-5 text-secondary border-gray-300 focus:ring-secondary/30">
+                                                <span class="ml-4 text-gray-900 font-medium group-hover:text-secondary transition-colors">
+                                                    <?php echo htmlspecialchars($option->option_text); ?>
+                                                </span>
+                                            </div>
+                                        </label>
+                                    <?php endforeach; ?>
+                                </div>
+                                <div class="text-center">
+                                    <button id="submitVote" 
+                                            class="inline-flex items-center px-8 py-3 bg-gradient-to-r from-secondary to-primary text-white font-semibold rounded-xl hover:shadow-lg transition-all duration-300 transform hover:scale-105"
+                                            data-poll-id="<?php echo $poll->id; ?>">
+                                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                        Stem Uitbrengen
+                                    </button>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+
+                        <?php if ($user_voted || $poll->show_results === 'always'): ?>
+                            <!-- Results Interface -->
+                            <div id="pollResults">
+                                <?php if ($user_voted): ?>
+                                    <div class="text-center mb-6">
+                                        <div class="inline-flex items-center px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-medium">
+                                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                            </svg>
+                                            Je hebt gestemd!
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
+
+                                <div class="space-y-4">
+                                    <?php 
+                                    $total_votes = array_sum(array_column($poll_results, 'votes'));
+                                    foreach ($poll_results as $result): 
+                                        $is_user_choice = $user_voted && $result['id'] == $user_vote_option_id;
+                                    ?>
+                                        <div class="relative">
+                                            <div class="flex items-center justify-between mb-2">
+                                                <div class="flex items-center gap-2">
+                                                    <span class="font-medium text-gray-900"><?php echo htmlspecialchars($result['text']); ?></span>
+                                                    <?php if ($is_user_choice): ?>
+                                                        <span class="inline-flex items-center px-2 py-1 bg-secondary/10 text-secondary rounded-full text-xs font-medium">
+                                                            <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                                            </svg>
+                                                            Jouw keuze
+                                                        </span>
+                                                    <?php endif; ?>
+                                                </div>
+                                                <div class="text-right">
+                                                    <span class="text-lg font-bold text-gray-900"><?php echo $result['percentage']; ?>%</span>
+                                                    <div class="text-sm text-gray-500"><?php echo $result['votes']; ?> <?php echo $result['votes'] == 1 ? 'stem' : 'stemmen'; ?></div>
+                                                </div>
+                                            </div>
+                                            <div class="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+                                                <div class="bg-gradient-to-r from-secondary to-primary h-full rounded-full transition-all duration-1000 ease-out <?php echo $is_user_choice ? 'animate-pulse' : ''; ?>" 
+                                                     style="width: <?php echo $result['percentage']; ?>%"></div>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+
+                                <?php if ($total_votes > 0): ?>
+                                    <div class="mt-6 text-center">
+                                        <div class="text-sm text-gray-500">
+                                            Totaal <?php echo $total_votes; ?> <?php echo $total_votes == 1 ? 'stem' : 'stemmen'; ?>
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <?php endif; ?>
+
     <!-- Enhanced Interactive Actions Section -->
     <section class="relative py-12 sm:py-16 bg-gradient-to-br from-gray-50 via-white to-blue-50/30">
         <!-- Background Pattern -->
@@ -3088,10 +3206,203 @@ function initializeLoadMoreComments() {
     }
 }
 
+// Poll functionality
+function initializePoll() {
+    const submitVoteBtn = document.getElementById('submitVote');
+    const pollVoting = document.getElementById('pollVoting');
+    const pollResults = document.getElementById('pollResults');
+    
+    if (!submitVoteBtn) return;
+    
+    submitVoteBtn.addEventListener('click', async function() {
+        const selectedOption = document.querySelector('input[name="poll_option"]:checked');
+        
+        if (!selectedOption) {
+            alert('Selecteer eerst een optie om te stemmen.');
+            return;
+        }
+        
+        const pollId = this.getAttribute('data-poll-id');
+        const optionId = selectedOption.value;
+        
+        // Disable button and show loading state
+        submitVoteBtn.disabled = true;
+        submitVoteBtn.innerHTML = `
+            <svg class="w-5 h-5 mr-2 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+            </svg>
+            Stemmen...
+        `;
+        
+        try {
+            const response = await fetch('<?php echo URLROOT; ?>/ajax/poll-vote.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    poll_id: parseInt(pollId),
+                    option_id: parseInt(optionId)
+                })
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                // Hide voting interface
+                if (pollVoting) {
+                    pollVoting.style.transition = 'opacity 0.5s ease-out';
+                    pollVoting.style.opacity = '0';
+                    setTimeout(() => {
+                        pollVoting.style.display = 'none';
+                    }, 500);
+                }
+                
+                // Show results
+                showPollResults(data.results, data.total_votes, data.voted_option_id);
+                
+                // Show success message
+                showNotification('Je stem is succesvol opgeslagen!', 'success');
+            } else {
+                throw new Error(data.error || 'Er is iets misgegaan bij het stemmen.');
+            }
+        } catch (error) {
+            console.error('Poll voting error:', error);
+            showNotification(error.message || 'Er is een fout opgetreden. Probeer het opnieuw.', 'error');
+            
+            // Re-enable button
+            submitVoteBtn.disabled = false;
+            submitVoteBtn.innerHTML = `
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                Stem Uitbrengen
+            `;
+        }
+    });
+}
+
+function showPollResults(results, totalVotes, votedOptionId) {
+    const pollContainer = document.querySelector('.bg-white.rounded-3xl.shadow-xl.border.border-secondary\\/20');
+    if (!pollContainer) return;
+    
+    // Create results HTML
+    let resultsHTML = `
+        <div id="pollResults" class="opacity-0">
+            <div class="text-center mb-6">
+                <div class="inline-flex items-center px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-medium">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    Je hebt gestemd!
+                </div>
+            </div>
+            <div class="space-y-4">
+    `;
+    
+    results.forEach(result => {
+        const isUserChoice = result.id == votedOptionId;
+        resultsHTML += `
+            <div class="relative">
+                <div class="flex items-center justify-between mb-2">
+                    <div class="flex items-center gap-2">
+                        <span class="font-medium text-gray-900">${escapeHtml(result.text)}</span>
+                        ${isUserChoice ? `
+                            <span class="inline-flex items-center px-2 py-1 bg-secondary/10 text-secondary rounded-full text-xs font-medium">
+                                <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                Jouw keuze
+                            </span>
+                        ` : ''}
+                    </div>
+                    <div class="text-right">
+                        <span class="text-lg font-bold text-gray-900">${result.percentage}%</span>
+                        <div class="text-sm text-gray-500">${result.votes} ${result.votes == 1 ? 'stem' : 'stemmen'}</div>
+                    </div>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+                    <div class="bg-gradient-to-r from-secondary to-primary h-full rounded-full transition-all duration-1000 ease-out ${isUserChoice ? 'animate-pulse' : ''}" 
+                         style="width: 0%"></div>
+                </div>
+            </div>
+        `;
+    });
+    
+    resultsHTML += `
+            </div>
+            ${totalVotes > 0 ? `
+                <div class="mt-6 text-center">
+                    <div class="text-sm text-gray-500">
+                        Totaal ${totalVotes} ${totalVotes == 1 ? 'stem' : 'stemmen'}
+                    </div>
+                </div>
+            ` : ''}
+        </div>
+    `;
+    
+    // Insert results
+    const pollContent = pollContainer.querySelector('.p-6.sm\\:p-8');
+    if (pollContent) {
+        pollContent.innerHTML = resultsHTML;
+        
+        // Animate results appearance
+        setTimeout(() => {
+            const pollResults = document.getElementById('pollResults');
+            if (pollResults) {
+                pollResults.style.transition = 'opacity 0.5s ease-in';
+                pollResults.style.opacity = '1';
+                
+                // Animate progress bars
+                setTimeout(() => {
+                    results.forEach((result, index) => {
+                        const progressBar = pollResults.querySelectorAll('.bg-gradient-to-r')[index];
+                        if (progressBar) {
+                            progressBar.style.width = result.percentage + '%';
+                        }
+                    });
+                }, 200);
+            }
+        }, 100);
+    }
+}
+
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = `fixed top-4 right-4 px-6 py-4 rounded-lg shadow-lg z-50 transition-all duration-300 transform translate-x-full ${
+        type === 'success' ? 'bg-green-500 text-white' : 
+        type === 'error' ? 'bg-red-500 text-white' : 
+        'bg-blue-500 text-white'
+    }`;
+    notification.textContent = message;
+    
+    document.body.appendChild(notification);
+    
+    // Animate in
+    setTimeout(() => {
+        notification.style.transform = 'translateX(0)';
+    }, 100);
+    
+    // Auto remove
+    setTimeout(() => {
+        notification.style.transform = 'translateX(100%)';
+        setTimeout(() => {
+            document.body.removeChild(notification);
+        }, 300);
+    }, 3000);
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
 // Initialize comment likes when page loads
 document.addEventListener('DOMContentLoaded', function() {
     initializeCommentLikes();
     initializeLoadMoreComments();
+    initializePoll();
 });
 
 console.log('Blog view script fully loaded and initialized');
