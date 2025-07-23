@@ -205,7 +205,12 @@ class BlogsController {
                 'video_url' => $video_url,
                 'audio_path' => $audio_path,
                 'audio_url' => $audio_url,
-                'soundcloud_url' => $soundcloud_url
+                'soundcloud_url' => $soundcloud_url,
+                // Poll data
+                'enable_poll' => isset($_POST['enable_poll']),
+                'poll_question' => trim($_POST['poll_question'] ?? ''),
+                'poll_option_a' => trim($_POST['poll_option_a'] ?? ''),
+                'poll_option_b' => trim($_POST['poll_option_b'] ?? '')
             ];
             
             // Debug: Log what will be saved to database

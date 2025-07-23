@@ -448,6 +448,36 @@ require_once '../views/templates/header.php';
                     </div>
                 </a>
                 
+                <a href="polls-beheer.php" 
+                   class="group p-6 bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200 rounded-xl hover:from-amber-100 hover:to-orange-100 transition-all duration-300 card-hover">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 bg-amber-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-gray-800">📊 Polls Beheer</h3>
+                            <p class="text-sm text-gray-600">Beheer blog poll stemcijfers</p>
+                        </div>
+                    </div>
+                </a>
+                
+                <a href="#" onclick="createPollTables()" 
+                   class="group p-6 bg-gradient-to-br from-lime-50 to-green-50 border border-lime-200 rounded-xl hover:from-lime-100 hover:to-green-100 transition-all duration-300 card-hover">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 bg-lime-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-gray-800">🗃️ Setup Poll Tables</h3>
+                            <p class="text-sm text-gray-600">Installeer poll database tabellen</p>
+                        </div>
+                    </div>
+                </a>
+                
                 <!-- Tijdelijk verborgen scripts -->
                 <div style="display: none;">
                     <a href="../scripts/run_nederlandse_verkiezingen_migration.php" 
@@ -517,6 +547,44 @@ require_once '../views/templates/header.php';
 </main>
 
 <script>
+// Poll tables setup functie
+function createPollTables() {
+    if (confirm('Weet je zeker dat je de poll database tabellen wilt installeren/bijwerken?')) {
+        // Toon loading indicator
+        const button = event.target.closest('a');
+        const originalContent = button.innerHTML;
+        button.innerHTML = `
+            <div class="flex items-center space-x-4">
+                <div class="w-12 h-12 bg-lime-500 rounded-xl flex items-center justify-center">
+                    <svg class="w-6 h-6 text-white animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-gray-800">Installeren...</h3>
+                    <p class="text-sm text-gray-600">Even geduld</p>
+                </div>
+            </div>
+        `;
+        
+        // Maak AJAX request
+        fetch('../scripts/create_poll_tables.php')
+            .then(response => response.text())
+            .then(data => {
+                button.innerHTML = originalContent;
+                if (data.includes('success') || data.includes('Tabellen aangemaakt')) {
+                    alert('Poll tabellen succesvol geïnstalleerd!\\n\\n' + data);
+                } else {
+                    alert('Er is een fout opgetreden:\\n\\n' + data);
+                }
+            })
+            .catch(error => {
+                button.innerHTML = originalContent;
+                alert('Network error: ' + error.message);
+            });
+    }
+}
+
 // Add some interactive animations
 document.addEventListener('DOMContentLoaded', function() {
     // Animate counters

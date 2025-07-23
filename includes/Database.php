@@ -72,4 +72,17 @@ class Database {
     public function directQuery($sql) {
         return $this->dbh->query($sql);
     }
+
+    // Transactie methoden
+    public function beginTransaction() {
+        return $this->dbh->beginTransaction();
+    }
+
+    public function commit() {
+        return $this->dbh->commit();
+    }
+
+    public function rollback() {
+        return $this->dbh->rollBack();
+    }
 } 

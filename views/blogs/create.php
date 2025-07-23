@@ -488,6 +488,134 @@
                         </div>
                     </div>
 
+                    <!-- Poll Sectie -->
+                    <div class="mb-10" data-aos="fade-up" data-aos-delay="350">
+                        <label class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                            <svg class="w-5 h-5 text-primary mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                            </svg>
+                            Poll toevoegen (optioneel)
+                        </label>
+                        
+                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300">
+                            <!-- Poll Toggle -->
+                            <div class="flex items-center justify-between mb-6">
+                                <div>
+                                    <h3 class="text-lg font-semibold text-gray-900 mb-1">Interactieve Poll</h3>
+                                    <p class="text-sm text-gray-600">Voeg een poll toe om lezers te laten stemmen tussen twee opties</p>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" id="enablePoll" name="enable_poll" class="sr-only peer" onchange="togglePollForm()">
+                                    <div class="w-14 h-8 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-primary/30 peer-checked:after:translate-x-6 peer-checked:after:border-white after:content-[''] after:absolute after:top-1 after:left-1 after:bg-white after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-primary"></div>
+                                    <span class="ml-3 text-sm font-medium text-gray-700">Activeren</span>
+                                </label>
+                            </div>
+
+                            <!-- Poll Form (verborgen by default) -->
+                            <div id="pollForm" class="hidden space-y-6">
+                                <!-- Poll Vraag -->
+                                <div>
+                                    <label for="poll_question" class="block text-sm font-medium text-gray-700 mb-2">
+                                        Poll Vraag/Stelling *
+                                    </label>
+                                    <div class="relative group">
+                                        <input type="text" 
+                                               name="poll_question" 
+                                               id="poll_question" 
+                                               class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition-all duration-300 bg-gray-50/50"
+                                               placeholder="Bijv. Wat vind je van het nieuwe beleid?"
+                                               maxlength="500">
+                                        <div class="absolute inset-0 bg-primary/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+                                    </div>
+                                    <p class="text-xs text-gray-500 mt-1">Maximaal 500 karakters</p>
+                                </div>
+
+                                <!-- Poll Opties -->
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <!-- Optie A -->
+                                    <div>
+                                        <label for="poll_option_a" class="block text-sm font-medium text-gray-700 mb-2">
+                                            <span class="inline-flex items-center">
+                                                <span class="w-6 h-6 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-full flex items-center justify-center text-xs font-bold mr-2">A</span>
+                                                Eerste keuze *
+                                            </span>
+                                        </label>
+                                        <div class="relative group">
+                                            <input type="text" 
+                                                   name="poll_option_a" 
+                                                   id="poll_option_a" 
+                                                   class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 outline-none transition-all duration-300 bg-gray-50/50"
+                                                   placeholder="Bijv. Eens"
+                                                   maxlength="200">
+                                            <div class="absolute inset-0 bg-blue-500/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Optie B -->
+                                    <div>
+                                        <label for="poll_option_b" class="block text-sm font-medium text-gray-700 mb-2">
+                                            <span class="inline-flex items-center">
+                                                <span class="w-6 h-6 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-full flex items-center justify-center text-xs font-bold mr-2">B</span>
+                                                Tweede keuze *
+                                            </span>
+                                        </label>
+                                        <div class="relative group">
+                                            <input type="text" 
+                                                   name="poll_option_b" 
+                                                   id="poll_option_b" 
+                                                   class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-red-500/30 focus:border-red-500 outline-none transition-all duration-300 bg-gray-50/50"
+                                                   placeholder="Bijv. Oneens"
+                                                   maxlength="200">
+                                            <div class="absolute inset-0 bg-red-500/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Poll Preview -->
+                                <div class="bg-gradient-to-r from-primary/5 to-secondary/5 rounded-xl p-6 border border-primary/20">
+                                    <div class="flex items-center mb-4">
+                                        <svg class="w-5 h-5 text-primary mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                        </svg>
+                                        <h4 class="font-semibold text-gray-900">Live Preview</h4>
+                                    </div>
+                                    <div id="pollPreview" class="space-y-3">
+                                        <div class="text-gray-700 font-medium" id="previewQuestion">Jouw poll vraag verschijnt hier...</div>
+                                        <div class="space-y-2">
+                                            <div class="flex items-center p-3 bg-white rounded-lg border border-gray-200 cursor-pointer hover:bg-blue-50 transition-colors">
+                                                <div class="w-4 h-4 rounded-full border-2 border-blue-500 mr-3"></div>
+                                                <span id="previewOptionA" class="text-gray-700">Optie A</span>
+                                            </div>
+                                            <div class="flex items-center p-3 bg-white rounded-lg border border-gray-200 cursor-pointer hover:bg-red-50 transition-colors">
+                                                <div class="w-4 h-4 rounded-full border-2 border-red-500 mr-3"></div>
+                                                <span id="previewOptionB" class="text-gray-700">Optie B</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Poll Info -->
+                                <div class="bg-blue-50 rounded-lg p-4 border border-blue-200">
+                                    <div class="flex items-start">
+                                        <svg class="w-5 h-5 text-blue-500 mt-0.5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                        <div class="text-sm text-blue-800">
+                                            <p class="font-medium mb-1">Poll informatie:</p>
+                                            <ul class="list-disc list-inside space-y-1 text-blue-700">
+                                                <li>Lezers kunnen één keer stemmen per blog</li>
+                                                <li>Anonieme stemmen wordt ondersteund</li>
+                                                <li>Resultaten worden direct getoond na stemmen</li>
+                                                <li>Poll wordt prominent getoond in je artikel</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Content Editor Sectie - volledig herontworpen met markdown knoppen -->
                     <div class="mt-10" data-aos="fade-up" data-aos-delay="300">
                         <div class="mb-6">
@@ -1472,7 +1600,63 @@ document.addEventListener('DOMContentLoaded', function() {
             this.parentElement.classList.remove('shadow-sm');
         });
     });
+
+    // Poll functionaliteit
+    setupPollFunctionality();
 });
+
+// Poll functionaliteit buiten DOMContentLoaded omdat het door onclick wordt aangeroepen
+function togglePollForm() {
+    const checkbox = document.getElementById('enablePoll');
+    const pollForm = document.getElementById('pollForm');
+    
+    if (checkbox.checked) {
+        pollForm.classList.remove('hidden');
+        pollForm.style.opacity = '0';
+        pollForm.style.transform = 'translateY(10px)';
+        
+        setTimeout(() => {
+            pollForm.style.opacity = '1';
+            pollForm.style.transform = 'translateY(0)';
+        }, 50);
+    } else {
+        pollForm.style.opacity = '0';
+        pollForm.style.transform = 'translateY(-10px)';
+        
+        setTimeout(() => {
+            pollForm.classList.add('hidden');
+            pollForm.style.opacity = '';
+            pollForm.style.transform = '';
+            
+            // Reset form
+            document.getElementById('poll_question').value = '';
+            document.getElementById('poll_option_a').value = '';
+            document.getElementById('poll_option_b').value = '';
+            updatePollPreview();
+        }, 300);
+    }
+}
+
+function setupPollFunctionality() {
+    const pollQuestion = document.getElementById('poll_question');
+    const pollOptionA = document.getElementById('poll_option_a');
+    const pollOptionB = document.getElementById('poll_option_b');
+    
+    // Live preview updates
+    if (pollQuestion) pollQuestion.addEventListener('input', updatePollPreview);
+    if (pollOptionA) pollOptionA.addEventListener('input', updatePollPreview);
+    if (pollOptionB) pollOptionB.addEventListener('input', updatePollPreview);
+}
+
+function updatePollPreview() {
+    const question = document.getElementById('poll_question').value || 'Jouw poll vraag verschijnt hier...';
+    const optionA = document.getElementById('poll_option_a').value || 'Optie A';
+    const optionB = document.getElementById('poll_option_b').value || 'Optie B';
+    
+    document.getElementById('previewQuestion').textContent = question;
+    document.getElementById('previewOptionA').textContent = optionA;
+    document.getElementById('previewOptionB').textContent = optionB;
+}
 </script>
 
 <?php require_once BASE_PATH . '/views/templates/footer.php'; ?> 
