@@ -798,15 +798,6 @@ require_once 'views/templates/header.php'; ?>
                                 </svg>
                                 Plaats Reactie
                             </button>
-                            
-                            <?php if(!isset($_SESSION['user_id'])): ?>
-                                <div class="text-sm text-gray-600 text-center sm:text-left">
-                                    Heb je een account? 
-                                    <a href="<?php echo URLROOT; ?>/login" class="text-blue-600 hover:text-blue-700 font-medium">Log hier in</a> 
-                                    of 
-                                    <a href="<?php echo URLROOT; ?>/register" class="text-blue-600 hover:text-blue-700 font-medium">maak een account aan</a>
-                                </div>
-                            <?php endif; ?>
                         </div>
                     </form>
                 </div>
