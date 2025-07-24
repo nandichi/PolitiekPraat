@@ -46,7 +46,116 @@ try {
 }
 
 require_once 'views/templates/header.php';
+
+// Structured Data voor SEO
+$structuredData = [
+    "@context" => "https://schema.org",
+    "@type" => "WebApplication",
+    "name" => "Stemwijzer 2025 Nederland",
+    "description" => "Gratis online stemtest voor Nederlandse verkiezingen 2025. Ontdek welke politieke partij het beste bij jouw standpunten past.",
+    "url" => URLROOT . "/stemwijzer",
+    "applicationCategory" => "EducationalApplication",
+    "operatingSystem" => "Web",
+    "offers" => [
+        "@type" => "Offer",
+        "price" => "0",
+        "priceCurrency" => "EUR"
+    ],
+    "provider" => [
+        "@type" => "Organization",
+        "name" => "PolitiekPraat",
+        "url" => URLROOT
+    ],
+    "potentialAction" => [
+        "@type" => "UseAction",
+        "target" => URLROOT . "/stemwijzer",
+        "name" => "Start Stemwijzer Test"
+    ]
+];
+
+$faqStructuredData = [
+    "@context" => "https://schema.org",
+    "@type" => "FAQPage",
+    "mainEntity" => [
+        [
+            "@type" => "Question",
+            "name" => "Hoe betrouwbaar is de stemwijzer test?",
+            "acceptedAnswer" => [
+                "@type" => "Answer",
+                "text" => "Onze stemwijzer gebruikt officiële partijstandpunten uit verkiezingsprogramma's en recente uitspraken. Alle 14 Nederlandse politieke partijen zijn vertegenwoordigd met actuele standpunten over 30 thema's."
+            ]
+        ],
+        [
+            "@type" => "Question", 
+            "name" => "Hoe lang duurt de stemwijzer test?",
+            "acceptedAnswer" => [
+                "@type" => "Answer",
+                "text" => "De complete stemwijzer test duurt ongeveer 5-7 minuten. Je beantwoordt 30 stellingen over actuele politieke thema's en krijgt direct je persoonlijke resultaten met partij-matches."
+            ]
+        ],
+        [
+            "@type" => "Question",
+            "name" => "Welke partijen zitten in de stemwijzer?", 
+            "acceptedAnswer" => [
+                "@type" => "Answer",
+                "text" => "Alle 14 grote Nederlandse politieke partijen: VVD, PVV, NSC, BBB, GL-PvdA, D66, SP, PvdD, CDA, JA21, SGP, FvD, DENK en Volt. Updated voor de verkiezingen 2025."
+            ]
+        ],
+        [
+            "@type" => "Question",
+            "name" => "Is mijn stemwijzer data veilig?",
+            "acceptedAnswer" => [
+                "@type" => "Answer", 
+                "text" => "Ja, je privacy is gegarandeerd. We slaan geen persoonlijke gegevens op en je antwoorden zijn volledig anoniem. Alleen jij ziet je resultaten, tenzij je ervoor kiest deze te delen."
+            ]
+        ]
+    ]
+];
+
+$howToStructuredData = [
+    "@context" => "https://schema.org",
+    "@type" => "HowTo",
+    "name" => "Hoe doe je de Stemwijzer 2025 test",
+    "description" => "Stap-voor-stap uitleg hoe je de Nederlandse Stemwijzer 2025 test doet om jouw politieke match te vinden",
+    "totalTime" => "PT7M",
+    "supply" => [
+        [
+            "@type" => "HowToSupply",
+            "name" => "Computer of smartphone met internetverbinding"
+        ]
+    ],
+    "step" => [
+        [
+            "@type" => "HowToStep",
+            "name" => "Beantwoord Stellingen",
+            "text" => "Ga door 30 actuele politieke stellingen over thema's als klimaat, zorg, economie en immigratie. Kies uit 'eens', 'oneens' of 'neutraal'."
+        ],
+        [
+            "@type" => "HowToStep", 
+            "name" => "Vergelijk Standpunten",
+            "text" => "Onze algoritme vergelijkt jouw antwoorden met de officiële standpunten van alle 14 Nederlandse politieke partijen uit hun verkiezingsprogramma's."
+        ],
+        [
+            "@type" => "HowToStep",
+            "name" => "Ontvang Resultaten", 
+            "text" => "Krijg een overzicht van je politieke profiel, persoonlijkheidsanalyse en zie welke partijen het beste bij jouw standpunten passen."
+        ]
+    ]
+];
 ?>
+
+<!-- Structured Data voor SEO -->
+<script type="application/ld+json">
+<?= json_encode($structuredData, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>
+</script>
+
+<script type="application/ld+json">
+<?= json_encode($faqStructuredData, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>
+</script>
+
+<script type="application/ld+json">
+<?= json_encode($howToStructuredData, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>
+</script>
 
 <!-- Custom Styles for Modern Stemwijzer -->
 <style>
@@ -122,6 +231,8 @@ require_once 'views/templates/header.php';
 }
 </style>
 
+
+
 <main class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-red-50">
     
     <!-- Modern Hero Section -->
@@ -146,14 +257,14 @@ require_once 'views/templates/header.php';
                 <!-- Main title -->
                 <div class="text-center mb-12">
                     <h1 class="text-5xl md:text-6xl lg:text-7xl font-black text-white mb-6 tracking-tight">
-                        Vind Jouw Perfecte
+                        Stemwijzer 2025
                         <span class="block bg-gradient-to-r from-secondary-light via-secondary to-primary-light bg-clip-text text-transparent">
-                            Politieke Match
+                            Nederland
                         </span>
                     </h1>
                     
                     <p class="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
-                        Ontdek welke partij het beste aansluit bij jouw standpunten
+                        Gratis online stemtest - Ontdek binnen 5 minuten welke Nederlandse politieke partij het beste bij jouw standpunten past
                     </p>
                 </div>
                 
@@ -201,7 +312,7 @@ require_once 'views/templates/header.php';
         </div>
 
         <!-- Stemwijzer App Container -->
-        <div class="max-w-6xl mx-auto pb-20" x-data="stemwijzer()">
+        <div id="stemwijzer-app" class="max-w-6xl mx-auto pb-20" x-data="stemwijzer()">
             
             <!-- Modern Progress Card -->
             <div x-show="screen !== 'start'" 
@@ -308,14 +419,14 @@ require_once 'views/templates/header.php';
                             </div>
                             
                             <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 mb-3 sm:mb-4">
-                                Welkom bij de 
+                                Welkom bij de gratis
                                 <span class="block sm:inline text-gradient bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                                    Stemwijzer
+                                    Online Stemtest Nederland
                                 </span>
                             </h2>
                             
                             <p class="text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto px-2 sm:px-0">
-                                Ontdek welke partij het beste aansluit bij jouw politieke overtuigingen door onze uitgebreide vragenlijst in te vullen.
+                                Vergelijk alle Nederlandse politieke partijen en ontdek welke partij het beste aansluit bij jouw politieke overtuigingen door onze uitgebreide stemtest voor de verkiezingen 2025 in te vullen.
                             </p>
                         </div>
 
@@ -383,7 +494,7 @@ require_once 'views/templates/header.php';
                             <button @click="startQuiz()" 
                                     class="group relative w-full sm:w-auto px-8 sm:px-10 md:px-12 py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-red-600 text-white font-semibold text-base sm:text-lg rounded-xl sm:rounded-2xl shadow-xl shadow-blue-500/25 hover:shadow-2xl hover:shadow-blue-500/40 transform hover:scale-105 transition-all duration-300 mb-4 sm:mb-6">
                                 <div class="flex items-center justify-center space-x-2 sm:space-x-3">
-                                    <span>Start de Stemwijzer</span>
+                                    <span>Start de Gratis Stemtest 2025</span>
                                     <svg class="w-4 sm:w-5 h-4 sm:h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
                                     </svg>
@@ -1535,6 +1646,718 @@ require_once 'views/templates/header.php';
         </div>
     </div>
 </main>
+
+    <!-- SEO Content Sections -->
+    <section class="bg-white py-16 relative">
+        <div class="container mx-auto px-6">
+                         <!-- FAQ Section -->
+             <div class="max-w-5xl mx-auto mb-16">
+                 <!-- Header with decorative elements -->
+                 <div class="relative text-center mb-16">
+                     <!-- Background decoration -->
+                     <div class="absolute inset-0 flex items-center justify-center opacity-5">
+                         <svg class="w-64 h-64 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                         </svg>
+                     </div>
+                     
+                     <!-- Badge -->
+                     <div class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-full border border-primary/20 mb-6">
+                         <svg class="w-4 h-4 text-primary mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                         </svg>
+                         <span class="text-primary font-semibold text-sm">Veel Gesteld</span>
+                     </div>
+
+                     <!-- Main heading -->
+                     <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-gray-800 mb-6 leading-tight">
+                         Alles over de
+                         <span class="block bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent">
+                             Stemwijzer 2025
+                         </span>
+                     </h2>
+                     
+                     <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                         Ontdek de antwoorden op de meest gestelde vragen over onze gratis online stemtest
+                     </p>
+                 </div>
+
+                 <!-- FAQ Accordion -->
+                 <div class="space-y-4" x-data="{ openFaq: 1 }">
+                     <!-- FAQ Item 1 -->
+                     <div class="group bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden">
+                         <button @click="openFaq = openFaq === 1 ? null : 1" 
+                                 class="w-full p-6 md:p-8 text-left focus:outline-none focus:ring-4 focus:ring-primary/10 transition-all duration-300"
+                                 :class="openFaq === 1 ? 'bg-gradient-to-r from-primary/5 to-secondary/5' : 'hover:bg-gray-50'">
+                             <div class="flex items-center justify-between">
+                                 <div class="flex items-center space-x-4 flex-1">
+                                     <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center transform transition-transform duration-300 group-hover:scale-110">
+                                         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                         </svg>
+                                     </div>
+                                     <h3 class="text-lg md:text-xl lg:text-2xl font-bold text-gray-800 group-hover:text-primary transition-colors duration-300">
+                                         Hoe betrouwbaar is de stemwijzer test?
+                                     </h3>
+                                 </div>
+                                 <div class="flex-shrink-0 ml-4">
+                                     <svg class="w-6 h-6 text-gray-500 transform transition-transform duration-300" 
+                                          :class="openFaq === 1 ? 'rotate-180' : ''" 
+                                          fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                     </svg>
+                                 </div>
+                             </div>
+                         </button>
+                         <div x-show="openFaq === 1" 
+                              x-transition:enter="transition ease-out duration-300"
+                              x-transition:enter-start="opacity-0 max-h-0"
+                              x-transition:enter-end="opacity-100 max-h-96"
+                              x-transition:leave="transition ease-in duration-200"
+                              x-transition:leave-start="opacity-100 max-h-96"
+                              x-transition:leave-end="opacity-0 max-h-0"
+                              class="overflow-hidden">
+                             <div class="px-6 md:px-8 pt-4 pb-6 md:pt-6 md:pb-8">
+                                 <p class="text-gray-600 leading-relaxed text-base md:text-lg">
+                                     Onze stemwijzer gebruikt officiële partijstandpunten uit verkiezingsprogramma's en recente uitspraken. 
+                                     Alle 14 Nederlandse politieke partijen zijn vertegenwoordigd met actuele standpunten over 30 thema's. 
+                                     De data wordt regelmatig geüpdatet om de meest actuele politieke posities weer te geven.
+                                 </p>
+                             </div>
+                         </div>
+                     </div>
+
+                     <!-- FAQ Item 2 -->
+                     <div class="group bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden">
+                         <button @click="openFaq = openFaq === 2 ? null : 2" 
+                                 class="w-full p-6 md:p-8 text-left focus:outline-none focus:ring-4 focus:ring-primary/10 transition-all duration-300"
+                                 :class="openFaq === 2 ? 'bg-gradient-to-r from-primary/5 to-secondary/5' : 'hover:bg-gray-50'">
+                             <div class="flex items-center justify-between">
+                                 <div class="flex items-center space-x-4 flex-1">
+                                     <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-secondary to-primary flex items-center justify-center transform transition-transform duration-300 group-hover:scale-110">
+                                         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                         </svg>
+                                     </div>
+                                     <h3 class="text-lg md:text-xl lg:text-2xl font-bold text-gray-800 group-hover:text-primary transition-colors duration-300">
+                                         Hoe lang duurt de stemwijzer test?
+                                     </h3>
+                                 </div>
+                                 <div class="flex-shrink-0 ml-4">
+                                     <svg class="w-6 h-6 text-gray-500 transform transition-transform duration-300" 
+                                          :class="openFaq === 2 ? 'rotate-180' : ''" 
+                                          fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                     </svg>
+                                 </div>
+                             </div>
+                         </button>
+                         <div x-show="openFaq === 2" 
+                              x-transition:enter="transition ease-out duration-300"
+                              x-transition:enter-start="opacity-0 max-h-0"
+                              x-transition:enter-end="opacity-100 max-h-96"
+                              x-transition:leave="transition ease-in duration-200"
+                              x-transition:leave-start="opacity-100 max-h-96"
+                              x-transition:leave-end="opacity-0 max-h-0"
+                              class="overflow-hidden">
+                             <div class="px-6 md:px-8 pt-4 pb-6 md:pt-6 md:pb-8">
+                                 <p class="text-gray-600 leading-relaxed text-base md:text-lg">
+                                     De complete stemwijzer test duurt ongeveer 5-7 minuten. Je beantwoordt 30 stellingen over actuele 
+                                     politieke thema's en krijgt direct je persoonlijke resultaten met partij-matches. Je kunt de test ook 
+                                     pauzeren en later hervatten.
+                                 </p>
+                             </div>
+                         </div>
+                     </div>
+
+                     <!-- FAQ Item 3 -->
+                     <div class="group bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden">
+                         <button @click="openFaq = openFaq === 3 ? null : 3" 
+                                 class="w-full p-6 md:p-8 text-left focus:outline-none focus:ring-4 focus:ring-primary/10 transition-all duration-300"
+                                 :class="openFaq === 3 ? 'bg-gradient-to-r from-primary/5 to-secondary/5' : 'hover:bg-gray-50'">
+                             <div class="flex items-center justify-between">
+                                 <div class="flex items-center space-x-4 flex-1">
+                                     <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center transform transition-transform duration-300 group-hover:scale-110">
+                                         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                                         </svg>
+                                     </div>
+                                     <h3 class="text-lg md:text-xl lg:text-2xl font-bold text-gray-800 group-hover:text-primary transition-colors duration-300">
+                                         Welke partijen zitten in de stemwijzer?
+                                     </h3>
+                                 </div>
+                                 <div class="flex-shrink-0 ml-4">
+                                     <svg class="w-6 h-6 text-gray-500 transform transition-transform duration-300" 
+                                          :class="openFaq === 3 ? 'rotate-180' : ''" 
+                                          fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                     </svg>
+                                 </div>
+                             </div>
+                         </button>
+                         <div x-show="openFaq === 3" 
+                              x-transition:enter="transition ease-out duration-300"
+                              x-transition:enter-start="opacity-0 max-h-0"
+                              x-transition:enter-end="opacity-100 max-h-96"
+                              x-transition:leave="transition ease-in duration-200"
+                              x-transition:leave-start="opacity-100 max-h-96"
+                              x-transition:leave-end="opacity-0 max-h-0"
+                              class="overflow-hidden">
+                             <div class="px-6 md:px-8 pt-4 pb-6 md:pt-6 md:pb-8">
+                                 <p class="text-gray-600 leading-relaxed text-base md:text-lg mb-6">
+                                     Alle 14 grote Nederlandse politieke partijen zijn opgenomen in de Stemwijzer 2025:
+                                 </p>
+                                 <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 mb-4">
+                                     <?php 
+                                     $parties = ['VVD', 'PVV', 'NSC', 'BBB', 'GL-PvdA', 'D66', 'SP', 'PvdD', 'CDA', 'JA21', 'SGP', 'FvD', 'DENK', 'Volt'];
+                                     foreach($parties as $party): ?>
+                                     <div class="bg-gray-50 rounded-lg px-3 py-2 border border-gray-200 text-center">
+                                         <span class="text-sm font-medium text-gray-700"><?= $party ?></span>
+                                     </div>
+                                     <?php endforeach; ?>
+                                 </div>
+                                 <p class="text-gray-500 text-sm">
+                                     Alle standpunten zijn geüpdatet voor de verkiezingen 2025
+                                 </p>
+                             </div>
+                         </div>
+                     </div>
+
+                     <!-- FAQ Item 4 -->
+                     <div class="group bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden">
+                         <button @click="openFaq = openFaq === 4 ? null : 4" 
+                                 class="w-full p-6 md:p-8 text-left focus:outline-none focus:ring-4 focus:ring-primary/10 transition-all duration-300"
+                                 :class="openFaq === 4 ? 'bg-gradient-to-r from-primary/5 to-secondary/5' : 'hover:bg-gray-50'">
+                             <div class="flex items-center justify-between">
+                                 <div class="flex items-center space-x-4 flex-1">
+                                     <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-secondary to-primary flex items-center justify-center transform transition-transform duration-300 group-hover:scale-110">
+                                         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                                         </svg>
+                                     </div>
+                                     <h3 class="text-lg md:text-xl lg:text-2xl font-bold text-gray-800 group-hover:text-primary transition-colors duration-300">
+                                         Is mijn stemwijzer data veilig?
+                                     </h3>
+                                 </div>
+                                 <div class="flex-shrink-0 ml-4">
+                                     <svg class="w-6 h-6 text-gray-500 transform transition-transform duration-300" 
+                                          :class="openFaq === 4 ? 'rotate-180' : ''" 
+                                          fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                     </svg>
+                                 </div>
+                             </div>
+                         </button>
+                         <div x-show="openFaq === 4" 
+                              x-transition:enter="transition ease-out duration-300"
+                              x-transition:enter-start="opacity-0 max-h-0"
+                              x-transition:enter-end="opacity-100 max-h-96"
+                              x-transition:leave="transition ease-in duration-200"
+                              x-transition:leave-start="opacity-100 max-h-96"
+                              x-transition:leave-end="opacity-0 max-h-0"
+                              class="overflow-hidden">
+                             <div class="px-6 md:px-8 pt-4 pb-6 md:pt-6 md:pb-8">
+                                 <p class="text-gray-600 leading-relaxed text-base md:text-lg">
+                                     Ja, je privacy is volledig gegarandeerd. We slaan geen persoonlijke gegevens op en je antwoorden 
+                                     zijn volledig anoniem. Alleen jij ziet je resultaten, tenzij je ervoor kiest deze te delen via een 
+                                     unieke link. We gebruiken moderne encryptie en volgen alle Nederlandse privacywetgeving (AVG/GDPR).
+                                 </p>
+                             </div>
+                         </div>
+                     </div>
+
+                     <!-- FAQ Item 5 - Bonus -->
+                     <div class="group bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden">
+                         <button @click="openFaq = openFaq === 5 ? null : 5" 
+                                 class="w-full p-6 md:p-8 text-left focus:outline-none focus:ring-4 focus:ring-primary/10 transition-all duration-300"
+                                 :class="openFaq === 5 ? 'bg-gradient-to-r from-primary/5 to-secondary/5' : 'hover:bg-gray-50'">
+                             <div class="flex items-center justify-between">
+                                 <div class="flex items-center space-x-4 flex-1">
+                                     <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center transform transition-transform duration-300 group-hover:scale-110">
+                                         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                         </svg>
+                                     </div>
+                                     <h3 class="text-lg md:text-xl lg:text-2xl font-bold text-gray-800 group-hover:text-primary transition-colors duration-300">
+                                         Wat krijg ik als resultaat?
+                                     </h3>
+                                 </div>
+                                 <div class="flex-shrink-0 ml-4">
+                                     <svg class="w-6 h-6 text-gray-500 transform transition-transform duration-300" 
+                                          :class="openFaq === 5 ? 'rotate-180' : ''" 
+                                          fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                     </svg>
+                                 </div>
+                             </div>
+                         </button>
+                         <div x-show="openFaq === 5" 
+                              x-transition:enter="transition ease-out duration-300"
+                              x-transition:enter-start="opacity-0 max-h-0"
+                              x-transition:enter-end="opacity-100 max-h-96"
+                              x-transition:leave="transition ease-in duration-200"
+                              x-transition:leave-start="opacity-100 max-h-96"
+                              x-transition:leave-end="opacity-0 max-h-0"
+                              class="overflow-hidden">
+                             <div class="px-6 md:px-8 pt-4 pb-6 md:pt-6 md:pb-8">
+                                 <p class="text-gray-600 leading-relaxed text-base md:text-lg">
+                                     Je krijgt een uitgebreid overzicht met je partij-matches (in percentages), een politiek kompas dat 
+                                     je positie weergeeft, een persoonlijkheidsanalyse van je politieke voorkeuren, en gedetailleerde 
+                                     uitleg waarom bepaalde partijen wel of niet bij je passen. Je kunt je resultaten ook delen of 
+                                     vergelijken met vrienden.
+                                 </p>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+
+                 <!-- CTA after FAQ -->
+                 <div class="text-center mt-12 p-8 bg-gradient-to-r from-primary/5 via-secondary/5 to-primary/5 rounded-2xl border border-primary/10">
+                     <h3 class="text-xl md:text-2xl font-bold text-gray-800 mb-4">
+                         Nog vragen? Start gewoon de test!
+                     </h3>
+                     <p class="text-gray-600 mb-6">
+                         De beste manier om de stemwijzer te begrijpen is door hem uit te proberen
+                     </p>
+                     <a href="#stemwijzer-app" 
+                        class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-xl hover:shadow-lg transform hover:scale-105 transition-all duration-300">
+                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                         </svg>
+                         Ga naar de stemwijzer
+                     </a>
+                 </div>
+             </div>
+
+            <!-- How It Works Section - Ultra Modern Design -->
+            <div class="max-w-7xl mx-auto mb-20">
+                <!-- Section Header with Enhanced Design -->
+                <div class="relative text-center mb-16">
+                    <!-- Background decorative elements -->
+                    <div class="absolute inset-0 flex items-center justify-center opacity-5">
+                        <svg class="w-80 h-80 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                    </div>
+
+                    <!-- Badge with animation -->
+                    <div class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-primary/10 via-secondary/10 to-primary/10 
+                               rounded-full border border-primary/20 mb-8 backdrop-blur-sm">
+                        <div class="w-3 h-3 bg-primary rounded-full mr-3 animate-pulse"></div>
+                        <span class="text-primary font-semibold text-sm tracking-wide uppercase">Zo Simpel Werkt Het</span>
+                    </div>
+
+                    <!-- Main heading with enhanced typography -->
+                    <h2 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-gray-800 mb-6 leading-tight tracking-tight">
+                        <span class="block mb-2">Hoe werkt de</span>
+                        <span class="bg-gradient-to-r from-primary via-secondary to-primary-light bg-clip-text text-transparent">
+                            Online Stemtest?
+                        </span>
+                    </h2>
+                    
+                    <!-- Enhanced subtitle -->
+                    <p class="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed font-light">
+                        In slechts <span class="font-semibold text-primary">3 eenvoudige stappen</span> naar jouw 
+                        <span class="font-semibold text-secondary">perfecte politieke match</span>
+                    </p>
+
+                    <!-- Decorative line -->
+                    <div class="flex items-center justify-center mt-8 space-x-4">
+                        <div class="w-16 h-0.5 bg-gradient-to-r from-transparent to-primary"></div>
+                        <div class="w-3 h-3 bg-primary rounded-full animate-pulse"></div>
+                        <div class="w-24 h-0.5 bg-gradient-to-r from-primary via-secondary to-primary"></div>
+                        <div class="w-3 h-3 bg-secondary rounded-full animate-pulse animation-delay-500"></div>
+                        <div class="w-16 h-0.5 bg-gradient-to-r from-secondary to-transparent"></div>
+                    </div>
+                </div>
+
+                <!-- Steps Grid with Glassmorphism Cards -->
+                <div class="grid md:grid-cols-3 gap-8 lg:gap-12">
+                    <!-- Step 1 - Enhanced Interactive Card -->
+                    <div class="group relative">
+                        <!-- Animated background glow -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-indigo-600/20 rounded-3xl 
+                                   opacity-0 group-hover:opacity-100 transition-all duration-500 blur-xl"></div>
+                        
+                        <!-- Main card -->
+                        <div class="relative bg-white/80 backdrop-blur-xl border border-white/30 rounded-3xl p-8 md:p-10 
+                                   shadow-2xl shadow-blue-500/10 transform transition-all duration-500 
+                                   group-hover:-translate-y-2 group-hover:shadow-3xl group-hover:shadow-blue-500/20">
+                            
+                            <!-- Icon container with advanced design -->
+                            <div class="relative mb-8">
+                                <!-- Outer glow ring -->
+                                <div class="absolute inset-0 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-3xl 
+                                           opacity-20 group-hover:opacity-40 transition-all duration-500 scale-110"></div>
+                                
+                                <!-- Main icon container -->
+                                <div class="relative w-20 h-20 mx-auto bg-gradient-to-br from-blue-500 to-indigo-600 
+                                           rounded-3xl flex items-center justify-center shadow-xl group-hover:scale-110 
+                                           transition-all duration-500">
+                                    <!-- Question/Survey icon -->
+                                    <svg class="w-10 h-10 text-white transform group-hover:rotate-12 transition-transform duration-500" 
+                                         fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                              d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+                                    </svg>
+                                </div>
+                                
+                                <!-- Step number badge -->
+                                <div class="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-br from-yellow-400 to-orange-500 
+                                           rounded-full flex items-center justify-center shadow-lg">
+                                    <span class="text-sm font-bold text-white">1</span>
+                                </div>
+                            </div>
+
+                            <!-- Content -->
+                            <div class="text-center">
+                                <h3 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4 group-hover:text-blue-600 
+                                          transition-colors duration-300">
+                                    Beantwoord Stellingen
+                                </h3>
+                                <p class="text-gray-600 leading-relaxed text-base md:text-lg">
+                                    Doorloop <span class="font-semibold text-blue-600">30 actuele politieke stellingen</span> 
+                                    over belangrijke thema's zoals klimaat, zorg, economie en immigratie. 
+                                    Kies simpelweg uit <span class="font-semibold">'eens'</span>, 
+                                    <span class="font-semibold">'oneens'</span> of <span class="font-semibold">'neutraal'</span>.
+                                </p>
+                                
+                                <!-- Feature highlights -->
+                                <div class="mt-6 flex flex-wrap gap-2 justify-center">
+                                    <span class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-xs font-medium">
+                                        5-7 minuten
+                                    </span>
+                                    <span class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-xs font-medium">
+                                        30 vragen
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 - Enhanced Interactive Card -->
+                    <div class="group relative">
+                        <!-- Animated background glow -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-pink-600/20 rounded-3xl 
+                                   opacity-0 group-hover:opacity-100 transition-all duration-500 blur-xl"></div>
+                        
+                        <!-- Main card -->
+                        <div class="relative bg-white/80 backdrop-blur-xl border border-white/30 rounded-3xl p-8 md:p-10 
+                                   shadow-2xl shadow-purple-500/10 transform transition-all duration-500 
+                                   group-hover:-translate-y-2 group-hover:shadow-3xl group-hover:shadow-purple-500/20">
+                            
+                            <!-- Icon container -->
+                            <div class="relative mb-8">
+                                <!-- Outer glow ring -->
+                                <div class="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-600 rounded-3xl 
+                                           opacity-20 group-hover:opacity-40 transition-all duration-500 scale-110"></div>
+                                
+                                <!-- Main icon container -->
+                                <div class="relative w-20 h-20 mx-auto bg-gradient-to-br from-purple-500 to-pink-600 
+                                           rounded-3xl flex items-center justify-center shadow-xl group-hover:scale-110 
+                                           transition-all duration-500">
+                                    <!-- Analysis/Compare icon -->
+                                    <svg class="w-10 h-10 text-white transform group-hover:rotate-12 transition-transform duration-500" 
+                                         fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                              d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                    </svg>
+                                </div>
+                                
+                                <!-- Step number badge -->
+                                <div class="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-br from-yellow-400 to-orange-500 
+                                           rounded-full flex items-center justify-center shadow-lg">
+                                    <span class="text-sm font-bold text-white">2</span>
+                                </div>
+                            </div>
+
+                            <!-- Content -->
+                            <div class="text-center">
+                                <h3 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4 group-hover:text-purple-600 
+                                          transition-colors duration-300">
+                                    Intelligente Analyse
+                                </h3>
+                                <p class="text-gray-600 leading-relaxed text-base md:text-lg">
+                                    Ons geavanceerde algoritme vergelijkt jouw antwoorden met de 
+                                    <span class="font-semibold text-purple-600">officiële standpunten</span> van alle 
+                                    <span class="font-semibold">14 Nederlandse politieke partijen</span> uit hun 
+                                    verkiezingsprogramma's en recente uitspraken.
+                                </p>
+                                
+                                <!-- Feature highlights -->
+                                <div class="mt-6 flex flex-wrap gap-2 justify-center">
+                                    <span class="px-3 py-1 bg-purple-50 text-purple-700 rounded-full text-xs font-medium">
+                                        14 partijen
+                                    </span>
+                                    <span class="px-3 py-1 bg-purple-50 text-purple-700 rounded-full text-xs font-medium">
+                                        Realtime
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 - Enhanced Interactive Card -->
+                    <div class="group relative">
+                        <!-- Animated background glow -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/20 to-teal-600/20 rounded-3xl 
+                                   opacity-0 group-hover:opacity-100 transition-all duration-500 blur-xl"></div>
+                        
+                        <!-- Main card -->
+                        <div class="relative bg-white/80 backdrop-blur-xl border border-white/30 rounded-3xl p-8 md:p-10 
+                                   shadow-2xl shadow-emerald-500/10 transform transition-all duration-500 
+                                   group-hover:-translate-y-2 group-hover:shadow-3xl group-hover:shadow-emerald-500/20">
+                            
+                            <!-- Icon container -->
+                            <div class="relative mb-8">
+                                <!-- Outer glow ring -->
+                                <div class="absolute inset-0 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-3xl 
+                                           opacity-20 group-hover:opacity-40 transition-all duration-500 scale-110"></div>
+                                
+                                <!-- Main icon container -->
+                                <div class="relative w-20 h-20 mx-auto bg-gradient-to-br from-emerald-500 to-teal-600 
+                                           rounded-3xl flex items-center justify-center shadow-xl group-hover:scale-110 
+                                           transition-all duration-500">
+                                    <!-- Results/Analytics icon -->
+                                    <svg class="w-10 h-10 text-white transform group-hover:rotate-12 transition-transform duration-500" 
+                                         fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                              d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
+                                    </svg>
+                                </div>
+                                
+                                <!-- Step number badge -->
+                                <div class="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-br from-yellow-400 to-orange-500 
+                                           rounded-full flex items-center justify-center shadow-lg">
+                                    <span class="text-sm font-bold text-white">3</span>
+                                </div>
+                            </div>
+
+                            <!-- Content -->
+                            <div class="text-center">
+                                <h3 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4 group-hover:text-emerald-600 
+                                          transition-colors duration-300">
+                                    Persoonlijke Resultaten
+                                </h3>
+                                <p class="text-gray-600 leading-relaxed text-base md:text-lg">
+                                    Ontvang direct een <span class="font-semibold text-emerald-600">uitgebreid overzicht</span> 
+                                    van je politieke profiel, persoonlijkheidsanalyse en zie precies welke partijen 
+                                    het beste aansluiten bij jouw <span class="font-semibold">unieke standpunten</span>.
+                                </p>
+                                
+                                <!-- Feature highlights -->
+                                <div class="mt-6 flex flex-wrap gap-2 justify-center">
+                                    <span class="px-3 py-1 bg-emerald-50 text-emerald-700 rounded-full text-xs font-medium">
+                                        Direct resultaat
+                                    </span>
+                                    <span class="px-3 py-1 bg-emerald-50 text-emerald-700 rounded-full text-xs font-medium">
+                                        Deelbaar
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bottom call-to-action with enhanced design -->
+                <div class="text-center mt-16">
+                    <div class="inline-flex items-center space-x-3 px-8 py-4 bg-gradient-to-r from-primary/10 to-secondary/10 
+                               rounded-2xl border border-primary/20 backdrop-blur-sm">
+                        <div class="w-3 h-3 bg-primary rounded-full animate-pulse"></div>
+                        <span class="text-gray-700 font-medium">Klaar om je politieke match te ontdekken?</span>
+                        <div class="w-3 h-3 bg-secondary rounded-full animate-pulse animation-delay-500"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Political Themes Preview - Completely Redesigned -->
+            <div class="max-w-7xl mx-auto">
+                <!-- Enhanced Section Header -->
+                <div class="relative text-center mb-16">
+                    <!-- Background decorative elements -->
+                    <div class="absolute inset-0 flex items-center justify-center opacity-5">
+                        <svg class="w-96 h-96 text-secondary" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                    </div>
+
+                    <!-- Badge -->
+                    <div class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-secondary/10 via-primary/10 to-secondary/10 
+                               rounded-full border border-secondary/20 mb-8 backdrop-blur-sm">
+                        <div class="w-3 h-3 bg-secondary rounded-full mr-3 animate-pulse"></div>
+                        <span class="text-secondary font-semibold text-sm tracking-wide uppercase">Alle Belangrijke Onderwerpen</span>
+                    </div>
+
+                    <!-- Main heading -->
+                    <h2 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-gray-800 mb-6 leading-tight tracking-tight">
+                        <span class="block mb-2">30 Actuele</span>
+                        <span class="bg-gradient-to-r from-secondary via-primary to-secondary-light bg-clip-text text-transparent">
+                            Politieke Thema's
+                        </span>
+                    </h2>
+                    
+                    <!-- Enhanced subtitle -->
+                    <p class="text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed font-light">
+                        Vergelijk <span class="font-semibold text-secondary">partijstandpunten</span> op alle belangrijke onderwerpen 
+                        van <span class="font-semibold text-primary">verkiezingen 2025</span>
+                    </p>
+
+                    <!-- Decorative line -->
+                    <div class="flex items-center justify-center mt-8 space-x-4">
+                        <div class="w-16 h-0.5 bg-gradient-to-r from-transparent to-secondary"></div>
+                        <div class="w-3 h-3 bg-secondary rounded-full animate-pulse"></div>
+                        <div class="w-24 h-0.5 bg-gradient-to-r from-secondary via-primary to-secondary"></div>
+                        <div class="w-3 h-3 bg-primary rounded-full animate-pulse animation-delay-500"></div>
+                        <div class="w-16 h-0.5 bg-gradient-to-r from-primary to-transparent"></div>
+                    </div>
+                </div>
+
+                <?php 
+                $themeCategories = [
+                    'Sociale & Zorg' => [
+                        'color' => 'from-emerald-500 to-teal-600',
+                        'bgColor' => 'from-emerald-50 to-teal-50',
+                        'textColor' => 'text-emerald-700',
+                        'borderColor' => 'border-emerald-200',
+                        'hoverColor' => 'hover:border-emerald-400',
+                        'icon' => '🏥',
+                        'themes' => ['Gezondheidszorg', 'Sociale Zekerheid', 'Zorg voor Ouderen', 'Kinderopvang', 'Pensioenen']
+                    ],
+                    'Economie & Werk' => [
+                        'color' => 'from-blue-500 to-indigo-600',
+                        'bgColor' => 'from-blue-50 to-indigo-50',
+                        'textColor' => 'text-blue-700',
+                        'borderColor' => 'border-blue-200',
+                        'hoverColor' => 'hover:border-blue-400',
+                        'icon' => '💼',
+                        'themes' => ['Economie & Werk', 'Belastingen', 'Startups & Innovatie', 'Internationale Handel']
+                    ],
+                    'Milieu & Klimaat' => [
+                        'color' => 'from-green-500 to-emerald-600',
+                        'bgColor' => 'from-green-50 to-emerald-50',
+                        'textColor' => 'text-green-700',
+                        'borderColor' => 'border-green-200',
+                        'hoverColor' => 'hover:border-green-400',
+                        'icon' => '🌍',
+                        'themes' => ['Klimaat & Energie', 'Milieu & Natuur', 'Duurzaamheid', 'Landbouw']
+                    ],
+                    'Samenleving & Veiligheid' => [
+                        'color' => 'from-red-500 to-pink-600',
+                        'bgColor' => 'from-red-50 to-pink-50',
+                        'textColor' => 'text-red-700',
+                        'borderColor' => 'border-red-200',
+                        'hoverColor' => 'hover:border-red-400',
+                        'icon' => '🛡️',
+                        'themes' => ['Veiligheid', 'Immigratie & Integratie', 'Justitie', 'Defensie', 'Discriminatie']
+                    ],
+                    'Wonen & Infrastructuur' => [
+                        'color' => 'from-orange-500 to-amber-600',
+                        'bgColor' => 'from-orange-50 to-amber-50',
+                        'textColor' => 'text-orange-700',
+                        'borderColor' => 'border-orange-200',
+                        'hoverColor' => 'hover:border-orange-400',
+                        'icon' => '🏠',
+                        'themes' => ['Wonen', 'Verkeer & Transport', 'Infrastructuur', 'Lokaal Bestuur']
+                    ],
+                    'Digitaal & Maatschappij' => [
+                        'color' => 'from-purple-500 to-violet-600',
+                        'bgColor' => 'from-purple-50 to-violet-50',
+                        'textColor' => 'text-purple-700',
+                        'borderColor' => 'border-purple-200',
+                        'hoverColor' => 'hover:border-purple-400',
+                        'icon' => '📱',
+                        'themes' => ['Digitalisering', 'Privacy & Data', 'Media', 'Onderwijs', 'Cultuur', 'Sport & Recreatie', 'Europa & EU', 'Mensenrechten']
+                    ]
+                ];
+                ?>
+
+                <!-- Theme Categories Grid -->
+                <div class="space-y-12">
+                    <?php foreach ($themeCategories as $categoryName => $categoryData): ?>
+                    <div class="group">
+                        <!-- Category Header -->
+                        <div class="flex items-center justify-center mb-8">
+                            <div class="inline-flex items-center px-6 py-3 bg-gradient-to-r <?= $categoryData['bgColor'] ?> 
+                                       rounded-2xl border <?= $categoryData['borderColor'] ?> shadow-sm">
+                                <span class="text-2xl mr-3"><?= $categoryData['icon'] ?></span>
+                                <span class="font-bold <?= $categoryData['textColor'] ?> text-lg"><?= $categoryName ?></span>
+                                <div class="ml-3 px-2 py-1 bg-white/60 rounded-full">
+                                    <span class="text-xs font-medium <?= $categoryData['textColor'] ?>"><?= count($categoryData['themes']) ?></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Theme Cards Grid -->
+                        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                            <?php foreach ($categoryData['themes'] as $theme): ?>
+                            <div class="group/card relative">
+                                <!-- Hover glow effect -->
+                                <div class="absolute inset-0 bg-gradient-to-br <?= $categoryData['color'] ?> rounded-2xl 
+                                           opacity-0 group-hover/card:opacity-20 transition-all duration-500 blur-lg"></div>
+                                
+                                <!-- Main card -->
+                                <div class="relative bg-white/90 backdrop-blur-sm border <?= $categoryData['borderColor'] ?> 
+                                           rounded-2xl p-4 text-center shadow-lg <?= $categoryData['hoverColor'] ?> 
+                                           hover:shadow-xl transform transition-all duration-300 
+                                           group-hover/card:-translate-y-1 group-hover/card:scale-105">
+                                    
+                                    <!-- Theme icon (first letter styled) -->
+                                    <div class="w-12 h-12 mx-auto mb-3 bg-gradient-to-br <?= $categoryData['color'] ?> 
+                                               rounded-xl flex items-center justify-center shadow-lg">
+                                        <span class="text-white font-bold text-lg"><?= substr($theme, 0, 1) ?></span>
+                                    </div>
+
+                                    <!-- Theme name -->
+                                    <span class="text-sm font-semibold text-gray-700 group-hover/card:<?= $categoryData['textColor'] ?> 
+                                                transition-colors duration-300 leading-tight block">
+                                        <?= $theme ?>
+                                    </span>
+
+                                    <!-- Hover indicator -->
+                                    <div class="absolute top-2 right-2 w-2 h-2 bg-gradient-to-br <?= $categoryData['color'] ?> 
+                                               rounded-full opacity-0 group-hover/card:opacity-100 transition-opacity duration-300"></div>
+                                </div>
+                            </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+
+                <!-- Enhanced Bottom Section -->
+                <div class="mt-16 text-center">
+                    <!-- Stats Row -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto mb-8">
+                        <div class="bg-gradient-to-br from-primary/10 to-secondary/10 rounded-2xl p-6 border border-primary/20">
+                            <div class="text-3xl font-black text-primary mb-2">30</div>
+                            <div class="text-sm font-medium text-gray-600">Actuele Thema's</div>
+                        </div>
+                        <div class="bg-gradient-to-br from-secondary/10 to-primary/10 rounded-2xl p-6 border border-secondary/20">
+                            <div class="text-3xl font-black text-secondary mb-2">14</div>
+                            <div class="text-sm font-medium text-gray-600">Politieke Partijen</div>
+                        </div>
+                        <div class="bg-gradient-to-br from-primary/10 to-secondary/10 rounded-2xl p-6 border border-primary/20">
+                            <div class="text-3xl font-black text-primary mb-2">2025</div>
+                            <div class="text-sm font-medium text-gray-600">Verkiezingen</div>
+                        </div>
+                    </div>
+
+                    <!-- Data source info -->
+                    <div class="inline-flex items-center space-x-3 px-8 py-4 bg-gradient-to-r from-gray-50 to-gray-100 
+                               rounded-2xl border border-gray-200 shadow-sm">
+                        <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <span class="text-gray-600 font-medium">
+                            Alle thema's zijn gebaseerd op de <span class="font-semibold">verkiezingsprogramma's 2025</span> 
+                            en <span class="font-semibold">recente partijstandpunten</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
 <script>
 function stemwijzer() {

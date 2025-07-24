@@ -138,6 +138,65 @@
             </div>
         </div>
     </section>
+
+    <!-- Stemwijzer CTA Section -->
+    <section class="relative bg-gradient-to-br from-primary-dark via-primary to-secondary py-16 overflow-hidden">
+        <!-- Background decorations -->
+        <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg opacity=\"0.1\"%3E%3Cpath d=\"M30 30m-20 0a20 20 0 1 1 40 0a20 20 0 1 1 -40 0\" stroke=\"white\" stroke-width=\"0.5\" fill=\"none\"/%3E%3C/g%3E%3C/svg%3E')] opacity-30"></div>
+        
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-4xl mx-auto text-center">
+                <!-- Badge -->
+                <div class="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 mb-6">
+                    <div class="w-2 h-2 bg-secondary-light rounded-full mr-3 animate-pulse"></div>
+                    <span class="text-white/90 text-sm font-medium">Verkiezingen 2025</span>
+                </div>
+
+                <!-- Heading -->
+                <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
+                    Ontdek welke partij bij 
+                    <span class="bg-gradient-to-r from-secondary-light via-secondary to-primary-light bg-clip-text text-transparent">
+                        jouw thema's past
+                    </span>
+                </h2>
+                
+                <!-- Description -->
+                <p class="text-lg md:text-xl text-blue-100 max-w-2xl mx-auto mb-8 leading-relaxed">
+                    Nu je de thema's kent, doe de gratis Stemwijzer 2025 en ontdek welke Nederlandse politieke partij het beste aansluit bij jouw standpunten over deze onderwerpen.
+                </p>
+
+                <!-- CTA Button -->
+                <div class="relative inline-block">
+                    <!-- Glow effect -->
+                    <div class="absolute -inset-2 bg-gradient-to-r from-secondary-light via-white to-secondary-light rounded-2xl blur opacity-30 animate-pulse"></div>
+                    
+                    <!-- Main button -->
+                    <a href="<?= URLROOT ?>/stemwijzer" 
+                       class="relative inline-flex items-center justify-center px-8 md:px-12 py-4 md:py-6 bg-white text-primary font-bold text-lg md:text-xl rounded-2xl shadow-2xl hover:shadow-white/30 transform hover:scale-105 transition-all duration-300 group overflow-hidden">
+                        
+                        <!-- Button content -->
+                        <div class="relative z-10 flex items-center">
+                            <svg class="w-6 h-6 mr-3 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v11a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+                            </svg>
+                            <span class="mr-3">Start de Stemwijzer 2025</span>
+                            <svg class="w-5 h-5 transform transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                            </svg>
+                        </div>
+                        
+                        <!-- Shimmer effect -->
+                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                    </a>
+                </div>
+
+                <!-- Supporting text -->
+                <p class="mt-6 text-sm text-blue-200">
+                    Gratis online stemtest • 30 politieke thema's • 14 Nederlandse partijen • Direct resultaat
+                </p>
+            </div>
+        </div>
+    </section>
 </main>
 
 <?php require_once 'views/templates/footer.php'; ?> 

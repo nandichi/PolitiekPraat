@@ -1221,7 +1221,7 @@ require_once 'views/templates/header.php';
                                         <svg class="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 mr-2 sm:mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
                                         </svg>
-                                        <span class="mr-2 sm:mr-3">Start de Stemwijzer – Ontdek jouw match!</span>
+                                        <span class="mr-2 sm:mr-3">Stemwijzer 2025 – Gratis Online Stemtest!</span>
                                         <div class="relative">
                                             <svg class="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 transform transition-transform duration-500 group-hover:translate-x-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
@@ -1240,7 +1240,7 @@ require_once 'views/templates/header.php';
                             
                             <!-- Supporting text -->
                             <p class="mt-4 text-sm text-slate-500">
-                                Gratis • <span class="font-semibold text-blue-600"><?php echo $totalQuestions ?? '25'; ?></span> vragen • <span class="font-semibold text-red-600">Alle Nederlandse partijen</span> opgenomen
+                                Gratis online stemtest • <span class="font-semibold text-blue-600"><?php echo $totalQuestions ?? '30'; ?></span> politieke thema's • <span class="font-semibold text-red-600">14 Nederlandse partijen</span> • Verkiezingen 2025
                             </p>
                         </div>
                     </div>
