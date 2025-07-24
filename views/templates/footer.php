@@ -239,9 +239,10 @@
                 <div class="flex flex-col md:flex-row justify-between items-center text-gray-500 text-sm">
                     <p>&copy; <?php echo date('Y'); ?> PolitiekPraat. Alle rechten voorbehouden.</p>
                     <div class="flex space-x-8 mt-4 md:mt-0">
-                        <a href="#" class="hover:text-primary transition-colors duration-300">Privacy Policy</a>
-                        <a href="#" class="hover:text-primary transition-colors duration-300">Gebruiksvoorwaarden</a>
-                        <a href="#" class="hover:text-primary transition-colors duration-300">Cookie Policy</a>
+                        <a href="<?php echo URLROOT; ?>/privacy-policy" class="hover:text-primary transition-colors duration-300">Privacy Policy</a>
+                        <a href="<?php echo URLROOT; ?>/gebruiksvoorwaarden" class="hover:text-primary transition-colors duration-300">Gebruiksvoorwaarden</a>
+                        <a href="<?php echo URLROOT; ?>/cookie-policy" class="hover:text-primary transition-colors duration-300">Cookie Policy</a>
+                        <a href="<?php echo URLROOT; ?>/toegankelijkheid" class="hover:text-primary transition-colors duration-300">Toegankelijkheid</a>
                     </div>
                 </div>
             </div>

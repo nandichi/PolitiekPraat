@@ -1,0 +1,407 @@
+/* ===== TOEGANKELIJKHEID (EAA) COMPLIANCE CSS ===== */
+
+/* Focus Management - Verbeterde focus indicators */
+*:focus {
+  outline: 2px solid #3b82f6 !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1) !important;
+}
+
+/* High Contrast Focus voor betere zichtbaarheid */
+.focus-visible:focus,
+*:focus-visible {
+  outline: 3px solid #1d4ed8 !important;
+  outline-offset: 3px !important;
+  box-shadow: 0 0 0 6px rgba(29, 78, 216, 0.2) !important;
+}
+
+/* Skip Links - Verbeterde styling */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: #1d4ed8;
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: 600;
+  z-index: 1000;
+  transition: top 0.3s ease;
+}
+
+.skip-link:focus {
+  top: 6px;
+  outline: 3px solid #fbbf24;
+  outline-offset: 2px;
+}
+
+/* Screen Reader Only Content */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.sr-only-focusable:focus {
+  position: static !important;
+  width: auto !important;
+  height: auto !important;
+  padding: 0.5rem 1rem !important;
+  margin: 0 !important;
+  overflow: visible !important;
+  clip: auto !important;
+  white-space: normal !important;
+  background: #1d4ed8 !important;
+  color: white !important;
+  border-radius: 4px !important;
+}
+
+/* Color Contrast Improvements - WCAG 2.1 AA Compliant - Alleen voor accessibility secties */
+.accessibility-content .text-primary,
+.privacy-content .text-primary {
+  color: #1e3a8a !important; /* Darker blue voor betere contrast */
+}
+
+.accessibility-content .text-secondary,
+.privacy-content .text-secondary {
+  color: #991b1b !important; /* Darker red voor betere contrast */
+}
+
+.accessibility-content .text-gray-500,
+.privacy-content .text-gray-500 {
+  color: #374151 !important; /* Darker gray voor betere leesbaarheid */
+}
+
+.accessibility-content .text-gray-600,
+.privacy-content .text-gray-600 {
+  color: #1f2937 !important;
+}
+
+/* Button Contrast Verbeteringen - Alleen voor accessibility componenten */
+.cookie-consent-banner .btn,
+.accessibility-help .btn,
+.accessibility-content .btn-primary {
+  background: #1e3a8a !important;
+  color: white !important;
+  border: 2px solid #1e3a8a !important;
+}
+
+.cookie-consent-banner .btn:hover,
+.accessibility-help .btn:hover,
+.accessibility-content .btn-primary:hover {
+  background: #1e40af !important;
+  border-color: #1e40af !important;
+}
+
+.cookie-consent-banner .btn-secondary,
+.accessibility-content .btn-secondary {
+  background: #991b1b !important;
+  color: white !important;
+  border: 2px solid #991b1b !important;
+}
+
+.cookie-consent-banner .btn-secondary:hover,
+.accessibility-content .btn-secondary:hover {
+  background: #b91c1c !important;
+  border-color: #b91c1c !important;
+}
+
+/* Link Contrast - Alleen voor privacy en accessibility pagina's */
+.privacy-content a,
+.accessibility-content a,
+.cookie-consent-banner a {
+  color: #1e3a8a !important;
+  text-decoration: underline !important;
+}
+
+.privacy-content a:hover,
+.accessibility-content a:hover,
+.cookie-consent-banner a:hover {
+  color: #1e40af !important;
+}
+
+.privacy-content a:focus,
+.accessibility-content a:focus,
+.cookie-consent-banner a:focus {
+  color: #1e40af !important;
+  background: rgba(30, 58, 138, 0.1) !important;
+  border-radius: 2px !important;
+}
+
+/* Modal Focus Management */
+.modal-open {
+  overflow: hidden;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 8px;
+  padding: 2rem;
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+.modal-content:focus {
+  outline: 3px solid #1d4ed8;
+  outline-offset: 2px;
+}
+
+/* Form Improvements - Alleen voor accessibility en privacy formulieren */
+.privacy-content input,
+.privacy-content textarea,
+.privacy-content select,
+.accessibility-content input,
+.accessibility-content textarea,
+.accessibility-content select,
+.cookie-consent-banner input,
+.cookie-consent-banner textarea,
+.cookie-consent-banner select {
+  border: 2px solid #6b7280 !important;
+  padding: 12px !important;
+  border-radius: 6px !important;
+  font-size: 16px !important; /* Voorkomt zoom op mobile */
+}
+
+.privacy-content input:focus,
+.privacy-content textarea:focus,
+.privacy-content select:focus,
+.accessibility-content input:focus,
+.accessibility-content textarea:focus,
+.accessibility-content select:focus,
+.cookie-consent-banner input:focus,
+.cookie-consent-banner textarea:focus,
+.cookie-consent-banner select:focus {
+  border-color: #1d4ed8 !important;
+  box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.1) !important;
+}
+
+.privacy-content input:invalid,
+.privacy-content textarea:invalid,
+.accessibility-content input:invalid,
+.accessibility-content textarea:invalid,
+.cookie-consent-banner input:invalid,
+.cookie-consent-banner textarea:invalid {
+  border-color: #dc2626 !important;
+}
+
+/* Label Improvements - Alleen voor accessibility en privacy formulieren */
+.privacy-content label,
+.accessibility-content label,
+.cookie-consent-banner label {
+  font-weight: 600 !important;
+  color: #1f2937 !important;
+  margin-bottom: 0.5rem !important;
+  display: block !important;
+}
+
+/* Error Messages */
+.error-message {
+  color: #dc2626 !important;
+  font-weight: 600 !important;
+  background: #fef2f2 !important;
+  border: 1px solid #fca5a5 !important;
+  padding: 0.75rem !important;
+  border-radius: 6px !important;
+  margin-top: 0.5rem !important;
+}
+
+.error-message::before {
+  content: "⚠️ ";
+  margin-right: 0.5rem;
+}
+
+/* Success Messages */
+.success-message {
+  color: #059669 !important;
+  font-weight: 600 !important;
+  background: #ecfdf5 !important;
+  border: 1px solid #6ee7b7 !important;
+  padding: 0.75rem !important;
+  border-radius: 6px !important;
+  margin-top: 0.5rem !important;
+}
+
+.success-message::before {
+  content: "✅ ";
+  margin-right: 0.5rem;
+}
+
+/* Table Accessibility - Alleen voor accessibility en privacy content */
+.privacy-content table,
+.accessibility-content table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.privacy-content th,
+.privacy-content td,
+.accessibility-content th,
+.accessibility-content td {
+  border: 1px solid #d1d5db !important;
+  padding: 12px !important;
+  text-align: left !important;
+}
+
+.privacy-content th,
+.accessibility-content th {
+  background: #f9fafb !important;
+  font-weight: 700 !important;
+  color: #1f2937 !important;
+}
+
+/* Keyboard Navigation Indicators */
+.keyboard-focusable {
+  position: relative;
+}
+
+.keyboard-focusable:focus::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border: 2px dashed #1d4ed8;
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  * {
+    background: white !important;
+    color: black !important;
+    border-color: black !important;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    background: black !important;
+    color: white !important;
+    border: 3px solid black !important;
+  }
+
+  a {
+    color: black !important;
+    text-decoration: underline !important;
+    font-weight: 700 !important;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Font Size Scaling Support */
+@media (min-resolution: 120dpi) {
+  body {
+    font-size: 18px !important;
+    line-height: 1.6 !important;
+  }
+}
+
+/* Touch Target Minimum Sizes - Alleen voor accessibility en privacy componenten */
+.privacy-content button,
+.privacy-content .btn,
+.privacy-content a[role="button"],
+.privacy-content input[type="submit"],
+.privacy-content input[type="button"],
+.accessibility-content button,
+.accessibility-content .btn,
+.accessibility-content a[role="button"],
+.accessibility-content input[type="submit"],
+.accessibility-content input[type="button"],
+.cookie-consent-banner button,
+.cookie-consent-banner .btn,
+.cookie-consent-banner a[role="button"],
+.cookie-consent-banner input[type="submit"],
+.cookie-consent-banner input[type="button"] {
+  min-height: 44px !important;
+  min-width: 44px !important;
+  padding: 12px 16px !important;
+}
+
+/* ARIA Live Regions */
+.live-region {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.live-region.announce {
+  position: static;
+  width: auto;
+  height: auto;
+  background: #1d4ed8;
+  color: white;
+  padding: 1rem;
+  border-radius: 6px;
+  margin: 1rem 0;
+}
+
+/* Focus Trap voor Modals */
+.focus-trap {
+  position: relative;
+}
+
+.focus-trap-boundary {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Print Accessibility */
+@media print {
+  * {
+    background: white !important;
+    color: black !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  a[href]:after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: #666;
+  }
+
+  .sr-only {
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    clip: auto !important;
+    white-space: normal !important;
+  }
+}

@@ -124,6 +124,32 @@ $router->add('nederlandse-verkiezingen/([0-9]+)', function($jaar) {
     require_once 'controllers/nederlandse-verkiezingen.php';
 });
 
+// Privacy en compliance routes
+$router->add('privacy-policy', function() {
+    $_GET['page'] = 'privacy-policy';
+    require_once 'controllers/privacy.php';
+});
+$router->add('cookie-policy', function() {
+    $_GET['page'] = 'cookie-policy';
+    require_once 'controllers/privacy.php';
+});
+$router->add('toegankelijkheid', function() {
+    $_GET['page'] = 'accessibility';
+    require_once 'controllers/privacy.php';
+});
+$router->add('accessibility', function() {
+    $_GET['page'] = 'accessibility';
+    require_once 'controllers/privacy.php';
+});
+$router->add('gebruiksvoorwaarden', function() {
+    $_GET['page'] = 'terms';
+    require_once 'controllers/privacy.php';
+});
+$router->add('terms', function() {
+    $_GET['page'] = 'terms';
+    require_once 'controllers/privacy.php';
+});
+
 // Get the requested URL
 $request = $_SERVER['REQUEST_URI'];
 
