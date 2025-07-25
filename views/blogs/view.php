@@ -391,170 +391,178 @@ require_once 'views/templates/header.php'; ?>
                                 <?php echo $blog->content; ?>
                             </div>
 
-                            <!-- Poll sectie (indien aanwezig) -->
-                            <?php if ($blog->poll): ?>
-                            <div class="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-gray-200">
-                                <div class="bg-gradient-to-br from-primary/5 via-white to-secondary/5 rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg border border-gray-100">
-                                    <!-- Poll Header -->
-                                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-                                        <div class="flex items-center space-x-3">
-                                            <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center flex-shrink-0">
-                                                <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                                                </svg>
-                                            </div>
-                                            <div class="min-w-0">
-                                                <h3 class="text-lg sm:text-xl font-bold text-gray-900">Wat vind jij?</h3>
-                                                <p class="text-sm text-gray-600">Stem en zie wat anderen denken</p>
-                                            </div>
-                                        </div>
+                                        <!-- Poll sectie (indien aanwezig) -->
+            <?php if ($blog->poll): ?>
+            <div class="mt-12 pt-8 border-t border-gray-200">
+                <div class="max-w-2xl mx-auto">
+                    <!-- Poll Header -->
+                    <div class="text-center mb-8">
+                        <div class="inline-flex items-center gap-2 bg-gray-100 text-gray-600 px-4 py-2 rounded-full text-sm font-medium mb-4">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                            </svg>
+                            Peiling
+                        </div>
+                        
+                        <h3 class="text-xl sm:text-2xl font-bold text-gray-900 mb-3">
+                            <?php echo htmlspecialchars($blog->poll->question); ?>
+                        </h3>
+                        
+                        <?php if ($blog->poll->total_votes > 0): ?>
+                            <p class="text-gray-600">
+                                <span class="font-semibold text-primary"><?php echo $blog->poll->total_votes; ?></span>
+                                <?php echo $blog->poll->total_votes === 1 ? 'persoon heeft gestemd' : 'mensen hebben gestemd'; ?>
+                            </p>
+                        <?php endif; ?>
+                    </div>
+
+                    <!-- Poll Container -->
+                    <div id="pollContainer" data-poll-id="<?php echo $blog->poll->id; ?>">
+                        <?php if ($blog->poll->user_has_voted): ?>
+                            <!-- Resultaten -->
+                            <div class="space-y-4 mb-6">
+                                <!-- Optie A -->
+                                <div class="relative group">
+                                    <div class="bg-white border-2 <?php echo $blog->poll->user_choice === 'A' ? 'border-blue-500' : 'border-gray-200'; ?> rounded-xl overflow-hidden">
+                                        <!-- Progress bar -->
+                                        <div class="absolute inset-0 bg-gradient-to-r from-blue-50 to-blue-100 opacity-60 transition-all duration-1000 ease-out" 
+                                             style="width: <?php echo $blog->poll->option_a_percentage; ?>%"></div>
                                         
-                                        <?php if ($blog->poll->total_votes > 0): ?>
-                                        <div class="text-left sm:text-right">
-                                            <div class="text-xl sm:text-2xl font-bold text-primary"><?php echo $blog->poll->total_votes; ?></div>
-                                            <div class="text-sm text-gray-500"><?php echo $blog->poll->total_votes === 1 ? 'stem' : 'stemmen'; ?></div>
+                                        <div class="relative p-5">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex items-center gap-4 flex-1 min-w-0">
+                                                    <div class="w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold text-lg flex-shrink-0">
+                                                        A
+                                                    </div>
+                                                    <div class="flex-1 min-w-0">
+                                                        <p class="font-medium text-gray-900 text-base break-words">
+                                                            <?php echo htmlspecialchars($blog->poll->option_a); ?>
+                                                        </p>
+                                                        <?php if ($blog->poll->user_choice === 'A'): ?>
+                                                            <p class="text-sm text-blue-600 font-medium mt-1">
+                                                                ✓ Jouw keuze
+                                                            </p>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                </div>
+                                                <div class="text-right flex-shrink-0 ml-4">
+                                                    <div class="text-2xl font-bold text-blue-600">
+                                                        <?php echo $blog->poll->option_a_percentage; ?>%
+                                                    </div>
+                                                    <div class="text-sm text-gray-500">
+                                                        <?php echo $blog->poll->option_a_votes; ?> <?php echo $blog->poll->option_a_votes === 1 ? 'stem' : 'stemmen'; ?>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <?php endif; ?>
                                     </div>
+                                </div>
 
-                                    <!-- Poll Vraag -->
-                                    <div class="mb-6 sm:mb-8">
-                                        <h4 class="text-base sm:text-lg lg:text-xl font-semibold text-gray-900 leading-relaxed">
-                                            <?php echo htmlspecialchars($blog->poll->question); ?>
-                                        </h4>
-                                    </div>
-
-                                    <!-- Poll Opties -->
-                                    <div id="pollContainer" class="space-y-3 sm:space-y-4 mb-6" data-poll-id="<?php echo $blog->poll->id; ?>">
-                                        <?php if ($blog->poll->user_has_voted): ?>
-                                            <!-- Resultaten tonen -->
-                                            <div class="space-y-3 sm:space-y-4">
-                                                <!-- Optie A -->
-                                                <div class="relative bg-white rounded-lg sm:rounded-xl border-2 <?php echo $blog->poll->user_choice === 'A' ? 'border-blue-500 ring-2 ring-blue-200' : 'border-gray-200'; ?> overflow-hidden">
-                                                    <div class="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-blue-600/5 transform transition-transform duration-1000" style="width: <?php echo $blog->poll->option_a_percentage; ?>%"></div>
-                                                    <div class="relative p-3 sm:p-4 lg:p-6">
-                                                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                                                            <div class="flex items-center space-x-2 sm:space-x-3 min-w-0 flex-1">
-                                                                <div class="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-full flex items-center justify-center font-bold text-sm sm:text-base flex-shrink-0">A</div>
-                                                                <span class="font-medium text-gray-900 text-sm sm:text-base lg:text-lg min-w-0 break-words"><?php echo htmlspecialchars($blog->poll->option_a); ?></span>
-                                                                <?php if ($blog->poll->user_choice === 'A'): ?>
-                                                                    <span class="hidden sm:inline-flex items-center px-2 py-1 rounded-full bg-blue-100 text-blue-800 text-xs font-semibold">
-                                                                        <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 24 24">
-                                                                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                                                        </svg>
-                                                                        Jouw keuze
-                                                                    </span>
-                                                                <?php endif; ?>
-                                                            </div>
-                                                            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-end gap-2 sm:gap-3">
-                                                                <div class="flex items-center gap-2">
-                                                                    <span class="text-lg sm:text-xl font-bold text-blue-600"><?php echo $blog->poll->option_a_percentage; ?>%</span>
-                                                                    <span class="text-xs sm:text-sm text-gray-500 whitespace-nowrap"><?php echo $blog->poll->option_a_votes; ?> <?php echo $blog->poll->option_a_votes === 1 ? 'stem' : 'stemmen'; ?></span>
-                                                                </div>
-                                                                <?php if ($blog->poll->user_choice === 'A'): ?>
-                                                                    <span class="inline-flex items-center px-2 py-1 rounded-full bg-blue-100 text-blue-800 text-xs font-semibold self-start sm:self-auto">
-                                                                        <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 24 24">
-                                                                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                                                        </svg>
-                                                                        Jouw keuze
-                                                                    </span>
-                                                                <?php endif; ?>
-                                                            </div>
-                                                        </div>
+                                <!-- Optie B -->
+                                <div class="relative group">
+                                    <div class="bg-white border-2 <?php echo $blog->poll->user_choice === 'B' ? 'border-red-500' : 'border-gray-200'; ?> rounded-xl overflow-hidden">
+                                        <!-- Progress bar -->
+                                        <div class="absolute inset-0 bg-gradient-to-r from-red-50 to-red-100 opacity-60 transition-all duration-1000 ease-out" 
+                                             style="width: <?php echo $blog->poll->option_b_percentage; ?>%"></div>
+                                        
+                                        <div class="relative p-5">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex items-center gap-4 flex-1 min-w-0">
+                                                    <div class="w-10 h-10 bg-red-500 text-white rounded-full flex items-center justify-center font-bold text-lg flex-shrink-0">
+                                                        B
+                                                    </div>
+                                                    <div class="flex-1 min-w-0">
+                                                        <p class="font-medium text-gray-900 text-base break-words">
+                                                            <?php echo htmlspecialchars($blog->poll->option_b); ?>
+                                                        </p>
+                                                        <?php if ($blog->poll->user_choice === 'B'): ?>
+                                                            <p class="text-sm text-red-600 font-medium mt-1">
+                                                                ✓ Jouw keuze
+                                                            </p>
+                                                        <?php endif; ?>
                                                     </div>
                                                 </div>
-
-                                                <!-- Optie B -->
-                                                <div class="relative bg-white rounded-lg sm:rounded-xl border-2 <?php echo $blog->poll->user_choice === 'B' ? 'border-red-500 ring-2 ring-red-200' : 'border-gray-200'; ?> overflow-hidden">
-                                                    <div class="absolute inset-0 bg-gradient-to-r from-red-500/10 to-red-600/5 transform transition-transform duration-1000" style="width: <?php echo $blog->poll->option_b_percentage; ?>%"></div>
-                                                    <div class="relative p-3 sm:p-4 lg:p-6">
-                                                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                                                            <div class="flex items-center space-x-2 sm:space-x-3 min-w-0 flex-1">
-                                                                <div class="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-full flex items-center justify-center font-bold text-sm sm:text-base flex-shrink-0">B</div>
-                                                                <span class="font-medium text-gray-900 text-sm sm:text-base lg:text-lg min-w-0 break-words"><?php echo htmlspecialchars($blog->poll->option_b); ?></span>
-                                                                <?php if ($blog->poll->user_choice === 'B'): ?>
-                                                                    <span class="hidden sm:inline-flex items-center px-2 py-1 rounded-full bg-red-100 text-red-800 text-xs font-semibold">
-                                                                        <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 24 24">
-                                                                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                                                        </svg>
-                                                                        Jouw keuze
-                                                                    </span>
-                                                                <?php endif; ?>
-                                                            </div>
-                                                            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-end gap-2 sm:gap-3">
-                                                                <div class="flex items-center gap-2">
-                                                                    <span class="text-lg sm:text-xl font-bold text-red-600"><?php echo $blog->poll->option_b_percentage; ?>%</span>
-                                                                    <span class="text-xs sm:text-sm text-gray-500 whitespace-nowrap"><?php echo $blog->poll->option_b_votes; ?> <?php echo $blog->poll->option_b_votes === 1 ? 'stem' : 'stemmen'; ?></span>
-                                                                </div>
-                                                                <?php if ($blog->poll->user_choice === 'B'): ?>
-                                                                    <span class="inline-flex items-center px-2 py-1 rounded-full bg-red-100 text-red-800 text-xs font-semibold self-start sm:self-auto">
-                                                                        <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 24 24">
-                                                                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                                                        </svg>
-                                                                        Jouw keuze
-                                                                    </span>
-                                                                <?php endif; ?>
-                                                            </div>
-                                                        </div>
+                                                <div class="text-right flex-shrink-0 ml-4">
+                                                    <div class="text-2xl font-bold text-red-600">
+                                                        <?php echo $blog->poll->option_b_percentage; ?>%
+                                                    </div>
+                                                    <div class="text-sm text-gray-500">
+                                                        <?php echo $blog->poll->option_b_votes; ?> <?php echo $blog->poll->option_b_votes === 1 ? 'stem' : 'stemmen'; ?>
                                                     </div>
                                                 </div>
                                             </div>
-
-                                            <!-- Bedankt bericht -->
-                                            <div class="bg-green-50 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-green-200">
-                                                <div class="flex items-start">
-                                                    <svg class="w-4 h-4 sm:w-5 sm:h-5 text-green-500 mr-2 sm:mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                                    </svg>
-                                                    <span class="text-green-800 font-medium text-sm sm:text-base">Bedankt voor je stem! Je hebt bijgedragen aan het politieke debat.</span>
-                                                </div>
-                                            </div>
-
-                                        <?php else: ?>
-                                            <!-- Stem opties -->
-                                            <div class="space-y-3 sm:space-y-4">
-                                                <!-- Optie A -->
-                                                <button onclick="votePoll('A')" 
-                                                        class="poll-option w-full group relative bg-white hover:bg-blue-50 rounded-lg sm:rounded-xl border-2 border-gray-200 hover:border-blue-500 p-3 sm:p-4 lg:p-6 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg">
-                                                    <div class="flex items-center space-x-3 sm:space-x-4">
-                                                        <div class="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-full flex items-center justify-center font-bold group-hover:scale-110 transition-transform text-sm sm:text-base flex-shrink-0">A</div>
-                                                        <span class="font-medium text-gray-900 text-sm sm:text-base lg:text-lg text-left flex-1 min-w-0 break-words"><?php echo htmlspecialchars($blog->poll->option_a); ?></span>
-                                                        <svg class="w-4 h-4 sm:w-5 sm:h-5 text-gray-400 group-hover:text-blue-500 transition-colors flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                                                        </svg>
-                                                    </div>
-                                                </button>
-
-                                                <!-- Optie B -->
-                                                <button onclick="votePoll('B')" 
-                                                        class="poll-option w-full group relative bg-white hover:bg-red-50 rounded-lg sm:rounded-xl border-2 border-gray-200 hover:border-red-500 p-3 sm:p-4 lg:p-6 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg">
-                                                    <div class="flex items-center space-x-3 sm:space-x-4">
-                                                        <div class="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-full flex items-center justify-center font-bold group-hover:scale-110 transition-transform text-sm sm:text-base flex-shrink-0">B</div>
-                                                        <span class="font-medium text-gray-900 text-sm sm:text-base lg:text-lg text-left flex-1 min-w-0 break-words"><?php echo htmlspecialchars($blog->poll->option_b); ?></span>
-                                                        <svg class="w-4 h-4 sm:w-5 sm:h-5 text-gray-400 group-hover:text-red-500 transition-colors flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                                                        </svg>
-                                                    </div>
-                                                </button>
-                                            </div>
-
-                                            <!-- Poll Info -->
-                                            <div class="bg-blue-50 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-blue-200">
-                                                <div class="flex items-start">
-                                                    <svg class="w-4 h-4 sm:w-5 sm:h-5 text-blue-500 mt-0.5 mr-2 sm:mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                                    </svg>
-                                                    <div class="text-xs sm:text-sm text-blue-800">
-                                                        <p class="font-medium mb-1">Jouw stem telt mee!</p>
-                                                        <p>Je kunt maar één keer stemmen per poll. Na het stemmen zie je direct de resultaten en hoe anderen hebben gestemd.</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        <?php endif; ?>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <?php endif; ?>
+
+                            <!-- Bedank bericht -->
+                            <div class="bg-green-50 border border-green-200 rounded-xl p-4">
+                                <div class="flex items-center gap-3 text-green-800">
+                                    <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    <p class="font-medium">Bedankt voor je stem! Je hebt bijgedragen aan het politieke debat.</p>
+                                </div>
+                            </div>
+
+                        <?php else: ?>
+                            <!-- Stem opties -->
+                            <div class="space-y-3 mb-6">
+                                <!-- Optie A -->
+                                <button onclick="votePoll('A')" 
+                                        class="poll-option w-full group bg-white hover:bg-blue-50 border-2 border-gray-200 hover:border-blue-500 rounded-xl p-5 transition-all duration-200 hover:shadow-md">
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-10 h-10 bg-blue-500 group-hover:bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-lg transition-colors flex-shrink-0">
+                                            A
+                                        </div>
+                                        <div class="flex-1 text-left min-w-0">
+                                            <p class="font-medium text-gray-900 text-base break-words">
+                                                <?php echo htmlspecialchars($blog->poll->option_a); ?>
+                                            </p>
+                                        </div>
+                                        <svg class="w-5 h-5 text-gray-400 group-hover:text-blue-500 transition-colors flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                        </svg>
+                                    </div>
+                                </button>
+
+                                <!-- Optie B -->
+                                <button onclick="votePoll('B')" 
+                                        class="poll-option w-full group bg-white hover:bg-red-50 border-2 border-gray-200 hover:border-red-500 rounded-xl p-5 transition-all duration-200 hover:shadow-md">
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-10 h-10 bg-red-500 group-hover:bg-red-600 text-white rounded-full flex items-center justify-center font-bold text-lg transition-colors flex-shrink-0">
+                                            B
+                                        </div>
+                                        <div class="flex-1 text-left min-w-0">
+                                            <p class="font-medium text-gray-900 text-base break-words">
+                                                <?php echo htmlspecialchars($blog->poll->option_b); ?>
+                                            </p>
+                                        </div>
+                                        <svg class="w-5 h-5 text-gray-400 group-hover:text-red-500 transition-colors flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                        </svg>
+                                    </div>
+                                </button>
+                            </div>
+
+                            <!-- Info bericht -->
+                            <div class="bg-blue-50 border border-blue-200 rounded-xl p-4">
+                                <div class="flex gap-3 text-blue-800">
+                                    <svg class="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    <div class="text-sm">
+                                        <p class="font-medium mb-1">Jouw stem telt mee!</p>
+                                        <p>Je kunt één keer stemmen. Na het stemmen zie je de resultaten.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -3295,80 +3303,106 @@ function updatePollResults(poll, userChoice) {
     const optionAPercentage = totalVotes > 0 ? Math.round((poll.option_a_votes / totalVotes) * 100 * 10) / 10 : 0;
     const optionBPercentage = totalVotes > 0 ? Math.round((poll.option_b_votes / totalVotes) * 100 * 10) / 10 : 0;
     
-    // Update HTML met resultaten
+    // Update HTML met nieuwe clean design
     pollContainer.innerHTML = `
-        <div class="space-y-4">
+        <div class="space-y-4 mb-6">
             <!-- Optie A -->
-            <div class="relative bg-white rounded-xl border-2 ${userChoice === 'A' ? 'border-blue-500 ring-2 ring-blue-200' : 'border-gray-200'} overflow-hidden">
-                <div class="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-blue-600/5 transform transition-transform duration-1000" style="width: ${optionAPercentage}%"></div>
-                <div class="relative p-4 sm:p-6">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-full flex items-center justify-center font-bold">A</div>
-                            <span class="font-medium text-gray-900 text-lg">${poll.option_a}</span>
-                            ${userChoice === 'A' ? `
-                                <span class="inline-flex items-center px-2 py-1 rounded-full bg-blue-100 text-blue-800 text-xs font-semibold">
-                                    <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                    </svg>
-                                    Jouw keuze
-                                </span>
-                            ` : ''}
-                        </div>
-                        <div class="flex items-center space-x-3">
-                            <span class="text-xl font-bold text-blue-600">${optionAPercentage}%</span>
-                            <span class="text-sm text-gray-500">${poll.option_a_votes} ${poll.option_a_votes === 1 ? 'stem' : 'stemmen'}</span>
+            <div class="relative group">
+                <div class="bg-white border-2 ${userChoice === 'A' ? 'border-blue-500' : 'border-gray-200'} rounded-xl overflow-hidden">
+                    <!-- Progress bar -->
+                    <div class="absolute inset-0 bg-gradient-to-r from-blue-50 to-blue-100 opacity-60 transition-all duration-1000 ease-out" style="width: ${optionAPercentage}%"></div>
+                    
+                    <div class="relative p-5">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-4 flex-1 min-w-0">
+                                <div class="w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold text-lg flex-shrink-0">
+                                    A
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="font-medium text-gray-900 text-base break-words">
+                                        ${poll.option_a}
+                                    </p>
+                                    ${userChoice === 'A' ? `
+                                        <p class="text-sm text-blue-600 font-medium mt-1">
+                                            ✓ Jouw keuze
+                                        </p>
+                                    ` : ''}
+                                </div>
+                            </div>
+                            <div class="text-right flex-shrink-0 ml-4">
+                                <div class="text-2xl font-bold text-blue-600">
+                                    ${optionAPercentage}%
+                                </div>
+                                <div class="text-sm text-gray-500">
+                                    ${poll.option_a_votes} ${poll.option_a_votes === 1 ? 'stem' : 'stemmen'}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Optie B -->
-            <div class="relative bg-white rounded-xl border-2 ${userChoice === 'B' ? 'border-red-500 ring-2 ring-red-200' : 'border-gray-200'} overflow-hidden">
-                <div class="absolute inset-0 bg-gradient-to-r from-red-500/10 to-red-600/5 transform transition-transform duration-1000" style="width: ${optionBPercentage}%"></div>
-                <div class="relative p-4 sm:p-6">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-8 h-8 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-full flex items-center justify-center font-bold">B</div>
-                            <span class="font-medium text-gray-900 text-lg">${poll.option_b}</span>
-                            ${userChoice === 'B' ? `
-                                <span class="inline-flex items-center px-2 py-1 rounded-full bg-red-100 text-red-800 text-xs font-semibold">
-                                    <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                    </svg>
-                                    Jouw keuze
-                                </span>
-                            ` : ''}
-                        </div>
-                        <div class="flex items-center space-x-3">
-                            <span class="text-xl font-bold text-red-600">${optionBPercentage}%</span>
-                            <span class="text-sm text-gray-500">${poll.option_b_votes} ${poll.option_b_votes === 1 ? 'stem' : 'stemmen'}</span>
+            <div class="relative group">
+                <div class="bg-white border-2 ${userChoice === 'B' ? 'border-red-500' : 'border-gray-200'} rounded-xl overflow-hidden">
+                    <!-- Progress bar -->
+                    <div class="absolute inset-0 bg-gradient-to-r from-red-50 to-red-100 opacity-60 transition-all duration-1000 ease-out" style="width: ${optionBPercentage}%"></div>
+                    
+                    <div class="relative p-5">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-4 flex-1 min-w-0">
+                                <div class="w-10 h-10 bg-red-500 text-white rounded-full flex items-center justify-center font-bold text-lg flex-shrink-0">
+                                    B
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="font-medium text-gray-900 text-base break-words">
+                                        ${poll.option_b}
+                                    </p>
+                                    ${userChoice === 'B' ? `
+                                        <p class="text-sm text-red-600 font-medium mt-1">
+                                            ✓ Jouw keuze
+                                        </p>
+                                    ` : ''}
+                                </div>
+                            </div>
+                            <div class="text-right flex-shrink-0 ml-4">
+                                <div class="text-2xl font-bold text-red-600">
+                                    ${optionBPercentage}%
+                                </div>
+                                <div class="text-sm text-gray-500">
+                                    ${poll.option_b_votes} ${poll.option_b_votes === 1 ? 'stem' : 'stemmen'}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Bedankt bericht -->
-        <div class="bg-green-50 rounded-xl p-4 border border-green-200 mt-6">
-            <div class="flex items-center">
-                <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <!-- Bedank bericht -->
+        <div class="bg-green-50 border border-green-200 rounded-xl p-4">
+            <div class="flex items-center gap-3 text-green-800">
+                <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                 </svg>
-                <span class="text-green-800 font-medium">Bedankt voor je stem! Je hebt bijgedragen aan het politieke debat.</span>
+                <p class="font-medium">Bedankt voor je stem! Je hebt bijgedragen aan het politieke debat.</p>
             </div>
         </div>
     `;
     
-    // Update totaal aantal stemmen in header (als aanwezig)
-    const totalVotesElement = document.querySelector('.text-2xl.font-bold.text-primary');
-    if (totalVotesElement) {
-        totalVotesElement.textContent = totalVotes;
-        const voteLabel = totalVotesElement.nextElementSibling;
-        if (voteLabel) {
-            voteLabel.textContent = totalVotes === 1 ? 'stem' : 'stemmen';
+    // Update totaal aantal stemmen in header
+    const totalVotesElements = document.querySelectorAll('.font-semibold.text-primary');
+    totalVotesElements.forEach(element => {
+        if (element.textContent && !isNaN(parseInt(element.textContent))) {
+            element.textContent = totalVotes;
+            
+            // Update bijbehorende tekst
+            const nextElement = element.nextSibling;
+            if (nextElement && nextElement.textContent) {
+                nextElement.textContent = totalVotes === 1 ? ' persoon heeft gestemd' : ' mensen hebben gestemd';
+            }
         }
-    }
+    });
 }
 
 // Initialize comment likes when page loads
