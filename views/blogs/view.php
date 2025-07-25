@@ -206,20 +206,13 @@ require_once 'views/templates/header.php'; ?>
                     <?php if (!empty($blog->soundcloud_url)): ?>
                     <div class="relative overflow-hidden">
                         <!-- Audio Header -->
-                        <div class="bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 p-6">
+                        <div class="bg-gradient-to-r from-primary-dark via-primary to-secondary p-6">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center gap-4">
-                                    <div class="relative">
-                                        <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
-                                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
-                            </svg>
-                                        </div>
-                                        <div class="absolute -top-1 -right-1 w-6 h-6 bg-white text-red-500 rounded-full flex items-center justify-center">
-                                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
-                                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                                            </svg>
-                                        </div>
+                                    <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm shadow-lg">
+                                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
+                                        </svg>
                                     </div>
                                     <div>
                                         <h3 class="text-xl font-bold text-white mb-1">🎙️ Podcast Editie</h3>
@@ -227,9 +220,11 @@ require_once 'views/templates/header.php'; ?>
                                     </div>
                                 </div>
                                 <div class="hidden sm:flex items-center gap-2">
-                                    <span class="inline-flex items-center px-3 py-1 rounded-full bg-white/20 text-white text-sm font-medium">
-                                        <span class="w-2 h-2 bg-white rounded-full mr-2 animate-pulse"></span>
-                                        LIVE
+                                    <span class="inline-flex items-center px-4 py-2 rounded-full bg-white/20 text-white text-sm font-medium backdrop-blur-sm border border-white/30">
+                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>
+                                        </svg>
+                                        Podcast
                                     </span>
                                 </div>
                             </div>
@@ -251,22 +246,6 @@ require_once 'views/templates/header.php'; ?>
                                         src="<?php echo htmlspecialchars($soundcloudEnhancedUrl); ?>">
                                 </iframe>
                             </div>
-                            
-                            <!-- Audio Controls -->
-                            <div class="flex items-center justify-center gap-4 mt-6">
-                                <button onclick="shareAudio()" class="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full hover:from-blue-600 hover:to-indigo-700 transition-all transform hover:scale-105">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"/>
-                                    </svg>
-                                    <span class="text-sm font-medium">Delen</span>
-                                </button>
-                                <button onclick="openInSoundCloud()" class="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-orange-500 to-red-600 text-white rounded-full hover:from-orange-600 hover:to-red-700 transition-all transform hover:scale-105">
-                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M7 7h10v3l4-4-4-4v3H7z"/>
-                                    </svg>
-                                    <span class="text-sm font-medium">SoundCloud</span>
-                                </button>
-                            </div>
                         </div>
                     </div>
                     
@@ -274,20 +253,13 @@ require_once 'views/templates/header.php'; ?>
                     <!-- Enhanced Fallback Audio Section -->
                     <div class="relative overflow-hidden">
                         <!-- Audio Header -->
-                        <div class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-6">
+                        <div class="bg-gradient-to-r from-primary-dark via-primary to-secondary p-6">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center gap-4">
-                                    <div class="relative">
-                                        <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
-                                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>
-                                            </svg>
-                                        </div>
-                                        <div class="absolute -top-1 -right-1 w-6 h-6 bg-white text-purple-500 rounded-full flex items-center justify-center">
-                                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
-                                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                                            </svg>
-                                        </div>
+                                    <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm shadow-lg">
+                                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>
+                                        </svg>
                                     </div>
                                     <div>
                                         <h3 class="text-xl font-bold text-white mb-1">🎵 Audio Versie</h3>
@@ -295,8 +267,10 @@ require_once 'views/templates/header.php'; ?>
                                     </div>
                                 </div>
                                 <div class="hidden sm:flex items-center gap-2">
-                                    <span class="inline-flex items-center px-3 py-1 rounded-full bg-white/20 text-white text-sm font-medium">
-                                        <span class="w-2 h-2 bg-white rounded-full mr-2 animate-pulse"></span>
+                                    <span class="inline-flex items-center px-4 py-2 rounded-full bg-white/20 text-white text-sm font-medium backdrop-blur-sm border border-white/30">
+                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>
+                                        </svg>
                                         AUDIO
                                     </span>
                                 </div>
