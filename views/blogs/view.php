@@ -85,29 +85,29 @@ require_once 'views/templates/header.php'; ?>
         </div>
         
         <div class="relative z-10 container mx-auto px-4">
-            <div class="max-w-4xl mx-auto flex flex-col items-center justify-center min-h-[50vh] md:min-h-[60vh] py-16 text-center">
+            <div class="max-w-4xl mx-auto flex flex-col items-center justify-end min-h-[60vh] text-center pb-12 sm:justify-center sm:min-h-[50vh] sm:py-16">
                 
                 <!-- Breadcrumb -->
-                <nav class="w-full mb-6" aria-label="Breadcrumb">
+                <nav class="w-full mb-4 sm:mb-6" aria-label="Breadcrumb">
                     <ol class="flex justify-center items-center space-x-2 text-sm text-gray-300">
                         <li><a href="<?php echo URLROOT; ?>" class="hover:text-white transition-colors duration-200">Home</a></li>
                         <li><span class="text-gray-500">/</span></li>
                         <li><a href="<?php echo URLROOT; ?>/blogs" class="hover:text-white transition-colors duration-200">Blogs</a></li>
                         <li><span class="text-gray-500">/</span></li>
-                        <li class="text-gray-400 truncate max-w-xs"><?php echo htmlspecialchars($blog->title); ?></li>
+                        <li class="text-gray-400 truncate max-w-[150px] sm:max-w-xs"><?php echo htmlspecialchars($blog->title); ?></li>
                     </ol>
                 </nav>
 
                 <!-- Badges -->
-                <div class="flex items-center gap-3 mb-6">
-                    <span class="inline-flex items-center px-4 py-1.5 rounded-full bg-blue-600/20 border border-blue-500/30 text-blue-200 font-medium text-sm backdrop-blur-sm">
+                <div class="flex items-center gap-3 mb-4 sm:mb-6">
+                    <span class="inline-flex items-center px-4 py-1 sm:py-1.5 rounded-full bg-black/20 sm:bg-blue-600/20 border border-white/20 sm:border-blue-500/30 text-white sm:text-blue-200 font-medium text-sm backdrop-blur-sm">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                         </svg>
                         Politieke Analyse
                     </span>
                     
-                    <div class="inline-flex items-center text-gray-300 text-sm bg-white/10 px-4 py-1.5 rounded-full backdrop-blur-sm border border-white/20">
+                    <div class="inline-flex items-center text-white sm:text-gray-300 text-sm bg-black/20 sm:bg-white/10 px-4 py-1 sm:py-1.5 rounded-full backdrop-blur-sm border border-white/20">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
@@ -116,20 +116,20 @@ require_once 'views/templates/header.php'; ?>
                 </div>
                 
                 <!-- Title -->
-                <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight tracking-tight mb-8 [text-shadow:_0_2px_4px_rgb(0_0_0_/_50%)]">
+                <h1 class="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight tracking-tight mb-4 sm:mb-8 [text-shadow:_0_2px_4px_rgb(0_0_0_/_50%)]">
                     <?php echo htmlspecialchars($blog->title); ?>
                 </h1>
 
                 <!-- Author Info & Actions -->
-                <div class="flex flex-col sm:flex-row items-center gap-6">
-                    <div class="flex items-center space-x-4">
-                        <img src="<?php echo URLROOT; ?>/public/images/naoufal-foto.jpg" 
-                             onerror="if(this.src !== '<?php echo URLROOT; ?>/images/naoufal-foto.jpg') this.src='<?php echo URLROOT; ?>/images/naoufal-foto.jpg'; else if(this.src !== '<?php echo URLROOT; ?>/public/images/profiles/naoufal-foto.jpg') this.src='<?php echo URLROOT; ?>/public/images/profiles/naoufal-foto.jpg';"
+                <div class="flex flex-col items-center gap-4 sm:flex-row sm:gap-6">
+                    <div class="flex flex-col items-center text-center sm:flex-row sm:space-x-4">
+                        <img src="<?php echo URLROOT; ?>/public/images/profiles/naoufal-foto.jpg" 
+                             onerror="this.src='<?php echo URLROOT; ?>/public/images/profiles/naoufal-foto.jpg';"
                              alt="<?php echo htmlspecialchars($blog->author_name); ?>"
-                             class="w-14 h-14 rounded-full border-2 border-white/30 shadow-xl object-cover">
-                        <div class="text-left">
-                            <h3 class="text-white font-semibold text-lg"><?php echo htmlspecialchars($blog->author_name); ?></h3>
-                            <p class="text-gray-300 text-sm"><?php 
+                             class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-white/30 shadow-lg sm:shadow-xl object-cover mb-2 sm:mb-0">
+                        <div class="sm:text-left">
+                            <h3 class="text-white font-semibold text-base sm:text-lg"><?php echo htmlspecialchars($blog->author_name); ?></h3>
+                            <p class="text-gray-300 text-xs sm:text-sm"><?php 
                                 $formatter = new IntlDateFormatter('nl_NL', IntlDateFormatter::LONG, IntlDateFormatter::NONE);
                                 echo $formatter->format(strtotime($blog->published_at)); 
                             ?></p>
@@ -137,13 +137,13 @@ require_once 'views/templates/header.php'; ?>
                     </div>
                     
                     <button id="heroLikeButton" 
-                            class="hero-like-btn group flex items-center space-x-2 bg-white/5 hover:bg-white/10 px-4 py-2 rounded-full transition-all duration-300 hover:scale-105 border border-white/20"
+                            class="hero-like-btn group flex items-center space-x-2 bg-black/20 hover:bg-black/40 sm:bg-white/5 sm:hover:bg-white/10 px-5 py-2 sm:px-4 rounded-full transition-all duration-300 hover:scale-105 border border-white/20"
                             data-slug="<?php echo $blog->slug; ?>"
                             aria-label="Like deze blog">
-                        <svg class="w-5 h-5 transition-all duration-300 group-hover:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 text-red-300 sm:text-white transition-all duration-300 group-hover:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
                         </svg>
-                        <span id="hero-like-count" class="group-hover:text-red-400 transition-colors text-sm font-semibold"><?php echo $blog->likes; ?> likes</span>
+                        <span id="hero-like-count" class="text-red-300 sm:text-white group-hover:text-red-400 transition-colors text-sm font-semibold"><?php echo $blog->likes; ?> likes</span>
                     </button>
                 </div>
             </div>
@@ -2454,10 +2454,13 @@ function updateLikeButtonStates() {
     }
     
     if (heroLikeButton) {
+        const svg = heroLikeButton.querySelector('svg');
         if (isLiked) {
             heroLikeButton.classList.add('liked');
+            if (svg) svg.setAttribute('fill', 'currentColor');
         } else {
             heroLikeButton.classList.remove('liked');
+            if (svg) svg.setAttribute('fill', 'none');
         }
     }
 }
