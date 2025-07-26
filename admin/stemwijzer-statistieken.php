@@ -993,68 +993,7 @@ require_once '../views/templates/header.php';
         </div>
         <?php endif; ?>
 
-        <!-- Answer Statistics -->
-        <?php if (!empty($answerStats) && !empty($questions)): ?>
-        <div class="bg-white/90 backdrop-blur-2xl rounded-2xl shadow-xl border border-white/50 overflow-hidden mb-8">
-            <div class="bg-gradient-to-r from-orange-50 to-red-50 px-6 py-4 border-b border-gray-100">
-                <h2 class="text-xl font-bold text-gray-800">Antwoord Verdeling per Vraag</h2>
-            </div>
-            
-            <div class="p-6">
-                <div class="space-y-6">
-                    <?php foreach (array_slice($questions, 0, 5) as $question): 
-                        if (isset($answerStats[$question->order_number - 1])):
-                            $stats = $answerStats[$question->order_number - 1];
-                            $total = $stats['eens'] + $stats['oneens'] + $stats['neutraal'];
-                    ?>
-                        <div class="border border-gray-100 rounded-xl p-4">
-                            <h3 class="font-semibold text-gray-800 mb-3"><?= htmlspecialchars($question->title) ?></h3>
-                            
-                            <?php if ($total > 0): ?>
-                                <div class="grid grid-cols-3 gap-4">
-                                    <div class="text-center">
-                                        <div class="bg-green-100 rounded-lg p-3">
-                                            <div class="text-2xl font-bold text-green-600"><?= $stats['eens'] ?></div>
-                                            <div class="text-sm text-green-700">Eens</div>
-                                            <div class="text-xs text-gray-500"><?= round(($stats['eens'] / $total) * 100, 1) ?>%</div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="text-center">
-                                        <div class="bg-gray-100 rounded-lg p-3">
-                                            <div class="text-2xl font-bold text-gray-600"><?= $stats['neutraal'] ?></div>
-                                            <div class="text-sm text-gray-700">Neutraal</div>
-                                            <div class="text-xs text-gray-500"><?= round(($stats['neutraal'] / $total) * 100, 1) ?>%</div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="text-center">
-                                        <div class="bg-red-100 rounded-lg p-3">
-                                            <div class="text-2xl font-bold text-red-600"><?= $stats['oneens'] ?></div>
-                                            <div class="text-sm text-red-700">Oneens</div>
-                                            <div class="text-xs text-gray-500"><?= round(($stats['oneens'] / $total) * 100, 1) ?>%</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            <?php else: ?>
-                                <p class="text-gray-500 text-sm">Nog geen antwoorden voor deze vraag</p>
-                            <?php endif; ?>
-                        </div>
-                    <?php 
-                        endif;
-                    endforeach; ?>
-                </div>
-                
-                <?php if (count($questions) > 5): ?>
-                    <div class="mt-6 text-center">
-                        <p class="text-gray-600 text-sm">
-                            Toont de eerste 5 vragen van <?= count($questions) ?> totaal
-                        </p>
-                    </div>
-                <?php endif; ?>
-            </div>
-        </div>
-        <?php endif; ?>
+
     </div>
 </main>
 
