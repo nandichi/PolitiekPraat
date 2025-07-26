@@ -913,240 +913,244 @@ $howToStructuredData = [
                  x-transition:enter-start="opacity-0 transform scale-95"
                  x-transition:enter-end="opacity-100 transform scale-100">
                 
-                <!-- Persoonlijkheidsanalyse Hero -->
-                <div class="text-center mb-16">
-                    <div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-600 shadow-lg shadow-purple-500/25 mb-6">
-                        <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                        </svg>
-                    </div>
-                    
-                    <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4 flex items-center justify-center gap-3">
-                        <span>Jouw Politieke
-                            <span class="text-gradient bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-                                Persoonlijkheid
+                <!-- Jouw Politieke Persoonlijkheid sectie - tijdelijk verborgen -->
+                <div style="display: none;">
+                    <!-- Persoonlijkheidsanalyse Hero -->
+                    <div class="text-center mb-16">
+                        <div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-600 shadow-lg shadow-purple-500/25 mb-6">
+                            <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                            </svg>
+                        </div>
+                        
+                        <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4 flex items-center justify-center gap-3">
+                            <span>Jouw Politieke
+                                <span class="text-gradient bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                                    Persoonlijkheid
+                                </span>
                             </span>
-                        </span>
-                        <div class="relative group">
-                            <div class="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center cursor-help shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110">
-                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
-                                </svg>
+                            <div class="relative group">
+                                <div class="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center cursor-help shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110">
+                                    <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                                    </svg>
+                                </div>
+                                
+                                <!-- Tooltip -->
+                                <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 px-4 py-3 bg-gray-900 text-white text-sm rounded-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 w-80 z-50 shadow-2xl">
+                                    <div class="space-y-3">
+                                        <p class="font-semibold text-purple-300">Hoe wordt dit berekend?</p>
+                                        <div class="space-y-2 text-xs leading-relaxed">
+                                            <p><strong>Categorisatie:</strong> Vragen worden automatisch ingedeeld in economische, sociale, progressieve, autoritaire en EU-gerelateerde onderwerpen op basis van kernwoorden.</p>
+                                            <p><strong>Scoring:</strong> Per categorie krijg je een score van 0-100% gebaseerd op je antwoorden (eens = +1, oneens = -1, neutraal = 0).</p>
+                                            <p><strong>Profiel:</strong> Je politieke type wordt bepaald door je economische (links-rechts) en progressieve scores te combineren.</p>
+                                            <p><strong>Kompas:</strong> Je positie gebruikt economische en sociale scores voor de X/Y-as.</p>
+                                        </div>
+                                    </div>
+                                    <div class="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
+                                </div>
+                            </div>
+                        </h2>
+                        
+                        <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed mb-8">
+                            Op basis van jouw antwoorden hebben we een uniek profiel samengesteld dat jouw politieke voorkeur en persoonlijkheid beschrijft.
+                        </p>
+                    </div>
+
+                    <!-- Hoofdprofiel Card -->
+                    <div class="bg-white/90 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/50 overflow-hidden mb-12">
+                        <div class="bg-gradient-to-r p-8 text-white relative overflow-hidden" :class="personalityAnalysis.political_profile.color">
+                            <div class="absolute inset-0 bg-gradient-to-r from-black/10 to-transparent"></div>
+                            <div class="absolute top-0 right-0 w-64 h-64 rounded-full bg-white/10 blur-3xl transform translate-x-32 -translate-y-32"></div>
+                            
+                            <div class="relative z-10">
+                                <div class="flex items-center justify-between mb-6">
+                                    <div>
+                                        <h3 class="text-3xl font-bold mb-2" x-text="personalityAnalysis.political_profile.type"></h3>
+                                        <p class="text-white/90 text-lg leading-relaxed" x-text="personalityAnalysis.political_profile.description"></p>
+                                    </div>
+                                    <div class="text-6xl opacity-20">🗳️</div>
+                                </div>
+                                
+                                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                    <div class="bg-white/20 rounded-xl p-4 text-center">
+                                        <div class="text-2xl font-bold" x-text="Math.round(personalityAnalysis.left_right_percentage) + '%'"></div>
+                                        <div class="text-sm opacity-90">Rechts</div>
+                                    </div>
+                                    <div class="bg-white/20 rounded-xl p-4 text-center">
+                                        <div class="text-2xl font-bold" x-text="Math.round(personalityAnalysis.progressive_percentage) + '%'"></div>
+                                        <div class="text-sm opacity-90">Progressief</div>
+                                    </div>
+                                    <div class="bg-white/20 rounded-xl p-4 text-center">
+                                        <div class="text-2xl font-bold" x-text="Math.round(personalityAnalysis.authoritarian_percentage) + '%'"></div>
+                                        <div class="text-sm opacity-90">Autoritair</div>
+                                    </div>
+                                    <div class="bg-white/20 rounded-xl p-4 text-center">
+                                        <div class="text-2xl font-bold" x-text="Math.round(personalityAnalysis.eu_pro_percentage) + '%'"></div>
+                                        <div class="text-sm opacity-90">Pro-EU</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Politiek Kompas -->
+                        <div class="p-8">
+                            <h4 class="text-2xl font-bold text-gray-800 mb-6 text-center">Jouw Positie op het Politieke Kompas</h4>
+                            
+                            <div class="max-w-md mx-auto mb-8">
+                                <div class="relative w-80 h-80 mx-auto">
+                                    <!-- Kompas achtergrond -->
+                                    <div class="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full border-2 border-gray-300"></div>
+                                    
+                                    <!-- Kwadranten -->
+                                    <div class="absolute inset-0 grid grid-cols-2 grid-rows-2 rounded-full overflow-hidden">
+                                        <div class="bg-green-200/30 border-r border-b border-gray-300 flex items-center justify-center">
+                                            <span class="text-xs font-medium text-green-700 text-center">Links<br/>Liberaal</span>
+                                        </div>
+                                        <div class="bg-blue-200/30 border-b border-gray-300 flex items-center justify-center">
+                                            <span class="text-xs font-medium text-blue-700 text-center">Rechts<br/>Liberaal</span>
+                                        </div>
+                                        <div class="bg-red-200/30 border-r border-gray-300 flex items-center justify-center">
+                                            <span class="text-xs font-medium text-red-700 text-center">Links<br/>Autoritair</span>
+                                        </div>
+                                        <div class="bg-indigo-200/30 flex items-center justify-center">
+                                            <span class="text-xs font-medium text-indigo-700 text-center">Rechts<br/>Autoritair</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Assen labels -->
+                                    <div class="absolute top-2 left-1/2 transform -translate-x-1/2 text-xs font-medium text-gray-600">Liberaal</div>
+                                    <div class="absolute bottom-2 left-1/2 transform -translate-x-1/2 text-xs font-medium text-gray-600">Autoritair</div>
+                                    <div class="absolute left-2 top-1/2 transform -translate-y-1/2 text-xs font-medium text-gray-600 -rotate-90">Links</div>
+                                    <div class="absolute right-2 top-1/2 transform -translate-y-1/2 text-xs font-medium text-gray-600 rotate-90">Rechts</div>
+                                    
+                                    <!-- Jouw positie -->
+                                    <div class="absolute w-4 h-4 rounded-full border-2 border-white shadow-lg transform -translate-x-2 -translate-y-2"
+                                         :class="'bg-' + personalityAnalysis.compass_position.quadrant.color + '-500'"
+                                         :style="'left: ' + ((personalityAnalysis.compass_position.x + 50) * 2.8) + 'px; top: ' + ((-personalityAnalysis.compass_position.y + 50) * 2.8) + 'px;'">
+                                    </div>
+                                    
+                                    <!-- Centrum punt -->
+                                    <div class="absolute top-1/2 left-1/2 w-2 h-2 bg-gray-400 rounded-full transform -translate-x-1 -translate-y-1"></div>
+                                </div>
                             </div>
                             
-                            <!-- Tooltip -->
-                            <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 px-4 py-3 bg-gray-900 text-white text-sm rounded-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 w-80 z-50 shadow-2xl">
-                                <div class="space-y-3">
-                                    <p class="font-semibold text-purple-300">Hoe wordt dit berekend?</p>
-                                    <div class="space-y-2 text-xs leading-relaxed">
-                                        <p><strong>Categorisatie:</strong> Vragen worden automatisch ingedeeld in economische, sociale, progressieve, autoritaire en EU-gerelateerde onderwerpen op basis van kernwoorden.</p>
-                                        <p><strong>Scoring:</strong> Per categorie krijg je een score van 0-100% gebaseerd op je antwoorden (eens = +1, oneens = -1, neutraal = 0).</p>
-                                        <p><strong>Profiel:</strong> Je politieke type wordt bepaald door je economische (links-rechts) en progressieve scores te combineren.</p>
-                                        <p><strong>Kompas:</strong> Je positie gebruikt economische en sociale scores voor de X/Y-as.</p>
-                                    </div>
+                            <div class="text-center">
+                                <div class="inline-flex items-center px-4 py-2 rounded-full font-semibold"
+                                     :class="'bg-' + personalityAnalysis.compass_position.quadrant.color + '-100 text-' + personalityAnalysis.compass_position.quadrant.color + '-800'">
+                                    <div class="w-3 h-3 rounded-full mr-2"
+                                         :class="'bg-' + personalityAnalysis.compass_position.quadrant.color + '-500'"></div>
+                                    <span x-text="personalityAnalysis.compass_position.quadrant.name"></span>
                                 </div>
-                                <div class="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
                             </div>
                         </div>
-                    </h2>
-                    
-                    <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed mb-8">
-                        Op basis van jouw antwoorden hebben we een uniek profiel samengesteld dat jouw politieke voorkeur en persoonlijkheid beschrijft.
-                    </p>
-                </div>
+                    </div>
 
-                <!-- Hoofdprofiel Card -->
-                <div class="bg-white/90 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/50 overflow-hidden mb-12">
-                    <div class="bg-gradient-to-r p-8 text-white relative overflow-hidden" :class="personalityAnalysis.political_profile.color">
-                        <div class="absolute inset-0 bg-gradient-to-r from-black/10 to-transparent"></div>
-                        <div class="absolute top-0 right-0 w-64 h-64 rounded-full bg-white/10 blur-3xl transform translate-x-32 -translate-y-32"></div>
+                    <!-- Persoonlijkheidskenmerken -->
+                    <div x-show="personalityAnalysis.personality_traits.length > 0" class="bg-white/90 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/50 p-8 mb-12">
+                        <h4 class="text-2xl font-bold text-gray-800 mb-6 text-center">Jouw Politieke Kenmerken</h4>
                         
-                        <div class="relative z-10">
-                            <div class="flex items-center justify-between mb-6">
-                                <div>
-                                    <h3 class="text-3xl font-bold mb-2" x-text="personalityAnalysis.political_profile.type"></h3>
-                                    <p class="text-white/90 text-lg leading-relaxed" x-text="personalityAnalysis.political_profile.description"></p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <template x-for="trait in personalityAnalysis.personality_traits" :key="trait.name">
+                                <div class="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 border border-gray-200 text-center hover:shadow-lg transition-shadow">
+                                    <div class="text-4xl mb-4" x-text="trait.icon"></div>
+                                    <h5 class="text-lg font-bold text-gray-800 mb-2" x-text="trait.name"></h5>
+                                    <p class="text-gray-600 text-sm leading-relaxed" x-text="trait.description"></p>
                                 </div>
-                                <div class="text-6xl opacity-20">🗳️</div>
-                            </div>
-                            
-                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                                <div class="bg-white/20 rounded-xl p-4 text-center">
-                                    <div class="text-2xl font-bold" x-text="Math.round(personalityAnalysis.left_right_percentage) + '%'"></div>
-                                    <div class="text-sm opacity-90">Rechts</div>
-                                </div>
-                                <div class="bg-white/20 rounded-xl p-4 text-center">
-                                    <div class="text-2xl font-bold" x-text="Math.round(personalityAnalysis.progressive_percentage) + '%'"></div>
-                                    <div class="text-sm opacity-90">Progressief</div>
-                                </div>
-                                <div class="bg-white/20 rounded-xl p-4 text-center">
-                                    <div class="text-2xl font-bold" x-text="Math.round(personalityAnalysis.authoritarian_percentage) + '%'"></div>
-                                    <div class="text-sm opacity-90">Autoritair</div>
-                                </div>
-                                <div class="bg-white/20 rounded-xl p-4 text-center">
-                                    <div class="text-2xl font-bold" x-text="Math.round(personalityAnalysis.eu_pro_percentage) + '%'"></div>
-                                    <div class="text-sm opacity-90">Pro-EU</div>
-                                </div>
-                            </div>
+                            </template>
                         </div>
                     </div>
-                    
-                    <!-- Politiek Kompas -->
-                    <div class="p-8">
-                        <h4 class="text-2xl font-bold text-gray-800 mb-6 text-center">Jouw Positie op het Politieke Kompas</h4>
+
+                    <!-- Politieke Assen Analyse -->
+                    <div class="bg-white/90 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/50 p-8 mb-16">
+                        <h4 class="text-2xl font-bold text-gray-800 mb-8 text-center">Gedetailleerde Politieke Analyse</h4>
                         
-                        <div class="max-w-md mx-auto mb-8">
-                            <div class="relative w-80 h-80 mx-auto">
-                                <!-- Kompas achtergrond -->
-                                <div class="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full border-2 border-gray-300"></div>
-                                
-                                <!-- Kwadranten -->
-                                <div class="absolute inset-0 grid grid-cols-2 grid-rows-2 rounded-full overflow-hidden">
-                                    <div class="bg-green-200/30 border-r border-b border-gray-300 flex items-center justify-center">
-                                        <span class="text-xs font-medium text-green-700 text-center">Links<br/>Liberaal</span>
-                                    </div>
-                                    <div class="bg-blue-200/30 border-b border-gray-300 flex items-center justify-center">
-                                        <span class="text-xs font-medium text-blue-700 text-center">Rechts<br/>Liberaal</span>
-                                    </div>
-                                    <div class="bg-red-200/30 border-r border-gray-300 flex items-center justify-center">
-                                        <span class="text-xs font-medium text-red-700 text-center">Links<br/>Autoritair</span>
-                                    </div>
-                                    <div class="bg-indigo-200/30 flex items-center justify-center">
-                                        <span class="text-xs font-medium text-indigo-700 text-center">Rechts<br/>Autoritair</span>
-                                    </div>
+                        <div class="space-y-8">
+                            <!-- Links-Rechts As -->
+                            <div>
+                                <div class="flex items-center justify-between mb-3">
+                                    <span class="text-sm font-medium text-gray-600">Economisch Links</span>
+                                    <span class="text-sm font-medium text-gray-600">Economisch Rechts</span>
                                 </div>
-                                
-                                <!-- Assen labels -->
-                                <div class="absolute top-2 left-1/2 transform -translate-x-1/2 text-xs font-medium text-gray-600">Liberaal</div>
-                                <div class="absolute bottom-2 left-1/2 transform -translate-x-1/2 text-xs font-medium text-gray-600">Autoritair</div>
-                                <div class="absolute left-2 top-1/2 transform -translate-y-1/2 text-xs font-medium text-gray-600 -rotate-90">Links</div>
-                                <div class="absolute right-2 top-1/2 transform -translate-y-1/2 text-xs font-medium text-gray-600 rotate-90">Rechts</div>
-                                
-                                <!-- Jouw positie -->
-                                <div class="absolute w-4 h-4 rounded-full border-2 border-white shadow-lg transform -translate-x-2 -translate-y-2"
-                                     :class="'bg-' + personalityAnalysis.compass_position.quadrant.color + '-500'"
-                                     :style="'left: ' + ((personalityAnalysis.compass_position.x + 50) * 2.8) + 'px; top: ' + ((-personalityAnalysis.compass_position.y + 50) * 2.8) + 'px;'">
+                                <div class="relative h-4 bg-gradient-to-r from-red-200 via-gray-200 to-blue-200 rounded-full">
+                                    <div class="absolute top-0 h-full bg-gradient-to-r from-red-500 to-blue-500 rounded-full transition-all duration-700"
+                                         :style="'width: ' + Math.round(personalityAnalysis.left_right_percentage) + '%; opacity: 0.8;'"></div>
+                                    <div class="absolute top-1/2 transform -translate-y-1/2 w-3 h-3 bg-white border-2 border-gray-400 rounded-full shadow"
+                                         :style="'left: calc(' + Math.round(personalityAnalysis.left_right_percentage) + '% - 6px);'"></div>
                                 </div>
-                                
-                                <!-- Centrum punt -->
-                                <div class="absolute top-1/2 left-1/2 w-2 h-2 bg-gray-400 rounded-full transform -translate-x-1 -translate-y-1"></div>
+                                <div class="text-center mt-2">
+                                    <span class="text-lg font-bold text-gray-700"><span x-text="Math.round(personalityAnalysis.left_right_percentage)"></span>% Rechts georiënteerd</span>
+                                </div>
+                            </div>
+
+                            <!-- Progressief-Conservatief As -->
+                            <div>
+                                <div class="flex items-center justify-between mb-3">
+                                    <span class="text-sm font-medium text-gray-600">Conservatief</span>
+                                    <span class="text-sm font-medium text-gray-600">Progressief</span>
+                                </div>
+                                <div class="relative h-4 bg-gradient-to-r from-orange-200 via-gray-200 to-green-200 rounded-full">
+                                    <div class="absolute top-0 h-full bg-gradient-to-r from-orange-500 to-green-500 rounded-full transition-all duration-700"
+                                         :style="'width: ' + Math.round(personalityAnalysis.progressive_percentage) + '%; opacity: 0.8;'"></div>
+                                    <div class="absolute top-1/2 transform -translate-y-1/2 w-3 h-3 bg-white border-2 border-gray-400 rounded-full shadow"
+                                         :style="'left: calc(' + Math.round(personalityAnalysis.progressive_percentage) + '% - 6px);'"></div>
+                                </div>
+                                <div class="text-center mt-2">
+                                    <span class="text-lg font-bold text-gray-700"><span x-text="Math.round(personalityAnalysis.progressive_percentage)"></span>% Progressief</span>
+                                </div>
+                            </div>
+
+                            <!-- Autoritair-Libertair As -->
+                            <div>
+                                <div class="flex items-center justify-between mb-3">
+                                    <span class="text-sm font-medium text-gray-600">Libertair</span>
+                                    <span class="text-sm font-medium text-gray-600">Autoritair</span>
+                                </div>
+                                <div class="relative h-4 bg-gradient-to-r from-purple-200 via-gray-200 to-red-200 rounded-full">
+                                    <div class="absolute top-0 h-full bg-gradient-to-r from-purple-500 to-red-500 rounded-full transition-all duration-700"
+                                         :style="'width: ' + Math.round(personalityAnalysis.authoritarian_percentage) + '%; opacity: 0.8;'"></div>
+                                    <div class="absolute top-1/2 transform -translate-y-1/2 w-3 h-3 bg-white border-2 border-gray-400 rounded-full shadow"
+                                         :style="'left: calc(' + Math.round(personalityAnalysis.authoritarian_percentage) + '% - 6px);'"></div>
+                                </div>
+                                <div class="text-center mt-2">
+                                    <span class="text-lg font-bold text-gray-700"><span x-text="Math.round(personalityAnalysis.authoritarian_percentage)"></span>% Autoritair</span>
+                                </div>
+                            </div>
+
+                            <!-- EU As -->
+                            <div>
+                                <div class="flex items-center justify-between mb-3">
+                                    <span class="text-sm font-medium text-gray-600">EU Skeptisch</span>
+                                    <span class="text-sm font-medium text-gray-600">Pro-EU</span>
+                                </div>
+                                <div class="relative h-4 bg-gradient-to-r from-yellow-200 via-gray-200 to-blue-200 rounded-full">
+                                    <div class="absolute top-0 h-full bg-gradient-to-r from-yellow-500 to-blue-500 rounded-full transition-all duration-700"
+                                         :style="'width: ' + Math.round(personalityAnalysis.eu_pro_percentage) + '%; opacity: 0.8;'"></div>
+                                    <div class="absolute top-1/2 transform -translate-y-1/2 w-3 h-3 bg-white border-2 border-gray-400 rounded-full shadow"
+                                         :style="'left: calc(' + Math.round(personalityAnalysis.eu_pro_percentage) + '% - 6px);'"></div>
+                                </div>
+                                <div class="text-center mt-2">
+                                    <span class="text-lg font-bold text-gray-700"><span x-text="Math.round(personalityAnalysis.eu_pro_percentage)"></span>% Pro-EU</span>
+                                </div>
                             </div>
                         </div>
-                        
-                        <div class="text-center">
-                            <div class="inline-flex items-center px-4 py-2 rounded-full font-semibold"
-                                 :class="'bg-' + personalityAnalysis.compass_position.quadrant.color + '-100 text-' + personalityAnalysis.compass_position.quadrant.color + '-800'">
-                                <div class="w-3 h-3 rounded-full mr-2"
-                                     :class="'bg-' + personalityAnalysis.compass_position.quadrant.color + '-500'"></div>
-                                <span x-text="personalityAnalysis.compass_position.quadrant.name"></span>
+
+                        <!-- Statistieken -->
+                        <div class="mt-8 pt-8 border-t border-gray-200">
+                            <div class="grid grid-cols-2 gap-6 text-center">
+                                <div class="bg-blue-50 rounded-xl p-4">
+                                    <div class="text-2xl font-bold text-blue-600" x-text="personalityAnalysis.total_answered"></div>
+                                    <div class="text-sm text-blue-700">Vragen beantwoord</div>
+                                </div>
+                                <div class="bg-purple-50 rounded-xl p-4">
+                                    <div class="text-2xl font-bold text-purple-600" x-text="personalityAnalysis.political_profile.type"></div>
+                                    <div class="text-sm text-purple-700">Politiek Type</div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <!-- Persoonlijkheidskenmerken -->
-                <div x-show="personalityAnalysis.personality_traits.length > 0" class="bg-white/90 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/50 p-8 mb-12">
-                    <h4 class="text-2xl font-bold text-gray-800 mb-6 text-center">Jouw Politieke Kenmerken</h4>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <template x-for="trait in personalityAnalysis.personality_traits" :key="trait.name">
-                            <div class="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 border border-gray-200 text-center hover:shadow-lg transition-shadow">
-                                <div class="text-4xl mb-4" x-text="trait.icon"></div>
-                                <h5 class="text-lg font-bold text-gray-800 mb-2" x-text="trait.name"></h5>
-                                <p class="text-gray-600 text-sm leading-relaxed" x-text="trait.description"></p>
-                            </div>
-                        </template>
-                    </div>
-                </div>
-
-                <!-- Politieke Assen Analyse -->
-                <div class="bg-white/90 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/50 p-8 mb-16">
-                    <h4 class="text-2xl font-bold text-gray-800 mb-8 text-center">Gedetailleerde Politieke Analyse</h4>
-                    
-                    <div class="space-y-8">
-                        <!-- Links-Rechts As -->
-                        <div>
-                            <div class="flex items-center justify-between mb-3">
-                                <span class="text-sm font-medium text-gray-600">Economisch Links</span>
-                                <span class="text-sm font-medium text-gray-600">Economisch Rechts</span>
-                            </div>
-                            <div class="relative h-4 bg-gradient-to-r from-red-200 via-gray-200 to-blue-200 rounded-full">
-                                <div class="absolute top-0 h-full bg-gradient-to-r from-red-500 to-blue-500 rounded-full transition-all duration-700"
-                                     :style="'width: ' + Math.round(personalityAnalysis.left_right_percentage) + '%; opacity: 0.8;'"></div>
-                                <div class="absolute top-1/2 transform -translate-y-1/2 w-3 h-3 bg-white border-2 border-gray-400 rounded-full shadow"
-                                     :style="'left: calc(' + Math.round(personalityAnalysis.left_right_percentage) + '% - 6px);'"></div>
-                            </div>
-                            <div class="text-center mt-2">
-                                <span class="text-lg font-bold text-gray-700"><span x-text="Math.round(personalityAnalysis.left_right_percentage)"></span>% Rechts georiënteerd</span>
-                            </div>
-                        </div>
-
-                        <!-- Progressief-Conservatief As -->
-                        <div>
-                            <div class="flex items-center justify-between mb-3">
-                                <span class="text-sm font-medium text-gray-600">Conservatief</span>
-                                <span class="text-sm font-medium text-gray-600">Progressief</span>
-                            </div>
-                            <div class="relative h-4 bg-gradient-to-r from-orange-200 via-gray-200 to-green-200 rounded-full">
-                                <div class="absolute top-0 h-full bg-gradient-to-r from-orange-500 to-green-500 rounded-full transition-all duration-700"
-                                     :style="'width: ' + Math.round(personalityAnalysis.progressive_percentage) + '%; opacity: 0.8;'"></div>
-                                <div class="absolute top-1/2 transform -translate-y-1/2 w-3 h-3 bg-white border-2 border-gray-400 rounded-full shadow"
-                                     :style="'left: calc(' + Math.round(personalityAnalysis.progressive_percentage) + '% - 6px);'"></div>
-                            </div>
-                            <div class="text-center mt-2">
-                                <span class="text-lg font-bold text-gray-700"><span x-text="Math.round(personalityAnalysis.progressive_percentage)"></span>% Progressief</span>
-                            </div>
-                        </div>
-
-                        <!-- Autoritair-Libertair As -->
-                        <div>
-                            <div class="flex items-center justify-between mb-3">
-                                <span class="text-sm font-medium text-gray-600">Libertair</span>
-                                <span class="text-sm font-medium text-gray-600">Autoritair</span>
-                            </div>
-                            <div class="relative h-4 bg-gradient-to-r from-purple-200 via-gray-200 to-red-200 rounded-full">
-                                <div class="absolute top-0 h-full bg-gradient-to-r from-purple-500 to-red-500 rounded-full transition-all duration-700"
-                                     :style="'width: ' + Math.round(personalityAnalysis.authoritarian_percentage) + '%; opacity: 0.8;'"></div>
-                                <div class="absolute top-1/2 transform -translate-y-1/2 w-3 h-3 bg-white border-2 border-gray-400 rounded-full shadow"
-                                     :style="'left: calc(' + Math.round(personalityAnalysis.authoritarian_percentage) + '% - 6px);'"></div>
-                            </div>
-                            <div class="text-center mt-2">
-                                <span class="text-lg font-bold text-gray-700"><span x-text="Math.round(personalityAnalysis.authoritarian_percentage)"></span>% Autoritair</span>
-                            </div>
-                        </div>
-
-                        <!-- EU As -->
-                        <div>
-                            <div class="flex items-center justify-between mb-3">
-                                <span class="text-sm font-medium text-gray-600">EU Skeptisch</span>
-                                <span class="text-sm font-medium text-gray-600">Pro-EU</span>
-                            </div>
-                            <div class="relative h-4 bg-gradient-to-r from-yellow-200 via-gray-200 to-blue-200 rounded-full">
-                                <div class="absolute top-0 h-full bg-gradient-to-r from-yellow-500 to-blue-500 rounded-full transition-all duration-700"
-                                     :style="'width: ' + Math.round(personalityAnalysis.eu_pro_percentage) + '%; opacity: 0.8;'"></div>
-                                <div class="absolute top-1/2 transform -translate-y-1/2 w-3 h-3 bg-white border-2 border-gray-400 rounded-full shadow"
-                                     :style="'left: calc(' + Math.round(personalityAnalysis.eu_pro_percentage) + '% - 6px);'"></div>
-                            </div>
-                            <div class="text-center mt-2">
-                                <span class="text-lg font-bold text-gray-700"><span x-text="Math.round(personalityAnalysis.eu_pro_percentage)"></span>% Pro-EU</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Statistieken -->
-                    <div class="mt-8 pt-8 border-t border-gray-200">
-                        <div class="grid grid-cols-2 gap-6 text-center">
-                            <div class="bg-blue-50 rounded-xl p-4">
-                                <div class="text-2xl font-bold text-blue-600" x-text="personalityAnalysis.total_answered"></div>
-                                <div class="text-sm text-blue-700">Vragen beantwoord</div>
-                            </div>
-                            <div class="bg-purple-50 rounded-xl p-4">
-                                <div class="text-2xl font-bold text-purple-600" x-text="personalityAnalysis.political_profile.type"></div>
-                                <div class="text-sm text-purple-700">Politiek Type</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <!-- Einde van Jouw Politieke Persoonlijkheid sectie -->
 
                 <!-- Results Hero Section -->
                 <div class="text-center mb-12">
