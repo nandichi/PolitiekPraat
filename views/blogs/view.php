@@ -86,18 +86,6 @@ require_once 'views/templates/header.php'; ?>
         
         <div class="relative z-10 container mx-auto px-4">
             <div class="max-w-4xl mx-auto flex flex-col items-center justify-end min-h-[60vh] text-center pb-12 sm:justify-center sm:min-h-[50vh] sm:py-16">
-                
-                <!-- Breadcrumb -->
-                <nav class="w-full mb-4 sm:mb-6" aria-label="Breadcrumb">
-                    <ol class="flex justify-center items-center space-x-2 text-sm text-gray-300">
-                        <li><a href="<?php echo URLROOT; ?>" class="hover:text-white transition-colors duration-200">Home</a></li>
-                        <li><span class="text-gray-500">/</span></li>
-                        <li><a href="<?php echo URLROOT; ?>/blogs" class="hover:text-white transition-colors duration-200">Blogs</a></li>
-                        <li><span class="text-gray-500">/</span></li>
-                        <li class="text-gray-400 truncate max-w-[150px] sm:max-w-xs"><?php echo htmlspecialchars($blog->title); ?></li>
-                    </ol>
-                </nav>
-
                 <!-- Badges -->
                 <div class="flex items-center gap-3 mb-4 sm:mb-6">
                     <span class="inline-flex items-center px-4 py-1 sm:py-1.5 rounded-full bg-black/20 sm:bg-blue-600/20 border border-white/20 sm:border-blue-500/30 text-white sm:text-blue-200 font-medium text-sm backdrop-blur-sm">

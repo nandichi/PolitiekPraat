@@ -377,8 +377,8 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
                             '100%': { transform: 'rotate(0deg)' },
                         },
                         shimmer: {
-                            '0%': { backgroundPosition: '-1000px 0' },
-                            '100%': { backgroundPosition: '1000px 0' },
+                            '0%': { transform: 'translateX(-150%)' },
+                            '100%': { transform: 'translateX(150%)' },
                         },
                     },
                     typography: {
@@ -868,6 +868,22 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
             animation: shimmer 3s infinite;
         }
 
+        /* Breadcrumb scroll styling */
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Breadcrumb responsive improvements */
+        @media (max-width: 768px) {
+            .breadcrumb-mobile {
+                max-width: 60vw;
+            }
+        }
+
         /* Enhanced dropdown styling with glassmorphism */
         .dropdown-content {
             transform-origin: top center;
@@ -1137,14 +1153,21 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
 
                 <!-- Desktop Navigation Links - Modern Dropdown Structure -->
                 <div class="hidden md:flex items-center space-x-1 lg:space-x-2">
+                    <?php 
+                    $currentContext = getCurrentPageContext();
+                    $isHome = ($currentContext['section'] === 'home' || empty($currentContext['section']));
+                    ?>
                     <a href="<?php echo URLROOT; ?>/" 
-                       class="nav-link px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg">
+                       class="nav-link px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg <?php echo $isHome ? 'active' : ''; ?>">
                         <span>Home</span>
                     </a>
 
                     <!-- Verkiezingen Dropdown -->
+                    <?php 
+                    $isVerkiezingenActive = in_array($currentContext['section'], ['stemwijzer', 'politiek-kompas', 'amerikaanse-verkiezingen', 'nederlandse-verkiezingen', 'resultaten']);
+                    ?>
                     <div class="relative dropdown-trigger group">
-                        <button class="nav-link px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg flex items-center space-x-1">
+                        <button class="nav-link px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg flex items-center space-x-1 <?php echo $isVerkiezingenActive ? 'active' : ''; ?>">
                             <span>Verkiezingen</span>
                             <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" 
                                  fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1226,8 +1249,11 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
                     </div>
 
                     <!-- Nieuws & Content Dropdown -->
+                    <?php 
+                    $isContentActive = in_array($currentContext['section'], ['blogs', 'nieuws']);
+                    ?>
                     <div class="relative dropdown-trigger group">
-                        <button class="nav-link px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg flex items-center space-x-1">
+                        <button class="nav-link px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg flex items-center space-x-1 <?php echo $isContentActive ? 'active' : ''; ?>">
                             <span>Nieuws & Blogs</span>
                             <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" 
                                  fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1267,8 +1293,11 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
                     </div>
 
                     <!-- Politiek Dropdown -->
+                    <?php 
+                    $isPolitiekActive = in_array($currentContext['section'], ['partijen', 'themas', 'thema']);
+                    ?>
                     <div class="relative dropdown-trigger group">
-                        <button class="nav-link px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg flex items-center space-x-1">
+                        <button class="nav-link px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg flex items-center space-x-1 <?php echo $isPolitiekActive ? 'active' : ''; ?>">
                             <span>Politiek</span>
                             <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" 
                                  fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1308,8 +1337,11 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
                     </div>
 
                     <!-- Info Dropdown -->
+                    <?php 
+                    $isInfoActive = in_array($currentContext['section'], ['over-mij', 'contact', 'forum']);
+                    ?>
                     <div class="relative dropdown-trigger group">
-                        <button class="nav-link px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg flex items-center space-x-1">
+                        <button class="nav-link px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg flex items-center space-x-1 <?php echo $isInfoActive ? 'active' : ''; ?>">
                             <span>Info</span>
                             <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" 
                                  fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1522,6 +1554,9 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
         </div>
     </nav>
 
+    <!-- Breadcrumb Navigation -->
+    <?php echo renderBreadcrumbs(); ?>
+
     <!-- Mobile Menu - Fixed overlay and animations -->
     <div class="md:hidden fixed inset-0 z-[60] transition-all duration-300 opacity-0 invisible pointer-events-none" 
          id="mobile-menu-overlay">
@@ -1549,8 +1584,9 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
                     </button>
                 </div>
 
-                <!-- Mobile Navigation Links - Herordend -->
-                <nav class="space-y-2">
+                <!-- Mobile Navigation Links - Verbeterde gegroepeerde structuur -->
+                <nav class="space-y-1">
+                    <!-- Home - altijd bovenaan -->
                     <a href="<?php echo URLROOT; ?>/" 
                        class="flex items-center text-gray-700 hover:text-primary p-3 rounded-lg transition-all duration-300 
                               hover:bg-primary/5 group">
@@ -1564,63 +1600,16 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
                         <span class="font-medium">Home</span>
                     </a>
 
-                    <a href="<?php echo URLROOT; ?>/blogs" 
-                       class="flex items-center text-gray-700 hover:text-primary p-3 rounded-lg transition-all duration-300 
-                              hover:bg-primary/5 group">
-                        <div class="mr-3 p-2 bg-primary/10 rounded-lg transition-all duration-300 
-                                    group-hover:bg-primary/20 group-hover:scale-110">
-                            <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                      d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
-                            </svg>
+                    <!-- Sectie Header: Verkiezingen & Politiek -->
+                    <div class="px-3 py-2">
+                        <div class="flex items-center">
+                            <div class="w-2 h-2 bg-secondary rounded-full mr-2"></div>
+                            <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wide">Verkiezingen & Politiek</h3>
                         </div>
-                        <span class="font-medium">Blogs</span>
-                    </a>
-
-                    <a href="<?php echo URLROOT; ?>/nieuws" 
-                       class="flex items-center text-gray-700 hover:text-primary p-3 rounded-lg transition-all duration-300 
-                              hover:bg-secondary/5 group">
-                        <div class="mr-3 p-2 bg-secondary/10 rounded-lg transition-all duration-300 
-                                    group-hover:bg-secondary/20 group-hover:scale-110">
-                            <svg class="w-5 h-5 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                      d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m0 0v10a2 2 0 01-2 2h-5m-4 0V5a2 2 0 014 0v2M7 7h3m-3 4h3m-3 4h3"/>
-                            </svg>
-                        </div>
-                        <span class="font-medium">Nieuws</span>
-                    </a>
-
-                    <a href="<?php echo URLROOT; ?>/partijen" 
-                       class="flex items-center text-gray-700 hover:text-primary p-3 rounded-lg transition-all duration-300 
-                              hover:bg-primary/5 group">
-                        <div class="mr-3 p-2 bg-primary/10 rounded-lg transition-all duration-300 
-                                    group-hover:bg-primary/20 group-hover:scale-110">
-                            <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                      d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
-                            </svg>
-                        </div>
-                        <span class="font-medium">Partijen</span>
-                    </a>
-
-                    <a href="<?php echo URLROOT; ?>/themas" 
-                       class="flex items-center text-gray-700 hover:text-primary p-3 rounded-lg transition-all duration-300 
-                              hover:bg-accent/5 group">
-                        <div class="mr-3 p-2 bg-accent/10 rounded-lg transition-all duration-300 
-                                    group-hover:bg-accent/20 group-hover:scale-110">
-                            <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                      d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
-                            </svg>
-                        </div>
-                        <span class="font-medium">Thema's</span>
-                    </a>
-
-                    <!-- Divider voor verkiezingssectie -->
-                    <div class="mx-3 my-2 border-t border-gray-200"></div>
+                    </div>
 
                     <a href="<?php echo URLROOT; ?>/stemwijzer" 
-                       class="flex items-center text-gray-700 hover:text-primary p-3 rounded-lg transition-all duration-300 
+                       class="flex items-center text-gray-700 hover:text-secondary p-3 rounded-lg transition-all duration-300 
                               hover:bg-secondary/5 group">
                         <div class="mr-3 p-2 bg-secondary/10 rounded-lg transition-all duration-300 
                                     group-hover:bg-secondary/20 group-hover:scale-110">
@@ -1639,11 +1628,11 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
                     </a>
 
                     <a href="<?php echo URLROOT; ?>/politiek-kompas" 
-                       class="flex items-center text-gray-700 hover:text-primary p-3 rounded-lg transition-all duration-300 
-                              hover:bg-accent/5 group">
-                        <div class="mr-3 p-2 bg-accent/10 rounded-lg transition-all duration-300 
-                                    group-hover:bg-accent/20 group-hover:scale-110">
-                            <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                       class="flex items-center text-gray-700 hover:text-accent p-3 rounded-lg transition-all duration-300 
+                              hover:bg-orange-500/5 group">
+                        <div class="mr-3 p-2 bg-orange-500/10 rounded-lg transition-all duration-300 
+                                    group-hover:bg-orange-500/20 group-hover:scale-110">
+                            <svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                       d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
                             </svg>
@@ -1651,33 +1640,99 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
                         <span class="font-medium flex items-center">
                             Politiek Kompas
                             <span class="ml-2 inline-flex items-center px-2 py-0.5 text-xs font-medium 
-                                        bg-accent text-white rounded-full">
+                                        bg-orange-500 text-white rounded-full">
                                 Nieuw
                             </span>
                         </span>
                     </a>
 
-                    <!-- Amerikaanse Verkiezingen - Mobile consistent met desktop -->
-                    <a href="<?php echo URLROOT; ?>/amerikaanse-verkiezingen" 
+                    <a href="<?php echo URLROOT; ?>/partijen" 
+                       class="flex items-center text-gray-700 hover:text-primary p-3 rounded-lg transition-all duration-300 
+                              hover:bg-primary/5 group">
+                        <div class="mr-3 p-2 bg-primary/10 rounded-lg transition-all duration-300 
+                                    group-hover:bg-primary/20 group-hover:scale-110">
+                            <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                            </svg>
+                        </div>
+                        <span class="font-medium">Partijen</span>
+                    </a>
+
+                    <a href="<?php echo URLROOT; ?>/themas" 
+                       class="flex items-center text-gray-700 hover:text-accent p-3 rounded-lg transition-all duration-300 
+                              hover:bg-orange-500/5 group">
+                        <div class="mr-3 p-2 bg-orange-500/10 rounded-lg transition-all duration-300 
+                                    group-hover:bg-orange-500/20 group-hover:scale-110">
+                            <svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                      d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+                            </svg>
+                        </div>
+                        <span class="font-medium">Thema's</span>
+                    </a>
+
+                    <!-- Sectie Header: Nieuws & Content -->
+                    <div class="px-3 py-2 mt-4">
+                        <div class="flex items-center">
+                            <div class="w-2 h-2 bg-primary rounded-full mr-2"></div>
+                            <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wide">Nieuws & Content</h3>
+                        </div>
+                    </div>
+
+                    <a href="<?php echo URLROOT; ?>/blogs" 
                        class="flex items-center text-gray-700 hover:text-primary p-3 rounded-lg transition-all duration-300 
                               hover:bg-primary/5 group">
                         <div class="mr-3 p-2 bg-primary/10 rounded-lg transition-all duration-300 
                                     group-hover:bg-primary/20 group-hover:scale-110">
                             <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                      d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                            </svg>
+                        </div>
+                        <span class="font-medium">Blogs</span>
+                    </a>
+
+                    <a href="<?php echo URLROOT; ?>/nieuws" 
+                       class="flex items-center text-gray-700 hover:text-secondary p-3 rounded-lg transition-all duration-300 
+                              hover:bg-secondary/5 group">
+                        <div class="mr-3 p-2 bg-secondary/10 rounded-lg transition-all duration-300 
+                                    group-hover:bg-secondary/20 group-hover:scale-110">
+                            <svg class="w-5 h-5 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                      d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m0 0v10a2 2 0 01-2 2h-5m-4 0V5a2 2 0 014 0v2M7 7h3m-3 4h3m-3 4h3"/>
+                            </svg>
+                        </div>
+                        <span class="font-medium">Nieuws</span>
+                    </a>
+
+                    <!-- Sectie Header: Verkiezingsgeschiedenis -->
+                    <div class="px-3 py-2 mt-4">
+                        <div class="flex items-center">
+                            <div class="w-2 h-2 bg-blue-500 rounded-full mr-2"></div>
+                            <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wide">Verkiezingsgeschiedenis</h3>
+                        </div>
+                    </div>
+
+                    <a href="<?php echo URLROOT; ?>/amerikaanse-verkiezingen" 
+                       class="flex items-center text-gray-700 hover:text-blue-600 p-3 rounded-lg transition-all duration-300 
+                              hover:bg-blue-500/5 group">
+                        <div class="mr-3 p-2 bg-blue-500/10 rounded-lg transition-all duration-300 
+                                    group-hover:bg-blue-500/20 group-hover:scale-110">
+                            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                       d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
                             </svg>
                         </div>
-                        <span class="font-medium flex items-center">
+                        <span class="font-medium flex items-center text-sm">
                             Amerikaanse Verkiezingen
                             <span class="ml-2 inline-flex items-center px-2 py-0.5 text-xs font-medium 
-                                        bg-primary text-white rounded-full">
+                                        bg-blue-500 text-white rounded-full">
                                 USA
                             </span>
                         </span>
                     </a>
 
-                    <!-- Nederlandse Verkiezingen - Mobile consistent met desktop -->
                     <a href="<?php echo URLROOT; ?>/nederlandse-verkiezingen" 
                        class="flex items-center text-gray-700 hover:text-orange-600 p-3 rounded-lg transition-all duration-300 
                               hover:bg-orange-500/5 group">
@@ -1688,7 +1743,7 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
                                       d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
                             </svg>
                         </div>
-                        <span class="font-medium flex items-center">
+                        <span class="font-medium flex items-center text-sm">
                             Nederlandse Verkiezingen
                             <span class="ml-2 inline-flex items-center px-2 py-0.5 text-xs font-medium 
                                         bg-orange-500 text-white rounded-full">
@@ -1697,15 +1752,20 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
                         </span>
                     </a>
 
-                    <!-- Divider voor duidelijke scheiding -->
-                    <div class="mx-3 my-2 border-t border-gray-200"></div>
+                    <!-- Sectie Header: Informatie -->
+                    <div class="px-3 py-2 mt-4">
+                        <div class="flex items-center">
+                            <div class="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+                            <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wide">Informatie</h3>
+                        </div>
+                    </div>
 
                     <a href="<?php echo URLROOT; ?>/over-mij" 
-                       class="flex items-center text-gray-700 hover:text-primary p-3 rounded-lg transition-all duration-300 
-                              hover:bg-primary/5 group">
-                        <div class="mr-3 p-2 bg-primary/10 rounded-lg transition-all duration-300 
-                                    group-hover:bg-primary/20 group-hover:scale-110">
-                            <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                       class="flex items-center text-gray-700 hover:text-green-600 p-3 rounded-lg transition-all duration-300 
+                              hover:bg-green-500/5 group">
+                        <div class="mr-3 p-2 bg-green-500/10 rounded-lg transition-all duration-300 
+                                    group-hover:bg-green-500/20 group-hover:scale-110">
+                            <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                       d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                             </svg>
@@ -1714,7 +1774,7 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
                     </a>
 
                     <a href="<?php echo URLROOT; ?>/contact" 
-                       class="flex items-center text-gray-700 hover:text-primary p-3 rounded-lg transition-all duration-300 
+                       class="flex items-center text-gray-700 hover:text-secondary p-3 rounded-lg transition-all duration-300 
                               hover:bg-secondary/5 group">
                         <div class="mr-3 p-2 bg-secondary/10 rounded-lg transition-all duration-300 
                                     group-hover:bg-secondary/20 group-hover:scale-110">

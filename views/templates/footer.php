@@ -1,4 +1,11 @@
     </div>
+    
+    <!-- Page Context Indicator -->
+    <?php echo renderPageContextIndicator(); ?>
+    
+    <!-- Quick Navigation Component -->
+    <?php echo renderQuickNavigation(); ?>
+    
     <footer class="relative">
         <!-- Decoratieve top border met gradient -->
         <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-secondary to-accent"></div>
@@ -255,16 +262,6 @@
             </div>
         </div>
     </footer>
-
-    <!-- Scroll to top button -->
-    <button id="scroll-to-top" 
-            class="fixed bottom-8 right-8 w-12 h-12 bg-secondary text-white rounded-xl shadow-lg
-                   transform transition-all duration-300 opacity-0 translate-y-10 hover:scale-110
-                   flex items-center justify-center">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
-        </svg>
-    </button>
 
     <script>
         // Scroll to top functionality
