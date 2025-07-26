@@ -118,7 +118,7 @@ try {
     $db->query("SELECT id, title, order_number FROM stemwijzer_questions ORDER BY order_number ASC");
     $questions = $db->resultSet() ?? [];
     
-    // Populairste partijen uit resultaten
+    // Populairste partijen uit resultaten (alleen nummer 1 partij per inzending)
     $db->query("SELECT results FROM stemwijzer_results WHERE results IS NOT NULL AND results != 'null'");
     $allResults = $db->resultSet() ?? [];
     
@@ -126,14 +126,24 @@ try {
     foreach ($allResults as $result) {
         $results = json_decode($result->results, true);
         if ($results && is_array($results)) {
+            // Vind de partij met de hoogste score (nummer 1)
+            $topParty = null;
+            $topScore = -1;
+            
             foreach ($results as $partyName => $partyData) {
-                if (!isset($partyScores[$partyName])) {
-                    $partyScores[$partyName] = ['total_score' => 0, 'count' => 0];
+                if (isset($partyData['agreement']) && $partyData['agreement'] > $topScore) {
+                    $topScore = $partyData['agreement'];
+                    $topParty = $partyName;
                 }
-                if (isset($partyData['agreement'])) {
-                    $partyScores[$partyName]['total_score'] += $partyData['agreement'];
-                    $partyScores[$partyName]['count']++;
+            }
+            
+            // Tel alleen de nummer 1 partij mee
+            if ($topParty && $topScore >= 0) {
+                if (!isset($partyScores[$topParty])) {
+                    $partyScores[$topParty] = ['total_score' => 0, 'count' => 0];
                 }
+                $partyScores[$topParty]['total_score'] += $topScore;
+                $partyScores[$topParty]['count']++;
             }
         }
     }
