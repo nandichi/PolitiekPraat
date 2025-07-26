@@ -159,9 +159,9 @@ try {
         }
     }
     
-    // Sorteer partijen op gemiddelde score
+    // Sorteer partijen op aantal keer nummer 1
     uasort($averagePartyScores, function($a, $b) {
-        return $b['average_score'] <=> $a['average_score'];
+        return $b['total_votes'] <=> $a['total_votes'];
     });
     
 } catch (Exception $e) {
@@ -350,7 +350,8 @@ require_once '../views/templates/header.php';
             <!-- Top Parties -->
             <div class="bg-white/90 backdrop-blur-2xl rounded-2xl shadow-xl border border-white/50 overflow-hidden">
                 <div class="bg-gradient-to-r from-green-50 to-emerald-50 px-6 py-4 border-b border-gray-100">
-                    <h2 class="text-xl font-bold text-gray-800">Hoogste Gemiddelde Scores</h2>
+                    <h2 class="text-xl font-bold text-gray-800">Meest Gekozen Partijen</h2>
+                    <p class="text-sm text-gray-600 mt-1">Aantal keer dat partij als nummer 1 uit de stemwijzer kwam</p>
                 </div>
                 
                 <div class="p-6">
@@ -375,12 +376,12 @@ require_once '../views/templates/header.php';
                                         </div>
                                         <div>
                                             <p class="font-semibold text-gray-800"><?= htmlspecialchars($party) ?></p>
-                                            <p class="text-xs text-gray-500"><?= $data['total_votes'] ?> keer gekozen</p>
+                                            <p class="text-xs text-gray-500">Gemiddeld <?= $data['average_score'] ?>% bij winst</p>
                                         </div>
                                     </div>
                                     <div class="text-right">
-                                        <p class="text-lg font-bold text-gray-800"><?= $data['average_score'] ?>%</p>
-                                        <p class="text-xs text-gray-500">gemiddeld</p>
+                                        <p class="text-lg font-bold text-gray-800"><?= $data['total_votes'] ?></p>
+                                        <p class="text-xs text-gray-500">keer nummer 1</p>
                                     </div>
                                 </div>
                             <?php endforeach; ?>
