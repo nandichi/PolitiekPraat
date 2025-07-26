@@ -179,7 +179,7 @@ if (!defined('URLROOT')) {
                             Naoufal Andichi
                         </h1>
                         <p class="text-2xl lg:text-3xl text-blue-100 mb-6 font-light">
-                            Politiek Analist & Technologie Enthousiasteling
+                            Software Developer die dol is op politiek
                         </p>
                         
                         <!-- Tags -->
@@ -238,9 +238,9 @@ if (!defined('URLROOT')) {
                         
                         <!-- Mission Statement Card -->
                         <div class="mission-card p-8 rounded-2xl shadow-xl">
-                            <h3 class="text-2xl font-bold gradient-text mb-4">Mijn Missie</h3>
+                            <h3 class="text-2xl font-bold gradient-text mb-4">Wat ik doe</h3>
                             <p class="text-gray-700 leading-relaxed">
-                                "Politiek toegankelijk maken voor iedereen door complexe onderwerpen uit te leggen op een begrijpelijke manier."
+                                "Ik probeer politiek gewoon begrijpelijk uit te leggen. Geen ingewikkelde taal, gewoon helder en eerlijk."
                             </p>
                         </div>
                     </div>
@@ -284,15 +284,15 @@ if (!defined('URLROOT')) {
                             
                             <div class="prose prose-lg text-gray-700 space-y-6">
                                 <p class="leading-relaxed">
-                                    Hoi! Ik ben Naoufal Andichi, een gepassioneerde liefhebber van technologie en politiek. Al van jongs af aan ben ik gefascineerd door de manier waarop onze samenleving functioneert en hoe technologie ons dagelijks leven beïnvloedt.
+                                    Hey! Ik ben Naoufal, en ik ben een beetje een nerd als het gaat om twee dingen: programmeren en politiek. Misschien een rare combinatie, maar het werkt voor mij!
                                 </p>
                                 
                                 <p class="leading-relaxed">
-                                    Mijn reis begon met een nieuwsgierigheid naar computers, maar al snel ontdekte ik de kracht van politiek om echte verandering teweeg te brengen. Deze unieke combinatie van interesses heeft me geïnspireerd om PolitiekPraat te creëren.
+                                    Het begon allemaal met computers. Ik was dat kind dat urenlang kon klooien met code. Maar ergens onderweg raakte ik gefascineerd door hoe onze samenleving werkt en hoe beslissingen in Den Haag ons allemaal raken. Zo ontstond het idee voor PolitiekPraat.
                                 </p>
                                 
                                 <p class="leading-relaxed">
-                                    Politiek is voor mij meer dan alleen een onderwerp; het is een passie. Ik volg het nieuws op de voet en geniet van gesprekken over de toekomst van ons land. Als liberaal geloof ik sterk in individuele vrijheid, persoonlijke verantwoordelijkheid en de kracht van onderwijs om de wereld te verbeteren.
+                                    Ik ben liberaal ingesteld, geloof in vrijheid, eigen verantwoordelijkheid en dat onderwijs heel veel problemen kan oplossen. Maar bovenal hou ik van een goed debat en probeer ik dingen gewoon helder uit te leggen zonder politieke jargon.
                                 </p>
                             </div>
                         </div>
@@ -309,11 +309,11 @@ if (!defined('URLROOT')) {
                             
                             <div class="space-y-4">
                                 <blockquote class="text-lg italic text-gray-700 border-l-4 border-red-600 pl-6">
-                                    "Kennis is macht, maar gedeelde kennis is echte vooruitgang."
+                                    "Politiek hoeft niet ingewikkeld te zijn als je het gewoon normaal uitlegt."
                                 </blockquote>
                                 
                                 <p class="text-gray-700 leading-relaxed">
-                                    Ik geloof dat iedereen het recht heeft om politiek te begrijpen. Door complexe onderwerpen uit te leggen op een toegankelijke manier, kunnen we samen een beter geïnformeerde samenleving creëren.
+                                    Ik snap best dat politiek vaak saai of verwarrend overkomt. Daarom probeer ik het gewoon uit te leggen zoals ik het zelf zou willen horen, zonder gedoe en met wat humor waar mogelijk.
                                 </p>
                             </div>
                         </div>
@@ -381,19 +381,19 @@ if (!defined('URLROOT')) {
                         
                         <div class="space-y-8 text-lg leading-relaxed text-gray-700">
                             <p class="text-xl lg:text-2xl font-light text-gray-800 mb-8">
-                                Welkom bij PolitiekPraat! Hier draait alles om het delen van frisse en scherpe inzichten over de politieke wereld. Met een flinke dosis enthousiasme duiken we in actuele onderwerpen en brengen we ze tot leven.
+                                Oké, dus waarom PolitiekPraat? Simpel: omdat ik merkte dat politiek vaak zo droog wordt uitgelegd dat mensen er van in slaap vallen. Dat kan beter!
                             </p>
                             
                             <p>
-                                Of het nu gaat om klimaatverandering, onderwijs of sociale rechtvaardigheid, PolitiekPraat is dé plek waar ideeën en perspectieven samenkomen. We willen je inspireren en uitdagen om mee te denken en te discussiëren.
+                                Ik schrijf hier over alles wat me interesseert: klimaat, onderwijs, economie, whatever. Niet omdat ik alles beter weet, maar omdat ik graag snap hoe dingen werken en dat delen.
                             </p>
                             
                             <p>
-                                Door het delen van krachtige analyses en meningen, streven we ernaar om een beter begrip te creëren van de complexe wereld waarin we leven. Het is een uitnodiging om samen te leren en te groeien in ons inzicht en begrip van de politiek.
+                                Het mooie van politiek is dat het eigenlijk overal over gaat. Van hoeveel je belasting betaalt tot of je straks nog een huis kan kopen. Het raakt ons allemaal, dus waarom zou het saai moeten zijn?
                             </p>
                             
                             <p class="text-xl font-semibold gradient-text">
-                                Sluit je aan bij PolitiekPraat en ontdek de energie van geïnformeerde discussie en betrokkenheid. Samen kunnen we een verschil maken!
+                                Dus neem een kijkje, lees wat rond, en laat vooral weten wat je ervan vindt. Discussie is goed, dat maakt het alleen maar interessanter!
                             </p>
                         </div>
                         
@@ -420,30 +420,30 @@ if (!defined('URLROOT')) {
                 <!-- Timeline -->
                 <div class="space-y-12">
                     <div class="timeline-item" data-aos="fade-up" data-aos-delay="100">
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">De Ontdekking</h3>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Hoe het begon</h3>
                         <p class="text-gray-600 leading-relaxed">
-                            Mijn eerste kennismaking met politiek gebeurde tijdens mijn studie. Ik realiseerde me hoe belangrijk het is om geïnformeerd te zijn over de beslissingen die ons dagelijks leven beïnvloeden.
+                            Tijdens mijn studie kreeg ik door dat politiek eigenlijk best belangrijk is, maar dat veel mensen er niet zo veel van snappen. Inclusief ikzelf toen nog.
                         </p>
                     </div>
                     
                     <div class="timeline-item" data-aos="fade-up" data-aos-delay="200">
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">Eerste Analyses</h3>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Eerste artikelen</h3>
                         <p class="text-gray-600 leading-relaxed">
-                            Ik begon met het schrijven van mijn eerste politieke analyses. Het was fascinerend om complexe onderwerpen uit te leggen op een manier die voor iedereen begrijpelijk was.
+                            Ik begon dingen op te schrijven die ik interessant vond. Bleek dat andere mensen dat ook leuk vonden om te lezen. Wie had dat gedacht?
                         </p>
                     </div>
                     
                     <div class="timeline-item" data-aos="fade-up" data-aos-delay="300">
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">PolitiekPraat wordt geboren</h3>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">PolitiekPraat ontstaat</h3>
                         <p class="text-gray-600 leading-relaxed">
-                            Met de combinatie van mijn technische achtergrond en politieke interesse, ontstond het idee voor PolitiekPraat - een platform waar politiek toegankelijk wordt gemaakt.
+                            Met wat programmeerskills en veel koffie bouwde ik deze site. Geen fancy agency, gewoon ik achter mijn laptop die iets cools wilde maken.
                         </p>
                     </div>
                     
                     <div class="timeline-item" data-aos="fade-up" data-aos-delay="400">
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">De Toekomst</h3>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Wat er komt</h3>
                         <p class="text-gray-600 leading-relaxed">
-                            Mijn doel is om PolitiekPraat uit te bouwen tot dé plek voor politieke educatie in Nederland. Een plaats waar nieuwsgierigheid wordt geprikkeld en kennis wordt gedeeld.
+                            Meer artikelen, meer tools zoals de stemwijzer, en hopelijk steeds meer mensen die snappen dat politiek eigenlijk best interessant kan zijn.
                         </p>
                     </div>
                 </div>
@@ -476,12 +476,12 @@ if (!defined('URLROOT')) {
                     </div>
                     
                     <h2 class="text-4xl lg:text-6xl font-black text-white mb-6 leading-tight">
-                        Klaar voor een <span class="bg-gradient-to-r from-yellow-300 to-orange-400 bg-clip-text text-transparent">Gesprek</span>?
+                        Heb je een <span class="bg-gradient-to-r from-yellow-300 to-orange-400 bg-clip-text text-transparent">Vraag</span>?
                     </h2>
                     
                     <p class="text-xl lg:text-2xl text-blue-100 leading-relaxed max-w-3xl mx-auto">
-                        Heb je vragen over politiek, ideeën voor samenwerking, of wil je gewoon even brainstormen? 
-                        Ik sta altijd open voor een goed gesprek!
+                        Vragen over iets politieks? Een idee voor een artikel? Of gewoon zin om te brainstormen? 
+                        Stuur me gerust een berichtje!
                     </p>
                 </div>
                 
@@ -543,8 +543,8 @@ if (!defined('URLROOT')) {
                 <div class="bg-white/5 backdrop-blur-lg rounded-3xl p-8 border border-white/20" data-aos="fade-up" data-aos-delay="400">
                     <div class="flex flex-col md:flex-row items-center justify-between gap-6">
                         <div class="text-left">
-                            <h3 class="text-2xl font-bold text-white mb-2">Samen sterker in politiek</h3>
-                            <p class="text-blue-200">Laten we politiek toegankelijker maken voor iedereen.</p>
+                            <h3 class="text-2xl font-bold text-white mb-2">Laten we politiek leuker maken</h3>
+                            <p class="text-blue-200">Want het hoeft echt niet zo droog te zijn als het vaak lijkt.</p>
                         </div>
                         <div class="flex flex-col sm:flex-row gap-4">
                             <a href="<?= URLROOT ?>/stemwijzer" 
