@@ -300,54 +300,54 @@ $latest_news = [
         'source' => 'De Volkskrant',
         'bias' => 'centrum-links', 
         'publishedAt' => date('Y-m-d H:i:s'), // Vandaag 08:30
-        'title' => 'VS bombarderen nucleaire faciliteiten Iran en storten zich in onvoorspelbaar conflict',
-        'description' => 'De Verenigde Staten hebben nucleaire faciliteiten in Iran gebombardeerd, wat heeft geleid tot een zeer gespannen situatie. Dit militaire ingrijpen brengt grote onzekerheid met zich mee over mogelijke vergeldingsacties en de toekomstige stabiliteit in de regio.',
-        'url' => 'https://www.volkskrant.nl/buitenland/vs-bombarderen-nucleaire-faciliteiten-iran-en-storten-zich-in-onvoorspelbaar-conflict~b4bd58ef/'
+        'title' => 'Trump ziet een verdeeld Europa met duiven en haviken onder de lidstaten en maakt daar goed gebruik van',
+        'description' => 'Trump speelt handig in op de verdeeldheid binnen Europa, waar sommige landen een meer vredeslievende koers varen terwijl andere een hardere lijn voorstaan. Deze tactiek stelt hem in staat om verschillende Europese leiders tegen elkaar uit te spelen.',
+        'url' => 'https://www.volkskrant.nl/buitenland/trump-ziet-een-verdeeld-europa-met-duiven-en-haviken-onder-de-lidstaten-en-maakt-daar-goed-gebruik-van~bef6bddc/'
     ],
     [
         'orientation' => 'links',
         'source' => 'NRC',
-        'bias' => 'links', 
+        'bias' => 'centrum-links', 
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-2 hours')), // 2 uur geleden
-        'title' => 'President die geen eindeloze oorlogen meer beloofde mengt zich in nieuwe oorlog met Iran',
-        'description' => 'De Amerikaanse president die beloofde een einde te maken aan eindeloze oorlogen, raakt nu verwikkeld in een nieuw militair conflict met Iran. Dit roept vragen op over de geloofwaardigheid van eerdere beloftes en de toekomstige koers van het Amerikaanse buitenlandbeleid.',
-        'url' => 'https://www.nrc.nl/nieuws/2025/06/22/president-die-geen-eindeloze-oorlogen-meer-beloofde-mengt-zich-in-nieuwe-oorlog-met-iran-a4897821'
+        'title' => 'VVD zet vol in op klassieke thema\'s veiligheid en economie',
+        'description' => 'De VVD kiest voor een vertrouwde strategie door zich te richten op de traditionele partijthema\'s veiligheid en economie. Deze focus past bij de partijkoers die al jaren wordt gevolgd en moet kiezers overtuigen van de betrouwbaarheid van de liberale partij.',
+        'url' => 'https://www.nrc.nl/nieuws/2025/07/26/vvd-zet-vol-in-op-klassieke-themas-veiligheid-en-economie-a4901363'
     ],
     [
         'orientation' => 'links',
         'source' => 'Trouw',
-        'bias' => 'links', 
+        'bias' => 'centrum-links', 
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-4 hours')), // 4 uur geleden
-        'title' => 'Gemengde reacties op controversiële uitspraken Saskia over migratie',
-        'description' => 'De recente uitspraken van Saskia over het migratiebeleid leiden tot verhitte discussies. Sommigen prijzen haar directe aanpak, terwijl anderen haar standpunten te extreem vinden. De politieke spanning neemt toe.',
-        'url' => 'https://www.trouw.nl/politiek/gemengde-reacties-op-controversiele-uitspraken-saskia-over-migratie~b7f31232/'
+        'title' => 'Veldkamp moet maandag schriftelijk uitleg geven over de humanitaire situatie in Gaza',
+        'description' => 'Minister Veldkamp van Buitenlandse Zaken moet maandag schriftelijke uitleg geven aan de Tweede Kamer over de humanitaire situatie in Gaza. De Kamer wil opheldering over de Nederlandse positie en mogelijke hulpverlening.',
+        'url' => 'https://www.trouw.nl/politiek/veldkamp-moet-maandag-schriftelijk-uitleg-geven-over-de-humanitaire-situatie-in-gaza~b1686cf8/'
     ],
     [
         'orientation' => 'rechts',
         'source' => 'Dagelijkse Standaard',
         'bias' => 'rechts',
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-6 hours')), // 6 uur geleden
-        'title' => 'Amerika bombardeert Iraanse kerninstallaties en Israël wist dat dit zou gebeuren',
-        'description' => 'De Verenigde Staten hebben Iraanse kerninstallaties gebombardeerd. Volgens bronnen was Israël vooraf op de hoogte van deze militaire actie. Dit markeert een significante escalatie in de spanningen tussen de VS en Iran.',
-        'url' => 'https://www.dagelijksestandaard.nl/buitenland/amerika-bombardeert-iraanse-kerninstallaties-en-israel-wist-dat-dit-zou-gebeuren'
+        'title' => 'Schoof noemt Israëlische koers catastrofaal maar doet niets',
+        'description' => 'Premier Schoof heeft de Israëlische koers omschreven als catastrofaal, maar onderneemt geen concrete actie. Deze uitspraak roept vragen op over de Nederlandse positie en het gebrek aan daadwerkelijke beleidsmaatregelen.',
+        'url' => 'https://www.dagelijksestandaard.nl/politiek/schoof-noemt-israelische-koers-catastrofaal-maar-doet-niets'
     ],
     [
         'orientation' => 'rechts',
         'source' => 'De Telegraaf',
         'bias' => 'rechts', 
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-8 hours')), // 8 uur geleden
-        'title' => 'LIVE - Iran: Aanval VS heeft eeuwigdurende gevolgen',
-        'description' => 'Iran heeft gereageerd op de Amerikaanse bombardementen op nucleaire faciliteiten en waarschuwt voor "eeuwigdurende gevolgen". Volg hier live de laatste ontwikkelingen rondom het conflict tussen de VS en Iran.',
-        'url' => 'https://www.telegraaf.nl/buitenland/live-iran-aanval-vs-heeft-eeuwigdurende-gevolgen/73099627.html'
+        'title' => 'VVD presenteert verkiezingsprogramma: pensioenleeftijd omhoog, investeren in defensie en snijden in uitkeringen',
+        'description' => 'De VVD heeft haar verkiezingsprogramma gepresenteerd met plannen om de pensioenleeftijd te verhogen, meer te investeren in defensie en bezuinigingen door te voeren op uitkeringen. Deze maatregelen moeten de Nederlandse economie versterken.',
+        'url' => 'https://www.telegraaf.nl/politiek/vvd-presenteert-verkiezingsprogramma-pensioenleeftijd-omhoog-investeren-in-defensie-en-snijden-in-uitkeringen/79844188.html'
     ],
     [
         'orientation' => 'rechts',
         'source' => 'Nieuw Rechts',
         'bias' => 'rechts', 
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-10 hours')), // 10 uur geleden
-        'title' => 'VS bombardeert nucleaire installaties in Iran, Trump spreekt van overwinning',
-        'description' => 'De Verenigde Staten hebben nucleaire installaties in Iran gebombardeerd. Voormalig president Trump noemt de actie een overwinning en zegt dat dit onder zijn leiding al eerder had moeten gebeuren.',
-        'url' => 'https://nieuwrechts.nl/104891-vs-bombardeert-nucleaire-installaties-in-iran-trump-spreekt-van-overwinning'
+        'title' => 'Raad van State maakt van Nederland een all-inclusive bestemming',
+        'description' => 'De Raad van State heeft uitspraken gedaan die volgens critici Nederland transformeren tot een all-inclusive bestemming voor migranten. Deze ontwikkeling zorgt voor discussie over de Nederlandse migratieregels en hun consequenties.',
+        'url' => 'https://nieuwrechts.nl/105585-raad-van-state-maakt-van-nederland-een-all-inclusive-bestemming'
     ]
 ];
 
