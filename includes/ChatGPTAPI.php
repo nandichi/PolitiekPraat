@@ -3,7 +3,7 @@
 class ChatGPTAPI {
     private $apiKey;
     private $apiUrl = 'https://api.openai.com/v1/chat/completions';
-    private $model = 'gpt-4o-mini';
+    private $model = 'gpt-4o-mini-search-preview';
     
     public function __construct() {
         // Probeer API key uit verschillende bronnen te halen
