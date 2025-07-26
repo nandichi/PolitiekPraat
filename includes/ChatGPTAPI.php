@@ -130,33 +130,36 @@ Schrijf in een persoonlijke, toegankelijke toespraak alsof je direct tegen de ge
     /**
      * Geef algemeen politiek advies gebaseerd op alle antwoorden
      */
-    public function generatePoliticalAdvice($personalityAnalysis, $topMatches) {
+    public function generatePoliticalAdvice($topMatches, $userAnswers = [], $questions = []) {
         $topThree = array_slice($topMatches, 0, 3);
         $topMatchesText = implode(', ', array_map(function($match) {
             return $match['name'] . ' (' . $match['agreement'] . '%)';
         }, $topThree));
         
+        // Maak samenvatting van gebruiker's specifieke antwoorden
+        $answerSummary = '';
+        if (!empty($userAnswers) && !empty($questions)) {
+            $answerSummary = $this->summarizeUserAnswers($userAnswers, $questions);
+        }
+        
         $prompt = "Je bent een Nederlandse politieke expert die persoonlijk stemadvies geeft.
 
 Een gebruiker heeft de stemwijzer ingevuld met de volgende resultaten:
 
-**Top 3 partij matches:** {$topMatchesText}
+**Top 3 partij matches:** {$topMatchesText}";
 
-**Politiek profiel:** {$personalityAnalysis['political_profile']['type']} - {$personalityAnalysis['political_profile']['description']}
+        // Voeg specifieke antwoorden toe als deze beschikbaar zijn
+        if (!empty($answerSummary)) {
+            $prompt .= "\n\n**Specifieke standpunten van de gebruiker:**\n{$answerSummary}";
+        }
 
-**Politieke kenmerken:**
-- {$personalityAnalysis['left_right_percentage']}% rechts georiënteerd  
-- {$personalityAnalysis['progressive_percentage']}% progressief
-- {$personalityAnalysis['authoritarian_percentage']}% autoritair
-- {$personalityAnalysis['eu_pro_percentage']}% pro-EU
-
-Geef in ongeveer 200-250 woorden persoonlijk stemadvies:
-1. Wat deze resultaten zeggen over hun politieke identiteit
-2. Waarom de top matches goed bij hen passen
+        $prompt .= "\n\nGeef in ongeveer 200-250 woorden persoonlijk stemadvies gebaseerd uitsluitend op hun stemwijzer antwoorden:
+1. Analyseer hun politieke voorkeuren op basis van hun concrete antwoorden
+2. Waarom de top matches goed bij hen passen (verwijs naar specifieke antwoorden)
 3. Op welke thema's ze extra moeten letten bij hun stemkeuze
 4. Suggesties voor vervolgstappen (partijprogramma's lezen, debatten kijken, etc.)
 
-Schrijf persoonlijk en bemoedigend. Begin met 'Op basis van jouw stemwijzer resultaten...' Eindigt met praktisch advies.";
+Schrijf persoonlijk en bemoedigend. Begin met 'Op basis van jouw stemwijzer antwoorden...' Focus volledig op hun concrete standpunten en keuzes. Eindig met praktisch advies.";
 
         return $this->makeAPICall($prompt);
     }
@@ -177,7 +180,7 @@ Schrijf persoonlijk en bemoedigend. Begin met 'Op basis van jouw stemwijzer resu
                     'content' => $prompt
                 ]
             ],
-            'max_tokens' => 400,
+            'max_tokens' => 300,
             'temperature' => 0.7
         ];
         
@@ -317,7 +320,7 @@ Begin direct met de samenvatting - geen inleiding. Focus op politiek relevante i
                     'content' => $prompt
                 ]
             ],
-            'max_tokens' => 600,
+            'max_tokens' => 400,
             'temperature' => 0.3
         ];
         
@@ -545,9 +548,9 @@ Geef een gebalanceerde analyse in dit formaat:
 ## **Conclusie**
 [Korte, eerlijke samenvatting van de partij]
 
-Schrijf elke punt uit in 2-3 zinnen. Wees eerlijk over zowel sterke als zwakke punten. Gebruik concrete voorbeelden waar mogelijk. Blijf objectief en informatief - geen extreme kritiek of lofzang.
+Schrijf elke punt uit in 1-2 zinnen. Wees eerlijk over zowel sterke als zwakke punten. Gebruik concrete voorbeelden waar mogelijk. Blijf objectief en informatief - geen extreme kritiek of lofzang.
 
-Totaal ongeveer 300-400 woorden.";
+Totaal ongeveer 200-250 woorden.";
 
         return $this->makeAPICall($prompt);
     }
@@ -590,7 +593,7 @@ Focus op:
 - Electorale aantrekkingskracht
 - Controverses (indien van toepassing)
 
-Totaal ongeveer 300-400 woorden.";
+Totaal ongeveer 200-250 woorden.";
 
         return $this->makeAPICall($prompt);
     }
@@ -645,7 +648,7 @@ Creëer een uitgebreid kiezersprofiel in dit formaat:
 
 Baseer je analyse op Nederlandse verkiezingsdata, peilingen en sociologisch onderzoek. Wees specifiek en realistisch. Gebruik concrete percentages en trends waar mogelijk.
 
-Totaal ongeveer 400-500 woorden.";
+Totaal ongeveer 250-300 woorden.";
 
         return $this->makeAPICall($prompt);
     }

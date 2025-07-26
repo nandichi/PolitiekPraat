@@ -2,6 +2,7 @@
 require_once 'includes/config.php';
 require_once 'includes/Database.php';
 require_once 'includes/StemwijzerController.php';
+require_once 'includes/ChatGPTAPI.php';
 
 // Debug mode - zet op true voor live debugging
 $debugMode = false;
@@ -233,8 +234,8 @@ require_once 'views/templates/header.php';
         $personalityAnalysis = $stemwijzerController->analyzePoliticalPersonality($savedResults->answers, $stemwijzerData['questions']);
         ?>
         
-        <!-- Politieke Persoonlijkheidsanalyse Sectie -->
-        <div class="max-w-6xl mx-auto pb-12">
+        <!-- Politieke Persoonlijkheidsanalyse Sectie - Verborgen -->
+        <div class="max-w-6xl mx-auto pb-12" style="display: none;">
             <!-- Persoonlijkheidsanalyse Hero -->
             <div class="text-center mb-16">
                 <div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-600 shadow-lg shadow-purple-500/25 mb-6">
@@ -622,22 +623,97 @@ require_once 'views/templates/header.php';
             <!-- Complete Results List -->
             <div class="bg-white/90 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/50 overflow-hidden mb-12">
                 <!-- Header -->
-                <div class="bg-gradient-to-r from-indigo-50 to-purple-50 px-8 py-6 border-b border-gray-100">
+                <div class="bg-gradient-to-r from-indigo-50 to-purple-50 px-4 sm:px-8 py-6 border-b border-gray-100">
                     <div class="flex items-center space-x-3">
-                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
-                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+                            <svg class="w-4 h-4 sm:w-5 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
                             </svg>
                         </div>
-                        <h3 class="text-2xl font-bold text-gray-800">Volledige Ranglijst</h3>
+                        <h3 class="text-lg sm:text-2xl font-bold text-gray-800">Volledige Ranglijst</h3>
                     </div>
                 </div>
                 
                 <!-- Results List -->
                 <div class="divide-y divide-gray-100">
                     <?php foreach ($finalResults as $index => $result): ?>
-                    <div class="px-8 py-6 hover:bg-gray-50 transition-all duration-300">
-                        <div class="flex items-center space-x-6">
+                    <div class="px-4 sm:px-8 py-4 sm:py-6 hover:bg-gray-50 transition-all duration-300">
+                        
+                        <!-- Mobile Layout (sm and below) -->
+                        <div class="sm:hidden">
+                            <div class="relative bg-gradient-to-r 
+                                 <?php 
+                                    if ($index === 0) echo 'from-yellow-50 to-amber-50 border-yellow-200';
+                                    elseif ($index === 1) echo 'from-gray-50 to-slate-50 border-gray-200';
+                                    elseif ($index === 2) echo 'from-orange-50 to-amber-50 border-orange-200';
+                                    else echo 'from-indigo-50 to-purple-50 border-indigo-200';
+                                 ?> 
+                                 rounded-2xl border-2 p-4 shadow-sm">
+                                
+                                <!-- Rank Badge - Absolute positioned -->
+                                <div class="absolute -top-3 -left-3 w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg shadow-lg
+                                     <?php 
+                                        if ($index === 0) echo 'bg-gradient-to-br from-yellow-400 to-yellow-600 text-white';
+                                        elseif ($index === 1) echo 'bg-gradient-to-br from-gray-400 to-gray-600 text-white';
+                                        elseif ($index === 2) echo 'bg-gradient-to-br from-amber-600 to-orange-700 text-white';
+                                        else echo 'bg-gradient-to-br from-indigo-500 to-purple-600 text-white';
+                                     ?>">
+                                    <span><?= $index + 1 ?></span>
+                                </div>
+                                
+                                <!-- Main Content -->
+                                <div class="flex items-center space-x-4">
+                                    <!-- Party Logo -->
+                                    <div class="w-16 h-16 rounded-xl bg-white border border-white/50 p-2 shadow-md">
+                                        <img src="<?= htmlspecialchars($result['logo']) ?>" alt="<?= htmlspecialchars($result['name']) ?>" class="w-full h-full object-contain rounded-lg">
+                                    </div>
+                                    
+                                    <!-- Party Info -->
+                                    <div class="flex-1">
+                                        <h4 class="text-lg font-bold text-gray-800 mb-1"><?= htmlspecialchars($result['name']) ?></h4>
+                                        
+                                        <!-- Percentage with style -->
+                                        <div class="flex items-baseline space-x-2 mb-3">
+                                            <span class="text-3xl font-bold 
+                                                 <?php 
+                                                    if ($index === 0) echo 'text-yellow-600';
+                                                    elseif ($index === 1) echo 'text-gray-600';
+                                                    elseif ($index === 2) echo 'text-orange-600';
+                                                    else echo 'text-indigo-600';
+                                                 ?>"><?= $result['agreement'] ?>%</span>
+                                            <span class="text-sm text-gray-500 font-medium">overeenkomst</span>
+                                        </div>
+                                        
+                                        <!-- Progress Bar -->
+                                        <div class="w-full h-3 bg-white/60 rounded-full overflow-hidden shadow-inner">
+                                            <div class="h-full rounded-full transition-all duration-1000 ease-out shadow-sm
+                                                 <?php 
+                                                    if ($index === 0) echo 'bg-gradient-to-r from-yellow-400 to-yellow-600';
+                                                    elseif ($index === 1) echo 'bg-gradient-to-r from-gray-400 to-gray-600';
+                                                    elseif ($index === 2) echo 'bg-gradient-to-r from-amber-600 to-orange-700';
+                                                    else echo 'bg-gradient-to-r from-indigo-500 to-purple-600';
+                                                 ?>"
+                                                 style="width: <?= $result['agreement'] ?>%">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <?php if ($index === 0): ?>
+                                <!-- Winner Badge for first place -->
+                                <div class="absolute -top-2 -right-2">
+                                    <div class="w-8 h-8 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-full flex items-center justify-center shadow-lg">
+                                        <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" clip-rule="evenodd"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        
+                        <!-- Desktop Layout (sm and above) -->
+                        <div class="hidden sm:flex items-center space-x-6">
                             <!-- Rank -->
                             <div class="flex-shrink-0">
                                 <div class="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-lg
@@ -690,6 +766,156 @@ require_once 'views/templates/header.php';
                     <?php endforeach; ?>
                 </div>
             </div>
+
+            <?php if ($savedResults && $stemwijzerData): ?>
+            <!-- AI Politieke Inzichten Sectie -->
+            <div class="max-w-6xl mx-auto mb-16">
+                <div class="text-center mb-8">
+                    <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-indigo-600 shadow-lg shadow-purple-500/25 mb-4">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                        </svg>
+                    </div>
+                    
+                    <h3 class="text-3xl md:text-4xl font-bold text-gray-800 mb-3">
+                        Slimme Politieke
+                        <span class="text-gradient bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
+                            Inzichten
+                        </span>
+                    </h3>
+                    
+                    <p class="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                        Krijg diepere inzichten over jouw politieke matches en persoonlijk stemadvies op basis van jouw antwoorden.
+                    </p>
+                </div>
+
+                <!-- Insights Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    
+                    <!-- Waarom Past Deze Partij Bij Mij? -->
+                    <div class="bg-white/90 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/50 overflow-hidden">
+                        <div class="bg-gradient-to-r from-green-50 to-emerald-50 px-6 py-4 border-b border-gray-100">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                </div>
+                                <h4 class="text-xl font-bold text-gray-800">Waarom Past <?= htmlspecialchars($finalResults[0]['name']) ?> Bij Mij?</h4>
+                            </div>
+                        </div>
+                        
+                        <div class="p-6">
+                            <div id="party-match-analysis" class="space-y-4">
+                                <div class="text-center py-12">
+                                    <p class="text-gray-600 mb-6">Ontdek waarom deze partij zo goed bij jouw politieke voorkeuren past.</p>
+                                    <button onclick="loadPartyMatchAnalysis()" 
+                                            class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white rounded-xl font-semibold transition-all duration-300 hover:shadow-lg">
+                                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                                        </svg>
+                                        Analyseer Match
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Persoonlijk Stemadvies -->
+                    <div class="bg-white/90 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/50 overflow-hidden">
+                        <div class="bg-gradient-to-r from-purple-50 to-indigo-50 px-6 py-4 border-b border-gray-100">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                </div>
+                                <h4 class="text-xl font-bold text-gray-800">Jouw Persoonlijke Stemadvies</h4>
+                            </div>
+                        </div>
+                        
+                        <div class="p-6">
+                            <div id="political-advice" class="space-y-4">
+                                <div class="text-center py-12">
+                                    <p class="text-gray-600 mb-6">Krijg persoonlijk stemadvies gebaseerd op jouw politieke profiel en voorkeuren.</p>
+                                    <button onclick="loadPoliticalAdvice()" 
+                                            class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white rounded-xl font-semibold transition-all duration-300 hover:shadow-lg">
+                                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                        Genereer Advies
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Voor- en Nadelen Top Match -->
+                    <div class="bg-white/90 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/50 overflow-hidden">
+                        <div class="bg-gradient-to-r from-blue-50 to-cyan-50 px-6 py-4 border-b border-gray-100">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-600 flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                    </svg>
+                                </div>
+                                <h4 class="text-xl font-bold text-gray-800">Voor- & Nadelen van <?= htmlspecialchars($finalResults[0]['name']) ?></h4>
+                            </div>
+                        </div>
+                        
+                        <div class="p-6">
+                            <div id="party-pros-cons" class="space-y-4">
+                                <div class="text-center py-12">
+                                    <p class="text-gray-600 mb-6">Bekijk een objectieve analyse van de voor- en nadelen van deze partij.</p>
+                                    <button onclick="loadPartyProsAndCons()" 
+                                            class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-500 to-cyan-600 hover:from-blue-600 hover:to-cyan-700 text-white rounded-xl font-semibold transition-all duration-300 hover:shadow-lg">
+                                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                        </svg>
+                                        Analyseer Voor- & Nadelen
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Kiezersprofiel Vergelijking -->
+                    <div class="bg-white/90 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/50 overflow-hidden">
+                        <div class="bg-gradient-to-r from-orange-50 to-amber-50 px-6 py-4 border-b border-gray-100">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-orange-500 to-amber-600 flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                                    </svg>
+                                </div>
+                                <h4 class="text-xl font-bold text-gray-800">Typische <?= htmlspecialchars($finalResults[0]['name']) ?> Kiezers</h4>
+                            </div>
+                        </div>
+                        
+                        <div class="p-6">
+                            <div id="voter-profile" class="space-y-4">
+                                <div class="text-center py-12">
+                                    <p class="text-gray-600 mb-6">Ontdek wie de typische kiezers zijn van deze partij en of je bij hun profiel past.</p>
+                                    <button onclick="loadVoterProfile()" 
+                                            class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-600 hover:to-amber-700 text-white rounded-xl font-semibold transition-all duration-300 hover:shadow-lg">
+                                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                                        </svg>
+                                        Bekijk Kiezersprofiel
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-8">
+                    <p class="text-sm text-gray-500">
+                        Deze inzichten zijn gegenereerd door onze geavanceerde politieke analyse en gebaseerd op jouw stemwijzer antwoorden.
+                    </p>
+                </div>
+            </div>
+            <?php endif; ?>
 
             <!-- Share and Action Buttons -->
             <div class="flex flex-col sm:flex-row items-center justify-center gap-4 no-print">
@@ -767,6 +993,201 @@ require_once 'views/templates/header.php';
 </main>
 
 <script>
+<?php if ($savedResults && $stemwijzerData): ?>
+// Data voor AI analyse
+const aiAnalysisData = {
+    shareId: '<?= $shareId ?>',
+    topParty: {
+        name: '<?= addslashes($finalResults[0]['name']) ?>',
+        agreement: <?= $finalResults[0]['agreement'] ?>,
+        logo: '<?= addslashes($finalResults[0]['logo']) ?>'
+    },
+    personalityAnalysis: <?= json_encode($personalityAnalysis) ?>,
+    topMatches: <?= json_encode(array_slice($finalResults, 0, 3)) ?>,
+    userAnswers: <?= json_encode($savedResults->answers) ?>
+};
+
+function showLoadingState(containerId, buttonText) {
+    const container = document.getElementById(containerId);
+    container.innerHTML = `
+        <div class="flex items-center justify-center py-12">
+            <div class="text-center">
+                <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gray-100 animate-spin mb-4">
+                    <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                    </svg>
+                </div>
+                <p class="text-gray-600">${buttonText} wordt geladen...</p>
+            </div>
+        </div>
+    `;
+}
+
+function loadPartyMatchAnalysis() {
+    showLoadingState('party-match-analysis', 'Analyse');
+    fetch('/ajax/ai-analysis.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            action: 'party_match',
+            data: aiAnalysisData
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        const container = document.getElementById('party-match-analysis');
+        if (data.success) {
+            container.innerHTML = `
+                <div class="prose prose-gray max-w-none">
+                    <div class="text-gray-700 leading-relaxed whitespace-pre-line">${data.content}</div>
+                </div>
+            `;
+        } else {
+            container.innerHTML = `
+                <div class="text-center py-8">
+                    <div class="text-red-500 mb-2">⚠️ Kon analyse niet laden</div>
+                    <p class="text-gray-600 text-sm">Probeer de pagina te verversen</p>
+                </div>
+            `;
+        }
+    })
+    .catch(error => {
+        console.error('Error loading party match analysis:', error);
+        document.getElementById('party-match-analysis').innerHTML = `
+            <div class="text-center py-8">
+                <div class="text-red-500 mb-2">⚠️ Netwerkfout</div>
+                <p class="text-gray-600 text-sm">Controleer je internetverbinding</p>
+            </div>
+        `;
+    });
+}
+
+function loadPoliticalAdvice() {
+    showLoadingState('political-advice', 'Advies');
+    fetch('/ajax/ai-analysis.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            action: 'political_advice',
+            data: aiAnalysisData
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        const container = document.getElementById('political-advice');
+        if (data.success) {
+            container.innerHTML = `
+                <div class="prose prose-gray max-w-none">
+                    <div class="text-gray-700 leading-relaxed whitespace-pre-line">${data.content}</div>
+                </div>
+            `;
+        } else {
+            container.innerHTML = `
+                <div class="text-center py-8">
+                    <div class="text-red-500 mb-2">⚠️ Kon advies niet laden</div>
+                    <p class="text-gray-600 text-sm">Probeer de pagina te verversen</p>
+                </div>
+            `;
+        }
+    })
+    .catch(error => {
+        console.error('Error loading political advice:', error);
+        document.getElementById('political-advice').innerHTML = `
+            <div class="text-center py-8">
+                <div class="text-red-500 mb-2">⚠️ Netwerkfout</div>
+                <p class="text-gray-600 text-sm">Controleer je internetverbinding</p>
+            </div>
+        `;
+    });
+}
+
+function loadPartyProsAndCons() {
+    showLoadingState('party-pros-cons', 'Voor- & Nadelen analyse');
+    fetch('/ajax/ai-analysis.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            action: 'party_pros_cons',
+            data: aiAnalysisData
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        const container = document.getElementById('party-pros-cons');
+        if (data.success) {
+            container.innerHTML = `
+                <div class="prose prose-gray max-w-none">
+                    <div class="text-gray-700 leading-relaxed whitespace-pre-line">${data.content}</div>
+                </div>
+            `;
+        } else {
+            container.innerHTML = `
+                <div class="text-center py-8">
+                    <div class="text-red-500 mb-2">⚠️ Kon analyse niet laden</div>
+                    <p class="text-gray-600 text-sm">Probeer de pagina te verversen</p>
+                </div>
+            `;
+        }
+    })
+    .catch(error => {
+        console.error('Error loading pros and cons:', error);
+        document.getElementById('party-pros-cons').innerHTML = `
+            <div class="text-center py-8">
+                <div class="text-red-500 mb-2">⚠️ Netwerkfout</div>
+                <p class="text-gray-600 text-sm">Controleer je internetverbinding</p>
+            </div>
+        `;
+    });
+}
+
+function loadVoterProfile() {
+    showLoadingState('voter-profile', 'Kiezersprofiel');
+    fetch('/ajax/ai-analysis.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            action: 'voter_profile',
+            data: aiAnalysisData
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        const container = document.getElementById('voter-profile');
+        if (data.success) {
+            container.innerHTML = `
+                <div class="prose prose-gray max-w-none">
+                    <div class="text-gray-700 leading-relaxed whitespace-pre-line">${data.content}</div>
+                </div>
+            `;
+        } else {
+            container.innerHTML = `
+                <div class="text-center py-8">
+                    <div class="text-red-500 mb-2">⚠️ Kon profiel niet laden</div>
+                    <p class="text-gray-600 text-sm">Probeer de pagina te verversen</p>
+                </div>
+            `;
+        }
+    })
+    .catch(error => {
+        console.error('Error loading voter profile:', error);
+        document.getElementById('voter-profile').innerHTML = `
+            <div class="text-center py-8">
+                <div class="text-red-500 mb-2">⚠️ Netwerkfout</div>
+                <p class="text-gray-600 text-sm">Controleer je internetverbinding</p>
+            </div>
+        `;
+    });
+}
+<?php endif; ?>
+
 function shareResults() {
     const url = window.location.href;
     const title = 'Mijn Stemwijzer 2025 Resultaten';

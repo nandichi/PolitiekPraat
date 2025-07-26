@@ -1391,7 +1391,7 @@ $howToStructuredData = [
                      x-transition:leave-end="opacity-0 transform scale-90"
                      class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
                     
-                    <div class="bg-white rounded-3xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden" @click.away="showPartyDetails = false">
+                    <div class="bg-white rounded-3xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden" @click.away="closePartyDetails()">
                         <!-- Modal Header -->
                         <div class="bg-gradient-to-r from-indigo-50 to-purple-50 px-8 py-6 border-b border-gray-100 sticky top-0 z-10">
                             <div class="flex items-center justify-between">
@@ -1413,7 +1413,7 @@ $howToStructuredData = [
                                 </div>
                                 
                                 <!-- Close Button -->
-                                <button @click="showPartyDetails = false" 
+                                <button @click="closePartyDetails()" 
                                         class="p-2 rounded-full hover:bg-gray-100 transition-colors group">
                                     <svg class="w-6 h-6 text-gray-400 group-hover:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -3025,8 +3025,9 @@ function stemwijzer() {
             this.showPartyDetails = false;
             this.detailedParty = null;
             
-            // Restore body scrolling
+            // Restore body scrolling (handle both inline styles and CSS classes)
             document.body.style.overflow = '';
+            document.body.classList.remove('overflow-hidden');
         },
         
         resetQuiz() {
@@ -3299,8 +3300,8 @@ function stemwijzer() {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        personalityAnalysis: this.personalityAnalysis,
-                        topMatches: this.finalResults.slice(0, 3)
+                        topMatches: this.finalResults.slice(0, 3),
+                        userAnswers: this.answers
                     })
                 });
                 

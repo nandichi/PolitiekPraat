@@ -403,25 +403,31 @@ try {
                         break;
                     }
                     
-                    $personalityAnalysis = $input['personalityAnalysis'] ?? null;
                     $topMatches = $input['topMatches'] ?? [];
+                    $userAnswers = $input['userAnswers'] ?? [];
                     
-                    if (empty($personalityAnalysis) || empty($topMatches)) {
+                    if (empty($topMatches)) {
                         http_response_code(400);
                         echo json_encode([
                             'success' => false,
-                            'error' => 'Personality analysis and top matches are required'
+                            'error' => 'Top matches are required'
                         ]);
                         break;
                     }
                     
+                    // Haal stemwijzer vragen op als userAnswers beschikbaar zijn
+                    $questions = [];
+                    if (!empty($userAnswers)) {
+                        $stemwijzerData = $stemwijzerController->getStemwijzerData();
+                        $questions = $stemwijzerData['questions'] ?? [];
+                    }
+                    
                     // Vraag ChatGPT om algemeen politiek advies
-                    $advice = $chatGPTAPI->generatePoliticalAdvice($personalityAnalysis, $topMatches);
+                    $advice = $chatGPTAPI->generatePoliticalAdvice($topMatches, $userAnswers, $questions);
                     
                     echo json_encode([
                         'success' => true,
-                        'advice' => $advice,
-                        'personality_type' => $personalityAnalysis['political_profile']['type'] ?? 'Onbekend'
+                        'advice' => $advice
                     ]);
                     break;
                     
