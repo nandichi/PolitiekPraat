@@ -164,6 +164,124 @@ try {
         return $b['total_votes'] <=> $a['total_votes'];
     });
     
+    // Uitgebreide gedragsanalyse
+    $behaviorStats = [];
+    
+    // 1. Antwoordpatronen analyse
+    $totalAnswers = 0;
+    $answerDistribution = ['eens' => 0, 'oneens' => 0, 'neutraal' => 0];
+    $questionCompleteness = [];
+    
+    foreach ($allAnswers as $result) {
+        $answers = json_decode($result->answers, true);
+        if ($answers && is_array($answers)) {
+            foreach ($answers as $questionIndex => $answer) {
+                $totalAnswers++;
+                if (isset($answerDistribution[$answer])) {
+                    $answerDistribution[$answer]++;
+                }
+                
+                // Track welke vragen het meest worden beantwoord
+                if (!isset($questionCompleteness[$questionIndex])) {
+                    $questionCompleteness[$questionIndex] = 0;
+                }
+                $questionCompleteness[$questionIndex]++;
+            }
+        }
+    }
+    
+    // 2. Score spreiding analyse
+    $scoreSpreadStats = [];
+    $closeRaces = 0; // Wanneer top 2 partijen minder dan 10% verschil hebben
+    $dominantWins = 0; // Wanneer winnaar 20%+ voorsprong heeft
+    
+    foreach ($allResults as $result) {
+        $results = json_decode($result->results, true);
+        if ($results && is_array($results)) {
+            $scores = [];
+            foreach ($results as $party => $data) {
+                if (isset($data['agreement'])) {
+                    $scores[] = $data['agreement'];
+                }
+            }
+            
+            if (count($scores) >= 2) {
+                rsort($scores); // Sorteer hoogste eerst
+                $difference = $scores[0] - $scores[1];
+                
+                if ($difference < 10) {
+                    $closeRaces++;
+                } else if ($difference > 20) {
+                    $dominantWins++;
+                }
+                
+                $scoreSpreadStats[] = [
+                    'highest' => $scores[0],
+                    'lowest' => end($scores),
+                    'spread' => $scores[0] - end($scores),
+                    'top_difference' => $difference
+                ];
+            }
+        }
+    }
+    
+    // 3. Tijdspatroon analyse
+    $db->query("
+        SELECT 
+            HOUR(completed_at) as hour,
+            COUNT(*) as count
+        FROM stemwijzer_results 
+        WHERE completed_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)
+        GROUP BY HOUR(completed_at)
+        ORDER BY hour ASC
+    ");
+    $hourlyStats = $db->resultSet() ?? [];
+    
+    $db->query("
+        SELECT 
+            DAYOFWEEK(completed_at) as day_of_week,
+            COUNT(*) as count
+        FROM stemwijzer_results 
+        WHERE completed_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)
+        GROUP BY DAYOFWEEK(completed_at)
+        ORDER BY day_of_week ASC
+    ");
+    $weeklyStats = $db->resultSet() ?? [];
+    
+    // 4. Bereken gemiddelden
+    $avgSpread = !empty($scoreSpreadStats) ? array_sum(array_column($scoreSpreadStats, 'spread')) / count($scoreSpreadStats) : 0;
+    $avgTopDifference = !empty($scoreSpreadStats) ? array_sum(array_column($scoreSpreadStats, 'top_difference')) / count($scoreSpreadStats) : 0;
+    
+    // 5. Vraag populariteit - welke vragen krijgen meeste neutrale antwoorden
+    $questionPolarization = [];
+    $questionTotalCount = [];
+    
+    foreach ($questions as $question) {
+        $questionIndex = $question->order_number - 1;
+        if (isset($answerStats[$questionIndex])) {
+            $stats = $answerStats[$questionIndex];
+            $total = $stats['eens'] + $stats['oneens'] + $stats['neutraal'];
+            
+            if ($total > 0) {
+                $neutralPercentage = ($stats['neutraal'] / $total) * 100;
+                $strongOpinions = (($stats['eens'] + $stats['oneens']) / $total) * 100;
+                
+                $questionPolarization[] = [
+                    'question' => $question,
+                    'neutral_percentage' => $neutralPercentage,
+                    'strong_opinions' => $strongOpinions,
+                    'total_answers' => $total,
+                    'stats' => $stats
+                ];
+            }
+        }
+    }
+    
+    // Sorteer vragen op neutrale antwoorden (meest neutrale eerst)
+    usort($questionPolarization, function($a, $b) {
+        return $b['neutral_percentage'] <=> $a['neutral_percentage'];
+    });
+    
 } catch (Exception $e) {
     $totalResults = 0;
     $todayResults = 0;
@@ -179,6 +297,18 @@ try {
     $searchTerm = '';
     $dateFrom = '';
     $dateTo = '';
+    
+    // Nieuwe variabelen voor gedragsanalyse
+    $totalAnswers = 0;
+    $answerDistribution = ['eens' => 0, 'oneens' => 0, 'neutraal' => 0];
+    $scoreSpreadStats = [];
+    $closeRaces = 0;
+    $dominantWins = 0;
+    $avgSpread = 0;
+    $avgTopDifference = 0;
+    $hourlyStats = [];
+    $weeklyStats = [];
+    $questionPolarization = [];
 }
 
 require_once '../views/templates/header.php';
@@ -211,6 +341,13 @@ require_once '../views/templates/header.php';
 
 .progress-bar {
     transition: width 0.3s ease-in-out;
+}
+
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 </style>
 
@@ -563,6 +700,298 @@ require_once '../views/templates/header.php';
                 </div>
             </div>
         </div>
+
+        <!-- Gedragsanalyse Secties -->
+        
+        <!-- Antwoordpatronen -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            
+            <!-- Algemene Antwoordverdeling -->
+            <div class="bg-white/90 backdrop-blur-2xl rounded-2xl shadow-xl border border-white/50 overflow-hidden">
+                <div class="bg-gradient-to-r from-cyan-50 to-blue-50 px-6 py-4 border-b border-gray-100">
+                    <h2 class="text-xl font-bold text-gray-800">Antwoordverdeling</h2>
+                    <p class="text-sm text-gray-600 mt-1">Hoe mensen gemiddeld stemmen</p>
+                </div>
+                
+                <div class="p-6">
+                    <?php if ($totalAnswers > 0): ?>
+                        <div class="space-y-4">
+                            <?php 
+                            $eensPerc = ($answerDistribution['eens'] / $totalAnswers) * 100;
+                            $oneensPerc = ($answerDistribution['oneens'] / $totalAnswers) * 100;
+                            $neutraalPerc = ($answerDistribution['neutraal'] / $totalAnswers) * 100;
+                            ?>
+                            
+                            <div class="flex items-center justify-between p-4 bg-green-50 rounded-lg">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-4 h-4 bg-green-500 rounded-full"></div>
+                                    <span class="font-medium text-gray-800">Eens</span>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-lg font-bold text-gray-800"><?= number_format($eensPerc, 1) ?>%</div>
+                                    <div class="text-xs text-gray-500"><?= number_format($answerDistribution['eens']) ?> antwoorden</div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-4 h-4 bg-gray-500 rounded-full"></div>
+                                    <span class="font-medium text-gray-800">Neutraal</span>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-lg font-bold text-gray-800"><?= number_format($neutraalPerc, 1) ?>%</div>
+                                    <div class="text-xs text-gray-500"><?= number_format($answerDistribution['neutraal']) ?> antwoorden</div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center justify-between p-4 bg-red-50 rounded-lg">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-4 h-4 bg-red-500 rounded-full"></div>
+                                    <span class="font-medium text-gray-800">Oneens</span>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-lg font-bold text-gray-800"><?= number_format($oneensPerc, 1) ?>%</div>
+                                    <div class="text-xs text-gray-500"><?= number_format($answerDistribution['oneens']) ?> antwoorden</div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4 p-4 bg-blue-50 rounded-lg">
+                                <div class="text-center">
+                                    <div class="text-2xl font-bold text-blue-600"><?= number_format($totalAnswers) ?></div>
+                                    <div class="text-sm text-blue-700">Totaal beantwoorde vragen</div>
+                                </div>
+                            </div>
+                        </div>
+                    <?php else: ?>
+                        <p class="text-gray-500 text-center py-8">Nog geen data beschikbaar</p>
+                    <?php endif; ?>
+                </div>
+            </div>
+
+            <!-- Resultaat Competitiviteit -->
+            <div class="bg-white/90 backdrop-blur-2xl rounded-2xl shadow-xl border border-white/50 overflow-hidden">
+                <div class="bg-gradient-to-r from-purple-50 to-pink-50 px-6 py-4 border-b border-gray-100">
+                    <h2 class="text-xl font-bold text-gray-800">Resultaat Competitiviteit</h2>
+                    <p class="text-sm text-gray-600 mt-1">Hoe dicht liggen de partijen bij elkaar</p>
+                </div>
+                
+                <div class="p-6">
+                    <?php if (!empty($scoreSpreadStats)): ?>
+                        <div class="space-y-6">
+                            <!-- Close Races vs Dominant Wins -->
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="bg-orange-50 rounded-lg p-4 text-center">
+                                    <div class="text-2xl font-bold text-orange-600"><?= $closeRaces ?></div>
+                                    <div class="text-sm text-orange-700">Spannende Races</div>
+                                    <div class="text-xs text-gray-500 mt-1">&lt;10% verschil top 2</div>
+                                </div>
+                                
+                                <div class="bg-blue-50 rounded-lg p-4 text-center">
+                                    <div class="text-2xl font-bold text-blue-600"><?= $dominantWins ?></div>
+                                    <div class="text-sm text-blue-700">Duidelijke Winnaars</div>
+                                    <div class="text-xs text-gray-500 mt-1">&gt;20% voorsprong</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Gemiddelde statistieken -->
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                                    <span class="text-sm text-gray-700">Gemiddelde spreiding (hoogste - laagste)</span>
+                                    <span class="font-bold text-gray-800"><?= number_format($avgSpread, 1) ?>%</span>
+                                </div>
+                                
+                                <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                                    <span class="text-sm text-gray-700">Gemiddeld verschil winnaar vs #2</span>
+                                    <span class="font-bold text-gray-800"><?= number_format($avgTopDifference, 1) ?>%</span>
+                                </div>
+                                
+                                <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                                    <span class="text-sm text-gray-700">Percentage spannende races</span>
+                                    <span class="font-bold text-gray-800"><?= count($scoreSpreadStats) > 0 ? number_format(($closeRaces / count($scoreSpreadStats)) * 100, 1) : 0 ?>%</span>
+                                </div>
+                            </div>
+                        </div>
+                    <?php else: ?>
+                        <p class="text-gray-500 text-center py-8">Nog geen data beschikbaar</p>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tijdspatronen -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            
+            <!-- Uurpatronen -->
+            <div class="bg-white/90 backdrop-blur-2xl rounded-2xl shadow-xl border border-white/50 overflow-hidden">
+                <div class="bg-gradient-to-r from-yellow-50 to-orange-50 px-6 py-4 border-b border-gray-100">
+                    <h2 class="text-xl font-bold text-gray-800">Activiteit per Uur</h2>
+                    <p class="text-sm text-gray-600 mt-1">Afgelopen 30 dagen</p>
+                </div>
+                
+                <div class="p-6">
+                    <?php if (!empty($hourlyStats)): ?>
+                        <div class="space-y-3">
+                            <?php 
+                            $maxHourly = max(array_map(function($stat) { return $stat->count; }, $hourlyStats));
+                            foreach ($hourlyStats as $stat): 
+                                $percentage = $maxHourly > 0 ? ($stat->count / $maxHourly) * 100 : 0;
+                                $hour = sprintf('%02d:00', $stat->hour);
+                            ?>
+                                <div class="flex items-center">
+                                    <div class="w-12 text-xs text-gray-600"><?= $hour ?></div>
+                                    <div class="flex-1 mx-3">
+                                        <div class="bg-gray-200 rounded-full h-2">
+                                            <div class="bg-gradient-to-r from-yellow-400 to-orange-500 h-2 rounded-full transition-all duration-500" 
+                                                 style="width: <?= $percentage ?>%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="w-8 text-right text-xs font-medium text-gray-800"><?= $stat->count ?></div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php else: ?>
+                        <p class="text-gray-500 text-center py-8">Nog geen data beschikbaar</p>
+                    <?php endif; ?>
+                </div>
+            </div>
+
+            <!-- Weekdagpatronen -->
+            <div class="bg-white/90 backdrop-blur-2xl rounded-2xl shadow-xl border border-white/50 overflow-hidden">
+                <div class="bg-gradient-to-r from-teal-50 to-cyan-50 px-6 py-4 border-b border-gray-100">
+                    <h2 class="text-xl font-bold text-gray-800">Activiteit per Weekdag</h2>
+                    <p class="text-sm text-gray-600 mt-1">Afgelopen 30 dagen</p>
+                </div>
+                
+                <div class="p-6">
+                    <?php if (!empty($weeklyStats)): ?>
+                        <div class="space-y-4">
+                            <?php 
+                            $weekDays = ['', 'Zondag', 'Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag'];
+                            $maxWeekly = max(array_map(function($stat) { return $stat->count; }, $weeklyStats));
+                            foreach ($weeklyStats as $stat): 
+                                $percentage = $maxWeekly > 0 ? ($stat->count / $maxWeekly) * 100 : 0;
+                                $dayName = $weekDays[$stat->day_of_week] ?? 'Onbekend';
+                                $isWeekend = in_array($stat->day_of_week, [1, 7]); // Zondag en Zaterdag
+                            ?>
+                                <div class="flex items-center justify-between p-3 rounded-lg <?= $isWeekend ? 'bg-blue-50' : 'bg-gray-50' ?>">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-20 text-sm <?= $isWeekend ? 'text-blue-700 font-medium' : 'text-gray-700' ?>">
+                                            <?= $dayName ?>
+                                        </div>
+                                        <div class="flex-1 w-32">
+                                            <div class="bg-gray-200 rounded-full h-3">
+                                                <div class="<?= $isWeekend ? 'bg-gradient-to-r from-blue-400 to-cyan-500' : 'bg-gradient-to-r from-teal-400 to-cyan-500' ?> h-3 rounded-full transition-all duration-500" 
+                                                     style="width: <?= $percentage ?>%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="text-lg font-bold <?= $isWeekend ? 'text-blue-600' : 'text-gray-800' ?>"><?= $stat->count ?></div>
+                                        <?php if ($isWeekend): ?>
+                                            <div class="text-xs text-blue-500">weekend</div>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php else: ?>
+                        <p class="text-gray-500 text-center py-8">Nog geen data beschikbaar</p>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vraag Analyse -->
+        <?php if (!empty($questionPolarization)): ?>
+        <div class="bg-white/90 backdrop-blur-2xl rounded-2xl shadow-xl border border-white/50 overflow-hidden mb-8">
+            <div class="bg-gradient-to-r from-indigo-50 to-purple-50 px-6 py-4 border-b border-gray-100">
+                <h2 class="text-xl font-bold text-gray-800">Vraag Polarisatie</h2>
+                <p class="text-sm text-gray-600 mt-1">Welke vragen zorgen voor de meeste neutrale antwoorden vs sterke meningen</p>
+            </div>
+            
+            <div class="p-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    
+                    <!-- Meest Neutrale Vragen -->
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">Meest Neutrale Vragen</h3>
+                        <div class="space-y-3">
+                            <?php foreach (array_slice($questionPolarization, 0, 5) as $index => $data): ?>
+                                <div class="p-3 border border-gray-100 rounded-lg hover:bg-gray-50 transition-colors">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <div class="flex-1 pr-4">
+                                            <p class="text-sm font-medium text-gray-800 line-clamp-2">
+                                                <?= htmlspecialchars($data['question']->title) ?>
+                                            </p>
+                                        </div>
+                                        <div class="text-right">
+                                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
+                                                <?= number_format($data['neutral_percentage'], 1) ?>% neutraal
+                                            </span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex space-x-2 text-xs">
+                                        <span class="text-green-600"><?= $data['stats']['eens'] ?> eens</span>
+                                        <span class="text-gray-500"><?= $data['stats']['neutraal'] ?> neutraal</span>
+                                        <span class="text-red-600"><?= $data['stats']['oneens'] ?> oneens</span>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                    
+                    <!-- Meest Polariserende Vragen -->
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">Meest Polariserende Vragen</h3>
+                        <div class="space-y-3">
+                            <?php 
+                            // Sorteer op laagste neutrale percentage (meest polariserend)
+                            $polarizing = array_slice(array_reverse($questionPolarization), 0, 5);
+                            foreach ($polarizing as $index => $data): 
+                            ?>
+                                <div class="p-3 border border-gray-100 rounded-lg hover:bg-gray-50 transition-colors">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <div class="flex-1 pr-4">
+                                            <p class="text-sm font-medium text-gray-800 line-clamp-2">
+                                                <?= htmlspecialchars($data['question']->title) ?>
+                                            </p>
+                                        </div>
+                                        <div class="text-right">
+                                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700">
+                                                <?= number_format($data['strong_opinions'], 1) ?>% sterke mening
+                                            </span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex space-x-2 text-xs">
+                                        <span class="text-green-600"><?= $data['stats']['eens'] ?> eens</span>
+                                        <span class="text-gray-500"><?= $data['stats']['neutraal'] ?> neutraal</span>
+                                        <span class="text-red-600"><?= $data['stats']['oneens'] ?> oneens</span>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Gemiddelde Polarisatie Score -->
+                <div class="mt-6 p-4 bg-blue-50 rounded-lg">
+                    <div class="text-center">
+                        <?php 
+                        $avgNeutral = !empty($questionPolarization) ? 
+                            array_sum(array_column($questionPolarization, 'neutral_percentage')) / count($questionPolarization) : 0;
+                        ?>
+                        <div class="text-2xl font-bold text-blue-600"><?= number_format($avgNeutral, 1) ?>%</div>
+                        <div class="text-sm text-blue-700">Gemiddeld percentage neutrale antwoorden</div>
+                        <div class="text-xs text-gray-500 mt-1">
+                            Lagere percentages betekenen meer polariserende vragen
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php endif; ?>
 
         <!-- Answer Statistics -->
         <?php if (!empty($answerStats) && !empty($questions)): ?>
