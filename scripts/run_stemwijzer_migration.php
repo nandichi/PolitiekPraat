@@ -607,8 +607,8 @@
      ],
      [
          'title' => 'Stikstofbeleid',
-         'description' => 'Het stikstofbeleid moet onverkort worden doorgezet, ook als dit ten koste gaat van boerenbedrijven en de werkgelegenheid in de agrarische sector.',
-         'context' => 'Deze stelling gaat over de voortgang van het Nederlandse stikstofbeleid. Onverkort doorzetten betekent dat de maatregelen om de stikstofuitstoot te verminderen (zoals het uitkopen van boeren) met volle kracht worden uitgevoerd, ongeacht de impact op individuele boeren en de agrarische sector. Dit kan leiden tot een snellere verbetering van de natuur en de volksgezondheid, maar kan ook leiden tot grote maatschappelijke en economische gevolgen voor de boeren. Het onderwerp raakt aan milieu, economie en de toekomst van de landbouw.',
+         'description' => 'De huidige stikstofmaatregelen (zoals het uitkopen van boeren en het verminderen van de veestapel) moeten volledig worden uitgevoerd, ook als dit ten koste gaat van landbouwbedrijven.',
+         'context' => 'Deze stelling gaat over het huidige Nederlandse stikstofbeleid dat stikstofemissies wil verminderen om natuurgebieden te beschermen. De maatregelen omvatten onder andere het uitkopen van boerenbedrijven, het verminderen van de veestapel, en het aanscherpen van vergunningen. Voorstanders zien dit als noodzakelijk om de natuur te herstellen, tegenstanders vinden het te ingrijpend voor de landbouwsector.',
          'left_view' => 'Vinden dat de natuur en het milieu voorrang moeten krijgen en dat het stikstofbeleid snel en effectief moet worden uitgevoerd.',
          'right_view' => 'Geloven dat het stikstofbeleid te ver gaat en dat de belangen van boeren en de agrarische sector meer gewicht moeten krijgen.',
          'order_number' => 25,

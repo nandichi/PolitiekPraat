@@ -437,7 +437,6 @@ class StemwijzerController {
      */
     public function analyzePoliticalPersonality($answers, $questions) {
         $analysis = [
-            'left_right_score' => 0,
             'progressive_conservative_score' => 0,
             'authoritarian_libertarian_score' => 0,
             'eu_skeptic_pro_score' => 0,
@@ -446,12 +445,21 @@ class StemwijzerController {
             'total_answered' => count($answers)
         ];
 
+        // Counters voor elke categorie om juiste percentages te berekenen
+        $categoryCounters = [
+            'economic_questions' => 0,
+            'social_questions' => 0,
+            'eu_questions' => 0,
+            'progressive_questions' => 0,
+            'authoritarian_questions' => 0
+        ];
+
         // Categorieën van vragen voor verschillende assen
-        $economicQuestions = ['belasting', 'uitkering', 'economie', 'subsidie', 'markt', 'inkomen', 'pensioen'];
-        $socialQuestions = ['asiel', 'immigratie', 'integratie', 'criminaliteit', 'veiligheid', 'identiteit'];
-        $euQuestions = ['europa', 'eu', 'europese', 'brexit', 'soevereiniteit'];
-        $progressiveQuestions = ['klimaat', 'milieu', 'duurzaam', 'innovatie', 'technologie'];
-        $authoritarianQuestions = ['veiligheid', 'privacy', 'surveillance', 'politie', 'straf'];
+        $economicQuestions = ['belasting', 'uitkering', 'economie', 'subsidie', 'markt', 'inkomen', 'pensioen', 'loon', 'werk', 'baan', 'onderneming', 'bedrijf'];
+        $socialQuestions = ['asiel', 'immigratie', 'integratie', 'criminaliteit', 'veiligheid', 'identiteit', 'cultuur', 'traditie'];
+        $euQuestions = ['europa', 'eu', 'europese', 'brexit', 'soevereiniteit', 'brussel'];
+        $progressiveQuestions = ['klimaat', 'milieu', 'duurzaam', 'innovatie', 'technologie', 'energie', 'natuur'];
+        $authoritarianQuestions = ['veiligheid', 'privacy', 'surveillance', 'politie', 'straf', 'orde', 'autoriteit'];
 
         foreach ($answers as $questionIndex => $answer) {
             if (!isset($questions[$questionIndex])) continue;
@@ -473,42 +481,52 @@ class StemwijzerController {
             // Economische as (links-rechts)
             if ($this->containsKeywords($questionText, $economicQuestions)) {
                 $analysis['economic_left_right'] += $answerValue;
+                $categoryCounters['economic_questions']++;
             }
 
             // Sociale as (progressief-conservatief)
             if ($this->containsKeywords($questionText, $socialQuestions)) {
                 $analysis['social_liberal_conservative'] += $answerValue;
+                $categoryCounters['social_questions']++;
             }
 
             // EU as (skeptisch-pro)
             if ($this->containsKeywords($questionText, $euQuestions)) {
                 $analysis['eu_skeptic_pro_score'] += $answerValue;
+                $categoryCounters['eu_questions']++;
             }
 
             // Progressief-conservatief
             if ($this->containsKeywords($questionText, $progressiveQuestions)) {
                 $analysis['progressive_conservative_score'] += $answerValue;
+                $categoryCounters['progressive_questions']++;
             }
 
             // Autoritair-libertair
             if ($this->containsKeywords($questionText, $authoritarianQuestions)) {
                 $analysis['authoritarian_libertarian_score'] += $answerValue;
+                $categoryCounters['authoritarian_questions']++;
             }
-
-            // Algemene links-rechts score
-            $analysis['left_right_score'] += $answerValue;
         }
 
-        // Normaliseer scores naar percentages
-        $totalQuestions = count($answers);
-        if ($totalQuestions > 0) {
-            $analysis['left_right_percentage'] = (($analysis['left_right_score'] / $totalQuestions) + 1) * 50;
-            $analysis['progressive_percentage'] = (($analysis['progressive_conservative_score'] / $totalQuestions) + 1) * 50;
-            $analysis['authoritarian_percentage'] = (($analysis['authoritarian_libertarian_score'] / $totalQuestions) + 1) * 50;
-            $analysis['eu_pro_percentage'] = (($analysis['eu_skeptic_pro_score'] / $totalQuestions) + 1) * 50;
-            $analysis['economic_right_percentage'] = (($analysis['economic_left_right'] / $totalQuestions) + 1) * 50;
-            $analysis['social_conservative_percentage'] = (($analysis['social_liberal_conservative'] / $totalQuestions) + 1) * 50;
-        }
+        // Normaliseer scores naar percentages gebaseerd op het juiste aantal vragen per categorie
+        $analysis['economic_right_percentage'] = $categoryCounters['economic_questions'] > 0 ? 
+            (($analysis['economic_left_right'] / $categoryCounters['economic_questions']) + 1) * 50 : 50;
+            
+        $analysis['social_conservative_percentage'] = $categoryCounters['social_questions'] > 0 ? 
+            (($analysis['social_liberal_conservative'] / $categoryCounters['social_questions']) + 1) * 50 : 50;
+            
+        $analysis['progressive_percentage'] = $categoryCounters['progressive_questions'] > 0 ? 
+            (($analysis['progressive_conservative_score'] / $categoryCounters['progressive_questions']) + 1) * 50 : 50;
+            
+        $analysis['authoritarian_percentage'] = $categoryCounters['authoritarian_questions'] > 0 ? 
+            (($analysis['authoritarian_libertarian_score'] / $categoryCounters['authoritarian_questions']) + 1) * 50 : 50;
+            
+        $analysis['eu_pro_percentage'] = $categoryCounters['eu_questions'] > 0 ? 
+            (($analysis['eu_skeptic_pro_score'] / $categoryCounters['eu_questions']) + 1) * 50 : 50;
+
+        // Voor backwards compatibility - gebruik economische score als basis voor algemene left_right
+        $analysis['left_right_percentage'] = $analysis['economic_right_percentage'];
 
         // Bepaal politiek profiel
         $analysis['political_profile'] = $this->determinePoliticalProfile($analysis);
@@ -534,7 +552,7 @@ class StemwijzerController {
      * Bepaal het politieke profiel
      */
     private function determinePoliticalProfile($analysis) {
-        $leftRight = $analysis['left_right_percentage'] ?? 50;
+        $leftRight = $analysis['economic_right_percentage'] ?? 50;
         $progressive = $analysis['progressive_percentage'] ?? 50;
         
         if ($leftRight < 35 && $progressive > 65) {
@@ -576,7 +594,7 @@ class StemwijzerController {
     private function determinePoliticalTraits($analysis) {
         $traits = [];
         
-        $leftRight = $analysis['left_right_percentage'] ?? 50;
+        $leftRight = $analysis['economic_right_percentage'] ?? 50;
         $progressive = $analysis['progressive_percentage'] ?? 50;
         $authoritarian = $analysis['authoritarian_percentage'] ?? 50;
         $euPro = $analysis['eu_pro_percentage'] ?? 50;

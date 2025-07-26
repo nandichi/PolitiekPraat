@@ -921,11 +921,33 @@ $howToStructuredData = [
                         </svg>
                     </div>
                     
-                    <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
-                        Jouw Politieke
-                        <span class="text-gradient bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-                            Persoonlijkheid
+                    <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4 flex items-center justify-center gap-3">
+                        <span>Jouw Politieke
+                            <span class="text-gradient bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                                Persoonlijkheid
+                            </span>
                         </span>
+                        <div class="relative group">
+                            <div class="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center cursor-help shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110">
+                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            
+                            <!-- Tooltip -->
+                            <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 px-4 py-3 bg-gray-900 text-white text-sm rounded-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 w-80 z-50 shadow-2xl">
+                                <div class="space-y-3">
+                                    <p class="font-semibold text-purple-300">Hoe wordt dit berekend?</p>
+                                    <div class="space-y-2 text-xs leading-relaxed">
+                                        <p><strong>Categorisatie:</strong> Vragen worden automatisch ingedeeld in economische, sociale, progressieve, autoritaire en EU-gerelateerde onderwerpen op basis van kernwoorden.</p>
+                                        <p><strong>Scoring:</strong> Per categorie krijg je een score van 0-100% gebaseerd op je antwoorden (eens = +1, oneens = -1, neutraal = 0).</p>
+                                        <p><strong>Profiel:</strong> Je politieke type wordt bepaald door je economische (links-rechts) en progressieve scores te combineren.</p>
+                                        <p><strong>Kompas:</strong> Je positie gebruikt economische en sociale scores voor de X/Y-as.</p>
+                                    </div>
+                                </div>
+                                <div class="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
+                            </div>
+                        </div>
                     </h2>
                     
                     <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed mb-8">
@@ -2746,7 +2768,6 @@ function stemwijzer() {
 
         calculatePersonalityAnalysis() {
             const analysis = {
-                left_right_score: 0,
                 progressive_conservative_score: 0,
                 authoritarian_libertarian_score: 0,
                 eu_skeptic_pro_score: 0,
@@ -2755,12 +2776,21 @@ function stemwijzer() {
                 total_answered: Object.keys(this.answers).length
             };
 
-            // Categorieën van vragen voor verschillende assen
-            const economicKeywords = ['belasting', 'uitkering', 'economie', 'subsidie', 'markt', 'inkomen', 'pensioen'];
-            const socialKeywords = ['asiel', 'immigratie', 'integratie', 'criminaliteit', 'veiligheid', 'identiteit'];
-            const euKeywords = ['europa', 'eu', 'europese', 'brexit', 'soevereiniteit'];
-            const progressiveKeywords = ['klimaat', 'milieu', 'duurzaam', 'innovatie', 'technologie'];
-            const authoritarianKeywords = ['veiligheid', 'privacy', 'surveillance', 'politie', 'straf'];
+            // Counters voor elke categorie om juiste percentages te berekenen
+            const categoryCounters = {
+                economic_questions: 0,
+                social_questions: 0,
+                eu_questions: 0,
+                progressive_questions: 0,
+                authoritarian_questions: 0
+            };
+
+            // Categorieën van vragen voor verschillende assen (uitgebreid)
+            const economicKeywords = ['belasting', 'uitkering', 'economie', 'subsidie', 'markt', 'inkomen', 'pensioen', 'loon', 'werk', 'baan', 'onderneming', 'bedrijf'];
+            const socialKeywords = ['asiel', 'immigratie', 'integratie', 'criminaliteit', 'veiligheid', 'identiteit', 'cultuur', 'traditie'];
+            const euKeywords = ['europa', 'eu', 'europese', 'brexit', 'soevereiniteit', 'brussel'];
+            const progressiveKeywords = ['klimaat', 'milieu', 'duurzaam', 'innovatie', 'technologie', 'energie', 'natuur'];
+            const authoritarianKeywords = ['veiligheid', 'privacy', 'surveillance', 'politie', 'straf', 'orde', 'autoriteit'];
 
             Object.keys(this.answers).forEach(questionIndex => {
                 const question = this.questions[questionIndex];
@@ -2777,35 +2807,44 @@ function stemwijzer() {
                 // Check voor verschillende categorieën
                 if (this.containsKeywords(questionText, economicKeywords)) {
                     analysis.economic_left_right += answerValue;
+                    categoryCounters.economic_questions++;
                 }
                 if (this.containsKeywords(questionText, socialKeywords)) {
                     analysis.social_liberal_conservative += answerValue;
+                    categoryCounters.social_questions++;
                 }
                 if (this.containsKeywords(questionText, euKeywords)) {
                     analysis.eu_skeptic_pro_score += answerValue;
+                    categoryCounters.eu_questions++;
                 }
                 if (this.containsKeywords(questionText, progressiveKeywords)) {
                     analysis.progressive_conservative_score += answerValue;
+                    categoryCounters.progressive_questions++;
                 }
                 if (this.containsKeywords(questionText, authoritarianKeywords)) {
                     analysis.authoritarian_libertarian_score += answerValue;
+                    categoryCounters.authoritarian_questions++;
                 }
-
-                analysis.left_right_score += answerValue;
             });
 
-            // Normaliseer scores naar percentages
-            const totalQuestions = Object.keys(this.answers).length;
-            analysis.total_answered = totalQuestions;
-            
-            if (totalQuestions > 0) {
-                analysis.left_right_percentage = ((analysis.left_right_score / totalQuestions) + 1) * 50;
-                analysis.progressive_percentage = ((analysis.progressive_conservative_score / totalQuestions) + 1) * 50;
-                analysis.authoritarian_percentage = ((analysis.authoritarian_libertarian_score / totalQuestions) + 1) * 50;
-                analysis.eu_pro_percentage = ((analysis.eu_skeptic_pro_score / totalQuestions) + 1) * 50;
-                analysis.economic_right_percentage = ((analysis.economic_left_right / totalQuestions) + 1) * 50;
-                analysis.social_conservative_percentage = ((analysis.social_liberal_conservative / totalQuestions) + 1) * 50;
-            }
+            // Normaliseer scores naar percentages gebaseerd op het juiste aantal vragen per categorie
+            analysis.economic_right_percentage = categoryCounters.economic_questions > 0 ? 
+                ((analysis.economic_left_right / categoryCounters.economic_questions) + 1) * 50 : 50;
+                
+            analysis.social_conservative_percentage = categoryCounters.social_questions > 0 ? 
+                ((analysis.social_liberal_conservative / categoryCounters.social_questions) + 1) * 50 : 50;
+                
+            analysis.progressive_percentage = categoryCounters.progressive_questions > 0 ? 
+                ((analysis.progressive_conservative_score / categoryCounters.progressive_questions) + 1) * 50 : 50;
+                
+            analysis.authoritarian_percentage = categoryCounters.authoritarian_questions > 0 ? 
+                ((analysis.authoritarian_libertarian_score / categoryCounters.authoritarian_questions) + 1) * 50 : 50;
+                
+            analysis.eu_pro_percentage = categoryCounters.eu_questions > 0 ? 
+                ((analysis.eu_skeptic_pro_score / categoryCounters.eu_questions) + 1) * 50 : 50;
+
+            // Voor backwards compatibility - gebruik economische score als basis voor algemene left_right
+            analysis.left_right_percentage = analysis.economic_right_percentage;
 
             // Bepaal politiek profiel
             analysis.political_profile = this.determinePoliticalProfile(analysis);
@@ -2820,7 +2859,7 @@ function stemwijzer() {
         },
 
         determinePoliticalProfile(analysis) {
-            const leftRight = analysis.left_right_percentage || 50;
+            const leftRight = analysis.economic_right_percentage || 50;
             const progressive = analysis.progressive_percentage || 50;
             
             if (leftRight < 35 && progressive > 65) {
@@ -2859,7 +2898,7 @@ function stemwijzer() {
         determinePoliticalTraits(analysis) {
             const traits = [];
             
-            const leftRight = analysis.left_right_percentage || 50;
+            const leftRight = analysis.economic_right_percentage || 50;
             const progressive = analysis.progressive_percentage || 50;
             const authoritarian = analysis.authoritarian_percentage || 50;
             const euPro = analysis.eu_pro_percentage || 50;
