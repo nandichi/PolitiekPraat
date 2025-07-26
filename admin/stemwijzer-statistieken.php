@@ -115,7 +115,7 @@ try {
     }
     
     // Haal vragen op voor display
-    $db->query("SELECT id, title, order_number FROM stemwijzer_questions ORDER BY order_number ASC");
+    $db->query("SELECT id, title, description, context, left_view, right_view, order_number FROM stemwijzer_questions ORDER BY order_number ASC");
     $questions = $db->resultSet() ?? [];
     
     // Populairste partijen uit resultaten (alleen nummer 1 partij per inzending)
@@ -683,19 +683,38 @@ require_once '../views/templates/header.php';
         </div>
 
         <!-- Detail Modal -->
-        <div id="detailModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden z-50">
-            <div class="relative top-20 mx-auto p-5 border w-11/12 max-w-4xl shadow-lg rounded-md bg-white">
-                <div class="mt-3">
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-lg font-medium text-gray-900" id="modalTitle">Inzending Details</h3>
-                        <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                            </svg>
-                        </button>
+        <div id="detailModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm overflow-y-auto h-full w-full hidden z-50">
+            <div class="relative p-4 w-full min-h-screen flex items-start justify-center pt-20 pb-20">
+                <div class="bg-white rounded-3xl shadow-2xl border border-gray-200 w-full max-w-6xl overflow-hidden">
+                    <!-- Modal Header -->
+                    <div class="bg-gradient-to-r from-primary-dark via-primary to-secondary px-6 py-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-2xl font-bold text-white" id="modalTitle">Inzending Details</h3>
+                                    <p class="text-white/80 text-sm">Gedetailleerde analyse van stemwijzer resultaten</p>
+                                </div>
+                            </div>
+                            <button onclick="closeModal()" class="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300 group">
+                                <svg class="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </button>
+                        </div>
                     </div>
-                    <div id="modalContent" class="space-y-6">
-                        <!-- Content will be loaded here -->
+
+                    <!-- Modal Content -->
+                    <div class="max-h-[80vh] overflow-y-auto">
+                        <div class="p-6">
+                            <div id="modalContent" class="space-y-6">
+                                <!-- Content will be loaded here -->
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1046,7 +1065,7 @@ function showDetails(resultId) {
     const result = resultsData.find(r => r.id == resultId);
     if (!result) return;
     
-    document.getElementById('modalTitle').textContent = `Inzending #${result.id} Details`;
+    document.getElementById('modalTitle').textContent = `Inzending #${result.id}`;
     
     let answersHtml = '';
     let resultsHtml = '';
@@ -1056,31 +1075,149 @@ function showDetails(resultId) {
         try {
             const answers = JSON.parse(result.answers);
             if (Array.isArray(answers) || typeof answers === 'object') {
-                answersHtml = '<div class="bg-gray-50 rounded-lg p-4"><h4 class="font-semibold mb-3 text-gray-800">Antwoorden per Vraag</h4><div class="space-y-2">';
+                answersHtml = `
+                                         <div class="bg-gradient-to-br from-primary/5 to-primary/10 rounded-2xl border border-primary/20 overflow-hidden">
+                         <div class="bg-gradient-to-r from-primary-dark to-primary px-6 py-4">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 bg-white/20 rounded-xl flex items-center justify-center">
+                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                </div>
+                                <h4 class="text-xl font-bold text-white">Antwoorden per Vraag</h4>
+                                <span class="bg-white/20 px-3 py-1 rounded-full text-white text-sm font-medium">
+                                    ${Object.keys(answers).length} vragen beantwoord
+                                </span>
+                            </div>
+                        </div>
+                        <div class="p-6 space-y-4">
+                `;
                 
                 Object.entries(answers).forEach(([questionIndex, answer]) => {
                     const questionNum = parseInt(questionIndex) + 1;
                     const question = questionsData.find(q => q.order_number == questionNum);
-                    const questionTitle = question ? question.title : `Vraag ${questionNum}`;
                     
-                    const answerClass = answer === 'eens' ? 'bg-green-100 text-green-800' : 
-                                      answer === 'oneens' ? 'bg-red-100 text-red-800' : 
-                                      'bg-gray-100 text-gray-800';
-                    
-                    answersHtml += `
-                        <div class="flex justify-between items-center py-2 px-3 bg-white rounded border">
-                            <span class="text-sm text-gray-700">${questionTitle}</span>
-                            <span class="px-2 py-1 rounded-full text-xs font-medium ${answerClass}">${answer}</span>
-                        </div>
-                    `;
+                    if (question) {
+                        const answerConfig = {
+                            'eens': {
+                                bg: 'bg-gradient-to-r from-green-50 to-emerald-50',
+                                border: 'border-green-200',
+                                badge: 'bg-green-500 text-white',
+                                icon: '👍',
+                                label: 'Eens'
+                            },
+                            'oneens': {
+                                bg: 'bg-gradient-to-r from-red-50 to-pink-50',
+                                border: 'border-red-200',
+                                badge: 'bg-red-500 text-white',
+                                icon: '👎',
+                                label: 'Oneens'
+                            },
+                            'neutraal': {
+                                bg: 'bg-gradient-to-r from-gray-50 to-slate-50',
+                                border: 'border-gray-200',
+                                badge: 'bg-gray-500 text-white',
+                                icon: '🤷‍♂️',
+                                label: 'Neutraal'
+                            }
+                        };
+                        
+                        const config = answerConfig[answer] || answerConfig['neutraal'];
+                        
+                        answersHtml += `
+                            <div class="group ${config.bg} ${config.border} border rounded-2xl p-6 hover:shadow-lg transition-all duration-300">
+                                <div class="flex items-start justify-between mb-4">
+                                    <div class="flex items-center space-x-3">
+                                                                                 <div class="w-10 h-10 bg-white/80 rounded-xl flex items-center justify-center font-bold text-primary text-sm">
+                                            ${questionNum}
+                                        </div>
+                                        <div>
+                                            <h5 class="font-bold text-gray-800 text-lg">${question.title}</h5>
+                                            <span class="inline-flex items-center space-x-2 px-3 py-1 rounded-full text-sm font-medium ${config.badge} mt-2">
+                                                <span>${config.icon}</span>
+                                                <span>${config.label}</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white/70 rounded-xl p-4 mb-4 border border-white/50">
+                                    <p class="text-gray-700 leading-relaxed">${question.description}</p>
+                                </div>
+                                
+                                ${question.context ? `
+                                    <div class="bg-white/50 rounded-xl p-4 mb-4 border border-white/30">
+                                        <h6 class="font-semibold text-gray-800 mb-2 flex items-center">
+                                                                                         <svg class="w-4 h-4 mr-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                            </svg>
+                                            Context
+                                        </h6>
+                                        <p class="text-gray-600 text-sm leading-relaxed">${question.context}</p>
+                                    </div>
+                                ` : ''}
+                                
+                                ${(question.left_view || question.right_view) ? `
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        ${question.left_view ? `
+                                                                                         <div class="bg-primary/5 rounded-xl p-4 border border-primary/20">
+                                                 <h6 class="font-semibold text-primary mb-2 flex items-center">
+                                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-1.586z"/>
+                                                    </svg>
+                                                    Perspectief Pro
+                                                </h6>
+                                                                                                 <p class="text-primary/70 text-sm leading-relaxed">${question.left_view}</p>
+                                            </div>
+                                        ` : ''}
+                                        ${question.right_view ? `
+                                                                                         <div class="bg-secondary/5 rounded-xl p-4 border border-secondary/20">
+                                                 <h6 class="font-semibold text-secondary mb-2 flex items-center">
+                                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a2 2 0 01-2-2v-6a2 2 0 012-2h8z"/>
+                                                    </svg>
+                                                    Perspectief Contra
+                                                </h6>
+                                                                                                 <p class="text-secondary/70 text-sm leading-relaxed">${question.right_view}</p>
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                ` : ''}
+                            </div>
+                        `;
+                    }
                 });
                 answersHtml += '</div></div>';
             }
         } catch (e) {
-            answersHtml = '<div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4"><p class="text-yellow-800">Fout bij het laden van antwoorden</p></div>';
+            answersHtml = `
+                <div class="bg-gradient-to-r from-yellow-50 to-orange-50 border border-yellow-200 rounded-2xl p-6">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-yellow-500 rounded-xl flex items-center justify-center">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-yellow-800">Fout bij het laden van antwoorden</h4>
+                            <p class="text-yellow-700 text-sm">De antwoorddata kon niet worden verwerkt</p>
+                        </div>
+                    </div>
+                </div>
+            `;
         }
     } else {
-        answersHtml = '<div class="bg-gray-50 rounded-lg p-4"><p class="text-gray-600">Geen antwoorden beschikbaar</p></div>';
+        answersHtml = `
+            <div class="bg-gradient-to-r from-gray-50 to-slate-50 border border-gray-200 rounded-2xl p-8 text-center">
+                <div class="w-16 h-16 bg-gray-300 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    </svg>
+                </div>
+                <h4 class="font-bold text-gray-700 mb-2">Geen antwoorden beschikbaar</h4>
+                <p class="text-gray-500 text-sm">Deze inzending bevat geen antwoorddata</p>
+            </div>
+        `;
     }
     
     // Parse resultaten
@@ -1090,54 +1227,153 @@ function showDetails(resultId) {
             if (typeof results === 'object') {
                 const sortedResults = Object.entries(results).sort((a, b) => b[1].agreement - a[1].agreement);
                 
-                resultsHtml = '<div class="bg-gray-50 rounded-lg p-4"><h4 class="font-semibold mb-3 text-gray-800">Partij Scores</h4><div class="space-y-2">';
+                resultsHtml = `
+                                         <div class="bg-gradient-to-br from-secondary/5 to-secondary/10 rounded-2xl border border-secondary/20 overflow-hidden">
+                         <div class="bg-gradient-to-r from-secondary-dark to-secondary px-6 py-4">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 bg-white/20 rounded-xl flex items-center justify-center">
+                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                    </svg>
+                                </div>
+                                <h4 class="text-xl font-bold text-white">Partij Resultaten</h4>
+                                <span class="bg-white/20 px-3 py-1 rounded-full text-white text-sm font-medium">
+                                    ${sortedResults.length} partijen
+                                </span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="grid gap-3">
+                `;
                 
                 sortedResults.forEach(([party, data], index) => {
                     const percentage = data.agreement || 0;
-                    const bgColor = index === 0 ? 'bg-gradient-to-r from-blue-500 to-indigo-600' : 'bg-gray-300';
-                    const textColor = index === 0 ? 'text-white' : 'text-gray-700';
+                    const isWinner = index === 0;
+                    const medalEmoji = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : '';
                     
                     resultsHtml += `
-                        <div class="flex items-center justify-between py-2 px-3 bg-white rounded border">
-                            <div class="flex items-center space-x-3">
-                                <div class="w-6 h-6 ${bgColor} rounded-lg flex items-center justify-center ${textColor} text-xs font-bold">
-                                    ${index + 1}
+                        <div class="group ${isWinner ? 'bg-gradient-to-r from-yellow-50 to-amber-50 border-yellow-300' : 'bg-white border-gray-200'} border rounded-xl p-4 hover:shadow-md transition-all duration-300">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-4">
+                                    <div class="relative">
+                                        <div class="w-12 h-12 ${isWinner ? 'bg-gradient-to-r from-yellow-400 to-amber-500' : 'bg-gradient-to-r from-gray-400 to-gray-500'} rounded-xl flex items-center justify-center text-white font-bold">
+                                            ${index + 1}
+                                        </div>
+                                        ${medalEmoji ? `<span class="absolute -top-1 -right-1 text-lg">${medalEmoji}</span>` : ''}
+                                    </div>
+                                    <div>
+                                        <h5 class="font-bold text-gray-800 text-lg">${party}</h5>
+                                        <p class="text-gray-500 text-sm">
+                                            ${index === 0 ? 'Beste match' : index === 1 ? 'Tweede keuze' : index === 2 ? 'Derde keuze' : `${index + 1}e plaats`}
+                                        </p>
+                                    </div>
                                 </div>
-                                <span class="text-sm font-medium text-gray-800">${party}</span>
+                                <div class="text-right">
+                                    <div class="text-2xl font-bold ${isWinner ? 'text-yellow-600' : 'text-gray-700'}">${percentage.toFixed(1)}%</div>
+                                    <div class="w-20 h-2 bg-gray-200 rounded-full mt-2">
+                                        <div class="${isWinner ? 'bg-gradient-to-r from-yellow-400 to-amber-500' : 'bg-gradient-to-r from-gray-400 to-gray-500'} h-2 rounded-full transition-all duration-500" 
+                                             style="width: ${Math.max(5, percentage)}%"></div>
+                                    </div>
+                                </div>
                             </div>
-                            <span class="text-sm font-bold text-gray-700">${percentage.toFixed(1)}%</span>
                         </div>
                     `;
                 });
-                resultsHtml += '</div></div>';
+                resultsHtml += '</div></div></div>';
             }
         } catch (e) {
-            resultsHtml = '<div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4"><p class="text-yellow-800">Fout bij het laden van resultaten</p></div>';
+            resultsHtml = `
+                <div class="bg-gradient-to-r from-red-50 to-pink-50 border border-red-200 rounded-2xl p-6">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-red-500 rounded-xl flex items-center justify-center">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-red-800">Fout bij het laden van resultaten</h4>
+                            <p class="text-red-700 text-sm">De resultaatdata kon niet worden verwerkt</p>
+                        </div>
+                    </div>
+                </div>
+            `;
         }
     } else {
-        resultsHtml = '<div class="bg-gray-50 rounded-lg p-4"><p class="text-gray-600">Geen resultaten beschikbaar</p></div>';
+        resultsHtml = `
+            <div class="bg-gradient-to-r from-gray-50 to-slate-50 border border-gray-200 rounded-2xl p-8 text-center">
+                <div class="w-16 h-16 bg-gray-300 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                    </svg>
+                </div>
+                <h4 class="font-bold text-gray-700 mb-2">Geen resultaten beschikbaar</h4>
+                <p class="text-gray-500 text-sm">Deze inzending bevat geen resultaatdata</p>
+            </div>
+        `;
     }
     
     // Basis informatie
     const basicInfoHtml = `
-        <div class="bg-blue-50 rounded-lg p-4">
-            <h4 class="font-semibold mb-3 text-gray-800">Basis Informatie</h4>
-            <div class="grid grid-cols-2 gap-4">
-                <div>
-                    <span class="text-sm text-gray-600">Session ID:</span>
-                    <p class="font-mono text-sm">${result.session_id}</p>
-                </div>
-                <div>
-                    <span class="text-sm text-gray-600">IP Adres:</span>
-                    <p class="text-sm">${result.ip_address}</p>
-                </div>
-                <div>
-                    <span class="text-sm text-gray-600">Voltooid op:</span>
-                    <p class="text-sm">${new Date(result.completed_at).toLocaleString('nl-NL')}</p>
-                </div>
-                <div>
-                    <span class="text-sm text-gray-600">Inzending ID:</span>
-                    <p class="text-sm font-semibold">#${result.id}</p>
+                          <div class="bg-gradient-to-br from-primary/5 to-primary/10 rounded-2xl border border-primary/20 overflow-hidden">
+             <div class="bg-gradient-to-r from-primary-dark to-primary px-6 py-4">
+                 <div class="flex items-center space-x-3">
+                     <div class="w-8 h-8 bg-white/20 rounded-xl flex items-center justify-center">
+                         <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                         </svg>
+                     </div>
+                     <h4 class="text-xl font-bold text-white">Basis Informatie</h4>
+                 </div>
+             </div>
+            <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white/70 rounded-xl p-4 border border-white/50">
+                        <div class="flex items-center space-x-3 mb-2">
+                                                         <div class="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
+                                 <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+                                </svg>
+                            </div>
+                            <span class="text-sm font-semibold text-gray-600">Inzending ID</span>
+                        </div>
+                        <p class="text-xl font-bold text-gray-800">#${result.id}</p>
+                    </div>
+                    
+                    <div class="bg-white/70 rounded-xl p-4 border border-white/50">
+                        <div class="flex items-center space-x-3 mb-2">
+                            <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <span class="text-sm font-semibold text-gray-600">Voltooid op</span>
+                        </div>
+                        <p class="text-lg font-semibold text-gray-700">${new Date(result.completed_at).toLocaleString('nl-NL')}</p>
+                    </div>
+                    
+                    <div class="bg-white/70 rounded-xl p-4 border border-white/50">
+                        <div class="flex items-center space-x-3 mb-2">
+                            <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <span class="text-sm font-semibold text-gray-600">Session ID</span>
+                        </div>
+                        <p class="font-mono text-sm text-gray-700 break-all">${result.session_id}</p>
+                    </div>
+                    
+                    <div class="bg-white/70 rounded-xl p-4 border border-white/50">
+                        <div class="flex items-center space-x-3 mb-2">
+                                                         <div class="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
+                                 <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0-9v9"/>
+                                </svg>
+                            </div>
+                            <span class="text-sm font-semibold text-gray-600">IP Adres</span>
+                        </div>
+                        <p class="text-sm font-semibold text-gray-700">${result.ip_address}</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1145,10 +1381,17 @@ function showDetails(resultId) {
     
     document.getElementById('modalContent').innerHTML = basicInfoHtml + answersHtml + resultsHtml;
     document.getElementById('detailModal').classList.remove('hidden');
+    
+    // Scroll to top and focus modal
+    setTimeout(() => {
+        document.getElementById('detailModal').scrollTop = 0;
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    }, 100);
 }
 
 function closeModal() {
     document.getElementById('detailModal').classList.add('hidden');
+    document.body.style.overflow = 'auto'; // Restore background scrolling
 }
 
 // Close modal when clicking outside
@@ -1160,7 +1403,7 @@ document.getElementById('detailModal').addEventListener('click', function(e) {
 
 // Close modal with escape key
 document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
+    if (e.key === 'Escape' && !document.getElementById('detailModal').classList.contains('hidden')) {
         closeModal();
     }
 });
