@@ -1150,7 +1150,6 @@ $howToStructuredData = [
                         </div>
                     </div>
                 </div>
-                <!-- Einde van Jouw Politieke Persoonlijkheid sectie -->
 
                 <!-- Results Hero Section -->
                 <div class="text-center mb-12">
