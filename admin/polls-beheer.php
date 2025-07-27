@@ -125,19 +125,19 @@ require_once '../views/templates/header.php';
     
     <!-- Header Section -->
     <div class="gradient-bg">
-        <div class="container mx-auto px-4 py-12">
-            <div class="flex items-center justify-between">
+        <div class="container mx-auto px-4 py-8 md:py-12">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                 <div>
-                    <h1 class="text-4xl font-bold text-white mb-2">Polls Beheer</h1>
-                    <p class="text-blue-100 text-lg">Beheer stemcijfers voor blog polls</p>
+                    <h1 class="text-3xl md:text-4xl font-bold text-white mb-2">Polls Beheer</h1>
+                    <p class="text-blue-100 text-base md:text-lg">Beheer stemcijfers voor blog polls</p>
                 </div>
-                <div class="flex space-x-4">
+                <div class="flex flex-col sm:flex-row gap-3">
                     <a href="stemwijzer-dashboard.php" 
-                       class="bg-white/20 backdrop-blur-sm text-white px-6 py-3 rounded-xl hover:bg-white/30 transition-all duration-300 border border-white/30">
+                       class="bg-white/20 backdrop-blur-sm text-white px-4 md:px-6 py-2 md:py-3 rounded-xl hover:bg-white/30 transition-all duration-300 border border-white/30 text-center">
                         ← Terug naar Dashboard
                     </a>
                     <a href="../blogs" target="_blank"
-                       class="bg-white text-indigo-600 px-6 py-3 rounded-xl hover:bg-blue-50 transition-all duration-300 font-semibold">
+                       class="bg-white text-indigo-600 px-4 md:px-6 py-2 md:py-3 rounded-xl hover:bg-blue-50 transition-all duration-300 font-semibold text-center">
                         Bekijk Blogs
                     </a>
                 </div>

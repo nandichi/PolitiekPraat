@@ -195,8 +195,8 @@ require_once '../views/templates/header.php';
     
     <!-- Header Section -->
     <div class="gradient-bg">
-        <div class="container mx-auto px-4 py-12">
-            <div class="flex items-center justify-between flex-wrap gap-4">
+        <div class="container mx-auto px-4 py-8 md:py-12">
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
                 <div>
                     <div class="flex items-center space-x-4 mb-2">
                         <a href="stemwijzer-dashboard.php" class="text-white/80 hover:text-white transition-colors">
@@ -204,20 +204,20 @@ require_once '../views/templates/header.php';
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                             </svg>
                         </a>
-                        <h1 class="text-4xl font-bold text-white">Partijen Beheer</h1>
+                        <h1 class="text-3xl md:text-4xl font-bold text-white">Partijen Beheer</h1>
                     </div>
-                    <p class="text-blue-100 text-lg">Beheer alle politieke partijen en hun informatie</p>
+                    <p class="text-blue-100 text-base md:text-lg">Beheer alle politieke partijen en hun informatie</p>
                 </div>
-                <div class="flex space-x-4">
+                <div class="flex flex-col sm:flex-row gap-3">
                     <button onclick="openAddModal()" 
-                            class="bg-white/20 backdrop-blur-sm text-white px-6 py-3 rounded-xl hover:bg-white/30 transition-all duration-300 border border-white/30 flex items-center space-x-2">
+                            class="bg-white/20 backdrop-blur-sm text-white px-4 md:px-6 py-2 md:py-3 rounded-xl hover:bg-white/30 transition-all duration-300 border border-white/30 flex items-center justify-center space-x-2 text-sm md:text-base">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
                         </svg>
                         <span>Nieuwe Partij</span>
                     </button>
                     <button onclick="exportParties()" 
-                            class="bg-white text-indigo-600 px-6 py-3 rounded-xl hover:bg-blue-50 transition-all duration-300 font-semibold flex items-center space-x-2">
+                            class="bg-white text-indigo-600 px-4 md:px-6 py-2 md:py-3 rounded-xl hover:bg-blue-50 transition-all duration-300 font-semibold flex items-center justify-center space-x-2 text-sm md:text-base">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                         </svg>

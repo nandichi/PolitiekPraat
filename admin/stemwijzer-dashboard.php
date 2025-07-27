@@ -76,29 +76,29 @@ require_once '../views/templates/header.php';
     
     <!-- Header Section -->
     <div class="gradient-bg">
-        <div class="container mx-auto px-4 py-12">
-            <div class="flex items-center justify-between">
+        <div class="container mx-auto px-4 py-8 md:py-12">
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
                 <div>
-                    <h1 class="text-4xl font-bold text-white mb-2">Stemwijzer Beheer</h1>
-                    <p class="text-blue-100 text-lg">Beheer vragen, partijen en bekijk statistieken</p>
+                    <h1 class="text-3xl md:text-4xl font-bold text-white mb-2">Stemwijzer Beheer</h1>
+                    <p class="text-blue-100 text-base md:text-lg">Beheer vragen, partijen en bekijk statistieken</p>
                 </div>
-                <div class="flex space-x-4">
+                <div class="flex flex-col sm:flex-row sm:flex-wrap lg:flex-nowrap gap-3">
                     <a href="stemwijzer-statistieken.php" 
-                       class="bg-white/20 backdrop-blur-sm text-white px-6 py-3 rounded-xl hover:bg-white/30 transition-all duration-300 border border-white/30">
+                       class="bg-white/20 backdrop-blur-sm text-white px-4 md:px-6 py-2 md:py-3 rounded-xl hover:bg-white/30 transition-all duration-300 border border-white/30 text-center text-sm md:text-base">
                         Statistieken
                     </a>
                     <a href="stemwijzer-vraag-beheer.php" 
-                       class="bg-white/20 backdrop-blur-sm text-white px-6 py-3 rounded-xl hover:bg-white/30 transition-all duration-300 border border-white/30">
+                       class="bg-white/20 backdrop-blur-sm text-white px-4 md:px-6 py-2 md:py-3 rounded-xl hover:bg-white/30 transition-all duration-300 border border-white/30 text-center text-sm md:text-base">
                         Vragen Beheren
                     </a>
-                                    <a href="stemwijzer-partij-beheer.php" 
-                   class="bg-white/20 backdrop-blur-sm text-white px-6 py-3 rounded-xl hover:bg-white/30 transition-all duration-300 border border-white/30">
-                    Stemwijzer Partijen
-                </a>
-                <a href="political-parties-beheer.php" 
-                   class="bg-white text-indigo-600 px-6 py-3 rounded-xl hover:bg-blue-50 transition-all duration-300 font-semibold">
-                    Partijen Beheren
-                </a>
+                    <a href="stemwijzer-partij-beheer.php" 
+                       class="bg-white/20 backdrop-blur-sm text-white px-4 md:px-6 py-2 md:py-3 rounded-xl hover:bg-white/30 transition-all duration-300 border border-white/30 text-center text-sm md:text-base">
+                        Stemwijzer Partijen
+                    </a>
+                    <a href="political-parties-beheer.php" 
+                       class="bg-white text-indigo-600 px-4 md:px-6 py-2 md:py-3 rounded-xl hover:bg-blue-50 transition-all duration-300 font-semibold text-center text-sm md:text-base">
+                        Partijen Beheren
+                    </a>
                 </div>
             </div>
         </div>

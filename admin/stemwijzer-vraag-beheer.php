@@ -138,20 +138,20 @@ input:checked + .slider:before {
     
     <!-- Header Section -->
     <div class="gradient-bg">
-        <div class="container mx-auto px-4 py-12">
-            <div class="flex items-center justify-between">
+        <div class="container mx-auto px-4 py-8 md:py-12">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                 <div>
                     <nav class="text-blue-100 text-sm mb-2">
                         <a href="stemwijzer-dashboard.php" class="hover:text-white">Stemwijzer Beheer</a> 
                         <span class="mx-2">›</span> 
                         <span>Vragen Beheer</span>
                     </nav>
-                    <h1 class="text-4xl font-bold text-white mb-2">Vragen Beheer</h1>
-                    <p class="text-blue-100 text-lg">Beheer alle stemwijzer vragen en hun volgorde</p>
+                    <h1 class="text-3xl md:text-4xl font-bold text-white mb-2">Vragen Beheer</h1>
+                    <p class="text-blue-100 text-base md:text-lg">Beheer alle stemwijzer vragen en hun volgorde</p>
                 </div>
-                <div class="flex space-x-4">
+                <div class="flex justify-center">
                     <a href="stemwijzer-vraag-toevoegen.php" 
-                       class="bg-white text-indigo-600 px-6 py-3 rounded-xl hover:bg-blue-50 transition-all duration-300 font-semibold flex items-center space-x-2">
+                       class="bg-white text-indigo-600 px-4 md:px-6 py-2 md:py-3 rounded-xl hover:bg-blue-50 transition-all duration-300 font-semibold flex items-center space-x-2 text-sm md:text-base">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
                         </svg>
