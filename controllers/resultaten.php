@@ -16,25 +16,25 @@ if ($debugMode) {
 $shareId = $_GET['id'] ?? '';
 
 if (empty($shareId)) {
-    // Redirect naar stemwijzer als geen share_id
-    header('Location: /stemwijzer');
+    // Redirect naar partijmeter als geen share_id
+    header('Location: /partijmeter');
     exit;
 }
 
-// Initialize de stemwijzer controller
-$stemwijzerController = new StemwijzerController();
+// Initialize de partijmeter controller
+$partijmeterController = new StemwijzerController();
 
 // Probeer de resultaten op te halen
 $savedResults = null;
-$stemwijzerData = null;
+$partijmeterData = null;
 $errorMessage = '';
 
 try {
-    $savedResults = $stemwijzerController->getResultsByShareId($shareId);
+    $savedResults = $partijmeterController->getResultsByShareId($shareId);
     
     if ($savedResults) {
-        // Haal ook de stemwijzer data op voor het tonen van details
-        $stemwijzerData = $stemwijzerController->getStemwijzerData();
+        // Haal ook de partijmeter data op voor het tonen van details
+        $partijmeterData = $partijmeterController->getStemwijzerData();
         
         if ($debugMode) {
             echo "<!-- DEBUG: Resultaten succesvol geladen voor share_id: $shareId -->\n";
@@ -173,13 +173,13 @@ require_once 'views/templates/header.php';
                 
                 <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 leading-tight slide-in-bottom" style="animation-delay: 0.2s;">
                     <span class="block text-gradient bg-gradient-to-r from-green-300 via-blue-300 to-green-300 bg-clip-text text-transparent">
-                        Jouw Stemwijzer
+                        Jouw PartijMeter
                     </span>
                     <span class="text-white">Resultaten</span>
                 </h1>
                 
                 <p class="text-lg md:text-xl text-blue-100/80 mb-8 max-w-3xl mx-auto leading-relaxed font-light slide-in-bottom" style="animation-delay: 0.4s;">
-                    Bekijk hier de resultaten van jouw stemwijzer test. Deze pagina kan je <strong class="text-blue-200 font-semibold">bookmarken of delen</strong> 
+                    Bekijk hier de resultaten van jouw PartijMeter test. Deze pagina kan je <strong class="text-blue-200 font-semibold">bookmarken of delen</strong> 
                     om je resultaten later opnieuw te bekijken.
                 </p>
                 
@@ -210,18 +210,18 @@ require_once 'views/templates/header.php';
     <!-- Main Content Container -->
     <div class="container mx-auto px-6 -mt-8 relative z-10">
         
-        <?php if ($savedResults && $stemwijzerData): ?>
+        <?php if ($savedResults && $partijmeterData): ?>
         
         <?php
         // Bereken de finale resultaten opnieuw voor display
-        $parties = array_keys($stemwijzerData['parties']);
+        $parties = array_keys($partijmeterData['parties']);
         $finalResults = [];
         
         foreach ($savedResults->results as $partyName => $result) {
             $finalResults[] = [
                 'name' => $partyName,
                 'agreement' => $result['agreement'] ?? 0,
-                'logo' => $stemwijzerData['partyLogos'][$partyName] ?? ''
+                'logo' => $partijmeterData['partyLogos'][$partyName] ?? ''
             ];
         }
         
@@ -231,7 +231,7 @@ require_once 'views/templates/header.php';
         });
         
         // Genereer persoonlijkheidsanalyse
-        $personalityAnalysis = $stemwijzerController->analyzePoliticalPersonality($savedResults->answers, $stemwijzerData['questions']);
+        $personalityAnalysis = $partijmeterController->analyzePoliticalPersonality($savedResults->answers, $partijmeterData['questions']);
         ?>
         
         <!-- Politieke Persoonlijkheidsanalyse Sectie - Verborgen -->
@@ -484,7 +484,7 @@ require_once 'views/templates/header.php';
             </div>
         </div>
 
-        <!-- Results Display - Reuse styling from stemwijzer.php -->
+        <!-- Results Display - Reuse styling from partijmeter.php -->
         <div class="max-w-6xl mx-auto pb-20">
             
             <!-- Results Hero Section -->
@@ -767,7 +767,7 @@ require_once 'views/templates/header.php';
                 </div>
             </div>
 
-            <?php if ($savedResults && $stemwijzerData): ?>
+            <?php if ($savedResults && $partijmeterData): ?>
             <!-- AI Politieke Inzichten Sectie -->
             <div class="max-w-6xl mx-auto mb-16">
                 <div class="text-center mb-8">
@@ -911,7 +911,7 @@ require_once 'views/templates/header.php';
 
                 <div class="text-center mt-8">
                     <p class="text-sm text-gray-500">
-                        Deze inzichten zijn gegenereerd door onze geavanceerde politieke analyse en gebaseerd op jouw stemwijzer antwoorden.
+                                                        Deze inzichten zijn gegenereerd door onze geavanceerde politieke analyse en gebaseerd op jouw PartijMeter antwoorden.
                     </p>
                 </div>
             </div>
@@ -935,7 +935,7 @@ require_once 'views/templates/header.php';
                     <span>Link delen</span>
                 </button>
                 
-                <a href="/stemwijzer" 
+                <a href="/partijmeter" 
                    class="group px-8 py-4 bg-white border-2 border-gray-300 hover:border-gray-400 text-gray-700 rounded-2xl font-semibold transition-all duration-300 hover:shadow-lg flex items-center space-x-3">
                     <svg class="w-5 h-5 group-hover:-rotate-45 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
@@ -968,12 +968,12 @@ require_once 'views/templates/header.php';
                     
                     <!-- Action Buttons -->
                     <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                        <a href="/stemwijzer" 
+                        <a href="/partijmeter" 
                            class="group px-8 py-4 bg-gradient-to-r from-blue-600 to-red-600 hover:from-blue-700 hover:to-red-700 text-white rounded-2xl font-semibold transition-all duration-300 hover:shadow-xl shadow-lg shadow-blue-500/25 flex items-center space-x-3">
                             <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
                             </svg>
-                            <span>Doe de Stemwijzer test</span>
+                            <span>Doe de PartijMeter test</span>
                         </a>
                         
                         <a href="/" 
@@ -993,7 +993,7 @@ require_once 'views/templates/header.php';
 </main>
 
 <script>
-<?php if ($savedResults && $stemwijzerData): ?>
+<?php if ($savedResults && $partijmeterData): ?>
 // Data voor AI analyse
 const aiAnalysisData = {
     shareId: '<?= $shareId ?>',
@@ -1190,8 +1190,8 @@ function loadVoterProfile() {
 
 function shareResults() {
     const url = window.location.href;
-    const title = 'Mijn Stemwijzer 2025 Resultaten';
-    const text = 'Bekijk mijn politieke matches van de Stemwijzer 2025!';
+                    const title = 'Mijn PartijMeter 2025 Resultaten';
+                    const text = 'Bekijk mijn politieke matches van de PartijMeter 2025!';
     
     if (navigator.share) {
         navigator.share({

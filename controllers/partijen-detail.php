@@ -855,14 +855,14 @@ $partyColorDark = lightenColor($partyColor, -20);
                                     <p class="text-gray-600 text-sm">Vergelijk alle Nederlandse politieke partijen</p>
                                 </a>
                                 
-                                <a href="<?php echo URLROOT; ?>/stemwijzer" 
+                                <a href="<?php echo URLROOT; ?>/partijmeter" 
                                    class="group bg-white rounded-2xl p-6 border border-gray-200 hover:border-gray-300 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
                                     <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-orange-50 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                                         <svg class="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v6a2 2 0 002 2h2m4-8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2m-4-6V9a2 2 0 012-2h2a2 2 0 012 2v2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
                                         </svg>
                                     </div>
-                                    <h3 class="font-bold text-gray-900 mb-2">Stemwijzer</h3>
+                                    <h3 class="font-bold text-gray-900 mb-2">PartijMeter</h3>
                                     <p class="text-gray-600 text-sm">Ontdek welke partij bij je past</p>
                                 </a>
                                 

@@ -5,7 +5,7 @@ $metaDescriptions = [
     'home' => 'Ontdek het laatste politieke nieuws, expert blogs en stemhulp op PolitiekPraat. Jouw platform voor Nederlandse politiek, verkiezingen en democratisch debat.',
     'blogs' => 'Lees politieke blogs van experts en ervaren columnisten over actuele Nederlandse thema\'s. Deel je mening en ontdek nieuwe perspectieven op de politiek.',
     'nieuws' => 'Het laatste Nederlandse politieke nieuws uit betrouwbare bronnen. Blijf dagelijks geïnformeerd over regering, oppositie en belangrijke ontwikkelingen.',
-    'stemwijzer' => 'Doe de gratis online Stemwijzer test 2025 en ontdek binnen 5 minuten welke Nederlandse politieke partij het beste bij jouw standpunten past. Vergelijk 14 partijen op basis van 30 actuele thema\'s.',
+    'partijmeter' => 'Doe de gratis online PartijMeter test 2025 en ontdek binnen 5 minuten welke Nederlandse politieke partij het beste bij jouw standpunten past. Vergelijk 14 partijen op basis van 30 actuele thema\'s.',
     'politiek-kompas' => 'Ontdek jouw politieke kompas door partijstandpunten te vergelijken op thema\'s als klimaat, zorg, economie en onderwijs. Maak een geïnformeerde stemkeuze.',
     'partijen' => 'Volledig overzicht van Nederlandse politieke partijen met hun standpunten, lijsttrekkers en verkiezingsprogramma\'s. Van VVD tot PvdA en alle anderen.',
     'themas' => 'Verdiep je in actuele politieke thema\'s als klimaatbeleid, gezondheidszorg en economie. Analyses, standpunten en expert discussies over Nederlandse politiek.',
@@ -14,19 +14,19 @@ $metaDescriptions = [
     'over-mij' => 'Leer meer over PolitiekPraat en onze missie om Nederlandse politiek toegankelijk te maken. Ontdek wie we zijn en waarom we dit platform hebben opgericht.',
     
     // Authenticatie pagina's
-    'login' => 'Log in op je PolitiekPraat account om blogs te schrijven, deel te nemen aan discussies en je stemwijzer resultaten op te slaan. Veilig en eenvoudig inloggen.',
+    'login' => 'Log in op je PolitiekPraat account om blogs te schrijven, deel te nemen aan discussies en je PartijMeter resultaten op te slaan. Veilig en eenvoudig inloggen.',
     'register' => 'Maak gratis een account aan bij PolitiekPraat. Krijg toegang tot extra functies, schrijf blogs en doe mee aan politieke discussies in onze community.',
     'logout' => 'Je bent succesvol uitgelogd van PolitiekPraat. Bedankt voor je bezoek en tot ziens. Log opnieuw in wanneer je toegang wilt tot je persoonlijke account.',
     
     // Profiel pagina's
-    'profile' => 'Bekijk en beheer je PolitiekPraat profiel. Zie je geschreven blogs, stemwijzer historie en persoonlijke instellingen. Pas je gegevens aan naar wens.',
+    'profile' => 'Bekijk en beheer je PolitiekPraat profiel. Zie je geschreven blogs, PartijMeter historie en persoonlijke instellingen. Pas je gegevens aan naar wens.',
     'profile-edit' => 'Bewerk je PolitiekPraat profiel en persoonlijke gegevens. Wijzig je bio, profielfoto en account instellingen om je profiel up-to-date te houden.',
     
     // Dynamische pagina's - templates
     'blog-detail' => 'Lees deze politieke blog met expert analyse over actuele Nederlandse thema\'s. Reageer, deel en discussieer mee over belangrijke ontwikkelingen.',
     'partij-detail' => 'Ontdek alles over deze Nederlandse politieke partij: standpunten, verkiezingsprogramma, lijsttrekker en historie. Vergelijk met andere partijen.',
     'thema-detail' => 'Verdiep je in dit specifieke politieke thema met analyses, standpunten van partijen en expert commentaar. Blijf geïnformeerd over actuele ontwikkelingen.',
-    'stemwijzer-resultaten' => 'Bekijk je persoonlijke stemwijzer resultaten en ontdek welke partijen het beste bij jouw politieke voorkeuren passen. Deel je resultaten met vrienden.',
+    'partijmeter-resultaten' => 'Bekijk je persoonlijke PartijMeter resultaten en ontdek welke partijen het beste bij jouw politieke voorkeuren passen. Deel je resultaten met vrienden.',
     
     // Newsletter gerelateerd
     'newsletter-subscribe' => 'Meld je aan voor de PolitiekPraat nieuwsbrief en ontvang wekelijks het belangrijkste politieke nieuws, analyses en nieuwe blogs direct in je mailbox.',
@@ -41,7 +41,7 @@ $metaDescriptions = [
     'blogs-create' => 'Schrijf en publiceer je eigen politieke blog op PolitiekPraat. Deel je expertise, mening en analyses over Nederlandse politiek met onze actieve community.',
     'blogs-manage' => 'Beheer je gepubliceerde blogs op PolitiekPraat. Bewerk, update of verwijder je politieke artikelen en bekijk uitgebreide statistieken over lezers en reacties.',
     'forum-create' => 'Start een nieuwe discussie in het PolitiekPraat forum. Deel politieke onderwerpen die je bezighouden en nodig anderen uit voor een respectvol debat.',
-    'resultaten' => 'Ontdek je stemwijzer resultaten en zie welke Nederlandse politieke partijen het beste aansluiten bij jouw persoonlijke standpunten en waarden.',
+    'resultaten' => 'Ontdek je PartijMeter resultaten en zie welke Nederlandse politieke partijen het beste aansluiten bij jouw persoonlijke standpunten en waarden.',
     
     // Amerikaanse verkiezingen
     'amerikaanse-verkiezingen' => 'Ontdek de complete geschiedenis van Amerikaanse presidentsverkiezingen van 1789 tot heden. Van George Washington tot Joe Biden - alle verkiezingen, statistieken en presidentiële races in detail.',
@@ -56,7 +56,7 @@ $metaKeywords = [
     'home' => 'politiek, nieuws, blogs, Nederland, politieke partijen, democratie, verkiezingen, overheid, Nederlandse politiek, Haags nieuws, PolitiekPraat',
     'blogs' => 'politieke blogs, opinieartikelen, politieke analyses, Nederlandse politiek, politiek commentaar, verkiezingen, columnisten, PolitiekPraat',
     'nieuws' => 'politiek nieuws, Nederlands nieuws, Haags nieuws, regering, oppositie, kabinet, ministeries, Tweede Kamer, PolitiekPraat',
-    'stemwijzer' => 'stemwijzer, stemwijzer 2025, online stemtest nederland, politieke partijen vergelijken, verkiezingen 2025, stemhulp, kieskompas, gratis stemwijzer, nederlandse stemwijzer, partijkeuze, stemadvies, PolitiekPraat',
+    'partijmeter' => 'partijmeter, stemwijzer, stemwijzer 2025, partijmeter 2025, online politieke test nederland, politieke partijen vergelijken, verkiezingen 2025, stemhulp, kieskompas, gratis partijmeter, nederlandse partijmeter, partijkeuze, stemadvies, PolitiekPraat',
     'politiek-kompas' => 'politiek kompas, partijen vergelijken, politieke standpunten, stemadvies, Nederlandse partijen, verkiezingen, PolitiekPraat',
     'partijen' => 'politieke partijen Nederland, VVD, PvdA, VVD, CDA, D66, PVV, GroenLinks, partijoverzicht, lijsttrekkers, PolitiekPraat',
     'themas' => 'politieke thema\'s, klimaat, zorg, economie, onderwijs, immigratie, standpunten, analyses, Nederlandse politiek, PolitiekPraat',
@@ -70,14 +70,14 @@ $metaKeywords = [
     'logout' => 'uitloggen, afmelden, account, veiligheid, PolitiekPraat, sessie',
     
     // Profiel pagina's
-    'profile' => 'profiel, account, gebruiker, blogs, stemwijzer, geschiedenis, instellingen, PolitiekPraat',
+    'profile' => 'profiel, account, gebruiker, blogs, partijmeter, geschiedenis, instellingen, PolitiekPraat',
     'profile-edit' => 'profiel bewerken, account wijzigen, gegevens, instellingen, privacy, PolitiekPraat',
     
     // Dynamische pagina's - templates
     'blog-detail' => 'politieke blog, artikel, analyse, standpunt, mening, Nederlandse politiek, commentaar, PolitiekPraat',
     'partij-detail' => 'politieke partij, standpunten, verkiezingsprogramma, lijsttrekker, Nederlandse politiek, partijinformatie, PolitiekPraat',
     'thema-detail' => 'politiek thema, standpunten, analyse, klimaat, zorg, economie, Nederlandse politiek, PolitiekPraat',
-    'stemwijzer-resultaten' => 'stemwijzer resultaten, politieke match, partijadvies, verkiezingen, stemkeuze, PolitiekPraat',
+    'partijmeter-resultaten' => 'partijmeter resultaten, politieke match, partijadvies, verkiezingen, stemkeuze, PolitiekPraat',
     
     // Newsletter gerelateerd
     'newsletter-subscribe' => 'nieuwsbrief, aanmelden, politiek nieuws, updates, PolitiekPraat, email',
@@ -92,7 +92,7 @@ $metaKeywords = [
     'blogs-create' => 'blog schrijven, artikel publiceren, politieke mening, PolitiekPraat, auteur, content',
     'blogs-manage' => 'blogs beheren, artikelen bewerken, schrijver, PolitiekPraat, content management',
     'forum-create' => 'discussie starten, forum, onderwerp, politiek debat, PolitiekPraat, community',
-    'resultaten' => 'stemwijzer resultaten, politieke match, partijen, verkiezingen, stemadvies, PolitiekPraat',
+    'resultaten' => 'partijmeter resultaten, politieke match, partijen, verkiezingen, stemadvies, PolitiekPraat',
     
     // Amerikaanse verkiezingen
     'amerikaanse-verkiezingen' => 'Amerikaanse verkiezingen, presidentsverkiezingen, verkiezingsgeschiedenis, George Washington, Joe Biden, kiesmannen, Democrats, Republicans, Electoral College, presidenten, verkiezingen geschiedenis',
@@ -1166,7 +1166,7 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
 
                     <!-- Verkiezingen Dropdown -->
                     <?php 
-                    $isVerkiezingenActive = in_array($currentContext['section'], ['stemwijzer', 'politiek-kompas', 'amerikaanse-verkiezingen', 'nederlandse-verkiezingen', 'resultaten']);
+                    $isVerkiezingenActive = in_array($currentContext['section'], ['partijmeter', 'politiek-kompas', 'amerikaanse-verkiezingen', 'nederlandse-verkiezingen', 'resultaten']);
                     ?>
                     <div class="relative dropdown-trigger group">
                         <button class="nav-link px-3 lg:px-4 py-2 text-gray-700 font-medium rounded-lg flex items-center space-x-1 <?php echo $isVerkiezingenActive ? 'active' : ''; ?>">
@@ -1178,7 +1178,7 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
                         </button>
                         
                         <div class="dropdown-content absolute left-0 w-72 bg-white rounded-xl shadow-xl py-2 px-1.5 border border-gray-100">
-                            <a href="<?php echo URLROOT; ?>/stemwijzer" 
+                            <a href="<?php echo URLROOT; ?>/partijmeter" 
                                class="flex items-center justify-between px-3 py-3 rounded-lg hover:bg-secondary/5 transition-all duration-300 group/item">
                                 <div class="flex items-center">
                                     <div class="w-10 h-10 bg-secondary/10 rounded-xl flex items-center justify-center mr-3 group-hover/item:bg-secondary/20 transition-colors duration-300">
@@ -1187,7 +1187,7 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
                                         </svg>
                                     </div>
                                     <div>
-                                        <div class="text-sm font-semibold text-gray-900">Stemwijzer</div>
+                                        <div class="text-sm font-semibold text-gray-900">PartijMeter</div>
                                         <div class="text-xs text-gray-500">Ontdek jouw politieke match</div>
                                     </div>
                                 </div>
@@ -1610,7 +1610,7 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
                         </div>
                     </div>
 
-                    <a href="<?php echo URLROOT; ?>/stemwijzer" 
+                    <a href="<?php echo URLROOT; ?>/partijmeter" 
                        class="flex items-center text-gray-700 hover:text-secondary p-3 rounded-lg transition-all duration-300 
                               hover:bg-secondary/5 group">
                         <div class="mr-3 p-2 bg-secondary/10 rounded-lg transition-all duration-300 
@@ -1621,7 +1621,7 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
                             </svg>
                         </div>
                         <span class="font-medium flex items-center">
-                            Stemwijzer
+                            PartijMeter
                             <span class="ml-2 inline-flex items-center px-2 py-0.5 text-xs font-medium 
                                         bg-secondary text-white rounded-full">
                                 2025

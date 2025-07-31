@@ -9,7 +9,7 @@ if (!isAdmin()) {
     redirect('login.php');
 }
 
-$stemwijzerController = new StemwijzerController();
+$partijmeterController = new StemwijzerController();
 
 // Haal statistieken op
 try {
@@ -79,7 +79,7 @@ require_once '../views/templates/header.php';
         <div class="container mx-auto px-4 py-8 md:py-12">
             <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
                 <div>
-                    <h1 class="text-3xl md:text-4xl font-bold text-white mb-2">Stemwijzer Beheer</h1>
+                    <h1 class="text-3xl md:text-4xl font-bold text-white mb-2">PartijMeter Beheer</h1>
                     <p class="text-blue-100 text-base md:text-lg">Beheer vragen, partijen en bekijk statistieken</p>
                 </div>
                 <div class="flex flex-col sm:flex-row sm:flex-wrap lg:flex-nowrap gap-3">
@@ -93,7 +93,7 @@ require_once '../views/templates/header.php';
                     </a>
                     <a href="stemwijzer-partij-beheer.php" 
                        class="bg-white/20 backdrop-blur-sm text-white px-4 md:px-6 py-2 md:py-3 rounded-xl hover:bg-white/30 transition-all duration-300 border border-white/30 text-center text-sm md:text-base">
-                        Stemwijzer Partijen
+                        PartijMeter Partijen
                     </a>
                     <a href="political-parties-beheer.php" 
                        class="bg-white text-indigo-600 px-4 md:px-6 py-2 md:py-3 rounded-xl hover:bg-blue-50 transition-all duration-300 font-semibold text-center text-sm md:text-base">
@@ -270,7 +270,7 @@ require_once '../views/templates/header.php';
                     <svg class="w-5 h-5 text-indigo-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
                     </svg>
-                    Stemwijzer Beheer
+                    PartijMeter Beheer
                 </h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     <a href="stemwijzer-vraag-toevoegen.php" 
@@ -333,7 +333,7 @@ require_once '../views/templates/header.php';
                         </div>
                     </a>
                     
-                    <a href="../stemwijzer" target="_blank"
+                    <a href="../partijmeter" target="_blank"
                        class="group p-6 bg-gradient-to-br from-teal-50 to-cyan-50 border border-teal-200 rounded-xl hover:from-teal-100 hover:to-cyan-100 transition-all duration-300 card-hover">
                         <div class="flex items-center space-x-4">
                             <div class="w-12 h-12 bg-teal-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -344,7 +344,7 @@ require_once '../views/templates/header.php';
                             </div>
                             <div>
                                 <h3 class="font-semibold text-gray-800">Preview</h3>
-                                <p class="text-sm text-gray-600">Bekijk stemwijzer</p>
+                                <p class="text-sm text-gray-600">Bekijk PartijMeter</p>
                             </div>
                         </div>
                     </a>

@@ -146,10 +146,10 @@
                         </h4>
                         <ul class="space-y-3">
                             <li>
-                                <a href="<?php echo URLROOT; ?>/stemwijzer" 
+                                <a href="<?php echo URLROOT; ?>/partijmeter" 
                                    class="group flex items-center text-gray-600 hover:text-primary transition-colors duration-300">
                                     <span class="w-2 h-2 bg-secondary rounded-full mr-3 transform scale-0 group-hover:scale-100 transition-transform duration-300"></span>
-                                    Stemwijzer
+                                    PartijMeter
                                 </a>
                             </li>
                             <li>

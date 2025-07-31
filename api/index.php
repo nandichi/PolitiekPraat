@@ -178,7 +178,8 @@ class APIRouter {
                     break;
                     
                 case 'stemwijzer':
-                    $this->handleStemwijzer();
+                case 'partijmeter':
+                    $this->handlePartijmeter();
                     break;
                     
                 case 'test':
@@ -309,13 +310,13 @@ class APIRouter {
         $userAPI->handle($this->method, $segments);
     }
     
-    private function handleStemwijzer() {
+    private function handlePartijmeter() {
         $stemwijzerPath = __DIR__ . '/stemwijzer.php';
         if (file_exists($stemwijzerPath)) {
             require_once $stemwijzerPath;
             exit();
         } else {
-            sendApiError('Stemwijzer API niet gevonden', 404);
+            sendApiError('PartijMeter API niet gevonden', 404);
         }
     }
     

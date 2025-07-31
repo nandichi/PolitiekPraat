@@ -600,7 +600,7 @@ require_once 'views/templates/header.php';
                             </div>
                             <div class="text-center">
                                 <div class="text-xl sm:text-2xl md:text-3xl font-bold text-primary-dark">25</div>
-                                <div class="text-xs sm:text-sm text-slate-500 uppercase tracking-wide">Stemwijzer vragen</div>
+                                <div class="text-xs sm:text-sm text-slate-500 uppercase tracking-wide">PartijMeter vragen</div>
                             </div>
                         </div>
                     </div>
@@ -636,7 +636,7 @@ require_once 'views/templates/header.php';
                         </a>
                         
                         <!-- Secondary CTA -->
-                        <a href="<?php echo URLROOT; ?>/stemwijzer" 
+                        <a href="<?php echo URLROOT; ?>/partijmeter" 
                            class="group relative inline-flex items-center justify-center px-6 sm:px-8 md:px-12 py-3 sm:py-4 md:py-6 bg-white/90 backdrop-blur-sm text-slate-900 font-bold text-base sm:text-lg md:text-xl rounded-xl sm:rounded-2xl border-2 border-slate-200 transition-all duration-500 transform hover:scale-105 hover:shadow-2xl hover:shadow-slate-900/10 hover:border-primary overflow-hidden">
                             
                             <!-- Animated background -->
@@ -647,7 +647,7 @@ require_once 'views/templates/header.php';
                                 <svg class="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 mr-2 sm:mr-3 text-primary group-hover:text-primary-dark transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                 </svg>
-                                <span class="mr-2 sm:mr-3 group-hover:text-primary-dark transition-colors duration-300">Start de Stemwijzer</span>
+                                <span class="mr-2 sm:mr-3 group-hover:text-primary-dark transition-colors duration-300">Start de PartijMeter</span>
                                 <div class="relative">
                                     <svg class="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 transform transition-transform duration-500 group-hover:translate-x-2 text-primary group-hover:text-primary-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
@@ -1130,7 +1130,7 @@ require_once 'views/templates/header.php';
         </div>
     </section>
 
-    <!-- Stemwijzer Call-to-Action Section -->
+            <!-- PartijMeter Call-to-Action Section -->
     <section class="py-24 bg-gradient-to-br from-blue-50 via-slate-50 to-red-50 relative overflow-hidden">
         <!-- Decoratieve achtergrond elementen -->
         <div class="absolute inset-0">
@@ -1213,7 +1213,7 @@ require_once 'views/templates/header.php';
                                 <div class="absolute -inset-1 bg-gradient-to-r from-primary via-secondary to-primary rounded-2xl blur opacity-40 animate-pulse"></div>
                                 
                                 <!-- Main button -->
-                                <a href="<?php echo URLROOT; ?>/stemwijzer" 
+                                <a href="<?php echo URLROOT; ?>/partijmeter" 
                                    class="relative inline-flex items-center px-6 sm:px-8 md:px-12 py-3 sm:py-4 md:py-6 bg-gradient-to-r from-primary via-secondary to-primary text-white font-bold text-sm sm:text-base md:text-lg lg:text-xl rounded-xl sm:rounded-2xl transition-all duration-500 transform hover:scale-105 shadow-2xl hover:shadow-3xl group overflow-hidden">
                                     
                                     <!-- Button content -->
@@ -1221,7 +1221,7 @@ require_once 'views/templates/header.php';
                                         <svg class="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 mr-2 sm:mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
                                         </svg>
-                                        <span class="mr-2 sm:mr-3">Stemwijzer 2025 – Gratis Online Stemtest!</span>
+                                        <span class="mr-2 sm:mr-3">PartijMeter 2025 – Gratis Online Politieke Test!</span>
                                         <div class="relative">
                                             <svg class="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 transform transition-transform duration-500 group-hover:translate-x-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
@@ -1259,7 +1259,7 @@ require_once 'views/templates/header.php';
                                             </svg>
                                         </div>
                                         <div>
-                                            <h3 class="text-lg font-bold text-white">PolitiekPraat Stemwijzer</h3>
+                                            <h3 class="text-lg font-bold text-white">PolitiekPraat PartijMeter</h3>
                                             <p class="text-indigo-100 text-sm">Verkiezingen 2025</p>
                                         </div>
                                     </div>
@@ -1595,7 +1595,7 @@ require_once 'views/templates/header.php';
         </div>
     </section>
 
-    <!-- Politiek Kompas Section - Consistent met Stemwijzer styling -->
+                <!-- Politiek Kompas Section - Consistent met PartijMeter styling -->
     <section class="py-24 bg-gradient-to-br from-blue-50 via-slate-50 to-red-50 relative overflow-hidden">
         <!-- Decoratieve achtergrond elementen -->
         <div class="absolute inset-0">

@@ -95,7 +95,7 @@ $router->add('newsletter/subscribe', 'controllers/newsletter.php');
 $router->add('newsletter/unsubscribe', 'controllers/newsletter.php?action=unsubscribe');
 $router->add('newsletter/unsubscribe-success', 'controllers/newsletter.php?action=unsubscribe-success');
 $router->add('newsletter/unsubscribe-error', 'controllers/newsletter.php?action=unsubscribe-error');
-$router->add('stemwijzer', 'controllers/stemwijzer.php');
+$router->add('partijmeter', 'controllers/partijmeter.php');
 $router->add('resultaten/([a-zA-Z0-9]+)', function($shareId) {
     $_GET['id'] = $shareId;
     require_once 'controllers/resultaten.php';

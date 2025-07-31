@@ -443,7 +443,7 @@ if (!defined('URLROOT')) {
                     <div class="timeline-item" data-aos="fade-up" data-aos-delay="400">
                         <h3 class="text-xl font-bold text-gray-900 mb-2">Wat er komt</h3>
                         <p class="text-gray-600 leading-relaxed">
-                            Meer artikelen, meer tools zoals de stemwijzer, en hopelijk steeds meer mensen die snappen dat politiek eigenlijk best interessant kan zijn.
+                                                            Meer artikelen, meer tools zoals de PartijMeter, en hopelijk steeds meer mensen die snappen dat politiek eigenlijk best interessant kan zijn.
                         </p>
                     </div>
                 </div>
@@ -547,9 +547,9 @@ if (!defined('URLROOT')) {
                             <p class="text-blue-200">Want het hoeft echt niet zo droog te zijn als het vaak lijkt.</p>
                         </div>
                         <div class="flex flex-col sm:flex-row gap-4">
-                            <a href="<?= URLROOT ?>/stemwijzer" 
+                            <a href="<?= URLROOT ?>/partijmeter" 
                                class="px-8 py-4 bg-gradient-to-r from-blue-600 to-red-600 text-white font-bold rounded-2xl hover:from-blue-700 hover:to-red-700 transition-all duration-300 hover:scale-105 hover:shadow-xl">
-                                Probeer de Stemwijzer
+                                Probeer de PartijMeter
                             </a>
                             <a href="<?= URLROOT ?>/blogs" 
                                class="px-8 py-4 bg-white/20 text-white font-bold rounded-2xl border border-white/30 hover:bg-white/30 transition-all duration-300 hover:scale-105">

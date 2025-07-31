@@ -56,7 +56,7 @@ try {
             $result = $chatGPT->explainPartyMatch(
                 $data['topParty']['name'],
                 $data['userAnswers'],
-                [], // Questions - zou uit stemwijzer data moeten komen
+                [], // Questions - zou uit partijmeter data moeten komen
                 $data['topParty']['agreement']
             );
             break;
