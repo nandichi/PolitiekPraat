@@ -5,6 +5,10 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
+// Haal categorieën op voor het formulier
+$categoryController = new CategoryController();
+$categories = $categoryController->getAll();
+
 $error = '';
 $success = '';
 
@@ -12,6 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_SPECIAL_CHARS);
     $summary = filter_input(INPUT_POST, 'summary', FILTER_SANITIZE_SPECIAL_CHARS);
     $content = filter_input(INPUT_POST, 'content', FILTER_SANITIZE_SPECIAL_CHARS);
+    $category_id = filter_input(INPUT_POST, 'category_id', FILTER_VALIDATE_INT);
     
     // Validatie
     if (empty($title) || empty($summary) || empty($content)) {
@@ -47,13 +52,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         
         // Voeg blog toe
-        $db->query("INSERT INTO blogs (title, slug, summary, content, image_path, author_id) 
-                   VALUES (:title, :slug, :summary, :content, :image_path, :author_id)");
+        $db->query("INSERT INTO blogs (title, slug, summary, content, image_path, category_id, author_id) 
+                   VALUES (:title, :slug, :summary, :content, :image_path, :category_id, :author_id)");
         $db->bind(':title', $title);
         $db->bind(':slug', $slug);
         $db->bind(':summary', $summary);
         $db->bind(':content', $content);
         $db->bind(':image_path', $image_path);
+        $db->bind(':category_id', $category_id);
         $db->bind(':author_id', $_SESSION['user_id']);
         
         if ($db->execute()) {
@@ -87,6 +93,25 @@ require_once BASE_PATH . '/views/templates/header.php';
                        class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-primary"
                        value="<?php echo isset($title) ? htmlspecialchars($title) : ''; ?>"
                        required>
+            </div>
+
+            <div class="mb-4">
+                <label for="category_id" class="block text-gray-700 font-bold mb-2">Categorie</label>
+                                        <select name="category_id" 
+                        id="category_id" 
+                        class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-primary">
+                    <option value="">Selecteer een categorie...</option>
+                    <?php foreach ($categories as $category): ?>
+                        <option value="<?php echo $category->id; ?>" 
+                                <?php echo (isset($category_id) && $category_id == $category->id) ? 'selected' : ''; ?>
+                                style="color: <?php echo $category->color; ?>">
+                            <?php echo htmlspecialchars($category->name); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+                <p class="text-sm text-gray-500 mt-1">
+                    Kies de categorie die het beste bij je artikel past (optioneel)
+                </p>
             </div>
 
             <div class="mb-4">

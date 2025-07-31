@@ -269,6 +269,49 @@
     document.head.appendChild(style);
     </script>
 
+    <!-- Categorie Filter Sectie -->
+    <section class="py-8 relative z-10">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-8">
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Verken per categorie</h3>
+                    <div class="flex flex-wrap justify-center gap-3">
+                        <a href="<?php echo URLROOT; ?>/blogs" 
+                           class="inline-flex items-center px-4 py-2 rounded-full bg-gray-100 hover:bg-primary hover:text-white transition-all duration-300 text-sm font-medium text-gray-700">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 9a2 2 0 012-2h6a2 2 0 012 2v2M7 19h10a2 2 0 002-2v-6a2 2 0 00-2-2H7a2 2 0 00-2 2v6a2 2 0 002 2z"></path>
+                            </svg>
+                            Alle artikelen
+                        </a>
+                        
+                        <?php 
+                        // Haal categorieën op voor filter
+                        $categoryController = new CategoryController();
+                        $filterCategories = $categoryController->getBlogCountByCategory();
+                        
+                        foreach ($filterCategories as $category):
+                            // Alleen tonen als er werkelijk blogs in deze categorie zitten
+                            if ($category->blog_count > 0):
+                        ?>
+                            <a href="<?php echo URLROOT; ?>/blogs?category=<?php echo $category->slug; ?>" 
+                               class="inline-flex items-center px-4 py-2 rounded-full text-white text-sm font-medium transition-all duration-300 hover:shadow-lg transform hover:scale-105"
+                               style="background-color: <?php echo $category->color; ?>;">
+                                <span class="w-2 h-2 bg-white/80 rounded-full mr-2"></span>
+                                <?php echo htmlspecialchars($category->name); ?>
+                                <span class="ml-2 bg-white/20 px-2 py-0.5 rounded-full text-xs">
+                                    <?php echo $category->blog_count; ?>
+                                </span>
+                            </a>
+                        <?php 
+                            endif;
+                        endforeach; 
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Blog Posts Grid -->
     <section class="py-12 relative z-10" id="blogs">
         <div class="container mx-auto px-4">
@@ -317,6 +360,19 @@
                             <?php endif; ?>
 
                             <div class="p-7">
+                                <!-- Categorie badge (alleen als er een categorie is) -->
+                                <?php if (isset($blog->category_name) && $blog->category_name): ?>
+                                <div class="mb-4">
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold text-white shadow-sm" 
+                                          style="background-color: <?php echo $blog->category_color ?? '#3B82F6'; ?>;">
+                                        <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 713 12V7a4 4 0 714-4z"></path>
+                                        </svg>
+                                        <?php echo htmlspecialchars($blog->category_name); ?>
+                                    </span>
+                                </div>
+                                <?php endif; ?>
+
                                 <!-- Auteur en datum info met verbeterd design -->
                                 <div class="flex items-center justify-between mb-5">
                                     <div class="flex items-center space-x-3">

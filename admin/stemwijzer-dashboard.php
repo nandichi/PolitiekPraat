@@ -370,6 +370,21 @@ require_once '../views/templates/header.php';
                         </div>
                     </div>
                 </a>
+
+                                    <a href="../scripts/run_blog_categories_migration.php" 
+                       class="group p-6 bg-gradient-to-br from-indigo-50 to-purple-50 border border-indigo-200 rounded-xl hover:from-indigo-100 hover:to-purple-100 transition-all duration-300 card-hover">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 713 12V7a4 4 0 714-4z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-800">🏷️ Blog Categorieën</h3>
+                                <p class="text-sm text-gray-600">Setup blog categorieën systeem</p>
+                            </div>
+                        </div>
+                    </a>
                 
                 <a href="news-scraper-beheer.php" 
                    class="group p-6 bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-200 rounded-xl hover:from-emerald-100 hover:to-teal-100 transition-all duration-300 card-hover">
@@ -540,6 +555,7 @@ require_once '../views/templates/header.php';
                             </div>
                         </div>
                     </a>
+                
                 </div>
             </div>
         </div>

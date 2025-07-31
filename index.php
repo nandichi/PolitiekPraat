@@ -23,6 +23,7 @@ require_once 'includes/config.php';
 require_once 'includes/Database.php';
 require_once 'includes/Router.php';
 require_once 'includes/BlogController.php';
+require_once 'includes/CategoryController.php';
 require_once 'controllers/blogs.php';  // Add BlogsController
 
 // Debug informatie (tijdelijk)

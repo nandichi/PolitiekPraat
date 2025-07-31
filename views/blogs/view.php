@@ -87,7 +87,17 @@ require_once 'views/templates/header.php'; ?>
         <div class="relative z-10 container mx-auto px-4">
             <div class="max-w-4xl mx-auto flex flex-col items-center justify-end min-h-[60vh] text-center pb-12 sm:justify-center sm:min-h-[50vh] sm:py-16">
                 <!-- Badges -->
-                <div class="flex items-center gap-3 mb-4 sm:mb-6">
+                <div class="flex items-center gap-3 mb-4 sm:mb-6 flex-wrap">
+                    <?php if (isset($blog->category_name) && $blog->category_name): ?>
+                    <span class="inline-flex items-center px-4 py-1 sm:py-1.5 rounded-full text-white font-medium text-sm backdrop-blur-sm border border-white/20 shadow-lg"
+                          style="background-color: <?php echo $blog->category_color ?? '#3B82F6'; ?>;">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+                        </svg>
+                        <?php echo htmlspecialchars($blog->category_name); ?>
+                    </span>
+                    <?php endif; ?>
+                    
                     <span class="inline-flex items-center px-4 py-1 sm:py-1.5 rounded-full bg-black/20 sm:bg-blue-600/20 border border-white/20 sm:border-blue-500/30 text-white sm:text-blue-200 font-medium text-sm backdrop-blur-sm">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>

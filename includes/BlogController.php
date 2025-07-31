@@ -27,17 +27,30 @@ class BlogController {
         return max(1, $readingTime);
     }
 
-    public function getAll($limit = null) {
-        $sql = "SELECT blogs.*, users.username as author_name, users.profile_photo 
+    public function getAll($limit = null, $categoryId = null) {
+        $sql = "SELECT blogs.*, users.username as author_name, users.profile_photo,
+                       blog_categories.name as category_name, blog_categories.slug as category_slug, 
+                       blog_categories.color as category_color, blog_categories.icon as category_icon
                 FROM blogs 
                 JOIN users ON blogs.author_id = users.id 
-                ORDER BY published_at DESC";
+                LEFT JOIN blog_categories ON blogs.category_id = blog_categories.id";
+        
+        if ($categoryId) {
+            $sql .= " WHERE blogs.category_id = :category_id";
+        }
+        
+        $sql .= " ORDER BY published_at DESC";
         
         if ($limit) {
-            $sql .= " LIMIT " . $limit;
+            $sql .= " LIMIT " . intval($limit);
         }
         
         $this->db->query($sql);
+        
+        if ($categoryId) {
+            $this->db->bind(':category_id', $categoryId);
+        }
+        
         $blogs = $this->db->resultSet();
         
         // Parse Markdown naar HTML voor elk blog
@@ -56,9 +69,12 @@ class BlogController {
     }
 
     public function getBySlug($slug) {
-        $this->db->query("SELECT blogs.*, users.username as author_name, users.profile_photo 
+        $this->db->query("SELECT blogs.*, users.username as author_name, users.profile_photo,
+                                 blog_categories.name as category_name, blog_categories.slug as category_slug, 
+                                 blog_categories.color as category_color, blog_categories.icon as category_icon
                          FROM blogs 
                          JOIN users ON blogs.author_id = users.id 
+                         LEFT JOIN blog_categories ON blogs.category_id = blog_categories.id
                          WHERE blogs.slug = :slug");
         $this->db->bind(':slug', $slug);
         $blog = $this->db->single();
@@ -81,8 +97,8 @@ class BlogController {
         $content = $data['content'];
         $summary = isset($data['summary']) ? $data['summary'] : substr(strip_tags($this->parsedown->text($content)), 0, 200) . '...';
         
-        $this->db->query("INSERT INTO blogs (title, slug, content, summary, image_path, video_path, video_url, audio_path, audio_url, soundcloud_url, author_id, published_at) 
-                         VALUES (:title, :slug, :content, :summary, :image_path, :video_path, :video_url, :audio_path, :audio_url, :soundcloud_url, :author_id, NOW())");
+        $this->db->query("INSERT INTO blogs (title, slug, content, summary, image_path, video_path, video_url, audio_path, audio_url, soundcloud_url, category_id, author_id, published_at) 
+                         VALUES (:title, :slug, :content, :summary, :image_path, :video_path, :video_url, :audio_path, :audio_url, :soundcloud_url, :category_id, :author_id, NOW())");
         
         $this->db->bind(':title', $data['title']);
         $this->db->bind(':slug', $this->generateSlug($data['title']));
@@ -94,6 +110,7 @@ class BlogController {
         $this->db->bind(':audio_path', $data['audio_path'] ?? null);
         $this->db->bind(':audio_url', $data['audio_url'] ?? null);
         $this->db->bind(':soundcloud_url', $data['soundcloud_url'] ?? null);
+        $this->db->bind(':category_id', $data['category_id'] ?? null);
         $this->db->bind(':author_id', $_SESSION['user_id']);
 
         if ($this->db->execute()) {

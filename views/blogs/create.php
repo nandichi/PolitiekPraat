@@ -53,6 +53,53 @@
                         </div>
                     </div>
 
+                    <!-- Categorie Selectie -->
+                    <div class="mb-8" data-aos="fade-up" data-aos-delay="150">
+                        <label for="category_id" class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                            <svg class="w-5 h-5 text-primary mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+                            </svg>
+                            Categorie
+                        </label>
+                        <div class="relative group">
+                            <select name="category_id" 
+                                    id="category_id" 
+                                    class="w-full px-5 py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition-all duration-300 text-lg font-medium bg-gray-50/50 appearance-none">
+                                <option value="">Selecteer een categorie...</option>
+                                <?php 
+                                // Haal categorieën op
+                                $categoryController = new CategoryController();
+                                $categories = $categoryController->getAll();
+                                
+                                foreach ($categories as $category): 
+                                ?>
+                                    <option value="<?php echo $category->id; ?>" 
+                                            data-color="<?php echo $category->color; ?>"
+                                            data-icon="<?php echo $category->icon; ?>">
+                                        <?php echo htmlspecialchars($category->name); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                            
+                            <!-- Custom dropdown arrow -->
+                            <div class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
+                                <svg class="w-5 h-5 text-gray-400 group-hover:text-primary transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </div>
+                            
+                            <div class="absolute inset-0 bg-primary/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+                        </div>
+                        
+                        <!-- Categorie preview -->
+                        <div class="mt-3 p-3 bg-gray-50 rounded-lg border border-gray-100 min-h-[50px] flex items-center" id="categoryPreview">
+                            <svg class="w-5 h-5 text-gray-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 713 12V7a4 4 0 014-4z"></path>
+                            </svg>
+                            <span class="text-gray-500 text-sm">Selecteer een categorie om meer informatie te zien (optioneel)</span>
+                        </div>
+                    </div>
+
                     <!-- Afbeelding Upload Sectie - verbeterd ontwerp -->
                     <div class="mb-10" data-aos="fade-up" data-aos-delay="200">
                         <label class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
@@ -908,6 +955,53 @@ document.addEventListener('DOMContentLoaded', function() {
     const previewContainer = document.getElementById('previewContainer');
     const editorTabBtn = document.getElementById('editorTabBtn');
     const previewTabBtn = document.getElementById('previewTabBtn');
+    
+    // Categorie selectie functionaliteit
+    const categorySelect = document.getElementById('category_id');
+    const categoryPreview = document.getElementById('categoryPreview');
+    
+    // Categorie data voor preview
+    const categoryData = {
+        <?php foreach ($categories as $category): ?>
+        '<?php echo $category->id; ?>': {
+            name: '<?php echo addslashes($category->name); ?>',
+            description: '<?php echo addslashes($category->description ?? ''); ?>',
+            color: '<?php echo $category->color; ?>',
+            icon: '<?php echo $category->icon; ?>'
+        },
+        <?php endforeach; ?>
+    };
+    
+    // Update categorie preview
+    function updateCategoryPreview() {
+        const selectedId = categorySelect.value;
+        
+        if (!selectedId || !categoryData[selectedId]) {
+            categoryPreview.innerHTML = `
+                <svg class="w-5 h-5 text-gray-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+                </svg>
+                <span class="text-gray-500 text-sm">Selecteer een categorie om meer informatie te zien</span>
+            `;
+            return;
+        }
+        
+        const category = categoryData[selectedId];
+        categoryPreview.innerHTML = `
+            <div class="flex items-center">
+                <div class="w-8 h-8 rounded-lg flex items-center justify-center mr-3" style="background-color: ${category.color}20; border: 1px solid ${category.color}40;">
+                    <div class="w-4 h-4 rounded" style="background-color: ${category.color};"></div>
+                </div>
+                <div>
+                    <div class="font-medium text-gray-900">${category.name}</div>
+                    <div class="text-sm text-gray-500">${category.description || 'Geen beschrijving beschikbaar'}</div>
+                </div>
+            </div>
+        `;
+    }
+    
+    // Event listener voor categorie selectie
+    categorySelect.addEventListener('change', updateCategoryPreview);
 
     // Tabfunctionaliteit voor editor/preview
     window.switchToEditor = function() {

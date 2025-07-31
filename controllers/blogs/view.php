@@ -5,9 +5,9 @@ if (!isset($_GET['slug'])) {
 }
 
 $db = new Database();
-w
+
 // Haal blog op
-$db->query("SELECT blogs.*, users.username as author_name 
+$db->query("SELECT blogs.*, users.username as author_name, users.photo as author_photo
            FROM blogs 
            JOIN users ON blogs.author_id = users.id 
            WHERE blogs.slug = :slug");

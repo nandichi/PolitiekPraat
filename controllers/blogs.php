@@ -7,7 +7,22 @@ class BlogsController {
     }
     
     public function index() {
-        $blogs = $this->blogModel->getAll();
+        // Check for category filtering via query parameter
+        $categoryId = null;
+        $selectedCategory = null;
+        
+        if (isset($_GET['category'])) {
+            $categoryController = new CategoryController();
+            $selectedCategory = $categoryController->getBySlug($_GET['category']);
+            
+            if ($selectedCategory) {
+                $categoryId = $selectedCategory->id;
+            }
+        }
+        
+        // Get blogs with optional category filtering
+        $blogs = $this->blogModel->getAll(null, $categoryId);
+        
         require_once BASE_PATH . '/views/blogs/index.php';
     }
     
@@ -206,6 +221,7 @@ class BlogsController {
                 'audio_path' => $audio_path,
                 'audio_url' => $audio_url,
                 'soundcloud_url' => $soundcloud_url,
+                'category_id' => !empty($_POST['category_id']) ? (int)$_POST['category_id'] : null,
                 // Poll data
                 'enable_poll' => isset($_POST['enable_poll']),
                 'poll_question' => trim($_POST['poll_question'] ?? ''),
