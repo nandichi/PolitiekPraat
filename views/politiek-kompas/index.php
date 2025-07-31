@@ -258,7 +258,6 @@
                                                hover:scale-[1.02] hover:-translate-y-1" 
                                          data-theme="<?php echo $key; ?>"
                                          data-title="<?php echo $theme['title']; ?>"
-                                         data-icon="<?php echo $theme['icon']; ?>"
                                          data-description="<?php echo $theme['description']; ?>">
                                         
                                         <!-- Selection Status -->
@@ -271,8 +270,19 @@
                                         
                                         <div class="p-4">
                                             <div class="flex items-start space-x-4">
-                                                <div class="text-3xl group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
-                                                    <?php echo $theme['icon']; ?>
+                                                <div class="relative">
+                                                    <!-- Icon container with gradient background -->
+                                                    <div class="w-16 h-16 bg-gradient-to-br from-slate-100 to-slate-200 rounded-2xl 
+                                                               flex items-center justify-center shadow-lg group-hover:shadow-xl
+                                                               group-hover:from-secondary/20 group-hover:to-secondary/10
+                                                               transition-all duration-300 group-hover:scale-110">
+                                                        <div class="text-slate-600 group-hover:text-secondary transition-colors duration-300">
+                                                            <?php echo $theme['icon']; ?>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Subtle glow effect on hover -->
+                                                    <div class="absolute inset-0 rounded-2xl bg-secondary/20 opacity-0 blur-xl
+                                                               group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
                                                 </div>
                                                 <div class="flex-1 min-w-0">
                                                     <div class="font-bold text-slate-800 group-hover:text-secondary 
@@ -545,8 +555,30 @@
 }
 
 .selection-chip .chip-icon {
-    font-size: 1rem;
-    margin-right: 0.375rem;
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-right: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.375rem;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.4) 100%);
+    padding: 0.125rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.selection-chip .chip-icon svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.1));
+}
+
+.selection-chip.party-chip .chip-icon {
+    background: linear-gradient(135deg, rgba(var(--primary), 0.2) 0%, rgba(var(--primary), 0.1) 100%);
+}
+
+.selection-chip.theme-chip .chip-icon {
+    background: linear-gradient(135deg, rgba(var(--secondary), 0.2) 0%, rgba(var(--secondary), 0.1) 100%);
 }
 
 .selection-chip .chip-remove {
@@ -776,6 +808,35 @@
 .theme-card:nth-child(5) { animation-delay: 0.3s; }
 .theme-card:nth-child(6) { animation-delay: 0.35s; }
 
+/* Enhanced SVG icon styling */
+.theme-card svg {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.theme-card:hover svg {
+    transform: scale(1.05);
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+}
+
+/* Icon container hover effects */
+.theme-card .relative:hover {
+    animation: subtle-pulse 2s ease-in-out infinite;
+}
+
+@keyframes subtle-pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.02);
+    }
+}
+
+/* Enhanced icon glow on selection */
+.theme-card.selected svg {
+    filter: drop-shadow(0 0 8px rgba(var(--secondary), 0.4));
+}
+
 /* Focus and accessibility improvements */
 .party-card:focus-visible,
 .theme-card:focus-visible {
@@ -890,7 +951,7 @@ document.addEventListener('DOMContentLoaded', function() {
             `;
         } else {
             chip.innerHTML = `
-                <span class="chip-icon">${data.icon}</span>
+                <span class="chip-icon w-4 h-4 inline-flex items-center justify-center">${themes[key].icon}</span>
                 <span>${data.title}</span>
                 <svg class="chip-remove w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -1148,9 +1209,11 @@ document.addEventListener('DOMContentLoaded', function() {
                          style="animation: fadeInUp 0.6s ease-out backwards; animation-delay: ${themeIndex * 100}ms">
                         <div class="flex flex-col sm:flex-row sm:items-center mb-8 space-y-4 sm:space-y-0">
                             <div class="flex items-center space-x-4">
-                                <div class="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl 
-                                           flex items-center justify-center shadow-lg">
-                                    <span class="text-2xl">${theme.icon}</span>
+                                <div class="relative w-20 h-20 bg-gradient-to-br from-indigo-500 via-purple-500 to-indigo-600 rounded-3xl 
+                                           flex items-center justify-center shadow-2xl border border-white/20">
+                                    <div class="w-10 h-10 text-white filter drop-shadow-lg">${theme.icon}</div>
+                                    <!-- Subtle inner glow -->
+                                    <div class="absolute inset-1 rounded-2xl bg-white/10 blur-sm"></div>
                                 </div>
                                 <div>
                                     <h3 class="text-2xl sm:text-3xl font-bold text-slate-800">${theme.title}</h3>

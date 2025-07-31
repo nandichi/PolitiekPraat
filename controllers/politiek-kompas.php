@@ -15,42 +15,42 @@ class ProgrammaVergelijkerController {
             'Immigratie' => [
                 'title' => 'Immigratie',
                 'description' => 'Asielbeleid, integratie en migratiestromen',
-                'icon' => '🛂'
+                'icon' => '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/></svg>'
             ],
             'Klimaat' => [
                 'title' => 'Klimaat',
                 'description' => 'CO2-reductie en milieumaatregelen',
-                'icon' => '🌍'
+                'icon' => '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3s-4.5 4.03-4.5 9 2.015 9 4.5 9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 7.5h-9m9 4.5h-9"/></svg>'
             ],
             'Zorg' => [
                 'title' => 'Zorg',
                 'description' => 'Eigen risico en toegankelijkheid',
-                'icon' => '🏥'
+                'icon' => '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/></svg>'
             ],
             'Energie' => [
                 'title' => 'Energie',
                 'description' => 'Kernenergie en duurzame bronnen',
-                'icon' => '⚡'
+                'icon' => '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg>'
             ],
             'Economie' => [
                 'title' => 'Economie',
                 'description' => 'Belastingen en ondernemerschap',
-                'icon' => '💰'
+                'icon' => '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>'
             ],
             'Onderwijs' => [
                 'title' => 'Onderwijs',
                 'description' => 'Kwaliteit en toegankelijkheid',
-                'icon' => '📚'
+                'icon' => '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5"/></svg>'
             ],
             'Woningmarkt' => [
                 'title' => 'Woningmarkt',
                 'description' => 'Betaalbare woningen en huurprijzen',
-                'icon' => '🏠'
+                'icon' => '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"/></svg>'
             ],
             'Veiligheid' => [
                 'title' => 'Veiligheid',
                 'description' => 'Politie en criminaliteitsbestrijding',
-                'icon' => '👮'
+                'icon' => '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>'
             ]
         ];
 
@@ -1406,6 +1406,98 @@ $parties = [
         'current_seats' => 1,
         'color' => '#FFD700'
     ],
+    
+    'BIJ1' => [
+        'name' => 'BIJ1',
+        'leader' => 'Sylvana Simons',
+        'logo' => 'https://i0.wp.com/www.worldwithoutfossilads.org/wp-content/uploads/2023/08/Bij1-logo.png?fit=2223%2C2223&ssl=1',
+        'description' => 'BIJ1 is een politieke partij die strijdt voor radicale gelijkwaardigheid en het doorbreken van systemische ongelijkheid. De partij richt zich op antiracisme, dekolonisatie en het bestrijden van alle vormen van discriminatie. BIJ1 streeft naar een inclusieve samenleving waar iedereen vrij kan zijn.',
+        'standpoints' => [
+            'Immigratie' => [
+                'summary' => 'BIJ1 wil een humaan migratiebeleid en afschaffing van mensonwaardige opvangcentra.',
+                'details' => 'BIJ1 pleit voor een fundamenteel andere aanpak van migratie gebaseerd op menselijke waardigheid. De partij wil af van detentiecentra en mensonwaardige opvang, en in plaats daarvan investeren in fatsoenlijke huisvesting. Pushbacks en geweld aan de grenzen moeten stoppen. Nederland moet meer vluchtelingen opvangen en familie-hereniging vergemakkelijken. Het asielsysteem moet worden gedekoloniseerd, zonder onderscheid tussen verschillende groepen vluchtelingen.',
+                'feasibility' => [
+                    'score' => 'Moeilijk',
+                    'explanation' => 'Requires substantial changes to current immigration infrastructure and EU coordination. Humane housing for asylum seekers needs significant investment and political support. Decolonizing asylum system faces institutional resistance.',
+                    'costs' => '€2-3 miljard voor verbeterde opvang en huisvesting',
+                    'timeline' => '3-5 jaar voor structurele veranderingen'
+                ]
+            ],
+            'Klimaat' => [
+                'summary' => 'BIJ1 wil klimaatrechtvaardigheid en een groene transitie die iedereen ten goede komt.',
+                'details' => 'BIJ1 verbindt klimaatbeleid met sociale rechtvaardigheid. De partij wil een groene transitie waarbij niet de gewone mensen de rekening betalen, maar grote vervuilers en multinationals. Fossiele subsidies moeten worden afgeschaft en geïnvesteerd in groene banen. Klimaatrechtvaardigheid betekent dat gemeenschappen die het zwaarst getroffen worden door vervuiling voorrang krijgen bij verduurzaming.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Green transition with social focus is achievable with proper funding and support. Removing fossil subsidies is politically challenging but financially beneficial long-term.',
+                    'costs' => '€3-5 miljard voor groene investeringen, besparingen op fossiele subsidies',
+                    'timeline' => '5-10 jaar voor transitie'
+                ]
+            ],
+            'Zorg' => [
+                'summary' => 'BIJ1 wil gezondheidszorg als grondrecht zonder winstoogmerk.',
+                'details' => 'Gezondheidszorg moet een grondrecht zijn dat verankerd wordt in de Grondwet. BIJ1 wil af van het winstoogmerk in de zorg en het eigen risico afschaffen. Zorgverzekeraars moeten verdwijnen en vervangen worden door een publiek zorgstelsel. Meer investering in preventie en mentale gezondheid, vooral in achterstandswijken. Structureel racisme in de zorg moet worden weggenomen.',
+                'feasibility' => [
+                    'score' => 'Zeer moeilijk',
+                    'explanation' => 'Complete overhaul of healthcare system requires massive political consensus and transition period. Constitutional changes need two-thirds majority. Dismantling insurance system faces strong institutional resistance.',
+                    'costs' => '€10-15 miljard voor transitie naar publiek stelsel',
+                    'timeline' => '10-15 jaar voor volledige hervorming'
+                ]
+            ],
+            'Energie' => [
+                'summary' => 'BIJ1 wil publieke controle over energie en een rechtvaardige energietransitie.',
+                'details' => 'Energiebedrijven moeten terug in publieke handen om betaalbare en schone energie te garanderen. BIJ1 wil investeren in hernieuwbare energie met democratische controle. Energiearmoede moet worden bestreden door lagere tarieven voor huishoudens met lage inkomens. De transitie mag niet ten koste gaan van werkgelegenheid - groene banen moeten werknemers in fossiele sectoren opvangen.',
+                'feasibility' => [
+                    'score' => 'Moeilijk',
+                    'explanation' => 'Nationalizing energy companies requires substantial compensation and legal procedures. Public energy control is achievable but needs careful transition planning and significant investment.',
+                    'costs' => '€20-30 miljard voor nationalisatie energiebedrijven',
+                    'timeline' => '7-10 jaar voor publieke controle'
+                ]
+            ],
+            'Economie' => [
+                'summary' => 'BIJ1 wil een radicaal andere economie met vermogenslimieten en publieke controle.',
+                'details' => 'BIJ1 wil een limiet op vermogen en versoepeling van onteigeningswetgeving. Banken, pensioensfondsen en openbaar vervoer moeten in publieke handen. Private bedrijven betalen forse winstbelasting. Nederland mag geen belastingparadijs meer zijn. Schuldhulporganisaties die geld verdienen aan andermans schulden worden verboden. Het recht op huisvesting, voeding en gezondheidszorg wordt verankerd in de Grondwet.',
+                'feasibility' => [
+                    'score' => 'Zeer moeilijk',
+                    'explanation' => 'Wealth caps and nationalization face constitutional and EU law challenges. Massive economic restructuring requires unprecedented political support and international coordination.',
+                    'costs' => '€50-100 miljard voor nationalisatie en compensatie',
+                    'timeline' => '15-20 jaar voor volledige herstructurering'
+                ]
+            ],
+            'Onderwijs' => [
+                'summary' => 'BIJ1 wil gratis onderwijs voor iedereen en dekolonisatie van het curriculum.',
+                'details' => 'Het collegegeld wordt afgeschaft en al het onderwijs wordt gratis. Studieschulden van de pechgeneratie worden volledig kwijtgescholden. Het onderwijs moet worden gedekoloniseerd met meer aandacht voor diverse geschiedenis en perspectieven. Scholen moeten volledig toegankelijk zijn voor leerlingen met een beperking. Betere arbeidsvoorwaarden voor onderwijspersoneel: hogere lonen, lagere werkdruk.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Free education is financially demanding but achievable with progressive taxation. Student debt forgiveness requires substantial one-time investment. Curriculum decolonization faces cultural resistance but is implementable.',
+                    'costs' => '€3-4 miljard per jaar voor gratis onderwijs, €15-20 miljard voor schuldenvergeving',
+                    'timeline' => '3-5 jaar voor implementatie'
+                ]
+            ],
+            'Woningmarkt' => [
+                'summary' => 'BIJ1 wil huisvesting als grondrecht en publieke controle over de woningmarkt.',
+                'details' => 'Het recht op huisvesting wordt verankerd in de Grondwet. BIJ1 wil massaal investeren in sociale woningbouw en speculatie op de woningmarkt tegengaan. Huurprijzen moeten worden bevroren en later verlaagd. Woningcorporaties krijgen meer middelen en er komt een limiet op verhuur door particuliere beleggers. Wonen is een recht, geen handelswaar.',
+                'feasibility' => [
+                    'score' => 'Moeilijk',
+                    'explanation' => 'Constitutional right to housing requires constitutional amendment. Market intervention faces property rights challenges. Large-scale social housing construction is achievable but needs massive investment and land availability.',
+                    'costs' => '€15-25 miljard voor sociale woningbouw en marktinterventie',
+                    'timeline' => '7-10 jaar voor structurele verandering'
+                ]
+            ],
+            'Veiligheid' => [
+                'summary' => 'BIJ1 wil preventieve veiligheid en afbouw van het strafrechtsysteem.',
+                'details' => 'BIJ1 wil investeren in preventie in plaats van repressie. De oorzaken van criminaliteit (armoede, discriminatie, gebrek aan kansen) moeten worden aangepakt. Het gevangeniswezen moet worden hervormd met focus op restorative justice. Etnisch profileren door politie moet stoppen. Meer investeringen in jeugdwerk, onderwijs en sociale voorzieningen in plaats van meer agenten en gevangenissen.',
+                'feasibility' => [
+                    'score' => 'Haalbaar',
+                    'explanation' => 'Preventive approach is evidence-based and cost-effective long-term. Reducing ethnic profiling requires training and oversight. Prison reform faces institutional resistance but is gradually achievable.',
+                    'costs' => '€2-3 miljard voor preventieve programmas en hervorming',
+                    'timeline' => '5-7 jaar voor structurele verandering'
+                ]
+            ]
+        ],
+        'current_seats' => 0,
+        'color' => '#E91E63'
+    ],
+    
 ];
 
         // Data structureren voor de view
