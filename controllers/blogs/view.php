@@ -5,7 +5,7 @@ if (!isset($_GET['slug'])) {
 }
 
 $db = new Database();
-
+w
 // Haal blog op
 $db->query("SELECT blogs.*, users.username as author_name 
            FROM blogs 

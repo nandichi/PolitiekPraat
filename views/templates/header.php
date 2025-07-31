@@ -1099,11 +1099,7 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
             animation: pulse-subtle 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
         
-        /* VVD Banner transitions */
-        #vvd-announcement-banner {
-            transition: transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1), 
-                       opacity 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-        }
+
     </style>
 </head>
 <body class="bg-gray-50 overflow-x-hidden">
@@ -1114,113 +1110,7 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
         <div class="blob bg-accent/10 w-[400px] h-[400px] -bottom-[200px] left-[10%] animate-pulse-slow" style="animation-delay: 2s;"></div>
     </div>
     
-    <!-- VVD Programma Announcement Banner -->
-    <div id="vvd-announcement-banner" class="relative z-40 bg-gradient-to-r from-primary via-primary/95 to-secondary shadow-lg border-b border-white/20">
-        <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-2.5 sm:py-3">
-            <!-- Mobile Layout (< 768px) -->
-            <div class="block md:hidden">
-                <div class="flex items-center justify-between">
-                    <!-- Left: Compact content -->
-                    <div class="flex items-center space-x-2 text-white min-w-0 flex-1">
-                        <span class="inline-flex items-center px-1.5 py-0.5 text-xs font-bold bg-white/20 text-white rounded-full border border-white/30 backdrop-blur-sm flex-shrink-0">
-                            NIEUW
-                        </span>
-                        <div class="min-w-0 flex-1">
-                            <div class="font-semibold text-sm leading-tight truncate">
-                                VVD verkiezingsprogramma
-                            </div>
-                            <div class="text-xs text-white/90 font-medium leading-tight">
-                                Lees onze kritische analyse
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Right: Action buttons -->
-                    <div class="flex items-center space-x-1 ml-2 flex-shrink-0">
-                        <a href="<?php echo URLROOT; ?>/blogs/nederland-op-een-kruispunt-een-kritische-blik-op-het-nieuwe-vvd-programma" 
-                           class="inline-flex items-center px-3 py-1.5 bg-white text-primary font-semibold text-xs rounded-md
-                                  transition-all duration-300 hover:bg-white/95 hover:scale-105
-                                  border border-white/20 group">
-                            <span>Lezen</span>
-                            <svg class="w-3 h-3 ml-1 transition-transform duration-300 group-hover:translate-x-0.5" 
-                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                            </svg>
-                        </a>
-                        
-                        <button onclick="dismissVVDBanner()" 
-                                class="p-1.5 text-white/70 hover:text-white hover:bg-white/10 rounded-md
-                                       transition-all duration-300 group flex-shrink-0"
-                                aria-label="Banner sluiten">
-                            <svg class="w-3.5 h-3.5 transition-transform duration-300 group-hover:rotate-90" 
-                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Desktop Layout (>= 768px) -->
-            <div class="hidden md:flex items-center justify-between">
-                <!-- Banner Content -->
-                <div class="flex items-center space-x-3 text-white">
-                    <!-- VVD Logo/Icon -->
-                    <div class="flex w-8 h-8 bg-white/20 rounded-lg items-center justify-center backdrop-blur-sm">
-                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                        </svg>
-                    </div>
-                    
-                    <!-- Announcement Text -->
-                    <div class="flex flex-col lg:flex-row lg:items-center lg:space-x-4">
-                        <div class="flex items-center space-x-2">
-                            <span class="inline-flex items-center px-2 py-1 text-xs font-bold bg-white/20 text-white rounded-full border border-white/30 backdrop-blur-sm">
-                                NIEUW
-                            </span>
-                            <span class="font-semibold text-sm lg:text-base">
-                                VVD presenteert nieuw verkiezingsprogramma
-                            </span>
-                        </div>
-                        <span class="text-xs lg:text-sm text-white/90 font-medium mt-0.5 lg:mt-0">
-                            "Sterker uit de storm" - Lees onze kritische analyse
-                        </span>
-                    </div>
-                </div>
-                
-                <!-- CTA Button -->
-                <div class="flex items-center space-x-3">
-                    <a href="<?php echo URLROOT; ?>/blogs/nederland-op-een-kruispunt-een-kritische-blik-op-het-nieuwe-vvd-programma" 
-                       class="inline-flex items-center px-4 py-2 bg-white text-primary font-semibold text-sm rounded-lg
-                              transition-all duration-300 hover:bg-white/95 hover:scale-105 hover:shadow-lg
-                              border border-white/20 group relative overflow-hidden">
-                        <span class="relative z-10">Lees analyse</span>
-                        <svg class="w-4 h-4 ml-2 transition-transform duration-300 group-hover:translate-x-1 relative z-10" 
-                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                        </svg>
-                        <div class="absolute inset-0 bg-gradient-to-r from-secondary/10 to-primary/10 
-                                    opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    </a>
-                    
-                    <!-- Close Button -->
-                    <button onclick="dismissVVDBanner()" 
-                            class="p-2 text-white/70 hover:text-white hover:bg-white/10 rounded-lg
-                                   transition-all duration-300 group"
-                            aria-label="Banner sluiten">
-                        <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-90" 
-                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Subtle bottom gradient -->
-        <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
-    </div>
+
 
     <!-- Main Navigation - Completely redesigned -->
     <nav class="relative z-50 sticky top-0">
@@ -2109,27 +1999,7 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
                 }
             });
 
-            // VVD Banner functionality
-            const vvdBanner = document.getElementById('vvd-announcement-banner');
-            
-            // Check if banner was previously dismissed
-            if (localStorage.getItem('vvdBannerDismissed') === 'true') {
-                if (vvdBanner) {
-                    vvdBanner.style.display = 'none';
-                }
-            }
-            
-            // Global function to dismiss VVD banner
-            window.dismissVVDBanner = function() {
-                if (vvdBanner) {
-                    vvdBanner.style.transform = 'translateY(-100%)';
-                    vvdBanner.style.opacity = '0';
-                    setTimeout(() => {
-                        vvdBanner.style.display = 'none';
-                    }, 300);
-                    localStorage.setItem('vvdBannerDismissed', 'true');
-                }
-            };
+
 
             // Handle desktop dropdowns with improved timing
             const dropdownGroups = document.querySelectorAll('.group');
