@@ -322,6 +322,10 @@ class BlogsController {
             exit;
         }
         
+        // Haal categorieën op voor het formulier
+        $categoryController = new CategoryController();
+        $categories = $categoryController->getAll();
+        
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Handle file uploads
             $image_path = $blog->image_path; // Keep existing image by default
@@ -528,6 +532,9 @@ class BlogsController {
                 }
             }
             
+            // Handle category update
+            $category_id = filter_input(INPUT_POST, 'category_id', FILTER_VALIDATE_INT);
+            
             // Handle poll updates
             $pollQuestion = isset($_POST['poll_question']) ? trim($_POST['poll_question']) : '';
             $pollOptionA = isset($_POST['poll_option_a']) ? trim($_POST['poll_option_a']) : '';
@@ -555,6 +562,7 @@ class BlogsController {
                 'id' => $id,
                 'title' => trim($_POST['title']),
                 'content' => trim($_POST['content']),
+                'category_id' => $category_id,
                 'image_path' => $image_path,
                 'video_path' => $video_path,
                 'video_url' => $video_url,

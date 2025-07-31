@@ -136,7 +136,7 @@ class BlogController {
         
         $this->db->query("UPDATE blogs 
                          SET title = :title, content = :content, 
-                             summary = :summary, image_path = :image_path,
+                             summary = :summary, category_id = :category_id, image_path = :image_path,
                              video_path = :video_path, video_url = :video_url, 
                              audio_path = :audio_path, audio_url = :audio_url, soundcloud_url = :soundcloud_url
                          WHERE id = :id AND author_id = :author_id");
@@ -144,6 +144,7 @@ class BlogController {
         $this->db->bind(':title', $data['title']);
         $this->db->bind(':content', $content);
         $this->db->bind(':summary', $summary);
+        $this->db->bind(':category_id', $data['category_id'] ?? null);
         $this->db->bind(':image_path', $data['image_path']);
         $this->db->bind(':video_path', $data['video_path'] ?? null);
         $this->db->bind(':video_url', $data['video_url'] ?? null);

@@ -53,6 +53,49 @@
                         </div>
                     </div>
 
+                    <!-- Category Selection Section -->
+                    <div class="mb-8" data-aos="fade-up" data-aos-delay="150">
+                        <label for="category_id" class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                            <svg class="w-5 h-5 text-primary mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+                            </svg>
+                            Categorie selecteren
+                        </label>
+                        <div class="relative group">
+                            <select name="category_id" 
+                                    id="category_id" 
+                                    class="w-full px-5 py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition-all duration-300 text-lg bg-gray-50/50 appearance-none cursor-pointer">
+                                <option value="">Geen categorie (optioneel)</option>
+                                <?php 
+                                if (isset($categories) && !empty($categories)): 
+                                    foreach ($categories as $category): 
+                                ?>
+                                    <option value="<?php echo $category->id; ?>" 
+                                            <?php echo (isset($blog->category_id) && $blog->category_id == $category->id) ? 'selected' : ''; ?>
+                                            data-color="<?php echo $category->color; ?>">
+                                        <?php echo htmlspecialchars($category->name); ?>
+                                    </option>
+                                <?php 
+                                    endforeach; 
+                                endif; 
+                                ?>
+                            </select>
+                            <!-- Custom dropdown arrow -->
+                            <div class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
+                                <svg class="w-5 h-5 text-gray-400 group-hover:text-primary transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </div>
+                            <div class="absolute inset-0 bg-primary/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-2 flex items-center">
+                            <svg class="w-4 h-4 text-gray-400 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            Kies de categorie die het beste bij je blog past. Dit helpt lezers je artikel te vinden.
+                        </p>
+                    </div>
+
                     <!-- Image Upload Section - verbeterd ontwerp -->
                     <div class="mb-10" data-aos="fade-up" data-aos-delay="200">
                         <label class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
@@ -996,6 +1039,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Poll functionaliteit
     setupPollFunctionality();
+    
+    // Category selection enhancement
+    setupCategorySelection();
 });
 
 // Poll functionaliteit buiten DOMContentLoaded omdat het door onclick wordt aangeroepen
@@ -1070,6 +1116,46 @@ function setupPollFunctionality() {
     if (pollQuestion) pollQuestion.addEventListener('input', updatePollPreview);
     if (pollOptionA) pollOptionA.addEventListener('input', updatePollPreview);
     if (pollOptionB) pollOptionB.addEventListener('input', updatePollPreview);
+}
+
+// Category selection functionality
+function setupCategorySelection() {
+    const categorySelect = document.getElementById('category_id');
+    
+    if (categorySelect) {
+        // Add visual feedback for category selection
+        categorySelect.addEventListener('change', function() {
+            const selectedOption = this.options[this.selectedIndex];
+            const categoryColor = selectedOption.getAttribute('data-color') || '#3B82F6';
+            
+            // Add subtle visual feedback
+            if (selectedOption.value) {
+                this.style.borderLeftColor = categoryColor;
+                this.style.borderLeftWidth = '4px';
+                
+                // Optional: Show a small colored indicator
+                let indicator = this.parentElement.querySelector('.category-indicator');
+                if (!indicator) {
+                    indicator = document.createElement('div');
+                    indicator.className = 'category-indicator absolute top-4 left-4 w-3 h-3 rounded-full transition-all duration-300';
+                    this.parentElement.appendChild(indicator);
+                }
+                indicator.style.backgroundColor = categoryColor;
+                indicator.style.opacity = '1';
+            } else {
+                this.style.borderLeftColor = '';
+                this.style.borderLeftWidth = '';
+                
+                const indicator = this.parentElement.querySelector('.category-indicator');
+                if (indicator) {
+                    indicator.style.opacity = '0';
+                }
+            }
+        });
+        
+        // Trigger initial state
+        categorySelect.dispatchEvent(new Event('change'));
+    }
 }
 </script>
 
