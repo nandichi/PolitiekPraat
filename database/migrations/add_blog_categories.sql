@@ -38,7 +38,7 @@ INSERT INTO blog_categories (name, slug, description, color, icon, sort_order) V
 ('Opinies & Columns', 'opinies-columns', 'Persoonlijke opinies en columns over politieke thema\'s', '#EC4899', 'edit', 7),
 ('Actuele Thema\'s', 'actuele-themas', 'Politieke duiding van actuele maatschappelijke thema\'s', '#06B6D4', 'trending', 8);
 
--- Stel een default categorie in voor bestaande blogs (Nederlandse Politiek)
+-- Revert: Zet alle category_id's terug naar NULL voor blogs die automatisch waren toegewezen
 UPDATE blogs 
-SET category_id = (SELECT id FROM blog_categories WHERE slug = 'nederlandse-politiek' LIMIT 1) 
-WHERE category_id IS NULL;
+SET category_id = NULL 
+WHERE category_id = (SELECT id FROM blog_categories WHERE slug = 'nederlandse-politiek' LIMIT 1);
