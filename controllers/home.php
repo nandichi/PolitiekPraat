@@ -46,97 +46,183 @@ $partijData = $politicalDataAPI->getPartijInformatie();
 $latestPolls = $pollAPI->getLatestPolls();
 $historicalPolls = $pollAPI->getHistoricalPolls(3);
 
-// Haal zetelverdeling data op uit de database
-$db->query("SELECT party_key, name, current_seats, polling, color FROM political_parties WHERE is_active = 1 ORDER BY JSON_EXTRACT(polling, '$.seats') DESC");
-$partiesData = $db->resultSet();
-
-// Converteer database data naar gewenste format
-$peilingData = [];
-foreach ($partiesData as $party) {
-    $polling = json_decode($party->polling, true);
-    
-    // Map party_key naar korte display naam voor consistentie
-    $displayName = '';
-    switch($party->party_key) {
-        case 'PVV': $displayName = 'PVV'; break;
-        case 'GL-PvdA': $displayName = 'GL/PvdA'; break;
-        case 'CDA': $displayName = 'CDA'; break;
-        case 'VVD': $displayName = 'VVD'; break;
-        case 'JA21': $displayName = 'JA21'; break;
-        case 'D66': $displayName = 'D66'; break;
-        case 'SP': $displayName = 'SP'; break;
-        case 'BBB': $displayName = 'BBB'; break;
-        case 'FvD': $displayName = 'FVD'; break;
-        case 'SGP': $displayName = 'SGP'; break;
-        case 'DENK': $displayName = 'DENK'; break;
-        case 'Volt': $displayName = 'Volt'; break;
-        case 'PvdD': $displayName = 'PvdDieren'; break;
-        case 'CU': $displayName = 'ChristenUnie'; break;
-        case 'NSC': $displayName = 'NSC'; break;
-        default: 
-            // Fallback naar de database naam als party_key niet bekend is
-            $displayName = $party->name; 
-            break;
-    }
-    
-    $peilingData[] = [
-        'partij' => $displayName,
+// Data voor zetelverdeling peiling 7-6-2025 (Peil.nl)
+$peilingData = [
+    [
+        'partij' => 'PVV',
         'zetels' => [
-            'peiling' => $polling['seats'] ?? 0,
-            'vorige' => $polling['seats'] ?? 0, // Voor nu zelfde waarde
-            'tkvorigepeiling' => $polling['seats'] ?? 0, // Voor nu zelfde waarde  
-            'tk2023' => $party->current_seats
+            'peiling' => 29, 
+            'vorige' => 30,
+            'tkvorigepeiling' => 31,
+            'tk2023' => 37
         ],
-        'color' => $party->color
-    ];
-}
-
-// Mogelijke coalities berekenen op basis van database peilingdata
-$mogelijkeCoalities = [];
-
-// Helper functie om zetels op te halen voor een partij
-function getZetelsVoorPartij($peilingData, $partijNaam) {
-    foreach ($peilingData as $partij) {
-        if ($partij['partij'] === $partijNaam) {
-            return $partij['zetels']['peiling'];
-        }
-    }
-    return 0;
-}
-
-// Definieer coalities en bereken zetels dynamisch
-$coalitieDefinities = [
-    [
-        'naam' => 'Links-progressief',
-        'partijen' => ['GL/PvdA', 'D66', 'SP', 'PvdDieren', 'Volt']
+        'color' => '#0078D7'
     ],
     [
-        'naam' => 'Rechts-conservatief',
-        'partijen' => ['PVV', 'VVD', 'BBB', 'JA21', 'SGP', 'FVD']
+        'partij' => 'GL/PvdA',
+        'zetels' => [
+            'peiling' => 28, 
+            'vorige' => 29,
+            'tkvorigepeiling' => 30,
+            'tk2023' => 25
+        ],
+        'color' => '#008800'
     ],
     [
-        'naam' => 'Centrum-breed',
-        'partijen' => ['GL/PvdA', 'VVD', 'CDA', 'D66', 'ChristenUnie']
+        'partij' => 'CDA',
+        'zetels' => [
+            'peiling' => 21, 
+            'vorige' => 21,
+            'tkvorigepeiling' => 18,
+            'tk2023' => 5
+        ],
+        'color' => '#1E8449'
     ],
     [
-        'naam' => 'Huidige coalitie',
-        'partijen' => ['PVV', 'VVD', 'BBB', 'NSC']
+        'partij' => 'VVD',
+        'zetels' => [
+            'peiling' => 20, 
+            'vorige' => 22,
+            'tkvorigepeiling' => 25,
+            'tk2023' => 24
+        ],
+        'color' => '#FF9900'
+    ],
+    [
+        'partij' => 'JA21',
+        'zetels' => [
+            'peiling' => 10, 
+            'vorige' => 8,
+            'tkvorigepeiling' => 4,
+            'tk2023' => 1
+        ],
+        'color' => '#4B0082'
+    ],
+    [
+        'partij' => 'D66',
+        'zetels' => [
+            'peiling' => 9, 
+            'vorige' => 8,
+            'tkvorigepeiling' => 8,
+            'tk2023' => 9
+        ],
+        'color' => '#00B13C'
+    ],
+    [
+        'partij' => 'SP',
+        'zetels' => [
+            'peiling' => 7, 
+            'vorige' => 7,
+            'tkvorigepeiling' => 7,
+            'tk2023' => 5
+        ],
+        'color' => '#EE0000'
+    ],
+    [
+        'partij' => 'BBB',
+        'zetels' => [
+            'peiling' => 4, 
+            'vorige' => 3,
+            'tkvorigepeiling' => 2,
+            'tk2023' => 7
+        ],
+        'color' => '#7CFC00'
+    ],
+    [
+        'partij' => 'FVD',
+        'zetels' => [
+            'peiling' => 4, 
+            'vorige' => 4,
+            'tkvorigepeiling' => 5,
+            'tk2023' => 3
+        ],
+        'color' => '#8B4513'
+    ],
+    [
+        'partij' => 'PvdDieren',
+        'zetels' => [
+            'peiling' => 4, 
+            'vorige' => 4,
+            'tkvorigepeiling' => 4,
+            'tk2023' => 3
+        ],
+        'color' => '#006400'
+    ],
+    [
+        'partij' => 'SGP',
+        'zetels' => [
+            'peiling' => 4, 
+            'vorige' => 4,
+            'tkvorigepeiling' => 4,
+            'tk2023' => 3
+        ],
+        'color' => '#ff7f00'
+    ],
+    [
+        'partij' => 'DENK',
+        'zetels' => [
+            'peiling' => 4, 
+            'vorige' => 4,
+            'tkvorigepeiling' => 4,
+            'tk2023' => 3
+        ],
+        'color' => '#00BFFF'
+    ],
+    [
+        'partij' => 'Volt',
+        'zetels' => [
+            'peiling' => 3, 
+            'vorige' => 3,
+            'tkvorigepeiling' => 4,
+            'tk2023' => 2
+        ],
+        'color' => '#800080'
+    ],
+    [
+        'partij' => 'ChristenUnie',
+        'zetels' => [
+            'peiling' => 3, 
+            'vorige' => 3,
+            'tkvorigepeiling' => 3,
+            'tk2023' => 3
+        ],
+        'color' => '#4682B4'
+    ],
+    [
+        'partij' => 'NSC',
+        'zetels' => [
+            'peiling' => 0, 
+            'vorige' => 0,
+            'tkvorigepeiling' => 1,
+            'tk2023' => 20
+        ],
+        'color' => '#4D7F78'
     ]
 ];
 
-// Bereken zetels voor elke coalitie
-foreach ($coalitieDefinities as $coalitie) {
-    $totaalZetels = 0;
-    foreach ($coalitie['partijen'] as $partij) {
-        $totaalZetels += getZetelsVoorPartij($peilingData, $partij);
-    }
-    
-    $mogelijkeCoalities[] = [
-        'naam' => $coalitie['naam'],
-        'partijen' => $coalitie['partijen'],
-        'zetels' => $totaalZetels
-    ];
-}
+// Mogelijke coalities berekenen op basis van de bijgewerkte peilingdata van 5-7-2025
+$mogelijkeCoalities = [
+    [
+        'naam' => 'Links-progressief',
+        'partijen' => ['GL/PvdA', 'D66', 'SP', 'PvdDieren', 'Volt'],
+        'zetels' => 28 + 9 + 7 + 4 + 3 // 51 zetels
+    ],
+    [
+        'naam' => 'Rechts-conservatief',
+        'partijen' => ['PVV', 'VVD', 'BBB', 'JA21', 'SGP', 'FVD'],
+        'zetels' => 29 + 20 + 4 + 10 + 4 + 4 // 71 zetels
+    ],
+    [
+        'naam' => 'Centrum-breed',
+        'partijen' => ['GL/PvdA', 'VVD', 'CDA', 'D66', 'ChristenUnie'],
+        'zetels' => 28 + 20 + 21 + 9 + 3 // 81 zetels
+    ],
+    [
+        'naam' => 'Huidige coalitie',
+        'partijen' => ['PVV', 'VVD', 'BBB', 'NSC'],
+        'zetels' => 29 + 20 + 4 + 0 // 53 zetels
+    ]
+];
 
 // Sorteer coalities op aantal zetels (aflopend)
 usort($mogelijkeCoalities, function($a, $b) {
@@ -2546,15 +2632,15 @@ require_once 'views/templates/header.php';
                                 <!-- Pie chart implementatie voor zetelverdeling -->
                                 <div class="relative w-full py-4">
                                     <?php
-                                    // Gebruik de database data voor de pie chart
-                                    $parties = [];
-                                    foreach ($peilingData as $partij) {
-                                        $parties[] = [
-                                            'name' => $partij['partij'],
-                                            'color' => $partij['color'],
-                                            'seats' => $partij['zetels']['peiling']
-                                        ];
-                                    }
+                                    $parties = [
+                                        ['name' => 'PVV', 'color' => '#0078D7', 'seats' => 28],
+                                        ['name' => 'GL-PvdA', 'color' => '#008800', 'seats' => 29],
+                                        ['name' => 'VVD', 'color' => '#FF9900', 'seats' => 26],
+                                        ['name' => 'NSC', 'color' => '#4D7F78', 'seats' => 1],
+                                        ['name' => 'CDA', 'color' => '#1E8449', 'seats' => 19],
+                                        ['name' => 'D66', 'color' => '#00B13C', 'seats' => 8],
+                                        ['name' => 'SP', 'color' => '#EE0000', 'seats' => 8]
+                                    ];
                                     // Sorteer partijen op aantal zetels (aflopend)
                                     usort($parties, function($a, $b) {
                                         return $b['seats'] - $a['seats'];
