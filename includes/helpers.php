@@ -325,8 +325,7 @@ function renderBreadcrumbs($breadcrumbs = null) {
     // Decoratieve patterns
     $html .= '<div class="absolute inset-0" style="background-image: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 1px, transparent 1px), radial-gradient(circle at 80% 20%, rgba(255,255,255,0.08) 1px, transparent 1px); background-size: 30px 30px, 40px 40px;"></div>';
     
-    // Shimmer effect
-    $html .= '<div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent transform -skew-x-12 animate-shimmer opacity-60"></div>';
+
     
     // Glow effects aan de randen
     $html .= '<div class="absolute top-0 left-0 w-32 h-full bg-gradient-to-r from-white/20 to-transparent"></div>';
