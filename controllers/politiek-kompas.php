@@ -1418,7 +1418,7 @@ $parties = [
                 'details' => 'BIJ1 pleit voor een fundamenteel andere aanpak van migratie gebaseerd op menselijke waardigheid. De partij wil af van detentiecentra en mensonwaardige opvang, en in plaats daarvan investeren in fatsoenlijke huisvesting. Pushbacks en geweld aan de grenzen moeten stoppen. Nederland moet meer vluchtelingen opvangen en familie-hereniging vergemakkelijken. Het asielsysteem moet worden gedekoloniseerd, zonder onderscheid tussen verschillende groepen vluchtelingen.',
                 'feasibility' => [
                     'score' => 'Moeilijk',
-                    'explanation' => 'Requires substantial changes to current immigration infrastructure and EU coordination. Humane housing for asylum seekers needs significant investment and political support. Decolonizing asylum system faces institutional resistance.',
+                    'explanation' => 'Vereist substantiële veranderingen aan de huidige immigratie-infrastructuur en EU-coördinatie. Humane huisvesting voor asielzoekers heeft aanzienlijke investeringen en politieke steun nodig. Dekolonisatie van het asielsysteem stuit op institutionele weerstand.',
                     'costs' => '€2-3 miljard voor verbeterde opvang en huisvesting',
                     'timeline' => '3-5 jaar voor structurele veranderingen'
                 ]
@@ -1428,7 +1428,7 @@ $parties = [
                 'details' => 'BIJ1 verbindt klimaatbeleid met sociale rechtvaardigheid. De partij wil een groene transitie waarbij niet de gewone mensen de rekening betalen, maar grote vervuilers en multinationals. Fossiele subsidies moeten worden afgeschaft en geïnvesteerd in groene banen. Klimaatrechtvaardigheid betekent dat gemeenschappen die het zwaarst getroffen worden door vervuiling voorrang krijgen bij verduurzaming.',
                 'feasibility' => [
                     'score' => 'Haalbaar',
-                    'explanation' => 'Green transition with social focus is achievable with proper funding and support. Removing fossil subsidies is politically challenging but financially beneficial long-term.',
+                    'explanation' => 'Groene transitie met sociale focus is haalbaar met juiste financiering en steun. Afschaffen van fossiele subsidies is politiek uitdagend maar financieel voordelig op lange termijn.',
                     'costs' => '€3-5 miljard voor groene investeringen, besparingen op fossiele subsidies',
                     'timeline' => '5-10 jaar voor transitie'
                 ]
@@ -1438,7 +1438,7 @@ $parties = [
                 'details' => 'Gezondheidszorg moet een grondrecht zijn dat verankerd wordt in de Grondwet. BIJ1 wil af van het winstoogmerk in de zorg en het eigen risico afschaffen. Zorgverzekeraars moeten verdwijnen en vervangen worden door een publiek zorgstelsel. Meer investering in preventie en mentale gezondheid, vooral in achterstandswijken. Structureel racisme in de zorg moet worden weggenomen.',
                 'feasibility' => [
                     'score' => 'Zeer moeilijk',
-                    'explanation' => 'Complete overhaul of healthcare system requires massive political consensus and transition period. Constitutional changes need two-thirds majority. Dismantling insurance system faces strong institutional resistance.',
+                    'explanation' => 'Volledige hervorming van het zorgstelsel vereist massale politieke consensus en overgangsperiode. Grondwetswijzigingen hebben een tweederdemeerderheid nodig. Afbreken van het verzekeringssysteem stuit op sterke institutionele weerstand.',
                     'costs' => '€10-15 miljard voor transitie naar publiek stelsel',
                     'timeline' => '10-15 jaar voor volledige hervorming'
                 ]
@@ -1448,7 +1448,7 @@ $parties = [
                 'details' => 'Energiebedrijven moeten terug in publieke handen om betaalbare en schone energie te garanderen. BIJ1 wil investeren in hernieuwbare energie met democratische controle. Energiearmoede moet worden bestreden door lagere tarieven voor huishoudens met lage inkomens. De transitie mag niet ten koste gaan van werkgelegenheid - groene banen moeten werknemers in fossiele sectoren opvangen.',
                 'feasibility' => [
                     'score' => 'Moeilijk',
-                    'explanation' => 'Nationalizing energy companies requires substantial compensation and legal procedures. Public energy control is achievable but needs careful transition planning and significant investment.',
+                    'explanation' => 'Nationalisatie van energiebedrijven vereist substantiële compensatie en juridische procedures. Publieke controle over energie is haalbaar maar heeft zorgvuldige overgangsplanning en aanzienlijke investeringen nodig.',
                     'costs' => '€20-30 miljard voor nationalisatie energiebedrijven',
                     'timeline' => '7-10 jaar voor publieke controle'
                 ]
@@ -1458,7 +1458,7 @@ $parties = [
                 'details' => 'BIJ1 wil een limiet op vermogen en versoepeling van onteigeningswetgeving. Banken, pensioensfondsen en openbaar vervoer moeten in publieke handen. Private bedrijven betalen forse winstbelasting. Nederland mag geen belastingparadijs meer zijn. Schuldhulporganisaties die geld verdienen aan andermans schulden worden verboden. Het recht op huisvesting, voeding en gezondheidszorg wordt verankerd in de Grondwet.',
                 'feasibility' => [
                     'score' => 'Zeer moeilijk',
-                    'explanation' => 'Wealth caps and nationalization face constitutional and EU law challenges. Massive economic restructuring requires unprecedented political support and international coordination.',
+                    'explanation' => 'Vermogenslimieten en nationalisatie stuiten op grondwettelijke en EU-rechtelijke uitdagingen. Massale economische herstructurering vereist ongekende politieke steun en internationale coördinatie.',
                     'costs' => '€50-100 miljard voor nationalisatie en compensatie',
                     'timeline' => '15-20 jaar voor volledige herstructurering'
                 ]
@@ -1468,7 +1468,7 @@ $parties = [
                 'details' => 'Het collegegeld wordt afgeschaft en al het onderwijs wordt gratis. Studieschulden van de pechgeneratie worden volledig kwijtgescholden. Het onderwijs moet worden gedekoloniseerd met meer aandacht voor diverse geschiedenis en perspectieven. Scholen moeten volledig toegankelijk zijn voor leerlingen met een beperking. Betere arbeidsvoorwaarden voor onderwijspersoneel: hogere lonen, lagere werkdruk.',
                 'feasibility' => [
                     'score' => 'Haalbaar',
-                    'explanation' => 'Free education is financially demanding but achievable with progressive taxation. Student debt forgiveness requires substantial one-time investment. Curriculum decolonization faces cultural resistance but is implementable.',
+                    'explanation' => 'Gratis onderwijs is financieel uitdagend maar haalbaar met progressieve belastingen. Kwijtschelding van studieschulden vereist substantiële eenmalige investering. Dekolonisatie van het curriculum stuit op culturele weerstand maar is implementeerbaar.',
                     'costs' => '€3-4 miljard per jaar voor gratis onderwijs, €15-20 miljard voor schuldenvergeving',
                     'timeline' => '3-5 jaar voor implementatie'
                 ]
@@ -1478,7 +1478,7 @@ $parties = [
                 'details' => 'Het recht op huisvesting wordt verankerd in de Grondwet. BIJ1 wil massaal investeren in sociale woningbouw en speculatie op de woningmarkt tegengaan. Huurprijzen moeten worden bevroren en later verlaagd. Woningcorporaties krijgen meer middelen en er komt een limiet op verhuur door particuliere beleggers. Wonen is een recht, geen handelswaar.',
                 'feasibility' => [
                     'score' => 'Moeilijk',
-                    'explanation' => 'Constitutional right to housing requires constitutional amendment. Market intervention faces property rights challenges. Large-scale social housing construction is achievable but needs massive investment and land availability.',
+                    'explanation' => 'Grondrecht op huisvesting vereist grondwetswijziging. Marktinterventie stuit op eigendomsrechten. Grootschalige sociale woningbouw is haalbaar maar vereist massale investeringen en beschikbaarheid van grond.',
                     'costs' => '€15-25 miljard voor sociale woningbouw en marktinterventie',
                     'timeline' => '7-10 jaar voor structurele verandering'
                 ]
@@ -1488,7 +1488,7 @@ $parties = [
                 'details' => 'BIJ1 wil investeren in preventie in plaats van repressie. De oorzaken van criminaliteit (armoede, discriminatie, gebrek aan kansen) moeten worden aangepakt. Het gevangeniswezen moet worden hervormd met focus op restorative justice. Etnisch profileren door politie moet stoppen. Meer investeringen in jeugdwerk, onderwijs en sociale voorzieningen in plaats van meer agenten en gevangenissen.',
                 'feasibility' => [
                     'score' => 'Haalbaar',
-                    'explanation' => 'Preventive approach is evidence-based and cost-effective long-term. Reducing ethnic profiling requires training and oversight. Prison reform faces institutional resistance but is gradually achievable.',
+                    'explanation' => 'Preventieve aanpak is wetenschappelijk onderbouwd en kosteneffectief op lange termijn. Beperking van etnisch profileren vereist training en toezicht. Gevangenishervorming stuit op institutionele weerstand maar is geleidelijk haalbaar.',
                     'costs' => '€2-3 miljard voor preventieve programmas en hervorming',
                     'timeline' => '5-7 jaar voor structurele verandering'
                 ]
