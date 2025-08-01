@@ -124,6 +124,8 @@ $router->add('nederlandse-verkiezingen/([0-9]+)', function($jaar) {
     $_GET['jaar'] = $jaar;
     require_once 'controllers/nederlandse-verkiezingen.php';
 });
+$router->add('stemmentracker', 'controllers/stemmentracker.php');
+$router->add('stemwijzer', 'controllers/stemwijzer.php');
 
 // Privacy en compliance routes
 $router->add('privacy-policy', function() {

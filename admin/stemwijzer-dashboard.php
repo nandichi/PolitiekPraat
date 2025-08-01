@@ -35,12 +35,26 @@ try {
     $db->query("SELECT id, name, short_name, logo_url FROM stemwijzer_parties ORDER BY name ASC");
     $allParties = $db->resultSet() ?? [];
     
+    // StemmenTracker statistieken
+    $db->query("SELECT COUNT(*) as count FROM stemmentracker_moties");
+    $totalMoties = $db->single()->count ?? 0;
+    
+    $db->query("SELECT COUNT(*) as count FROM stemmentracker_votes");
+    $totalVotes = $db->single()->count ?? 0;
+    
+    // Haal recente moties op
+    $db->query("SELECT id, title, datum_stemming, onderwerp, uitslag FROM stemmentracker_moties ORDER BY created_at DESC LIMIT 5");
+    $recentMoties = $db->resultSet() ?? [];
+    
 } catch (Exception $e) {
     $totalQuestions = 0;
     $totalParties = 0;
     $totalResults = 0;
     $recentQuestions = [];
     $allParties = [];
+    $totalMoties = 0;
+    $totalVotes = 0;
+    $recentMoties = [];
 }
 
 require_once '../views/templates/header.php';
@@ -107,7 +121,7 @@ require_once '../views/templates/header.php';
     <div class="container mx-auto px-4 -mt-6 relative z-10">
         
         <!-- Statistics Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             <div class="stat-card rounded-2xl p-6 border border-white/50 shadow-xl card-hover">
                 <div class="flex items-center space-x-4">
                     <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center">
@@ -149,10 +163,26 @@ require_once '../views/templates/header.php';
                     </div>
                 </div>
             </div>
+            
+            <!-- StemmenTracker Stats Card -->
+            <div class="stat-card rounded-2xl p-6 border border-white/50 shadow-xl card-hover">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-gradient-to-br from-secondary to-secondary-dark rounded-xl flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v6a2 2 0 002 2h2m0 0h2a2 2 0 002-2V7a2 2 0 00-2-2H9m0 10V9a2 2 0 012-2h2"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-gray-600 text-sm font-medium">StemmenTracker</p>
+                        <p class="text-3xl font-bold text-gray-800"><?= $totalMoties ?></p>
+                        <p class="text-xs text-gray-500"><?= $totalVotes ?> stemmen</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Main Content Grid -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
             
             <!-- Recent Questions -->
             <div class="bg-white/90 backdrop-blur-2xl rounded-2xl shadow-xl border border-white/50 overflow-hidden">
@@ -258,6 +288,55 @@ require_once '../views/templates/header.php';
                     <?php endif; ?>
                 </div>
             </div>
+
+            <!-- Recent StemmenTracker Moties -->
+            <div class="bg-white/90 backdrop-blur-2xl rounded-2xl shadow-xl border border-white/50 overflow-hidden">
+                <div class="bg-gradient-to-r from-secondary-light/20 to-secondary/20 px-6 py-4 border-b border-gray-100">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-xl font-bold text-gray-800">Recente Moties</h2>
+                        <a href="stemmentracker-motie-beheer.php" class="text-secondary hover:text-secondary-dark text-sm font-medium">
+                            Alle moties →
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="p-6">
+                    <?php if (empty($recentMoties)): ?>
+                        <div class="text-center py-8">
+                            <svg class="w-12 h-12 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                            <p class="text-gray-600">Nog geen moties aangemaakt</p>
+                            <a href="stemmentracker-motie-toevoegen.php" class="inline-block mt-2 text-secondary hover:text-secondary-dark font-medium">
+                                Voeg eerste motie toe
+                            </a>
+                        </div>
+                    <?php else: ?>
+                        <div class="space-y-4">
+                            <?php foreach ($recentMoties as $motie): ?>
+                                <div class="flex items-center justify-between p-4 border border-gray-100 rounded-xl hover:bg-gray-50 transition-colors">
+                                    <div class="flex-1">
+                                        <h3 class="font-semibold text-gray-800 mb-1"><?= htmlspecialchars($motie->title) ?></h3>
+                                        <div class="flex items-center space-x-3 text-sm text-gray-500">
+                                            <span><?= date('d-m-Y', strtotime($motie->datum_stemming)) ?></span>
+                                            <span><?= htmlspecialchars($motie->onderwerp) ?></span>
+                                            <?php if ($motie->uitslag): ?>
+                                                <span class="px-2 py-1 rounded-full text-xs <?= $motie->uitslag === 'aangenomen' ? 'bg-green-100 text-green-800' : ($motie->uitslag === 'verworpen' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800') ?>">
+                                                    <?= ucfirst($motie->uitslag) ?>
+                                                </span>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                    <a href="stemmentracker-stemgedrag-beheer.php?motie_id=<?= $motie->id ?>" 
+                                       class="text-secondary hover:text-secondary-dark font-medium text-sm">
+                                        Stemgedrag
+                                    </a>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
         </div>
 
         <!-- Quick Actions -->
@@ -345,6 +424,94 @@ require_once '../views/templates/header.php';
                             <div>
                                 <h3 class="font-semibold text-gray-800">Preview</h3>
                                 <p class="text-sm text-gray-600">Bekijk PartijMeter</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- StemmenTracker Beheer -->
+            <div class="mb-8">
+                <h3 class="text-lg font-semibold text-gray-700 mb-4 flex items-center">
+                    <svg class="w-5 h-5 text-secondary mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v6a2 2 0 002 2h2m0 0h2a2 2 0 002-2V7a2 2 0 00-2-2H9m0 10V9a2 2 0 012-2h2"/>
+                    </svg>
+                    StemmenTracker Beheer
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    
+                    <a href="#" onclick="createStemmenTrackerTables()" 
+                       class="group p-6 bg-gradient-to-br from-secondary-light/10 to-secondary/10 border border-secondary-light/30 rounded-xl hover:from-secondary-light/20 hover:to-secondary/20 transition-all duration-300 card-hover">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-secondary rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-800">🗃️ Setup Database</h3>
+                                <p class="text-sm text-gray-600">Installeer StemmenTracker tabellen</p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="stemmentracker-motie-beheer.php" 
+                       class="group p-6 bg-gradient-to-br from-primary/10 to-primary-dark/10 border border-primary/30 rounded-xl hover:from-primary/20 hover:to-primary-dark/20 transition-all duration-300 card-hover">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-primary rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-800">📋 Moties Beheer</h3>
+                                <p class="text-sm text-gray-600">Beheer alle moties</p>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    <a href="stemmentracker-motie-toevoegen.php" 
+                       class="group p-6 bg-gradient-to-br from-green-50 to-emerald-50 border border-green-200 rounded-xl hover:from-green-100 hover:to-emerald-100 transition-all duration-300 card-hover">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-800">➕ Nieuwe Motie</h3>
+                                <p class="text-sm text-gray-600">Voeg motie toe</p>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    <a href="stemmentracker-stemgedrag-beheer.php" 
+                       class="group p-6 bg-gradient-to-br from-purple-50 to-violet-50 border border-purple-200 rounded-xl hover:from-purple-100 hover:to-violet-100 transition-all duration-300 card-hover">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v6a2 2 0 002 2h2m0 0h2a2 2 0 002-2V7a2 2 0 00-2-2H9m0 10V9a2 2 0 012-2h2"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-800">🗳️ Stemgedrag</h3>
+                                <p class="text-sm text-gray-600">Beheer partij stemmen</p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="../stemmentracker" target="_blank"
+                       class="group p-6 bg-gradient-to-br from-teal-50 to-cyan-50 border border-teal-200 rounded-xl hover:from-teal-100 hover:to-cyan-100 transition-all duration-300 card-hover">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-teal-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-800">👁️ Preview</h3>
+                                <p class="text-sm text-gray-600">Bekijk StemmenTracker</p>
                             </div>
                         </div>
                     </a>
@@ -698,6 +865,46 @@ function createPollTables() {
             .catch(error => {
                 button.innerHTML = originalContent;
                 alert('Network error: ' + error.message);
+            });
+    }
+}
+
+// StemmenTracker tables setup functie
+function createStemmenTrackerTables() {
+    if (confirm('Weet je zeker dat je de StemmenTracker database tabellen wilt installeren/bijwerken?\\n\\nDit zal de volgende tabellen aanmaken:\\n- stemmentracker_moties\\n- stemmentracker_votes\\n- stemmentracker_themas\\n- stemmentracker_motie_themas')) {
+        // Toon loading indicator
+        const button = event.target.closest('a');
+        const originalContent = button.innerHTML;
+        button.innerHTML = `
+            <div class="flex items-center space-x-4">
+                <div class="w-12 h-12 bg-secondary rounded-xl flex items-center justify-center">
+                    <svg class="w-6 h-6 text-white animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-gray-800">Installeren...</h3>
+                    <p class="text-sm text-gray-600">Database tabellen aanmaken</p>
+                </div>
+            </div>
+        `;
+        
+        // Maak AJAX request
+        fetch('../scripts/create_stemmentracker_tables.php')
+            .then(response => response.text())
+            .then(data => {
+                button.innerHTML = originalContent;
+                if (data.includes('✓') || data.includes('succesvol') || data.includes('Created table')) {
+                    alert('StemmenTracker database tabellen succesvol geïnstalleerd!\\n\\n' + data.replace(/✓/g, '✅'));
+                    // Refresh de pagina om nieuwe data te tonen
+                    setTimeout(() => window.location.reload(), 1000);
+                } else {
+                    alert('Er is een fout opgetreden bij het installeren van de tabellen:\\n\\n' + data);
+                }
+            })
+            .catch(error => {
+                button.innerHTML = originalContent;
+                alert('Network error bij het installeren van StemmenTracker tabellen: ' + error.message);
             });
     }
 }

@@ -1321,6 +1321,32 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
                                 </div>
                             </a>
                             
+                            <a href="<?php echo URLROOT; ?>/stemmentracker" 
+                               class="flex items-center px-3 py-3 rounded-lg hover:bg-secondary/5 transition-all duration-300 group/item">
+                                <div class="w-10 h-10 bg-secondary/10 rounded-xl flex items-center justify-center mr-3 group-hover/item:bg-secondary/20 transition-colors duration-300">
+                                    <svg class="w-5 h-5 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v6a2 2 0 002 2h2m0 0h2a2 2 0 002-2V7a2 2 0 00-2-2H9m0 10V9a2 2 0 012-2h2"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-semibold text-gray-900">StemmenTracker</div>
+                                    <div class="text-xs text-gray-500">Werkelijk stemgedrag</div>
+                                </div>
+                            </a>
+                            
+                            <a href="<?php echo URLROOT; ?>/stemwijzer" 
+                               class="flex items-center px-3 py-3 rounded-lg hover:bg-primary-light/5 transition-all duration-300 group/item">
+                                <div class="w-10 h-10 bg-primary-light/10 rounded-xl flex items-center justify-center mr-3 group-hover/item:bg-primary-light/20 transition-colors duration-300">
+                                    <svg class="w-5 h-5 text-primary-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-semibold text-gray-900">StemWijzer</div>
+                                    <div class="text-xs text-gray-500">Plannen van partijen</div>
+                                </div>
+                            </a>
+                            
                             <div class="mx-2 my-1 border-t border-gray-100"></div>
                             
                             <a href="<?php echo URLROOT; ?>/themas" 
@@ -1659,6 +1685,32 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
                             </svg>
                         </div>
                         <span class="font-medium">Partijen</span>
+                    </a>
+
+                    <a href="<?php echo URLROOT; ?>/stemmentracker" 
+                       class="flex items-center text-gray-700 hover:text-secondary p-3 rounded-lg transition-all duration-300 
+                              hover:bg-secondary/5 group">
+                        <div class="mr-3 p-2 bg-secondary/10 rounded-lg transition-all duration-300 
+                                    group-hover:bg-secondary/20 group-hover:scale-110">
+                            <svg class="w-5 h-5 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                      d="M9 5H7a2 2 0 00-2 2v6a2 2 0 002 2h2m0 0h2a2 2 0 002-2V7a2 2 0 00-2-2H9m0 10V9a2 2 0 012-2h2"/>
+                            </svg>
+                        </div>
+                        <span class="font-medium">StemmenTracker</span>
+                    </a>
+
+                    <a href="<?php echo URLROOT; ?>/stemwijzer" 
+                       class="flex items-center text-gray-700 hover:text-primary-light p-3 rounded-lg transition-all duration-300 
+                              hover:bg-primary-light/5 group">
+                        <div class="mr-3 p-2 bg-primary-light/10 rounded-lg transition-all duration-300 
+                                    group-hover:bg-primary-light/20 group-hover:scale-110">
+                            <svg class="w-5 h-5 text-primary-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <span class="font-medium">StemWijzer</span>
                     </a>
 
                     <a href="<?php echo URLROOT; ?>/themas" 
