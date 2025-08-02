@@ -54,7 +54,7 @@ if (!function_exists('isAdmin')) {
      * @return bool True if user is an admin, false otherwise
      */
     function isAdmin() {
-        return isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == 1;
+        return isset($_SESSION['user_id']) && isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == 1;
     }
 }
 
