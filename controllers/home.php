@@ -798,19 +798,7 @@ require_once 'views/templates/header.php';
                                         <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                                         
                                         <!-- Category floating badge -->
-                                        <div class="absolute top-6 left-6 z-20">
-                                            <div class="relative">
-                                                <div class="absolute inset-0 bg-white/20 backdrop-blur-md rounded-xl blur-sm"></div>
-                                                <div class="relative bg-white/90 backdrop-blur-sm px-4 py-2 rounded-xl shadow-lg border border-white/20">
-                                                    <div class="flex items-center space-x-2">
-                                                        <svg class="w-3 h-3 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
-                                                        </svg>
-                                                        <span class="text-xs font-bold text-gray-700 uppercase tracking-wide">Politiek</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+
                                         
                                         <!-- Reading time badge -->
                                         <div class="absolute bottom-6 right-6 z-20">
