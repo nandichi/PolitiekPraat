@@ -272,7 +272,7 @@ include_once 'views/templates/header.php';
                                     <!-- Motie Details -->
                                     <div class="lg:col-span-2">
                                         <h3 class="text-2xl font-bold text-gray-900 mb-4 leading-tight">
-                                            <a href="stemmentracker?action=detail&id=<?php echo $motie->id; ?>" 
+                                            <a href="stemmentracker/detail/<?php echo $motie->id; ?>" 
                                                class="hover:text-primary transition-colors duration-300">
                                                 <?php echo htmlspecialchars($motie->title); ?>
                                             </a>
@@ -354,7 +354,7 @@ include_once 'views/templates/header.php';
                                             <?php endif; ?>
                                             
                                             <!-- Action Button -->
-                                            <a href="stemmentracker?action=detail&id=<?php echo $motie->id; ?>" 
+                                            <a href="stemmentracker/detail/<?php echo $motie->id; ?>" 
                                                class="w-full inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-primary to-primary-dark text-white font-semibold rounded-xl hover:from-primary-dark hover:to-primary transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
                                                 <i class="fas fa-eye mr-2"></i>Bekijk Details
                                             </a>

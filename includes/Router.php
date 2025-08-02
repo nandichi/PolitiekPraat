@@ -15,12 +15,22 @@ class Router {
     }
     
     public function dispatch($url) {
-        // Verwijder query parameters
+        // Bewaar originele URL voor query parameters
+        $originalUrl = $url;
+        
+        // Haal alleen het pad op (zonder query parameters voor route matching)
         $url = parse_url($url, PHP_URL_PATH);
         
         // Verwijder leading/trailing slashes
         $url = trim($url, '/');
         
+        // Haal query parameters op en bewaar ze in $_GET
+        $queryString = parse_url($originalUrl, PHP_URL_QUERY);
+        if ($queryString) {
+            parse_str($queryString, $queryParams);
+            $_GET = array_merge($_GET, $queryParams);
+        }
+
         // Als de URL leeg is, gebruik de default route
         if (empty($url)) {
             return [

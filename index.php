@@ -125,6 +125,11 @@ $router->add('nederlandse-verkiezingen/([0-9]+)', function($jaar) {
     require_once 'controllers/nederlandse-verkiezingen.php';
 });
 $router->add('stemmentracker', 'controllers/stemmentracker.php');
+$router->add('stemmentracker/detail/([0-9]+)', function($motie_id) {
+    $_GET['action'] = 'detail';
+    $_GET['id'] = $motie_id;
+    require_once 'controllers/stemmentracker.php';
+});
 $router->add('stemwijzer', 'controllers/stemwijzer.php');
 
 // Privacy en compliance routes
