@@ -1334,19 +1334,6 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
                                 </div>
                             </a>
                             
-                            <a href="<?php echo URLROOT; ?>/stemwijzer" 
-                               class="flex items-center px-3 py-3 rounded-lg hover:bg-primary-light/5 transition-all duration-300 group/item">
-                                <div class="w-10 h-10 bg-primary-light/10 rounded-xl flex items-center justify-center mr-3 group-hover/item:bg-primary-light/20 transition-colors duration-300">
-                                    <svg class="w-5 h-5 text-primary-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <div class="text-sm font-semibold text-gray-900">StemWijzer</div>
-                                    <div class="text-xs text-gray-500">Plannen van partijen</div>
-                                </div>
-                            </a>
-                            
                             <div class="mx-2 my-1 border-t border-gray-100"></div>
                             
                             <a href="<?php echo URLROOT; ?>/themas" 
