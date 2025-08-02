@@ -23,7 +23,7 @@ if (!defined('FUNCTIONS_INCLUDED')) {
     // Don't redeclare if it already exists in helpers.php
     if (!function_exists('isAdmin')) {
         function isAdmin() {
-            return isset($_SESSION['user_id']) && isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == 1;
+            return isset($_SESSION['user_id']) && isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true;
         }
     }
 
