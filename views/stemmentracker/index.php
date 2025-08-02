@@ -139,109 +139,54 @@ include_once 'views/templates/header.php';
         <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-slate-50 to-transparent"></div>
     </section>
 
-    <!-- Filters Section -->
+    <!-- Intro Section -->
     <div class="container mx-auto px-6 -mt-8 relative z-10">
         <div class="max-w-6xl mx-auto">
-            <!-- Filter Card -->
+            <!-- Info Card -->
             <div class="filter-glass rounded-3xl shadow-2xl p-8 mb-12 fade-in-up">
                 <div class="text-center mb-8">
-                    <h2 class="text-3xl font-bold text-gray-900 mb-4">Zoek & Filter Moties</h2>
-                    <p class="text-gray-600">Vind specifieke moties door te filteren op thema, onderwerp, uitslag en meer</p>
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6">Beslissende Momenten in de Politiek</h2>
+                    <div class="max-w-4xl mx-auto">
+                        <p class="text-lg text-gray-700 leading-relaxed mb-6">
+                            Hier vind je de moties die Nederland echt bezig houden. Van controversiële onderwerpen die 
+                            de gemoederen verhitten tot cruciale beslissingen die onze toekomst vormgeven. Deze stemresultaten 
+                            laten zien waar onze volksvertegenwoordigers werkelijk voor staan wanneer het erop aankomt.
+                        </p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                            <div class="bg-white/60 rounded-2xl p-6 border border-white/40">
+                                <div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mx-auto mb-4">
+                                    <i class="fas fa-fire text-primary text-xl"></i>
+                                </div>
+                                <h3 class="font-bold text-gray-900 mb-2">Hete Onderwerpen</h3>
+                                <p class="text-gray-600 text-sm">Moties die discussie en debat oproepen in de maatschappij</p>
+                            </div>
+                            
+                            <div class="bg-white/60 rounded-2xl p-6 border border-white/40">
+                                <div class="w-12 h-12 bg-secondary/10 rounded-xl flex items-center justify-center mx-auto mb-4">
+                                    <i class="fas fa-landmark text-secondary text-xl"></i>
+                                </div>
+                                <h3 class="font-bold text-gray-900 mb-2">Belangrijke Besluiten</h3>
+                                <p class="text-gray-600 text-sm">Stemresultaten die impact hebben op het dagelijks leven</p>
+                            </div>
+                            
+                            <div class="bg-white/60 rounded-2xl p-6 border border-white/40">
+                                <div class="w-12 h-12 bg-primary-light/10 rounded-xl flex items-center justify-center mx-auto mb-4">
+                                    <i class="fas fa-users text-primary-light text-xl"></i>
+                                </div>
+                                <h3 class="font-bold text-gray-900 mb-2">Maatschappelijke Thema's</h3>
+                                <p class="text-gray-600 text-sm">Onderwerpen waar Nederland over spreekt en nadenkt</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8 p-6 bg-gradient-to-r from-primary/5 to-secondary/5 rounded-2xl border border-primary/10">
+                            <p class="text-gray-700 font-medium">
+                                💡 <strong>Transparantie in actie:</strong> Zie niet alleen wat partijen beloven, maar hoe ze daadwerkelijk 
+                                stemmen wanneer het erop aankomt. Elke motie vertelt een verhaal over de richting van ons land.
+                            </p>
+                        </div>
+                    </div>
                 </div>
-                
-                <form method="GET" class="space-y-6">
-                    <!-- Search Bar - Featured -->
-                    <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                            <i class="fas fa-search text-gray-400"></i>
-                        </div>
-                        <input type="text" name="search" value="<?php echo htmlspecialchars($filters['search']); ?>" 
-                               placeholder="Zoek in motie titel, beschrijving of indiener..." 
-                               class="w-full pl-12 pr-4 py-4 text-lg bg-white/80 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 backdrop-blur-sm">
-                    </div>
-
-                    <!-- Filter Grid -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <!-- Thema -->
-                        <div class="group">
-                            <label class="block text-sm font-semibold text-gray-700 mb-3">🏷️ Thema</label>
-                            <select name="thema" class="w-full px-4 py-3 bg-white/80 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 backdrop-blur-sm">
-                                <option value="">Alle thema's</option>
-                                <?php foreach ($themas as $thema): ?>
-                                    <option value="<?php echo htmlspecialchars($thema->name); ?>" 
-                                            <?php echo $filters['thema'] === $thema->name ? 'selected' : ''; ?>>
-                                        <?php echo htmlspecialchars($thema->name); ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                        
-                        <!-- Onderwerp -->
-                        <div class="group">
-                            <label class="block text-sm font-semibold text-gray-700 mb-3">📂 Onderwerp</label>
-                            <select name="onderwerp" class="w-full px-4 py-3 bg-white/80 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 backdrop-blur-sm">
-                                <option value="">Alle onderwerpen</option>
-                                <?php foreach ($onderwerpen as $onderwerp): ?>
-                                    <option value="<?php echo htmlspecialchars($onderwerp->onderwerp); ?>" 
-                                            <?php echo $filters['onderwerp'] === $onderwerp->onderwerp ? 'selected' : ''; ?>>
-                                        <?php echo htmlspecialchars($onderwerp->onderwerp); ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                        
-                        <!-- Uitslag -->
-                        <div class="group">
-                            <label class="block text-sm font-semibold text-gray-700 mb-3">✅ Uitslag</label>
-                            <select name="uitslag" class="w-full px-4 py-3 bg-white/80 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 backdrop-blur-sm">
-                                <option value="">Alle uitslagen</option>
-                                <?php foreach ($uitslagen as $uitslag): ?>
-                                    <option value="<?php echo $uitslag; ?>" 
-                                            <?php echo $filters['uitslag'] === $uitslag ? 'selected' : ''; ?>>
-                                        <?php echo ucfirst($uitslag); ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-
-                        <!-- Jaar -->
-                        <div class="group">
-                            <label class="block text-sm font-semibold text-gray-700 mb-3">📅 Jaar</label>
-                            <select name="jaar" class="w-full px-4 py-3 bg-white/80 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 backdrop-blur-sm">
-                                <option value="">Alle jaren</option>
-                                <?php for ($jaar = date('Y'); $jaar >= 2017; $jaar--): ?>
-                                    <option value="<?php echo $jaar; ?>" 
-                                            <?php echo $filters['jaar'] == $jaar ? 'selected' : ''; ?>>
-                                        <?php echo $jaar; ?>
-                                    </option>
-                                <?php endfor; ?>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!-- Sort & Actions -->
-                    <div class="flex flex-col md:flex-row gap-4 pt-6 border-t border-gray-200">
-                        <div class="flex-1">
-                            <label class="block text-sm font-semibold text-gray-700 mb-3">📊 Sorteren op</label>
-                            <select name="sort" class="w-full px-4 py-3 bg-white/80 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 backdrop-blur-sm">
-                                <option value="datum_desc" <?php echo $filters['sort'] === 'datum_desc' ? 'selected' : ''; ?>>Nieuwste eerst</option>
-                                <option value="datum_asc" <?php echo $filters['sort'] === 'datum_asc' ? 'selected' : ''; ?>>Oudste eerst</option>
-                                <option value="titel" <?php echo $filters['sort'] === 'titel' ? 'selected' : ''; ?>>Alfabetisch</option>
-                                <option value="onderwerp" <?php echo $filters['sort'] === 'onderwerp' ? 'selected' : ''; ?>>Per onderwerp</option>
-                            </select>
-                        </div>
-                        
-                        <!-- Action Buttons -->
-                        <div class="flex gap-3 items-end">
-                            <button type="submit" class="px-8 py-3 bg-gradient-to-r from-primary to-primary-dark text-white font-semibold rounded-xl hover:from-primary-dark hover:to-primary transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
-                                <i class="fas fa-search mr-2"></i>Filter Toepassen
-                            </button>
-                            <a href="stemmentracker" class="px-6 py-3 bg-gray-100 text-gray-700 font-semibold rounded-xl hover:bg-gray-200 transition-all duration-300 border border-gray-200">
-                                <i class="fas fa-times mr-2"></i>Reset
-                            </a>
-                        </div>
-                    </div>
-                </form>
             </div>
         </div>
     </div>
