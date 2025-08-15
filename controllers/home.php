@@ -300,54 +300,54 @@ $latest_news = [
         'source' => 'De Volkskrant',
         'bias' => 'centrum-links', 
         'publishedAt' => date('Y-m-d H:i:s'), // Vandaag 08:30
-        'title' => 'Trump ziet een verdeeld Europa met duiven en haviken onder de lidstaten en maakt daar goed gebruik van',
-        'description' => 'Trump speelt handig in op de verdeeldheid binnen Europa, waar sommige landen een meer vredeslievende koers varen terwijl andere een hardere lijn voorstaan. Deze tactiek stelt hem in staat om verschillende Europese leiders tegen elkaar uit te spelen.',
-        'url' => 'https://www.volkskrant.nl/buitenland/trump-ziet-een-verdeeld-europa-met-duiven-en-haviken-onder-de-lidstaten-en-maakt-daar-goed-gebruik-van~bef6bddc/'
+        'title' => 'NSC kampt met leegloop, juist daarom wil Van Vroonhoven door',
+        'description' => 'Ondanks de leegloop bij NSC wil partijleider Van Vroonhoven doorgaan. De partij kampt met interne problemen en vertrekkende Kamerleden, maar de leider blijft vastberaden om de koers voort te zetten en de partij te stabiliseren.',
+        'url' => 'https://www.volkskrant.nl/politiek/nsc-kampt-met-leegloop-juist-daarom-wil-van-vroonhoven-door~baac77ee/'
     ],
     [
         'orientation' => 'links',
         'source' => 'NRC',
         'bias' => 'centrum-links', 
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-2 hours')), // 2 uur geleden
-        'title' => 'VVD zet vol in op klassieke thema\'s veiligheid en economie',
-        'description' => 'De VVD kiest voor een vertrouwde strategie door zich te richten op de traditionele partijthema\'s veiligheid en economie. Deze focus past bij de partijkoers die al jaren wordt gevolgd en moet kiezers overtuigen van de betrouwbaarheid van de liberale partij.',
-        'url' => 'https://www.nrc.nl/nieuws/2025/07/26/vvd-zet-vol-in-op-klassieke-themas-veiligheid-en-economie-a4901363'
+        'title' => 'DENK-leider Van Baarle stopt als lijsttrekker: \'Partijbestuur heeft mijn rol ondermijnd\'',
+        'description' => 'DENK-leider Van Baarle heeft aangekondigd te stoppen als lijsttrekker van de partij. Hij stelt dat het partijbestuur zijn rol heeft ondermijnd en dat hij onder deze omstandigheden niet langer effectief kan functioneren als politiek leider.',
+        'url' => 'https://www.nrc.nl/nieuws/2025/08/14/denk-leider-van-baarle-stopt-als-lijsttrekker-partijbestuur-heeft-mijn-rol-ondermijnd-a4903055'
     ],
     [
         'orientation' => 'links',
         'source' => 'Trouw',
         'bias' => 'centrum-links', 
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-4 hours')), // 4 uur geleden
-        'title' => 'Veldkamp moet maandag schriftelijk uitleg geven over de humanitaire situatie in Gaza',
-        'description' => 'Minister Veldkamp van Buitenlandse Zaken moet maandag schriftelijke uitleg geven aan de Tweede Kamer over de humanitaire situatie in Gaza. De Kamer wil opheldering over de Nederlandse positie en mogelijke hulpverlening.',
-        'url' => 'https://www.trouw.nl/politiek/veldkamp-moet-maandag-schriftelijk-uitleg-geven-over-de-humanitaire-situatie-in-gaza~b1686cf8/'
+        'title' => 'Diederik Boomsma stapt voor verkiezingen over van NSC naar JA21',
+        'description' => 'Diederik Boomsma verlaat NSC en stapt over naar JA21 in aanloop naar de verkiezingen. Deze overstap benadrukt de interne spanningen binnen NSC en versterkt de rangen van JA21 met een ervaren politicus.',
+        'url' => 'https://www.trouw.nl/politiek/diederik-boomsma-stapt-voor-verkiezingen-over-van-nsc-naar-ja21~b74b5d13/'
     ],
     [
         'orientation' => 'rechts',
         'source' => 'Dagelijkse Standaard',
         'bias' => 'rechts',
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-6 hours')), // 6 uur geleden
-        'title' => 'Schoof noemt Israëlische koers catastrofaal maar doet niets',
-        'description' => 'Premier Schoof heeft de Israëlische koers omschreven als catastrofaal, maar onderneemt geen concrete actie. Deze uitspraak roept vragen op over de Nederlandse positie en het gebrek aan daadwerkelijke beleidsmaatregelen.',
-        'url' => 'https://www.dagelijksestandaard.nl/politiek/schoof-noemt-israelische-koers-catastrofaal-maar-doet-niets'
+        'title' => 'Politiek is verrot: partijhoppers, egotrippers en transfertjes - Bennink zegt wat niemand durft',
+        'description' => 'Politiek commentator Bennink spreekt openlijk uit wat velen denken: de Nederlandse politiek is verworden tot een theater van partijhoppers, egotrippers en carrièretransfers. Een scherpe analyse van de huidige politieke cultuur die niemand anders durft te maken.',
+        'url' => 'https://www.dagelijksestandaard.nl/politiek/politiek-is-verrot-partijhoppers-egotrippers-en-transfertjes-bennink-zegt-wat-niemand-durft'
     ],
     [
         'orientation' => 'rechts',
         'source' => 'De Telegraaf',
         'bias' => 'rechts', 
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-8 hours')), // 8 uur geleden
-        'title' => 'VVD presenteert verkiezingsprogramma: pensioenleeftijd omhoog, investeren in defensie en snijden in uitkeringen',
-        'description' => 'De VVD heeft haar verkiezingsprogramma gepresenteerd met plannen om de pensioenleeftijd te verhogen, meer te investeren in defensie en bezuinigingen door te voeren op uitkeringen. Deze maatregelen moeten de Nederlandse economie versterken.',
-        'url' => 'https://www.telegraaf.nl/politiek/vvd-presenteert-verkiezingsprogramma-pensioenleeftijd-omhoog-investeren-in-defensie-en-snijden-in-uitkeringen/79844188.html'
+        'title' => 'Vliegveld sluiten om plek te maken voor nieuwbouw onrealistisch',
+        'description' => 'Lezers van De Telegraaf reageren op plannen om vliegvelden te sluiten voor woningbouw. Velen vinden dit onrealistisch en wijzen op de economische en praktische problemen die dit zou veroorzaken voor Nederland.',
+        'url' => 'https://www.telegraaf.nl/wat-u-zegt/lezersbrieven/vliegveld-sluiten-om-plek-te-maken-voor-nieuwbouw-onrealistisch/83676208.html'
     ],
     [
         'orientation' => 'rechts',
         'source' => 'Nieuw Rechts',
         'bias' => 'rechts', 
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-10 hours')), // 10 uur geleden
-        'title' => 'Raad van State maakt van Nederland een all-inclusive bestemming',
-        'description' => 'De Raad van State heeft uitspraken gedaan die volgens critici Nederland transformeren tot een all-inclusive bestemming voor migranten. Deze ontwikkeling zorgt voor discussie over de Nederlandse migratieregels en hun consequenties.',
-        'url' => 'https://nieuwrechts.nl/105585-raad-van-state-maakt-van-nederland-een-all-inclusive-bestemming'
+        'title' => 'Gelders dorp Brummen krijgt mega-AZC voor 30 jaar: \'Dit is krankzinnig\'',
+        'description' => 'Het Gelderse dorp Brummen krijgt een mega-AZC voor dertig jaar. Bewoners en lokale politici reageren geschokt op de plannen en spreken van een krankzinnige beslissing die het karakter van hun gemeente ingrijpend zal veranderen.',
+        'url' => 'https://nieuwrechts.nl/105877-gelders-dorp-brummen-krijgt-mega-azc-voor-30-jaar-dit-is-krankzinnig'
     ]
 ];
 
