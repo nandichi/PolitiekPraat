@@ -58,7 +58,9 @@ class CategoryController {
         
         $this->db->query($sql);
         $this->db->bind(':category_id', $categoryId);
-        return $this->db->resultSet();
+        $blogs = $this->db->resultSet();
+        
+        return $this->assignCategoryColors($blogs, true);
     }
 
     /**
@@ -73,7 +75,9 @@ class CategoryController {
             GROUP BY bc.id, bc.name, bc.slug, bc.color, bc.icon
             ORDER BY bc.sort_order ASC, bc.name ASC
         ");
-        return $this->db->resultSet();
+
+        $categories = $this->db->resultSet();
+        return $this->assignCategoryColors($categories);
     }
 
     /**
@@ -174,6 +178,46 @@ class CategoryController {
             GROUP BY bc.id
             ORDER BY total_blogs DESC, bc.sort_order ASC
         ");
-        return $this->db->resultSet();
+        
+        $categories = $this->db->resultSet();
+        return $this->assignCategoryColors($categories);
+    }
+
+    /**
+     * Wijs consistente kleuren toe aan een lijst van categorieën of blogs.
+     */
+    public function assignCategoryColors($items, $isBlogList = false) {
+        // Define a color palette that matches the website's theme
+        $colorPalette = [
+            '#4F46E5', // Indigo (Primary)
+            '#EC4899', // Pink (Secondary)
+            '#10B981', // Emerald
+            '#F59E0B', // Amber
+            '#6366F1', // Indigo Light
+            '#D946EF', // Fuchsia
+            '#06B6D4', // Cyan
+            '#84CC16', // Lime
+        ];
+
+        // Haal alle categorieën op om een consistente kleurindex te garanderen
+        $allCategories = $this->getAll(true);
+        $categoryColorMap = [];
+        foreach ($allCategories as $index => $category) {
+            $categoryColorMap[$category->id] = $colorPalette[$index % count($colorPalette)];
+        }
+
+        foreach ($items as $item) {
+            if ($isBlogList) {
+                if (isset($item->category_id) && isset($categoryColorMap[$item->category_id])) {
+                    $item->category_color = $categoryColorMap[$item->category_id];
+                }
+            } else {
+                if (isset($item->id) && isset($categoryColorMap[$item->id])) {
+                    $item->color = $categoryColorMap[$item->id];
+                }
+            }
+        }
+
+        return $items;
     }
 }

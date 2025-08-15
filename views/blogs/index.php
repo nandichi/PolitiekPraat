@@ -270,43 +270,52 @@
     </script>
 
     <!-- Categorie Filter Sectie -->
-    <section class="py-8 relative z-10">
+    <section class="py-12 bg-gray-50/50 relative z-10">
         <div class="container mx-auto px-4">
-            <div class="max-w-6xl mx-auto">
-                <div class="text-center mb-8">
-                    <h3 class="text-xl font-bold text-gray-900 mb-4">Verken per categorie</h3>
-                    <div class="flex flex-wrap justify-center gap-3">
-                        <a href="<?php echo URLROOT; ?>/blogs" 
-                           class="inline-flex items-center px-4 py-2 rounded-full bg-gray-100 hover:bg-primary hover:text-white transition-all duration-300 text-sm font-medium text-gray-700">
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 9a2 2 0 012-2h6a2 2 0 012 2v2M7 19h10a2 2 0 002-2v-6a2 2 0 00-2-2H7a2 2 0 00-2 2v6a2 2 0 002 2z"></path>
-                            </svg>
-                            Alle artikelen
-                        </a>
-                        
-                        <?php 
-                        // Haal categorieën op voor filter
-                        $categoryController = new CategoryController();
-                        $filterCategories = $categoryController->getBlogCountByCategory();
-                        
-                        foreach ($filterCategories as $category):
-                            // Alleen tonen als er werkelijk blogs in deze categorie zitten
-                            if ($category->blog_count > 0):
-                        ?>
-                            <a href="<?php echo URLROOT; ?>/blogs?category=<?php echo $category->slug; ?>" 
-                               class="inline-flex items-center px-4 py-2 rounded-full text-white text-sm font-medium transition-all duration-300 hover:shadow-lg transform hover:scale-105"
-                               style="background-color: <?php echo $category->color; ?>;">
-                                <span class="w-2 h-2 bg-white/80 rounded-full mr-2"></span>
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-10">
+                    <h2 class="text-3xl font-extrabold text-gray-900 tracking-tight sm:text-4xl">
+                        Verken per Categorie
+                    </h2>
+                    <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-500">
+                        Vind de blogs die jou het meest interesseren.
+                    </p>
+                </div>
+                <div class="flex flex-wrap justify-center items-center gap-3 md:gap-4">
+                    <a href="<?php echo URLROOT; ?>/blogs" 
+                       class="group inline-flex items-center px-4 py-2 rounded-full bg-white shadow-sm border border-gray-200 hover:bg-primary-light/20 hover:border-primary/30 transition-all duration-300 text-sm font-semibold text-gray-800 hover:text-primary transform hover:-translate-y-0.5">
+                        <svg class="w-5 h-5 mr-2 text-gray-400 group-hover:text-primary transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 9a2 2 0 012-2h6a2 2 0 012 2v2"></path>
+                        </svg>
+                        <span>Alle artikelen</span>
+                    </a>
+                    
+                    <?php 
+                    $categoryController = new CategoryController();
+                    $filterCategories = $categoryController->getBlogCountByCategory();
+                    
+                    foreach ($filterCategories as $category):
+                        if ($category->blog_count > 0):
+                    ?>
+                        <a href="<?php echo URLROOT; ?>/blogs?category=<?php echo $category->slug; ?>" 
+                           class="group relative inline-flex items-center px-4 py-2 rounded-full text-white text-sm font-semibold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 overflow-hidden"
+                           style="background: linear-gradient(135deg, <?php echo htmlspecialchars($category->color); ?> 0%, <?php echo htmlspecialchars(adjust_brightness($category->color, -20)); ?> 100%);">
+                            
+                            <!-- Shine effect -->
+                            <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+
+                            <span class="relative z-10 flex items-center">
+                                <span class="w-2 h-2 bg-white/80 rounded-full mr-2.5"></span>
                                 <?php echo htmlspecialchars($category->name); ?>
-                                <span class="ml-2 bg-white/20 px-2 py-0.5 rounded-full text-xs">
+                                <span class="ml-2.5 bg-white/25 px-2 py-0.5 rounded-full text-xs font-bold">
                                     <?php echo $category->blog_count; ?>
                                 </span>
-                            </a>
-                        <?php 
-                            endif;
-                        endforeach; 
-                        ?>
-                    </div>
+                            </span>
+                        </a>
+                    <?php 
+                        endif;
+                    endforeach; 
+                    ?>
                 </div>
             </div>
         </div>

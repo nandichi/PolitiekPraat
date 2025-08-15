@@ -3,10 +3,12 @@
 class BlogController {
     private $db;
     private $parsedown;
+    private $categoryController; // Voeg CategoryController toe
 
     public function __construct() {
         $this->db = new Database();
         $this->parsedown = new Parsedown();
+        $this->categoryController = new CategoryController(); // Initialiseer CategoryController
         // Configureer Parsedown voor optimale Markdown verwerking
         $this->parsedown->setSafeMode(false);
         $this->parsedown->setBreaksEnabled(true);
@@ -53,6 +55,9 @@ class BlogController {
         
         $blogs = $this->db->resultSet();
         
+        // Wijs consistente kleuren toe
+        $blogs = $this->categoryController->assignCategoryColors($blogs, true);
+
         // Parse Markdown naar HTML voor elk blog
         foreach ($blogs as $blog) {
             // Bewaar de originele content voor de samenvatting
@@ -80,6 +85,10 @@ class BlogController {
         $blog = $this->db->single();
         
         if ($blog) {
+            // Wijs een consistente kleur toe
+            $blogWithColor = $this->categoryController->assignCategoryColors([$blog], true);
+            $blog = $blogWithColor[0];
+
             // Converteer Markdown naar HTML
             $blog->content = $this->parsedown->text($blog->content);
             // Bereken leestijd

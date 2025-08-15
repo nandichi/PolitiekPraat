@@ -690,4 +690,36 @@ function renderPageContextIndicator() {
 
 // Additional helper functions can be added here
 
+if (!function_exists('adjust_brightness')) {
+    /**
+     * Adjusts the brightness of a HEX color.
+     *
+     * @param string $hex The hex color code.
+     * @param int $steps A value between -255 and 255 to adjust brightness.
+     * @return string The new hex color code.
+     */
+    function adjust_brightness($hex, $steps) {
+        // Steps should be between -255 and 255. Negative = darker, positive = lighter.
+        $steps = max(-255, min(255, $steps));
+
+        // Normalize HEX
+        $hex = str_replace('#', '', $hex);
+        if (strlen($hex) == 3) {
+            $hex = str_repeat(substr($hex,0,1), 2) . str_repeat(substr($hex,1,1), 2) . str_repeat(substr($hex,2,1), 2);
+        }
+
+        // Split into three parts
+        $color_parts = str_split($hex, 2);
+        $return = '#';
+
+        foreach ($color_parts as $color) {
+            $color = hexdec($color); // Convert to decimal
+            $color = max(0, min(255, $color + $steps)); // Adjust brightness
+            $return .= str_pad(dechex($color), 2, '0', STR_PAD_LEFT); // Convert back to hex
+        }
+
+        return $return;
+    }
+}
+
 } // End of !defined('HELPERS_INCLUDED') 
