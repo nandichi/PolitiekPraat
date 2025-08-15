@@ -213,8 +213,8 @@ require_once 'views/templates/header.php'; ?>
                                         </svg>
                                     </div>
                                     <div>
-                                        <h3 class="text-xl font-bold text-white mb-1">🎙️ Podcast Editie</h3>
-                                        <p class="text-white/90 text-sm">Luister ook naar de audio versie</p>
+                                        <h3 class="text-xl font-bold text-white mb-1">🎙️ AI Podcast Editie</h3>
+                                        <p class="text-white/90 text-sm">Luister naar de AI-gegenereerde podcast versie</p>
                                     </div>
                                 </div>
                                 <div class="hidden sm:flex items-center gap-2">
@@ -222,7 +222,7 @@ require_once 'views/templates/header.php'; ?>
                                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>
                                         </svg>
-                                        Podcast
+                                        AI Podcast
                                     </span>
                                 </div>
                             </div>
@@ -260,8 +260,8 @@ require_once 'views/templates/header.php'; ?>
                                         </svg>
                                     </div>
                                     <div>
-                                        <h3 class="text-xl font-bold text-white mb-1">🎵 Audio Versie</h3>
-                                        <p class="text-white/90 text-sm">Luister naar de podcast versie</p>
+                                        <h3 class="text-xl font-bold text-white mb-1">🎵 AI Audio Versie</h3>
+                                        <p class="text-white/90 text-sm">Luister naar de AI-gegenereerde podcast versie</p>
                                     </div>
                                 </div>
                                 <div class="hidden sm:flex items-center gap-2">
@@ -269,7 +269,7 @@ require_once 'views/templates/header.php'; ?>
                                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>
                                         </svg>
-                                        AUDIO
+                                        AI AUDIO
                                     </span>
                                 </div>
                             </div>
@@ -298,8 +298,8 @@ require_once 'views/templates/header.php'; ?>
                                                     </svg>
                                                 </div>
                                                 <div>
-                                                    <h4 class="text-lg font-semibold text-gray-900">Google Drive Audio</h4>
-                                                    <p class="text-sm text-gray-600">Klik om af te spelen</p>
+                                                    <h4 class="text-lg font-semibold text-gray-900">AI Podcast Audio</h4>
+                                                    <p class="text-sm text-gray-600">Klik om de AI-gegenereerde podcast af te spelen</p>
                                                 </div>
                                             </div>
                                             
@@ -307,7 +307,7 @@ require_once 'views/templates/header.php'; ?>
                                                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h1m4 0h1m-6-8h12a2 2 0 012 2v8a2 2 0 01-2 2H6a2 2 0 01-2-2V8a2 2 0 012-2z"/>
                                                 </svg>
-                                                Podcast Afspelen
+                                                AI Podcast Afspelen
                                             </button>
                                             
                                             <audio id="googleDrivePodcast" controls class="w-full mt-4 rounded-lg shadow-md" preload="none" style="display: none;">
@@ -325,8 +325,8 @@ require_once 'views/templates/header.php'; ?>
                                                 </svg>
                                             </div>
                                             <div>
-                                                <h4 class="text-lg font-semibold text-gray-900">Audio Podcast</h4>
-                                                <p class="text-sm text-gray-600">Luister naar de volledige audio versie</p>
+                                                <h4 class="text-lg font-semibold text-gray-900">AI Audio Podcast</h4>
+                                                <p class="text-sm text-gray-600">Luister naar de AI-gegenereerde podcast versie</p>
                                             </div>
                                         </div>
                                         
