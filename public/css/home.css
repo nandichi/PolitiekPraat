@@ -1,7 +1,12 @@
 /* ===== CSS CUSTOM PROPERTIES ===== */
 :root {
-  --color-primary: #1a56db;
+  --color-primary: #1a365d;
+  --color-primary-dark: #0f2a44;
+  --color-primary-light: #2d4a6b;
   --color-secondary: #c41e3a;
+  --color-secondary-dark: #9e1829;
+  --color-secondary-light: #d63856;
+  --color-accent: #f59e0b;
 }
 
 /* ===== HERO SECTION ===== */
@@ -348,6 +353,21 @@
     font-size: 1rem;
   }
 
+  /* Hero blog card specifieke mobile optimalisaties */
+  .hero-section .bg-white\/95 {
+    transform: none !important;
+  }
+
+  .hero-section .bg-white\/95:hover {
+    transform: none !important;
+    scale: 1 !important;
+  }
+
+  /* Kleinere aspect ratio voor mobile hero blog afbeelding */
+  .hero-section .aspect-video {
+    aspect-ratio: 16 / 10;
+  }
+
   .peiling-card {
     padding: 1rem;
   }
@@ -355,6 +375,20 @@
   .peiling-table-row:hover {
     transform: none;
     background: rgba(59, 130, 246, 0.05);
+  }
+}
+
+/* Extra small devices (phones) */
+@media (max-width: 480px) {
+  /* Hero blog afbeelding nog kleiner maken op zeer kleine schermen */
+  .hero-section .aspect-video {
+    aspect-ratio: 4 / 3;
+  }
+
+  /* Hero section padding aanpassen */
+  .hero-section .min-h-screen {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
   }
 }
 

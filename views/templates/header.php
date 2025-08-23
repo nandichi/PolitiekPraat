@@ -323,18 +323,21 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link href="<?php echo URLROOT; ?>/public/css/output.css" rel="stylesheet">
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        primary: '#1a365d',    // Donkerblauw - VVD/conservatief
-                        secondary: '#c41e3a',  // Rood - PvdA/progressief
-                        accent: '#1a365d',     // Donkerblauw - VVD/conservatief
-                        tertiary: '#F59E0B',   // Oranje voor accent kleuren
+                        primary: '#1a365d',
+                        'primary-dark': '#0f2a44',
+                        'primary-light': '#2d4a6b',
+                        secondary: '#c41e3a',
+                        'secondary-dark': '#9e1829',
+                        'secondary-light': '#d63856',
+                        accent: '#F59E0B',
+                        tertiary: '#F59E0B',
                     },
                     animation: {
                         'fade-in': 'fadeIn 0.5s ease-in-out',
@@ -1120,7 +1123,7 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
         <!-- Modern header with clean design -->
         <div class="bg-white shadow-lg border-b-2 border-primary/10">
             <!-- Top accent bar -->
-            <div class="h-1 bg-gradient-to-r from-primary via-secondary to-accent"></div>
+            <div class="h-1 bg-gradient-to-r from-primary to-secondary"></div>
             
             <!-- Navigation content -->
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

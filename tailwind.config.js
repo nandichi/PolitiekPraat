@@ -2,17 +2,20 @@
 module.exports = {
   content: [
     "./views/**/*.php",
+    "./controllers/**/*.php",
     "./public/**/*.{html,js,php}",
     "./includes/**/*.php",
   ],
   theme: {
     extend: {
       colors: {
-        primary: "#1a56db",
-        "primary-dark": "#1e429f",
-        secondary: "#7e3af2",
-        "secondary-dark": "#6c2bd9",
-        accent: "#ff5a1f",
+        primary: "#1a365d",
+        "primary-dark": "#0f2a44",
+        "primary-light": "#2d4a6b",
+        secondary: "#c41e3a",
+        "secondary-dark": "#9e1829",
+        "secondary-light": "#d63856",
+        accent: "#F59E0B",
       },
       typography: {
         DEFAULT: {
