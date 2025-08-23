@@ -14,26 +14,12 @@ if (!defined('URLROOT')) {
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
 .over-mij-hero {
-    background: linear-gradient(135deg, #1a56db 0%, #c41e3a 100%);
+    background: linear-gradient(135deg, #0f2a44 0%, #1a365d 50%, #c41e3a 100%);
     position: relative;
     overflow: hidden;
 }
 
-.floating-element {
-    position: absolute;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.1);
-    animation: floating 6s ease-in-out infinite;
-}
 
-.floating-element:nth-child(1) { top: 20%; left: 10%; width: 60px; height: 60px; animation-delay: 0s; }
-.floating-element:nth-child(2) { top: 60%; right: 10%; width: 80px; height: 80px; animation-delay: 2s; }
-.floating-element:nth-child(3) { bottom: 30%; left: 20%; width: 40px; height: 40px; animation-delay: 4s; }
-
-@keyframes floating {
-    0%, 100% { transform: translateY(0px) rotate(0deg); }
-    50% { transform: translateY(-20px) rotate(180deg); }
-}
 
 .profile-card {
     backdrop-filter: blur(20px);
@@ -47,14 +33,14 @@ if (!defined('URLROOT')) {
 }
 
 .skill-badge {
-    background: linear-gradient(135deg, #1a56db 0%, #c41e3a 100%);
+    background: linear-gradient(135deg, #1a365d 0%, #c41e3a 100%);
     color: white;
     transition: all 0.3s ease;
 }
 
 .skill-badge:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(26, 86, 219, 0.3);
+    box-shadow: 0 10px 25px rgba(26, 54, 93, 0.3);
 }
 
 .timeline-item {
@@ -69,10 +55,10 @@ if (!defined('URLROOT')) {
     top: 0.5rem;
     width: 12px;
     height: 12px;
-    background: linear-gradient(135deg, #1a56db 0%, #c41e3a 100%);
+    background: linear-gradient(135deg, #1a365d 0%, #c41e3a 100%);
     border-radius: 50%;
     border: 3px solid white;
-    box-shadow: 0 0 0 3px rgba(26, 86, 219, 0.2);
+    box-shadow: 0 0 0 3px rgba(26, 54, 93, 0.2);
 }
 
 .social-link {
@@ -87,14 +73,14 @@ if (!defined('URLROOT')) {
 }
 
 .gradient-text {
-    background: linear-gradient(135deg, #1a56db 0%, #c41e3a 100%);
+    background: linear-gradient(135deg, #1a365d 0%, #c41e3a 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
 
 .animated-bg {
-    background: linear-gradient(270deg, #1a56db, #c41e3a, #1a56db, #c41e3a);
+    background: linear-gradient(270deg, #1a365d, #c41e3a, #1a365d, #c41e3a);
     background-size: 800% 800%;
     animation: gradientShift 15s ease infinite;
 }
@@ -123,39 +109,267 @@ if (!defined('URLROOT')) {
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
 }
 
-.geometric-bg {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    opacity: 0.05;
-    background-image: 
-        radial-gradient(circle at 1px 1px, rgba(255,255,255,0.3) 1px, transparent 0);
-    background-size: 30px 30px;
-}
+
 
 @media (max-width: 768px) {
-    .floating-element { display: none; }
     .tech-grid { grid-template-columns: repeat(2, 1fr); }
     .over-mij-hero {
         padding-top: 4rem;
         padding-bottom: 4rem;
     }
+    .party-float-container {
+        animation-duration: 15s !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .party-float-container {
+        animation: none !important;
+    }
 }
 </style>
+
+
 
 <main class="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
     <!-- Hero Section -->
     <section class="over-mij-hero min-h-screen flex items-center justify-center relative overflow-hidden">
-        <!-- Animated floating elements -->
-        <div class="floating-element"></div>
-        <div class="floating-element"></div>
-        <div class="floating-element"></div>
+        <!-- Subtle background elements -->
+        <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg opacity=\"0.03\"%3E%3Ccircle cx=\"30\" cy=\"30\" r=\"1.5\" fill=\"white\"/%3E%3Ccircle cx=\"0\" cy=\"30\" r=\"1\" fill=\"white\"/%3E%3Ccircle cx=\"60\" cy=\"30\" r=\"1\" fill=\"white\"/%3E%3Ccircle cx=\"30\" cy=\"0\" r=\"1\" fill=\"white\"/%3E%3Ccircle cx=\"30\" cy=\"60\" r=\"1\" fill=\"white\"/%3E%3C/g%3E%3C/svg%3E')] opacity-40"></div>
         
-        <!-- Geometric background pattern -->
-        <div class="geometric-bg"></div>
+        <!-- Ambient light effects -->
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-pulse"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-secondary/15 rounded-full blur-3xl animate-pulse" style="animation-delay: 2s;"></div>
+        
+        <!-- Floating partij logos -->
+        <div class="absolute inset-0 z-10 pointer-events-none overflow-hidden">
+            <?php
+            // Database van partij logo's
+            $partyLogos = [
+                'PVV' => 'https://i.ibb.co/DfR8pS2Y/403880390-713625330344634-198487231923339026-n.jpg',
+                'VVD' => 'https://logo.clearbit.com/vvd.nl',
+                'NSC' => 'https://i.ibb.co/YT2fJZb4/nsc.png',
+                'BBB' => 'https://i.ibb.co/qMjw7jDV/bbb.png',
+                'GL-PvdA' => 'https://i.ibb.co/67hkc5Hv/gl-pvda.png',
+                'D66' => 'https://logo.clearbit.com/d66.nl',
+                'SP' => 'https://logo.clearbit.com/sp.nl',
+                'PvdD' => 'https://logo.clearbit.com/partijvoordedieren.nl',
+                'CDA' => 'https://logo.clearbit.com/cda.nl',
+                'JA21' => 'https://logo.clearbit.com/ja21.nl',
+                'SGP' => 'https://logo.clearbit.com/sgp.nl',
+                'FvD' => 'https://logo.clearbit.com/fvd.nl',
+                'DENK' => 'https://logo.clearbit.com/bewegingdenk.nl',
+                'Volt' => 'https://logo.clearbit.com/voltnederland.org'
+            ];
+            
+            // Partijen configuratie met kleuren - posities worden random gegenereerd
+            $floatingPartijen = [
+                ['naam' => 'VVD', 'kleur' => '#FF9900', 'logo' => $partyLogos['VVD'], 'delay' => '0s', 'duration' => '20s', 'size' => 'large'],
+                ['naam' => 'PVV', 'kleur' => '#0078D7', 'logo' => $partyLogos['PVV'], 'delay' => '3s', 'duration' => '22s', 'size' => 'large'],
+                ['naam' => 'GL-PvdA', 'kleur' => '#008800', 'logo' => $partyLogos['GL-PvdA'], 'delay' => '6s', 'duration' => '24s', 'size' => 'large'],
+                ['naam' => 'CDA', 'kleur' => '#1E8449', 'logo' => $partyLogos['CDA'], 'delay' => '2s', 'duration' => '18s', 'size' => 'medium'],
+                ['naam' => 'D66', 'kleur' => '#00B13C', 'logo' => $partyLogos['D66'], 'delay' => '4s', 'duration' => '26s', 'size' => 'medium'],
+                ['naam' => 'SP', 'kleur' => '#EE0000', 'logo' => $partyLogos['SP'], 'delay' => '7s', 'duration' => '19s', 'size' => 'small'],
+                ['naam' => 'PvdD', 'kleur' => '#006400', 'logo' => $partyLogos['PvdD'], 'delay' => '8s', 'duration' => '21s', 'size' => 'small'],
+                ['naam' => 'Volt', 'kleur' => '#800080', 'logo' => $partyLogos['Volt'], 'delay' => '10s', 'duration' => '25s', 'size' => 'small'],
+                ['naam' => 'JA21', 'kleur' => '#4B0082', 'logo' => $partyLogos['JA21'], 'delay' => '12s', 'duration' => '27s', 'size' => 'small'],
+                ['naam' => 'SGP', 'kleur' => '#ff7f00', 'logo' => $partyLogos['SGP'], 'delay' => '14s', 'duration' => '29s', 'size' => 'small']
+            ];
+            
+            // Array om gebruikte posities bij te houden
+            $usedPositions = [];
+            
+            // Functie om random posities te genereren die niet overlappen
+            function generateRandomPosition($index, $total, &$usedPositions) {
+                $attempts = 0;
+                $maxAttempts = 50;
+                
+                do {
+                    $attempts++;
+                    
+                    // Genereer random positie
+                    $isLeft = (rand(0, 1) === 0);
+                    
+                    if ($isLeft) {
+                        $position = [
+                            'top' => rand(5, 90),
+                            'left' => rand(2, 18),
+                            'right' => null
+                        ];
+                    } else {
+                        $position = [
+                            'top' => rand(5, 90),
+                            'left' => null,
+                            'right' => rand(2, 18)
+                        ];
+                    }
+                    
+                    // Check overlap met bestaande posities
+                    $hasOverlap = false;
+                    foreach ($usedPositions as $used) {
+                        $topDiff = abs($position['top'] - $used['top']);
+                        
+                        if ($isLeft && isset($used['left'])) {
+                            $sideDiff = abs($position['left'] - $used['left']);
+                            if ($topDiff < 15 && $sideDiff < 8) {
+                                $hasOverlap = true;
+                                break;
+                            }
+                        } elseif (!$isLeft && isset($used['right'])) {
+                            $sideDiff = abs($position['right'] - $used['right']);
+                            if ($topDiff < 15 && $sideDiff < 8) {
+                                $hasOverlap = true;
+                                break;
+                            }
+                        }
+                    }
+                    
+                    // Vermijd centrale zone (waar content staat)
+                    if ($position['top'] > 30 && $position['top'] < 70) {
+                        if (($isLeft && $position['left'] > 15) || (!$isLeft && $position['right'] > 15)) {
+                            $hasOverlap = true;
+                        }
+                    }
+                    
+                } while ($hasOverlap && $attempts < $maxAttempts);
+                
+                // Voeg positie toe aan gebruikte posities
+                $usedPositions[] = $position;
+                
+                return $position;
+            }
+            
+            foreach($floatingPartijen as $index => $partij):
+                // Bepaal grootte op basis van size parameter
+                $sizeClasses = match($partij['size']) {
+                    'large' => 'w-16 h-16 sm:w-20 sm:h-20',
+                    'medium' => 'w-12 h-12 sm:w-16 sm:h-16',
+                    'small' => 'w-8 h-8 sm:w-12 sm:h-12',
+                    default => 'w-12 h-12 sm:w-16 sm:h-16'
+                };
+                
+                $logoSizeClasses = match($partij['size']) {
+                    'large' => 'w-10 h-10 sm:w-14 sm:h-14',
+                    'medium' => 'w-8 h-8 sm:w-10 sm:h-10',
+                    'small' => 'w-6 h-6 sm:w-8 sm:h-8',
+                    default => 'w-8 h-8 sm:w-10 sm:h-10'
+                };
+                
+                // Genereer unieke random positie
+                $position = generateRandomPosition($index, count($floatingPartijen), $usedPositions);
+                $positionStyle = "top: {$position['top']}%;";
+                if ($position['left'] !== null) {
+                    $positionStyle .= " left: {$position['left']}%;";
+                } else {
+                    $positionStyle .= " right: {$position['right']}%;";
+                }
+            ?>
+            <div class="absolute opacity-15 hover:opacity-30 transition-opacity duration-500 party-float-<?php echo $index; ?>" 
+                 style="<?php echo $positionStyle; ?> animation: floating-<?php echo $index; ?> <?php echo $partij['duration']; ?> infinite ease-in-out; animation-delay: <?php echo $partij['delay']; ?>;">
+                <!-- Partij logo container met mooie styling -->
+                <div class="relative group cursor-pointer">
+                    <!-- Multi-layer glow effect -->
+                    <div class="absolute inset-0 <?php echo $sizeClasses; ?> rounded-3xl blur-xl transform scale-125 group-hover:scale-150 transition-transform duration-700 opacity-40"
+                         style="background: linear-gradient(135deg, <?php echo $partij['kleur']; ?>, <?php echo $partij['kleur']; ?>80);"></div>
+                    
+                    <div class="absolute inset-0 <?php echo $sizeClasses; ?> rounded-3xl blur-md transform scale-110 group-hover:scale-125 transition-transform duration-500 opacity-60"
+                         style="background: <?php echo $partij['kleur']; ?>;"></div>
+                    
+                    <!-- Main logo container -->
+                    <div class="relative <?php echo $sizeClasses; ?> bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/50 flex items-center justify-center transform group-hover:rotate-12 group-hover:scale-110 transition-all duration-700 overflow-hidden">
+                        <!-- Shimmer effect -->
+                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent transform -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
+                        
+                        <!-- Logo afbeelding -->
+                        <div class="<?php echo $logoSizeClasses; ?> rounded-2xl overflow-hidden transform group-hover:scale-110 transition-transform duration-500 flex items-center justify-center relative z-10">
+                            <img src="<?php echo $partij['logo']; ?>" 
+                                 alt="<?php echo $partij['naam']; ?> logo"
+                                 class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-110"
+                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                                 loading="lazy">
+                            <!-- Fallback met gradient -->
+                            <div class="hidden w-full h-full rounded-2xl font-black text-white items-center justify-center transform group-hover:scale-110 transition-transform duration-500 text-center"
+                                 style="background: linear-gradient(135deg, <?php echo $partij['kleur']; ?>, <?php echo $partij['kleur']; ?>CC); text-shadow: 0 2px 4px rgba(0,0,0,0.4); font-size: <?php echo $partij['size'] === 'large' ? '14px' : ($partij['size'] === 'medium' ? '12px' : '10px'); ?>;">
+                                <?php 
+                                // Optimized fallback text
+                                $afkorting = $partij['naam'];
+                                if (strpos($afkorting, '/') !== false) {
+                                    $delen = explode('/', $afkorting);
+                                    echo substr($delen[0], 0, 3);
+                                } else {
+                                    echo substr($afkorting, 0, min(4, strlen($afkorting)));
+                                }
+                                ?>
+                            </div>
+                        </div>
+                        
+                        <!-- Animated border -->
+                        <div class="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                             style="background: linear-gradient(45deg, <?php echo $partij['kleur']; ?>, transparent, <?php echo $partij['kleur']; ?>); padding: 2px;">
+                            <div class="w-full h-full rounded-3xl bg-white/95"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Floating particles -->
+                    <div class="absolute -top-2 -right-2 w-3 h-3 rounded-full animate-ping opacity-60"
+                         style="background: <?php echo $partij['kleur']; ?>; animation-delay: 0.5s;"></div>
+                    <div class="absolute -bottom-2 -left-2 w-2 h-2 rounded-full animate-ping opacity-40"
+                         style="background: <?php echo $partij['kleur']; ?>; animation-delay: 1s;"></div>
+                    
+                    <!-- Enhanced tooltip -->
+                    <div class="absolute -bottom-12 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none z-50">
+                        <div class="relative">
+                            <div class="absolute inset-0 bg-slate-900 rounded-lg blur-sm"></div>
+                            <div class="relative bg-slate-900/95 backdrop-blur-sm text-white text-sm px-3 py-2 rounded-lg shadow-xl border border-slate-700 whitespace-nowrap">
+                                <div class="font-bold"><?php echo $partij['naam']; ?></div>
+                                <div class="text-xs text-slate-300">Nederlandse Politieke Partij</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?php endforeach; ?>
+        </div>
+
+        <!-- CSS animaties voor partij logos -->
+        <style>
+        /* Floating animaties voor partij logos */
+        <?php foreach($floatingPartijen as $index => $partij): ?>
+        @keyframes floating-<?php echo $index; ?> {
+            0% { 
+                transform: translateX(0px) translateY(0px) rotate(0deg) scale(1); 
+            }
+            25% { 
+                transform: translateX(<?php echo 15 + ($index * 3); ?>px) translateY(-<?php echo 20 + ($index * 2); ?>px) rotate(<?php echo 5 + ($index * 2); ?>deg) scale(1.05); 
+            }
+            50% { 
+                transform: translateX(-<?php echo 10 + ($index * 3); ?>px) translateY(<?php echo 25 + ($index * 2); ?>px) rotate(-<?php echo 7 + ($index * 2); ?>deg) scale(0.95); 
+            }
+            75% { 
+                transform: translateX(<?php echo 20 + ($index * 2); ?>px) translateY(<?php echo 15 + ($index * 3); ?>px) rotate(<?php echo 3 + ($index * 2); ?>deg) scale(1.02); 
+            }
+            100% { 
+                transform: translateX(0px) translateY(0px) rotate(0deg) scale(1); 
+            }
+        }
+        <?php endforeach; ?>
+        
+        /* Responsieve aanpassingen */
+        @media (max-width: 768px) {
+            .party-float-container {
+                animation-duration: 15s !important;
+            }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            .party-float-container {
+                animation: none !important;
+            }
+        }
+        </style>
         
         <!-- Hero Content -->
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
             <div class="max-w-6xl mx-auto">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                     
@@ -245,13 +459,6 @@ if (!defined('URLROOT')) {
                         </div>
                     </div>
                 </div>
-            </div>
-            
-            <!-- Scroll indicator -->
-            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
-                </svg>
             </div>
         </div>
     </section>

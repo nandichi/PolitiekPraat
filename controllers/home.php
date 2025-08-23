@@ -674,15 +674,34 @@ require_once 'views/templates/header.php';
                             
                         <!-- Rechts: Nieuwste blog post -->
                         <div class="order-last lg:order-last">
+                            <!-- Header voor blog sectie -->
+                            <div class="text-center mb-6 lg:mb-8">
+                                <div class="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 mb-3">
+                                    <div class="w-2 h-2 bg-secondary-light rounded-full mr-2 animate-pulse"></div>
+                                    <span class="text-white/90 text-sm font-medium">Nieuwste Artikel</span>
+                                </div>
+                            </div>
+                            
                             <?php if ($latestBlog): ?>
-                                <div class="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl overflow-hidden border border-white/20 hover:shadow-3xl transition-all duration-500 transform hover:scale-105 
-                                           max-w-sm mx-auto lg:max-w-none lg:mx-0">
+                                <div class="relative bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl overflow-hidden border border-white/20 hover:shadow-3xl transition-all duration-500 transform hover:scale-105 
+                                           max-w-sm mx-auto lg:max-w-none lg:mx-0 before:absolute before:inset-0 before:bg-gradient-to-br before:from-primary/5 before:via-transparent before:to-secondary/5 before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-500">
+                                    
+                                    <!-- NIEUW badge -->
+                                    <div class="absolute top-4 right-4 z-20">
+                                        <div class="relative bg-gradient-to-r from-secondary to-primary text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+                                            <div class="absolute inset-0 bg-gradient-to-r from-secondary to-primary rounded-full animate-ping opacity-75"></div>
+                                            <span class="relative">NIEUW</span>
+                                        </div>
+                                    </div>
                                     <!-- Blog afbeelding -->
                                     <?php if (!empty($latestBlog->image_path)): ?>
-                                        <div class="aspect-video overflow-hidden">
+                                        <div class="aspect-video overflow-hidden relative">
                                             <img src="<?php echo URLROOT . '/' . $latestBlog->image_path; ?>" 
                                                  alt="<?php echo htmlspecialchars($latestBlog->title); ?>"
-                                                 class="w-full h-full object-cover">
+                                                 class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                                            
+                                            <!-- Gradient overlay voor betere tekst leesbaarheid -->
+                                            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
                                         </div>
                                     <?php endif; ?>
                                     
@@ -710,22 +729,55 @@ require_once 'views/templates/header.php';
                                         </p>
                                         
                                         <!-- Meta info -->
+                                        <div class="flex items-center justify-between text-xs text-gray-500 mb-6 pt-4 border-t border-gray-100">
+                                            <div class="flex items-center space-x-3">
+                                                <!-- Datum -->
+                                                <div class="flex items-center">
+                                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                                    </svg>
+                                                    <span><?php echo date('d M Y', strtotime($latestBlog->published_at ?? date('Y-m-d'))); ?></span>
+                                                </div>
+                                                
+                                                <!-- Auteur -->
+                                                <?php if (!empty($latestBlog->author_name)): ?>
+                                                    <div class="flex items-center">
+                                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                                        </svg>
+                                                        <span><?php echo htmlspecialchars($latestBlog->author_name); ?></span>
+                                                    </div>
+                                                <?php endif; ?>
+                                            </div>
+                                            
+                                            <!-- Leestijd -->
+                                            <div class="flex items-center bg-gray-50 rounded-full px-2 py-1">
+                                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                                </svg>
+                                                <span class="font-medium">5 min</span>
+                                            </div>
+                                        </div>
 
                             </div>
                             
                                         <!-- Lees meer button -->
                                         <a href="<?php echo URLROOT; ?>/blogs/<?php echo $latestBlog->slug; ?>" 
-                                           class="inline-flex items-center justify-center w-full px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-primary-dark via-primary to-secondary text-white text-sm sm:text-base font-bold rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-300">
-                                            <span>Lees het volledige artikel</span>
-                                            <svg class="w-4 h-4 sm:w-5 sm:h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                           class="group relative inline-flex items-center justify-center w-full px-4 sm:px-6 py-3 sm:py-4 bg-gradient-to-r from-primary-dark via-primary to-secondary text-white text-sm sm:text-base font-bold rounded-xl hover:shadow-lg hover:shadow-primary/25 transition-all duration-300 overflow-hidden">
+                                            
+                                            <!-- Shimmer effect -->
+                                            <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
+                                            
+                                            <span class="relative z-10">Lees het volledige artikel</span>
+                                            <svg class="relative z-10 w-4 h-4 sm:w-5 sm:h-5 ml-2 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                                </svg>
-                        </a>
+                                            </svg>
+                                        </a>
                                 </div>
                             </div>
                             <?php else: ?>
                                 <!-- Fallback indien geen blog beschikbaar -->
-                                <div class="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-4 sm:p-6 lg:p-8 border border-white/20 max-w-sm mx-auto lg:max-w-none lg:mx-0">
+                                <div class="relative bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-4 sm:p-6 lg:p-8 border border-white/20 max-w-sm mx-auto lg:max-w-none lg:mx-0 before:absolute before:inset-0 before:bg-gradient-to-br before:from-primary/5 before:via-transparent before:to-secondary/5 before:opacity-50">
                                     <div class="text-center">
                                         <div class="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
                                             <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
