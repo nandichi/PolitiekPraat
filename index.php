@@ -82,6 +82,7 @@ $router->add('blogs/([^/]+)', function($slug) {
 $router->add('forum', 'controllers/forum.php');
 $router->add('forum/create', 'controllers/forum/create.php');
 $router->add('contact', 'controllers/contact.php');
+$router->add('donatie', 'controllers/donatie.php');
 $router->add('login', 'controllers/auth/login.php');
 $router->add('register', 'controllers/auth/register.php');
 $router->add('logout', 'controllers/auth/logout.php');

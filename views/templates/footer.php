@@ -3,8 +3,7 @@
     <!-- Page Context Indicator -->
     <?php echo renderPageContextIndicator(); ?>
     
-    <!-- Quick Navigation Component -->
-    <?php echo renderQuickNavigation(); ?>
+
     
     <footer class="relative">
         <!-- Decoratieve top border met gradient -->
@@ -363,6 +362,9 @@
     
     <!-- Newsletter JavaScript -->
     <script src="<?php echo URLROOT; ?>/js/newsletter.js"></script>
+    
+    <!-- Buy Me A Coffee Button -->
+    <script src="<?php echo URLROOT; ?>/public/js/coffee-button.js"></script>
 
     <script>
         AOS.init({

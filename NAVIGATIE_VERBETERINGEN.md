@@ -39,20 +39,20 @@ De website heeft feedback ontvangen over het gebrek aan overzicht en intuïtieve
 
 **Locatie**: `views/templates/header.php` - CSS class `active` toegevoegd
 
-### 3. ✅ Quick Navigation Component
+### 3. ❌ Quick Navigation Component (VERWIJDERD)
 
 **Probleem**: Belangrijke functies zijn niet snel toegankelijk
 **Oplossing**: Floating action button met snelle acties
 
-**Functionaliteiten**:
+**Status**: Deze component is verwijderd op verzoek van de gebruiker
+
+**Voormalige functionaliteiten**:
 
 - Floating button rechtsonder (desktop only)
 - Context-afhankelijke acties
 - Stemwijzer, Politiek Kompas, Partijen, Nieuws altijd beschikbaar
 - Extra acties zoals "Schrijf Blog" voor ingelogde gebruikers
 - Smooth animaties en hover effecten
-
-**Locatie**: `includes/helpers.php` - functie `renderQuickNavigation()`
 
 ### 4. ✅ Page Context Indicator
 
@@ -100,8 +100,8 @@ getCurrentPageContext()
 generateBreadcrumbs()
 renderBreadcrumbs()
 
-// Quick navigation
-renderQuickNavigation()
+// Quick navigation (VERWIJDERD)
+// renderQuickNavigation() - functie verwijderd
 
 // Page context
 renderPageContextIndicator()

@@ -242,35 +242,6 @@
   outline-offset: 2px;
 }
 
-/* Cookie Settings Button in Footer */
-.cookie-settings-btn {
-  position: fixed;
-  bottom: 1rem;
-  right: 1rem;
-  background: #1e3a8a;
-  color: white;
-  border: none;
-  padding: 0.75rem 1rem;
-  border-radius: 50px;
-  font-size: 0.875rem;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(30, 58, 138, 0.3);
-  transition: all 0.3s ease;
-  z-index: 1000;
-}
-
-.cookie-settings-btn:hover {
-  background: #1e40af;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(30, 58, 138, 0.4);
-}
-
-.cookie-settings-btn:focus {
-  outline: 3px solid #60a5fa;
-  outline-offset: 2px;
-}
-
 /* Animations */
 @keyframes fadeIn {
   from {
@@ -312,13 +283,6 @@
   .consent-toggle-description {
     margin-left: 1rem;
     padding-left: 0.5rem;
-  }
-
-  .cookie-settings-btn {
-    bottom: 0.5rem;
-    right: 0.5rem;
-    padding: 0.5rem 0.75rem;
-    font-size: 0.8rem;
   }
 }
 
@@ -393,23 +357,20 @@
   }
 
   .consent-content,
-  .cookie-settings-btn,
   .consent-actions .btn {
     transition: none;
   }
 
   .btn-primary:hover,
   .btn-secondary:hover,
-  .btn-outline:hover,
-  .cookie-settings-btn:hover {
+  .btn-outline:hover {
     transform: none;
   }
 }
 
 /* Print Styles */
 @media print {
-  .cookie-consent-banner,
-  .cookie-settings-btn {
+  .cookie-consent-banner {
     display: none !important;
   }
 }

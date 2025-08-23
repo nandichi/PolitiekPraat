@@ -26,7 +26,6 @@ class CookieConsentManager {
     } else {
       this.applyConsent();
     }
-    this.setupConsentButton();
   }
 
   loadExistingConsent() {
@@ -322,25 +321,6 @@ class CookieConsentManager {
         event: "cookie_consent_update",
         consent_preferences: this.consentTypes,
       });
-    }
-  }
-
-  setupConsentButton() {
-    // Add consent management button to footer
-    const consentButton = document.createElement("button");
-    consentButton.id = "manage-cookie-consent";
-    consentButton.className = "cookie-settings-btn";
-    consentButton.innerHTML = "🍪 Cookie Instellingen";
-    consentButton.setAttribute("aria-label", "Cookie voorkeuren beheren");
-
-    consentButton.addEventListener("click", () => {
-      this.showConsentBanner();
-    });
-
-    // Add to footer
-    const footer = document.querySelector("footer");
-    if (footer) {
-      footer.appendChild(consentButton);
     }
   }
 

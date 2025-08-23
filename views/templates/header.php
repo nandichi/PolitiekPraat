@@ -11,6 +11,7 @@ $metaDescriptions = [
     'themas' => 'Verdiep je in actuele politieke thema\'s als klimaatbeleid, gezondheidszorg en economie. Analyses, standpunten en expert discussies over Nederlandse politiek.',
     'forum' => 'Discussieer mee in het politieke forum van PolitiekPraat. Deel je mening over actuele onderwerpen en ga respectvol in debat met andere gebruikers.',
     'contact' => 'Neem contact op met het PolitiekPraat team voor vragen, feedback of suggesties. Ons contactformulier zorgt voor snelle en persoonlijke ondersteuning.',
+    'donatie' => 'Steun PolitiekPraat met een donatie. Help ons de website gratis, advertentievrij en onafhankelijk te houden. Elke bijdrage helpt ons verder ontwikkelen.',
     'over-mij' => 'Leer meer over PolitiekPraat en onze missie om Nederlandse politiek toegankelijk te maken. Ontdek wie we zijn en waarom we dit platform hebben opgericht.',
     
     // Authenticatie pagina's
@@ -62,6 +63,7 @@ $metaKeywords = [
     'themas' => 'politieke thema\'s, klimaat, zorg, economie, onderwijs, immigratie, standpunten, analyses, Nederlandse politiek, PolitiekPraat',
     'forum' => 'politiek forum, politieke discussie, debat, meningen, Nederlandse politiek, politieke standpunten, actuele discussies, PolitiekPraat',
     'contact' => 'contact, vragen, feedback, hulp, informatie, PolitiekPraat, bereikbaarheid, klantenservice',
+    'donatie' => 'donatie, steun, PolitiekPraat, onafhankelijk, advertentievrij, buy me a coffee, bijdrage, koffie, serverkosten, ondersteuning',
     'over-mij' => 'over ons, missie, visie, team, PolitiekPraat, Nederlandse politiek, platform, democratie, transparantie',
     
     // Authenticatie pagina's
@@ -549,6 +551,7 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
     <!-- Accessibility & Privacy CSS -->
     <link rel="stylesheet" href="<?php echo URLROOT; ?>/public/css/accessibility.css">
     <link rel="stylesheet" href="<?php echo URLROOT; ?>/public/css/cookie-consent.css">
+    <link rel="stylesheet" href="<?php echo URLROOT; ?>/public/css/coffee-button.css">
     
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5550921434025979" crossorigin="anonymous"></script>
@@ -1394,6 +1397,19 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
                                     <div class="text-xs text-gray-500">Neem contact op</div>
                                 </div>
                             </a>
+                            
+                            <a href="<?php echo URLROOT; ?>/donatie" 
+                               class="flex items-center px-3 py-3 rounded-lg hover:bg-primary/5 transition-all duration-300 group/item">
+                                <div class="w-10 h-10 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-xl flex items-center justify-center mr-3 group-hover/item:from-primary/20 group-hover/item:to-secondary/20 transition-all duration-300">
+                                    <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-semibold text-gray-900">Doneer</div>
+                                    <div class="text-xs text-gray-500">Steun PolitiekPraat</div>
+                                </div>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -1815,6 +1831,18 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
                             </svg>
                         </div>
                         <span class="font-medium">Contact</span>
+                    </a>
+
+                    <a href="<?php echo URLROOT; ?>/donatie" 
+                       class="flex items-center text-gray-700 hover:text-primary p-3 rounded-lg transition-all duration-300 
+                              hover:bg-primary/5 group">
+                        <div class="mr-3 p-2 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-lg transition-all duration-300 
+                                    group-hover:from-primary/20 group-hover:to-secondary/20 group-hover:scale-110">
+                            <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                            </svg>
+                        </div>
+                        <span class="font-medium">Doneer</span>
                     </a>
                 </nav>
 
