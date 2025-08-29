@@ -1974,7 +1974,7 @@ document.addEventListener('DOMContentLoaded', function() {
                      
                      <!-- Polling -->
                      <div class="text-center w-24">
-                         <div class="text-2xl font-bold" style="color: ${color}">${party.polling.seats}</div>
+                         <div class="text-2xl font-bold" style="color: ${color}">${parseInt(party.polling?.seats) || 0}</div>
                          <div class="text-xs text-gray-500 uppercase tracking-wide">Peilingen</div>
                      </div>
                      
@@ -2127,7 +2127,9 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Collect all parties with their seats (current or polling)
         for (const [partyKey, party] of Object.entries(partyData)) {
-            const seatNum = type === 'current' ? party.current_seats : party.polling.seats;
+            const seatNum = type === 'current' ? 
+                parseInt(party.current_seats) || 0 : 
+                parseInt(party.polling?.seats) || 0;
             if (seatNum > 0) {
                 partySeats.push({
                     party: partyKey,
@@ -2493,7 +2495,9 @@ document.addEventListener('DOMContentLoaded', function() {
             let totalParties = 0;
             
             sortedParties.forEach(([partyKey, party]) => {
-                const seats = this.currentView === 'current' ? party.current_seats : party.polling.seats;
+                const seats = this.currentView === 'current' ? 
+                    parseInt(party.current_seats) || 0 : 
+                    parseInt(party.polling?.seats) || 0;
                 
                 if (seats > 0) {
                     totalParties++;
@@ -2727,7 +2731,10 @@ document.addEventListener('DOMContentLoaded', function() {
         calculateCoalitionSeats(coalition, view) {
             return coalition.reduce((total, partyKey) => {
                 const party = this.parties[partyKey];
-                return total + (view === 'current' ? party.current_seats : party.polling.seats);
+                const seats = view === 'current' ? 
+                    parseInt(party.current_seats) || 0 : 
+                    parseInt(party.polling?.seats) || 0;
+                return total + seats;
             }, 0);
         },
         
@@ -2776,7 +2783,9 @@ document.addEventListener('DOMContentLoaded', function() {
             
             this.coalition.forEach(partyKey => {
                 const party = this.parties[partyKey];
-                const seats = this.currentView === 'current' ? party.current_seats : party.polling.seats;
+                const seats = this.currentView === 'current' ? 
+                    parseInt(party.current_seats) || 0 : 
+                    parseInt(party.polling?.seats) || 0;
                 const card = this.createCoalitionPartyCard(partyKey, party, seats);
                 coalitionList.appendChild(card);
             });
@@ -2936,7 +2945,9 @@ document.addEventListener('DOMContentLoaded', function() {
         calculateCoalitionSeats(coalition, view) {
             return coalition.reduce((total, partyKey) => {
                 const party = this.parties[partyKey];
-                const seats = view === 'current' ? party.current_seats : party.polling.seats;
+                const seats = view === 'current' ? 
+                    parseInt(party.current_seats) || 0 : 
+                    parseInt(party.polling?.seats) || 0;
                 return total + seats;
             }, 0);
         },
@@ -2965,7 +2976,9 @@ document.addEventListener('DOMContentLoaded', function() {
             
             this.coalition.forEach((partyKey, index) => {
                 const party = this.parties[partyKey];
-                const seats = this.currentView === 'current' ? party.current_seats : party.polling.seats;
+                const seats = this.currentView === 'current' ? 
+                    parseInt(party.current_seats) || 0 : 
+                    parseInt(party.polling?.seats) || 0;
                 const card = this.createCoalitionPartyCard(partyKey, party, seats);
                 // Add staggered animation
                 card.style.opacity = '0';
@@ -3063,8 +3076,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 const totalSeats = suggestion.parties.reduce((total, partyKey) => {
                     const party = this.parties[partyKey];
                     if (!party) return total;
-                    return total + (this.currentView === 'current' ? party.current_seats : party.polling.seats);
+                    
+                    const seats = this.currentView === 'current' ? 
+                        parseInt(party.current_seats) || 0 : 
+                        parseInt(party.polling?.seats) || 0;
+                    
+                    return total + seats;
                 }, 0);
+                
+
                 
                                  if (totalSeats >= 76) {
                      const suggestionCard = document.createElement('div');
@@ -3181,8 +3201,8 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('party-modal-leader-photo').src = party.leader_photo;
             document.getElementById('party-modal-leader-photo').alt = party.leader;
             document.getElementById('party-modal-description').textContent = party.description;
-            document.getElementById('party-modal-seats').textContent = party.current_seats;
-            document.getElementById('party-modal-polling').textContent = party.polling.seats;
+            document.getElementById('party-modal-seats').textContent = parseInt(party.current_seats) || 0;
+            document.getElementById('party-modal-polling').textContent = parseInt(party.polling?.seats) || 0;
             
             // Fill perspectives
             document.getElementById('party-modal-left-perspective').textContent = party.perspectives.left;
