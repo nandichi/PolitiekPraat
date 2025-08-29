@@ -30,7 +30,7 @@ class BlogController {
     }
 
     public function getAll($limit = null, $categoryId = null) {
-        $sql = "SELECT blogs.*, users.username as author_name, users.profile_photo,
+        $sql = "SELECT blogs.*, users.username as author_name, users.profile_photo as author_photo,
                        blog_categories.name as category_name, blog_categories.slug as category_slug, 
                        blog_categories.color as category_color, blog_categories.icon as category_icon
                 FROM blogs 
@@ -74,7 +74,7 @@ class BlogController {
     }
 
     public function getBySlug($slug) {
-        $this->db->query("SELECT blogs.*, users.username as author_name, users.profile_photo,
+        $this->db->query("SELECT blogs.*, users.username as author_name, users.profile_photo as author_photo,
                                  blog_categories.name as category_name, blog_categories.slug as category_slug, 
                                  blog_categories.color as category_color, blog_categories.icon as category_icon
                          FROM blogs 
@@ -225,7 +225,7 @@ class BlogController {
         // Calculate offset
         $offset = ($page - 1) * $perPage;
         
-        $sql = "SELECT blogs.*, users.username as author_name, users.profile_photo 
+        $sql = "SELECT blogs.*, users.username as author_name, users.profile_photo as author_photo 
                 FROM blogs 
                 JOIN users ON blogs.author_id = users.id 
                 WHERE blogs.author_id = :author_id
@@ -261,7 +261,7 @@ class BlogController {
     }
     
     public function getById($id) {
-        $this->db->query("SELECT blogs.*, users.username as author_name, users.profile_photo 
+        $this->db->query("SELECT blogs.*, users.username as author_name, users.profile_photo as author_photo 
                          FROM blogs 
                          JOIN users ON blogs.author_id = users.id 
                          WHERE blogs.id = :id");
