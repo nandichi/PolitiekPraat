@@ -386,10 +386,17 @@
                                 <div class="flex items-center justify-between mb-5">
                                     <div class="flex items-center space-x-3">
                                         <div class="w-10 h-10 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full flex items-center justify-center overflow-hidden">
-                                            <img src="<?php echo URLROOT; ?>/public/images/naoufal-foto.jpg" 
-                                                 onerror="if(this.src !== '<?php echo URLROOT; ?>/images/naoufal-foto.jpg') this.src='<?php echo URLROOT; ?>/images/naoufal-foto.jpg'; else if(this.src !== '<?php echo URLROOT; ?>/public/images/profiles/naoufal-foto.jpg') this.src='<?php echo URLROOT; ?>/public/images/profiles/naoufal-foto.jpg';"
-                                                 alt="<?php echo htmlspecialchars($blog->author_name); ?>"
-                                                 class="w-full h-full object-cover">
+                                            <?php
+                                            $profilePhotoData = getProfilePhotoUrl($blog->profile_photo ?? null, $blog->author_name);
+                                            if ($profilePhotoData['type'] === 'img'): ?>
+                                                <img src="<?php echo htmlspecialchars($profilePhotoData['value']); ?>" 
+                                                     alt="<?php echo htmlspecialchars($blog->author_name); ?>"
+                                                     class="w-full h-full object-cover">
+                                            <?php else: ?>
+                                                <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary to-secondary text-white font-bold text-lg">
+                                                    <?php echo htmlspecialchars($profilePhotoData['value']); ?>
+                                                </div>
+                                            <?php endif; ?>
                                         </div>
                                         <span class="text-sm font-bold text-gray-800"><?php echo htmlspecialchars($blog->author_name); ?></span>
                                     </div>

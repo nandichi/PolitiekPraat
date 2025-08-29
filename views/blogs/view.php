@@ -114,10 +114,17 @@ require_once 'views/templates/header.php'; ?>
                 <!-- Author Info & Actions -->
                 <div class="flex flex-col items-center gap-4 sm:flex-row sm:gap-6">
                     <div class="flex flex-col items-center text-center sm:flex-row sm:space-x-4">
-                        <img src="<?php echo URLROOT; ?>/public/images/profiles/naoufal-foto.jpg" 
-                             onerror="this.src='<?php echo URLROOT; ?>/public/images/profiles/naoufal-foto.jpg';"
-                             alt="<?php echo htmlspecialchars($blog->author_name); ?>"
-                             class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-white/30 shadow-lg sm:shadow-xl object-cover mb-2 sm:mb-0">
+                        <?php
+                        $profilePhotoData = getProfilePhotoUrl($blog->author_photo ?? null, $blog->author_name);
+                        if ($profilePhotoData['type'] === 'img'): ?>
+                            <img src="<?php echo htmlspecialchars($profilePhotoData['value']); ?>" 
+                                 alt="<?php echo htmlspecialchars($blog->author_name); ?>"
+                                 class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-white/30 shadow-lg sm:shadow-xl object-cover mb-2 sm:mb-0">
+                        <?php else: ?>
+                            <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-white/30 shadow-lg sm:shadow-xl flex items-center justify-center bg-gradient-to-br from-primary to-secondary text-white font-bold text-lg mb-2 sm:mb-0">
+                                <?php echo htmlspecialchars($profilePhotoData['value']); ?>
+                            </div>
+                        <?php endif; ?>
                         <div class="sm:text-left">
                             <h3 class="text-white font-semibold text-base sm:text-lg"><?php echo htmlspecialchars($blog->author_name); ?></h3>
                             <p class="text-gray-300 text-xs sm:text-sm"><?php 
@@ -1217,10 +1224,17 @@ require_once 'views/templates/header.php'; ?>
                                         <div class="flex items-center space-x-3">
                                             <div class="relative">
                                                 <div class="w-8 sm:w-10 h-8 sm:h-10 rounded-full overflow-hidden border-2 border-primary/20 shadow-md">
-                                                    <img src="<?php echo URLROOT; ?>/public/images/naoufal-foto.jpg" 
-                                                         onerror="if(this.src !== '<?php echo URLROOT; ?>/images/naoufal-foto.jpg') this.src='<?php echo URLROOT; ?>/images/naoufal-foto.jpg'; else if(this.src !== '<?php echo URLROOT; ?>/public/images/profiles/naoufal-foto.jpg') this.src='<?php echo URLROOT; ?>/public/images/profiles/naoufal-foto.jpg';"
-                                                         alt="<?php echo htmlspecialchars($relatedBlog->author_name); ?>"
-                                                         class="w-full h-full object-cover">
+                                                    <?php
+                                                    $relatedProfilePhotoData = getProfilePhotoUrl($relatedBlog->profile_photo ?? null, $relatedBlog->author_name);
+                                                    if ($relatedProfilePhotoData['type'] === 'img'): ?>
+                                                        <img src="<?php echo htmlspecialchars($relatedProfilePhotoData['value']); ?>" 
+                                                             alt="<?php echo htmlspecialchars($relatedBlog->author_name); ?>"
+                                                             class="w-full h-full object-cover">
+                                                    <?php else: ?>
+                                                        <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary to-secondary text-white font-bold text-sm">
+                                                            <?php echo htmlspecialchars($relatedProfilePhotoData['value']); ?>
+                                                        </div>
+                                                    <?php endif; ?>
                                                 </div>
                                                 <div class="absolute inset-0 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-full blur opacity-50"></div>
                                             </div>

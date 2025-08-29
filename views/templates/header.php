@@ -1429,31 +1429,20 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
                                          shadow-sm transition-all duration-300
                                          group-hover:shadow-md group-hover:scale-110 overflow-hidden">
                                     <?php
-                                    if (isset($_SESSION['username']) && $_SESSION['username'] === 'Naoufal') {
-                                        // Special profile photo for Naoufal - using same paths as over-mij page
-                                        $imagePath = URLROOT . '/images/naoufal-foto.jpg';
-                                        $imagePath2 = URLROOT . '/public/images/naoufal-foto.jpg';
-                                        $imagePath3 = URLROOT . '/public/images/profiles/naoufal-foto.jpg';
-                                        $imagePath4 = '/img/naoufal-foto.jpg';
-                                        ?>
-                                        <img src="<?php echo $imagePath; ?>" 
-                                             onerror="if(this.src !== '<?php echo $imagePath2; ?>') this.src='<?php echo $imagePath2; ?>'; else if(this.src !== '<?php echo $imagePath3; ?>') this.src='<?php echo $imagePath3; ?>'; else if(this.src !== '<?php echo $imagePath4; ?>') this.src='<?php echo $imagePath4; ?>';"
-                                             alt="Foto van Naoufal Andichi" class="w-full h-full object-cover rounded-lg">
-                                    <?php
-                                    } else {
-                                        // Normal profile photo handling for other users
-                                        $profilePhoto = getProfilePhotoUrl($_SESSION['profile_photo'] ?? '', $_SESSION['username']);
-                                        if ($profilePhoto['type'] === 'img'): 
-                                        ?>
-                                            <img src="<?php echo $profilePhoto['value']; ?>" 
-                                                 alt="Profile" class="w-full h-full object-cover rounded-lg">
-                                        <?php else: ?>
-                                            <span class="text-white font-bold text-sm">
-                                                <?php echo $profilePhoto['value']; ?>
-                                            </span>
-                                        <?php endif;
-                                    }
+                                    // Use dynamic profile photo with session refresh for ALL users
+                                    $profilePhoto = function_exists('getProfilePhotoWithRefresh') 
+                                        ? getProfilePhotoWithRefresh($_SESSION['username'] ?? '') 
+                                        : getProfilePhotoUrl($_SESSION['profile_photo'] ?? '', $_SESSION['username'] ?? '');
+                                    if ($profilePhoto['type'] === 'img'): 
                                     ?>
+                                        <img src="<?php echo $profilePhoto['value']; ?>" 
+                                             alt="Profile" class="w-full h-full object-cover rounded-lg">
+                                    <?php else: ?>
+                                        <span class="text-white font-bold text-sm">
+                                            <?php echo $profilePhoto['value']; ?>
+                                        </span>
+                                    <?php endif; ?>
+                                    
                                 </div>
                                 <span class="font-medium text-gray-700 text-sm"><?php echo htmlspecialchars($_SESSION['username']); ?></span>
                                 <svg class="w-4 h-4 text-gray-500 transition-transform duration-300 group-hover:rotate-180" 
@@ -1856,30 +1845,19 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
                             <div class="w-10 h-10 bg-gradient-to-br from-secondary to-primary/80 rounded-lg 
                                       flex items-center justify-center shadow-lg">
                                 <?php
-                                if (isset($_SESSION['username']) && $_SESSION['username'] === 'Naoufal') {
-                                    // Using same paths as over-mij page and desktop header
-                                    $imagePath = URLROOT . '/images/naoufal-foto.jpg';
-                                    $imagePath2 = URLROOT . '/public/images/naoufal-foto.jpg';
-                                    $imagePath3 = URLROOT . '/public/images/profiles/naoufal-foto.jpg';
-                                    $imagePath4 = '/img/naoufal-foto.jpg';
-                                    ?>
-                                    <img src="<?php echo $imagePath; ?>" 
-                                         onerror="if(this.src !== '<?php echo $imagePath2; ?>') this.src='<?php echo $imagePath2; ?>'; else if(this.src !== '<?php echo $imagePath3; ?>') this.src='<?php echo $imagePath3; ?>'; else if(this.src !== '<?php echo $imagePath4; ?>') this.src='<?php echo $imagePath4; ?>';"
-                                         alt="Foto van Naoufal Andichi" class="w-full h-full object-cover rounded-lg">
-                                <?php
-                                } else {
-                                    $profilePhoto = getProfilePhotoUrl($_SESSION['profile_photo'] ?? '', $_SESSION['username']);
-                                    if ($profilePhoto['type'] === 'img'): 
-                                    ?>
-                                        <img src="<?php echo $profilePhoto['value']; ?>" 
-                                             alt="Profile" class="w-full h-full object-cover rounded-lg">
-                                    <?php else: ?>
-                                        <span class="text-white font-bold text-lg">
-                                            <?php echo $profilePhoto['value']; ?>
-                                        </span>
-                                    <?php endif;
-                                }
+                                // Use dynamic profile photo with session refresh for ALL users (mobile)
+                                $mobileProfilePhoto = function_exists('getProfilePhotoWithRefresh') 
+                                    ? getProfilePhotoWithRefresh($_SESSION['username'] ?? '') 
+                                    : getProfilePhotoUrl($_SESSION['profile_photo'] ?? '', $_SESSION['username'] ?? '');
+                                if ($mobileProfilePhoto['type'] === 'img'): 
                                 ?>
+                                    <img src="<?php echo $mobileProfilePhoto['value']; ?>" 
+                                         alt="Profile" class="w-full h-full object-cover rounded-lg">
+                                <?php else: ?>
+                                    <span class="text-white font-bold text-lg">
+                                        <?php echo $mobileProfilePhoto['value']; ?>
+                                    </span>
+                                <?php endif; ?>
                             </div>
                             <div>
                                 <p class="text-gray-800 font-medium"><?php echo htmlspecialchars($_SESSION['username']); ?></p>

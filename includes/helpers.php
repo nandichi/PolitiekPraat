@@ -25,7 +25,7 @@ if (!function_exists('getProfilePhotoUrl')) {
             
             // Check if the file exists in the public directory
             if (file_exists(BASE_PATH . '/public/' . $profilePhoto)) {
-                return ['type' => 'img', 'value' => URLROOT . '/' . $profilePhoto];
+                return ['type' => 'img', 'value' => URLROOT . '/public/' . $profilePhoto];
             }
             
             // Try alternate paths
@@ -36,7 +36,7 @@ if (!function_exists('getProfilePhotoUrl')) {
             
             foreach ($altPaths as $path) {
                 if (file_exists(BASE_PATH . '/public/' . $path)) {
-                    return ['type' => 'img', 'value' => URLROOT . '/' . $path];
+                    return ['type' => 'img', 'value' => URLROOT . '/public/' . $path];
                 }
             }
         }

@@ -34,6 +34,9 @@ if (!defined('CONFIG_INCLUDED')) {
         define('BASE_PATH', dirname(__DIR__));
     }
 
+    // Include Database class first (required by session refresh)
+    require_once __DIR__ . '/Database.php';
+
     // Include helper functions only if the HELPERS_INCLUDED constant is not defined
     if (!defined('HELPERS_INCLUDED')) {
         require_once __DIR__ . '/helpers.php';
@@ -43,4 +46,10 @@ if (!defined('CONFIG_INCLUDED')) {
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
+
+    // Include session refresh mechanism (requires Database class)
+    require_once __DIR__ . '/session_refresh.php';
+    
+    // Auto-refresh session on every page load to ensure fresh data
+    autoRefreshSession();
 }
