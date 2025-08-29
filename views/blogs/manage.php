@@ -181,13 +181,6 @@
                                                         </svg>
                                                         Bewerken
                                                     </a>
-                                                    <a href="<?php echo URLROOT; ?>/blogs/updateLikes/<?php echo $blog->id; ?>"
-                                                       class="group/btn inline-flex items-center px-3 py-2 border-2 border-blue-300 rounded-xl text-blue-600 bg-white hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2">
-                                                        <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-                                                        </svg>
-                                                        Likes
-                                                    </a>
                                                     <a href="<?php echo URLROOT; ?>/blogs/delete/<?php echo $blog->id; ?>"
                                                        onclick="return confirm('Weet je zeker dat je deze blog wilt verwijderen? Dit kan niet ongedaan worden gemaakt.')"
                                                        class="group/btn inline-flex items-center px-3 py-2 border-2 border-red-300 rounded-xl text-red-600 bg-white hover:bg-red-600 hover:text-white hover:border-red-600 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2">
@@ -271,13 +264,6 @@
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                                                     </svg>
                                                     Bewerken
-                                                </a>
-                                                <a href="<?php echo URLROOT; ?>/blogs/updateLikes/<?php echo $blog->id; ?>"
-                                                   class="md:inline-flex hidden items-center px-3 py-1.5 border-2 border-blue-300 rounded-xl text-xs text-blue-600 bg-white hover:bg-blue-600 hover:text-white transition-all duration-300">
-                                                    <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-                                                    </svg>
-                                                    Likes
                                                 </a>
                                                 <a href="<?php echo URLROOT; ?>/blogs/delete/<?php echo $blog->id; ?>"
                                                    onclick="return confirm('Weet je zeker dat je deze blog wilt verwijderen? Dit kan niet ongedaan worden gemaakt.')"
