@@ -5,13 +5,8 @@ $pageDescription = htmlspecialchars(stripMarkdownForSocialMedia($blog->summary, 
 
 // Zorg ervoor dat de afbeelding URL altijd absoluut is voor social media sharing
 if ($blog->image_path) {
-    $blogImageUrl = getBlogImageUrl($blog->image_path);
-    // Controleer of het al een absolute URL is, zo niet, maak er een absolute URL van
-    if (strpos($blogImageUrl, 'http') !== 0) {
-        $pageImage = rtrim(URLROOT, '/') . '/' . ltrim($blogImageUrl, '/');
-    } else {
-        $pageImage = $blogImageUrl;
-    }
+    // getBlogImageUrl() retourneert al een absolute URL
+    $pageImage = getBlogImageUrl($blog->image_path);
 } else {
     // Fallback naar default metadata foto
     $pageImage = rtrim(URLROOT, '/') . '/metadata-foto.png';
