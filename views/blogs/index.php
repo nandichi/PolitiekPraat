@@ -387,7 +387,7 @@
                                     <div class="flex items-center space-x-3">
                                         <div class="w-10 h-10 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full flex items-center justify-center overflow-hidden">
                                             <?php
-                                            $profilePhotoData = getProfilePhotoUrl($blog->profile_photo ?? null, $blog->author_name);
+                                            $profilePhotoData = getProfilePhotoUrl($blog->author_photo ?? null, $blog->author_name);
                                             if ($profilePhotoData['type'] === 'img'): ?>
                                                 <img src="<?php echo htmlspecialchars($profilePhotoData['value']); ?>" 
                                                      alt="<?php echo htmlspecialchars($blog->author_name); ?>"

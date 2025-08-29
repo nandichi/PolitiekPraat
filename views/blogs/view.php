@@ -1225,7 +1225,7 @@ require_once 'views/templates/header.php'; ?>
                                             <div class="relative">
                                                 <div class="w-8 sm:w-10 h-8 sm:h-10 rounded-full overflow-hidden border-2 border-primary/20 shadow-md">
                                                     <?php
-                                                    $relatedProfilePhotoData = getProfilePhotoUrl($relatedBlog->profile_photo ?? null, $relatedBlog->author_name);
+                                                    $relatedProfilePhotoData = getProfilePhotoUrl($relatedBlog->author_photo ?? null, $relatedBlog->author_name);
                                                     if ($relatedProfilePhotoData['type'] === 'img'): ?>
                                                         <img src="<?php echo htmlspecialchars($relatedProfilePhotoData['value']); ?>" 
                                                              alt="<?php echo htmlspecialchars($relatedBlog->author_name); ?>"
