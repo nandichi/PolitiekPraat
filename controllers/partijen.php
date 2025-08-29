@@ -2295,7 +2295,7 @@ document.addEventListener('DOMContentLoaded', function() {
             'PVV': '#0078D7', 
             'VVD': '#FF9900',
             'NSC': '#4D7F78',
-            'BBB': '#95c119',
+            'BBB': '#006633',
             'GL-PvdA': '#008800',
             'D66': '#00B13C',
             'SP': '#EE0000',
@@ -2399,8 +2399,6 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         
         init() {
-            // Initialize parties data from PHP
-            this.parties = partyData;
             this.setupEventListeners();
             this.generateAvailableParties();
             this.setupDragAndDrop();
@@ -3060,7 +3058,6 @@ document.addEventListener('DOMContentLoaded', function() {
             ];
             
             container.innerHTML = '';
-            let validSuggestions = 0;
             
             suggestions.forEach((suggestion, index) => {
                 const totalSeats = suggestion.parties.reduce((total, partyKey) => {
@@ -3069,67 +3066,52 @@ document.addEventListener('DOMContentLoaded', function() {
                     return total + (this.currentView === 'current' ? party.current_seats : party.polling.seats);
                 }, 0);
                 
-                if (totalSeats >= 76) {
-                    validSuggestions++;
-                    const suggestionCard = document.createElement('div');
-                    suggestionCard.className = 'bg-white rounded-lg border border-gray-200 p-3 lg:p-4 hover:shadow-md transition-all duration-200 cursor-pointer touch-manipulation';
-                    
-                    suggestionCard.innerHTML = `
-                         <div class="flex items-center justify-between mb-3">
-                            <h4 class="font-semibold text-gray-900 text-sm lg:text-base flex-1 mr-2">${suggestion.name}</h4>
-                            <span class="text-xs font-bold px-2 py-1 rounded-full flex-shrink-0 bg-green-100 text-green-800">
-                                ${totalSeats} zetels
-                            </span>
-                        </div>
-                         <p class="text-xs lg:text-sm text-gray-600 mb-3">${suggestion.description}</p>
-                         <div class="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-2">
-                             <span class="text-xs text-gray-500 font-medium flex-shrink-0">Partijen:</span>
-                             <div class="flex flex-wrap gap-1 lg:gap-2">
-                                 ${suggestion.parties.map(partyKey => {
-                                     const party = this.parties[partyKey];
-                                     if (!party) return '';
-                                     return `
-                                         <div class="relative group">
-                                             <div class="w-7 lg:w-8 h-7 lg:h-8 rounded-lg overflow-hidden bg-white border border-gray-200 shadow-sm flex items-center justify-center">
-                                                 <img src="${party.logo}" alt="${partyKey}" class="w-5 lg:w-6 h-5 lg:h-6 object-contain" title="${partyKey}">
-                                             </div>
-                                             <div class="absolute -bottom-1 -right-1 w-2 lg:w-2.5 h-2 lg:h-2.5 rounded-full border border-white shadow-sm" style="background-color: ${this.getPartyColor(partyKey)}"></div>
-                                             <!-- Tooltip for desktop -->
-                                             <div class="hidden lg:block absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
-                                                 ${partyKey}
-                                             </div>
-                                             <!-- Mobile label -->
-                                             <div class="lg:hidden absolute -top-1 -left-1 bg-gray-800 text-white text-xs px-1 rounded opacity-0 group-active:opacity-100 transition-opacity duration-200 pointer-events-none">
-                                                 ${partyKey}
-                                             </div>
-                                         </div>
-                                     `;
-                                 }).join('')}
-                             </div>
+                                 if (totalSeats >= 76) {
+                     const suggestionCard = document.createElement('div');
+                     suggestionCard.className = 'bg-white rounded-lg border border-gray-200 p-3 lg:p-4 hover:shadow-md transition-all duration-200 cursor-pointer touch-manipulation';
+                     
+                     suggestionCard.innerHTML = `
+                          <div class="flex items-center justify-between mb-3">
+                             <h4 class="font-semibold text-gray-900 text-sm lg:text-base flex-1 mr-2">${suggestion.name}</h4>
+                             <span class="text-xs font-bold px-2 py-1 rounded-full flex-shrink-0 ${totalSeats >= 76 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+                                 ${totalSeats} zetels
+                             </span>
                          </div>
-                    `;
-                   
-                   suggestionCard.addEventListener('click', () => {
-                       this.applySuggestion(suggestion.parties);
-                   });
-                   
-                   container.appendChild(suggestionCard);
-               }
+                          <p class="text-xs lg:text-sm text-gray-600 mb-3">${suggestion.description}</p>
+                          <div class="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-2">
+                              <span class="text-xs text-gray-500 font-medium flex-shrink-0">Partijen:</span>
+                              <div class="flex flex-wrap gap-1 lg:gap-2">
+                                  ${suggestion.parties.map(partyKey => {
+                                      const party = this.parties[partyKey];
+                                      if (!party) return '';
+                                      return `
+                                          <div class="relative group">
+                                              <div class="w-7 lg:w-8 h-7 lg:h-8 rounded-lg overflow-hidden bg-white border border-gray-200 shadow-sm flex items-center justify-center">
+                                                  <img src="${party.logo}" alt="${partyKey}" class="w-5 lg:w-6 h-5 lg:h-6 object-contain" title="${partyKey}">
+                                              </div>
+                                              <div class="absolute -bottom-1 -right-1 w-2 lg:w-2.5 h-2 lg:h-2.5 rounded-full border border-white shadow-sm" style="background-color: ${this.getPartyColor(partyKey)}"></div>
+                                              <!-- Tooltip for desktop -->
+                                              <div class="hidden lg:block absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
+                                                  ${partyKey}
+                                              </div>
+                                              <!-- Mobile label -->
+                                              <div class="lg:hidden absolute -top-1 -left-1 bg-gray-800 text-white text-xs px-1 rounded opacity-0 group-active:opacity-100 transition-opacity duration-200 pointer-events-none">
+                                                  ${partyKey}
+                                              </div>
+                                          </div>
+                                      `;
+                                  }).join('')}
+                              </div>
+                          </div>
+                     `;
+                    
+                    suggestionCard.addEventListener('click', () => {
+                        this.applySuggestion(suggestion.parties);
+                    });
+                    
+                    container.appendChild(suggestionCard);
+                }
             });
-            
-            // Show fallback message if no valid coalitions found
-            if (validSuggestions === 0) {
-                const fallbackMessage = document.createElement('div');
-                fallbackMessage.className = 'text-center text-gray-500 py-6';
-                fallbackMessage.innerHTML = `
-                    <svg class="w-8 h-8 mx-auto mb-3 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                    </svg>
-                    <p class="text-sm font-medium mb-1">Geen meerderheidscoalities beschikbaar</p>
-                    <p class="text-xs text-gray-400">Probeer de peilingen-weergave of bouw handmatig een coalitie</p>
-                `;
-                container.appendChild(fallbackMessage);
-            }
         },
         
         applySuggestion(parties) {
@@ -3160,7 +3142,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         getPartyColor(partyKey) {
             const colors = {
-                'PVV': '#0078D7', 'VVD': '#FF9900', 'NSC': '#4D7F78', 'BBB': '#95c119',
+                'PVV': '#0078D7', 'VVD': '#FF9900', 'NSC': '#4D7F78', 'BBB': '#006633',
                 'GL-PvdA': '#008800', 'D66': '#00B13C', 'SP': '#EE0000', 'PvdD': '#007E3A',
                 'CDA': '#1E8449', 'JA21': '#0066CC', 'SGP': '#FF6600', 'FvD': '#811E1E',
                 'DENK': '#00b7b2', 'Volt': '#502379', 'CU': '#00AEEF'
@@ -3169,11 +3151,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
     
-    // Additional party functionality (existing code)
-    const partyData = <?php echo json_encode($parties); ?>;
-    
     // Initialize the Modern Coalition Maker
     ModernCoalitionMaker.init();
+    
+    // Additional party functionality (existing code)
+    const partyData = <?php echo json_encode($parties); ?>;
     
     // Handle image errors
     document.querySelectorAll('img').forEach(img => {
