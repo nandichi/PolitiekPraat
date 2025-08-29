@@ -232,7 +232,7 @@ usort($mogelijkeCoalities, function($a, $b) {
 });
 
 // Haal de laatste 6 blogs op
-$db->query("SELECT blogs.*, users.username as author_name, users.profile_photo 
+$db->query("SELECT blogs.*, users.username as author_name, users.profile_photo as author_photo 
            FROM blogs 
            JOIN users ON blogs.author_id = users.id 
            ORDER BY published_at DESC 
@@ -261,7 +261,7 @@ foreach ($nederlandse_verkiezingen as $verkiezing) {
 }
 
 // Haal de populairste blogs op voor de hero sectie
-$db->query("SELECT blogs.*, users.username as author_name, users.profile_photo 
+$db->query("SELECT blogs.*, users.username as author_name, users.profile_photo as author_photo 
            FROM blogs 
            JOIN users ON blogs.author_id = users.id 
            ORDER BY views DESC, published_at DESC 
@@ -948,10 +948,17 @@ require_once 'views/templates/header.php';
                                             <div class="flex items-center space-x-3">
                                                 <div class="relative">
                                                     <div class="w-12 h-12 rounded-full overflow-hidden ring-2 ring-primary/20 group-hover:ring-primary/40 transition-all duration-300">
-                                                        <img src="<?php echo URLROOT; ?>/public/images/naoufal-foto.jpg" 
-                                                             onerror="if(this.src !== '<?php echo URLROOT; ?>/images/naoufal-foto.jpg') this.src='<?php echo URLROOT; ?>/images/naoufal-foto.jpg'; else if(this.src !== '<?php echo URLROOT; ?>/public/images/profiles/naoufal-foto.jpg') this.src='<?php echo URLROOT; ?>/public/images/profiles/naoufal-foto.jpg';"
-                                                             alt="<?php echo htmlspecialchars($blog->author_name); ?>"
-                                                             class="w-full h-full object-cover">
+                                                        <?php
+                                                        $profilePhotoData = getProfilePhotoUrl($blog->author_photo ?? null, $blog->author_name);
+                                                        if ($profilePhotoData['type'] === 'img'): ?>
+                                                            <img src="<?php echo htmlspecialchars($profilePhotoData['value']); ?>" 
+                                                                 alt="<?php echo htmlspecialchars($blog->author_name); ?>"
+                                                                 class="w-full h-full object-cover">
+                                                        <?php else: ?>
+                                                            <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary to-secondary text-white font-bold text-sm">
+                                                                <?php echo htmlspecialchars($profilePhotoData['value']); ?>
+                                                            </div>
+                                                        <?php endif; ?>
                                                     </div>
                                                     <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
                                                 </div>
