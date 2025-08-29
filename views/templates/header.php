@@ -274,19 +274,33 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
     <link rel="preload" href="<?php echo URLROOT; ?>/images/favicon-512x512.png" as="image">
     
     <!-- Open Graph / Social Media Meta Tags -->
-    <meta property="og:type" content="<?php echo isset($data['title']) ? 'article' : 'website'; ?>">
-    <meta property="og:url" content="<?php echo URLROOT . $_SERVER['REQUEST_URI']; ?>">
+    <meta property="og:type" content="<?php echo isset($data['og_type']) ? $data['og_type'] : (isset($data['title']) ? 'article' : 'website'); ?>">
+    <meta property="og:url" content="<?php echo isset($data['og_url']) ? htmlspecialchars($data['og_url']) : htmlspecialchars(URLROOT . $_SERVER['REQUEST_URI']); ?>">
     <meta property="og:title" content="<?php echo htmlspecialchars($metaTitle); ?>">
     <meta property="og:description" content="<?php echo htmlspecialchars($metaDescription); ?>">
     <meta property="og:image" content="<?php echo htmlspecialchars($metaImage); ?>">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="<?php echo htmlspecialchars($metaTitle); ?>">
+    <meta property="og:site_name" content="PolitiekPraat">
+    <meta property="og:locale" content="nl_NL">
+    
+    <?php if (isset($data['article_author'])): ?>
+    <!-- Article-specific meta tags -->
+    <meta property="article:author" content="<?php echo htmlspecialchars($data['article_author']); ?>">
+    <?php endif; ?>
+    
+    <?php if (isset($data['article_published_time'])): ?>
+    <meta property="article:published_time" content="<?php echo htmlspecialchars($data['article_published_time']); ?>">
+    <?php endif; ?>
     
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@PolitiekPraat">
     <meta name="twitter:title" content="<?php echo htmlspecialchars($metaTitle); ?>">
     <meta name="twitter:description" content="<?php echo htmlspecialchars($metaDescription); ?>">
     <meta name="twitter:image" content="<?php echo htmlspecialchars($metaImage); ?>">
+    <meta name="twitter:image:alt" content="<?php echo htmlspecialchars($metaTitle); ?>">
 
     <!-- Canonical URL -->
     <link rel="canonical" href="<?php echo URLROOT . $_SERVER['REQUEST_URI']; ?>">

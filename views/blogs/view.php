@@ -2,13 +2,31 @@
 // Voeg dynamische meta tags toe voor deze specifieke blog
 $pageTitle = htmlspecialchars($blog->title) . ' | PolitiekPraat';
 $pageDescription = htmlspecialchars(stripMarkdownForSocialMedia($blog->summary, 160));
-$pageImage = $blog->image_path ? getBlogImageUrl($blog->image_path) : URLROOT . '/public/img/og-image.jpg';
+
+// Zorg ervoor dat de afbeelding URL altijd absoluut is voor social media sharing
+if ($blog->image_path) {
+    $blogImageUrl = getBlogImageUrl($blog->image_path);
+    // Controleer of het al een absolute URL is, zo niet, maak er een absolute URL van
+    if (strpos($blogImageUrl, 'http') !== 0) {
+        $pageImage = rtrim(URLROOT, '/') . '/' . ltrim($blogImageUrl, '/');
+    } else {
+        $pageImage = $blogImageUrl;
+    }
+} else {
+    // Fallback naar default metadata foto
+    $pageImage = rtrim(URLROOT, '/') . '/metadata-foto.png';
+}
 
 // Voeg deze variabelen toe aan $data voor de header
 $data = [
     'title' => $pageTitle,
     'description' => $pageDescription,
-    'image' => $pageImage
+    'image' => $pageImage,
+    // Voeg extra meta data toe voor betere social sharing
+    'og_type' => 'article',
+    'og_url' => rtrim(URLROOT, '/') . '/blogs/' . $blog->slug,
+    'article_author' => $blog->author_name,
+    'article_published_time' => date('c', strtotime($blog->published_at))
 ];
 
 // Haal comments op (zowel van ingelogde als anonieme gebruikers) met like info
