@@ -1434,8 +1434,8 @@ include_once BASE_PATH . '/views/templates/header.php';
                             <div class="p-4 lg:p-6 border-b border-blue-200/60 bg-white/50 backdrop-blur-sm">
                                 <h3 class="text-lg font-bold text-gray-900 flex items-center">
                                     <div class="w-2 h-2 bg-blue-500 rounded-full mr-2 lg:mr-3"></div>
-                                    <span class="hidden sm:inline">Mogelijke Coalities</span>
-                                    <span class="sm:hidden">Suggesties</span>
+                                    <span class="hidden sm:inline">Mogelijke Coalities (Peilingen)</span>
+                                    <span class="sm:hidden">Peilingen</span>
                                 </h3>
                             </div>
                             <div class="p-4 lg:p-6">
@@ -1445,8 +1445,8 @@ include_once BASE_PATH . '/views/templates/header.php';
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
                                         </svg>
                                         <p class="text-xs lg:text-sm">
-                                            <span class="hidden sm:inline">Automatische suggesties op basis van zetelverdeling</span>
-                                            <span class="sm:hidden">Automatische suggesties</span>
+                                            <span class="hidden sm:inline">Automatische suggesties op basis van peilingen (meerderheden van 76+ zetels)</span>
+                                            <span class="sm:hidden">Suggesties op basis van peilingen</span>
                                         </p>
                                     </div>
                                 </div>
@@ -3062,24 +3062,23 @@ document.addEventListener('DOMContentLoaded', function() {
             const container = document.getElementById('coalition-suggestions');
             if (!container) return;
             
-            // Generate realistic coalition options
+            // Generate realistic coalition options based on polling data (only showing coalitions with majority)
             const suggestions = [
-                { name: 'Paarse Coalitie', parties: ['VVD', 'D66', 'NSC'], description: 'Liberaal centrum' },
-                { name: 'Links Blok', parties: ['GL-PvdA', 'SP', 'PvdD', 'DENK', 'Volt'], description: 'Progressieve samenwerking' },
-                { name: 'Rechts Kabinet', parties: ['VVD', 'PVV', 'BBB', 'JA21'], description: 'Conservatief beleid' },
-                { name: 'Grote Coalitie', parties: ['VVD', 'NSC', 'GL-PvdA', 'D66'], description: 'Brede samenwerking' }
+                { name: 'Nationale Coalitie', parties: ['PVV', 'GL-PvdA', 'VVD', 'D66'], description: 'Vier grootste partijen samen' },
+                { name: 'Centrum Coalitie', parties: ['GL-PvdA', 'VVD', 'D66', 'SP', 'BBB', 'DENK', 'PvdD', 'Volt'], description: 'Inclusieve brede samenwerking' },
+                { name: 'Brede Coalitie', parties: ['GL-PvdA', 'VVD', 'D66', 'SP', 'BBB', 'JA21'], description: 'Centrum met pragmatische steun' },
+                { name: 'Rechts Plus', parties: ['PVV', 'VVD', 'JA21', 'BBB', 'D66', 'SP'], description: 'Conservatief met brede steun' }
             ];
             
             container.innerHTML = '';
             
             suggestions.forEach((suggestion, index) => {
+                // Altijd polling data gebruiken voor mogelijke coalities
                 const totalSeats = suggestion.parties.reduce((total, partyKey) => {
                     const party = this.parties[partyKey];
                     if (!party) return total;
                     
-                    const seats = this.currentView === 'current' ? 
-                        parseInt(party.current_seats) || 0 : 
-                        parseInt(party.polling?.seats) || 0;
+                    const seats = parseInt(party.polling?.seats) || 0;
                     
                     return total + seats;
                 }, 0);
