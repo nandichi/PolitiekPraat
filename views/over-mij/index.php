@@ -588,19 +588,19 @@ if (!defined('URLROOT')) {
                         
                         <div class="space-y-8 text-lg leading-relaxed text-gray-700">
                             <p class="text-xl lg:text-2xl font-light text-gray-800 mb-8">
-                                Oké, dus waarom PolitiekPraat? Simpel: omdat ik merkte dat politiek vaak zo droog wordt uitgelegd dat mensen er van in slaap vallen. Dat kan beter!
+                                Waarom PolitiekPraat? Omdat politieke thema’s vaak onnodig ingewikkeld en droog worden gebracht. Hier maak ik ze begrijpelijk, relevant en prettig om te lezen.
                             </p>
                             
                             <p>
-                                Ik schrijf hier over alles wat me interesseert: klimaat, onderwijs, economie, whatever. Niet omdat ik alles beter weet, maar omdat ik graag snap hoe dingen werken en dat delen.
+                                Ik schrijf over onderwerpen als klimaat, onderwijs en economie. Niet omdat ik alle antwoorden heb, maar om complexe kwesties helder te duiden en inzichten te delen.
                             </p>
                             
                             <p>
-                                Het mooie van politiek is dat het eigenlijk overal over gaat. Van hoeveel je belasting betaalt tot of je straks nog een huis kan kopen. Het raakt ons allemaal, dus waarom zou het saai moeten zijn?
+                                Politiek raakt het dagelijks leven: van belasting en zorg tot de woningmarkt. Juist daarom verdient het een duidelijke, toegankelijke en nuchtere uitleg.
                             </p>
                             
                             <p class="text-xl font-semibold gradient-text">
-                                Dus neem een kijkje, lees wat rond, en laat vooral weten wat je ervan vindt. Discussie is goed, dat maakt het alleen maar interessanter!
+                                Verken de artikelen, denk mee en deel je perspectief. Constructieve dialoog maakt het gesprek scherper én waardevoller.
                             </p>
                         </div>
                         
