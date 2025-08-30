@@ -186,8 +186,8 @@ class BlogsController {
             
             // Handle lokaal audio bestand upload (alleen als geen URL is opgegeven)
             if (empty($audio_url) && isset($_FILES['audio']) && $_FILES['audio']['error'] === UPLOAD_ERR_OK) {
-                $upload_dir = BASE_PATH . '/uploads/blogs/audio/';
-                $relative_upload_dir = 'uploads/blogs/audio/';
+                $upload_dir = BASE_PATH . '/public/uploads/blogs/audio/';
+                $relative_upload_dir = 'public/uploads/blogs/audio/';
                 
                 if (!file_exists($upload_dir)) {
                     mkdir($upload_dir, 0777, true);
@@ -503,8 +503,8 @@ class BlogsController {
             
             // Handle lokaal audio bestand upload (alleen als geen URL is opgegeven)
             if (empty($audio_url) && isset($_FILES['audio']) && $_FILES['audio']['error'] === UPLOAD_ERR_OK) {
-                $upload_dir = BASE_PATH . '/uploads/blogs/audio/';
-                $relative_upload_dir = 'uploads/blogs/audio/';
+                $upload_dir = BASE_PATH . '/public/uploads/blogs/audio/';
+                $relative_upload_dir = 'public/uploads/blogs/audio/';
                 
                 if (!file_exists($upload_dir)) {
                     mkdir($upload_dir, 0777, true);
