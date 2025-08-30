@@ -205,9 +205,17 @@ class BlogsController {
                         if (move_uploaded_file($_FILES['audio']['tmp_name'], $target_path)) {
                             // Store the relative path in database for compatibility
                             $audio_path = $relative_upload_dir . $new_filename;
+                        } else {
+                            error_log("Audio upload failed: move_uploaded_file failed for " . $_FILES['audio']['name']);
                         }
+                    } else {
+                        error_log("Audio upload failed: file too large (" . $_FILES['audio']['size'] . " bytes)");
                     }
+                } else {
+                    error_log("Audio upload failed: invalid file extension (" . $file_extension . ")");
                 }
+            } elseif (isset($_FILES['audio']) && $_FILES['audio']['error'] !== UPLOAD_ERR_NO_FILE) {
+                error_log("Audio upload failed: upload error " . $_FILES['audio']['error']);
             }
             
             // Create blog post data
@@ -527,9 +535,17 @@ class BlogsController {
                             // Store the relative path in database for compatibility
                             $audio_path = $relative_upload_dir . $new_filename;
                             $audio_url = ''; // Reset URL als lokaal bestand wordt gebruikt
+                        } else {
+                            error_log("Audio upload (edit) failed: move_uploaded_file failed for " . $_FILES['audio']['name']);
                         }
+                    } else {
+                        error_log("Audio upload (edit) failed: file too large (" . $_FILES['audio']['size'] . " bytes)");
                     }
+                } else {
+                    error_log("Audio upload (edit) failed: invalid file extension (" . $file_extension . ")");
                 }
+            } elseif (isset($_FILES['audio']) && $_FILES['audio']['error'] !== UPLOAD_ERR_NO_FILE) {
+                error_log("Audio upload (edit) failed: upload error " . $_FILES['audio']['error']);
             }
             
             // Handle category update
