@@ -186,8 +186,8 @@ class BlogsController {
             
             // Handle lokaal audio bestand upload (alleen als geen URL is opgegeven)
             if (empty($audio_url) && isset($_FILES['audio']) && $_FILES['audio']['error'] === UPLOAD_ERR_OK) {
-                $upload_dir = BASE_PATH . '/public/uploads/blogs/audio/';
-                $relative_upload_dir = 'public/uploads/blogs/audio/';
+                $upload_dir = BASE_PATH . '/uploads/blogs/audio/';
+                $relative_upload_dir = 'uploads/blogs/audio/';
                 
                 if (!file_exists($upload_dir)) {
                     mkdir($upload_dir, 0777, true);
@@ -205,17 +205,9 @@ class BlogsController {
                         if (move_uploaded_file($_FILES['audio']['tmp_name'], $target_path)) {
                             // Store the relative path in database for compatibility
                             $audio_path = $relative_upload_dir . $new_filename;
-                        } else {
-                            error_log("Audio upload failed: move_uploaded_file failed for " . $_FILES['audio']['name']);
                         }
-                    } else {
-                        error_log("Audio upload failed: file too large (" . $_FILES['audio']['size'] . " bytes)");
                     }
-                } else {
-                    error_log("Audio upload failed: invalid file extension (" . $file_extension . ")");
                 }
-            } elseif (isset($_FILES['audio']) && $_FILES['audio']['error'] !== UPLOAD_ERR_NO_FILE) {
-                error_log("Audio upload failed: upload error " . $_FILES['audio']['error']);
             }
             
             // Create blog post data
@@ -511,8 +503,8 @@ class BlogsController {
             
             // Handle lokaal audio bestand upload (alleen als geen URL is opgegeven)
             if (empty($audio_url) && isset($_FILES['audio']) && $_FILES['audio']['error'] === UPLOAD_ERR_OK) {
-                $upload_dir = BASE_PATH . '/public/uploads/blogs/audio/';
-                $relative_upload_dir = 'public/uploads/blogs/audio/';
+                $upload_dir = BASE_PATH . '/uploads/blogs/audio/';
+                $relative_upload_dir = 'uploads/blogs/audio/';
                 
                 if (!file_exists($upload_dir)) {
                     mkdir($upload_dir, 0777, true);
@@ -535,17 +527,9 @@ class BlogsController {
                             // Store the relative path in database for compatibility
                             $audio_path = $relative_upload_dir . $new_filename;
                             $audio_url = ''; // Reset URL als lokaal bestand wordt gebruikt
-                        } else {
-                            error_log("Audio upload (edit) failed: move_uploaded_file failed for " . $_FILES['audio']['name']);
                         }
-                    } else {
-                        error_log("Audio upload (edit) failed: file too large (" . $_FILES['audio']['size'] . " bytes)");
                     }
-                } else {
-                    error_log("Audio upload (edit) failed: invalid file extension (" . $file_extension . ")");
                 }
-            } elseif (isset($_FILES['audio']) && $_FILES['audio']['error'] !== UPLOAD_ERR_NO_FILE) {
-                error_log("Audio upload (edit) failed: upload error " . $_FILES['audio']['error']);
             }
             
             // Handle category update

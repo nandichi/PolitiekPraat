@@ -1403,32 +1403,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Audio upload en preview
     function updateAudioPreview(file) {
-        console.log('updateAudioPreview called with file:', file);
-        console.log('audioPreview element:', audioPreview);
-        console.log('audioPlayer element:', audioPlayer);
-        console.log('audioInfoText element:', audioInfoText);
-        console.log('audioDurationText element:', audioDurationText);
-        
         const reader = new FileReader();
         reader.onload = function(e) {
-            console.log('FileReader loaded successfully');
-            
             audioPreview.classList.remove('hidden');
             audioPreview.style.opacity = '0';
             audioPreview.style.transform = 'translateY(10px)';
             
             // Update audio player
             audioPlayer.src = e.target.result;
-            console.log('Audio player src set to:', e.target.result.substring(0, 50) + '...');
             
             // Update bestandsinformatie
             const fileInfo = `${file.name} (${formatFileSize(file.size)})`;
             audioInfoText.textContent = fileInfo;
-            console.log('Audio info updated:', fileInfo);
             
             // Audio metadata laden voor duur
             audioPlayer.addEventListener('loadedmetadata', function() {
-                console.log('Audio metadata loaded, duration:', audioPlayer.duration);
                 if (!isNaN(audioPlayer.duration)) {
                     audioDurationText.textContent = formatTime(audioPlayer.duration);
                 }
@@ -1438,15 +1427,8 @@ document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => {
                 audioPreview.style.opacity = '1';
                 audioPreview.style.transform = 'translateY(0)';
-                console.log('Audio preview animation completed');
             }, 50);
         }
-        
-        reader.onerror = function(e) {
-            console.error('FileReader error:', e);
-        };
-        
-        console.log('Starting FileReader.readAsDataURL');
         reader.readAsDataURL(file);
     }
 
@@ -1664,11 +1646,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Event listeners voor audio bestand upload
     audioInput.addEventListener('change', function(e) {
-        console.log('Audio input change event triggered', e.target.files);
-        
         if (e.target.files && e.target.files[0]) {
             const file = e.target.files[0];
-            console.log('Audio file selected:', file.name, file.size, file.type);
             
             // Check bestandsgrootte (max 50MB)
             if (file.size > 50 * 1024 * 1024) {
@@ -1681,12 +1660,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const allowedTypes = ['audio/mpeg', 'audio/wav', 'audio/ogg', 'audio/mp3'];
             if (!allowedTypes.includes(file.type) && !file.name.toLowerCase().match(/\.(mp3|wav|ogg)$/)) {
                 alert('Alleen MP3, WAV en OGG bestanden zijn toegestaan');
-                console.log('File type rejected:', file.type);
                 this.value = '';
                 return;
             }
             
-            console.log('Calling updateAudioPreview');
             updateAudioPreview(file);
             
             // Reset URL input als er een bestand is gekozen
@@ -1694,8 +1671,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 audioUrlInput.value = '';
                 audioUrlPreview.classList.add('hidden');
             }
-        } else {
-            console.log('No files selected or files array empty');
         }
     });
 

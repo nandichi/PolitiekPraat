@@ -345,7 +345,7 @@ require_once 'views/templates/header.php'; ?>
                                         
                                         <div class="bg-gray-50 rounded-xl p-4">
                                             <audio controls class="w-full rounded-lg" preload="metadata">
-                                                <source src="<?php echo getBlogAudioUrl($blog->audio_path); ?>" type="audio/mpeg">
+                                                <source src="<?php echo URLROOT . '/' . $blog->audio_path; ?>" type="audio/mpeg">
                                                 Je browser ondersteunt geen audio weergave.
                                             </audio>
                                         </div>
