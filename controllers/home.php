@@ -302,54 +302,54 @@ $latest_news = [
         'source' => 'De Volkskrant',
         'bias' => 'centrum-links', 
         'publishedAt' => date('Y-m-d H:i:s'), // Vandaag 08:30
-        'title' => 'NSC kampt met leegloop, juist daarom wil Van Vroonhoven door',
-        'description' => 'Ondanks de leegloop bij NSC wil partijleider Van Vroonhoven doorgaan. De partij kampt met interne problemen en vertrekkende Kamerleden, maar de leider blijft vastberaden om de koers voort te zetten en de partij te stabiliseren.',
-        'url' => 'https://www.volkskrant.nl/politiek/nsc-kampt-met-leegloop-juist-daarom-wil-van-vroonhoven-door~baac77ee/'
+        'title' => 'Relschoppers in Den Haag beschadigden ook Binnenhof tijdens tocht door de stad',
+        'description' => 'Tijdens de rellen in Den Haag hebben relschoppers ook schade aangericht aan het Binnenhof. De ongeregeldheden verspreidden zich door de hele stad en het politieke hart van Nederland werd niet gespaard tijdens de gewelddadige tocht.',
+        'url' => 'https://www.volkskrant.nl/binnenland/relschoppers-in-den-haag-beschadigden-ook-binnenhof-tijdens-tocht-door-de-stad~b6bbfd7d/'
     ],
     [
         'orientation' => 'links',
         'source' => 'NRC',
         'bias' => 'centrum-links', 
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-2 hours')), // 2 uur geleden
-        'title' => 'DENK-leider Van Baarle stopt als lijsttrekker: \'Partijbestuur heeft mijn rol ondermijnd\'',
-        'description' => 'DENK-leider Van Baarle heeft aangekondigd te stoppen als lijsttrekker van de partij. Hij stelt dat het partijbestuur zijn rol heeft ondermijnd en dat hij onder deze omstandigheden niet langer effectief kan functioneren als politiek leider.',
-        'url' => 'https://www.nrc.nl/nieuws/2025/08/14/denk-leider-van-baarle-stopt-als-lijsttrekker-partijbestuur-heeft-mijn-rol-ondermijnd-a4903055'
+        'title' => 'Burgers hebben genoeg van al die meningen, zodat Den Haag maar afziet van al te verhit debat',
+        'description' => 'Nederlandse burgers tonen steeds minder belangstelling voor verhitte politieke debatten. Politici in Den Haag worstelen met de vraag hoe zij nog kunnen doordringen tot een publiek dat moe is geworden van polarisatie en eindeloze meningsvorming.',
+        'url' => 'https://www.nrc.nl/nieuws/2025/09/19/burgers-hebben-genoeg-van-al-die-meningen-zodat-den-haag-maar-afziet-van-al-te-verhit-debat-a4906809'
     ],
     [
         'orientation' => 'links',
         'source' => 'Trouw',
         'bias' => 'centrum-links', 
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-4 hours')), // 4 uur geleden
-        'title' => 'Diederik Boomsma stapt voor verkiezingen over van NSC naar JA21',
-        'description' => 'Diederik Boomsma verlaat NSC en stapt over naar JA21 in aanloop naar de verkiezingen. Deze overstap benadrukt de interne spanningen binnen NSC en versterkt de rangen van JA21 met een ervaren politicus.',
-        'url' => 'https://www.trouw.nl/politiek/diederik-boomsma-stapt-voor-verkiezingen-over-van-nsc-naar-ja21~b74b5d13/'
+        'title' => 'De Kamer noemt antifa een terroristische organisatie, maar antifa is niet terroristisch en ook geen organisatie',
+        'description' => 'De Tweede Kamer heeft een motie aangenomen waarin antifa wordt bestempeld als terroristische organisatie. Experts wijzen erop dat antifa echter geen georganiseerde structuur heeft en niet voldoet aan de definitie van terrorisme.',
+        'url' => 'https://www.trouw.nl/politiek/de-kamer-noemt-antifa-een-terroristische-organisatie-maar-antifa-is-niet-terroristisch-en-ook-geen-organisatie~b8651a25/'
     ],
     [
         'orientation' => 'rechts',
         'source' => 'Dagelijkse Standaard',
         'bias' => 'rechts',
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-6 hours')), // 6 uur geleden
-        'title' => 'Politiek is verrot: partijhoppers, egotrippers en transfertjes - Bennink zegt wat niemand durft',
-        'description' => 'Politiek commentator Bennink spreekt openlijk uit wat velen denken: de Nederlandse politiek is verworden tot een theater van partijhoppers, egotrippers en carrièretransfers. Een scherpe analyse van de huidige politieke cultuur die niemand anders durft te maken.',
-        'url' => 'https://www.dagelijksestandaard.nl/politiek/politiek-is-verrot-partijhoppers-egotrippers-en-transfertjes-bennink-zegt-wat-niemand-durft'
+        'title' => 'Timmermans misleidt: rellen Den Haag door hooligans, niet door extreemrechts',
+        'description' => 'Frans Timmermans wijt de rellen in Den Haag ten onrechte aan extreemrechts, terwijl het hooligans betrof. Een analyse van de werkelijke oorzaken achter de ongeregeldheden en de politieke framing die daarop volgde.',
+        'url' => 'https://www.dagelijksestandaard.nl/politiek/timmermans-misleidt-rellen-den-haag-door-hooligans-niet-door-extreemrechts'
     ],
     [
         'orientation' => 'rechts',
         'source' => 'De Telegraaf',
         'bias' => 'rechts', 
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-8 hours')), // 8 uur geleden
-        'title' => 'Vliegveld sluiten om plek te maken voor nieuwbouw onrealistisch',
-        'description' => 'Lezers van De Telegraaf reageren op plannen om vliegvelden te sluiten voor woningbouw. Velen vinden dit onrealistisch en wijzen op de economische en praktische problemen die dit zou veroorzaken voor Nederland.',
-        'url' => 'https://www.telegraaf.nl/wat-u-zegt/lezersbrieven/vliegveld-sluiten-om-plek-te-maken-voor-nieuwbouw-onrealistisch/83676208.html'
+        'title' => 'Rob Jetten over aanval op D66-kantoor: \'Deze mensen hebben zich laten ophitsen\'',
+        'description' => 'D66-leider Rob Jetten reageert op de aanval op het partijkantoor. Hij stelt dat de daders zich hebben laten ophitsen door politieke retoriek en roept op tot meer respect in het politieke debat.',
+        'url' => 'https://www.telegraaf.nl/politiek/rob-jetten-over-aanval-op-d66-kantoor-deze-mensen-hebben-zich-laten-ophitsen/91850069.html'
     ],
     [
         'orientation' => 'rechts',
         'source' => 'Nieuw Rechts',
         'bias' => 'rechts', 
         'publishedAt' => date('Y-m-d H:i:s', strtotime('-10 hours')), // 10 uur geleden
-        'title' => 'Gelders dorp Brummen krijgt mega-AZC voor 30 jaar: \'Dit is krankzinnig\'',
-        'description' => 'Het Gelderse dorp Brummen krijgt een mega-AZC voor dertig jaar. Bewoners en lokale politici reageren geschokt op de plannen en spreken van een krankzinnige beslissing die het karakter van hun gemeente ingrijpend zal veranderen.',
-        'url' => 'https://nieuwrechts.nl/105877-gelders-dorp-brummen-krijgt-mega-azc-voor-30-jaar-dit-is-krankzinnig'
+        'title' => 'Rapport onthult: EU gebruikt 250 miljoen voor academische propaganda',
+        'description' => 'Een nieuw rapport toont aan dat de Europese Unie jaarlijks 250 miljoen euro besteedt aan wat critici academische propaganda noemen. Het geld wordt gebruikt om universiteiten en onderzoeksinstellingen te financieren die de EU-agenda ondersteunen.',
+        'url' => 'https://nieuwrechts.nl/106542-rapport-onthult-eu-gebruikt-250-miljoen-voor-academische-propaganda'
     ]
 ];
 
