@@ -6,26 +6,26 @@ echo "=========================================\n";
 echo "   PolitiekPraat Peiling Update Script   \n";
 echo "=========================================\n\n";
 
-// Nieuwe peiling data gebaseerd op Peil.nl d.d. 6-9-2025
+// Nieuwe peiling data gebaseerd op Peil.nl d.d. 19-9-2025
 $new_polls = [
-    'gl-pvda' => 28,
-    'pvv' => 28,
-    'cda' => 24,
-    'vvd' => 15,
-    'ja21' => 11,
-    'd66' => 10,
+    'pvv' => 29,
+    'gl-pvda' => 26,
+    'cda' => 22,
+    'vvd' => 16,
+    'ja21' => 12,
+    'd66' => 12,
     'sp' => 7,
-    'bbb' => 6,
     'fvd' => 5,
+    'bbb' => 4,
     'denk' => 4,
     'pvdd' => 3,
     'sgp' => 3,
     'volt' => 3,
     'cu' => 3,
+    '50plus' => 1,
     'nsc' => 0,
     'bvnl' => 0,
-    'bij1' => 0,
-    '50plus' => 0
+    'bij1' => 0
 ];
 
 
