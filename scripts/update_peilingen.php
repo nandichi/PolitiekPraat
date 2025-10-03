@@ -8,24 +8,22 @@ echo "=========================================\n\n";
 
 // Nieuwe peiling data gebaseerd op Peil.nl d.d. 19-9-2025
 $new_polls = [
-    'pvv' => 29,
-    'gl-pvda' => 26,
-    'cda' => 22,
-    'vvd' => 16,
-    'ja21' => 12,
-    'd66' => 12,
-    'sp' => 7,
-    'fvd' => 5,
-    'bbb' => 4,
-    'denk' => 4,
-    'pvdd' => 3,
-    'sgp' => 3,
-    'volt' => 3,
-    'cu' => 3,
-    '50plus' => 1,
-    'nsc' => 0,
-    'bvnl' => 0,
-    'bij1' => 0
+    'pvv'      => 31,
+    'cda'      => 25,
+    'gl-pvda'  => 23,
+    'd66'      => 15,
+    'vvd'      => 14,
+    'ja21'     => 11,
+    'bbb'      => 5,
+    'sp'       => 4,
+    'pvdd'     => 4,
+    'denk'     => 4,
+    'fvd'      => 4,
+    'volt'     => 4,
+    'sgp'      => 3,
+    'cu'       => 2,
+    '50plus'   => 1,
+    'nsc'      => 0
 ];
 
 
