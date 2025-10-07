@@ -363,6 +363,11 @@
     <!-- Newsletter JavaScript -->
     <script src="<?php echo URLROOT; ?>/js/newsletter.js"></script>
     
+    <!-- Election Countdown Timer (alleen op home pagina) -->
+    <?php if (basename($_SERVER['PHP_SELF']) == 'home.php' || $_SERVER['REQUEST_URI'] == '/' || $_SERVER['REQUEST_URI'] == URLROOT . '/'): ?>
+        <script src="<?php echo URLROOT; ?>/public/js/election-countdown.js"></script>
+    <?php endif; ?>
+    
     <!-- Buy Me A Coffee Button -->
     <script src="<?php echo URLROOT; ?>/public/js/coffee-button.js"></script>
 
