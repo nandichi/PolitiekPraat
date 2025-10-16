@@ -182,6 +182,47 @@ class APIRouter {
                     $this->handlePartijmeter();
                     break;
                     
+                case 'parties':
+                case 'partijen':
+                    $this->handleParties($segments);
+                    break;
+                    
+                case 'forum':
+                    $this->handleForum($segments);
+                    break;
+                    
+                case 'comments':
+                    $this->handleComments($segments);
+                    break;
+                    
+                case 'polls':
+                    $this->handlePolls($segments);
+                    break;
+                    
+                case 'stemmentracker':
+                    $this->handleStemmentracker($segments);
+                    break;
+                    
+                case 'themas':
+                    $this->handleThemas($segments);
+                    break;
+                    
+                case 'verkiezingen':
+                    $this->handleVerkiezingen($segments);
+                    break;
+                    
+                case 'presidenten':
+                    $this->handlePresidenten($segments);
+                    break;
+                    
+                case 'contact':
+                    $this->handleContact($segments);
+                    break;
+                    
+                case 'stats':
+                    $this->handleStats($segments);
+                    break;
+                    
                 case 'test':
                     $this->handleTest();
                     break;
@@ -230,8 +271,62 @@ class APIRouter {
                     'GET /api/user/profile' => 'Gebruikersprofiel',
                     'PUT /api/user/profile' => 'Profiel bijwerken'
                 ],
+                'parties' => [
+                    'GET /api/parties' => 'Alle politieke partijen',
+                    'GET /api/parties/{id}' => 'Specifieke partij',
+                    'POST /api/parties' => 'Partij aanmaken (admin)',
+                    'PUT /api/parties/{id}' => 'Partij bijwerken (admin)',
+                    'DELETE /api/parties/{id}' => 'Partij verwijderen (admin)'
+                ],
+                'forum' => [
+                    'GET /api/forum/topics' => 'Alle forum topics',
+                    'GET /api/forum/topics/{id}' => 'Specifiek topic',
+                    'POST /api/forum/topics' => 'Topic aanmaken',
+                    'POST /api/forum/topics/{id}/replies' => 'Reply toevoegen',
+                    'DELETE /api/forum/replies/{id}' => 'Reply verwijderen'
+                ],
+                'comments' => [
+                    'GET /api/comments?blog_id={id}' => 'Comments ophalen',
+                    'POST /api/comments' => 'Comment toevoegen',
+                    'PUT /api/comments/{id}' => 'Comment bijwerken',
+                    'DELETE /api/comments/{id}' => 'Comment verwijderen'
+                ],
+                'polls' => [
+                    'GET /api/polls?blog_id={id}' => 'Poll ophalen',
+                    'POST /api/polls' => 'Poll aanmaken',
+                    'POST /api/polls/{id}/vote' => 'Stemmen'
+                ],
                 'stemwijzer' => [
-                    'GET /api/stemwijzer' => 'Stemwijzer data'
+                    'GET /api/stemwijzer' => 'Stemwijzer data',
+                    'GET /api/stemwijzer/questions' => 'Alle vragen',
+                    'GET /api/stemwijzer/parties' => 'Alle partijen',
+                    'POST /api/stemwijzer/calculate' => 'Resultaat berekenen'
+                ],
+                'stemmentracker' => [
+                    'GET /api/stemmentracker/moties' => 'Alle moties',
+                    'GET /api/stemmentracker/moties/{id}' => 'Specifieke motie',
+                    'POST /api/stemmentracker/moties' => 'Motie toevoegen (admin)'
+                ],
+                'themas' => [
+                    'GET /api/themas' => 'Alle themas',
+                    'GET /api/themas/{id}' => 'Specifiek thema'
+                ],
+                'verkiezingen' => [
+                    'GET /api/verkiezingen/nederland' => 'NL verkiezingen',
+                    'GET /api/verkiezingen/nederland/{jaar}' => 'Specifieke NL verkiezing',
+                    'GET /api/verkiezingen/usa' => 'USA verkiezingen',
+                    'GET /api/verkiezingen/usa/{jaar}' => 'Specifieke USA verkiezing'
+                ],
+                'presidenten' => [
+                    'GET /api/presidenten/usa' => 'Amerikaanse presidenten',
+                    'GET /api/presidenten/nederland' => 'Nederlandse ministers-presidenten'
+                ],
+                'contact' => [
+                    'POST /api/contact' => 'Contact formulier versturen'
+                ],
+                'stats' => [
+                    'GET /api/stats' => 'Website statistieken',
+                    'GET /api/stats/trending' => 'Trending content'
                 ],
                 'test' => [
                     'GET /api/test' => 'API connectie test'
@@ -318,6 +413,79 @@ class APIRouter {
         } else {
             sendApiError('PartijMeter API niet gevonden', 404);
         }
+    }
+    
+    private function handleParties($segments) {
+        $this->requireEndpoint('parties');
+        $partiesAPI = new PartiesAPI();
+        $partiesAPI->handle($this->method, $segments);
+    }
+    
+    private function handleForum($segments) {
+        $this->requireEndpoint('forum');
+        $forumAPI = new ForumAPI();
+        $forumAPI->handle($this->method, $segments);
+    }
+    
+    private function handleComments($segments) {
+        $this->requireEndpoint('comments');
+        $commentsAPI = new CommentsAPI();
+        $commentsAPI->handle($this->method, $segments);
+    }
+    
+    private function handlePolls($segments) {
+        $this->requireEndpoint('blog-polls');
+        $pollsAPI = new BlogPollsAPI();
+        $pollsAPI->handle($this->method, $segments);
+    }
+    
+    private function handleStemmentracker($segments) {
+        $this->requireEndpoint('stemmentracker');
+        $stemmentrackerAPI = new StemmentrackerAPI();
+        $stemmentrackerAPI->handle($this->method, $segments);
+    }
+    
+    private function handleThemas($segments) {
+        $this->requireEndpoint('themas');
+        $themasAPI = new ThemasAPI();
+        $themasAPI->handle($this->method, $segments);
+    }
+    
+    private function handleVerkiezingen($segments) {
+        // Route naar NL of USA based on second segment
+        if (isset($segments[1])) {
+            if ($segments[1] === 'nederland') {
+                $this->requireEndpoint('verkiezingen-nl');
+                $verkiezingenAPI = new VerkiezingenNLAPI();
+                $verkiezingenAPI->handle($this->method, $segments);
+            } elseif ($segments[1] === 'usa') {
+                $this->requireEndpoint('verkiezingen-usa');
+                $verkiezingenAPI = new VerkiezingenUSAAPI();
+                $verkiezingenAPI->handle($this->method, $segments);
+            } else {
+                sendApiError('Onbekende verkiezingen type. Gebruik /verkiezingen/nederland of /verkiezingen/usa', 404);
+            }
+        } else {
+            sendApiError('Specificeer verkiezingen type: /verkiezingen/nederland of /verkiezingen/usa', 400);
+        }
+    }
+    
+    private function handlePresidenten($segments) {
+        $this->requireEndpoint('presidenten');
+        $presidentenAPI = new PresidentenAPI();
+        $presidentenAPI->handle($this->method, $segments);
+    }
+    
+    private function handleContact($segments) {
+        $this->requireEndpoint('contact');
+        $contactAPI = new ContactAPI();
+        $contactAPI->handle($this->method, $segments);
+    }
+    
+    private function handleStats($segments) {
+        $this->requireEndpoint('stats');
+        $statsAPI = new StatsAPI();
+        $statsAPI->handle($this->method, $segments);
     }
     
     private function requireEndpoint($endpoint) {
