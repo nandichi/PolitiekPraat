@@ -1203,261 +1203,257 @@ include_once BASE_PATH . '/views/templates/header.php';
         </div>
     </section>
 
-<!-- Modern Coalitiemaker -->
-<div class="container mx-auto px-4 py-16 mb-16" id="coalitiemaker">
-    <div class="bg-gradient-to-br from-white via-slate-50 to-gray-100 rounded-3xl shadow-2xl overflow-hidden border border-white/50 backdrop-blur-xl">
+<!-- Completely Rebuilt Modern Coalitiemaker -->
+<div class="container mx-auto px-4 py-12 md:py-16 mb-16" id="coalitiemaker">
+    <!-- Hero Header with Gradient -->
+    <div class="relative bg-gradient-to-br from-primary-dark via-primary to-secondary rounded-3xl shadow-2xl overflow-hidden mb-6 md:mb-8">
+        <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg opacity=\"0.05\"%3E%3Ccircle cx=\"30\" cy=\"30\" r=\"2\" fill=\"white\"/%3E%3Ccircle cx=\"10\" cy=\"10\" r=\"1\" fill=\"white\"/%3E%3Ccircle cx=\"50\" cy=\"10\" r=\"1\" fill=\"white\"/%3E%3Ccircle cx=\"10\" cy=\"50\" r=\"1\" fill=\"white\"/%3E%3Ccircle cx=\"50\" cy=\"50\" r=\"1\" fill=\"white\"/%3E%3C/g%3E%3C/svg%3E')]"></div>
         
-        <!-- Elegant Header -->
-        <div class="relative bg-gradient-to-br from-primary-dark via-primary to-secondary p-4 lg:p-8 overflow-hidden">
-            <div class="absolute inset-0 bg-black/10"></div>
-            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg opacity=\"0.1\"%3E%3Ccircle cx=\"30\" cy=\"30\" r=\"2\" fill=\"white\"/%3E%3Ccircle cx=\"10\" cy=\"10\" r=\"1\" fill=\"white\"/%3E%3Ccircle cx=\"50\" cy=\"10\" r=\"1\" fill=\"white\"/%3E%3Ccircle cx=\"10\" cy=\"50\" r=\"1\" fill=\"white\"/%3E%3Ccircle cx=\"50\" cy=\"50\" r=\"1\" fill=\"white\"/%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
-            
-            <div class="relative z-10">
-                <div class="flex flex-col lg:flex-row lg:items-center justify-between mb-4 lg:mb-6">
-                    <div class="mb-4 lg:mb-0">
-                        <div class="inline-flex items-center px-3 lg:px-4 py-1 lg:py-2 bg-white/20 backdrop-blur-sm rounded-xl border border-white/30 mb-3 lg:mb-4">
+        <div class="relative z-10 p-6 md:p-10">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 md:gap-6 mb-6">
+                <div>
+                    <div class="inline-flex items-center px-3 md:px-4 py-1.5 md:py-2 bg-white/15 backdrop-blur-md rounded-full border border-white/25 mb-3 md:mb-4">
                             <div class="w-2 h-2 bg-secondary-light rounded-full mr-2 animate-pulse"></div>
-                            <span class="text-white/90 font-semibold text-xs lg:text-sm">Interactieve Tool</span>
+                        <span class="text-white/95 text-xs md:text-sm font-semibold">Interactieve Coalitiemaker</span>
                         </div>
-                        <h2 class="text-2xl lg:text-4xl font-black text-white mb-2 lg:mb-3 tracking-tight">
-                            Coalitiemaker
+                    <h2 class="text-3xl md:text-4xl lg:text-5xl font-black text-white mb-2 md:mb-3 tracking-tight">
+                        Bouw Jouw Coalitie
                         </h2>
-                        <p class="text-white/90 text-sm lg:text-lg font-medium max-w-2xl">
-                            <span class="hidden sm:inline">Bouw je ideale coalitie en ontdek welke partijen samen een meerderheid kunnen vormen in de Tweede Kamer</span>
-                            <span class="sm:hidden">Bouw je ideale coalitie voor de Tweede Kamer</span>
+                    <p class="text-white/90 text-sm md:text-base lg:text-lg font-medium max-w-2xl">
+                        Klik op partijen om je ideale coalitie samen te stellen en direct te zien of je een meerderheid behaalt
                         </p>
                     </div>
-                    <div class="hidden md:flex items-center space-x-2 bg-white/20 backdrop-blur-sm rounded-2xl p-3 lg:p-4">
-                        <div class="w-3 h-3 bg-secondary-light rounded-full animate-pulse"></div>
-                        <span class="text-white font-semibold text-sm">Live Data</span>
+                
+                <!-- Live Stats Summary -->
+                <div class="flex md:flex-col gap-3 md:gap-2">
+                    <div class="flex-1 md:flex-initial bg-white/15 backdrop-blur-md rounded-xl px-4 py-3 border border-white/25">
+                        <div class="text-xs text-white/70 font-medium mb-1">Totale Zetels</div>
+                        <div class="text-2xl md:text-3xl font-black text-white" id="header-seats">0</div>
+                    </div>
+                    <div class="flex-1 md:flex-initial bg-white/15 backdrop-blur-md rounded-xl px-4 py-3 border border-white/25">
+                        <div class="text-xs text-white/70 font-medium mb-1">Partijen</div>
+                        <div class="text-2xl md:text-3xl font-black text-white" id="header-parties">0</div>
+                    </div>
                     </div>
                 </div>
                 
-                <!-- Interactive View Tabs -->
-                <div class="flex space-x-1 lg:space-x-2 bg-white/20 backdrop-blur-sm rounded-2xl p-1 lg:p-2 w-full sm:w-fit overflow-hidden">
-                    <button id="coalition-current-tab" class="coalition-tab-btn active flex-1 sm:flex-initial px-3 lg:px-6 py-2 lg:py-3 rounded-xl font-semibold text-white transition-all duration-300">
-                        <span class="flex items-center justify-center space-x-1 lg:space-x-2">
-                            <svg class="w-3 lg:w-4 h-3 lg:h-4" fill="currentColor" viewBox="0 0 20 20">
+            <!-- View Tabs -->
+            <div class="flex gap-2 bg-white/10 backdrop-blur-sm rounded-xl p-1.5 w-full sm:w-auto">
+                <button id="coalition-current-tab" class="coalition-tab-btn active flex-1 sm:flex-initial px-4 md:px-6 py-2.5 md:py-3 rounded-lg font-semibold text-white text-sm md:text-base transition-all duration-300">
+                    <span class="flex items-center justify-center gap-2">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
                             </svg>
-                            <span class="text-xs lg:text-base">
-                                <span class="hidden sm:inline">Huidige Zetels</span>
-                                <span class="sm:hidden">Huidig</span>
-                            </span>
+                        <span>Huidige Zetels</span>
                         </span>
                     </button>
-                    <button id="coalition-polling-tab" class="coalition-tab-btn flex-1 sm:flex-initial px-3 lg:px-6 py-2 lg:py-3 rounded-xl font-semibold text-white/70 transition-all duration-300">
-                        <span class="flex items-center justify-center space-x-1 lg:space-x-2">
-                            <svg class="w-3 lg:w-4 h-3 lg:h-4" fill="currentColor" viewBox="0 0 20 20">
+                <button id="coalition-polling-tab" class="coalition-tab-btn flex-1 sm:flex-initial px-4 md:px-6 py-2.5 md:py-3 rounded-lg font-semibold text-white/60 text-sm md:text-base transition-all duration-300">
+                    <span class="flex items-center justify-center gap-2">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"/>
                             </svg>
-                            <span class="text-xs lg:text-base">Peilingen</span>
+                        <span>Peilingen</span>
                         </span>
                     </button>
                 </div>
             </div>
         </div>
         
-        <!-- Main Coalition Builder Interface -->
-        <div class="p-4 lg:p-8">
-            <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-12 gap-4 lg:gap-8">
+    <!-- Main Content Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8">
+        
+        <!-- Left Column: Party Selector -->
+        <div class="lg:col-span-7 xl:col-span-8">
+            <!-- Analytics Dashboard -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-6">
+                <!-- Seats Card -->
+                <div class="bg-white/80 backdrop-blur-xl rounded-2xl shadow-lg border border-primary/10 p-4 hover:shadow-xl transition-shadow">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="w-10 h-10 bg-gradient-to-br from-primary to-primary-light rounded-xl flex items-center justify-center">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11"/>
+                            </svg>
+                                </div>
+                            </div>
+                    <div class="text-2xl md:text-3xl font-black text-gray-900" id="dashboard-seats">0</div>
+                    <div class="text-xs text-gray-500 font-medium">Zetels</div>
+                        </div>
                 
-                <!-- Available Parties Section -->
-                <div class="lg:col-span-1 xl:col-span-4">
-                    <div class="bg-gradient-to-br from-primary-light/10 to-primary/5 rounded-2xl border border-primary/20 shadow-lg overflow-hidden">
-                        <div class="p-4 lg:p-6 border-b border-primary/20 bg-white/50 backdrop-blur-sm">
-                            <div class="flex items-center justify-between">
-                                <h3 class="text-lg lg:text-xl font-bold text-gray-900 flex items-center">
-                                    <div class="w-2 h-2 bg-primary rounded-full mr-2 lg:mr-3 animate-pulse"></div>
-                                    <span class="hidden sm:inline">Beschikbare Partijen</span>
-                                    <span class="sm:hidden">Partijen</span>
-                                </h3>
-                                <div id="available-count" class="bg-primary/10 text-primary-dark text-xs lg:text-sm font-bold px-2 lg:px-3 py-1 rounded-full">
-                                    0
+                <!-- Percentage Card -->
+                <div class="bg-white/80 backdrop-blur-xl rounded-2xl shadow-lg border border-secondary/10 p-4 hover:shadow-xl transition-shadow">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="w-10 h-10 bg-gradient-to-br from-secondary to-secondary-light rounded-xl flex items-center justify-center">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                            </svg>
                                 </div>
                             </div>
-                            <p class="text-gray-600 text-xs lg:text-sm mt-2">
-                                <span class="hidden sm:inline">Sleep partijen naar je coalitie</span>
-                                <span class="sm:hidden">Tik om toe te voegen</span>
-                            </p>
-                        </div>
-                        <div class="p-4 lg:p-6">
-                            <div id="available-parties" class="space-y-2 lg:space-y-3 max-h-[300px] sm:max-h-[400px] lg:max-h-[600px] overflow-y-auto scrollbar-thin scrollbar-thumb-primary/20 scrollbar-track-gray-100">
-                                <div class="text-center text-gray-500 py-8">
-                                    <div class="animate-spin w-6 lg:w-8 h-6 lg:h-8 border-2 border-primary border-t-transparent rounded-full mx-auto mb-4"></div>
-                                    <p class="font-medium text-sm lg:text-base">Partijen worden geladen...</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="text-2xl md:text-3xl font-black text-gray-900" id="dashboard-percentage">0%</div>
+                    <div class="text-xs text-gray-500 font-medium">Percentage</div>
                 </div>
                 
-                <!-- Coalition Builder Section -->
-                <div class="lg:col-span-1 xl:col-span-4">
-                    <div class="bg-gradient-to-br from-secondary-light/10 to-secondary/5 rounded-2xl border border-secondary/20 shadow-lg overflow-hidden">
-                        <div class="p-4 lg:p-6 border-b border-secondary/20 bg-white/50 backdrop-blur-sm">
-                            <h3 class="text-lg lg:text-xl font-bold text-gray-900 flex items-center">
-                                <div class="w-2 h-2 bg-secondary rounded-full mr-2 lg:mr-3 animate-pulse"></div>
-                                <span class="hidden sm:inline">Jouw Coalitie</span>
-                                <span class="sm:hidden">Coalitie</span>
-                            </h3>
-                            <p class="text-gray-600 text-xs lg:text-sm mt-2">
-                                <span class="hidden sm:inline">Sleep hier je partijen naartoe</span>
-                                <span class="sm:hidden">Geselecteerde partijen</span>
-                            </p>
-                        </div>
-                        <div class="p-4 lg:p-6">
-                            <div id="selected-coalition" class="min-h-[250px] sm:min-h-[300px] lg:min-h-[400px] max-h-[300px] sm:max-h-[400px] lg:max-h-[600px] overflow-y-auto rounded-xl border-2 border-dashed border-secondary/30 bg-white/70 backdrop-blur-sm transition-all duration-300">
-                                <div class="flex flex-col items-center justify-center h-full p-4 lg:p-8 text-center">
-                                    <div class="bg-secondary/10 p-3 lg:p-4 rounded-full mb-3 lg:mb-4">
-                                        <svg class="w-6 lg:w-8 h-6 lg:h-8 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <!-- Parties Count Card -->
+                <div class="bg-white/80 backdrop-blur-xl rounded-2xl shadow-lg border border-primary/10 p-4 hover:shadow-xl transition-shadow">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="w-10 h-10 bg-gradient-to-br from-primary-light to-secondary rounded-xl flex items-center justify-center">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
                                         </svg>
                                     </div>
-                                    <p class="text-gray-600 font-medium mb-2 text-sm lg:text-base">Bouw je coalitie</p>
-                                    <p class="text-gray-400 text-xs lg:text-sm">
-                                        <span class="hidden sm:inline">Sleep partijen hierheen om te beginnen</span>
-                                        <span class="sm:hidden">Tik op partijen om toe te voegen</span>
-                                    </p>
                                 </div>
+                    <div class="text-2xl md:text-3xl font-black text-gray-900" id="dashboard-party-count">0</div>
+                    <div class="text-xs text-gray-500 font-medium">Partijen</div>
                             </div>
                             
-                            <!-- Coalition Actions -->
-                            <div class="flex space-x-2 lg:space-x-3 mt-3 lg:mt-4">
-                                <button id="clear-coalition" class="flex-1 bg-white border border-gray-300 text-gray-700 py-2 lg:py-3 px-3 lg:px-4 rounded-lg font-medium hover:bg-gray-50 transition-colors duration-200 text-sm lg:text-base">
-                                    <svg class="w-3 lg:w-4 h-3 lg:h-4 inline mr-1 lg:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                <!-- Status Card -->
+                <div class="bg-white/80 backdrop-blur-xl rounded-2xl shadow-lg border border-gray-200 p-4 hover:shadow-xl transition-shadow">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="w-10 h-10 bg-gradient-to-br from-gray-400 to-gray-500 rounded-xl flex items-center justify-center" id="dashboard-status-icon">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                     </svg>
-                                    <span class="hidden sm:inline">Wissen</span>
-                                    <span class="sm:hidden">Clear</span>
-                                </button>
-                                <button id="shuffle-coalition" class="flex-1 bg-primary text-white py-2 lg:py-3 px-3 lg:px-4 rounded-lg font-medium hover:bg-primary-dark transition-colors duration-200 text-sm lg:text-base">
-                                    <svg class="w-3 lg:w-4 h-3 lg:h-4 inline mr-1 lg:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
-                                    </svg>
-                                    Random
-                                </button>
                             </div>
                         </div>
+                    <div class="text-xs md:text-sm font-bold text-gray-900" id="dashboard-status-text">Geen coalitie</div>
+                    <div class="text-xs text-gray-500 font-medium">Status</div>
                     </div>
                 </div>
                 
-                <!-- Analysis & Results Section -->
-                <div class="lg:col-span-2 xl:col-span-4">
-                    <div class="space-y-4 lg:space-y-6">
-                        
-                        <!-- Coalition Summary -->
-                        <div class="bg-gradient-to-br from-amber-50 to-orange-100 rounded-2xl border border-orange-200/60 shadow-lg overflow-hidden">
-                            <div class="p-4 lg:p-6 border-b border-orange-200/60 bg-white/50 backdrop-blur-sm">
-                                <h3 class="text-lg lg:text-xl font-bold text-gray-900 flex items-center">
-                                    <div class="w-2 h-2 bg-orange-500 rounded-full mr-2 lg:mr-3 animate-pulse"></div>
-                                    <span class="hidden sm:inline">Coalitie Analyse</span>
-                                    <span class="sm:hidden">Analyse</span>
-                                </h3>
+            <!-- Progress Bar Section -->
+            <div class="bg-white/80 backdrop-blur-xl rounded-2xl shadow-lg border border-gray-200 p-4 md:p-6 mb-6">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-sm font-semibold text-gray-700">Meerderheid Tracker</span>
+                    <div class="flex items-center gap-2">
+                        <span class="text-2xl font-black text-gray-900" id="progress-seats">0</span>
+                        <span class="text-sm text-gray-500">/ 150</span>
                             </div>
-                            <div class="p-4 lg:p-6">
-                                <!-- Seats Counter -->
-                                <div class="mb-4 lg:mb-6">
-                                    <div class="flex justify-between items-center mb-3">
-                                        <span class="text-xs lg:text-sm font-semibold text-gray-700">Coalitiezetels</span>
-                                        <div class="flex items-center space-x-1 lg:space-x-2">
-                                            <span id="coalition-seats" class="text-2xl lg:text-3xl font-black text-gray-900">0</span>
-                                            <span class="text-xs lg:text-sm text-gray-500">/150</span>
+                                        </div>
+                
+                <div class="relative w-full h-6 bg-gray-200 rounded-full overflow-hidden shadow-inner">
+                    <div id="main-progress-bar" class="h-full rounded-full shadow-sm transition-all duration-700 ease-out bg-gradient-to-r from-primary via-secondary to-primary-light relative overflow-hidden" style="width: 0%">
+                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer"></div>
+                                    </div>
+                                    
+                    <!-- Majority Indicator -->
+                    <div class="absolute top-0 h-full w-0.5 bg-red-500" style="left: 50.67%">
+                        <div class="absolute -top-1 -left-2 w-5 h-8 bg-red-500 rounded-sm shadow-lg flex items-center justify-center">
+                            <span class="text-white text-xs font-bold">76</span>
+                        </div>
                                         </div>
                                     </div>
                                     
-                                    <!-- Enhanced Progress Bar -->
-                                    <div class="relative w-full h-3 lg:h-4 bg-gray-200 rounded-full overflow-hidden shadow-inner">
-                                        <div id="coalition-progress" class="h-full rounded-full shadow-sm transition-all duration-700 ease-out bg-gradient-to-r from-primary via-secondary to-secondary-light" style="width: 0%"></div>
-                                        <!-- Majority Line -->
-                                        <div class="absolute top-0 h-full w-0.5 bg-red-500 shadow-md" style="left: 50.67%">
-                                            <div class="absolute -top-1 -left-1 lg:-left-2 w-2 lg:w-4 h-4 lg:h-6 bg-red-500 rounded-sm shadow-sm"></div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="flex justify-between items-center text-xs text-gray-500 mt-2">
-                                        <span>0</span>
-                                        <span class="bg-red-100 text-red-700 px-2 py-1 rounded font-bold text-xs">
-                                            <span class="hidden sm:inline">Meerderheid: 76</span>
-                                            <span class="sm:hidden">≥76</span>
-                                        </span>
-                                        <span>150</span>
+                <div class="flex justify-between text-xs text-gray-500 mt-2">
+                    <span>Geen meerderheid</span>
+                    <span class="font-bold text-red-600">Meerderheid</span>
                                     </div>
                                 </div>
                                 
-                                <!-- Status Badge -->
-                                <div id="coalition-status" class="text-center py-3 lg:py-4 rounded-xl bg-gray-100 text-gray-600 font-semibold transition-all duration-300 text-sm lg:text-base">
-                                    Geen coalitie gevormd
+            <!-- Party Grid -->
+            <div class="bg-white/80 backdrop-blur-xl rounded-2xl shadow-lg border border-gray-200 p-4 md:p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg md:text-xl font-bold text-gray-900 flex items-center gap-2">
+                        <div class="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
+                        <span>Selecteer Partijen</span>
+                    </h3>
+                    <div class="flex gap-2">
+                        <button id="clear-all-btn" class="px-3 md:px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg text-xs md:text-sm font-semibold transition-colors">
+                            <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                            </svg>
+                            <span class="hidden sm:inline">Wissen</span>
+                        </button>
+                        <button id="random-coalition-btn" class="px-3 md:px-4 py-2 bg-primary hover:bg-primary-dark text-white rounded-lg text-xs md:text-sm font-semibold transition-colors">
+                            <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                            </svg>
+                            <span class="hidden sm:inline">Random</span>
+                        </button>
+                    </div>
                                 </div>
                                 
-                                <!-- Coalition Stats -->
-                                <div id="coalition-stats" class="mt-3 lg:mt-4 space-y-2">
-                                    <!-- Stats will be populated by JavaScript -->
+                <div id="party-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-4">
+                    <!-- Parties will be dynamically inserted here -->
                                 </div>
                             </div>
                         </div>
                         
-                        <!-- Political Spectrum -->
-                        <div class="bg-gradient-to-br from-violet-50 to-purple-100 rounded-2xl border border-violet-200/60 shadow-lg overflow-hidden">
-                            <div class="p-4 lg:p-6 border-b border-violet-200/60 bg-white/50 backdrop-blur-sm">
-                                <h3 class="text-lg font-bold text-gray-900 flex items-center">
-                                    <div class="w-2 h-2 bg-violet-500 rounded-full mr-2 lg:mr-3"></div>
-                                    <span class="hidden sm:inline">Politieke Richting</span>
-                                    <span class="sm:hidden">Spectrum</span>
+        <!-- Right Column: Visualizations -->
+        <div class="lg:col-span-5 xl:col-span-4 space-y-6">
+            
+            <!-- Hemicycle Visualization -->
+            <div class="bg-white/80 backdrop-blur-xl rounded-2xl shadow-lg border border-gray-200 p-4 md:p-6">
+                <h3 class="text-lg font-bold text-gray-900 flex items-center gap-2 mb-4">
+                    <div class="w-2 h-2 bg-secondary rounded-full animate-pulse"></div>
+                    <span>Tweede Kamer</span>
                                 </h3>
-                            </div>
-                            <div class="p-4 lg:p-6">
-                                <div id="coalition-spectrum-container" class="relative">
-                                    <div class="h-4 lg:h-6 bg-gradient-to-r from-primary via-secondary to-primary-light rounded-full shadow-inner overflow-hidden">
-                                        <div id="coalition-spectrum-indicator" class="absolute w-1 h-6 lg:h-8 bg-white shadow-lg rounded-full -top-1 border-2 border-gray-800 transition-all duration-500" style="left: 50%; transform: translateX(-50%); display: none;"></div>
-                                    </div>
-                                    
-                                    <div class="flex justify-between text-xs text-gray-600 mt-2">
-                                        <span class="font-medium">Links</span>
-                                        <span class="font-medium hidden sm:inline">Centrum</span>
-                                        <span class="font-medium sm:hidden">Mid</span>
-                                        <span class="font-medium">Rechts</span>
-                                    </div>
+                
+                <div id="hemicycle-container" class="relative w-full" style="aspect-ratio: 2/1;">
+                    <svg id="hemicycle-svg" class="w-full h-full" viewBox="0 0 400 200">
+                        <!-- Hemicycle will be drawn here -->
+                    </svg>
                                 </div>
                                 
-                                <div id="coalition-spectrum-details" class="mt-3 lg:mt-4 text-xs lg:text-sm text-gray-600">
-                                    <p class="text-center">
-                                        <span class="hidden sm:inline">Selecteer partijen om de gemiddelde politieke positie te zien</span>
-                                        <span class="sm:hidden">Selecteer partijen voor positie</span>
-                                    </p>
+                <div class="text-center mt-4">
+                    <div class="text-sm text-gray-600">
+                        <span class="font-semibold" id="hemicycle-selected">0</span> / <span class="font-semibold">150</span> zetels geselecteerd
                                 </div>
                             </div>
                         </div>
                         
-                        <!-- Coalitie Suggesties -->
-                        <div class="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-2xl border border-blue-200/60 shadow-lg overflow-hidden">
-                            <div class="p-4 lg:p-6 border-b border-blue-200/60 bg-white/50 backdrop-blur-sm">
-                                <h3 class="text-lg font-bold text-gray-900 flex items-center">
-                                    <div class="w-2 h-2 bg-blue-500 rounded-full mr-2 lg:mr-3"></div>
-                                    <span class="hidden sm:inline">Mogelijke Coalities (Peilingen)</span>
-                                    <span class="sm:hidden">Peilingen</span>
+            <!-- Political Spectrum -->
+            <div class="bg-white/80 backdrop-blur-xl rounded-2xl shadow-lg border border-gray-200 p-4 md:p-6">
+                <h3 class="text-lg font-bold text-gray-900 flex items-center gap-2 mb-4">
+                    <div class="w-2 h-2 bg-purple-500 rounded-full animate-pulse"></div>
+                    <span>Politiek Spectrum</span>
                                 </h3>
+                
+                <div class="relative mb-4">
+                    <div class="h-6 bg-gradient-to-r from-red-500 via-purple-500 to-blue-500 rounded-full shadow-inner relative overflow-hidden">
+                        <!-- Party indicators will be placed here -->
+                        <div id="spectrum-indicators"></div>
                             </div>
-                            <div class="p-4 lg:p-6">
-                                <div id="coalition-suggestions" class="space-y-2 lg:space-y-3">
-                                    <div class="text-center text-gray-500 py-4">
-                                        <svg class="w-5 lg:w-6 h-5 lg:h-6 mx-auto mb-2 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
-                                        </svg>
-                                        <p class="text-xs lg:text-sm">
-                                            <span class="hidden sm:inline">Automatische suggesties op basis van peilingen (meerderheden van 76+ zetels)</span>
-                                            <span class="sm:hidden">Suggesties op basis van peilingen</span>
-                                        </p>
+                    
+                    <div class="flex justify-between text-xs text-gray-600 mt-2 font-medium">
+                        <span>Links</span>
+                        <span>Centrum</span>
+                        <span>Rechts</span>
                                     </div>
                                 </div>
+                
+                <div id="spectrum-info" class="text-center">
+                    <div class="text-sm text-gray-600">Selecteer partijen om het politieke spectrum te zien</div>
                             </div>
                         </div>
+            
+            <!-- Coalition Suggestions -->
+            <div class="bg-white/80 backdrop-blur-xl rounded-2xl shadow-lg border border-gray-200 p-4 md:p-6">
+                <h3 class="text-lg font-bold text-gray-900 flex items-center gap-2 mb-4">
+                    <div class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+                    <span>Coalitie Suggesties</span>
+                </h3>
+                
+                <div id="suggestions-container" class="space-y-3">
+                    <!-- Suggestions will be dynamically inserted -->
                     </div>
                 </div>
-            </div>
+            
         </div>
     </div>
 </div>
+
+<style>
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+.animate-shimmer {
+    animation: shimmer 2s infinite;
+}
+.coalition-tab-btn.active {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+}
+</style>
 
 <!-- Premium Visual Tweede Kamer Representation -->
 <div class="container mx-auto px-4 py-12 mb-16">
@@ -2385,13 +2381,12 @@ function adjustColorBrightness($hex, $steps) {
 }
 ?>
 
-// Modern Coalition Maker JavaScript
+// Completely Rebuilt Modern Coalition Maker - Tap/Click Only
 document.addEventListener('DOMContentLoaded', function() {
-    // Modern Coalition Maker with enhanced features
-    const ModernCoalitionMaker = {
+    const NewCoalitionMaker = {
         parties: <?php echo json_encode($parties); ?>,
         currentView: 'current',
-        coalition: [],
+        selectedParties: new Set(),
         
         // Political spectrum positions (0 = far left, 100 = far right)
         partyPositions: {
@@ -2400,198 +2395,654 @@ document.addEventListener('DOMContentLoaded', function() {
             'SGP': 75, 'FvD': 90, 'DENK': 25, 'Volt': 35, 'CU': 40
         },
         
+        partyColors: {
+            'PVV': '#0078D7', 'VVD': '#FF9900', 'NSC': '#4D7F78', 'BBB': '#006633',
+            'GL-PvdA': '#008800', 'D66': '#00B13C', 'SP': '#EE0000', 'PvdD': '#007E3A',
+            'CDA': '#1E8449', 'JA21': '#0066CC', 'SGP': '#FF6600', 'FvD': '#811E1E',
+            'DENK': '#00b7b2', 'Volt': '#502379', 'CU': '#00AEEF'
+        },
+        
         init() {
             this.setupEventListeners();
-            this.generateAvailableParties();
-            this.setupDragAndDrop();
-            this.updateAnalysis();
-            this.generateCoalitionSuggestions();
-            console.log('🚀 Moderne Coalitiemaker geïnitialiseerd');
+            this.renderPartyGrid();
+            this.renderHemicycle();
+            this.updateAllMetrics();
+            this.generateSuggestions();
         },
         
         setupEventListeners() {
-            // Tab switching with smooth animations
-            const currentTab = document.getElementById('coalition-current-tab');
-            const pollingTab = document.getElementById('coalition-polling-tab');
+            // Tab switching
+            document.getElementById('coalition-current-tab')?.addEventListener('click', () => this.switchView('current'));
+            document.getElementById('coalition-polling-tab')?.addEventListener('click', () => this.switchView('polling'));
             
-            if (currentTab) {
-                currentTab.addEventListener('click', () => {
-                    this.switchView('current');
-                });
-            }
-            
-            if (pollingTab) {
-                pollingTab.addEventListener('click', () => {
-                    this.switchView('polling');
-                });
-            }
-            
-            // Enhanced action buttons
-            const clearBtn = document.getElementById('clear-coalition');
-            const shuffleBtn = document.getElementById('shuffle-coalition');
-            
-            if (clearBtn) {
-                clearBtn.addEventListener('click', () => {
-                    this.clearCoalition();
-                });
-            }
-            
-            if (shuffleBtn) {
-                shuffleBtn.addEventListener('click', () => {
-                    this.shuffleRandomCoalition();
-                });
-            }
+            // Action buttons
+            document.getElementById('clear-all-btn')?.addEventListener('click', () => this.clearAll());
+            document.getElementById('random-coalition-btn')?.addEventListener('click', () => this.randomCoalition());
         },
         
         switchView(view) {
             this.currentView = view;
             
-            // Update tab styling with smooth transitions
+            // Update tabs
             const currentTab = document.getElementById('coalition-current-tab');
             const pollingTab = document.getElementById('coalition-polling-tab');
             
             if (view === 'current') {
-                currentTab.classList.add('bg-white/30', 'backdrop-blur-sm');
-                currentTab.classList.remove('text-white/70');
-                pollingTab.classList.remove('bg-white/30', 'backdrop-blur-sm');
-                pollingTab.classList.add('text-white/70');
+                currentTab?.classList.add('active');
+                currentTab?.classList.remove('text-white/60');
+                pollingTab?.classList.remove('active');
+                pollingTab?.classList.add('text-white/60');
             } else {
-                pollingTab.classList.add('bg-white/30', 'backdrop-blur-sm');
-                pollingTab.classList.remove('text-white/70');
-                currentTab.classList.remove('bg-white/30', 'backdrop-blur-sm');
-                currentTab.classList.add('text-white/70');
+                pollingTab?.classList.add('active');
+                pollingTab?.classList.remove('text-white/60');
+                currentTab?.classList.remove('active');
+                currentTab?.classList.add('text-white/60');
             }
             
-            this.clearCoalition();
-            this.generateAvailableParties();
+            this.renderPartyGrid();
+            this.updateAllMetrics();
         },
         
-        generateAvailableParties() {
-            const container = document.getElementById('available-parties');
+        renderPartyGrid() {
+            const container = document.getElementById('party-grid');
+            if (!container) return;
+            
             container.innerHTML = '';
             
-            // Add mobile help text if on mobile
-            if (window.innerWidth < 1024) {
-                const helpText = document.createElement('div');
-                helpText.className = 'bg-blue-50 border border-blue-200 rounded-lg p-3 mb-3 text-center';
-                helpText.innerHTML = `
-                    <div class="flex items-center justify-center space-x-2">
-                        <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                        <span class="text-blue-800 text-xs font-medium">Tik op een partij om deze toe te voegen aan je coalitie</span>
-                    </div>
-                `;
-                container.appendChild(helpText);
-            }
-            
             // Sort parties by seats
-            const sortedParties = Object.entries(this.parties).sort((a, b) => {
-                const aSeats = this.currentView === 'current' ? a[1].current_seats : a[1].polling.seats;
-                const bSeats = this.currentView === 'current' ? b[1].current_seats : b[1].polling.seats;
-                return bSeats - aSeats;
+            const sorted = Object.entries(this.parties).sort((a, b) => {
+                const seatsA = this.getSeats(a[0]);
+                const seatsB = this.getSeats(b[0]);
+                return seatsB - seatsA;
             });
             
-            let totalParties = 0;
-            
-            sortedParties.forEach(([partyKey, party]) => {
-                const seats = this.currentView === 'current' ? 
-                    parseInt(party.current_seats) || 0 : 
-                    parseInt(party.polling?.seats) || 0;
-                
+            sorted.forEach(([key, party]) => {
+                const seats = this.getSeats(key);
                 if (seats > 0) {
-                    totalParties++;
-                    const card = this.createPartyCard(partyKey, party, seats);
+                    const card = this.createPartyCard(key, party, seats);
                     container.appendChild(card);
                 }
             });
-            
-            // Update counter with animation
-            this.animateCounter('available-count', totalParties);
         },
         
-        createPartyCard(partyKey, party, seats) {
+        createPartyCard(key, party, seats) {
             const card = document.createElement('div');
-            card.className = 'party-card group bg-white rounded-xl shadow-lg cursor-move border border-gray-200 hover:shadow-xl hover:scale-105 transition-all duration-300 touch-manipulation';
-            card.setAttribute('draggable', 'true');
-            card.setAttribute('data-party', partyKey);
-            card.setAttribute('data-seats', seats);
+            const isSelected = this.selectedParties.has(key);
+            const color = this.partyColors[key] || '#A0A0A0';
             
-            const color = this.getPartyColor(partyKey);
-            const change = party.polling?.change || 0;
-            const changeIcon = change > 0 ? '↗' : change < 0 ? '↘' : '→';
-            const changeClass = change > 0 ? 'text-green-600' : change < 0 ? 'text-red-600' : 'text-gray-500';
-            
-            // Add click handler for mobile
-            card.addEventListener('click', () => {
-                if (window.innerWidth < 1024) { // Mobile/tablet
-                    this.addToCoalition(partyKey);
-                }
-            });
+            card.className = `party-card cursor-pointer rounded-xl p-3 md:p-4 transition-all duration-300 border-2 ${
+                isSelected 
+                    ? 'bg-gradient-to-br from-primary/10 to-secondary/10 border-primary shadow-lg scale-105' 
+                    : 'bg-white hover:bg-gray-50 border-gray-200 hover:border-gray-300 hover:shadow-md'
+            }`;
             
             card.innerHTML = `
-                <div class="p-3 lg:p-4">
-                    <div class="flex items-center justify-between mb-2 lg:mb-3">
-                        <div class="flex items-center space-x-2 lg:space-x-3 flex-1 min-w-0">
-                            <div class="relative flex-shrink-0">
-                                <div class="w-10 lg:w-12 h-10 lg:h-12 rounded-xl overflow-hidden bg-white shadow-md border-2 border-gray-100 flex items-center justify-center">
-                                    <img src="${party.logo}" alt="${party.name}" class="w-8 lg:w-10 h-8 lg:h-10 object-contain">
-                                </div>
-                                <div class="absolute -bottom-1 -right-1 w-3 lg:w-4 h-3 lg:h-4 rounded-full border-2 border-white shadow-sm" style="background-color: ${color}"></div>
+                <div class="flex flex-col gap-2">
+                    <div class="flex items-center gap-2 md:gap-3">
+                        <div class="w-10 h-10 md:w-12 md:h-12 rounded-lg overflow-hidden bg-white border border-gray-200 flex-shrink-0 flex items-center justify-center shadow-sm">
+                            <img src="${party.logo}" alt="${key}" class="w-8 h-8 md:w-10 md:h-10 object-contain p-1">
                             </div>
                             <div class="flex-1 min-w-0">
-                                <h4 class="font-bold text-gray-900 text-sm lg:text-base">${partyKey}</h4>
+                            <h4 class="font-bold text-gray-900 text-sm md:text-base truncate">${key}</h4>
                                 <p class="text-xs text-gray-600 truncate hidden sm:block">${party.name}</p>
                             </div>
                         </div>
-                        <div class="text-right flex-shrink-0">
-                            <div class="bg-gradient-to-r from-primary/10 to-secondary/10 text-primary-dark text-sm lg:text-base font-bold px-2 lg:px-3 py-1 rounded-lg">
-                                ${seats}
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <div class="w-3 h-3 rounded-full" style="background-color: ${color}"></div>
+                            <span class="text-xs font-semibold text-gray-700">${seats} zetels</span>
                             </div>
-                            ${this.currentView === 'polling' && change !== 0 ? `
-                                <div class="text-xs mt-1 ${changeClass} font-medium">
-                                    ${changeIcon} ${change > 0 ? '+' : ''}${change}
+                        ${isSelected ? `
+                            <div class="flex items-center gap-1 text-primary">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
                                 </div>
                             ` : ''}
                         </div>
                     </div>
-                    
-                    <div class="text-xs text-gray-500 line-clamp-2 mb-2 lg:mb-3 hidden sm:block">
-                        ${party.description}
-                    </div>
-                    
-                    <div class="flex items-center justify-between">
-                        <div class="text-xs text-gray-500 flex items-center flex-1 min-w-0">
-                            <div class="w-4 lg:w-6 h-4 lg:h-6 rounded-full overflow-hidden mr-1 lg:mr-2 border border-gray-200 flex-shrink-0">
-                                <img src="${party.leader_photo}" alt="${party.leader}" class="w-full h-full object-cover">
-                            </div>
-                            <span class="truncate">${party.leader}</span>
-                        </div>
-                        <div class="flex space-x-1 ml-2 flex-shrink-0">
-                            <div class="w-1.5 lg:w-2 h-1.5 lg:h-2 rounded-full bg-gray-200"></div>
-                            <div class="w-1.5 lg:w-2 h-1.5 lg:h-2 rounded-full bg-gray-300"></div>
-                            <div class="w-1.5 lg:w-2 h-1.5 lg:h-2 rounded-full" style="background-color: ${color}"></div>
-                        </div>
-                    </div>
-                    
-                    <!-- Mobile add indicator -->
-                    <div class="lg:hidden mt-2 pt-2 border-t border-gray-100 text-center">
-                        <span class="text-xs text-gray-400">Tik om toe te voegen</span>
-                    </div>
-                </div>
             `;
             
+            card.addEventListener('click', () => this.toggleParty(key));
             return card;
         },
         
-        setupDragAndDrop() {
-            // Enhanced drag and drop with mobile support
-            const isMobile = () => window.innerWidth < 1024;
+        toggleParty(key) {
+            if (this.selectedParties.has(key)) {
+                this.selectedParties.delete(key);
+            } else {
+                this.selectedParties.add(key);
+            }
+            this.renderPartyGrid();
+            this.updateAllMetrics();
+            this.renderHemicycle();
+            this.updateSpectrum();
+        },
+        
+        clearAll() {
+            this.selectedParties.clear();
+            this.renderPartyGrid();
+            this.updateAllMetrics();
+            this.renderHemicycle();
+            this.updateSpectrum();
+        },
+        
+        randomCoalition() {
+            this.selectedParties.clear();
+            const parties = Object.keys(this.parties).filter(k => this.getSeats(k) > 0);
+            let totalSeats = 0;
             
-            // Desktop drag and drop
-            document.addEventListener('dragstart', (e) => {
-                if (e.target.classList.contains('party-card') && !isMobile()) {
-                    e.dataTransfer.setData('text/plain', e.target.getAttribute('data-party'));
+            // Shuffle and select until we have a majority
+            const shuffled = parties.sort(() => Math.random() - 0.5);
+            for (const party of shuffled) {
+                if (totalSeats >= 76) break;
+                this.selectedParties.add(party);
+                totalSeats += this.getSeats(party);
+                if (this.selectedParties.size >= 6) break; // Max 6 parties
+            }
+            
+            this.renderPartyGrid();
+            this.updateAllMetrics();
+            this.renderHemicycle();
+            this.updateSpectrum();
+        },
+        
+        getSeats(key) {
+            const party = this.parties[key];
+            return this.currentView === 'current' 
+                ? parseInt(party.current_seats) || 0 
+                : parseInt(party.polling?.seats) || 0;
+        },
+        
+        getTotalSeats() {
+            let total = 0;
+            this.selectedParties.forEach(key => {
+                total += this.getSeats(key);
+            });
+            return total;
+        },
+        
+        updateAllMetrics() {
+            const totalSeats = this.getTotalSeats();
+            const percentage = Math.round((totalSeats / 150) * 100);
+            const partyCount = this.selectedParties.size;
+            const hasMajority = totalSeats >= 76;
+            
+            // Update all displays
+            this.animateNumber('header-seats', totalSeats);
+            this.animateNumber('header-parties', partyCount);
+            this.animateNumber('dashboard-seats', totalSeats);
+            this.animateNumber('progress-seats', totalSeats);
+            this.animateNumber('dashboard-party-count', partyCount);
+            this.animateNumber('hemicycle-selected', totalSeats);
+            
+            document.getElementById('dashboard-percentage').textContent = percentage + '%';
+            
+            // Update progress bar
+            const progressBar = document.getElementById('main-progress-bar');
+            if (progressBar) {
+                progressBar.style.width = Math.min(100, (totalSeats / 150) * 100) + '%';
+            }
+            
+            // Update status
+            const statusIcon = document.getElementById('dashboard-status-icon');
+            const statusText = document.getElementById('dashboard-status-text');
+            
+            if (totalSeats === 0) {
+                statusText.textContent = 'Geen coalitie';
+                statusIcon.className = 'w-10 h-10 bg-gradient-to-br from-gray-400 to-gray-500 rounded-xl flex items-center justify-center';
+            } else if (hasMajority) {
+                statusText.textContent = 'Meerderheid!';
+                statusIcon.className = 'w-10 h-10 bg-gradient-to-br from-green-400 to-green-500 rounded-xl flex items-center justify-center';
+            } else {
+                statusText.textContent = (76 - totalSeats) + ' tekort';
+                statusIcon.className = 'w-10 h-10 bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-xl flex items-center justify-center';
+            }
+        },
+        
+        animateNumber(elementId, targetValue) {
+            const element = document.getElementById(elementId);
+            if (!element) return;
+            
+            const startValue = parseInt(element.textContent) || 0;
+            const duration = 500;
+            const startTime = performance.now();
+            
+            const animate = (currentTime) => {
+                const progress = Math.min((currentTime - startTime) / duration, 1);
+                const easeOut = 1 - Math.pow(1 - progress, 3);
+                const current = Math.round(startValue + (targetValue - startValue) * easeOut);
+                element.textContent = current;
+                
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                }
+            };
+            
+            requestAnimationFrame(animate);
+        },
+        
+        renderHemicycle() {
+            const svg = document.getElementById('hemicycle-svg');
+            if (!svg) return;
+            
+            svg.innerHTML = '';
+            
+            // Configuration
+            const centerX = 200;
+            const centerY = 180;
+            const rows = 5;
+            const seatsPerRow = [20, 25, 30, 35, 40];
+            const startRadius = 60;
+            const radiusIncrement = 20;
+            
+            let seatIndex = 0;
+            const selectedKeys = Array.from(this.selectedParties);
+            let currentPartyIndex = 0;
+            let seatsForCurrentParty = selectedKeys.length > 0 ? this.getSeats(selectedKeys[0]) : 0;
+            
+            // Draw seats in hemicycle
+            for (let row = 0; row < rows; row++) {
+                const radius = startRadius + (row * radiusIncrement);
+                const numSeats = seatsPerRow[row];
+                const startAngle = Math.PI;
+                const endAngle = 0;
+                const angleStep = (startAngle - endAngle) / (numSeats - 1);
+                
+                for (let i = 0; i < numSeats; i++) {
+                    const angle = startAngle - (i * angleStep);
+                    const x = centerX + radius * Math.cos(angle);
+                    const y = centerY - radius * Math.sin(angle);
+                    
+                    let color = '#E5E7EB'; // gray-200 for empty seats
+                    
+                    // Assign color if seat is part of selected coalition
+                    if (seatIndex < this.getTotalSeats()) {
+                        if (seatsForCurrentParty > 0) {
+                            color = this.partyColors[selectedKeys[currentPartyIndex]] || '#A0A0A0';
+                            seatsForCurrentParty--;
+                            
+                            if (seatsForCurrentParty === 0 && currentPartyIndex < selectedKeys.length - 1) {
+                                currentPartyIndex++;
+                                seatsForCurrentParty = this.getSeats(selectedKeys[currentPartyIndex]);
+                            }
+                        }
+                    }
+                    
+                    // Create seat circle
+                    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                    circle.setAttribute('cx', x);
+                    circle.setAttribute('cy', y);
+                    circle.setAttribute('r', '3.5');
+                    circle.setAttribute('fill', color);
+                    circle.setAttribute('stroke', '#fff');
+                    circle.setAttribute('stroke-width', '0.5');
+                    
+                    svg.appendChild(circle);
+                    seatIndex++;
+                }
+            }
+        },
+        
+        updateSpectrum() {
+            const container = document.getElementById('spectrum-indicators');
+            const info = document.getElementById('spectrum-info');
+            
+            if (!container || !info) return;
+            
+            container.innerHTML = '';
+            
+            if (this.selectedParties.size === 0) {
+                info.innerHTML = '<div class="text-sm text-gray-600">Selecteer partijen om het politieke spectrum te zien</div>';
+                return;
+            }
+            
+            // Calculate weighted average
+            let totalPosition = 0;
+            let totalSeats = 0;
+            
+            this.selectedParties.forEach(key => {
+                const position = this.partyPositions[key] || 50;
+                const seats = this.getSeats(key);
+                totalPosition += position * seats;
+                totalSeats += seats;
+            });
+            
+            const avgPosition = totalPosition / totalSeats;
+            
+            // Place indicators for each party
+            this.selectedParties.forEach(key => {
+                const position = this.partyPositions[key] || 50;
+                const color = this.partyColors[key] || '#A0A0A0';
+                
+                const indicator = document.createElement('div');
+                indicator.className = 'absolute w-3 h-8 -top-1 transform -translate-x-1/2 transition-all duration-500';
+                indicator.style.left = position + '%';
+                indicator.innerHTML = `
+                    <div class="w-full h-full rounded-full shadow-lg border-2 border-white" style="background-color: ${color}"></div>
+                `;
+                
+                container.appendChild(indicator);
+            });
+            
+            // Describe political orientation
+            let description = '';
+            if (avgPosition < 25) description = 'Sterk links-georiënteerde coalitie';
+            else if (avgPosition < 40) description = 'Links-georiënteerde coalitie';
+            else if (avgPosition < 48) description = 'Centrum-links coalitie';
+            else if (avgPosition < 53) description = 'Centrum coalitie';
+            else if (avgPosition < 65) description = 'Centrum-rechts coalitie';
+            else if (avgPosition < 80) description = 'Rechts-georiënteerde coalitie';
+            else description = 'Sterk rechts-georiënteerde coalitie';
+            
+            info.innerHTML = `<div class="text-sm font-semibold text-gray-900">${description}</div>`;
+        },
+        
+        generateSuggestions() {
+            const container = document.getElementById('suggestions-container');
+            if (!container) return;
+            
+            const suggestions = [
+                { name: 'Grote Coalitie', parties: ['PVV', 'VVD', 'GL-PvdA', 'NSC'], description: 'Vier grootste partijen' },
+                { name: 'Paars-Plus', parties: ['VVD', 'D66', 'GL-PvdA', 'Volt'], description: 'Progressief-liberaal' },
+                { name: 'Nationaal Compromis', parties: ['VVD', 'NSC', 'GL-PvdA', 'CDA', 'D66'], description: 'Breed centrum' },
+                { name: 'Rechts Blok', parties: ['PVV', 'VVD', 'NSC', 'BBB', 'JA21'], description: 'Conservatief-liberaal' }
+            ];
+            
+            container.innerHTML = suggestions.map(sug => {
+                // Calculate seats for polling view
+                const totalSeats = sug.parties.reduce((sum, key) => {
+                    const party = this.parties[key];
+                    return sum + (parseInt(party?.polling?.seats) || 0);
+                }, 0);
+                
+                if (totalSeats < 76) return ''; // Only show coalitions with majority
+                
+                return `
+                    <div class="bg-gradient-to-br from-gray-50 to-white rounded-xl p-4 border border-gray-200 hover:border-primary hover:shadow-md transition-all cursor-pointer"
+                         onclick="NewCoalitionMaker.applySuggestion(${JSON.stringify(sug.parties).replace(/"/g, '&quot;')})">
+                        <div class="flex items-center justify-between mb-2">
+                            <h4 class="font-bold text-gray-900 text-sm">${sug.name}</h4>
+                            <span class="text-xs font-bold px-2 py-1 rounded-full bg-primary/10 text-primary">${totalSeats} zetels</span>
+                            </div>
+                        <p class="text-xs text-gray-600 mb-3">${sug.description}</p>
+                        <div class="flex flex-wrap gap-2">
+                            ${sug.parties.map(key => {
+                                const party = this.parties[key];
+                                if (!party) return '';
+                                const color = this.partyColors[key] || '#A0A0A0';
+                                return `
+                                    <div class="flex items-center gap-1 bg-white rounded-lg px-2 py-1 border border-gray-200">
+                                        <div class="w-2 h-2 rounded-full" style="background-color: ${color}"></div>
+                                        <span class="text-xs font-semibold">${key}</span>
+                        </div>
+                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                `;
+            }).filter(html => html !== '').join('');
+        },
+        
+        applySuggestion(partyKeys) {
+            this.selectedParties.clear();
+            partyKeys.forEach(key => {
+                if (this.parties[key] && this.getSeats(key) > 0) {
+                    this.selectedParties.add(key);
+                }
+            });
+            this.renderPartyGrid();
+            this.updateAllMetrics();
+            this.renderHemicycle();
+            this.updateSpectrum();
+        }
+    };
+    
+    // Initialize
+    NewCoalitionMaker.init();
+    window.NewCoalitionMaker = NewCoalitionMaker;
+    
+    // Additional party functionality (existing code)
+    const partyData = <?php echo json_encode($parties); ?>;
+    
+    // Handle image errors
+    document.querySelectorAll('img').forEach(img => {
+        img.onerror = function() {
+            this.src = 'https://i.ibb.co/kXL6rQ8/placeholder-profile.jpg';
+            this.onerror = null;
+        };
+    });
+    
+    // Party buttons for modals
+    document.querySelectorAll('.party-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const partyKey = this.getAttribute('data-party');
+            const party = partyData[partyKey];
+            
+            // Fill modal with party data
+            document.getElementById('party-modal-title').textContent = party.name;
+            document.getElementById('party-modal-logo').src = party.logo;
+            document.getElementById('party-modal-logo').alt = `${party.name} logo`;
+            document.getElementById('party-modal-abbr').textContent = partyKey;
+            document.getElementById('party-modal-name').textContent = party.name;
+            document.getElementById('party-modal-leader').textContent = party.leader;
+            document.getElementById('party-modal-leader-photo').src = party.leader_photo;
+            document.getElementById('party-modal-leader-photo').alt = party.leader;
+            document.getElementById('party-modal-description').textContent = party.description;
+            document.getElementById('party-modal-seats').textContent = parseInt(party.current_seats) || 0;
+            document.getElementById('party-modal-polling').textContent = parseInt(party.polling?.seats) || 0;
+            
+            // Fill perspectives
+            document.getElementById('party-modal-left-perspective').textContent = party.perspectives.left;
+            document.getElementById('party-modal-right-perspective').textContent = party.perspectives.right;
+            
+            // Display polling trend
+            const trendElement = document.getElementById('party-modal-polling-trend');
+            const change = party.polling.change;
+            const changeClass = change > 0 ? 'text-green-600' : (change < 0 ? 'text-red-600' : 'text-yellow-600');
+            const changeIcon = change > 0 ? '↑' : (change < 0 ? '↓' : '→');
+            const changeText = change > 0 ? `+${change}` : change;
+            
+            trendElement.className = `text-sm font-medium ${changeClass}`;
+            trendElement.textContent = change !== 0 ? `Trend: ${changeIcon} ${changeText}` : 'Stabiel in peilingen';
+            
+            // Fill standpoints
+            const standpointsContainer = document.getElementById('party-modal-standpoints');
+            standpointsContainer.innerHTML = '';
+            
+            for (const [topic, standpoint] of Object.entries(party.standpoints)) {
+                const standpointEl = document.createElement('div');
+                standpointEl.className = 'bg-gray-50 p-4 rounded-xl border border-gray-200';
+                standpointEl.innerHTML = `
+                    <h4 class="font-semibold text-gray-800 mb-2">${topic}</h4>
+                    <p class="text-gray-600 text-sm">${standpoint}</p>
+                `;
+                standpointsContainer.appendChild(standpointEl);
+            }
+            
+            // Show modal
+            document.getElementById('party-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        });
+    });
+
+    
+    // Close modal buttons
+    document.querySelectorAll('.close-modal').forEach(button => {
+        button.addEventListener('click', function() {
+            document.getElementById('party-modal').classList.add('hidden');
+            document.getElementById('leader-modal').classList.add('hidden');
+            document.body.style.overflow = '';
+        });
+    });
+    
+    // Close modals when clicking outside
+    window.addEventListener('click', function(event) {
+        const partyModal = document.getElementById('party-modal');
+        const leaderModal = document.getElementById('leader-modal');
+        
+        if (event.target === partyModal) {
+            partyModal.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+        
+        if (event.target === leaderModal) {
+            leaderModal.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+    });
+
+    // AI Analysis functionality
+    const aiBtn = document.getElementById('ai-analysis-btn');
+    const aiModal = document.getElementById('ai-modal');
+    const aiModalContent = document.getElementById('ai-modal-content');
+    const closeAiModal = document.getElementById('close-ai-modal');
+    const aiLoading = document.getElementById('ai-loading');
+    const aiContent = document.getElementById('ai-content');
+    const aiError = document.getElementById('ai-error');
+    const retryBtn = document.getElementById('retry-ai-analysis');
+
+    function openAiModal() {
+        aiModal.classList.remove('hidden');
+        setTimeout(() => {
+            aiModal.classList.remove('opacity-0');
+            aiModalContent.classList.remove('scale-95');
+            aiModalContent.classList.add('scale-100');
+        }, 10);
+        document.body.style.overflow = 'hidden';
+        
+        // Start AI analysis
+        performAiAnalysis();
+    }
+
+    function closeAiModalFunc() {
+        aiModal.classList.add('opacity-0');
+        aiModalContent.classList.remove('scale-100');
+        aiModalContent.classList.add('scale-95');
+        setTimeout(() => {
+            aiModal.classList.add('hidden');
+            // Reset states
+            aiLoading.classList.remove('hidden');
+            aiContent.classList.add('hidden');
+            aiError.classList.add('hidden');
+        }, 300);
+        document.body.style.overflow = '';
+    }
+
+    function performAiAnalysis() {
+        // Show loading state
+        aiLoading.classList.remove('hidden');
+        aiContent.classList.add('hidden');
+        aiError.classList.add('hidden');
+
+        // Gather polling data for AI analysis
+        const pollingData = {
+            parties: <?php echo json_encode($parties); ?>,
+            date: new Date().toISOString().split('T')[0]
+        };
+
+        fetch('ajax/ai-polling-analysis.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(pollingData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            aiLoading.classList.add('hidden');
+            
+            if (data.success) {
+                aiContent.innerHTML = formatAiResponse(data.content);
+                aiContent.classList.remove('hidden');
+            } else {
+                showAiError();
+            }
+        })
+        .catch(error => {
+            console.error('AI Analysis Error:', error);
+            showAiError();
+        });
+    }
+    
+    function showAiError() {
+        aiLoading.classList.add('hidden');
+        aiError.classList.remove('hidden');
+    }
+    
+    function formatAiResponse(content) {
+        // Format AI response with proper styling
+        const sections = content.split('\n\n');
+        return sections.map(section => {
+            if (section.startsWith('#')) {
+                const title = section.replace(/^#+\s*/, '');
+                return `<h3 class="text-xl font-bold text-gray-900 mb-3 mt-6 first:mt-0">${title}</h3>`;
+            } else if (section.startsWith('-')) {
+                const items = section.split('\n').filter(line => line.trim());
+                const listItems = items.map(item => `<li>${item.replace(/^-\s*/, '')}</li>`).join('');
+                return `<ul class="list-disc list-inside space-y-2 text-gray-700 mb-4">${listItems}</ul>`;
+            } else {
+                return `<p class="text-gray-700 leading-relaxed mb-4">${section}</p>`;
+            }
+        }).join('');
+    }
+    
+    // Event listeners for AI modal
+    if (aiBtn) {
+        aiBtn.addEventListener('click', openAiModal);
+    }
+    
+    if (closeAiModal) {
+        closeAiModal.addEventListener('click', closeAiModalFunc);
+    }
+    
+    if (retryBtn) {
+        retryBtn.addEventListener('click', performAiAnalysis);
+    }
+    
+    // Close AI modal when clicking outside
+    if (aiModal) {
+        aiModal.addEventListener('click', function(e) {
+            if (e.target === aiModal) {
+                closeAiModalFunc();
+            }
+        });
+    }
+    
+    // Close AI modal with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && !aiModal.classList.contains('hidden')) {
+            closeAiModalFunc();
+        }
+    });
+});
+</script>
+
+<style>
+/* Smooth scrolling for the entire page */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Enhanced Party Cards Styling */
+
+/* Modern hover animations and transitions */
+.party-card {
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform, box-shadow;
+}
+
+.party-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 20px 25px -5px rgba(0, 0, 0, 0.1),
+        0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.party-card:active {
+    transform: scale(0.98);
+}
                     e.target.style.opacity = '0.6';
                     e.target.style.transform = 'rotate(3deg) scale(0.95)';
                     e.target.style.zIndex = '1000';
