@@ -2476,7 +2476,7 @@ require_once 'views/templates/header.php';
                 
                         <!-- Subtitel -->
                         <p class="text-base sm:text-lg md:text-xl lg:text-2xl text-slate-600 max-w-4xl mx-auto leading-relaxed font-light">
-                            De nieuwste <span class="font-semibold text-blue-600">zetelverdeling</span> volgens recente peilingen van <span class="font-semibold text-red-600">7 juni 2025</span>
+                            De nieuwste <span class="font-semibold text-blue-600">zetelverdeling</span> volgens recente peilingen van <span class="font-semibold text-red-600">26 oktober 2025</span>
                         </p>
                         
                         <!-- Status indicator -->
@@ -2485,7 +2485,7 @@ require_once 'views/templates/header.php';
                                 <svg class="w-3 sm:w-4 h-3 sm:h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                                 </svg>
-                                <span class="text-xs sm:text-sm font-medium text-slate-600">Bron: Peil.nl / Maurice de Hond</span>
+                                <span class="text-xs sm:text-sm font-medium text-slate-600">Bron: Ipsos I&O / Pauw & De Wit</span>
                             </div>
                         </div>
                     </div>
