@@ -30,7 +30,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'Immigratie' => $_POST['standpoint_immigratie'] ?? '',
                     'Klimaat' => $_POST['standpoint_klimaat'] ?? '',
                     'Zorg' => $_POST['standpoint_zorg'] ?? '',
-                    'Energie' => $_POST['standpoint_energie'] ?? ''
+                    'Economie' => $_POST['standpoint_economie'] ?? '',
+                    'Onderwijs' => $_POST['standpoint_onderwijs'] ?? '',
+                    'Veiligheid' => $_POST['standpoint_veiligheid'] ?? ''
                 ],
                 'current_seats' => (int)($_POST['current_seats'] ?? 0),
                 'polling' => [
@@ -69,7 +71,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'Immigratie' => $_POST['standpoint_immigratie'] ?? '',
                     'Klimaat' => $_POST['standpoint_klimaat'] ?? '',
                     'Zorg' => $_POST['standpoint_zorg'] ?? '',
-                    'Energie' => $_POST['standpoint_energie'] ?? ''
+                    'Economie' => $_POST['standpoint_economie'] ?? '',
+                    'Onderwijs' => $_POST['standpoint_onderwijs'] ?? '',
+                    'Veiligheid' => $_POST['standpoint_veiligheid'] ?? ''
                 ],
                 'current_seats' => (int)($_POST['current_seats'] ?? 0),
                 'polling' => [
@@ -122,107 +126,323 @@ require_once '../views/templates/header.php';
 ?>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
 * {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
 }
 
-.gradient-bg {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+.hero-gradient {
+    background: linear-gradient(135deg, #0f2a44 0%, #1a365d 50%, #2d4a6b 100%);
+    position: relative;
+    overflow: hidden;
 }
 
-.card-hover {
+.hero-gradient::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 20% 50%, rgba(196, 30, 58, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(196, 30, 58, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.gradient-text {
+    background: linear-gradient(135deg, #d63856 0%, #c41e3a 50%, #9e1829 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.card-primary {
+    background: white;
+    border: 1px solid rgba(26, 54, 93, 0.08);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.card-hover:hover {
+.card-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-}
-
-.modal {
-    backdrop-filter: blur(8px);
+    box-shadow: 0 12px 24px -6px rgba(26, 54, 93, 0.12), 0 6px 12px -3px rgba(26, 54, 93, 0.08);
+    border-color: rgba(26, 54, 93, 0.15);
 }
 
 .party-card {
-    background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.9) 100%);
-    backdrop-filter: blur(10px);
+    background: white;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
-.glass-effect {
-    background: rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.18);
+.party-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--party-color, #c41e3a);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.party-card:hover::before {
+    transform: scaleX(1);
+}
+
+.party-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #1a365d 0%, #2d4a6b 100%);
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #0f2a44 0%, #1a365d 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 16px -4px rgba(26, 54, 93, 0.3);
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #c41e3a 0%, #9e1829 100%);
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background: linear-gradient(135deg, #9e1829 0%, #7d1320 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 16px -4px rgba(196, 30, 58, 0.4);
+}
+
+.stat-card {
+    background: white;
+    border-left: 4px solid;
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateX(4px);
+    box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.1);
+}
+
+.modal-backdrop {
+    backdrop-filter: blur(8px);
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content {
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.tab-button {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.tab-button::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #c41e3a 0%, #d63856 100%);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.tab-button.active::after {
+    transform: scaleX(1);
+}
+
+.preview-image {
+    max-width: 120px;
+    max-height: 120px;
+    object-fit: contain;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 8px;
+    background: white;
+}
+
+.color-preset {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 2px solid transparent;
+}
+
+.color-preset:hover {
+    transform: scale(1.1);
+    border-color: #1a365d;
 }
 
 .search-input {
-    background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
 }
 
-.stats-card {
-    background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.8) 100%);
-    backdrop-filter: blur(10px);
-}
-
-.form-section {
-    background: rgba(248, 250, 252, 0.8);
-    backdrop-filter: blur(5px);
+.search-input:focus {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 16px -4px rgba(26, 54, 93, 0.15);
 }
 
 /* Custom scrollbar */
 .custom-scrollbar::-webkit-scrollbar {
-    width: 6px;
+    width: 8px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.1);
-    border-radius: 3px;
+    background: #f1f5f9;
+    border-radius: 4px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 3px;
+    background: #cbd5e1;
+    border-radius: 4px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: rgba(0, 0, 0, 0.5);
+    background: #94a3b8;
+}
+
+.badge-party {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+@media (max-width: 768px) {
+    .party-card:hover {
+        transform: none;
+    }
 }
 </style>
 
-<main class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50">
+<main class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/20 to-indigo-50/30">
     
-    <!-- Header Section -->
-    <div class="gradient-bg">
-        <div class="container mx-auto px-4 py-8 md:py-12">
-            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-                <div>
-                    <div class="flex items-center space-x-4 mb-2">
-                        <a href="stemwijzer-dashboard.php" class="text-white/80 hover:text-white transition-colors">
+    <!-- Hero Section -->
+    <div class="hero-gradient relative">
+        <div class="container mx-auto px-4 py-12 md:py-16 relative z-10">
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
+                <div class="flex-1">
+                    <div class="flex items-center space-x-3 mb-3">
+                        <a href="stemwijzer-dashboard.php" class="text-white/70 hover:text-white transition-colors">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                             </svg>
                         </a>
-                        <h1 class="text-3xl md:text-4xl font-bold text-white">Partijen Beheer</h1>
+                        <div class="px-3 py-1 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
+                            <span class="text-xs font-semibold text-white uppercase tracking-wider">Admin Beheer</span>
+                        </div>
                     </div>
-                    <p class="text-blue-100 text-base md:text-lg">Beheer alle politieke partijen en hun informatie</p>
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4 leading-tight">
+                        Politieke <span class="gradient-text">Partijen</span>
+                    </h1>
+                    <p class="text-lg md:text-xl text-blue-100 max-w-2xl leading-relaxed">
+                        Beheer alle politieke partijen, hun standpunten, peilingen en informatie op één centrale plek.
+                    </p>
                 </div>
-                <div class="flex flex-col sm:flex-row gap-3">
+                <div class="flex flex-col sm:flex-row lg:flex-col gap-3">
                     <button onclick="openAddModal()" 
-                            class="bg-white/20 backdrop-blur-sm text-white px-4 md:px-6 py-2 md:py-3 rounded-xl hover:bg-white/30 transition-all duration-300 border border-white/30 flex items-center justify-center space-x-2 text-sm md:text-base">
+                            class="btn-secondary text-white px-6 py-4 rounded-xl font-semibold flex items-center justify-center space-x-2 shadow-lg">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                         </svg>
                         <span>Nieuwe Partij</span>
                     </button>
                     <button onclick="exportParties()" 
-                            class="bg-white text-indigo-600 px-4 md:px-6 py-2 md:py-3 rounded-xl hover:bg-blue-50 transition-all duration-300 font-semibold flex items-center justify-center space-x-2 text-sm md:text-base">
+                            class="bg-white/10 backdrop-blur-sm border border-white/30 text-white px-6 py-4 rounded-xl font-semibold hover:bg-white/20 transition-all duration-300 flex items-center justify-center space-x-2">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"/>
                         </svg>
-                        <span>Export</span>
+                        <span>Exporteer Data</span>
                     </button>
+                </div>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-12">
+                <div class="stat-card rounded-xl p-6 shadow-lg border-primary">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-600 uppercase tracking-wide mb-1">Totaal Partijen</p>
+                            <p class="text-4xl font-black text-primary"><?= $stats['total_parties'] ?? 0 ?></p>
+                        </div>
+                        <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center">
+                            <svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-card rounded-xl p-6 shadow-lg border-secondary">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-600 uppercase tracking-wide mb-1">Totaal Zetels</p>
+                            <p class="text-4xl font-black text-secondary"><?= $stats['total_seats'] ?? 0 ?></p>
+                        </div>
+                        <div class="w-14 h-14 bg-secondary/10 rounded-xl flex items-center justify-center">
+                            <svg class="w-7 h-7 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-card rounded-xl p-6 shadow-lg border-green-500">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-600 uppercase tracking-wide mb-1">Grootste Partij</p>
+                            <p class="text-4xl font-black text-green-600"><?= $stats['max_seats'] ?? 0 ?></p>
+                        </div>
+                        <div class="w-14 h-14 bg-green-500/10 rounded-xl flex items-center justify-center">
+                            <svg class="w-7 h-7 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-card rounded-xl p-6 shadow-lg border-amber-500">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-600 uppercase tracking-wide mb-1">Gemiddeld</p>
+                            <p class="text-4xl font-black text-amber-600"><?= round($stats['avg_seats'] ?? 0, 1) ?></p>
+                        </div>
+                        <div class="w-14 h-14 bg-amber-500/10 rounded-xl flex items-center justify-center">
+                            <svg class="w-7 h-7 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                            </svg>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -230,106 +450,47 @@ require_once '../views/templates/header.php';
 
     <!-- Message Display -->
     <?php if ($message): ?>
-    <div class="container mx-auto px-4 -mt-6 relative z-20">
-        <div class="<?= $messageType === 'success' ? 'bg-green-100 border-green-400 text-green-700' : 'bg-red-100 border-red-400 text-red-700' ?> px-6 py-4 border rounded-xl">
-            <div class="flex items-center space-x-2">
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+    <div class="container mx-auto px-4 py-4 relative z-20">
+        <div class="<?= $messageType === 'success' ? 'bg-green-50 border-l-4 border-green-500 text-green-800' : 'bg-red-50 border-l-4 border-red-500 text-red-800' ?> px-6 py-4 rounded-xl shadow-md">
+            <div class="flex items-center space-x-3">
+                <svg class="w-6 h-6 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                     <?php if ($messageType === 'success'): ?>
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                     <?php else: ?>
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
                     <?php endif; ?>
                 </svg>
-                <span><?= htmlspecialchars($message) ?></span>
+                <span class="font-semibold"><?= htmlspecialchars($message) ?></span>
             </div>
         </div>
     </div>
     <?php endif; ?>
 
-    <div class="container mx-auto px-4 -mt-6 relative z-10">
+    <div class="container mx-auto px-4 py-8">
         
-        <!-- Statistics Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-            <div class="stats-card rounded-2xl p-6 border border-white/50 shadow-xl">
-                <div class="flex items-center space-x-4">
-                    <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <p class="text-gray-600 text-sm font-medium">Totaal Partijen</p>
-                        <p class="text-3xl font-bold text-gray-800"><?= $stats['total_parties'] ?? 0 ?></p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="stats-card rounded-2xl p-6 border border-white/50 shadow-xl">
-                <div class="flex items-center space-x-4">
-                    <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0A1.5 1.5 0 003 15.546V12c0-6.627 5.373-12 12-12s12 5.373 12 12v3.546z"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <p class="text-gray-600 text-sm font-medium">Totaal Zetels</p>
-                        <p class="text-3xl font-bold text-gray-800"><?= $stats['total_seats'] ?? 0 ?></p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="stats-card rounded-2xl p-6 border border-white/50 shadow-xl">
-                <div class="flex items-center space-x-4">
-                    <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <p class="text-gray-600 text-sm font-medium">Grootste Partij</p>
-                        <p class="text-3xl font-bold text-gray-800"><?= $stats['max_seats'] ?? 0 ?></p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="stats-card rounded-2xl p-6 border border-white/50 shadow-xl">
-                <div class="flex items-center space-x-4">
-                    <div class="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-600 rounded-xl flex items-center justify-center">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <p class="text-gray-600 text-sm font-medium">Gemiddeld</p>
-                        <p class="text-3xl font-bold text-gray-800"><?= round($stats['avg_seats'] ?? 0, 1) ?></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Search and Filter -->
-        <div class="glass-effect rounded-2xl p-6 mb-8 shadow-xl">
-            <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0 md:space-x-4">
+        <!-- Search and Filter Section -->
+        <div class="card-primary rounded-xl p-6 mb-8 shadow-md">
+            <div class="flex flex-col lg:flex-row lg:items-center gap-4">
                 <div class="flex-1">
                     <div class="relative">
                         <input type="text" 
                                id="searchInput" 
-                               placeholder="Zoek partijen..." 
-                               class="search-input w-full px-4 py-3 pl-12 rounded-xl border border-white/30 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                               placeholder="Zoek op partijnaam of afkorting..." 
+                               class="search-input w-full px-5 py-3 pl-12 rounded-xl border-2 border-gray-200 focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all">
                         <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                         </svg>
                     </div>
                 </div>
-                <div class="flex space-x-4">
-                    <select id="seatFilter" class="search-input px-4 py-3 rounded-xl border border-white/30 focus:ring-2 focus:ring-indigo-500">
-                        <option value="">Alle zetels</option>
-                        <option value="0-5">0-5 zetels</option>
-                        <option value="6-15">6-15 zetels</option>
-                        <option value="16-30">16-30 zetels</option>
-                        <option value="31+">31+ zetels</option>
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <select id="sortSelect" class="px-5 py-3 rounded-xl border-2 border-gray-200 focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all font-medium">
+                        <option value="seats-desc">Zetels (hoog-laag)</option>
+                        <option value="seats-asc">Zetels (laag-hoog)</option>
+                        <option value="name-asc">Naam (A-Z)</option>
+                        <option value="name-desc">Naam (Z-A)</option>
+                        <option value="polling-desc">Peiling (hoog-laag)</option>
                     </select>
-                    <button onclick="resetFilters()" class="bg-white/50 text-gray-700 px-6 py-3 rounded-xl hover:bg-white/70 transition-all duration-300">
+                    <button onclick="resetFilters()" class="px-6 py-3 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-all font-semibold">
                         Reset
                     </button>
                 </div>
@@ -339,104 +500,82 @@ require_once '../views/templates/header.php';
         <!-- Parties Grid -->
         <div id="partiesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
             <?php foreach ($parties as $key => $party): ?>
-            <div class="party-card rounded-2xl shadow-xl border border-white/50 overflow-hidden card-hover party-item" 
+            <div class="party-card rounded-2xl shadow-lg border border-gray-100 overflow-hidden party-item" 
+                 style="--party-color: <?= $party['color'] ?>;"
                  data-party-name="<?= strtolower($party['name']) ?>" 
                  data-party-key="<?= strtolower($key) ?>"
-                 data-seats="<?= $party['current_seats'] ?>">
+                 data-seats="<?= $party['current_seats'] ?>"
+                 data-polling="<?= $party['polling']['seats'] ?>">
                 
                 <!-- Party Header -->
-                <div class="p-6 border-b border-gray-100" style="background: linear-gradient(135deg, <?= $party['color'] ?>15 0%, <?= $party['color'] ?>08 100%);">
-                    <div class="flex items-start justify-between">
-                        <div class="flex items-center space-x-4">
-                            <div class="w-16 h-16 rounded-xl bg-white shadow-md p-2">
+                <div class="p-6 bg-gradient-to-br from-gray-50 to-white">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="flex items-center space-x-4 flex-1">
+                            <div class="w-20 h-20 rounded-xl bg-white shadow-md p-3 flex-shrink-0">
                                 <img src="<?= htmlspecialchars($party['logo']) ?>" 
                                      alt="<?= htmlspecialchars($party['name']) ?>" 
-                                     class="w-full h-full object-contain">
+                                     class="w-full h-full object-contain"
+                                     onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect fill=%22%23e5e7eb%22 width=%22100%22 height=%22100%22/%3E%3Ctext x=%2250%22 y=%2255%22 font-size=%2240%22 text-anchor=%22middle%22 fill=%22%23fff%22%3E?%3C/text%3E%3C/svg%3E'">
                             </div>
-                            <div>
-                                <h3 class="text-xl font-bold text-gray-800"><?= htmlspecialchars($party['name']) ?></h3>
-                                <p class="text-gray-600"><?= htmlspecialchars($party['leader']) ?></p>
-                                <div class="flex items-center space-x-2 mt-1">
-                                    <span class="px-2 py-1 text-xs font-semibold rounded-full" style="background-color: <?= $party['color'] ?>20; color: <?= $party['color'] ?>;">
-                                        <?= $key ?>
-                                    </span>
-                                    <span class="px-2 py-1 text-xs font-semibold bg-gray-100 text-gray-700 rounded-full">
-                                        <?= $party['current_seats'] ?> zetels
-                                    </span>
-                                </div>
+                            <div class="flex-1 min-w-0">
+                                <h3 class="text-xl font-black text-gray-900 mb-1 truncate"><?= htmlspecialchars($party['name']) ?></h3>
+                                <p class="text-sm text-gray-600 font-medium truncate"><?= htmlspecialchars($party['leader']) ?></p>
                             </div>
                         </div>
-                        
-                        <!-- Actions Dropdown -->
-                        <div class="relative">
-                            <button onclick="toggleDropdown('dropdown-<?= $key ?>')" class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                                <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"/>
-                                </svg>
-                            </button>
-                            <div id="dropdown-<?= $key ?>" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-200 z-20">
-                                <a href="?edit=<?= $key ?>" class="block px-4 py-2 text-gray-700 hover:bg-gray-50 first:rounded-t-xl">
-                                    <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                                    </svg>
-                                    Bewerken
-                                </a>
-                                <button onclick="duplicateParty('<?= $key ?>')" class="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-50">
-                                    <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
-                                    </svg>
-                                    Dupliceren
-                                </button>
-                                <button onclick="confirmDelete('<?= $key ?>', '<?= htmlspecialchars($party['name']) ?>')" class="block w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 last:rounded-b-xl">
-                                    <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                    </svg>
-                                    Verwijderen
-                                </button>
-                            </div>
-                        </div>
+                    </div>
+
+                    <div class="flex items-center space-x-2 flex-wrap gap-2">
+                        <span class="badge-party" style="background-color: <?= $party['color'] ?>20; color: <?= $party['color'] ?>;">
+                            <?= $key ?>
+                        </span>
+                        <span class="badge-party bg-gray-100 text-gray-700">
+                            <?= $party['current_seats'] ?> zetels
+                        </span>
+                        <span class="badge-party <?= $party['polling']['change'] >= 0 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' ?>">
+                            <?= $party['polling']['change'] >= 0 ? '+' : '' ?><?= $party['polling']['change'] ?>
+                        </span>
                     </div>
                 </div>
 
                 <!-- Party Content -->
                 <div class="p-6">
                     <!-- Description -->
-                    <p class="text-gray-600 text-sm mb-4 line-clamp-3">
+                    <p class="text-gray-600 text-sm mb-4 line-clamp-2 leading-relaxed">
                         <?= htmlspecialchars(substr($party['description'], 0, 120)) ?>...
                     </p>
                     
                     <!-- Polling Data -->
-                    <div class="bg-gray-50 rounded-xl p-4 mb-4">
-                        <h4 class="font-semibold text-gray-800 mb-2">Huidige Peiling</h4>
+                    <div class="bg-gradient-to-br from-gray-50 to-gray-100/50 rounded-xl p-4 mb-4">
+                        <h4 class="font-bold text-gray-900 text-xs uppercase tracking-wide mb-3">Huidige Peiling</h4>
                         <div class="flex items-center justify-between">
                             <div class="text-center">
-                                <p class="text-2xl font-bold text-gray-800"><?= $party['polling']['seats'] ?></p>
-                                <p class="text-xs text-gray-600">Zetels</p>
+                                <p class="text-2xl font-black text-primary"><?= $party['polling']['seats'] ?></p>
+                                <p class="text-xs text-gray-600 font-medium mt-1">Zetels</p>
                             </div>
                             <div class="text-center">
-                                <p class="text-2xl font-bold text-gray-800"><?= $party['polling']['percentage'] ?>%</p>
-                                <p class="text-xs text-gray-600">Percentage</p>
+                                <p class="text-2xl font-black text-primary"><?= $party['polling']['percentage'] ?>%</p>
+                                <p class="text-xs text-gray-600 font-medium mt-1">Percentage</p>
                             </div>
                             <div class="text-center">
-                                <p class="text-2xl font-bold <?= $party['polling']['change'] >= 0 ? 'text-green-600' : 'text-red-600' ?>">
+                                <p class="text-2xl font-black <?= $party['polling']['change'] >= 0 ? 'text-green-600' : 'text-red-600' ?>">
                                     <?= $party['polling']['change'] >= 0 ? '+' : '' ?><?= $party['polling']['change'] ?>
                                 </p>
-                                <p class="text-xs text-gray-600">Verandering</p>
+                                <p class="text-xs text-gray-600 font-medium mt-1">Trend</p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Key Standpoints -->
-                    <div class="space-y-2">
-                        <h4 class="font-semibold text-gray-800 text-sm">Standpunten</h4>
-                        <div class="grid grid-cols-2 gap-2">
-                            <?php foreach (array_slice($party['standpoints'], 0, 4) as $topic => $stance): ?>
-                            <div class="bg-white rounded-lg p-2 border border-gray-100">
-                                <p class="text-xs font-medium text-gray-600"><?= $topic ?></p>
-                                <p class="text-xs text-gray-500 truncate"><?= htmlspecialchars(substr($stance, 0, 30)) ?>...</p>
-                            </div>
-                            <?php endforeach; ?>
-                        </div>
+                    <!-- Action Buttons -->
+                    <div class="flex gap-2">
+                        <a href="?edit=<?= $key ?>" class="flex-1 btn-primary text-white text-center py-3 rounded-xl font-semibold text-sm">
+                            Bewerken
+                        </a>
+                        <button onclick="confirmDelete('<?= $key ?>', '<?= htmlspecialchars($party['name']) ?>')" 
+                                class="px-4 py-3 bg-red-50 text-red-600 rounded-xl hover:bg-red-100 transition-all font-semibold">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                            </svg>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -444,145 +583,211 @@ require_once '../views/templates/header.php';
         </div>
 
         <!-- Empty State -->
-        <div id="emptyState" class="hidden text-center py-12">
-            <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-            </svg>
-            <h3 class="text-xl font-semibold text-gray-600 mb-2">Geen partijen gevonden</h3>
-            <p class="text-gray-500">Probeer je zoekcriteria aan te passen</p>
+        <div id="emptyState" class="hidden text-center py-16">
+            <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-900 mb-2">Geen partijen gevonden</h3>
+            <p class="text-gray-600">Probeer je zoekopdracht aan te passen of reset de filters</p>
         </div>
     </div>
 </main>
 
 <!-- Add Party Modal -->
-<div id="addModal" class="hidden fixed inset-0 bg-black bg-opacity-50 modal z-50 flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden">
-        <div class="flex items-center justify-between p-6 border-b border-gray-200">
-            <h2 class="text-2xl font-bold text-gray-800">Nieuwe Partij Toevoegen</h2>
-            <button onclick="closeAddModal()" class="text-gray-500 hover:text-gray-700">
+<div id="addModal" class="hidden fixed inset-0 bg-black/60 modal-backdrop z-50 flex items-center justify-center p-4">
+    <div class="modal-content bg-white rounded-2xl shadow-2xl w-full max-w-5xl max-h-[90vh] overflow-hidden">
+        <div class="flex items-center justify-between p-6 border-b border-gray-200 bg-gradient-to-r from-primary to-primary-light">
+            <h2 class="text-2xl font-black text-white">Nieuwe Partij Toevoegen</h2>
+            <button onclick="closeAddModal()" class="text-white/80 hover:text-white transition-colors">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                 </svg>
             </button>
         </div>
         
-        <form method="POST" class="custom-scrollbar overflow-y-auto max-h-[calc(90vh-120px)]">
+        <!-- Tabs -->
+        <div class="flex border-b border-gray-200 bg-gray-50 px-6">
+            <button onclick="switchTab('basic')" class="tab-button active px-6 py-4 font-semibold text-primary" data-tab="basic">
+                Basis Info
+            </button>
+            <button onclick="switchTab('standpoints')" class="tab-button px-6 py-4 font-semibold text-gray-600 hover:text-primary" data-tab="standpoints">
+                Standpunten
+            </button>
+            <button onclick="switchTab('polling')" class="tab-button px-6 py-4 font-semibold text-gray-600 hover:text-primary" data-tab="polling">
+                Peilingen
+            </button>
+        </div>
+        
+        <form method="POST" class="custom-scrollbar overflow-y-auto" style="max-height: calc(90vh - 180px);">
             <input type="hidden" name="action" value="add_party">
             
-            <div class="p-6 space-y-8">
-                <!-- Basic Information -->
-                <div class="form-section rounded-xl p-6">
-                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Basis Informatie</h3>
+            <div class="p-6">
+                <!-- Tab Content: Basic Info -->
+                <div id="tab-basic" class="tab-content">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Partij Code *</label>
-                            <input type="text" name="party_key" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="bijv. VVD">
+                            <label class="block text-sm font-bold text-gray-900 mb-2">Partij Code *</label>
+                            <input type="text" name="party_key" required 
+                                   class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/10" 
+                                   placeholder="bijv. VVD">
+                            <p class="text-xs text-gray-500 mt-1">Unieke code in hoofdletters</p>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Partij Naam *</label>
-                            <input type="text" name="name" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Volledige partijnaam">
+                            <label class="block text-sm font-bold text-gray-900 mb-2">Partij Naam *</label>
+                            <input type="text" name="name" required 
+                                   class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/10" 
+                                   placeholder="Volledige partijnaam">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Partijleider *</label>
-                            <input type="text" name="leader" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Naam van de partijleider">
+                            <label class="block text-sm font-bold text-gray-900 mb-2">Partijleider *</label>
+                            <input type="text" name="leader" required 
+                                   class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/10" 
+                                   placeholder="Naam van de partijleider">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Partij Kleur *</label>
-                            <input type="color" name="color" required class="w-full h-12 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                            <label class="block text-sm font-bold text-gray-900 mb-2">Huidige Zetels *</label>
+                            <input type="number" name="current_seats" required min="0" value="0"
+                                   class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/10">
                         </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Logo URL</label>
-                            <input type="url" name="logo" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="https://...">
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-bold text-gray-900 mb-2">Logo URL *</label>
+                            <input type="url" name="logo" id="logo_url" required
+                                   oninput="previewImage('logo_url', 'logo_preview')"
+                                   class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/10" 
+                                   placeholder="https://example.com/logo.png">
+                            <div id="logo_preview" class="mt-3 hidden">
+                                <p class="text-xs font-semibold text-gray-700 mb-2">Preview:</p>
+                                <img class="preview-image" alt="Logo preview">
+                            </div>
                         </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Leider Foto URL</label>
-                            <input type="url" name="leader_photo" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="/partijleiders/...">
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-bold text-gray-900 mb-2">Leider Foto URL *</label>
+                            <input type="url" name="leader_photo" id="leader_photo_url" required
+                                   oninput="previewImage('leader_photo_url', 'leader_photo_preview')"
+                                   class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/10" 
+                                   placeholder="/partijleiders/naam.jpg">
+                            <div id="leader_photo_preview" class="mt-3 hidden">
+                                <p class="text-xs font-semibold text-gray-700 mb-2">Preview:</p>
+                                <img class="preview-image" alt="Leader photo preview">
+                            </div>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-bold text-gray-900 mb-2">Partij Kleur *</label>
+                            <div class="flex items-center gap-4">
+                                <input type="color" name="color" id="color_picker" required value="#1a365d"
+                                       class="h-12 w-20 border-2 border-gray-200 rounded-xl cursor-pointer">
+                                <div class="flex gap-2">
+                                    <button type="button" onclick="setColor('#1a365d')" class="color-preset" style="background: #1a365d;" title="Primary"></button>
+                                    <button type="button" onclick="setColor('#c41e3a')" class="color-preset" style="background: #c41e3a;" title="Secondary"></button>
+                                    <button type="button" onclick="setColor('#10b981')" class="color-preset" style="background: #10b981;" title="Groen"></button>
+                                    <button type="button" onclick="setColor('#3b82f6')" class="color-preset" style="background: #3b82f6;" title="Blauw"></button>
+                                    <button type="button" onclick="setColor('#f59e0b')" class="color-preset" style="background: #f59e0b;" title="Oranje"></button>
+                                    <button type="button" onclick="setColor('#8b5cf6')" class="color-preset" style="background: #8b5cf6;" title="Paars"></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-bold text-gray-900 mb-2">Partij Beschrijving *</label>
+                            <textarea name="description" required rows="4" 
+                                      class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/10" 
+                                      placeholder="Uitgebreide beschrijving van de partij en haar ideologie"></textarea>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-bold text-gray-900 mb-2">Leider Informatie *</label>
+                            <textarea name="leader_info" required rows="3" 
+                                      class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/10" 
+                                      placeholder="Achtergrond en informatie over de partijleider"></textarea>
                         </div>
                     </div>
                 </div>
 
-                <!-- Descriptions -->
-                <div class="form-section rounded-xl p-6">
-                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Beschrijvingen</h3>
-                    <div class="space-y-6">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Partij Beschrijving *</label>
-                            <textarea name="description" required rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Uitgebreide beschrijving van de partij"></textarea>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Leider Informatie *</label>
-                            <textarea name="leader_info" required rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Informatie over de partijleider"></textarea>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Zetels & Polling -->
-                <div class="form-section rounded-xl p-6">
-                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Zetels & Peilingen</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Huidige Zetels *</label>
-                            <input type="number" name="current_seats" required min="0" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Peiling Zetels</label>
-                            <input type="number" name="polling_seats" min="0" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Peiling Percentage</label>
-                            <input type="number" name="polling_percentage" step="0.1" min="0" max="100" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Verandering</label>
-                            <input type="number" name="polling_change" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Standpunten -->
-                <div class="form-section rounded-xl p-6">
-                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Standpunten</h3>
+                <!-- Tab Content: Standpunten -->
+                <div id="tab-standpoints" class="tab-content hidden">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Immigratie</label>
-                            <textarea name="standpoint_immigratie" rows="2" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Standpunt over immigratie"></textarea>
+                            <label class="block text-sm font-bold text-gray-900 mb-2">Immigratie</label>
+                            <textarea name="standpoint_immigratie" rows="3" 
+                                      class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/10" 
+                                      placeholder="Standpunt over immigratie en asielbeleid"></textarea>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Klimaat</label>
-                            <textarea name="standpoint_klimaat" rows="2" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Standpunt over klimaat"></textarea>
+                            <label class="block text-sm font-bold text-gray-900 mb-2">Klimaat</label>
+                            <textarea name="standpoint_klimaat" rows="3" 
+                                      class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/10" 
+                                      placeholder="Standpunt over klimaat en duurzaamheid"></textarea>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Zorg</label>
-                            <textarea name="standpoint_zorg" rows="2" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Standpunt over zorg"></textarea>
+                            <label class="block text-sm font-bold text-gray-900 mb-2">Zorg</label>
+                            <textarea name="standpoint_zorg" rows="3" 
+                                      class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/10" 
+                                      placeholder="Standpunt over gezondheidszorg"></textarea>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Energie</label>
-                            <textarea name="standpoint_energie" rows="2" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Standpunt over energie"></textarea>
+                            <label class="block text-sm font-bold text-gray-900 mb-2">Economie</label>
+                            <textarea name="standpoint_economie" rows="3" 
+                                      class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/10" 
+                                      placeholder="Standpunt over economie en belastingen"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-900 mb-2">Onderwijs</label>
+                            <textarea name="standpoint_onderwijs" rows="3" 
+                                      class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/10" 
+                                      placeholder="Standpunt over onderwijs"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-900 mb-2">Veiligheid</label>
+                            <textarea name="standpoint_veiligheid" rows="3" 
+                                      class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/10" 
+                                      placeholder="Standpunt over veiligheid en justitie"></textarea>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-bold text-gray-900 mb-2">Links Perspectief</label>
+                            <textarea name="perspective_left" rows="2" 
+                                      class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/10" 
+                                      placeholder="Hoe linkse kiezers deze partij kunnen zien"></textarea>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-bold text-gray-900 mb-2">Rechts Perspectief</label>
+                            <textarea name="perspective_right" rows="2" 
+                                      class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/10" 
+                                      placeholder="Hoe rechtse kiezers deze partij kunnen zien"></textarea>
                         </div>
                     </div>
                 </div>
 
-                <!-- Perspectieven -->
-                <div class="form-section rounded-xl p-6">
-                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Perspectieven</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Tab Content: Polling -->
+                <div id="tab-polling" class="tab-content hidden">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Links Perspectief</label>
-                            <textarea name="perspective_left" rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Hoe linkse kiezers deze partij kunnen zien"></textarea>
+                            <label class="block text-sm font-bold text-gray-900 mb-2">Peiling Zetels</label>
+                            <input type="number" name="polling_seats" min="0" value="0"
+                                   class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/10">
+                            <p class="text-xs text-gray-500 mt-1">Verwachte zetels volgens peilingen</p>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Rechts Perspectief</label>
-                            <textarea name="perspective_right" rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Hoe rechtse kiezers deze partij kunnen zien"></textarea>
+                            <label class="block text-sm font-bold text-gray-900 mb-2">Peiling Percentage</label>
+                            <input type="number" name="polling_percentage" step="0.1" min="0" max="100" value="0"
+                                   class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/10">
+                            <p class="text-xs text-gray-500 mt-1">Percentage in peilingen</p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-900 mb-2">Trend/Verandering</label>
+                            <input type="number" name="polling_change" value="0"
+                                   class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/10">
+                            <p class="text-xs text-gray-500 mt-1">Positief of negatief (bijv. +3 of -2)</p>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="p-6 bg-gray-50 border-t border-gray-200 flex justify-end space-x-4">
-                <button type="button" onclick="closeAddModal()" class="px-6 py-3 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors">
+                <button type="button" onclick="closeAddModal()" 
+                        class="px-6 py-3 border-2 border-gray-300 text-gray-700 rounded-xl hover:bg-gray-100 transition-colors font-semibold">
                     Annuleren
                 </button>
-                <button type="submit" class="px-6 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-colors">
+                <button type="submit" class="btn-secondary px-8 py-3 text-white rounded-xl font-semibold shadow-lg">
                     Partij Toevoegen
                 </button>
             </div>
@@ -592,136 +797,180 @@ require_once '../views/templates/header.php';
 
 <!-- Edit Party Modal -->
 <?php if ($editParty): ?>
-<div id="editModal" class="fixed inset-0 bg-black bg-opacity-50 modal z-50 flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden">
-        <div class="flex items-center justify-between p-6 border-b border-gray-200">
-            <h2 class="text-2xl font-bold text-gray-800">Partij Bewerken: <?= htmlspecialchars($editParty['name']) ?></h2>
-            <a href="?" class="text-gray-500 hover:text-gray-700">
+<div id="editModal" class="fixed inset-0 bg-black/60 modal-backdrop z-50 flex items-center justify-center p-4">
+    <div class="modal-content bg-white rounded-2xl shadow-2xl w-full max-w-5xl max-h-[90vh] overflow-hidden">
+        <div class="flex items-center justify-between p-6 border-b border-gray-200 bg-gradient-to-r from-primary to-primary-light">
+            <h2 class="text-2xl font-black text-white">Partij Bewerken: <?= htmlspecialchars($editParty['name']) ?></h2>
+            <a href="?" class="text-white/80 hover:text-white transition-colors">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                 </svg>
             </a>
         </div>
         
-        <form method="POST" class="custom-scrollbar overflow-y-auto max-h-[calc(90vh-120px)]">
+        <!-- Tabs -->
+        <div class="flex border-b border-gray-200 bg-gray-50 px-6">
+            <button onclick="switchTabEdit('basic')" class="tab-button-edit active px-6 py-4 font-semibold text-primary" data-tab="basic">
+                Basis Info
+            </button>
+            <button onclick="switchTabEdit('standpoints')" class="tab-button-edit px-6 py-4 font-semibold text-gray-600 hover:text-primary" data-tab="standpoints">
+                Standpunten
+            </button>
+            <button onclick="switchTabEdit('polling')" class="tab-button-edit px-6 py-4 font-semibold text-gray-600 hover:text-primary" data-tab="polling">
+                Peilingen
+            </button>
+        </div>
+        
+        <form method="POST" class="custom-scrollbar overflow-y-auto" style="max-height: calc(90vh - 180px);">
             <input type="hidden" name="action" value="update_party">
             <input type="hidden" name="party_key" value="<?= htmlspecialchars($editPartyKey) ?>">
             
-            <div class="p-6 space-y-8">
-                <!-- Basic Information -->
-                <div class="form-section rounded-xl p-6">
-                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Basis Informatie</h3>
+            <div class="p-6">
+                <!-- Tab Content: Basic Info -->
+                <div id="tab-edit-basic" class="tab-content-edit">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Partij Code</label>
-                            <input type="text" value="<?= htmlspecialchars($editPartyKey) ?>" disabled class="w-full px-4 py-3 border border-gray-300 rounded-xl bg-gray-100 text-gray-500">
+                            <label class="block text-sm font-bold text-gray-900 mb-2">Partij Code</label>
+                            <input type="text" value="<?= htmlspecialchars($editPartyKey) ?>" disabled 
+                                   class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl bg-gray-100 text-gray-500">
                             <p class="text-xs text-gray-500 mt-1">Partij code kan niet worden gewijzigd</p>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Partij Naam *</label>
-                            <input type="text" name="name" required value="<?= htmlspecialchars($editParty['name']) ?>" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                            <label class="block text-sm font-bold text-gray-900 mb-2">Partij Naam *</label>
+                            <input type="text" name="name" required value="<?= htmlspecialchars($editParty['name']) ?>"
+                                   class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/10">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Partijleider *</label>
-                            <input type="text" name="leader" required value="<?= htmlspecialchars($editParty['leader']) ?>" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                            <label class="block text-sm font-bold text-gray-900 mb-2">Partijleider *</label>
+                            <input type="text" name="leader" required value="<?= htmlspecialchars($editParty['leader']) ?>"
+                                   class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/10">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Partij Kleur *</label>
-                            <input type="color" name="color" required value="<?= htmlspecialchars($editParty['color']) ?>" class="w-full h-12 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                            <label class="block text-sm font-bold text-gray-900 mb-2">Huidige Zetels *</label>
+                            <input type="number" name="current_seats" required min="0" value="<?= $editParty['current_seats'] ?>"
+                                   class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/10">
                         </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Logo URL</label>
-                            <input type="url" name="logo" value="<?= htmlspecialchars($editParty['logo']) ?>" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-bold text-gray-900 mb-2">Logo URL *</label>
+                            <input type="url" name="logo" id="edit_logo_url" required value="<?= htmlspecialchars($editParty['logo']) ?>"
+                                   oninput="previewImage('edit_logo_url', 'edit_logo_preview')"
+                                   class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/10">
+                            <div id="edit_logo_preview" class="mt-3">
+                                <p class="text-xs font-semibold text-gray-700 mb-2">Preview:</p>
+                                <img src="<?= htmlspecialchars($editParty['logo']) ?>" class="preview-image" alt="Logo preview">
+                            </div>
                         </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Leider Foto URL</label>
-                            <input type="url" name="leader_photo" value="<?= htmlspecialchars($editParty['leader_photo']) ?>" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-bold text-gray-900 mb-2">Leider Foto URL *</label>
+                            <input type="url" name="leader_photo" id="edit_leader_photo_url" required value="<?= htmlspecialchars($editParty['leader_photo']) ?>"
+                                   oninput="previewImage('edit_leader_photo_url', 'edit_leader_photo_preview')"
+                                   class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/10">
+                            <div id="edit_leader_photo_preview" class="mt-3">
+                                <p class="text-xs font-semibold text-gray-700 mb-2">Preview:</p>
+                                <img src="<?= htmlspecialchars($editParty['leader_photo']) ?>" class="preview-image" alt="Leader photo preview">
+                            </div>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-bold text-gray-900 mb-2">Partij Kleur *</label>
+                            <div class="flex items-center gap-4">
+                                <input type="color" name="color" id="edit_color_picker" required value="<?= htmlspecialchars($editParty['color']) ?>"
+                                       class="h-12 w-20 border-2 border-gray-200 rounded-xl cursor-pointer">
+                                <div class="flex gap-2">
+                                    <button type="button" onclick="setColorEdit('#1a365d')" class="color-preset" style="background: #1a365d;"></button>
+                                    <button type="button" onclick="setColorEdit('#c41e3a')" class="color-preset" style="background: #c41e3a;"></button>
+                                    <button type="button" onclick="setColorEdit('#10b981')" class="color-preset" style="background: #10b981;"></button>
+                                    <button type="button" onclick="setColorEdit('#3b82f6')" class="color-preset" style="background: #3b82f6;"></button>
+                                    <button type="button" onclick="setColorEdit('#f59e0b')" class="color-preset" style="background: #f59e0b;"></button>
+                                    <button type="button" onclick="setColorEdit('#8b5cf6')" class="color-preset" style="background: #8b5cf6;"></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-bold text-gray-900 mb-2">Partij Beschrijving *</label>
+                            <textarea name="description" required rows="4" 
+                                      class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/10"><?= htmlspecialchars($editParty['description']) ?></textarea>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-bold text-gray-900 mb-2">Leider Informatie *</label>
+                            <textarea name="leader_info" required rows="3" 
+                                      class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/10"><?= htmlspecialchars($editParty['leader_info']) ?></textarea>
                         </div>
                     </div>
                 </div>
 
-                <!-- Descriptions -->
-                <div class="form-section rounded-xl p-6">
-                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Beschrijvingen</h3>
-                    <div class="space-y-6">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Partij Beschrijving *</label>
-                            <textarea name="description" required rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"><?= htmlspecialchars($editParty['description']) ?></textarea>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Leider Informatie *</label>
-                            <textarea name="leader_info" required rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"><?= htmlspecialchars($editParty['leader_info']) ?></textarea>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Zetels & Polling -->
-                <div class="form-section rounded-xl p-6">
-                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Zetels & Peilingen</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Huidige Zetels *</label>
-                            <input type="number" name="current_seats" required min="0" value="<?= $editParty['current_seats'] ?>" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Peiling Zetels</label>
-                            <input type="number" name="polling_seats" min="0" value="<?= $editParty['polling']['seats'] ?>" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Peiling Percentage</label>
-                            <input type="number" name="polling_percentage" step="0.1" min="0" max="100" value="<?= $editParty['polling']['percentage'] ?>" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Verandering</label>
-                            <input type="number" name="polling_change" value="<?= $editParty['polling']['change'] ?>" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Standpunten -->
-                <div class="form-section rounded-xl p-6">
-                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Standpunten</h3>
+                <!-- Tab Content: Standpunten -->
+                <div id="tab-edit-standpoints" class="tab-content-edit hidden">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Immigratie</label>
-                            <textarea name="standpoint_immigratie" rows="2" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"><?= htmlspecialchars($editParty['standpoints']['Immigratie'] ?? '') ?></textarea>
+                            <label class="block text-sm font-bold text-gray-900 mb-2">Immigratie</label>
+                            <textarea name="standpoint_immigratie" rows="3" 
+                                      class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/10"><?= htmlspecialchars($editParty['standpoints']['Immigratie'] ?? '') ?></textarea>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Klimaat</label>
-                            <textarea name="standpoint_klimaat" rows="2" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"><?= htmlspecialchars($editParty['standpoints']['Klimaat'] ?? '') ?></textarea>
+                            <label class="block text-sm font-bold text-gray-900 mb-2">Klimaat</label>
+                            <textarea name="standpoint_klimaat" rows="3" 
+                                      class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/10"><?= htmlspecialchars($editParty['standpoints']['Klimaat'] ?? '') ?></textarea>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Zorg</label>
-                            <textarea name="standpoint_zorg" rows="2" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"><?= htmlspecialchars($editParty['standpoints']['Zorg'] ?? '') ?></textarea>
+                            <label class="block text-sm font-bold text-gray-900 mb-2">Zorg</label>
+                            <textarea name="standpoint_zorg" rows="3" 
+                                      class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/10"><?= htmlspecialchars($editParty['standpoints']['Zorg'] ?? '') ?></textarea>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Energie</label>
-                            <textarea name="standpoint_energie" rows="2" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"><?= htmlspecialchars($editParty['standpoints']['Energie'] ?? '') ?></textarea>
+                            <label class="block text-sm font-bold text-gray-900 mb-2">Economie</label>
+                            <textarea name="standpoint_economie" rows="3" 
+                                      class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/10"><?= htmlspecialchars($editParty['standpoints']['Economie'] ?? '') ?></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-900 mb-2">Onderwijs</label>
+                            <textarea name="standpoint_onderwijs" rows="3" 
+                                      class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/10"><?= htmlspecialchars($editParty['standpoints']['Onderwijs'] ?? '') ?></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-900 mb-2">Veiligheid</label>
+                            <textarea name="standpoint_veiligheid" rows="3" 
+                                      class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/10"><?= htmlspecialchars($editParty['standpoints']['Veiligheid'] ?? '') ?></textarea>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-bold text-gray-900 mb-2">Links Perspectief</label>
+                            <textarea name="perspective_left" rows="2" 
+                                      class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/10"><?= htmlspecialchars($editParty['perspectives']['left'] ?? '') ?></textarea>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-bold text-gray-900 mb-2">Rechts Perspectief</label>
+                            <textarea name="perspective_right" rows="2" 
+                                      class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/10"><?= htmlspecialchars($editParty['perspectives']['right'] ?? '') ?></textarea>
                         </div>
                     </div>
                 </div>
 
-                <!-- Perspectieven -->
-                <div class="form-section rounded-xl p-6">
-                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Perspectieven</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Tab Content: Polling -->
+                <div id="tab-edit-polling" class="tab-content-edit hidden">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Links Perspectief</label>
-                            <textarea name="perspective_left" rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"><?= htmlspecialchars($editParty['perspectives']['left'] ?? '') ?></textarea>
+                            <label class="block text-sm font-bold text-gray-900 mb-2">Peiling Zetels</label>
+                            <input type="number" name="polling_seats" min="0" value="<?= $editParty['polling']['seats'] ?>"
+                                   class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/10">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Rechts Perspectief</label>
-                            <textarea name="perspective_right" rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"><?= htmlspecialchars($editParty['perspectives']['right'] ?? '') ?></textarea>
+                            <label class="block text-sm font-bold text-gray-900 mb-2">Peiling Percentage</label>
+                            <input type="number" name="polling_percentage" step="0.1" min="0" max="100" value="<?= $editParty['polling']['percentage'] ?>"
+                                   class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/10">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-900 mb-2">Trend/Verandering</label>
+                            <input type="number" name="polling_change" value="<?= $editParty['polling']['change'] ?>"
+                                   class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/10">
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="p-6 bg-gray-50 border-t border-gray-200 flex justify-end space-x-4">
-                <a href="?" class="px-6 py-3 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors">
+                <a href="?" class="px-6 py-3 border-2 border-gray-300 text-gray-700 rounded-xl hover:bg-gray-100 transition-colors font-semibold inline-block">
                     Annuleren
                 </a>
-                <button type="submit" class="px-6 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-colors">
+                <button type="submit" class="btn-primary px-8 py-3 text-white rounded-xl font-semibold shadow-lg">
                     Wijzigingen Opslaan
                 </button>
             </div>
@@ -731,7 +980,7 @@ require_once '../views/templates/header.php';
 <?php endif; ?>
 
 <script>
-// Modal functions
+// Modal Management
 function openAddModal() {
     document.getElementById('addModal').classList.remove('hidden');
     document.body.style.overflow = 'hidden';
@@ -742,69 +991,119 @@ function closeAddModal() {
     document.body.style.overflow = 'auto';
 }
 
-// Dropdown functions
-function toggleDropdown(id) {
-    // Close all other dropdowns
-    document.querySelectorAll('[id^="dropdown-"]').forEach(dropdown => {
-        if (dropdown.id !== id) {
-            dropdown.classList.add('hidden');
-        }
+// Tab Management for Add Modal
+function switchTab(tabName) {
+    // Hide all tab contents
+    document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.add('hidden');
     });
     
-    // Toggle target dropdown
-    const dropdown = document.getElementById(id);
-    dropdown.classList.toggle('hidden');
+    // Remove active class from all tabs
+    document.querySelectorAll('.tab-button').forEach(tab => {
+        tab.classList.remove('active', 'text-primary');
+        tab.classList.add('text-gray-600');
+    });
+    
+    // Show selected tab content
+    document.getElementById('tab-' + tabName).classList.remove('hidden');
+    
+    // Add active class to selected tab
+    const activeTab = document.querySelector('.tab-button[data-tab="' + tabName + '"]');
+    activeTab.classList.add('active', 'text-primary');
+    activeTab.classList.remove('text-gray-600');
 }
 
-// Close dropdowns when clicking outside
-document.addEventListener('click', function(event) {
-    if (!event.target.closest('button') || !event.target.closest('[onclick^="toggleDropdown"]')) {
-        document.querySelectorAll('[id^="dropdown-"]').forEach(dropdown => {
-            dropdown.classList.add('hidden');
-        });
-    }
-});
+// Tab Management for Edit Modal
+function switchTabEdit(tabName) {
+    // Hide all tab contents
+    document.querySelectorAll('.tab-content-edit').forEach(content => {
+        content.classList.add('hidden');
+    });
+    
+    // Remove active class from all tabs
+    document.querySelectorAll('.tab-button-edit').forEach(tab => {
+        tab.classList.remove('active', 'text-primary');
+        tab.classList.add('text-gray-600');
+    });
+    
+    // Show selected tab content
+    document.getElementById('tab-edit-' + tabName).classList.remove('hidden');
+    
+    // Add active class to selected tab
+    const activeTab = document.querySelector('.tab-button-edit[data-tab="' + tabName + '"]');
+    activeTab.classList.add('active', 'text-primary');
+    activeTab.classList.remove('text-gray-600');
+}
 
-// Search and filter functions
+// Image Preview Function
+function previewImage(inputId, previewId) {
+    const input = document.getElementById(inputId);
+    const preview = document.getElementById(previewId);
+    const img = preview.querySelector('img');
+    
+    if (input.value) {
+        preview.classList.remove('hidden');
+        img.src = input.value;
+        img.onerror = function() {
+            this.src = 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect fill=%22%23e5e7eb%22 width=%22100%22 height=%22100%22/%3E%3Ctext x=%2250%22 y=%2255%22 font-size=%2220%22 text-anchor=%22middle%22 fill=%22%23666%22%3EInvalid URL%3C/text%3E%3C/svg%3E';
+        };
+    } else {
+        preview.classList.add('hidden');
+    }
+}
+
+// Color Picker Functions
+function setColor(color) {
+    document.getElementById('color_picker').value = color;
+}
+
+function setColorEdit(color) {
+    document.getElementById('edit_color_picker').value = color;
+}
+
+// Search and Filter
 function filterParties() {
     const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-    const seatFilter = document.getElementById('seatFilter').value;
-    const parties = document.querySelectorAll('.party-item');
+    const sortValue = document.getElementById('sortSelect').value;
+    const parties = Array.from(document.querySelectorAll('.party-item'));
     let visibleCount = 0;
 
+    // Filter
     parties.forEach(party => {
         const name = party.dataset.partyName;
         const key = party.dataset.partyKey;
-        const seats = parseInt(party.dataset.seats);
         
-        let matchesSearch = name.includes(searchTerm) || key.includes(searchTerm);
-        let matchesSeats = true;
-        
-        if (seatFilter) {
-            switch(seatFilter) {
-                case '0-5':
-                    matchesSeats = seats >= 0 && seats <= 5;
-                    break;
-                case '6-15':
-                    matchesSeats = seats >= 6 && seats <= 15;
-                    break;
-                case '16-30':
-                    matchesSeats = seats >= 16 && seats <= 30;
-                    break;
-                case '31+':
-                    matchesSeats = seats >= 31;
-                    break;
-            }
-        }
-        
-        if (matchesSearch && matchesSeats) {
+        if (name.includes(searchTerm) || key.includes(searchTerm)) {
             party.style.display = 'block';
             visibleCount++;
         } else {
             party.style.display = 'none';
         }
     });
-    
+
+    // Sort visible parties
+    const visibleParties = parties.filter(p => p.style.display !== 'none');
+    visibleParties.sort((a, b) => {
+        switch(sortValue) {
+            case 'seats-desc':
+                return parseInt(b.dataset.seats) - parseInt(a.dataset.seats);
+            case 'seats-asc':
+                return parseInt(a.dataset.seats) - parseInt(b.dataset.seats);
+            case 'name-asc':
+                return a.dataset.partyName.localeCompare(b.dataset.partyName);
+            case 'name-desc':
+                return b.dataset.partyName.localeCompare(a.dataset.partyName);
+            case 'polling-desc':
+                return parseInt(b.dataset.polling) - parseInt(a.dataset.polling);
+            default:
+                return 0;
+        }
+    });
+
+    // Reorder in DOM
+    const grid = document.getElementById('partiesGrid');
+    visibleParties.forEach(party => grid.appendChild(party));
+
     // Show/hide empty state
     const emptyState = document.getElementById('emptyState');
     if (visibleCount === 0) {
@@ -816,17 +1115,17 @@ function filterParties() {
 
 function resetFilters() {
     document.getElementById('searchInput').value = '';
-    document.getElementById('seatFilter').value = '';
+    document.getElementById('sortSelect').value = 'seats-desc';
     filterParties();
 }
 
-// Add event listeners
+// Event listeners
 document.getElementById('searchInput').addEventListener('input', filterParties);
-document.getElementById('seatFilter').addEventListener('change', filterParties);
+document.getElementById('sortSelect').addEventListener('change', filterParties);
 
 // Delete confirmation
 function confirmDelete(partyKey, partyName) {
-    if (confirm(`Weet je zeker dat je "${partyName}" wilt verwijderen? Deze actie kan niet ongedaan worden gemaakt.`)) {
+    if (confirm(`Weet je zeker dat je "${partyName}" wilt deactiveren?\n\nDeze actie kan later ongedaan worden gemaakt door de partij opnieuw te activeren in de database.`)) {
         const form = document.createElement('form');
         form.method = 'POST';
         form.innerHTML = `
@@ -838,28 +1137,55 @@ function confirmDelete(partyKey, partyName) {
     }
 }
 
-// Duplicate party
-function duplicateParty(partyKey) {
-    // This would open the add modal with pre-filled data
-    // For now, just show an alert
-    alert('Dupliceren functionaliteit wordt nog geïmplementeerd');
-}
-
 // Export parties
 function exportParties() {
-    alert('Export functionaliteit wordt nog geïmplementeerd');
+    const parties = Array.from(document.querySelectorAll('.party-item:not([style*="display: none"])')).map(party => ({
+        key: party.dataset.partyKey.toUpperCase(),
+        name: party.querySelector('h3').textContent.trim(),
+        seats: party.dataset.seats
+    }));
+    
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(parties, null, 2));
+    const downloadAnchorNode = document.createElement('a');
+    downloadAnchorNode.setAttribute("href", dataStr);
+    downloadAnchorNode.setAttribute("download", "partijen_export_" + new Date().toISOString().split('T')[0] + ".json");
+    document.body.appendChild(downloadAnchorNode);
+    downloadAnchorNode.click();
+    downloadAnchorNode.remove();
 }
 
-// Auto-close messages after 5 seconds
+// Auto-close success/error messages
 document.addEventListener('DOMContentLoaded', function() {
-    const messages = document.querySelectorAll('[class*="bg-green-100"], [class*="bg-red-100"]');
+    const messages = document.querySelectorAll('[class*="bg-green-50"], [class*="bg-red-50"]');
     messages.forEach(message => {
         setTimeout(() => {
+            message.style.transition = 'opacity 0.3s ease';
             message.style.opacity = '0';
             setTimeout(() => message.remove(), 300);
         }, 5000);
     });
+
+    // Initialize image previews for edit modal
+    <?php if ($editParty): ?>
+    previewImage('edit_logo_url', 'edit_logo_preview');
+    previewImage('edit_leader_photo_url', 'edit_leader_photo_preview');
+    <?php endif; ?>
 });
+
+// Prevent closing modal when clicking inside
+document.getElementById('addModal')?.addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeAddModal();
+    }
+});
+
+<?php if ($editParty): ?>
+document.getElementById('editModal')?.addEventListener('click', function(e) {
+    if (e.target === this) {
+        window.location.href = '?';
+    }
+});
+<?php endif; ?>
 </script>
 
-<?php require_once '../views/templates/footer.php'; ?> 
+<?php require_once '../views/templates/footer.php'; ?>
