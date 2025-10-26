@@ -2267,11 +2267,25 @@ document.addEventListener('DOMContentLoaded', function() {
     updateLikeButtonStates();
 });
 
-// Reading Progress Bar
+// Reading Progress Bar - optimized with throttling
 function initializeReadingProgress() {
+    let ticking = false;
+    let lastUpdateTime = 0;
+    const updateThrottle = 16; // ~60fps
+    
     function updateReadingProgress() {
+        const now = Date.now();
+        if (now - lastUpdateTime < updateThrottle) {
+            ticking = false;
+            return;
+        }
+        lastUpdateTime = now;
+        
         const article = document.getElementById('blog-content');
-        if (!article) return;
+        if (!article) {
+            ticking = false;
+            return;
+        }
         
         const articleHeight = article.offsetHeight;
         const articleTop = article.offsetTop;
@@ -2286,10 +2300,19 @@ function initializeReadingProgress() {
         if (progressBar) {
             progressBar.style.width = progress + '%';
         }
+        
+        ticking = false;
     }
     
-    window.addEventListener('scroll', updateReadingProgress);
-    window.addEventListener('resize', updateReadingProgress);
+    function requestUpdate() {
+        if (!ticking) {
+            requestAnimationFrame(updateReadingProgress);
+            ticking = true;
+        }
+    }
+    
+    window.addEventListener('scroll', requestUpdate, { passive: true });
+    window.addEventListener('resize', requestUpdate, { passive: true });
     updateReadingProgress();
 }
 

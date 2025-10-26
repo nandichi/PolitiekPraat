@@ -1119,16 +1119,35 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
             animation: pulse-subtle 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
         
+        /* Accessibility - Respect prefers-reduced-motion */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                will-change: auto !important;
+            }
+            
+            .animate-pulse-subtle,
+            .animate-ping,
+            [class*="animate-"] {
+                animation: none !important;
+            }
+            
+            /* Disable transforms on hover for reduced motion */
+            .group:hover *,
+            .dropdown-trigger:hover *,
+            .nav-link:hover {
+                transform: none !important;
+            }
+        }
 
     </style>
 </head>
 <body class="bg-gray-50 overflow-x-hidden">
-    <!-- Background blobs for decoration -->
-    <div aria-hidden="true" class="fixed inset-0 overflow-hidden z-0 pointer-events-none">
-        <div class="blob bg-primary/20 w-[500px] h-[500px] -top-[250px] -left-[250px] animate-pulse-slow"></div>
-        <div class="blob bg-secondary/10 w-[600px] h-[600px] top-[30%] -right-[300px] animate-pulse-slow" style="animation-delay: 1s;"></div>
-        <div class="blob bg-accent/10 w-[400px] h-[400px] -bottom-[200px] left-[10%] animate-pulse-slow" style="animation-delay: 2s;"></div>
-    </div>
+    <!-- Background blobs disabled to improve performance and prevent flickering -->
     
 
 
@@ -2101,16 +2120,6 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
                         }
                     });
                 }
-            });
-        });
-    </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            AOS.init({
-                duration: 1000,
-                once: false,
-                mirror: true
             });
         });
     </script>

@@ -24,14 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Initialize AOS (Animate On Scroll) if available
-  if (typeof AOS !== "undefined") {
-    AOS.init({
-      duration: 1000,
-      once: true,
-      offset: 100,
-    });
-  }
+  // AOS initialized in footer.php to avoid conflicts
 
   // Enhanced Typewriter effect
   const typewriterElement = document.getElementById("typewriter");
@@ -173,24 +166,33 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // Parallax effect for hero background elements
+  // Parallax effect for hero background elements - optimized with throttling
   const heroShapes = document.querySelectorAll(".hero-shape");
   const heroPattern = document.querySelector(".hero-pattern");
 
   if (heroShapes.length > 0 || heroPattern) {
     let ticking = false;
+    let lastScrollTime = 0;
+    const scrollThrottle = 16; // ~60fps
 
     function updateParallax() {
+      const now = Date.now();
+      if (now - lastScrollTime < scrollThrottle) {
+        ticking = false;
+        return;
+      }
+      lastScrollTime = now;
+
       const scrolled = window.pageYOffset;
       const rate = scrolled * -0.5;
 
       if (heroPattern) {
-        heroPattern.style.transform = `translateY(${rate * 0.3}px)`;
+        heroPattern.style.transform = `translate3d(0, ${rate * 0.3}px, 0)`;
       }
 
       heroShapes.forEach((shape, index) => {
         const shapeRate = rate * (0.2 + index * 0.1);
-        shape.style.transform = `translateY(${shapeRate}px)`;
+        shape.style.transform = `translate3d(0, ${shapeRate}px, 0)`;
       });
 
       ticking = false;
@@ -203,7 +205,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }
 
-    window.addEventListener("scroll", requestTick);
+    window.addEventListener("scroll", requestTick, { passive: true });
   }
 
   // Enhanced Newsletter form submission
@@ -369,34 +371,41 @@ document.addEventListener("DOMContentLoaded", function () {
   window.addEventListener("resize", function () {
     clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(() => {
-      // Recalculate positions if needed
-      if (typeof AOS !== "undefined") {
-        AOS.refresh();
-      }
+      // Recalculate positions if needed - AOS handles this automatically
     }, 250);
   });
 
-  // Add custom cursor effect for hero section (optional enhancement)
+  // Add custom cursor effect for hero section - optimized with rate limiting
   const heroSection = document.querySelector(".hero-section");
-  if (heroSection && window.innerWidth > 1024) {
+  if (heroSection && window.innerWidth > 1024 && heroShapes.length > 0) {
     let mouseX = 0;
     let mouseY = 0;
+    let lastMouseMoveTime = 0;
+    const mouseMoveThrottle = 50; // Update every 50ms for smoother but less resource-intensive animation
 
     heroSection.addEventListener("mousemove", function (e) {
+      const now = Date.now();
+      if (now - lastMouseMoveTime < mouseMoveThrottle) {
+        return;
+      }
+      lastMouseMoveTime = now;
+
       mouseX = e.clientX;
       mouseY = e.clientY;
 
       // Subtle mouse-follow effect for shapes
-      heroShapes.forEach((shape, index) => {
-        const rect = heroSection.getBoundingClientRect();
-        const x = (mouseX - rect.left) / rect.width;
-        const y = (mouseY - rect.top) / rect.height;
+      requestAnimationFrame(() => {
+        heroShapes.forEach((shape, index) => {
+          const rect = heroSection.getBoundingClientRect();
+          const x = (mouseX - rect.left) / rect.width;
+          const y = (mouseY - rect.top) / rect.height;
 
-        const moveX = (x - 0.5) * 20 * (index + 1);
-        const moveY = (y - 0.5) * 20 * (index + 1);
+          const moveX = (x - 0.5) * 20 * (index + 1);
+          const moveY = (y - 0.5) * 20 * (index + 1);
 
-        shape.style.transform += ` translate(${moveX}px, ${moveY}px)`;
+          shape.style.transform = `translate3d(${moveX}px, ${moveY}px, 0)`;
+        });
       });
-    });
+    }, { passive: true });
   }
 });

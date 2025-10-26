@@ -394,15 +394,7 @@
 <!-- Enhanced JavaScript with Modern Interactions -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize AOS (Animate On Scroll) if available
-    if (typeof AOS !== 'undefined') {
-        AOS.init({
-            duration: 800,
-            offset: 100,
-            once: true,
-            easing: 'ease-out-cubic'
-        });
-    }
+    // AOS initialized in footer.php to avoid conflicts
     
     // Add smooth hover effects for cards
     const blogRows = document.querySelectorAll('tr.group, .lg\\:hidden > div');

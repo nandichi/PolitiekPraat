@@ -117,36 +117,36 @@
 @keyframes float {
   0%,
   100% {
-    transform: translateY(0px) rotate(0deg);
+    transform: translate3d(0, 0, 0) rotate(0deg);
   }
   33% {
-    transform: translateY(-10px) rotate(1deg);
+    transform: translate3d(0, -10px, 0) rotate(1deg);
   }
   66% {
-    transform: translateY(5px) rotate(-1deg);
+    transform: translate3d(0, 5px, 0) rotate(-1deg);
   }
 }
 
 @keyframes float-delayed {
   0%,
   100% {
-    transform: translateY(0px) rotate(0deg);
+    transform: translate3d(0, 0, 0) rotate(0deg);
   }
   33% {
-    transform: translateY(8px) rotate(-1deg);
+    transform: translate3d(0, 8px, 0) rotate(-1deg);
   }
   66% {
-    transform: translateY(-12px) rotate(1deg);
+    transform: translate3d(0, -12px, 0) rotate(1deg);
   }
 }
 
 @keyframes bounce-slow {
   0%,
   100% {
-    transform: translateY(0px);
+    transform: translate3d(0, 0, 0);
   }
   50% {
-    transform: translateY(-20px);
+    transform: translate3d(0, -20px, 0);
   }
 }
 
@@ -188,24 +188,36 @@
   }
 }
 
-/* Animation Classes */
+/* Animation Classes - with performance optimizations */
 .animate-float {
   animation: float 6s ease-in-out infinite;
+  will-change: transform;
+  backface-visibility: hidden;
 }
 .animate-float-delayed {
   animation: float-delayed 8s ease-in-out infinite;
+  will-change: transform;
+  backface-visibility: hidden;
 }
 .animate-bounce-slow {
   animation: bounce-slow 3s ease-in-out infinite;
+  will-change: transform;
+  backface-visibility: hidden;
 }
 .animate-pulse-slow {
   animation: pulse-slow 4s ease-in-out infinite;
+  will-change: opacity;
+  backface-visibility: hidden;
 }
 .animate-shimmer {
   animation: shimmer 1.5s ease-out;
+  will-change: transform;
+  backface-visibility: hidden;
 }
 .animate-gradient {
   animation: gradient 3s ease infinite;
+  will-change: background-position;
+  backface-visibility: hidden;
 }
 
 /* ===== UTILITY CLASSES ===== */
@@ -275,10 +287,12 @@
 .news-card-premium {
   transition: all 0.3s ease;
   border: 1px solid rgba(226, 232, 240, 0.8);
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
 .news-card-premium:hover {
-  transform: translateY(-4px);
+  transform: translate3d(0, -4px, 0);
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
     0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
@@ -291,15 +305,19 @@
   box-shadow: 0 8px 32px 0 rgba(100, 116, 139, 0.1);
   transition: all 0.5s ease;
   position: relative;
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
 .peiling-card:hover {
-  transform: translateY(-4px);
+  transform: translate3d(0, -4px, 0);
   box-shadow: 0 20px 40px 0 rgba(100, 116, 139, 0.15);
 }
 
 .peiling-table-row {
   transition: all 0.3s ease;
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
 .peiling-table-row:hover {
@@ -309,7 +327,7 @@
     rgba(255, 255, 255, 1),
     rgba(147, 51, 234, 0.05)
   );
-  transform: scale(1.01);
+  transform: scale3d(1.01, 1.01, 1);
 }
 
 .peiling-party-indicator {
@@ -530,6 +548,8 @@
   padding: 2rem 1rem;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   overflow: hidden;
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
 .countdown-item::before {
@@ -567,7 +587,7 @@
 .countdown-item:hover {
   background: rgba(255, 255, 255, 0.1);
   border-color: rgba(255, 255, 255, 0.3);
-  transform: translateY(-8px) scale(1.05);
+  transform: translate3d(0, -8px, 0) scale3d(1.05, 1.05, 1);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
@@ -693,23 +713,34 @@
 
 /* ===== ACCESSIBILITY ===== */
 @media (prefers-reduced-motion: reduce) {
+  /* Disable all animations */
   .animate-float,
   .animate-float-delayed,
   .animate-bounce-slow,
   .animate-pulse-slow,
   .animate-shimmer,
   .animate-gradient {
-    animation: none;
+    animation: none !important;
   }
 
   .countdown-glow,
-  .countdown-item::before {
-    animation: none;
+  .countdown-item::before,
+  .swiper-slide-active-custom {
+    animation: none !important;
   }
 
+  /* Reset all transforms to prevent flickering */
+  .news-card-premium:hover,
+  .peiling-card:hover,
+  .countdown-item:hover {
+    transform: none !important;
+  }
+
+  /* Disable will-change for reduced motion */
   * {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    will-change: auto !important;
   }
 }

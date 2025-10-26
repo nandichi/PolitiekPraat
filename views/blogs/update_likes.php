@@ -257,14 +257,7 @@ require_once BASE_PATH . '/views/templates/header.php'; ?>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize AOS (Animate On Scroll) - if your website uses it
-    if (typeof AOS !== 'undefined') {
-        AOS.init({
-            duration: 800,
-            offset: 80,
-            once: true
-        });
-    }
+    // AOS initialized in footer.php to avoid conflicts
     
     // Live preview van de statistieken
     const likesInput = document.getElementById('likes');

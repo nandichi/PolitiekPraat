@@ -771,15 +771,7 @@ if (!defined('URLROOT')) {
 </main>
 
 <script>
-// Initialize AOS (Animate On Scroll)
-document.addEventListener('DOMContentLoaded', function() {
-    AOS.init({
-        duration: 800,
-        easing: 'ease-in-out',
-        once: true,
-        offset: 100
-    });
-});
+// AOS initialized in footer.php to avoid conflicts
 
 // Add some interactive effects
 document.addEventListener('DOMContentLoaded', function() {
