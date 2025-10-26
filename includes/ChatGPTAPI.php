@@ -3,7 +3,7 @@
 class ChatGPTAPI {
     private $apiKey;
     private $apiUrl = 'https://api.openai.com/v1/chat/completions';
-    private $model = 'gpt-4o-mini';
+    private $model = 'gpt-4o'; // Upgraded for better reasoning and accuracy
     
     public function __construct() {
         // Probeer API key uit verschillende bronnen te halen
@@ -167,7 +167,7 @@ Schrijf persoonlijk en bemoedigend. Begin met 'Op basis van jouw stemwijzer antw
     /**
      * Maak daadwerkelijke API call naar OpenAI
      */
-    private function makeAPICall($prompt) {
+    private function makeAPICall($prompt, $maxTokens = 300, $temperature = 0.7) {
         $data = [
             'model' => $this->model,
             'messages' => [
@@ -180,8 +180,8 @@ Schrijf persoonlijk en bemoedigend. Begin met 'Op basis van jouw stemwijzer antw
                     'content' => $prompt
                 ]
             ],
-            'max_tokens' => 300,
-            'temperature' => 0.7
+            'max_tokens' => $maxTokens,
+            'temperature' => $temperature
         ];
         
         $headers = [
@@ -507,6 +507,237 @@ Wees echt menselijk - toon frustratie, enthousiasme, vastberadenheid, teleurstel
     public function testConnection() {
         $testPrompt = "Zeg gewoon 'Hallo, de ChatGPT API werkt!' in het Nederlands.";
         return $this->makeAPICall($testPrompt);
+    }
+
+    // ========================================
+    // Politiek Gesprek Chatbot Methods
+    // ========================================
+
+    /**
+     * Genereer een adaptieve vraag gebaseerd op eerdere antwoorden
+     */
+    public function generateChatQuestion($questionIndex, $previousAnswers, $userProfile) {
+        $answersContext = $this->formatPreviousAnswers($previousAnswers);
+        
+        $prompt = "Je bent een Nederlandse politieke expert die een diepgaand stemwijzer gesprek voert.
+
+**Context van het gesprek:**
+De gebruiker heeft tot nu toe {$questionIndex} vragen beantwoord.
+
+**Eerdere antwoorden:**
+{$answersContext}
+
+**Gebruikersprofiel tot nu toe:**
+{$userProfile}
+
+Genereer vraag nummer " . ($questionIndex + 1) . " (van 20) die:
+1. Voortbouwt op hun eerdere antwoorden
+2. Helpt om onduidelijkheden op te helderen
+3. Dieper ingaat op controversiële onderwerpen
+4. Relevant is voor de Nederlandse politiek van 2025
+5. Helpt om keuze tussen partijen te verfijnen
+
+Geef je antwoord in dit EXACTE JSON formaat:
+{
+    \"question\": \"De vraag die je wilt stellen (helder en direct)\",
+    \"context\": \"Waarom deze vraag belangrijk is (2-3 zinnen)\",
+    \"topic\": \"Onderwerp categorie (bijv. klimaat, immigratie, economie)\",
+    \"follow_up_reason\": \"Waarom deze vraag relevant is op basis van eerdere antwoorden\"
+}
+
+Focus op actuele Nederlandse politieke thema's zoals:
+- Stikstofcrisis en landbouw
+- Asielbeleid en migratie
+- Betaalbaarheid en inflatie
+- Klimaatdoelen en energietransitie
+- Zorg en vergrijzing
+- Woningmarkt en betaalbaar wonen
+- Onderwijs en studiefinanciering
+- Defensie en NAVO
+- EU-integratie vs nationale soevereiniteit
+
+Wees specifiek en concreet. Geen algemene vragen.";
+
+        return $this->makeAPICall($prompt, 400);
+    }
+
+    /**
+     * Bepaal of een vraag multiple choice of open-ended moet zijn
+     */
+    public function determineQuestionMode($question, $topic, $previousModeCount) {
+        $prompt = "Je bent een expert in het ontwerpen van politieke vragenlijsten.
+
+**Vraag:** {$question}
+**Onderwerp:** {$topic}
+
+**Eerdere vraag types:**
+- Multiple choice: {$previousModeCount['multiple_choice']}
+- Open-ended: {$previousModeCount['open']}
+
+Bepaal of deze vraag beter beantwoord kan worden met:
+1. **Multiple choice** (eens/neutraal/oneens) - voor duidelijke standpunten, beleid, ja/nee situaties
+2. **Open-ended** (vrije tekst) - voor complexe morele kwesties, genuanceerde meningen, persoonlijke overwegingen
+
+Geef je antwoord in dit EXACTE JSON formaat:
+{
+    \"mode\": \"multiple_choice\" of \"open\",
+    \"reasoning\": \"Korte uitleg waarom (1 zin)\",
+    \"options\": [\"Eens\", \"Neutraal\", \"Oneens\"] (alleen bij multiple_choice, anders leeg array)
+}
+
+Richtlijnen:
+- Gebruik multiple choice voor 60-70% van de vragen (voor betere vergelijkbaarheid)
+- Gebruik open-ended voor complexe ethische vraagstukken
+- Varieer tussen beide types voor een natuurlijk gesprek";
+
+        return $this->makeAPICall($prompt, 200);
+    }
+
+    /**
+     * Analyseer een open-ended antwoord en vertaal naar politieke positie
+     */
+    public function analyzeOpenAnswer($question, $answer, $topic) {
+        $prompt = "Je bent een Nederlandse politieke expert die open antwoorden analyseert en vertaalt naar politieke standpunten.
+
+**Vraag:** {$question}
+**Onderwerp:** {$topic}
+**Antwoord van gebruiker:** \"{$answer}\"
+
+Analyseer dit antwoord en bepaal:
+1. De politieke positie (links/centrum-links/centrum/centrum-rechts/rechts)
+2. De stelligheid van het standpunt (0-100%)
+3. Specifieke standpunten die blijken uit het antwoord
+4. Welke Nederlandse partijen het meest aansluiten bij dit antwoord
+
+Geef je antwoord in dit EXACTE JSON formaat:
+{
+    \"position\": \"eens|neutraal|oneens\",
+    \"confidence\": 85,
+    \"political_leaning\": \"links|centrum-links|centrum|centrum-rechts|rechts\",
+    \"key_points\": [\"punt 1\", \"punt 2\", \"punt 3\"],
+    \"party_alignment\": [\"Partij1\", \"Partij2\", \"Partij3\"],
+    \"reasoning\": \"Waarom deze interpretatie (2-3 zinnen)\"
+}
+
+Wees objectief en baseer je alleen op wat de gebruiker daadwerkelijk zegt. Als het antwoord onduidelijk is, geef dat aan in de reasoning.";
+
+        return $this->makeAPICall($prompt, 300);
+    }
+
+    /**
+     * Genereer finale partij match analyse op basis van alle antwoorden
+     */
+    public function generateFinalMatch($allAnswers, $partyData, $userProfile) {
+        $answersContext = $this->formatAllAnswersDetailed($allAnswers);
+        
+        // Limiteer party data voor context
+        $partySummary = [];
+        foreach ($partyData as $party) {
+            $partySummary[] = $party['name'] . " (" . $party['short_name'] . ") - " . $party['current_seats'] . " zetels";
+        }
+        $partiesText = implode("\n", $partySummary);
+
+        $prompt = "Je bent een Nederlandse politieke expert die uitgebreide stemadvies geeft na een diepgaand politiek gesprek.
+
+**Alle 20 antwoorden van de gebruiker:**
+{$answersContext}
+
+**Beschikbare partijen:**
+{$partiesText}
+
+**Gebruikersprofiel:**
+{$userProfile}
+
+Geef een uitgebreide analyse (400-500 woorden) met:
+
+## **Jouw Politieke Profiel**
+[Beschrijf de gebruiker's politieke identiteit op basis van hun antwoorden]
+
+## **Top 5 Partij Matches**
+[Voor elke partij: waarom ze passen, sterke punten, mogelijke zorgen]
+
+## **Diepgaande Analyse**
+[Analyseer hun standpunten op belangrijkste thema's]
+
+## **Stemadvies**
+[Persoonlijk advies: welke partij het beste past en waarom]
+
+## **Vervolgstappen**
+[Praktische suggesties: programma's lezen, debatten kijken, etc.]
+
+Schrijf persoonlijk en toegankelijk. Gebruik concrete voorbeelden uit hun antwoorden. Wees eerlijk over mogelijke verschillen met partijen.";
+
+        return $this->makeAPICall($prompt, 1000);
+    }
+
+    /**
+     * Format eerdere antwoorden voor context
+     */
+    private function formatPreviousAnswers($answers) {
+        if (empty($answers)) {
+            return "Nog geen eerdere antwoorden.";
+        }
+
+        $formatted = "";
+        foreach ($answers as $index => $answerData) {
+            $q = $answerData['question'] ?? 'Vraag ' . ($index + 1);
+            $a = $answerData['answer'] ?? 'Geen antwoord';
+            $formatted .= "Vraag " . ($index + 1) . ": {$q}\nAntwoord: {$a}\n\n";
+        }
+
+        return $formatted;
+    }
+
+    /**
+     * Format alle antwoorden gedetailleerd voor finale analyse
+     */
+    private function formatAllAnswersDetailed($answers) {
+        if (empty($answers)) {
+            return "Geen antwoorden beschikbaar.";
+        }
+
+        $formatted = "";
+        foreach ($answers as $index => $answerData) {
+            $q = $answerData['question'] ?? 'Vraag ' . ($index + 1);
+            $a = $answerData['answer'] ?? 'Geen antwoord';
+            $topic = $answerData['topic'] ?? 'Algemeen';
+            $mode = $answerData['mode'] ?? 'onbekend';
+            
+            $formatted .= "**Vraag " . ($index + 1) . " ({$topic}):**\n";
+            $formatted .= "{$q}\n";
+            $formatted .= "**Antwoord ({$mode}):** {$a}\n";
+            
+            if (isset($answerData['analysis'])) {
+                $formatted .= "**Analyse:** {$answerData['analysis']}\n";
+            }
+            
+            $formatted .= "\n";
+        }
+
+        return $formatted;
+    }
+
+    /**
+     * Genereer conversationele introductie voor een vraag
+     */
+    public function generateQuestionIntro($questionNumber, $question, $context) {
+        $prompt = "Je bent een vriendelijke Nederlandse politieke expert die een stemwijzer gesprek voert.
+
+Dit is vraag {$questionNumber} van 20.
+
+**De vraag:** {$question}
+**Context:** {$context}
+
+Schrijf een korte, natuurlijke inleiding (1-2 zinnen) voor deze vraag. Maak het conversationeel en betrokken, alsof je echt met iemand in gesprek bent.
+
+Voorbeelden:
+- \"Interessant! Laten we het nu over iets anders hebben...\"
+- \"Dat is helder. Nu ben ik benieuwd naar jouw mening over...\"
+- \"Goed om te weten. Het volgende onderwerp is misschien wat complexer...\"
+
+Schrijf alleen de inleiding, geen verdere uitleg. Maximaal 2 zinnen.";
+
+        return $this->makeAPICall($prompt, 100);
     }
 
     /**

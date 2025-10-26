@@ -6,6 +6,7 @@ $metaDescriptions = [
     'blogs' => 'Lees politieke blogs van experts en ervaren columnisten over actuele Nederlandse thema\'s. Deel je mening en ontdek nieuwe perspectieven op de politiek.',
     'nieuws' => 'Het laatste Nederlandse politieke nieuws uit betrouwbare bronnen. Blijf dagelijks geïnformeerd over regering, oppositie en belangrijke ontwikkelingen.',
     'partijmeter' => 'Doe de gratis online PartijMeter test 2025 en ontdek binnen 5 minuten welke Nederlandse politieke partij het beste bij jouw standpunten past. Vergelijk 14 partijen op basis van 30 actuele thema\'s.',
+    'politiek-gesprek' => 'Voer een intelligent AI-gestuurd gesprek over jouw politieke visie met 20 adaptieve vragen. Ontdek welke Nederlandse partij echt bij je past met diepgaande analyse.',
     'politiek-kompas' => 'Ontdek jouw politieke kompas door partijstandpunten te vergelijken op thema\'s als klimaat, zorg, economie en onderwijs. Maak een geïnformeerde stemkeuze.',
     'partijen' => 'Volledig overzicht van Nederlandse politieke partijen met hun standpunten, lijsttrekkers en verkiezingsprogramma\'s. Van VVD tot PvdA en alle anderen.',
     'themas' => 'Verdiep je in actuele politieke thema\'s als klimaatbeleid, gezondheidszorg en economie. Analyses, standpunten en expert discussies over Nederlandse politiek.',
@@ -58,6 +59,7 @@ $metaKeywords = [
     'blogs' => 'politieke blogs, opinieartikelen, politieke analyses, Nederlandse politiek, politiek commentaar, verkiezingen, columnisten, PolitiekPraat',
     'nieuws' => 'politiek nieuws, Nederlands nieuws, Haags nieuws, regering, oppositie, kabinet, ministeries, Tweede Kamer, PolitiekPraat',
     'partijmeter' => 'partijmeter, stemwijzer, stemwijzer 2025, partijmeter 2025, online politieke test nederland, politieke partijen vergelijken, verkiezingen 2025, stemhulp, kieskompas, gratis partijmeter, nederlandse partijmeter, partijkeuze, stemadvies, PolitiekPraat',
+    'politiek-gesprek' => 'ai stemwijzer, politiek gesprek, adaptieve vragen, ai chatbot, politiek advies, stemhulp, openai, gpt, nederlandse politiek, verkiezingen 2025, intelligente stemwijzer, PolitiekPraat',
     'politiek-kompas' => 'politiek kompas, partijen vergelijken, politieke standpunten, stemadvies, Nederlandse partijen, verkiezingen, PolitiekPraat',
     'partijen' => 'politieke partijen Nederland, VVD, PvdA, VVD, CDA, D66, PVV, GroenLinks, partijoverzicht, lijsttrekkers, PolitiekPraat',
     'themas' => 'politieke thema\'s, klimaat, zorg, economie, onderwijs, immigratie, standpunten, analyses, Nederlandse politiek, PolitiekPraat',
@@ -1710,6 +1712,22 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
                             </svg>
                         </div>
                         <span class="font-medium">StemWijzer</span>
+                    </a>
+
+                    <a href="<?php echo URLROOT; ?>/politiek-gesprek" 
+                       class="flex items-center text-gray-700 hover:text-secondary p-3 rounded-lg transition-all duration-300 
+                              hover:bg-secondary/5 group relative">
+                        <div class="mr-3 p-2 bg-secondary/10 rounded-lg transition-all duration-300 
+                                    group-hover:bg-secondary/20 group-hover:scale-110">
+                            <svg class="w-5 h-5 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                      d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
+                            </svg>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="font-medium">Politiek Gesprek</span>
+                            <span class="ml-2 px-2 py-0.5 bg-green-100 text-green-700 text-xs font-semibold rounded-full">AI</span>
+                        </div>
                     </a>
 
                     <a href="<?php echo URLROOT; ?>/themas" 
