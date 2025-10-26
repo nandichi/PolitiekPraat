@@ -6,18 +6,18 @@ echo "=========================================\n";
 echo "   PolitiekPraat Peiling Update Script   \n";
 echo "=========================================\n\n";
 
-// Nieuwe peiling data gebaseerd op Ipsos I&O d.d. 16-10-2025
+// Nieuwe peiling data gebaseerd op Ipsos I&O d.d. 25-10-2025
 $new_polls = [
-    'pvv'      => 29,
-    'cda'      => 25,
-    'gl-pvda'  => 22,
-    'd66'      => 18,
-    'vvd'      => 14,
+    'pvv'      => 26,
+    'gl-pvda'  => 23,
+    'd66'      => 22,
+    'cda'      => 20,
+    'vvd'      => 16,
     'ja21'     => 12,
+    'fvd'      => 5,
     'pvdd'     => 4,
     'bbb'      => 4,
     'sp'       => 4,
-    'fvd'      => 4,
     'denk'     => 3,
     'volt'     => 3,
     'sgp'      => 3,
