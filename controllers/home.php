@@ -2624,8 +2624,8 @@ require_once 'views/templates/header.php';
                                             </div>
                                         </div>
                                         <div class="text-sm text-slate-500 font-medium">
-                                        <span class="hidden sm:inline">Peilingdatum: 7 juni 2025</span>
-                                            <span class="sm:hidden">7 jun 2025</span>
+                                        <span class="hidden sm:inline">Peilingdatum: 26 oktober 2025</span>
+                                            <span class="sm:hidden">26 oktober 2025</span>
                             </div>
                         </div>
                     </div>
