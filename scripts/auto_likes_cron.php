@@ -61,6 +61,16 @@ try {
     
     $db = new Database();
     
+    // Controleer of de benodigde tabellen bestaan
+    $db->query("SHOW TABLES LIKE 'auto_likes_settings'");
+    $tableExists = $db->single();
+    
+    if (!$tableExists) {
+        logMessage("FOUT: Database tabellen bestaan niet. Voer eerst de migratie uit:");
+        logMessage("php " . $projectRoot . "/scripts/create_auto_likes_tables.php");
+        exit(1);
+    }
+    
     // Controleer of het systeem globaal is ingeschakeld
     $globalEnabled = getSetting($db, 'global_enabled', '0');
     if ($globalEnabled !== '1') {

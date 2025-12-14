@@ -14,6 +14,51 @@ if (!isAdmin()) {
 
 $db = new Database();
 
+// Controleer of de benodigde tabellen bestaan
+$db->query("SHOW TABLES LIKE 'auto_likes_settings'");
+$tableExists = $db->single();
+
+if (!$tableExists) {
+    require_once '../views/templates/header.php';
+    ?>
+    <main class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50">
+        <div class="container mx-auto px-4 py-12">
+            <div class="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl p-8 border border-red-200">
+                <div class="flex items-center space-x-4 mb-6">
+                    <div class="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center">
+                        <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.382 16.5c-.77.833.192 2.5 1.732 2.5z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-800">Database Migratie Vereist</h1>
+                        <p class="text-gray-600">De benodigde tabellen bestaan nog niet</p>
+                    </div>
+                </div>
+                
+                <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6">
+                    <p class="text-amber-800 mb-2">Voer de volgende opdracht uit op de server om de tabellen aan te maken:</p>
+                    <code class="block bg-gray-800 text-green-400 p-3 rounded-lg text-sm overflow-x-auto">
+                        php <?= dirname(dirname(__FILE__)) ?>/scripts/create_auto_likes_tables.php
+                    </code>
+                </div>
+                
+                <div class="flex space-x-4">
+                    <a href="dashboard.php" class="bg-gray-100 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-200 transition-colors">
+                        Terug naar Dashboard
+                    </a>
+                    <a href="<?= $_SERVER['REQUEST_URI'] ?>" class="bg-indigo-500 text-white px-6 py-3 rounded-lg hover:bg-indigo-600 transition-colors">
+                        Opnieuw Proberen
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+    <?php
+    require_once '../views/templates/footer.php';
+    exit;
+}
+
 // Helper functie om instelling op te halen
 function getSetting($db, $key, $default = null) {
     $db->query("SELECT setting_value FROM auto_likes_settings WHERE setting_key = :key");
