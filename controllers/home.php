@@ -858,54 +858,11 @@ require_once 'views/templates/header.php';
                             <p class="text-base sm:text-lg md:text-xl lg:text-2xl text-slate-600 max-w-4xl mx-auto leading-relaxed font-light">
                                 Ontdek mijn meest recente <span class="font-semibold text-blue-600">politieke analyses</span> en <span class="font-semibold text-red-600">diepgaande inzichten</span> over de Nederlandse politiek
                             </p>
-                        </div>
-                    </div>
-
-                    <!-- Blog Schedule Announcement -->
-                    <div class="max-w-4xl mx-auto mt-12 mb-16" data-aos="fade-up" data-aos-delay="200" data-aos-once="true">
-                        <div class="relative bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden group hover:shadow-2xl transition-shadow duration-500">
-                            <!-- Gradient top accent -->
-                            <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-secondary to-primary"></div>
                             
-                            <div class="p-6 sm:p-8">
-                                <div class="flex flex-col sm:flex-row items-center gap-6 sm:gap-8">
-                                    <!-- Zondag Blog -->
-                                    <div class="flex items-center gap-4 flex-1">
-                                        <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-primary to-blue-800 flex items-center justify-center shadow-lg transform group-hover:scale-105 transition-transform duration-300">
-                                            <!-- Kalender icoon -->
-                                            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                            </svg>
-                                        </div>
-                                        <div>
-                                            <p class="font-bold text-gray-900 text-lg">Elke zondag</p>
-                                            <p class="text-sm text-gray-600">Een nieuwe blog met analyse</p>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- Divider -->
-                                    <div class="hidden sm:block w-px h-14 bg-gradient-to-b from-transparent via-gray-300 to-transparent"></div>
-                                    <div class="sm:hidden w-3/4 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
-                                    
-                                    <!-- Doordeweeks/Actueel -->
-                                    <div class="flex items-center gap-4 flex-1">
-                                        <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-secondary to-red-700 flex items-center justify-center shadow-lg relative transform group-hover:scale-105 transition-transform duration-300">
-                                            <!-- Breaking news icoon -->
-                                            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                                            </svg>
-                                            <span class="absolute -top-1 -right-1 flex h-3 w-3">
-                                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
-                                                <span class="relative inline-flex rounded-full h-3 w-3 bg-orange-500"></span>
-                                            </span>
-                                        </div>
-                                        <div>
-                                            <p class="font-bold text-gray-900 text-lg">Doordeweeks</p>
-                                            <p class="text-sm text-gray-600">Extra blog bij actueel nieuws</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <!-- Blog Schedule -->
+                            <p class="text-sm sm:text-base text-slate-500 max-w-2xl mx-auto mt-4">
+                                Elke <span class="font-medium text-slate-700">zondag</span> een nieuwe blog &middot; Doordeweeks extra bij <span class="font-medium text-slate-700">actueel nieuws</span>
+                            </p>
                         </div>
                     </div>
 
