@@ -1151,6 +1151,20 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
 
     <!-- Main Navigation - Completely redesigned -->
     <nav class="relative z-50 sticky top-0">
+        <!-- Blog Schedule Announcement Bar -->
+        <div class="bg-gradient-to-r from-primary to-primary-dark text-white text-center py-1.5 px-4">
+            <p class="text-xs sm:text-sm font-medium flex items-center justify-center gap-2">
+                <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-green-400"></span>
+                </span>
+                <span class="hidden sm:inline">Elke zondag een nieuwe blog</span>
+                <span class="sm:hidden">Zondag: nieuwe blog</span>
+                <span class="text-white/50 mx-1">|</span>
+                <span class="text-white/80">Doordeweeks extra bij actueel nieuws</span>
+            </p>
+        </div>
+        
         <!-- Modern header with clean design -->
         <div class="bg-white shadow-lg border-b-2 border-primary/10">
             <!-- Top accent bar -->

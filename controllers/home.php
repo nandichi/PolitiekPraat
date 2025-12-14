@@ -860,9 +860,19 @@ require_once 'views/templates/header.php';
                             </p>
                             
                             <!-- Blog Schedule -->
-                            <p class="text-sm sm:text-base text-slate-500 max-w-2xl mx-auto mt-4">
-                                Elke <span class="font-medium text-slate-700">zondag</span> een nieuwe blog &middot; Doordeweeks extra bij <span class="font-medium text-slate-700">actueel nieuws</span>
-                            </p>
+                            <div class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 mt-6">
+                                <span class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-50 to-blue-100 rounded-full border border-blue-200 shadow-sm">
+                                    <span class="relative flex h-2.5 w-2.5">
+                                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                                        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-blue-500"></span>
+                                    </span>
+                                    <span class="text-sm sm:text-base font-semibold text-blue-700">Elke zondag een nieuwe blog</span>
+                                </span>
+                                <span class="flex items-center gap-2 text-slate-500">
+                                    <span class="w-2 h-2 bg-red-400 rounded-full"></span>
+                                    <span class="text-sm sm:text-base">Doordeweeks extra bij actueel nieuws</span>
+                                </span>
+                            </div>
                         </div>
                     </div>
 
