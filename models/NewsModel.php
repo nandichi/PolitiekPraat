@@ -110,7 +110,50 @@ class NewsModel {
             case 'conservatief':
                 return $this->getNewsByOrientationPaginated('rechts', $page, $perPage);
             default:
+                // Check of het een bron filter is
+                $validSources = ['De Volkskrant', 'NRC', 'Trouw', 'AD', 'NU.nl', 'RTL Nieuws'];
+                if (in_array($filter, $validSources)) {
+                    return $this->getNewsBySourcePaginated($filter, $page, $perPage);
+                }
                 return $this->getAllNewsPaginated($page, $perPage);
+        }
+    }
+    
+    /**
+     * Haal nieuwsartikelen op per bron met paginering
+     */
+    public function getNewsBySourcePaginated($source, $page = 1, $perPage = 9) {
+        $offset = ($page - 1) * $perPage;
+        $sql = "SELECT * FROM news_articles WHERE source = ? ORDER BY published_at DESC LIMIT ? OFFSET ?";
+        
+        try {
+            $this->db->query($sql);
+            $this->db->bind(1, $source);
+            $this->db->bind(2, intval($perPage));
+            $this->db->bind(3, intval($offset));
+            $this->db->execute();
+            $result = $this->db->resultSet();
+            return $this->formatNewsResultsFromObject($result);
+        } catch (Exception $e) {
+            error_log("NewsModel::getNewsBySourcePaginated fout: " . $e->getMessage());
+            return [];
+        }
+    }
+    
+    /**
+     * Haal alle unieke bronnen op
+     */
+    public function getAllSources() {
+        try {
+            $result = $this->db->directQuery("SELECT DISTINCT source FROM news_articles ORDER BY source ASC");
+            $sources = [];
+            while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                $sources[] = $row['source'];
+            }
+            return $sources;
+        } catch (Exception $e) {
+            error_log("NewsModel::getAllSources fout: " . $e->getMessage());
+            return [];
         }
     }
     
@@ -127,6 +170,15 @@ class NewsModel {
                     $result = $this->db->directQuery("SELECT COUNT(*) as total FROM news_articles WHERE orientation = 'rechts'");
                     break;
                 default:
+                    // Check of het een bron filter is
+                    $validSources = ['De Volkskrant', 'NRC', 'Trouw', 'AD', 'NU.nl', 'RTL Nieuws'];
+                    if (in_array($filter, $validSources)) {
+                        $this->db->query("SELECT COUNT(*) as total FROM news_articles WHERE source = ?");
+                        $this->db->bind(1, $filter);
+                        $this->db->execute();
+                        $row = $this->db->single();
+                        return $row->total ?? 0;
+                    }
                     $result = $this->db->directQuery("SELECT COUNT(*) as total FROM news_articles");
             }
             return $result->fetch(PDO::FETCH_ASSOC)['total'];

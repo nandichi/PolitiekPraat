@@ -10,21 +10,20 @@ $newsModel = new NewsModel($db);
 
 // Definieer de nieuwsbronnen per politieke oriëntatie
 $news_sources = [
-    'links' => [
-        ['name' => 'De Volkskrant'],
-        ['name' => 'NRC'],
-        ['name' => 'Trouw'],
-        ['name' => 'Socialisme.nu']
+    'progressief' => [
+        ['name' => 'De Volkskrant', 'key' => 'De Volkskrant'],
+        ['name' => 'NRC', 'key' => 'NRC'],
+        ['name' => 'Trouw', 'key' => 'Trouw']
     ],
-    'rechts' => [
-        ['name' => 'NU.nl'],
-        ['name' => 'Telegraaf'],
-        ['name' => 'AD'],
-        ['name' => 'FVD'],
-        ['name' => 'De Dagelijkse Standaard'],
-        ['name' => 'Nieuw Rechts']
+    'conservatief' => [
+        ['name' => 'AD', 'key' => 'AD'],
+        ['name' => 'NU.nl', 'key' => 'NU.nl'],
+        ['name' => 'RTL Nieuws', 'key' => 'RTL Nieuws']
     ]
 ];
+
+// Alle beschikbare bronnen voor filtering
+$all_sources = array_merge($news_sources['progressief'], $news_sources['conservatief']);
 
 // Haal de geselecteerde filter op (default is 'alle')
 $filter = isset($_GET['filter']) ? $_GET['filter'] : 'alle';
