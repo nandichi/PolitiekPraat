@@ -51,13 +51,20 @@ function updateSetting($db, $key, $value) {
     return $db->execute();
 }
 
+// Check of we direct uitvoeren (zonder delay) via web request
+$skipDelay = isset($_GET['run']) || isset($argv[1]) && $argv[1] === '--now';
+
 try {
     logMessage("=== Auto Likes Cron gestart ===");
     
-    // Random delay van 0-120 seconden voor extra onregelmatigheid
-    $randomDelay = rand(0, 120);
-    logMessage("Random delay: {$randomDelay} seconden");
-    sleep($randomDelay);
+    // Random delay van 0-120 seconden voor extra onregelmatigheid (overslaan bij directe uitvoering)
+    if (!$skipDelay) {
+        $randomDelay = rand(0, 120);
+        logMessage("Random delay: {$randomDelay} seconden");
+        sleep($randomDelay);
+    } else {
+        logMessage("Direct uitvoeren (delay overgeslagen)");
+    }
     
     $db = new Database();
     

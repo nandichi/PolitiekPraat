@@ -335,6 +335,14 @@ require_once '../views/templates/header.php';
                     <p class="text-blue-100 text-lg">Beheer automatische likes simulatie per blog</p>
                 </div>
                 <div class="flex flex-col sm:flex-row gap-3">
+                    <button onclick="runCronNow()" id="runCronBtn"
+                       class="bg-green-500 text-white px-4 md:px-6 py-2 md:py-3 rounded-xl hover:bg-green-600 transition-all duration-300 font-semibold flex items-center justify-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        Nu Uitvoeren
+                    </button>
                     <a href="dashboard.php" 
                        class="bg-white/20 backdrop-blur-sm text-white px-4 md:px-6 py-2 md:py-3 rounded-xl hover:bg-white/30 transition-all duration-300 border border-white/30 text-center">
                         Terug naar Dashboard
@@ -734,6 +742,49 @@ document.addEventListener('keydown', function(e) {
         closeConfigModal();
     }
 });
+
+// Run cron job now
+function runCronNow() {
+    const button = document.getElementById('runCronBtn');
+    const originalContent = button.innerHTML;
+    
+    // Disable button and show loading
+    button.disabled = true;
+    button.innerHTML = `
+        <svg class="w-5 h-5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+        </svg>
+        Bezig...
+    `;
+    
+    fetch('../scripts/auto_likes_cron.php?run=1')
+        .then(response => response.text())
+        .then(data => {
+            button.disabled = false;
+            button.innerHTML = originalContent;
+            
+            // Parse de output
+            const lines = data.split('\n').filter(line => line.trim());
+            const summary = lines.slice(-4).join('\n');
+            
+            if (data.includes('voltooid') || data.includes('Samenvatting')) {
+                alert('Auto Likes succesvol uitgevoerd!\n\n' + summary);
+                // Refresh de pagina om nieuwe stats te tonen
+                setTimeout(() => window.location.reload(), 500);
+            } else if (data.includes('uitgeschakeld')) {
+                alert('Auto Likes is uitgeschakeld. Schakel het eerst in via de globale instellingen.');
+            } else if (data.includes('FOUT')) {
+                alert('Er is een fout opgetreden:\n\n' + data);
+            } else {
+                alert('Resultaat:\n\n' + data);
+            }
+        })
+        .catch(error => {
+            button.disabled = false;
+            button.innerHTML = originalContent;
+            alert('Er is een fout opgetreden: ' + error.message);
+        });
+}
 </script>
 
 <?php require_once '../views/templates/footer.php'; ?>
