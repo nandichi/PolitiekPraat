@@ -1,18 +1,18 @@
 {
     "De Volkskrant": {
-        "last_article_url": "https:\/\/www.volkskrant.nl\/columns-van-de-dag\/moslims-hebben-geen-kleur-zij-hebben-een-geloof-en-dat-is-heel-iets-anders~bdb206c4\/",
-        "last_scraped_at": "2025-07-25 14:50:30",
+        "last_article_url": "https:\/\/www.volkskrant.nl\/wetenschap\/de-mri-om-tumoren-op-te-sporen-bij-hoge-borstdichtheid-is-er-nog-niet-dus-zoeken-vrouwen-zelf-naar-screening~b3eadbcc\/",
+        "last_scraped_at": "2025-12-14 17:17:10",
         "articles_found": 10
     },
     "NRC": {
-        "last_article_url": "https:\/\/www.nrc.nl\/nieuws\/2025\/07\/25\/de-worstelaar-die-trump-met-kayfabe-de-ring-introk-a4901316",
-        "last_scraped_at": "2025-07-25 14:50:30",
+        "last_article_url": "https:\/\/www.nrc.nl\/nieuws\/2025\/12\/14\/de-boulevard-bij-bondi-beach-in-sydney-lag-bezaaid-met-kogels-er-was-heel-veel-bloed-a4915329",
+        "last_scraped_at": "2025-12-14 17:17:11",
         "articles_found": 10
     },
     "Trouw": {
-        "last_article_url": "https:\/\/www.trouw.nl\/politiek\/sandra-palmen-wil-de-laatste-bewindspersoon-zijn-voor-het-herstel-in-de-toeslagenaffaire~b743e3a0\/",
-        "last_scraped_at": "2025-07-25 14:50:31",
-        "articles_found": 2
+        "last_article_url": "https:\/\/www.trouw.nl\/politiek\/wiersma-oogst-hoon-met-haar-geplande-versoepeling-van-het-mestbeleid~b01a0d75\/",
+        "last_scraped_at": "2025-12-14 17:17:11",
+        "articles_found": 10
     },
     "Telegraaf": {
         "last_article_url": "https:\/\/www.telegraaf.nl\/sport\/wielrennen\/live-tour-de-france-roglic-gegrepen-aan-voet-klim-la-plagne-komt-er-nog-een-duel-pogacar-vs.-vingegaard\/79912006.html",
@@ -20,13 +20,18 @@
         "articles_found": 10
     },
     "AD": {
-        "last_article_url": "https:\/\/www.ad.nl\/politiek\/kamer-wil-opheldering-van-kabinet-over-situatie-in-gaza-vn-zegt-dat-er-hongersnood-is-de-tijd-tikt-door~a9e2ddab\/",
-        "last_scraped_at": "2025-07-25 14:50:32",
+        "last_article_url": "https:\/\/www.ad.nl\/politiek\/het-croky-dilemma-gijzelt-den-haag-het-is-niet-zo-simpel-als-het-lijkt~a89699bf\/",
+        "last_scraped_at": "2025-12-14 17:17:11",
         "articles_found": 10
     },
     "NU.nl": {
-        "last_article_url": "https:\/\/www.nu.nl\/spanningen-oekraine\/6363607\/nederland-wil-opheldering-over-mishandeling-van-krijgsgevangenen-door-rusland.html",
-        "last_scraped_at": "2025-07-25 14:50:34",
-        "articles_found": 7
+        "last_article_url": "https:\/\/www.nu.nl\/formatie\/6379232\/d66-cda-en-vvd-praten-op-landgoed-de-zwaluwenberg-moeten-meters-maken.html",
+        "last_scraped_at": "2025-12-14 17:17:11",
+        "articles_found": 10
+    },
+    "RTL Nieuws": {
+        "last_article_url": "https:\/\/www.rtl.nl\/nieuws\/sport\/artikel\/5544446\/van-persie-ik-kan-mijn-spelers-niet-veel-kwalijk-nemen",
+        "last_scraped_at": "2025-12-14 17:17:11",
+        "articles_found": 10
     }
 }

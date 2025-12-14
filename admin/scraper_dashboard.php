@@ -1,11 +1,16 @@
 <?php
+// Voor AJAX requests: buffer output en onderdruk notices
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    error_reporting(E_ERROR | E_PARSE);
+    ob_start();
+}
+
 require_once '../includes/config.php';
 require_once '../includes/Database.php';
 require_once '../models/NewsModel.php';
 require_once '../includes/NewsScraper.php';
 
-// Eenvoudige authenticatie check (dit zou robuuster moeten in productie)
-session_start();
+// Sessie wordt al gestart in config.php, dus geen session_start() nodig
 if (!isset($_SESSION['admin_logged_in'])) {
     // Voor development - in productie moet dit beveiligd worden
     $_SESSION['admin_logged_in'] = true;
@@ -18,44 +23,39 @@ $scraper = new NewsScraper($newsModel);
 
 // Handle AJAX requests
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Schakel alle output buffering in en onderdruk errors voor clean JSON
-    ob_start();
-    
     $action = $_POST['action'] ?? '';
     
     try {
         switch ($action) {
             case 'run_scraper':
-                // Onderdruk alle PHP output om JSON clean te houden
-                ob_clean();
-                $result = $scraper->scrapeAllSources();
-                
-                // Zorg dat er geen ongewenste output is
-                if (ob_get_length()) {
-                    ob_clean();
+                // Clear alle gebufferde output
+                while (ob_get_level()) {
+                    ob_end_clean();
                 }
+                
+                $result = $scraper->scrapeAllSources();
                 
                 header('Content-Type: application/json');
                 echo json_encode($result);
                 exit;
                 
             case 'cleanup_old':
-                ob_clean();
+                // Clear alle gebufferde output
+                while (ob_get_level()) {
+                    ob_end_clean();
+                }
+                
                 $days = intval($_POST['days'] ?? 30);
                 $deleted = $scraper->cleanupOldArticles($days);
-                
-                if (ob_get_length()) {
-                    ob_clean();
-                }
                 
                 header('Content-Type: application/json');
                 echo json_encode(['deleted_count' => $deleted]);
                 exit;
         }
     } catch (Exception $e) {
-        // Clean alle output buffer en stuur error response
-        if (ob_get_length()) {
-            ob_clean();
+        // Clear alle output buffers
+        while (ob_get_level()) {
+            ob_end_clean();
         }
         
         header('Content-Type: application/json');
@@ -67,8 +67,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ]);
         exit;
     }
-    
-    ob_end_clean();
 }
 
 // Haal statistieken op
