@@ -4,7 +4,11 @@ if (!defined('CONFIG_INCLUDED')) {
     define('CONFIG_INCLUDED', true);
 
     // Detect environment
-    $is_production = ($_SERVER['HTTP_HOST'] ?? 'localhost') === 'politiekpraat.nl';
+    // Check voor production: HTTP_HOST is politiekpraat.nl OF we draaien via CLI op de server
+    $is_cli = (php_sapi_name() === 'cli' || php_sapi_name() === 'cli-server');
+    $is_production_host = ($_SERVER['HTTP_HOST'] ?? '') === 'politiekpraat.nl';
+    $is_production_server = $is_cli && strpos(__DIR__, '/home/naoufal/domains/politiekpraat.nl') !== false;
+    $is_production = $is_production_host || $is_production_server;
 
     // Database configuratie
     if ($is_production) {
