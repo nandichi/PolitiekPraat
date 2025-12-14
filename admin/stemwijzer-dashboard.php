@@ -616,6 +616,21 @@ require_once '../views/templates/header.php';
                         </div>
                     </a>
 
+                    <a href="#" onclick="runAutoLikesMigration()" 
+                       class="group p-6 bg-gradient-to-br from-rose-50 to-pink-50 border border-rose-200 rounded-xl hover:from-rose-100 hover:to-pink-100 transition-all duration-300 card-hover">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-rose-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-800">Auto Likes Migratie</h3>
+                                <p class="text-sm text-gray-600">Installeer database tabellen</p>
+                            </div>
+                        </div>
+                    </a>
+
                     <a href="../scripts/fix_live_blog_categories.php" 
                        class="group p-6 bg-gradient-to-br from-indigo-50 to-purple-50 border border-indigo-200 rounded-xl hover:from-indigo-100 hover:to-purple-100 transition-all duration-300 card-hover">
                         <div class="flex items-center space-x-4">
@@ -905,6 +920,46 @@ function createStemmenTrackerTables() {
             .catch(error => {
                 button.innerHTML = originalContent;
                 alert('Network error bij het installeren van StemmenTracker tabellen: ' + error.message);
+            });
+    }
+}
+
+// Auto Likes migratie functie
+function runAutoLikesMigration() {
+    if (confirm('Weet je zeker dat je de Auto Likes database tabellen wilt installeren?\n\nDit zal de volgende tabellen aanmaken:\n- auto_likes_config\n- auto_likes_log\n- auto_likes_settings')) {
+        // Toon loading indicator
+        const button = event.target.closest('a');
+        const originalContent = button.innerHTML;
+        button.innerHTML = `
+            <div class="flex items-center space-x-4">
+                <div class="w-12 h-12 bg-rose-500 rounded-xl flex items-center justify-center">
+                    <svg class="w-6 h-6 text-white animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-gray-800">Installeren...</h3>
+                    <p class="text-sm text-gray-600">Database tabellen aanmaken</p>
+                </div>
+            </div>
+        `;
+        
+        // Maak AJAX request
+        fetch('../scripts/create_auto_likes_tables.php')
+            .then(response => response.text())
+            .then(data => {
+                button.innerHTML = originalContent;
+                if (data.includes('voltooid') || data.includes('aangemaakt') || data.includes('Migratie')) {
+                    alert('Auto Likes database tabellen succesvol geinstalleerd!\n\n' + data);
+                    // Refresh de pagina
+                    setTimeout(() => window.location.reload(), 1000);
+                } else {
+                    alert('Er is een fout opgetreden:\n\n' + data);
+                }
+            })
+            .catch(error => {
+                button.innerHTML = originalContent;
+                alert('Network error: ' + error.message);
             });
     }
 }
