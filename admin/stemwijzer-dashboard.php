@@ -601,7 +601,7 @@ require_once '../views/templates/header.php';
                 </h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     
-                    <a href="likes-beheer.php" 
+                    <a href="auto-likes-beheer.php" 
                        class="group p-6 bg-gradient-to-br from-pink-50 to-red-50 border border-pink-200 rounded-xl hover:from-pink-100 hover:to-red-100 transition-all duration-300 card-hover">
                         <div class="flex items-center space-x-4">
                             <div class="w-12 h-12 bg-pink-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -610,8 +610,8 @@ require_once '../views/templates/header.php';
                                 </svg>
                             </div>
                             <div>
-                                <h3 class="font-semibold text-gray-800">Likes Beheer</h3>
-                                <p class="text-sm text-gray-600">Beheer blog likes</p>
+                                <h3 class="font-semibold text-gray-800">Auto Likes Beheer</h3>
+                                <p class="text-sm text-gray-600">Beheer automatische likes</p>
                             </div>
                         </div>
                     </a>
