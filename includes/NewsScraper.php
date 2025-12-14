@@ -9,32 +9,32 @@ class NewsScraper {
     // Configuratie voor nieuwsbronnen met hun RSS feeds en oriëntatie
     private $newsSources = [
         'De Volkskrant' => [
-            'rss_url' => 'https://www.volkskrant.nl/nieuws/rss.xml',
+            'rss_url' => 'https://www.volkskrant.nl/columns-van-de-dag/rss.xml',
             'orientation' => 'links',
             'bias' => 'Progressief'
         ],
         'NRC' => [
             'rss_url' => 'https://www.nrc.nl/rss/',
             'orientation' => 'links',
-            'bias' => 'Progressief'
+            'bias' => 'Liberaal'
         ],
         'Trouw' => [
             'rss_url' => 'https://www.trouw.nl/politiek/rss.xml',
             'orientation' => 'links',
             'bias' => 'Progressief'
         ],
-        'AD' => [
-            'rss_url' => 'https://www.ad.nl/politiek/rss.xml',
-            'orientation' => 'midden',
-            'bias' => 'Conservatief'
-        ],
-        'NU.nl' => [
-            'rss_url' => 'https://www.nu.nl/rss/Politiek',
+        'Telegraaf' => [
+            'rss_url' => 'https://www.telegraaf.nl/rss/',
             'orientation' => 'rechts',
             'bias' => 'Conservatief'
         ],
-        'RTL Nieuws' => [
-            'rss_url' => 'https://www.rtlnieuws.nl/rss.xml',
+        'AD' => [
+            'rss_url' => 'https://www.ad.nl/politiek/rss.xml',
+            'orientation' => 'midden',
+            'bias' => 'conservatief'
+        ],
+        'NU.nl' => [
+            'rss_url' => 'https://www.nu.nl/rss/Politiek',
             'orientation' => 'rechts',
             'bias' => 'Conservatief'
         ]

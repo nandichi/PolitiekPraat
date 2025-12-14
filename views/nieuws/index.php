@@ -461,59 +461,6 @@
                             <div class="absolute -bottom-1 -left-1 w-6 h-6 bg-indigo-500/20 rounded-full group-hover:scale-125 transition-transform duration-700"></div>
                         </a>
                     </div>
-                    
-                    <!-- Separator -->
-                    <div class="my-6 border-t border-slate-200"></div>
-                    
-                    <!-- Source Filter Buttons -->
-                    <div>
-                        <p class="text-sm text-slate-500 text-center mb-4 font-medium">Of filter per nieuwsbron:</p>
-                        <div class="flex flex-wrap justify-center gap-3">
-                            <?php
-                            // Progressieve bronnen (groen)
-                            $progressiefSources = [
-                                'De Volkskrant' => 'VK',
-                                'NRC' => 'NRC',
-                                'Trouw' => 'TR'
-                            ];
-                            foreach ($progressiefSources as $sourceName => $shortName): 
-                                $isActive = $filter === $sourceName;
-                            ?>
-                                <a href="?filter=<?= urlencode($sourceName) ?>#artikelen" 
-                                   class="group relative px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-300 <?= $isActive ? 'bg-gradient-to-r from-emerald-500 to-green-600 text-white shadow-lg' : 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200'; ?>">
-                                    <span class="flex items-center gap-2">
-                                        <span class="w-2 h-2 rounded-full <?= $isActive ? 'bg-white' : 'bg-emerald-500'; ?>"></span>
-                                        <?= htmlspecialchars($sourceName) ?>
-                                    </span>
-                                    <?php if($isActive): ?>
-                                    <span class="absolute -top-1 -right-1 w-3 h-3 bg-white rounded-full animate-pulse shadow"></span>
-                                    <?php endif; ?>
-                                </a>
-                            <?php endforeach; ?>
-                            
-                            <?php
-                            // Conservatieve bronnen (rood)
-                            $conservatiefSources = [
-                                'AD' => 'AD',
-                                'NU.nl' => 'NU',
-                                'RTL Nieuws' => 'RTL'
-                            ];
-                            foreach ($conservatiefSources as $sourceName => $shortName): 
-                                $isActive = $filter === $sourceName;
-                            ?>
-                                <a href="?filter=<?= urlencode($sourceName) ?>#artikelen" 
-                                   class="group relative px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-300 <?= $isActive ? 'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg' : 'bg-red-50 text-red-700 hover:bg-red-100 border border-red-200'; ?>">
-                                    <span class="flex items-center gap-2">
-                                        <span class="w-2 h-2 rounded-full <?= $isActive ? 'bg-white' : 'bg-red-500'; ?>"></span>
-                                        <?= htmlspecialchars($sourceName) ?>
-                                    </span>
-                                    <?php if($isActive): ?>
-                                    <span class="absolute -top-1 -right-1 w-3 h-3 bg-white rounded-full animate-pulse shadow"></span>
-                                    <?php endif; ?>
-                                </a>
-                            <?php endforeach; ?>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
