@@ -172,9 +172,9 @@ require_once '../views/templates/header.php';
                            class="bg-indigo-500 text-white px-4 py-2 rounded-lg hover:bg-indigo-600 transition-colors text-center text-sm">
                             Nieuwe Blog Toevoegen
                         </a>
-                        <a href="likes-beheer.php" 
+                        <a href="auto-likes-beheer.php" 
                            class="bg-pink-500 text-white px-4 py-2 rounded-lg hover:bg-pink-600 transition-colors text-center text-sm">
-                            Likes Beheren
+                            Auto Likes Beheer
                         </a>
                     </div>
                 </div>
