@@ -1,6 +1,7 @@
 <?php
 require_once 'includes/Database.php';
 require_once 'includes/config.php';
+require_once 'models/PartyModel.php';
 
 class ProgrammaVergelijkerController {
     private $db;
@@ -1499,6 +1500,19 @@ $parties = [
     ],
     
 ];
+
+        // Haal partij logo's en kleuren dynamisch op uit de database
+        $partyModel = new PartyModel();
+        $dbParties = $partyModel->getAllParties();
+        
+        // Update de hardcoded parties met logo's en kleuren uit de database
+        foreach ($parties as $key => &$party) {
+            if (isset($dbParties[$key])) {
+                $party['logo'] = $dbParties[$key]['logo'];
+                $party['color'] = $dbParties[$key]['color'];
+            }
+        }
+        unset($party); // Verbreek de referentie
 
         // Data structureren voor de view
         $data = [

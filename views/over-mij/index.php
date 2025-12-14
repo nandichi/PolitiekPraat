@@ -3,6 +3,9 @@
 if (!defined('URLROOT')) {
     exit;
 }
+
+// Laad PartyModel voor dynamische partij logo's
+require_once __DIR__ . '/../../models/PartyModel.php';
 ?>
 
 <!-- Link naar AOS (Animate On Scroll) library -->
@@ -144,36 +147,28 @@ if (!defined('URLROOT')) {
         <!-- Floating partij logos -->
         <div class="absolute inset-0 z-10 pointer-events-none overflow-hidden">
             <?php
-            // Database van partij logo's
-            $partyLogos = [
-                'PVV' => 'https://i.ibb.co/DfR8pS2Y/403880390-713625330344634-198487231923339026-n.jpg',
-                'VVD' => 'https://logo.clearbit.com/vvd.nl',
-                'NSC' => 'https://i.ibb.co/YT2fJZb4/nsc.png',
-                'BBB' => 'https://i.ibb.co/qMjw7jDV/bbb.png',
-                'GL-PvdA' => 'https://i.ibb.co/67hkc5Hv/gl-pvda.png',
-                'D66' => 'https://logo.clearbit.com/d66.nl',
-                'SP' => 'https://logo.clearbit.com/sp.nl',
-                'PvdD' => 'https://logo.clearbit.com/partijvoordedieren.nl',
-                'CDA' => 'https://logo.clearbit.com/cda.nl',
-                'JA21' => 'https://logo.clearbit.com/ja21.nl',
-                'SGP' => 'https://logo.clearbit.com/sgp.nl',
-                'FvD' => 'https://logo.clearbit.com/fvd.nl',
-                'DENK' => 'https://logo.clearbit.com/bewegingdenk.nl',
-                'Volt' => 'https://logo.clearbit.com/voltnederland.org'
-            ];
+            // Haal partij logo's dynamisch op uit de database
+            $partyModel = new PartyModel();
+            $allDbParties = $partyModel->getAllParties();
+            $partyLogos = [];
+            $partyColors = [];
+            foreach ($allDbParties as $key => $party) {
+                $partyLogos[$key] = $party['logo'];
+                $partyColors[$key] = $party['color'];
+            }
             
-            // Partijen configuratie met kleuren - posities worden random gegenereerd
+            // Partijen configuratie met kleuren uit database - posities worden random gegenereerd
             $floatingPartijen = [
-                ['naam' => 'VVD', 'kleur' => '#FF9900', 'logo' => $partyLogos['VVD'], 'delay' => '0s', 'duration' => '20s', 'size' => 'large'],
-                ['naam' => 'PVV', 'kleur' => '#0078D7', 'logo' => $partyLogos['PVV'], 'delay' => '3s', 'duration' => '22s', 'size' => 'large'],
-                ['naam' => 'GL-PvdA', 'kleur' => '#008800', 'logo' => $partyLogos['GL-PvdA'], 'delay' => '6s', 'duration' => '24s', 'size' => 'large'],
-                ['naam' => 'CDA', 'kleur' => '#1E8449', 'logo' => $partyLogos['CDA'], 'delay' => '2s', 'duration' => '18s', 'size' => 'medium'],
-                ['naam' => 'D66', 'kleur' => '#00B13C', 'logo' => $partyLogos['D66'], 'delay' => '4s', 'duration' => '26s', 'size' => 'medium'],
-                ['naam' => 'SP', 'kleur' => '#EE0000', 'logo' => $partyLogos['SP'], 'delay' => '7s', 'duration' => '19s', 'size' => 'small'],
-                ['naam' => 'PvdD', 'kleur' => '#006400', 'logo' => $partyLogos['PvdD'], 'delay' => '8s', 'duration' => '21s', 'size' => 'small'],
-                ['naam' => 'Volt', 'kleur' => '#800080', 'logo' => $partyLogos['Volt'], 'delay' => '10s', 'duration' => '25s', 'size' => 'small'],
-                ['naam' => 'JA21', 'kleur' => '#4B0082', 'logo' => $partyLogos['JA21'], 'delay' => '12s', 'duration' => '27s', 'size' => 'small'],
-                ['naam' => 'SGP', 'kleur' => '#ff7f00', 'logo' => $partyLogos['SGP'], 'delay' => '14s', 'duration' => '29s', 'size' => 'small']
+                ['naam' => 'VVD', 'kleur' => $partyColors['VVD'] ?? '#FF9900', 'logo' => $partyLogos['VVD'] ?? '', 'delay' => '0s', 'duration' => '20s', 'size' => 'large'],
+                ['naam' => 'PVV', 'kleur' => $partyColors['PVV'] ?? '#0078D7', 'logo' => $partyLogos['PVV'] ?? '', 'delay' => '3s', 'duration' => '22s', 'size' => 'large'],
+                ['naam' => 'GL-PvdA', 'kleur' => $partyColors['GL-PvdA'] ?? '#008800', 'logo' => $partyLogos['GL-PvdA'] ?? '', 'delay' => '6s', 'duration' => '24s', 'size' => 'large'],
+                ['naam' => 'CDA', 'kleur' => $partyColors['CDA'] ?? '#1E8449', 'logo' => $partyLogos['CDA'] ?? '', 'delay' => '2s', 'duration' => '18s', 'size' => 'medium'],
+                ['naam' => 'D66', 'kleur' => $partyColors['D66'] ?? '#00B13C', 'logo' => $partyLogos['D66'] ?? '', 'delay' => '4s', 'duration' => '26s', 'size' => 'medium'],
+                ['naam' => 'SP', 'kleur' => $partyColors['SP'] ?? '#EE0000', 'logo' => $partyLogos['SP'] ?? '', 'delay' => '7s', 'duration' => '19s', 'size' => 'small'],
+                ['naam' => 'PvdD', 'kleur' => $partyColors['PvdD'] ?? '#006400', 'logo' => $partyLogos['PvdD'] ?? '', 'delay' => '8s', 'duration' => '21s', 'size' => 'small'],
+                ['naam' => 'Volt', 'kleur' => $partyColors['Volt'] ?? '#800080', 'logo' => $partyLogos['Volt'] ?? '', 'delay' => '10s', 'duration' => '25s', 'size' => 'small'],
+                ['naam' => 'JA21', 'kleur' => $partyColors['JA21'] ?? '#4B0082', 'logo' => $partyLogos['JA21'] ?? '', 'delay' => '12s', 'duration' => '27s', 'size' => 'small'],
+                ['naam' => 'SGP', 'kleur' => $partyColors['SGP'] ?? '#ff7f00', 'logo' => $partyLogos['SGP'] ?? '', 'delay' => '14s', 'duration' => '29s', 'size' => 'small']
             ];
             
             // Array om gebruikte posities bij te houden

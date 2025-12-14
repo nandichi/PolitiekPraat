@@ -1,4 +1,11 @@
 <?php 
+// Laad PartyModel voor dynamische partij logo's
+require_once __DIR__ . '/../../models/PartyModel.php';
+
+// Haal partij data dynamisch op uit de database
+$partyModel = new PartyModel();
+$dbParties = $partyModel->getAllParties();
+
 // Voeg dynamische meta tags toe voor deze specifieke blog
 $pageTitle = htmlspecialchars($blog->title) . ' | PolitiekPraat';
 $pageDescription = htmlspecialchars(stripMarkdownForSocialMedia($blog->summary, 160));
@@ -1510,187 +1517,23 @@ require_once 'views/templates/header.php'; ?>
             
             <!-- Modal Body -->
             <div class="p-6 overflow-y-auto max-h-[70vh]">
-                <!-- Party Selection Grid -->
+                <!-- Party Selection Grid - Dynamisch geladen uit database -->
                 <div id="partySelectionGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-6">
-                    <!-- PVV -->
-                    <button type="button" class="party-select-btn" data-party="PVV">
-                        <div class="p-4 border-2 border-gray-200 rounded-xl hover:border-orange-300 hover:bg-orange-50 transition-all cursor-pointer group">
-                            <img src="https://i.ibb.co/DfR8pS2Y/403880390-713625330344634-198487231923339026-n.jpg" 
-                                 alt="PVV" 
-                                 class="w-16 h-16 mx-auto mb-2 object-contain">
-                            <h4 class="font-bold text-sm text-gray-900 group-hover:text-orange-700">PVV</h4>
-                            <p class="text-xs text-gray-600 mt-1 leader-name">Geert Wilders</p>
-                            <img src="/partijleiders/geert.jpg" alt="Geert Wilders" class="leader-photo w-12 h-12 rounded-full mx-auto mt-2 object-cover border-2 border-gray-200 hidden">
-                        </div>
-                    </button>
-                    
-                    <!-- VVD -->
-                    <button type="button" class="party-select-btn" data-party="VVD">
-                        <div class="p-4 border-2 border-gray-200 rounded-xl hover:border-blue-300 hover:bg-blue-50 transition-all cursor-pointer group">
-                            <img src="https://logo.clearbit.com/vvd.nl" 
-                                 alt="VVD" 
-                                 class="w-16 h-16 mx-auto mb-2 object-contain">
-                            <h4 class="font-bold text-sm text-gray-900 group-hover:text-blue-700">VVD</h4>
-                            <p class="text-xs text-gray-600 mt-1 leader-name">Dilan Yeşilgöz</p>
-                            <img src="/partijleiders/dilan.jpg" alt="Dilan Yeşilgöz" class="leader-photo w-12 h-12 rounded-full mx-auto mt-2 object-cover border-2 border-gray-200 hidden">
-                        </div>
-                    </button>
-                    
-                    <!-- GL-PvdA -->
-                    <button type="button" class="party-select-btn" data-party="GL-PvdA">
-                        <div class="p-4 border-2 border-gray-200 rounded-xl hover:border-green-300 hover:bg-green-50 transition-all cursor-pointer group">
-                            <img src="https://i.ibb.co/67hkc5Hv/gl-pvda.png" 
-                                 alt="GL-PvdA" 
-                                 class="w-16 h-16 mx-auto mb-2 object-contain">
-                            <h4 class="font-bold text-sm text-gray-900 group-hover:text-green-700">GL-PvdA</h4>
-                            <p class="text-xs text-gray-600 mt-1 leader-name">Frans Timmermans</p>
-                            <img src="/partijleiders/frans.jpg" alt="Frans Timmermans" class="leader-photo w-12 h-12 rounded-full mx-auto mt-2 object-cover border-2 border-gray-200 hidden">
-                        </div>
-                    </button>
-                    
-                    <!-- NSC -->
-                    <button type="button" class="party-select-btn" data-party="NSC">
-                        <div class="p-4 border-2 border-gray-200 rounded-xl hover:border-purple-300 hover:bg-purple-50 transition-all cursor-pointer group">
-                            <img src="https://i.ibb.co/YT2fJZb4/nsc.png" 
-                                 alt="NSC" 
-                                 class="w-16 h-16 mx-auto mb-2 object-contain">
-                            <h4 class="font-bold text-sm text-gray-900 group-hover:text-purple-700">NSC</h4>
-                            <p class="text-xs text-gray-600 mt-1 leader-name">Nicolien van Vroonhoven</p>
-                            <img src="https://i.ibb.co/NgY27GmZ/nicolien-van-vroonhoven-en-piete.jpg" alt="Nicolien van Vroonhoven" class="leader-photo w-12 h-12 rounded-full mx-auto mt-2 object-cover border-2 border-gray-200 hidden">
-                        </div>
-                    </button>
-                    
-                    <!-- BBB -->
-                    <button type="button" class="party-select-btn" data-party="BBB">
-                        <div class="p-4 border-2 border-gray-200 rounded-xl hover:border-yellow-300 hover:bg-yellow-50 transition-all cursor-pointer group">
-                            <img src="https://i.ibb.co/qMjw7jDV/bbb.png" 
-                                 alt="BBB" 
-                                 class="w-16 h-16 mx-auto mb-2 object-contain">
-                            <h4 class="font-bold text-sm text-gray-900 group-hover:text-yellow-700">BBB</h4>
-                            <p class="text-xs text-gray-600 mt-1 leader-name">Caroline van der Plas</p>
-                            <img src="/partijleiders/plas.jpg" alt="Caroline van der Plas" class="leader-photo w-12 h-12 rounded-full mx-auto mt-2 object-cover border-2 border-gray-200 hidden">
-                        </div>
-                    </button>
-                    
-                    <!-- D66 -->
-                    <button type="button" class="party-select-btn" data-party="D66">
-                        <div class="p-4 border-2 border-gray-200 rounded-xl hover:border-teal-300 hover:bg-teal-50 transition-all cursor-pointer group">
-                            <img src="https://logo.clearbit.com/d66.nl" 
-                                 alt="D66" 
-                                 class="w-16 h-16 mx-auto mb-2 object-contain">
-                            <h4 class="font-bold text-sm text-gray-900 group-hover:text-teal-700">D66</h4>
-                            <p class="text-xs text-gray-600 mt-1 leader-name">Rob Jetten</p>
-                            <img src="/partijleiders/rob.jpg" alt="Rob Jetten" class="leader-photo w-12 h-12 rounded-full mx-auto mt-2 object-cover border-2 border-gray-200 hidden">
-                        </div>
-                    </button>
-                    
-                    <!-- SP -->
-                    <button type="button" class="party-select-btn" data-party="SP">
-                        <div class="p-4 border-2 border-gray-200 rounded-xl hover:border-red-300 hover:bg-red-50 transition-all cursor-pointer group">
-                            <img src="https://logo.clearbit.com/sp.nl" 
-                                 alt="SP" 
-                                 class="w-16 h-16 mx-auto mb-2 object-contain">
-                            <h4 class="font-bold text-sm text-gray-900 group-hover:text-red-700">SP</h4>
-                            <p class="text-xs text-gray-600 mt-1 leader-name">Jimmy Dijk</p>
-                            <img src="/partijleiders/jimmy.jpg" alt="Jimmy Dijk" class="leader-photo w-12 h-12 rounded-full mx-auto mt-2 object-cover border-2 border-gray-200 hidden">
-                        </div>
-                    </button>
-                    
-                    <!-- PvdD -->
-                    <button type="button" class="party-select-btn" data-party="PvdD">
-                        <div class="p-4 border-2 border-gray-200 rounded-xl hover:border-lime-300 hover:bg-lime-50 transition-all cursor-pointer group">
-                            <img src="https://logo.clearbit.com/partijvoordedieren.nl" 
-                                 alt="PvdD" 
-                                 class="w-16 h-16 mx-auto mb-2 object-contain">
-                            <h4 class="font-bold text-sm text-gray-900 group-hover:text-lime-700">PvdD</h4>
-                            <p class="text-xs text-gray-600 mt-1 leader-name">Esther Ouwehand</p>
-                            <img src="/partijleiders/esther.jpg" alt="Esther Ouwehand" class="leader-photo w-12 h-12 rounded-full mx-auto mt-2 object-cover border-2 border-gray-200 hidden">
-                        </div>
-                    </button>
-                    
-                    <!-- CDA -->
-                    <button type="button" class="party-select-btn" data-party="CDA">
-                        <div class="p-4 border-2 border-gray-200 rounded-xl hover:border-sky-300 hover:bg-sky-50 transition-all cursor-pointer group">
-                            <img src="https://logo.clearbit.com/cda.nl" 
-                                 alt="CDA" 
-                                 class="w-16 h-16 mx-auto mb-2 object-contain">
-                            <h4 class="font-bold text-sm text-gray-900 group-hover:text-sky-700">CDA</h4>
-                            <p class="text-xs text-gray-600 mt-1 leader-name">Henri Bontenbal</p>
-                            <img src="/partijleiders/Henri.jpg" alt="Henri Bontenbal" class="leader-photo w-12 h-12 rounded-full mx-auto mt-2 object-cover border-2 border-gray-200 hidden">
-                        </div>
-                    </button>
-                    
-                    <!-- JA21 -->
-                    <button type="button" class="party-select-btn" data-party="JA21">
-                        <div class="p-4 border-2 border-gray-200 rounded-xl hover:border-indigo-300 hover:bg-indigo-50 transition-all cursor-pointer group">
-                            <img src="https://logo.clearbit.com/ja21.nl" 
-                                 alt="JA21" 
-                                 class="w-16 h-16 mx-auto mb-2 object-contain">
-                            <h4 class="font-bold text-sm text-gray-900 group-hover:text-indigo-700">JA21</h4>
-                            <p class="text-xs text-gray-600 mt-1 leader-name">Joost Eerdmans</p>
-                            <img src="/partijleiders/joost.jpg" alt="Joost Eerdmans" class="leader-photo w-12 h-12 rounded-full mx-auto mt-2 object-cover border-2 border-gray-200 hidden">
-                        </div>
-                    </button>
-                    
-                    <!-- SGP -->
-                    <button type="button" class="party-select-btn" data-party="SGP">
+                    <?php foreach ($dbParties as $partyKey => $party): ?>
+                    <button type="button" class="party-select-btn" data-party="<?php echo htmlspecialchars($partyKey); ?>">
                         <div class="p-4 border-2 border-gray-200 rounded-xl hover:border-gray-400 hover:bg-gray-50 transition-all cursor-pointer group">
-                            <img src="https://logo.clearbit.com/sgp.nl" 
-                                 alt="SGP" 
-                                 class="w-16 h-16 mx-auto mb-2 object-contain">
-                            <h4 class="font-bold text-sm text-gray-900 group-hover:text-gray-700">SGP</h4>
-                            <p class="text-xs text-gray-600 mt-1 leader-name">Chris Stoffer</p>
-                            <img src="/partijleiders/Chris.jpg" alt="Chris Stoffer" class="leader-photo w-12 h-12 rounded-full mx-auto mt-2 object-cover border-2 border-gray-200 hidden">
+                            <img src="<?php echo htmlspecialchars($party['logo']); ?>" 
+                                 alt="<?php echo htmlspecialchars($partyKey); ?>" 
+                                 class="w-16 h-16 mx-auto mb-2 object-contain"
+                                 onerror="this.style.display='none'">
+                            <h4 class="font-bold text-sm text-gray-900 group-hover:text-gray-700"><?php echo htmlspecialchars($partyKey); ?></h4>
+                            <p class="text-xs text-gray-600 mt-1 leader-name"><?php echo htmlspecialchars($party['leader']); ?></p>
+                            <?php if (!empty($party['leader_photo'])): ?>
+                            <img src="<?php echo htmlspecialchars($party['leader_photo']); ?>" alt="<?php echo htmlspecialchars($party['leader']); ?>" class="leader-photo w-12 h-12 rounded-full mx-auto mt-2 object-cover border-2 border-gray-200 hidden">
+                            <?php endif; ?>
                         </div>
                     </button>
-                    
-                    <!-- FvD -->
-                    <button type="button" class="party-select-btn" data-party="FvD">
-                        <div class="p-4 border-2 border-gray-200 rounded-xl hover:border-amber-300 hover:bg-amber-50 transition-all cursor-pointer group">
-                            <img src="https://logo.clearbit.com/fvd.nl" 
-                                 alt="FvD" 
-                                 class="w-16 h-16 mx-auto mb-2 object-contain">
-                            <h4 class="font-bold text-sm text-gray-900 group-hover:text-amber-700">FvD</h4>
-                            <p class="text-xs text-gray-600 mt-1 leader-name">Thierry Baudet</p>
-                            <img src="/partijleiders/thierry.jpg" alt="Thierry Baudet" class="leader-photo w-12 h-12 rounded-full mx-auto mt-2 object-cover border-2 border-gray-200 hidden">
-                        </div>
-                    </button>
-                    
-                    <!-- DENK -->
-                    <button type="button" class="party-select-btn" data-party="DENK">
-                        <div class="p-4 border-2 border-gray-200 rounded-xl hover:border-cyan-300 hover:bg-cyan-50 transition-all cursor-pointer group">
-                            <img src="https://logo.clearbit.com/bewegingdenk.nl" 
-                                 alt="DENK" 
-                                 class="w-16 h-16 mx-auto mb-2 object-contain">
-                            <h4 class="font-bold text-sm text-gray-900 group-hover:text-cyan-700">DENK</h4>
-                            <p class="text-xs text-gray-600 mt-1 leader-name">Stephan van Baarle</p>
-                            <img src="/partijleiders/baarle.jpg" alt="Stephan van Baarle" class="leader-photo w-12 h-12 rounded-full mx-auto mt-2 object-cover border-2 border-gray-200 hidden">
-                        </div>
-                    </button>
-                    
-                    <!-- Volt -->
-                    <button type="button" class="party-select-btn" data-party="Volt">
-                        <div class="p-4 border-2 border-gray-200 rounded-xl hover:border-violet-300 hover:bg-violet-50 transition-all cursor-pointer group">
-                            <img src="https://logo.clearbit.com/voltnederland.org" 
-                                 alt="Volt" 
-                                 class="w-16 h-16 mx-auto mb-2 object-contain">
-                            <h4 class="font-bold text-sm text-gray-900 group-hover:text-violet-700">Volt</h4>
-                            <p class="text-xs text-gray-600 mt-1 leader-name">Laurens Dassen</p>
-                            <img src="/partijleiders/dassen.jpg" alt="Laurens Dassen" class="leader-photo w-12 h-12 rounded-full mx-auto mt-2 object-cover border-2 border-gray-200 hidden">
-                        </div>
-                    </button>
-                    
-                    <!-- CU -->
-                    <button type="button" class="party-select-btn" data-party="CU">
-                        <div class="p-4 border-2 border-gray-200 rounded-xl hover:border-emerald-300 hover:bg-emerald-50 transition-all cursor-pointer group">
-                            <img src="https://logo.clearbit.com/christenunie.nl" 
-                                 alt="CU" 
-                                 class="w-16 h-16 mx-auto mb-2 object-contain">
-                            <h4 class="font-bold text-sm text-gray-900 group-hover:text-emerald-700">CU</h4>
-                            <p class="text-xs text-gray-600 mt-1 leader-name">Mirjam Bikker</p>
-                            <img src="https://i.ibb.co/wh3wwQ66/Bikker.jpg" alt="Mirjam Bikker" class="leader-photo w-12 h-12 rounded-full mx-auto mt-2 object-cover border-2 border-gray-200 hidden">
-                        </div>
-                    </button>
+                    <?php endforeach; ?>
                 </div>
                 
                 <!-- Loading State -->
@@ -2871,23 +2714,19 @@ async function performPartyAnalysis(party) {
 function showPartyResults(data, partyKey) {
     console.log('Showing party results for:', partyKey);
     
-    const partyData = {
-        'PVV': { name: 'Partij voor de Vrijheid', leader: 'Geert Wilders', logo: 'https://i.ibb.co/DfR8pS2Y/403880390-713625330344634-198487231923339026-n.jpg', leaderPhoto: '/partijleiders/geert.jpg' },
-        'VVD': { name: 'Volkspartij voor Vrijheid en Democratie', leader: 'Dilan Yeşilgöz-Zegerius', logo: 'https://logo.clearbit.com/vvd.nl', leaderPhoto: '/partijleiders/dilan.jpg' },
-        'GL-PvdA': { name: 'GroenLinks-PvdA', leader: 'Frans Timmermans', logo: 'https://i.ibb.co/67hkc5Hv/gl-pvda.png', leaderPhoto: '/partijleiders/frans.jpg' },
-        'NSC': { name: 'Nieuw Sociaal Contract', leader: 'Nicolien van Vroonhoven', logo: 'https://i.ibb.co/YT2fJZb4/nsc.png', leaderPhoto: 'https://i.ibb.co/NgY27GmZ/nicolien-van-vroonhoven-en-piete.jpg' },
-        'BBB': { name: 'BoerBurgerBeweging', leader: 'Caroline van der Plas', logo: 'https://i.ibb.co/qMjw7jDV/bbb.png', leaderPhoto: '/partijleiders/plas.jpg' },
-        'D66': { name: 'Democraten 66', leader: 'Rob Jetten', logo: 'https://logo.clearbit.com/d66.nl', leaderPhoto: '/partijleiders/rob.jpg' },
-        'SP': { name: 'Socialistische Partij', leader: 'Jimmy Dijk', logo: 'https://logo.clearbit.com/sp.nl', leaderPhoto: '/partijleiders/jimmy.jpg' },
-        'PvdD': { name: 'Partij voor de Dieren', leader: 'Esther Ouwehand', logo: 'https://logo.clearbit.com/partijvoordedieren.nl', leaderPhoto: '/partijleiders/esther.jpg' },
-        'CDA': { name: 'Christen-Democratisch Appèl', leader: 'Henri Bontenbal', logo: 'https://logo.clearbit.com/cda.nl', leaderPhoto: '/partijleiders/Henri.jpg' },
-        'JA21': { name: 'Juiste Antwoord 2021', leader: 'Joost Eerdmans', logo: 'https://logo.clearbit.com/ja21.nl', leaderPhoto: '/partijleiders/joost.jpg' },
-        'SGP': { name: 'Staatkundig Gereformeerde Partij', leader: 'Chris Stoffer', logo: 'https://logo.clearbit.com/sgp.nl', leaderPhoto: '/partijleiders/Chris.jpg' },
-        'FvD': { name: 'Forum voor Democratie', leader: 'Thierry Baudet', logo: 'https://logo.clearbit.com/fvd.nl', leaderPhoto: '/partijleiders/thierry.jpg' },
-        'DENK': { name: 'DENK', leader: 'Stephan van Baarle', logo: 'https://logo.clearbit.com/bewegingdenk.nl', leaderPhoto: '/partijleiders/baarle.jpg' },
-        'Volt': { name: 'Volt Nederland', leader: 'Laurens Dassen', logo: 'https://logo.clearbit.com/voltnederland.org', leaderPhoto: '/partijleiders/dassen.jpg' },
-        'CU': { name: 'ChristenUnie', leader: 'Mirjam Bikker', logo: 'https://logo.clearbit.com/christenunie.nl', leaderPhoto: 'https://i.ibb.co/wh3wwQ66/Bikker.jpg' }
-    };
+    // Dynamisch geladen partij data uit database
+    const partyData = <?php 
+        $jsPartyData = [];
+        foreach ($dbParties as $key => $party) {
+            $jsPartyData[$key] = [
+                'name' => $party['name'],
+                'leader' => $party['leader'],
+                'logo' => $party['logo'],
+                'leaderPhoto' => $party['leader_photo'] ?? ''
+            ];
+        }
+        echo json_encode($jsPartyData, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    ?>;
     
     const party = partyData[partyKey];
     if (!party) return;
