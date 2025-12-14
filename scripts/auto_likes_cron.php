@@ -1,169 +1,156 @@
 <?php
-// Automatische likes cron job script
-// Dit script kan worden uitgevoerd door een cron job om automatisch likes toe te voegen
+/**
+ * Auto Likes Cronjob
+ * 
+ * Dit script simuleert realistische likes op blogs door:
+ * - Onregelmatige timing (willekeurige kans per blog)
+ * - Variabele hoeveelheid likes
+ * - Logging naar database voor beheer
+ * 
+ * Aanbevolen cron: elke 15 minuten - zie setup_cron.sh
+ */
 
-// Bepaal het absolute pad naar de project root
 $scriptDir = dirname(__FILE__);
 $projectRoot = dirname($scriptDir);
 
-// Gebruik absolute paden voor alle includes
 require_once $projectRoot . '/includes/config.php';
 require_once $projectRoot . '/includes/Database.php';
 require_once $projectRoot . '/includes/functions.php';
-require_once $projectRoot . '/includes/mail_helper.php';
 
-// Logging functie
+// Optioneel: mail helper voor notificaties
+if (file_exists($projectRoot . '/includes/mail_helper.php')) {
+    require_once $projectRoot . '/includes/mail_helper.php';
+}
+
+/**
+ * Log naar console/file
+ */
 function logMessage($message) {
-    global $projectRoot;
-    $logFile = $projectRoot . '/logs/auto_likes.log';
     $timestamp = date('Y-m-d H:i:s');
-    $logEntry = "[$timestamp] $message" . PHP_EOL;
-    
-    // Zorg ervoor dat logs directory bestaat
-    $logDir = dirname($logFile);
-    if (!is_dir($logDir)) {
-        mkdir($logDir, 0755, true);
-    }
-    
-    file_put_contents($logFile, $logEntry, FILE_APPEND | LOCK_EX);
-    echo $logEntry;
+    $logEntry = "[$timestamp] $message";
+    echo $logEntry . PHP_EOL;
+}
+
+/**
+ * Haal een instelling op uit de database
+ */
+function getSetting($db, $key, $default = null) {
+    $db->query("SELECT setting_value FROM auto_likes_settings WHERE setting_key = :key");
+    $db->bind(':key', $key);
+    $result = $db->single();
+    return $result ? $result->setting_value : $default;
+}
+
+/**
+ * Update een instelling in de database
+ */
+function updateSetting($db, $key, $value) {
+    $db->query("UPDATE auto_likes_settings SET setting_value = :value WHERE setting_key = :key");
+    $db->bind(':value', $value);
+    $db->bind(':key', $key);
+    return $db->execute();
 }
 
 try {
-    logMessage("Starting auto likes cron job");
+    logMessage("=== Auto Likes Cron gestart ===");
     
-    // Controleer of logs directory bestaat
-    if (!is_dir($projectRoot . '/logs')) {
-        mkdir($projectRoot . '/logs', 0755, true);
-    }
+    // Random delay van 0-120 seconden voor extra onregelmatigheid
+    $randomDelay = rand(0, 120);
+    logMessage("Random delay: {$randomDelay} seconden");
+    sleep($randomDelay);
     
-    // Laad automatische instellingen
-    $autoSettingsFile = $projectRoot . '/cache/auto_likes_settings.json';
-    if (!file_exists($autoSettingsFile)) {
-        logMessage("Auto likes settings file not found. Exiting.");
-        exit;
-    }
-    
-    $autoSettings = json_decode(file_get_contents($autoSettingsFile), true);
-    
-    // Controleer of automatische likes is ingeschakeld
-    if (!($autoSettings['enabled'] ?? false)) {
-        logMessage("Auto likes is disabled. Exiting.");
-        exit;
-    }
-    
-    // Controleer of het tijd is voor een nieuwe run
-    $lastRun = $autoSettings['last_run'] ?? 0;
-    $intervalSeconds = ($autoSettings['interval_hours'] ?? 6) * 3600;
-    $now = time();
-    
-    if (($now - $lastRun) < $intervalSeconds) {
-        $nextRun = $lastRun + $intervalSeconds;
-        $remainingTime = $nextRun - $now;
-        logMessage("Not time yet for next run. Next run in " . round($remainingTime / 3600, 1) . " hours");
-        exit;
-    }
-    
-    // Database verbinding
     $db = new Database();
     
-    // Haal alle blogs op
-    $db->query("SELECT id, title, likes, published_at FROM blogs WHERE published_at >= DATE_SUB(NOW(), INTERVAL 30 DAY) ORDER BY published_at DESC");
+    // Controleer of het systeem globaal is ingeschakeld
+    $globalEnabled = getSetting($db, 'global_enabled', '0');
+    if ($globalEnabled !== '1') {
+        logMessage("Auto likes systeem is globaal uitgeschakeld. Stoppen.");
+        exit;
+    }
+    
+    // Haal globale instellingen op
+    $likeChanceMin = (int)getSetting($db, 'like_chance_min', '30');
+    $likeChanceMax = (int)getSetting($db, 'like_chance_max', '70');
+    $defaultMinLikes = (int)getSetting($db, 'default_min_likes', '1');
+    $defaultMaxLikes = (int)getSetting($db, 'default_max_likes', '5');
+    
+    logMessage("Instellingen: kans {$likeChanceMin}-{$likeChanceMax}%, likes {$defaultMinLikes}-{$defaultMaxLikes}");
+    
+    // Haal alle ingeschakelde blogs op met hun configuratie
+    $db->query("
+        SELECT 
+            b.id,
+            b.title,
+            b.likes,
+            COALESCE(alc.enabled, 1) as auto_enabled,
+            COALESCE(alc.min_likes_per_run, :default_min) as min_likes,
+            COALESCE(alc.max_likes_per_run, :default_max) as max_likes
+        FROM blogs b
+        LEFT JOIN auto_likes_config alc ON b.id = alc.blog_id
+        WHERE COALESCE(alc.enabled, 1) = 1
+        ORDER BY b.published_at DESC
+    ");
+    $db->bind(':default_min', $defaultMinLikes);
+    $db->bind(':default_max', $defaultMaxLikes);
     $blogs = $db->resultSet();
     
     if (empty($blogs)) {
-        logMessage("No blogs found to update");
+        logMessage("Geen blogs gevonden met auto likes ingeschakeld.");
         exit;
     }
     
-    $minLikes = $autoSettings['min_likes'] ?? 1;
-    $maxLikes = $autoSettings['max_likes'] ?? 5;
+    logMessage("Gevonden: " . count($blogs) . " blogs met auto likes ingeschakeld");
+    
     $updatedCount = 0;
     $totalLikesAdded = 0;
     
-    logMessage("Processing " . count($blogs) . " blogs");
-    
     foreach ($blogs as $blog) {
-        // Willekeurige kans (70%) dat deze blog likes krijgt
-        if (rand(1, 100) <= 70) {
-            $randomLikes = rand($minLikes, $maxLikes);
-            $newLikes = $blog->likes + $randomLikes;
+        // Genereer willekeurige kans voor deze run
+        $randomChance = rand($likeChanceMin, $likeChanceMax);
+        $roll = rand(1, 100);
+        
+        if ($roll <= $randomChance) {
+            // Deze blog krijgt likes
+            $likesToAdd = rand($blog->min_likes, $blog->max_likes);
+            $newLikeCount = $blog->likes + $likesToAdd;
             
+            // Update likes in blogs tabel
             $db->query("UPDATE blogs SET likes = :likes WHERE id = :id");
-            $db->bind(':likes', $newLikes);
+            $db->bind(':likes', $newLikeCount);
             $db->bind(':id', $blog->id);
             
             if ($db->execute()) {
+                // Log naar auto_likes_log
+                $db->query("INSERT INTO auto_likes_log (blog_id, likes_added) VALUES (:blog_id, :likes_added)");
+                $db->bind(':blog_id', $blog->id);
+                $db->bind(':likes_added', $likesToAdd);
+                $db->execute();
+                
                 $updatedCount++;
-                $totalLikesAdded += $randomLikes;
-                logMessage("Added $randomLikes likes to blog: " . substr($blog->title, 0, 50) . "...");
-            } else {
-                logMessage("Failed to update likes for blog ID: " . $blog->id);
+                $totalLikesAdded += $likesToAdd;
+                
+                $shortTitle = mb_substr($blog->title, 0, 40);
+                logMessage("+ {$likesToAdd} likes -> \"{$shortTitle}...\" (roll: {$roll} <= {$randomChance})");
             }
         }
     }
     
-    // Update last run tijd
-    $autoSettings['last_run'] = $now;
-    file_put_contents($autoSettingsFile, json_encode($autoSettings));
+    // Update last_run timestamp
+    updateSetting($db, 'last_run', time());
     
-    logMessage("Auto likes cron job completed successfully");
-    logMessage("Updated $updatedCount blogs with $totalLikesAdded total likes");
-    
-    // Email notificatie versturen
-    $emailSummary = "Auto Likes succesvol uitgevoerd! {$updatedCount} blogs bijgewerkt met {$totalLikesAdded} likes.";
-    $emailDetails = "Likes Resultaten:\n";
-    $emailDetails .= "- Blogs verwerkt: " . count($blogs) . "\n";
-    $emailDetails .= "- Blogs bijgewerkt: {$updatedCount}\n";
-    $emailDetails .= "- Totale likes toegevoegd: {$totalLikesAdded}\n";
-    $emailDetails .= "- Min likes per blog: {$minLikes}\n";
-    $emailDetails .= "- Max likes per blog: {$maxLikes}\n";
-    $emailDetails .= "- Interval: " . ($autoSettings['interval_hours'] ?? 6) . " uur\n";
-    $emailDetails .= "- Tijd: " . date('Y-m-d H:i:s') . "\n";
-    
-    // Verstuur email
-    $logFile = $projectRoot . '/logs/auto_likes.log';
-    $emailSent = sendCronJobEmail(
-        'Auto Likes',
-        'success',
-        $emailSummary,
-        $emailDetails,
-        $logFile
-    );
-    
-    if ($emailSent) {
-        logMessage("Email notificatie verstuurd naar admin");
-    } else {
-        logMessage("Waarschuwing: Email notificatie kon niet worden verstuurd");
-    }
+    logMessage("=== Samenvatting ===");
+    logMessage("Blogs verwerkt: " . count($blogs));
+    logMessage("Blogs bijgewerkt: {$updatedCount}");
+    logMessage("Totaal likes toegevoegd: {$totalLikesAdded}");
+    logMessage("=== Auto Likes Cron voltooid ===");
     
 } catch (Exception $e) {
-    logMessage("Error in auto likes cron job: " . $e->getMessage());
+    logMessage("FOUT: " . $e->getMessage());
     logMessage("Stack trace: " . $e->getTraceAsString());
     
-    // Verstuur error email
-    $errorSummary = "Auto Likes FOUT! Het script is gestopt met een kritieke fout.";
-    $errorDetails = "Fout: " . $e->getMessage() . "\n\n";
-    $errorDetails .= "Stack trace:\n" . $e->getTraceAsString() . "\n\n";
-    $errorDetails .= "Tijd: " . date('Y-m-d H:i:s') . "\n";
-    $errorDetails .= "Server: " . gethostname() . "\n";
-    
-    $logFile = $projectRoot . '/logs/auto_likes.log';
-    $emailSent = sendCronJobEmail(
-        'Auto Likes - ERROR',
-        'error',
-        $errorSummary,
-        $errorDetails,
-        $logFile
-    );
-    
-    if ($emailSent) {
-        logMessage("Error email notificatie verstuurd naar admin");
-    } else {
-        logMessage("Kritiek: Error email kon niet worden verstuurd!");
-    }
-    
-    // Log naar main error log ook
+    // Log naar error log
     error_log("Auto Likes Cron Error: " . $e->getMessage());
+    
+    exit(1);
 }
-?> 
+?>

@@ -1,7 +1,0 @@
-{
-  "enabled": true,
-  "interval_hours": 6,
-  "min_likes": 1,
-  "max_likes": 5,
-  "last_run": 0
-}
