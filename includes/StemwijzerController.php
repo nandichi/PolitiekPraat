@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . '/../models/PartyModel.php';
+
 class StemwijzerController {
     private $db;
     private $schemaType;
@@ -238,6 +240,22 @@ class StemwijzerController {
             $questions = $validQuestions; // Gebruik alleen vragen met posities
 
             $partyLogos = [];
+            
+            // Haal eerst logos op uit de political_parties tabel (primaire bron)
+            try {
+                $partyModel = new PartyModel();
+                $politicalParties = $partyModel->getAllParties();
+                foreach ($politicalParties as $key => $pParty) {
+                    if (!empty($pParty['logo'])) {
+                        $partyLogos[$key] = $pParty['logo'];
+                    }
+                }
+                error_log("StemwijzerController: Loaded " . count($partyLogos) . " logos from political_parties table");
+            } catch (Exception $e) {
+                error_log("StemwijzerController: Could not load logos from PartyModel - " . $e->getMessage());
+            }
+            
+            // Vul aan met logos uit stemwijzer_parties als die ontbreken
             foreach ($parties as $party) {
                  // Zorg ervoor dat party een object is
                 if (!is_object($party)) {
@@ -249,10 +267,13 @@ class StemwijzerController {
 
                 if (empty($shortName)) continue; // Sla op als geen naam
 
-                if (empty($logoUrl) || $logoUrl === 'NULL') {
-                    $logoUrl = $this->getFallbackLogoForParty($shortName);
+                // Alleen toevoegen als er nog geen logo is uit political_parties
+                if (!isset($partyLogos[$shortName]) || empty($partyLogos[$shortName])) {
+                    if (empty($logoUrl) || $logoUrl === 'NULL') {
+                        $logoUrl = $this->getFallbackLogoForParty($shortName);
+                    }
+                    $partyLogos[$shortName] = $logoUrl;
                 }
-                $partyLogos[$shortName] = $logoUrl;
             }
             
             if (empty($partyLogos) && !empty($this->getFallbackParties())) {
@@ -837,7 +858,10 @@ class StemwijzerController {
             'SGP' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/SGP_logo.svg/200px-SGP_logo.svg.png',
             'FvD' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Forum_voor_Democratie_logo.svg/200px-Forum_voor_Democratie_logo.svg.png',
             'DENK' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/DENK_logo.svg/200px-DENK_logo.svg.png',
-            'Volt' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Volt_Europa_logo.svg/200px-Volt_Europa_logo.svg.png'
+            'Volt' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Volt_Europa_logo.svg/200px-Volt_Europa_logo.svg.png',
+            'BIJ1' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/BIJ1_logo.svg/200px-BIJ1_logo.svg.png',
+            'CU' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/ChristenUnie_logo.svg/200px-ChristenUnie_logo.svg.png',
+            'ChristenUnie' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/ChristenUnie_logo.svg/200px-ChristenUnie_logo.svg.png'
         ];
         $defaultPlaceholder = 'https://via.placeholder.com/100x60/f0f0f0/666666?text=' . urlencode($partyName ?: "Onbekend");
         return $fallbackLogos[$partyName] ?? $defaultPlaceholder;
@@ -894,7 +918,9 @@ class StemwijzerController {
             (object)['id' => 11, 'name' => 'SGP', 'short_name' => 'SGP', 'logo_url' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/SGP_logo.svg/200px-SGP_logo.svg.png'],
             (object)['id' => 12, 'name' => 'FvD', 'short_name' => 'FvD', 'logo_url' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Forum_voor_Democratie_logo.svg/200px-Forum_voor_Democratie_logo.svg.png'],
             (object)['id' => 13, 'name' => 'DENK', 'short_name' => 'DENK', 'logo_url' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/DENK_logo.svg/200px-DENK_logo.svg.png'],
-            (object)['id' => 14, 'name' => 'Volt', 'short_name' => 'Volt', 'logo_url' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Volt_Europa_logo.svg/200px-Volt_Europa_logo.svg.png']
+            (object)['id' => 14, 'name' => 'Volt', 'short_name' => 'Volt', 'logo_url' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Volt_Europa_logo.svg/200px-Volt_Europa_logo.svg.png'],
+            (object)['id' => 15, 'name' => 'BIJ1', 'short_name' => 'BIJ1', 'logo_url' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/BIJ1_logo.svg/200px-BIJ1_logo.svg.png'],
+            (object)['id' => 16, 'name' => 'ChristenUnie', 'short_name' => 'CU', 'logo_url' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/ChristenUnie_logo.svg/200px-ChristenUnie_logo.svg.png']
         ];
     }
     

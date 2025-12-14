@@ -269,23 +269,7 @@ require_once 'views/templates/header.php';
                             Hieronder vindt u verschillende manieren om uw cookie-voorkeuren te beheren:
                         </p>
 
-                        <div class="grid md:grid-cols-2 gap-6">
-                            <div class="border border-gray-200 rounded-lg p-6">
-                                <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-                                    <svg class="w-5 h-5 text-blue-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/>
-                                    </svg>
-                                    Via Onze Website
-                                </h3>
-                                <p class="text-gray-600 text-sm mb-4">
-                                    Gebruik onze cookie instellingen om uw voorkeuren direct te wijzigen:
-                                </p>
-                                <button onclick="window.cookieConsent.showSettings()" 
-                                        class="w-full bg-blue-600 text-white px-4 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium">
-                                    Cookie Instellingen Openen
-                                </button>
-                            </div>
-
+                        <div class="grid gap-6">
                             <div class="border border-gray-200 rounded-lg p-6">
                                 <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
                                     <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
@@ -486,15 +470,8 @@ require_once 'views/templates/header.php';
                         U heeft volledige controle over uw privacy. Pas uw cookie-instellingen aan naar uw wensen.
                     </p>
                     <div class="flex flex-wrap justify-center gap-4">
-                        <button onclick="window.cookieConsent.showSettings()" 
-                                class="bg-white text-primary px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors inline-flex items-center">
-                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/>
-                            </svg>
-                            Cookie Instellingen
-                        </button>
                         <a href="<?php echo URLROOT; ?>/privacy-policy" 
-                           class="bg-transparent border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-primary transition-colors">
+                           class="bg-white text-primary px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
                             Lees Privacy Policy
                         </a>
                     </div>

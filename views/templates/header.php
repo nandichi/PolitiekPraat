@@ -567,15 +567,13 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
     
     <!-- Accessibility & Privacy CSS -->
     <link rel="stylesheet" href="<?php echo URLROOT; ?>/public/css/accessibility.css">
-    <link rel="stylesheet" href="<?php echo URLROOT; ?>/public/css/cookie-consent.css">
     <link rel="stylesheet" href="<?php echo URLROOT; ?>/public/css/coffee-button.css">
     
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5550921434025979" crossorigin="anonymous"></script>
     
-    <!-- Accessibility & Privacy Scripts -->
+    <!-- Accessibility Scripts -->
     <script src="<?php echo URLROOT; ?>/public/js/accessibility.js" defer></script>
-    <script src="<?php echo URLROOT; ?>/public/js/cookie-consent.js" defer></script>
 
     <style>
         [x-cloak] { 
