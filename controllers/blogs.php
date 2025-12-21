@@ -27,6 +27,13 @@ class BlogsController {
     }
     
     public function create() {
+        // Set PHP upload limits as fallback for development server
+        @ini_set('upload_max_filesize', '100M');
+        @ini_set('post_max_size', '100M');
+        @ini_set('max_execution_time', '300');
+        @ini_set('max_input_time', '300');
+        @ini_set('memory_limit', '256M');
+        
         // Check if user is logged in
         if (!isset($_SESSION['user_id'])) {
             header('Location: ' . URLROOT . '/auth/login');
@@ -145,70 +152,93 @@ class BlogsController {
                 }
             }
 
-            // Handle audio upload voor tekst-naar-spraak
+            // Handle audio upload voor podcast
             $audio_path = '';
-            $audio_url = '';
             
-            // Handle Google Drive audio URL
-            if (!empty($_POST['audio_url'])) {
-                $audio_url = trim($_POST['audio_url']);
-                // Valideer Google Drive URLs
-                if (strpos($audio_url, 'drive.google.com') !== false) {
-                    // Extracteer file ID uit Google Drive URL
-                    if (preg_match('/\/file\/d\/([a-zA-Z0-9_-]+)/', $audio_url, $matches) || 
-                        preg_match('/[?&]id=([a-zA-Z0-9_-]+)/', $audio_url, $matches)) {
-                        // URL is geldig, bewaar originele URL
-                    } else {
-                        $audio_url = ''; // Reset als Google Drive URL ongeldig is
-                    }
-                } else {
-                    $audio_url = ''; // Reset als het geen Google Drive URL is
-                }
-            }
-
-            // Handle SoundCloud audio URL
-            $soundcloud_url = '';
-            if (!empty($_POST['soundcloud_url'])) {
-                $soundcloud_url = trim($_POST['soundcloud_url']);
-                // Valideer SoundCloud URLs
-                if (strpos($soundcloud_url, 'soundcloud.com') !== false) {
-                    // Basis validatie voor SoundCloud URLs
-                    if (preg_match('/^https:\/\/(www\.|m\.)?soundcloud\.com\/[^\/]+\/[^\/]+/', $soundcloud_url) ||
-                        preg_match('/^https:\/\/(www\.|m\.)?soundcloud\.com\/[^\/]+\/sets\/[^\/]+/', $soundcloud_url)) {
-                        // URL is geldig, bewaar originele URL
-                    } else {
-                        $soundcloud_url = ''; // Reset als SoundCloud URL ongeldig is
-                    }
-                } else {
-                    $soundcloud_url = ''; // Reset als het geen SoundCloud URL is
-                }
+            // Debug: Log audio upload attempt
+            error_log("=== AUDIO UPLOAD DEBUG START ===");
+            error_log("Audio file isset: " . (isset($_FILES['audio']) ? 'YES' : 'NO'));
+            if (isset($_FILES['audio'])) {
+                error_log("Audio file data: " . print_r($_FILES['audio'], true));
             }
             
-            // Handle lokaal audio bestand upload (alleen als geen URL is opgegeven)
-            if (empty($audio_url) && isset($_FILES['audio']) && $_FILES['audio']['error'] === UPLOAD_ERR_OK) {
+            // Handle lokaal audio bestand upload
+            if (isset($_FILES['audio']) && $_FILES['audio']['error'] === UPLOAD_ERR_OK) {
                 $upload_dir = BASE_PATH . '/uploads/blogs/audio/';
                 $relative_upload_dir = 'uploads/blogs/audio/';
                 
+                // Uitgebreide logging voor debugging
+                error_log("Audio upload attempt - BASE_PATH: " . BASE_PATH);
+                error_log("Audio upload directory: " . $upload_dir);
+                error_log("Directory exists: " . (file_exists($upload_dir) ? 'YES' : 'NO'));
+                
                 if (!file_exists($upload_dir)) {
-                    mkdir($upload_dir, 0777, true);
+                    $mkdir_result = mkdir($upload_dir, 0777, true);
+                    error_log("Creating audio directory result: " . ($mkdir_result ? 'SUCCESS' : 'FAILED'));
+                    if ($mkdir_result) {
+                        chmod($upload_dir, 0777);
+                        error_log("Audio directory permissions set to 0777");
+                    }
                 }
+                
+                error_log("Directory writable: " . (is_writable($upload_dir) ? 'YES' : 'NO'));
                 
                 $file_extension = strtolower(pathinfo($_FILES['audio']['name'], PATHINFO_EXTENSION));
                 $allowed_audio = ['mp3', 'wav', 'ogg'];
                 
+                error_log("Audio file extension: " . $file_extension);
+                error_log("Audio file size: " . $_FILES['audio']['size'] . " bytes");
+                error_log("Audio temp file: " . $_FILES['audio']['tmp_name']);
+                error_log("Audio temp file exists: " . (file_exists($_FILES['audio']['tmp_name']) ? 'YES' : 'NO'));
+                
                 if (in_array($file_extension, $allowed_audio)) {
-                    // Check bestandsgrootte (max 50MB)
-                    if ($_FILES['audio']['size'] <= 50 * 1024 * 1024) {
+                    // Check bestandsgrootte (max 100MB)
+                    if ($_FILES['audio']['size'] <= 100 * 1024 * 1024) {
                         $new_filename = uniqid() . '.' . $file_extension;
                         $target_path = $upload_dir . $new_filename;
+                        
+                        error_log("Audio target path: " . $target_path);
                         
                         if (move_uploaded_file($_FILES['audio']['tmp_name'], $target_path)) {
                             // Store the relative path in database for compatibility
                             $audio_path = $relative_upload_dir . $new_filename;
+                            
+                            // Set correct file permissions
+                            chmod($target_path, 0644);
+                            
+                            error_log("Audio uploaded successfully: " . $audio_path);
+                            error_log("Audio file size after upload: " . filesize($target_path));
+                        } else {
+                            error_log("Audio upload FAILED for file: " . $_FILES['audio']['name']);
+                            error_log("Upload error details - Source: " . $_FILES['audio']['tmp_name'] . ", Target: " . $target_path);
+                            $last_error = error_get_last();
+                            if ($last_error) {
+                                error_log("Last error: " . $last_error['message']);
+                            }
                         }
+                    } else {
+                        error_log("Audio file too large: " . $_FILES['audio']['size'] . " bytes (max 100MB)");
                     }
+                } else {
+                    error_log("Invalid audio file extension: " . $file_extension . " for file: " . $_FILES['audio']['name']);
                 }
+            } else if (isset($_FILES['audio']) && $_FILES['audio']['error'] !== UPLOAD_ERR_NO_FILE) {
+                // Log upload errors
+                $upload_errors = [
+                    UPLOAD_ERR_INI_SIZE => 'The uploaded file exceeds the upload_max_filesize directive in php.ini',
+                    UPLOAD_ERR_FORM_SIZE => 'The uploaded file exceeds the MAX_FILE_SIZE directive in the HTML form',
+                    UPLOAD_ERR_PARTIAL => 'The uploaded file was only partially uploaded',
+                    UPLOAD_ERR_NO_TMP_DIR => 'Missing a temporary folder',
+                    UPLOAD_ERR_CANT_WRITE => 'Failed to write file to disk',
+                    UPLOAD_ERR_EXTENSION => 'A PHP extension stopped the file upload',
+                ];
+                $error_code = $_FILES['audio']['error'];
+                $error_message = isset($upload_errors[$error_code]) ? $upload_errors[$error_code] : 'Unknown upload error';
+                error_log("Audio upload error (code $error_code): $error_message");
+            } else {
+                error_log("No audio file uploaded or UPLOAD_ERR_NO_FILE");
             }
+            error_log("=== AUDIO UPLOAD DEBUG END ===");
             
             // Create blog post data
             $data = [
@@ -219,8 +249,8 @@ class BlogsController {
                 'video_path' => $video_path,
                 'video_url' => $video_url,
                 'audio_path' => $audio_path,
-                'audio_url' => $audio_url,
-                'soundcloud_url' => $soundcloud_url,
+                'audio_url' => '', // Legacy field, no longer used
+                'soundcloud_url' => '', // Legacy field, no longer used
                 'category_id' => !empty($_POST['category_id']) ? (int)$_POST['category_id'] : null,
                 // Poll data
                 'enable_poll' => isset($_POST['enable_poll']),
@@ -303,6 +333,13 @@ class BlogsController {
     }
     
     public function edit($id = null) {
+        // Set PHP upload limits as fallback for development server
+        @ini_set('upload_max_filesize', '100M');
+        @ini_set('post_max_size', '100M');
+        @ini_set('max_execution_time', '300');
+        @ini_set('max_input_time', '300');
+        @ini_set('memory_limit', '256M');
+        
         // Check if user is logged in
         if (!isset($_SESSION['user_id'])) {
             header('Location: ' . URLROOT . '/auth/login');
@@ -449,88 +486,107 @@ class BlogsController {
 
             // Handle audio updates
             $audio_path = isset($blog->audio_path) ? $blog->audio_path : ''; // Keep existing audio by default
-            $audio_url = isset($blog->audio_url) ? $blog->audio_url : ''; // Keep existing audio URL by default
-            $soundcloud_url = isset($blog->soundcloud_url) ? $blog->soundcloud_url : ''; // Keep existing SoundCloud URL by default
             
-            // Handle updated Google Drive audio URL
-            if (!empty($_POST['audio_url'])) {
-                $audio_url = trim($_POST['audio_url']);
-                // Valideer Google Drive URLs
-                if (strpos($audio_url, 'drive.google.com') !== false) {
-                    // Extracteer file ID uit Google Drive URL
-                    if (preg_match('/\/file\/d\/([a-zA-Z0-9_-]+)/', $audio_url, $matches) || 
-                        preg_match('/[?&]id=([a-zA-Z0-9_-]+)/', $audio_url, $matches)) {
-                        // URL is geldig, bewaar originele URL
-                        // Reset lokaal audio bestand als URL wordt gebruikt
-                        if (!empty($blog->audio_path) && file_exists(BASE_PATH . '/' . $blog->audio_path)) {
-                            unlink(BASE_PATH . '/' . $blog->audio_path);
-                        }
-                        $audio_path = '';
-                    } else {
-                        $audio_url = ''; // Reset als Google Drive URL ongeldig is
-                    }
-                } else {
-                    $audio_url = ''; // Reset als het geen Google Drive URL is
-                }
-            } else {
-                $audio_url = '';
-            }
-
-            // Handle updated SoundCloud audio URL
-            if (!empty($_POST['soundcloud_url'])) {
-                $soundcloud_url = trim($_POST['soundcloud_url']);
-                // Valideer SoundCloud URLs
-                if (strpos($soundcloud_url, 'soundcloud.com') !== false) {
-                    // Basis validatie voor SoundCloud URLs
-                    if (preg_match('/^https:\/\/(www\.|m\.)?soundcloud\.com\/[^\/]+\/[^\/]+/', $soundcloud_url) ||
-                        preg_match('/^https:\/\/(www\.|m\.)?soundcloud\.com\/[^\/]+\/sets\/[^\/]+/', $soundcloud_url)) {
-                        // URL is geldig, bewaar originele URL
-                        // Reset lokaal audio bestand en Google Drive URL als SoundCloud wordt gebruikt
-                        if (!empty($blog->audio_path) && file_exists(BASE_PATH . '/' . $blog->audio_path)) {
-                            unlink(BASE_PATH . '/' . $blog->audio_path);
-                        }
-                        $audio_path = '';
-                        $audio_url = '';
-                    } else {
-                        $soundcloud_url = ''; // Reset als SoundCloud URL ongeldig is
-                    }
-                } else {
-                    $soundcloud_url = ''; // Reset als het geen SoundCloud URL is
-                }
-            } else {
-                $soundcloud_url = '';
+            // Debug: Log audio upload attempt for edit
+            error_log("=== AUDIO UPLOAD DEBUG (EDIT) START ===");
+            error_log("Audio file isset: " . (isset($_FILES['audio']) ? 'YES' : 'NO'));
+            error_log("Existing audio_path: " . $audio_path);
+            if (isset($_FILES['audio'])) {
+                error_log("Audio file data: " . print_r($_FILES['audio'], true));
             }
             
-            // Handle lokaal audio bestand upload (alleen als geen URL is opgegeven)
-            if (empty($audio_url) && isset($_FILES['audio']) && $_FILES['audio']['error'] === UPLOAD_ERR_OK) {
+            // Handle remove_audio checkbox
+            if (isset($_POST['remove_audio']) && $_POST['remove_audio'] === 'on') {
+                // Delete existing audio file
+                if (!empty($blog->audio_path) && file_exists(BASE_PATH . '/' . $blog->audio_path)) {
+                    unlink(BASE_PATH . '/' . $blog->audio_path);
+                    error_log("Deleted existing audio file: " . $blog->audio_path);
+                }
+                $audio_path = '';
+            }
+            
+            // Handle lokaal audio bestand upload
+            if (isset($_FILES['audio']) && $_FILES['audio']['error'] === UPLOAD_ERR_OK) {
                 $upload_dir = BASE_PATH . '/uploads/blogs/audio/';
                 $relative_upload_dir = 'uploads/blogs/audio/';
                 
+                // Uitgebreide logging voor debugging
+                error_log("Audio upload attempt (edit) - BASE_PATH: " . BASE_PATH);
+                error_log("Audio upload directory: " . $upload_dir);
+                error_log("Directory exists: " . (file_exists($upload_dir) ? 'YES' : 'NO'));
+                
                 if (!file_exists($upload_dir)) {
-                    mkdir($upload_dir, 0777, true);
+                    $mkdir_result = mkdir($upload_dir, 0777, true);
+                    error_log("Creating audio directory result: " . ($mkdir_result ? 'SUCCESS' : 'FAILED'));
+                    if ($mkdir_result) {
+                        chmod($upload_dir, 0777);
+                        error_log("Audio directory permissions set to 0777");
+                    }
                 }
+                
+                error_log("Directory writable: " . (is_writable($upload_dir) ? 'YES' : 'NO'));
                 
                 $file_extension = strtolower(pathinfo($_FILES['audio']['name'], PATHINFO_EXTENSION));
                 $allowed_audio = ['mp3', 'wav', 'ogg'];
                 
+                error_log("Audio file extension: " . $file_extension);
+                error_log("Audio file size: " . $_FILES['audio']['size'] . " bytes");
+                error_log("Audio temp file: " . $_FILES['audio']['tmp_name']);
+                error_log("Audio temp file exists: " . (file_exists($_FILES['audio']['tmp_name']) ? 'YES' : 'NO'));
+                
                 if (in_array($file_extension, $allowed_audio)) {
-                    // Check bestandsgrootte (max 50MB)
-                    if ($_FILES['audio']['size'] <= 50 * 1024 * 1024) {
+                    // Check bestandsgrootte (max 100MB)
+                    if ($_FILES['audio']['size'] <= 100 * 1024 * 1024) {
                         $new_filename = uniqid() . '.' . $file_extension;
                         $target_path = $upload_dir . $new_filename;
+                        
+                        error_log("Audio target path: " . $target_path);
                         
                         if (move_uploaded_file($_FILES['audio']['tmp_name'], $target_path)) {
                             // Delete old audio if it exists
                             if (!empty($blog->audio_path) && file_exists(BASE_PATH . '/' . $blog->audio_path)) {
                                 unlink(BASE_PATH . '/' . $blog->audio_path);
+                                error_log("Deleted old audio file: " . $blog->audio_path);
                             }
                             // Store the relative path in database for compatibility
                             $audio_path = $relative_upload_dir . $new_filename;
-                            $audio_url = ''; // Reset URL als lokaal bestand wordt gebruikt
+                            
+                            // Set correct file permissions
+                            chmod($target_path, 0644);
+                            
+                            error_log("Audio uploaded successfully: " . $audio_path);
+                            error_log("Audio file size after upload: " . filesize($target_path));
+                        } else {
+                            error_log("Audio upload FAILED for file: " . $_FILES['audio']['name']);
+                            error_log("Upload error details - Source: " . $_FILES['audio']['tmp_name'] . ", Target: " . $target_path);
+                            $last_error = error_get_last();
+                            if ($last_error) {
+                                error_log("Last error: " . $last_error['message']);
+                            }
                         }
+                    } else {
+                        error_log("Audio file too large: " . $_FILES['audio']['size'] . " bytes (max 100MB)");
                     }
+                } else {
+                    error_log("Invalid audio file extension: " . $file_extension . " for file: " . $_FILES['audio']['name']);
                 }
+            } else if (isset($_FILES['audio']) && $_FILES['audio']['error'] !== UPLOAD_ERR_NO_FILE) {
+                // Log upload errors
+                $upload_errors = [
+                    UPLOAD_ERR_INI_SIZE => 'The uploaded file exceeds the upload_max_filesize directive in php.ini',
+                    UPLOAD_ERR_FORM_SIZE => 'The uploaded file exceeds the MAX_FILE_SIZE directive in the HTML form',
+                    UPLOAD_ERR_PARTIAL => 'The uploaded file was only partially uploaded',
+                    UPLOAD_ERR_NO_TMP_DIR => 'Missing a temporary folder',
+                    UPLOAD_ERR_CANT_WRITE => 'Failed to write file to disk',
+                    UPLOAD_ERR_EXTENSION => 'A PHP extension stopped the file upload',
+                ];
+                $error_code = $_FILES['audio']['error'];
+                $error_message = isset($upload_errors[$error_code]) ? $upload_errors[$error_code] : 'Unknown upload error';
+                error_log("Audio upload error (code $error_code): $error_message");
+            } else {
+                error_log("No audio file uploaded or UPLOAD_ERR_NO_FILE");
             }
+            error_log("=== AUDIO UPLOAD DEBUG (EDIT) END ===");
             
             // Handle category update
             $category_id = filter_input(INPUT_POST, 'category_id', FILTER_VALIDATE_INT);
@@ -567,8 +623,8 @@ class BlogsController {
                 'video_path' => $video_path,
                 'video_url' => $video_url,
                 'audio_path' => $audio_path,
-                'audio_url' => $audio_url,
-                'soundcloud_url' => $soundcloud_url
+                'audio_url' => '', // Legacy field, no longer used
+                'soundcloud_url' => '' // Legacy field, no longer used
             ];
             
             if ($this->blogModel->update($data)) {

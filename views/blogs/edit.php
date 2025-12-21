@@ -245,112 +245,140 @@
                         <?php endif; ?>
                     </div>
 
-                    <!-- SoundCloud Audio URL Sectie -->
+                    <!-- Podcast Audio Upload Sectie -->
                     <div class="mb-10" data-aos="fade-up" data-aos-delay="325">
                         <label class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
-                            <svg class="w-5 h-5 text-orange-500 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M7 17.939h-1v-8.068c.308-.231.639-.429 1-.566v8.634zm3 0h1v-9.224c-.229.265-.443.548-.621.857l-.379-.184v8.551zm-2 0h1v-8.848c-.508-.079-.623-.05-1-.01v8.858zm-4 0h1v-6.891c-.024.184-.037.37-.037.557 0 .228.017.457.037.684v5.65zm13 0h1v-2.24c-.508.138-1.027.262-1.532.355l.532.025v1.86zm-3 0h1v-2.32c-.203.206-.398.422-.609.629l.609.177v1.514zm2 0h1v-2.174c-.993.21-1.927.364-2.811.455l.811-.039v1.758zm3-2.557c-.024-.068-.053-.133-.063-.201l-.045-.171c-.065-.247-.077-.49-.077-.731 0-.242.012-.484.077-.731l.045-.171c.024-.09.054-.177.087-.265.069-.176.158-.343.261-.501.309-.473.765-.884 1.346-1.15.208-.095.406-.141.601-.141.195 0 .393.046.601.141.581.266 1.037.677 1.346 1.15.103.158.192.325.261.501.033.088.063.175.087.265l.045.171c.065.247.077.489.077.731 0 .241-.012.484-.077.731l-.045.171c-.01.068-.039.133-.063.201l-3 2.557zm-14.32-2.557c-.024-.068-.053-.133-.063-.201l-.045-.171c-.065-.247-.077-.49-.077-.731 0-.242.012-.484.077-.731l.045-.171c.024-.09.054-.177.087-.265.069-.176.158-.343.261-.501.309-.473.765-.884 1.346-1.15.208-.095.406-.141.601-.141.195 0 .393.046.601.141.581.266 1.037.677 1.346 1.15.103.158.192.325.261.501.033.088.063.175.087.265l.045.171c.065.247.077.489.077.731 0 .241-.012.484-.077.731l-.045.171c-.01.068-.039.133-.063.201l-3 2.557z"/>
+                            <svg class="w-5 h-5 text-primary mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
                             </svg>
-                            SoundCloud Audio (Aanbevolen)
+                            Podcast Audio (optioneel)
                         </label>
                         
-                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300">
-                            <div class="relative group mb-2">
-                                <input type="url" 
-                                       name="soundcloud_url" 
-                                       id="soundcloud_url" 
-                                       class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500 outline-none transition-all duration-300 bg-gray-50/50"
-                                       placeholder="https://soundcloud.com/user/track-name"
-                                       value="<?php echo htmlspecialchars($blog->soundcloud_url ?? ''); ?>">
-                                <div class="absolute inset-0 bg-orange-500/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+                        <!-- Huidige audio weergave als die bestaat -->
+                        <?php if(!empty($blog->audio_path)): ?>
+                        <div id="currentAudioSection" class="mb-6">
+                            <div class="relative bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                                            <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                            </svg>
                             </div>
-                            <p class="text-sm text-gray-500">Plak een SoundCloud track of playlist link</p>
-                            <div class="mt-2 text-xs text-gray-400 bg-orange-50 p-3 rounded-lg border border-orange-100">
-                                <div class="space-y-2">
-                                    <p><strong>SoundCloud instructies:</strong></p>
-                                    <ol class="list-decimal list-inside space-y-1 text-xs">
-                                        <li>Ga naar je SoundCloud track</li>
-                                        <li>Klik op "Share" onder de track</li>
-                                        <li>Kopieer de link en plak hier</li>
-                                        <li>Zorg dat de track openbaar is</li>
-                                    </ol>
-                                    <p class="text-green-600 font-medium">✅ Voordeel: SoundCloud werkt betrouwbaar zonder CORS problemen en heeft professionele audio player</p>
+                                        <div>
+                                            <h3 class="font-medium text-gray-900">Huidige podcast audio</h3>
+                                            <p class="text-xs text-gray-500">Upload een nieuw bestand om te vervangen</p>
                                 </div>
                             </div>
+                                    <label class="flex items-center space-x-2">
+                                        <input type="checkbox" 
+                                               name="remove_audio" 
+                                               id="removeAudioCheckbox"
+                                               class="w-4 h-4 text-red-600 focus:ring-red-500 border-gray-300 rounded"
+                                               onchange="toggleRemoveAudio()">
+                                        <span class="text-xs text-red-600">Audio verwijderen</span>
+                                    </label>
                         </div>
 
-                        <!-- SoundCloud URL Preview -->
-                        <?php if(!empty($blog->soundcloud_url)): ?>
-                        <div id="currentSoundcloudPreview" class="mt-4">
-                            <div class="relative bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-                                <div class="flex items-center justify-between mb-3">
-                                    <div class="flex items-center space-x-2">
-                                        <svg class="w-5 h-5 text-orange-500" fill="currentColor" viewBox="0 0 24 24">
-                                            <path d="M7 17.939h-1v-8.068c.308-.231.639-.429 1-.566v8.634zm3 0h1v-9.224c-.229.265-.443.548-.621.857l-.379-.184v8.551zm-2 0h1v-8.848c-.508-.079-.623-.05-1-.01v8.858zm-4 0h1v-6.891c-.024.184-.037.37-.037.557 0 .228.017.457.037.684v5.65zm13 0h1v-2.24c-.508.138-1.027.262-1.532.355l.532.025v1.86zm-3 0h1v-2.32c-.203.206-.398.422-.609.629l.609.177v1.514zm2 0h1v-2.174c-.993.21-1.927.364-2.811.455l.811-.039v1.758zm3-2.557c-.024-.068-.053-.133-.063-.201l-.045-.171c-.065-.247-.077-.49-.077-.731 0-.242.012-.484.077-.731l.045-.171c.024-.09.054-.177.087-.265.069-.176.158-.343.261-.501.309-.473.765-.884 1.346-1.15.208-.095.406-.141.601-.141.195 0 .393.046.601.141.581.266 1.037.677 1.346 1.15.103.158.192.325.261.501.033.088.063.175.087.265l.045.171c.065.247.077.489.077.731 0 .241-.012.484-.077.731l-.045.171c-.01.068-.039.133-.063.201l-3 2.557zm-14.32-2.557c-.024-.068-.053-.133-.063-.201l-.045-.171c-.065-.247-.077-.49-.077-.731 0-.242.012-.484.077-.731l.045-.171c.024-.09.054-.177.087-.265.069-.176.158-.343.261-.501.309-.473.765-.884 1.346-1.15.208-.095.406-.141.601-.141.195 0 .393.046.601.141.581.266 1.037.677 1.346 1.15.103.158.192.325.261.501.033.088.063.175.087.265l.045.171c.065.247.077.489.077.731 0 .241-.012.484-.077.731l-.045.171c-.01.068-.039.133-.063.201l-3 2.557z"/>
-                                        </svg>
-                                        <h3 class="font-medium text-gray-900">Huidige SoundCloud audio</h3>
+                                <div id="currentAudioPlayer" class="bg-gradient-to-r from-primary/5 to-secondary/5 rounded-xl p-4">
+                                    <audio controls class="w-full" preload="metadata">
+                                        <source src="<?php echo URLROOT . '/' . $blog->audio_path; ?>" type="audio/mpeg">
+                                        Je browser ondersteunt geen audio weergave.
+                                    </audio>
                                     </div>
                                 </div>
-                                
-                                <div class="bg-gradient-to-r from-orange-50 to-red-50 rounded-lg p-4">
-                                    <div id="currentSoundcloudEmbedContainer" class="w-full">
-                                        <!-- SoundCloud iframe wordt hier geladen -->
-                                        <div class="text-center p-4">
-                                            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500 mx-auto mb-2"></div>
-                                            <p class="text-gray-600">SoundCloud track wordt geladen...</p>
-                                        </div>
-                                    </div>
-                                    <div class="mt-3 flex items-center justify-between text-sm text-gray-600">
-                                        <span id="currentSoundcloudInfo">Huidige SoundCloud track</span>
-                                        <div class="flex items-center space-x-2">
-                                            <span class="inline-flex items-center text-orange-600">
-                                                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24">
-                                                    <path d="M7 17.939h-1v-8.068c.308-.231.639-.429 1-.566v8.634zm3 0h1v-9.224c-.229.265-.443.548-.621.857l-.379-.184v8.551zm-2 0h1v-8.848c-.508-.079-.623-.05-1-.10v8.858zm-4 0h1v-6.891c-.024.184-.037.37-.037.557 0 .228.017.457.037.684v5.65zm13 0h1v-2.24c-.508.138-1.027.262-1.532.355l.532.025v1.86zm-3 0h1v-2.32c-.203.206-.398.422-.609.629l.609.177v1.514zm2 0h1v-2.174c-.993.21-1.927.364-2.811.455l.811-.039v1.758zm3-2.557c-.024-.068-.053-.133-.063-.201l-.045-.171c-.065-.247-.077-.49-.077-.731 0-.242.012-.484.077-.731l.045-.171c.024-.09.054-.177.087-.265.069-.176.158-.343.261-.501.309-.473.765-.884 1.346-1.15.208-.095.406-.141.601-.141.195 0 .393.046.601.141.581.266 1.037.677 1.346 1.15.103.158.192.325.261.501.033.088.063.175.087.265l.045.171c.065.247.077.489.077.731 0 .241-.012.484-.077.731l-.045.171c-.01.068-.039.133-.063.201l-3 2.557zm-14.32-2.557c-.024-.068-.053-.133-.063-.201l-.045-.171c-.065-.247-.077-.49-.077-.731 0-.242.012-.484.077-.731l.045-.171c.024-.09.054-.177.087-.265.069-.176.158-.343.261-.501.309-.473.765-.884 1.346-1.15.208-.095.406-.141.601-.141.195 0 .393.046.601.141.581.266 1.037.677 1.346 1.15.103.158.192.325.261.501.033.088.063.175.087.265l.045.171c.065.247.077.489.077.731 0 .241-.012.484-.077.731l-.045.171c-.01.068-.039.133-.063.201l-3 2.557z"/>
-                                                </svg>
-                                                SoundCloud verbonden
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                         <?php endif; ?>
                         
-                        <div id="soundcloudPreview" class="hidden mt-6">
-                            <div class="relative bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+                        <!-- Audio bestand upload -->
+                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300">
+                            <div class="flex items-center mb-4">
+                                <svg class="w-5 h-5 text-primary mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>
+                                </svg>
+                                <h3 class="font-medium text-gray-900"><?php echo !empty($blog->audio_path) ? 'Nieuwe audio uploaden' : 'Upload een podcast/audio bestand'; ?></h3>
+                                        </div>
+                            
+                            <div class="relative group/upload">
+                                <div class="relative flex flex-col items-center p-8 bg-gradient-to-br from-gray-50 to-primary/5 rounded-xl border-2 border-dashed border-gray-200 transition-all duration-300 hover:border-primary/50 hover:bg-gradient-to-br hover:from-gray-50 hover:to-primary/10">
+                                    <!-- Decoratieve elementen -->
+                                    <div class="absolute -left-4 -top-4 w-32 h-32 bg-primary/10 rounded-full mix-blend-multiply filter blur-xl opacity-0 group-hover/upload:opacity-60 transition-all duration-700"></div>
+                                    <div class="absolute -right-4 -bottom-4 w-32 h-32 bg-secondary/10 rounded-full mix-blend-multiply filter blur-xl opacity-0 group-hover/upload:opacity-60 transition-all duration-700"></div>
+
+                                    <!-- Audio icoon container -->
+                                    <div class="relative z-10">
+                                        <div class="p-5 bg-white rounded-2xl border border-gray-100 shadow-sm transition-all duration-500 group-hover/upload:shadow-lg group-hover/upload:scale-110">
+                                            <svg class="w-12 h-12 text-gray-400 transition-colors duration-300 group-hover/upload:text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
+                                            </svg>
+                                    </div>
+                                    </div>
+
+                                    <!-- Upload tekst en knop -->
+                                    <div class="relative z-10 text-center space-y-4 mt-6">
+                                        <label for="audio" class="group/button inline-flex items-center px-6 py-3 bg-white border-2 border-primary/30 text-primary font-medium rounded-xl cursor-pointer shadow-sm transition-all duration-300 hover:border-primary hover:bg-primary hover:text-white hover:shadow-md">
+                                            <svg class="w-5 h-5 mr-2 transition-transform duration-300 group-hover/button:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                                                </svg>
+                                            <span>Audiobestand kiezen</span>
+                                            <input id="audio" name="audio" type="file" class="sr-only" accept=".mp3,.wav,.ogg,audio/mpeg,audio/wav,audio/ogg">
+                                        </label>
+                                        
+                                        <div class="flex flex-col items-center space-y-2">
+                                            <p class="text-sm text-gray-600">
+                                                Upload een podcast of voorgelezen versie van je blog
+                                            </p>
+                                            <span class="inline-flex items-center px-3 py-1.5 space-x-1 bg-gray-100 rounded-full text-xs text-gray-500">
+                                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                                </svg>
+                                                <span>MP3, WAV of OGG (max. 100MB)</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                        
+                                <!-- Audio Preview voor nieuwe upload -->
+                                <div id="audioPreview" class="hidden mt-6">
+                                    <div class="relative bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
                                 <!-- Preview header -->
-                                <div class="flex items-center justify-between mb-3">
-                                    <div class="flex items-center space-x-2">
-                                        <svg class="w-5 h-5 text-orange-500" fill="currentColor" viewBox="0 0 24 24">
-                                            <path d="M7 17.939h-1v-8.068c.308-.231.639-.429 1-.566v8.634zm3 0h1v-9.224c-.229.265-.443.548-.621.857l-.379-.184v8.551zm-2 0h1v-8.848c-.508-.079-.623-.50-1-.10v8.858zm-4 0h1v-6.891c-.024.184-.037.37-.037.557 0 .228.017.457.037.684v5.65zm13 0h1v-2.24c-.508.138-1.027.262-1.532.355l.532.025v1.86zm-3 0h1v-2.32c-.203.206-.398.422-.609.629l.609.177v1.514zm2 0h1v-2.174c-.993.21-1.927.364-2.811.455l.811-.039v1.758zm3-2.557c-.024-.068-.053-.133-.063-.201l-.045-.171c-.065-.247-.077-.49-.077-.731 0-.242.012-.484.077-.731l.045-.171c.024-.09.054-.177.087-.265.069-.176.158-.343.261-.501.309-.473.765-.884 1.346-1.15.208-.095.406-.141.601-.141.195 0 .393.046.601.141.581.266 1.037.677 1.346 1.15.103.158.192.325.261.501.033.088.063.175.087.265l.045.171c.065.247.077.489.077.731 0 .241-.012.484-.077.731l-.045.171c-.01.068-.039.133-.063.201l-3 2.557zm-14.32-2.557c-.024-.068-.053-.133-.063-.201l-.045-.171c-.065-.247-.077-.49-.077-.731 0-.242.012-.484.077-.731l.045-.171c.024-.09.054-.177.087-.265.069-.176.158-.343.261-.501.309-.473.765-.884 1.346-1.15.208-.095.406-.141.601-.141.195 0 .393.046.601.141.581.266 1.037.677 1.346 1.15.103.158.192.325.261.501.033.088.063.175.087.265l.045.171c.065.247.077.489.077.731 0 .241-.012.484-.077.731l-.045.171c-.01.068-.039.133-.063.201l-3 2.557z"/>
+                                        <div class="flex items-center justify-between mb-4">
+                                            <div class="flex items-center space-x-3">
+                                                <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
+                                                    <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
                                         </svg>
-                                        <h3 class="font-medium text-gray-900">SoundCloud Preview</h3>
+                                                </div>
+                                                <div>
+                                                    <h3 class="font-medium text-gray-900">Nieuwe audio preview</h3>
+                                                    <p class="text-xs text-gray-500" id="audioInfo">Bestand geladen</p>
+                                                </div>
                                     </div>
                                     <button type="button" 
-                                            onclick="removeSoundCloudUrl()" 
-                                            class="group inline-flex items-center px-3 py-1 space-x-1 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors duration-300">
+                                                    onclick="removeAudio()" 
+                                                    class="group inline-flex items-center px-3 py-1.5 space-x-1 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors duration-300">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                                         </svg>
-                                        <span class="text-sm font-medium">Verwijderen</span>
+                                                <span class="text-sm font-medium">Annuleren</span>
                                     </button>
                                 </div>
                                 
-                                <!-- SoundCloud embed container -->
-                                <div class="bg-gradient-to-r from-orange-50 to-red-50 rounded-lg p-4">
-                                    <div id="soundcloudEmbedContainer" class="w-full">
-                                        <!-- SoundCloud iframe wordt hier geladen -->
-                                    </div>
-                                    <!-- SoundCloud info -->
-                                    <div class="mt-3 flex items-center justify-between text-sm text-gray-600">
-                                        <span id="soundcloudInfo">SoundCloud track wordt geladen...</span>
-                                        <div class="flex items-center space-x-2">
-                                            <span class="inline-flex items-center text-orange-600">
-                                                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24">
-                                                    <path d="M7 17.939h-1v-8.068c.308-.231.639-.429 1-.566v8.634zm3 0h1v-9.224c-.229.265-.443.548-.621.857l-.379-.184v8.551zm-2 0h1v-8.848c-.508-.079-.623-.50-1-.10v8.858zm-4 0h1v-6.891c-.024.184-.037.37-.037.557 0 .228.017.457.037.684v5.65zm13 0h1v-2.24c-.508.138-1.027.262-1.532.355l.532.025v1.86zm-3 0h1v-2.32c-.203.206-.398.422-.609.629l.609.177v1.514zm2 0h1v-2.174c-.993.21-1.927.364-2.811.455l.811-.039v1.758zm3-2.557c-.024-.068-.053-.133-.063-.201l-.045-.171c-.065-.247-.077-.49-.077-.731 0-.242.012-.484.077-.731l.045-.171c.024-.09.054-.177.087-.265.069-.176.158-.343.261-.501.309-.473.765-.884 1.346-1.15.208-.095.406-.141.601-.141.195 0 .393.046.601.141.581.266 1.037.677 1.346 1.15.103.158.192.325.261.501.033.088.063.175.087.265l.045.171c.065.247.077.489.077.731 0 .241-.012.484-.077.731l-.045.171c-.01.068-.039.133-.063.201l-3 2.557zm-14.32-2.557c-.024-.068-.053-.133-.063-.201l-.045-.171c-.065-.247-.077-.49-.077-.731 0-.242.012-.484.077-.731l.045-.171c.024-.09.054-.177.087-.265.069-.176.158-.343.261-.501.309-.473.765-.884 1.346-1.15.208-.095.406-.141.601-.141.195 0 .393.046.601.141.581.266 1.037.677 1.346 1.15.103.158.192.325.261.501.033.088.063.175.087.265l.045.171c.065.247.077.489.077.731 0 .241-.012.484-.077.731l-.045.171c-.01.068-.039.133-.063.201l-3 2.557z"/>
+                                        <!-- Audio player container -->
+                                        <div class="bg-gradient-to-r from-primary/5 to-secondary/5 rounded-xl p-4">
+                                            <audio id="audioPlayer" controls class="w-full">
+                                                <source src="" type="audio/mpeg">
+                                                Je browser ondersteunt geen audio weergave.
+                                            </audio>
+                                            <!-- Audio duration -->
+                                            <div class="mt-3 flex items-center justify-end text-sm text-gray-600">
+                                                <span class="inline-flex items-center">
+                                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                                 </svg>
-                                                SoundCloud verbonden
+                                                    <span id="audioDuration">--:--</span>
                                             </span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -895,147 +923,139 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // SoundCloud functionaliteit
-    const soundcloudInput = document.getElementById('soundcloud_url');
-    const soundcloudPreview = document.getElementById('soundcloudPreview');
-    const soundcloudEmbedContainer = document.getElementById('soundcloudEmbedContainer');
-    const soundcloudInfo = document.getElementById('soundcloudInfo');
+    // Audio upload functionaliteit
+    const audioInput = document.getElementById('audio');
+    const audioPreview = document.getElementById('audioPreview');
+    const audioPlayer = document.getElementById('audioPlayer');
+    const audioInfoText = document.getElementById('audioInfo');
+    const audioDurationText = document.getElementById('audioDuration');
 
-    // SoundCloud URL validatie functie
-    function validateSoundCloudUrl(url) {
-        // Check verschillende SoundCloud URL formaten
-        const patterns = [
-            /^https:\/\/soundcloud\.com\/[^\/]+\/[^\/]+/,
-            /^https:\/\/soundcloud\.com\/[^\/]+\/sets\/[^\/]+/,
-            /^https:\/\/m\.soundcloud\.com\/[^\/]+\/[^\/]+/
-        ];
-        
-        return patterns.some(pattern => pattern.test(url));
+    // Functie om bestandsgrootte te formatteren
+    function formatFileSize(bytes) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
     }
 
-    // SoundCloud oEmbed API functie
-    async function getSoundCloudEmbed(url) {
-        try {
-            // Gebruik SoundCloud oEmbed API voor betrouwbare embeds
-            const oembedUrl = `https://soundcloud.com/oembed?format=json&url=${encodeURIComponent(url)}&maxheight=166&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false`;
-            
-            const response = await fetch(oembedUrl);
-            if (!response.ok) {
-                throw new Error('SoundCloud API fout');
-            }
-            
-            const data = await response.json();
-            return {
-                success: true,
-                html: data.html,
-                title: data.title,
-                author: data.author_name
-            };
-        } catch (error) {
-            console.error('SoundCloud embed fout:', error);
-            // Fallback naar handmatige iframe constructie
-            const trackId = url.split('/').pop();
-            const embedUrl = `https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}&color=%23ff5500&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=true`;
-            
-            return {
-                success: true,
-                html: `<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="${embedUrl}"></iframe>`,
-                title: 'SoundCloud Audio',
-                author: 'Onbekende artiest'
-            };
-        }
+    // Functie om tijd te formatteren (seconden naar mm:ss)
+    function formatTime(seconds) {
+        const minutes = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60);
+        return `${minutes}:${secs.toString().padStart(2, '0')}`;
     }
 
-    // SoundCloud preview functie
-    async function showSoundCloudPreview(url) {
-        soundcloudPreview.classList.remove('hidden');
-        soundcloudPreview.style.opacity = '0';
-        soundcloudPreview.style.transform = 'translateY(10px)';
+    // Toggle remove audio checkbox
+    window.toggleRemoveAudio = function() {
+        const checkbox = document.getElementById('removeAudioCheckbox');
+        const currentAudioPlayer = document.getElementById('currentAudioPlayer');
         
-        // Toon loading state
-        soundcloudInfo.textContent = 'SoundCloud track wordt geladen...';
-        soundcloudEmbedContainer.innerHTML = '<div class="text-center p-4"><div class="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500 mx-auto"></div></div>';
-        
-        try {
-            const embedData = await getSoundCloudEmbed(url);
-            
-            if (embedData.success) {
-                // Update container met SoundCloud embed
-                soundcloudEmbedContainer.innerHTML = embedData.html;
-                soundcloudInfo.textContent = `${embedData.title} - ${embedData.author}`;
+        if (checkbox && currentAudioPlayer) {
+            if (checkbox.checked) {
+                currentAudioPlayer.style.opacity = '0.5';
+                currentAudioPlayer.style.pointerEvents = 'none';
             } else {
-                throw new Error('Kan SoundCloud embed niet laden');
+                currentAudioPlayer.style.opacity = '1';
+                currentAudioPlayer.style.pointerEvents = 'auto';
             }
-        } catch (error) {
-            console.error('SoundCloud preview fout:', error);
-            soundcloudEmbedContainer.innerHTML = '<div class="text-red-600 text-center p-4">❌ Kan SoundCloud track niet laden</div>';
-            soundcloudInfo.textContent = 'Fout bij laden van SoundCloud track';
         }
-        
-        // Animeer het verschijnen
-        setTimeout(() => {
-            soundcloudPreview.style.opacity = '1';
-            soundcloudPreview.style.transform = 'translateY(0)';
-        }, 50);
     }
 
-    // SoundCloud URL verwijderen functie (globaal beschikbaar)
-    window.removeSoundCloudUrl = function() {
-        soundcloudInput.value = ''; // Reset URL input
-        soundcloudPreview.classList.add('hidden'); // Verberg preview
+    // Audio functionaliteit alleen uitvoeren als alle elementen bestaan
+    if (audioInput && audioPreview && audioPlayer && audioInfoText && audioDurationText) {
+        console.log('Audio upload elementen gevonden (edit), initialiseren...');
         
-        // Animatie voor het verwijderen
-        soundcloudPreview.style.opacity = '0';
-        soundcloudPreview.style.transform = 'translateY(-10px)';
-        
-        setTimeout(() => {
-            soundcloudPreview.style.opacity = '';
-            soundcloudPreview.style.transform = '';
-            soundcloudEmbedContainer.innerHTML = ''; // Reset embed container
-        }, 300);
-    }
+        // Audio upload en preview
+        function updateAudioPreview(file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                audioPreview.classList.remove('hidden');
+                audioPreview.style.opacity = '0';
+                audioPreview.style.transform = 'translateY(10px)';
+                
+                // Update audio player
+                audioPlayer.src = e.target.result;
+                
+                // Update bestandsinformatie
+                const fileInfo = `${file.name} (${formatFileSize(file.size)})`;
+                audioInfoText.textContent = fileInfo;
+                
+                // Audio metadata laden voor duur
+                audioPlayer.addEventListener('loadedmetadata', function() {
+                    if (!isNaN(audioPlayer.duration)) {
+                        audioDurationText.textContent = formatTime(audioPlayer.duration);
+                    }
+                });
+            
+                // Animeer het verschijnen
+                setTimeout(() => {
+                    audioPreview.style.opacity = '1';
+                    audioPreview.style.transform = 'translateY(0)';
+                }, 50);
+            }
+            reader.readAsDataURL(file);
+        }
 
-    // SoundCloud URL validatie en preview
-    if (soundcloudInput) {
-        soundcloudInput.addEventListener('input', async function() {
-            const url = this.value.trim();
-            if (url) {
-                if (validateSoundCloudUrl(url)) {
-                    await showSoundCloudPreview(url);
-                } else {
-                    alert('Geen geldige SoundCloud link. Gebruik een link van soundcloud.com');
+        // Audio verwijderen functie
+        window.removeAudio = function() {
+            audioInput.value = ''; // Reset input
+            audioPreview.classList.add('hidden'); // Verberg preview
+            
+            // Animatie voor het verwijderen
+            audioPreview.style.opacity = '0';
+            audioPreview.style.transform = 'translateY(-10px)';
+            
+            setTimeout(() => {
+                audioPreview.style.opacity = '';
+                audioPreview.style.transform = '';
+                audioPlayer.src = ''; // Reset audio player
+                audioDurationText.textContent = '--:--';
+            }, 300);
+        }
+
+        // Event listeners voor audio bestand upload
+        audioInput.addEventListener('change', function(e) {
+            console.log('Audio input change event triggered (edit)');
+            if (e.target.files && e.target.files[0]) {
+                const file = e.target.files[0];
+                console.log('Audio file selected:', file.name, 'Size:', file.size, 'Type:', file.type);
+                
+                // Check bestandsgrootte (max 100MB)
+                if (file.size > 100 * 1024 * 1024) {
+                    alert('Audio bestand mag niet groter zijn dan 100MB');
                     this.value = '';
+                    return;
+                }
+                
+                // Check bestandstype
+                const allowedTypes = ['audio/mpeg', 'audio/wav', 'audio/ogg', 'audio/mp3'];
+                if (!allowedTypes.includes(file.type) && !file.name.toLowerCase().match(/\.(mp3|wav|ogg)$/)) {
+                    alert('Alleen MP3, WAV en OGG bestanden zijn toegestaan');
+                    this.value = '';
+                    return;
+                }
+                
+                console.log('Audio file validation passed (edit), updating preview...');
+                updateAudioPreview(file);
+                
+                // Uncheck remove audio checkbox als er een nieuw bestand wordt gekozen
+                const removeCheckbox = document.getElementById('removeAudioCheckbox');
+                if (removeCheckbox) {
+                    removeCheckbox.checked = false;
+                    toggleRemoveAudio();
                 }
             }
         });
+    } else {
+        console.warn('Audio upload elementen niet gevonden (edit):', {
+            audioInput: !!audioInput,
+            audioPreview: !!audioPreview,
+            audioPlayer: !!audioPlayer,
+            audioInfoText: !!audioInfoText,
+            audioDurationText: !!audioDurationText
+        });
     }
-
-    // Laad huidige SoundCloud track als die bestaat
-    <?php if(!empty($blog->soundcloud_url)): ?>
-    if (document.getElementById('currentSoundcloudPreview')) {
-        // Laad huidige SoundCloud embed
-        (async function() {
-            try {
-                const embedData = await getSoundCloudEmbed('<?php echo htmlspecialchars($blog->soundcloud_url); ?>');
-                const container = document.getElementById('currentSoundcloudEmbedContainer');
-                const info = document.getElementById('currentSoundcloudInfo');
-                
-                if (embedData.success && container) {
-                    container.innerHTML = embedData.html;
-                    if (info) {
-                        info.textContent = `${embedData.title} - ${embedData.author}`;
-                    }
-                }
-            } catch (error) {
-                console.error('Fout bij laden huidige SoundCloud track:', error);
-                const container = document.getElementById('currentSoundcloudEmbedContainer');
-                if (container) {
-                    container.innerHTML = '<div class="text-red-600 text-center p-4">❌ Kan huidige SoundCloud track niet laden</div>';
-                }
-            }
-        })();
-    }
-    <?php endif; ?>
 
     // Poll functionaliteit
     setupPollFunctionality();
