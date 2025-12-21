@@ -1356,29 +1356,35 @@ require_once 'views/templates/header.php'; ?>
     </section>
 </main>
 
-<!-- Bias Analysis Modal -->
-<div id="biasModal" class="fixed inset-0 z-50 hidden">
+<!-- Bias Analysis Modal - Uitgebreide versie -->
+<div id="biasModal" class="fixed inset-0 z-50 hidden overflow-y-auto">
     <!-- Modal Overlay -->
-    <div class="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity"></div>
+    <div class="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity" onclick="hideBiasModal()"></div>
     
     <!-- Modal Content -->
-    <div class="fixed inset-0 flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden">
-            <!-- Modal Header -->
-            <div class="bg-gradient-to-r from-purple-500 to-indigo-600 px-6 py-4">
-                <div class="flex items-center justify-between">
+    <div class="flex items-start justify-center min-h-screen p-4 py-8">
+        <div class="relative bg-white rounded-2xl shadow-2xl max-w-3xl w-full transform transition-all">
+            <!-- Modal Header met thema kleuren -->
+            <div id="biasModalHeader" class="bg-gradient-to-r from-primary-dark via-primary to-primary-dark px-5 py-4 rounded-t-2xl relative overflow-hidden">
+                <!-- Animated background effect -->
+                <div class="absolute inset-0 opacity-20">
+                    <div class="absolute top-0 left-1/4 w-24 h-24 bg-secondary rounded-full filter blur-3xl"></div>
+                    <div class="absolute bottom-0 right-1/4 w-24 h-24 bg-primary-light rounded-full filter blur-3xl"></div>
+                </div>
+                
+                <div class="relative flex items-center justify-between">
                     <div class="flex items-center space-x-3">
-                        <div class="p-2 bg-white/20 rounded-lg">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="p-2 bg-white/15 backdrop-blur rounded-lg">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                             </svg>
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold text-white">Politieke Bias Analyse</h3>
-                            <p class="text-purple-100 text-sm">AI-gedreven analyse van politieke orientatie</p>
+                            <h3 class="text-lg font-bold text-white">Politieke Spectrum Analyse</h3>
+                            <p class="text-blue-200 text-xs">Multi-dimensionale analyse</p>
                         </div>
                     </div>
-                    <button id="closeBiasModal" class="p-2 hover:bg-white/20 rounded-lg transition-colors">
+                    <button id="closeBiasModal" class="p-2 hover:bg-white/10 rounded-lg transition-colors">
                         <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                         </svg>
@@ -1387,89 +1393,342 @@ require_once 'views/templates/header.php'; ?>
             </div>
             
             <!-- Modal Body -->
-            <div class="p-6 overflow-y-auto max-h-[70vh]">
+            <div class="p-5 bg-gray-50">
                 <!-- Loading State -->
-                <div id="biasLoading" class="text-center py-8">
-                    <div class="inline-flex items-center space-x-3">
-                        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-500"></div>
-                        <span class="text-gray-600 font-medium">Artikel wordt geanalyseerd...</span>
+                <div id="biasLoading" class="text-center py-12">
+                    <div class="relative inline-flex">
+                        <div class="w-12 h-12 border-4 border-gray-200 rounded-full"></div>
+                        <div class="w-12 h-12 border-4 border-secondary rounded-full animate-spin border-t-transparent absolute top-0 left-0"></div>
                     </div>
-                    <p class="text-gray-500 text-sm mt-2">Dit kan een paar seconden duren</p>
+                    <p class="text-gray-700 font-medium mt-4">Artikel wordt geanalyseerd...</p>
+                    <p class="text-gray-500 text-sm mt-1">Dit kan 10-15 seconden duren</p>
+                    <div class="flex justify-center gap-1.5 mt-3">
+                        <span class="w-1.5 h-1.5 bg-secondary rounded-full animate-bounce" style="animation-delay: 0ms"></span>
+                        <span class="w-1.5 h-1.5 bg-secondary rounded-full animate-bounce" style="animation-delay: 150ms"></span>
+                        <span class="w-1.5 h-1.5 bg-secondary rounded-full animate-bounce" style="animation-delay: 300ms"></span>
+                    </div>
                 </div>
                 
                 <!-- Error State -->
                 <div id="biasError" class="hidden">
-                    <div class="bg-red-50 border border-red-200 rounded-xl p-6">
-                        <div class="flex items-start">
-                            <svg class="w-6 h-6 text-red-500 mt-0.5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="bg-red-50 border border-red-200 rounded-xl p-6 text-center">
+                        <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <svg class="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.5 0L4.232 15.5c-.77.833.192 2.5 1.732 2.5z"/>
                             </svg>
-                            <div>
-                                <h4 class="text-red-800 font-medium mb-1">Analyse mislukt</h4>
-                                <p id="biasErrorMessage" class="text-red-700 text-sm"></p>
-                            </div>
                         </div>
+                        <h4 class="text-red-800 font-bold mb-1">Analyse mislukt</h4>
+                        <p id="biasErrorMessage" class="text-red-600 text-sm"></p>
                     </div>
                 </div>
                 
                 <!-- Results -->
-                <div id="biasResults" class="hidden space-y-6">
-                    <!-- Overall Orientation -->
-                    <div class="bg-gradient-to-r from-gray-50 to-blue-50 rounded-xl p-6">
-                        <h4 class="text-lg font-bold text-gray-900 mb-3">Politieke Orientatie</h4>
-                        <div class="flex items-center space-x-4">
-                            <div id="orientationBadge" class="px-4 py-2 rounded-full font-bold text-lg"></div>
-                            <div class="flex-1">
-                                <div class="text-sm text-gray-600 mb-1">Zekerheid</div>
-                                <div class="bg-gray-200 rounded-full h-3 overflow-hidden">
-                                    <div id="confidenceBar" class="h-full bg-gradient-to-r from-purple-500 to-blue-500 transition-all duration-500"></div>
+                <div id="biasResults" class="hidden space-y-4">
+                    
+                    <!-- Overall Orientation Hero Card -->
+                    <div id="overallOrientationCard" class="relative bg-gradient-to-br from-primary-dark via-primary to-primary-dark rounded-xl p-5 text-white overflow-hidden">
+                        <div class="absolute inset-0 opacity-15">
+                            <div class="absolute top-0 right-0 w-32 h-32 bg-secondary rounded-full filter blur-3xl"></div>
+                            <div class="absolute bottom-0 left-0 w-32 h-32 bg-primary-light rounded-full filter blur-3xl"></div>
+                        </div>
+                        <div class="relative">
+                            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                            <div>
+                                    <p class="text-blue-200 text-xs uppercase tracking-wider mb-1">Politieke Orientatie</p>
+                                    <h3 id="orientationBadge" class="text-2xl font-bold"></h3>
+                            </div>
+                                <div class="flex items-center gap-3">
+                                    <div class="text-right">
+                                        <p class="text-blue-200 text-xs uppercase tracking-wider">Zekerheid</p>
+                                        <p class="text-xl font-bold"><span id="confidenceText">--</span>%</p>
+                        </div>
+                                    <div class="w-14 h-14 relative">
+                                        <svg class="w-14 h-14 transform -rotate-90">
+                                            <circle cx="28" cy="28" r="24" stroke="rgba(255,255,255,0.2)" stroke-width="4" fill="none"/>
+                                            <circle id="confidenceCircle" cx="28" cy="28" r="24" stroke="url(#confidenceGradient)" stroke-width="4" fill="none" stroke-linecap="round" stroke-dasharray="151" stroke-dashoffset="151" class="transition-all duration-1000"/>
+                                        </svg>
+                                        <svg class="absolute top-0 left-0 w-0 h-0">
+                                            <defs>
+                                                <linearGradient id="confidenceGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                                    <stop offset="0%" stop-color="#c41e3a"/>
+                                                    <stop offset="100%" stop-color="#d63856"/>
+                                                </linearGradient>
+                                            </defs>
+                                        </svg>
+                                    </div>
                                 </div>
-                                <div class="text-xs text-gray-500 mt-1">
-                                    <span id="confidenceText">--</span>% zeker
+                            </div>
+                            <p id="overallSummary" class="text-blue-100 mt-3 text-sm leading-relaxed"></p>
+                    </div>
+                </div>
+                
+                    <!-- Spectrum Breakdown -->
+                    <div class="bg-white rounded-xl border border-gray-200 p-4 shadow-sm">
+                        <h4 class="text-base font-bold text-gray-800 mb-4 flex items-center gap-2">
+                            <svg class="w-4 h-4 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+                            </svg>
+                            Politiek Spectrum (5 Assen)
+                        </h4>
+                        
+                        <div class="space-y-4">
+                            <!-- Economisch -->
+                            <div class="spectrum-item" data-spectrum="economisch">
+                                <div class="flex justify-between items-center mb-1.5">
+                                    <span class="text-sm font-medium text-gray-700">Economisch</span>
+                                    <span id="economischLabel" class="text-xs px-2 py-0.5 rounded-full bg-gray-100 text-gray-600"></span>
+                                </div>
+                                <div class="relative h-2.5 bg-gradient-to-r from-secondary via-gray-200 to-primary rounded-full overflow-hidden">
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <div class="w-0.5 h-full bg-gray-400/50"></div>
+                                </div>
+                                    <div id="economischMarker" class="absolute top-1/2 -translate-y-1/2 w-4 h-4 bg-white border-2 border-primary-dark rounded-full shadow transition-all duration-700" style="left: 50%"></div>
+                            </div>
+                                <div class="flex justify-between text-xs text-gray-500 mt-0.5">
+                                    <span>Links</span>
+                                    <span>Rechts</span>
+                        </div>
+                                <p id="economischToelichting" class="text-xs text-gray-500 mt-1 italic hidden"></p>
+                    </div>
+                    
+                            <!-- Sociaal-cultureel -->
+                            <div class="spectrum-item" data-spectrum="sociaal_cultureel">
+                                <div class="flex justify-between items-center mb-1.5">
+                                    <span class="text-sm font-medium text-gray-700">Sociaal-cultureel</span>
+                                    <span id="sociaal_cultureel_label" class="text-xs px-2 py-0.5 rounded-full bg-gray-100 text-gray-600"></span>
+                                </div>
+                                <div class="relative h-2.5 bg-gradient-to-r from-pink-400 via-gray-200 to-amber-500 rounded-full overflow-hidden">
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <div class="w-0.5 h-full bg-gray-400/50"></div>
+                                    </div>
+                                    <div id="sociaal_cultureel_marker" class="absolute top-1/2 -translate-y-1/2 w-4 h-4 bg-white border-2 border-primary-dark rounded-full shadow transition-all duration-700" style="left: 50%"></div>
+                                </div>
+                                <div class="flex justify-between text-xs text-gray-500 mt-0.5">
+                                    <span>Progressief</span>
+                                    <span>Conservatief</span>
+                                </div>
+                                <p id="sociaal_cultureel_toelichting" class="text-xs text-gray-500 mt-1 italic hidden"></p>
+                    </div>
+                    
+                            <!-- EU/Internationaal -->
+                            <div class="spectrum-item" data-spectrum="eu_internationaal">
+                                <div class="flex justify-between items-center mb-1.5">
+                                    <span class="text-sm font-medium text-gray-700">EU / Internationaal</span>
+                                    <span id="eu_internationaal_label" class="text-xs px-2 py-0.5 rounded-full bg-gray-100 text-gray-600"></span>
+                            </div>
+                                <div class="relative h-2.5 bg-gradient-to-r from-blue-500 via-gray-200 to-orange-500 rounded-full overflow-hidden">
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <div class="w-0.5 h-full bg-gray-400/50"></div>
+                            </div>
+                                    <div id="eu_internationaal_marker" class="absolute top-1/2 -translate-y-1/2 w-4 h-4 bg-white border-2 border-primary-dark rounded-full shadow transition-all duration-700" style="left: 50%"></div>
+                            </div>
+                                <div class="flex justify-between text-xs text-gray-500 mt-0.5">
+                                    <span>Pro-EU</span>
+                                    <span>Nationalistisch</span>
+                        </div>
+                                <p id="eu_internationaal_toelichting" class="text-xs text-gray-500 mt-1 italic hidden"></p>
+                    </div>
+                    
+                            <!-- Klimaat -->
+                            <div class="spectrum-item" data-spectrum="klimaat">
+                                <div class="flex justify-between items-center mb-1.5">
+                                    <span class="text-sm font-medium text-gray-700">Klimaat</span>
+                                    <span id="klimaatLabel" class="text-xs px-2 py-0.5 rounded-full bg-gray-100 text-gray-600"></span>
+                                </div>
+                                <div class="relative h-2.5 bg-gradient-to-r from-green-500 via-gray-200 to-gray-500 rounded-full overflow-hidden">
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <div class="w-0.5 h-full bg-gray-400/50"></div>
+                                    </div>
+                                    <div id="klimaatMarker" class="absolute top-1/2 -translate-y-1/2 w-4 h-4 bg-white border-2 border-primary-dark rounded-full shadow transition-all duration-700" style="left: 50%"></div>
+                                </div>
+                                <div class="flex justify-between text-xs text-gray-500 mt-0.5">
+                                    <span>Groen</span>
+                                    <span>Economie-eerst</span>
+                                </div>
+                                <p id="klimaatToelichting" class="text-xs text-gray-500 mt-1 italic hidden"></p>
+                            </div>
+                            
+                            <!-- Immigratie -->
+                            <div class="spectrum-item" data-spectrum="immigratie">
+                                <div class="flex justify-between items-center mb-1.5">
+                                    <span class="text-sm font-medium text-gray-700">Immigratie</span>
+                                    <span id="immigratieLabel" class="text-xs px-2 py-0.5 rounded-full bg-gray-100 text-gray-600"></span>
+                                </div>
+                                <div class="relative h-2.5 bg-gradient-to-r from-teal-400 via-gray-200 to-secondary rounded-full overflow-hidden">
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <div class="w-0.5 h-full bg-gray-400/50"></div>
+                                    </div>
+                                    <div id="immigratieMarker" class="absolute top-1/2 -translate-y-1/2 w-4 h-4 bg-white border-2 border-primary-dark rounded-full shadow transition-all duration-700" style="left: 50%"></div>
+                                </div>
+                                <div class="flex justify-between text-xs text-gray-500 mt-0.5">
+                                    <span>Open</span>
+                                    <span>Restrictief</span>
+                                </div>
+                                <p id="immigratieToelichting" class="text-xs text-gray-500 mt-1 italic hidden"></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Two Column Layout for Retoriek & Schrijfstijl -->
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <!-- Retorische Analyse -->
+                        <div class="bg-white rounded-xl border border-gray-200 p-4 shadow-sm">
+                            <h4 class="text-sm font-bold text-gray-800 mb-3 flex items-center gap-2">
+                                <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
+                                </svg>
+                                Retorische Analyse
+                            </h4>
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center py-1.5 border-b border-gray-100">
+                                    <span class="text-xs text-gray-600">Toon</span>
+                                    <span id="retoriekToon" class="text-xs font-medium text-gray-800 px-2 py-0.5 bg-gray-100 rounded"></span>
+                                </div>
+                                <div class="flex justify-between items-center py-1.5 border-b border-gray-100">
+                                    <span class="text-xs text-gray-600">Framing</span>
+                                    <span id="retoriekFraming" class="text-xs font-medium text-gray-800 px-2 py-0.5 bg-gray-100 rounded"></span>
+                                </div>
+                                <div class="flex justify-between items-center py-1.5 border-b border-gray-100">
+                                    <span class="text-xs text-gray-600">Stijl</span>
+                                    <span id="retoriekStijl" class="text-xs font-medium text-gray-800 px-2 py-0.5 bg-gray-100 rounded"></span>
+                                </div>
+                                <div class="pt-1">
+                                    <div class="flex justify-between items-center mb-1">
+                                        <span class="text-xs text-gray-600">Objectiviteit</span>
+                                        <span id="retoriekObjectiviteitValue" class="text-xs font-bold text-gray-800"></span>
+                                    </div>
+                                    <div class="h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                                        <div id="retoriekObjectiviteitBar" class="h-full bg-gradient-to-r from-secondary to-secondary-light transition-all duration-700" style="width: 0%"></div>
+                                    </div>
+                                </div>
+                                <p id="retoriekToelichting" class="text-xs text-gray-500 mt-2 italic hidden"></p>
+                            </div>
+                        </div>
+                        
+                        <!-- Schrijfstijl Analyse -->
+                        <div class="bg-white rounded-xl border border-gray-200 p-4 shadow-sm">
+                            <h4 class="text-sm font-bold text-gray-800 mb-3 flex items-center gap-2">
+                                <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                </svg>
+                                Schrijfstijl
+                            </h4>
+                            <div class="space-y-3">
+                                <div>
+                                    <div class="flex justify-between items-center mb-1">
+                                        <span class="text-xs text-gray-600">Feitelijk vs Mening</span>
+                                        <span id="schrijfstijlFeitelijkValue" class="text-xs text-gray-500"></span>
+                                    </div>
+                                    <div class="h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                                        <div id="schrijfstijlFeitelijkBar" class="h-full bg-gradient-to-r from-primary to-secondary transition-all duration-700" style="width: 50%"></div>
+                                    </div>
+                                    <div class="flex justify-between text-xs text-gray-400 mt-0.5">
+                                        <span>Feitelijk</span>
+                                        <span>Mening</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between items-center mb-1">
+                                        <span class="text-xs text-gray-600">Emotionele lading</span>
+                                        <span id="schrijfstijlEmotieValue" class="text-xs text-gray-500"></span>
+                                    </div>
+                                    <div class="h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                                        <div id="schrijfstijlEmotieBar" class="h-full bg-gradient-to-r from-gray-400 to-secondary transition-all duration-700" style="width: 0%"></div>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center py-1.5 border-b border-gray-100">
+                                    <span class="text-xs text-gray-600">Bronverwijzingen</span>
+                                    <span id="schrijfstijlBronnen" class="text-xs font-medium text-gray-800 px-2 py-0.5 bg-gray-100 rounded"></span>
+                                </div>
+                                <div class="flex justify-between items-center py-1.5">
+                                    <span class="text-xs text-gray-600">Argumentatie</span>
+                                    <span id="schrijfstijlArgumentatie" class="text-xs font-medium text-gray-800 px-2 py-0.5 bg-gray-100 rounded"></span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- Reasoning -->
-                    <div class="bg-white border border-gray-200 rounded-xl p-6">
-                        <h4 class="text-lg font-bold text-gray-900 mb-3">Analyse Uitleg</h4>
-                        <p id="reasoningText" class="text-gray-700 leading-relaxed"></p>
-                    </div>
-                    
-                    <!-- Detailed Indicators -->
-                    <div class="bg-white border border-gray-200 rounded-xl p-6">
-                        <h4 class="text-lg font-bold text-gray-900 mb-4">Gedetailleerde Indicatoren</h4>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <div class="text-center">
-                                <div class="text-sm text-gray-600 mb-2">Economisch</div>
-                                <div id="economicIndicator" class="px-3 py-1 rounded-full text-sm font-medium"></div>
+                    <!-- Partij Matching -->
+                    <div class="bg-white rounded-xl border border-gray-200 p-4 shadow-sm">
+                        <h4 class="text-sm font-bold text-gray-800 mb-3 flex items-center gap-2">
+                            <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                            </svg>
+                            Partij Matching
+                        </h4>
+                        
+                        <div class="space-y-3">
+                            <!-- Best Match -->
+                            <div class="bg-gradient-to-r from-primary/5 to-primary/10 rounded-lg p-3 border border-primary/20">
+                                <p class="text-xs text-primary uppercase tracking-wider font-medium mb-0.5">Best passende partij</p>
+                                <p id="partijBestMatch" class="text-base font-bold text-primary-dark"></p>
                             </div>
-                            <div class="text-center">
-                                <div class="text-sm text-gray-600 mb-2">Sociaal</div>
-                                <div id="socialIndicator" class="px-3 py-1 rounded-full text-sm font-medium"></div>
+                            
+                            <div class="grid md:grid-cols-2 gap-3">
+                                <!-- Zou onderschrijven -->
+                                <div class="bg-green-50 rounded-lg p-3 border border-green-100">
+                                    <p class="text-xs text-green-700 uppercase tracking-wider font-medium mb-2 flex items-center gap-1">
+                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                        </svg>
+                                        Zou onderschrijven
+                                    </p>
+                                    <div id="partijOnderschrijven" class="flex flex-wrap gap-1.5"></div>
+                                </div>
+                                
+                                <!-- Zou afwijzen -->
+                                <div class="bg-red-50 rounded-lg p-3 border border-red-100">
+                                    <p class="text-xs text-red-700 uppercase tracking-wider font-medium mb-2 flex items-center gap-1">
+                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                        </svg>
+                                        Zou afwijzen
+                                    </p>
+                                    <div id="partijAfwijzen" class="flex flex-wrap gap-1.5"></div>
+                                </div>
                             </div>
-                            <div class="text-center">
-                                <div class="text-sm text-gray-600 mb-2">Immigratie</div>
-                                <div id="immigrationIndicator" class="px-3 py-1 rounded-full text-sm font-medium"></div>
-                            </div>
+                            
+                            <p id="partijToelichting" class="text-xs text-gray-600 italic hidden"></p>
                         </div>
                     </div>
                     
-                    <!-- Summary -->
-                    <div class="bg-gradient-to-r from-purple-50 to-indigo-50 rounded-xl p-6">
-                        <h4 class="text-lg font-bold text-gray-900 mb-3">Samenvatting</h4>
-                        <p id="summaryText" class="text-gray-700 leading-relaxed"></p>
+                    <!-- Doelgroep & Kernpunten -->
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <!-- Doelgroep -->
+                        <div class="bg-gradient-to-br from-primary/5 to-primary/10 rounded-xl p-4 border border-primary/20">
+                            <h4 class="text-sm font-bold text-primary-dark mb-2 flex items-center gap-2">
+                                <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                                </svg>
+                                Doelgroep
+                            </h4>
+                            <div class="space-y-1">
+                                <p id="doelgroepPrimair" class="text-primary-dark font-medium text-sm"></p>
+                                <p id="doelgroepDemografisch" class="text-xs text-gray-600"></p>
+                                <p id="doelgroepPolitiek" class="text-xs text-gray-500 italic"></p>
+                            </div>
+                        </div>
+                        
+                        <!-- Kernpunten -->
+                        <div class="bg-gradient-to-br from-secondary/5 to-secondary/10 rounded-xl p-4 border border-secondary/20">
+                            <h4 class="text-sm font-bold text-secondary-dark mb-2 flex items-center gap-2">
+                                <svg class="w-4 h-4 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+                                </svg>
+                                Kernpunten
+                            </h4>
+                            <ul id="kernpuntenList" class="space-y-1"></ul>
+                        </div>
                     </div>
                     
                     <!-- Disclaimer -->
-                    <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-4">
-                        <div class="flex items-start">
-                            <svg class="w-5 h-5 text-yellow-600 mt-0.5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="bg-gray-100 rounded-lg p-3 border border-gray-200">
+                        <div class="flex items-start gap-2">
+                            <svg class="w-4 h-4 text-gray-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                             </svg>
-                            <div class="text-sm text-yellow-800">
-                                <strong>Disclaimer:</strong> Deze analyse is gebaseerd op AI en dient als indicatie. Politieke standpunten zijn complex en deze tool geeft een vereenvoudigde weergave.
+                            <div class="text-xs text-gray-600">
+                                <strong class="text-gray-700">Disclaimer:</strong> Deze analyse dient als indicatie. Politieke standpunten zijn complex - gebruik de resultaten als startpunt voor reflectie.
                             </div>
                         </div>
                     </div>
@@ -1477,43 +1736,50 @@ require_once 'views/templates/header.php'; ?>
             </div>
             
             <!-- Modal Footer -->
-            <div class="bg-gray-50 px-6 py-4 border-t border-gray-200">
-                <div class="flex justify-end space-x-3">
-                    <button id="closeBiasModalFooter" class="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors">
+            <div class="bg-white px-5 py-3 border-t border-gray-200 rounded-b-2xl">
+                <div class="flex justify-between items-center">
+                    <p class="text-xs text-gray-400">PolitiekPraat Analyse</p>
+                    <div class="flex gap-2">
+                        <button id="retryBiasAnalysis" class="px-3 py-1.5 text-secondary hover:text-secondary-dark hover:bg-secondary/5 rounded-lg transition-colors hidden text-sm font-medium">
+                            Opnieuw
+                        </button>
+                        <button id="closeBiasModalFooter" class="px-4 py-1.5 bg-primary hover:bg-primary-dark text-white rounded-lg transition-colors text-sm font-medium">
                         Sluiten
                     </button>
-                    <button id="retryBiasAnalysis" class="px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg transition-colors hidden">
-                        Opnieuw proberen
-                    </button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Party Perspective Modal -->
-<div id="partyModal" class="fixed inset-0 z-50 hidden">
+<!-- Party Perspective Modal - Uitgebreide versie -->
+<div id="partyModal" class="fixed inset-0 z-50 hidden overflow-y-auto">
     <!-- Modal Overlay -->
-    <div class="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity"></div>
+    <div class="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity" onclick="hidePartyModal()"></div>
     
     <!-- Modal Content -->
-    <div class="fixed inset-0 flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden">
+    <div class="flex items-start justify-center min-h-screen p-4 py-8">
+        <div class="relative bg-white rounded-2xl shadow-2xl max-w-3xl w-full transform transition-all">
             <!-- Modal Header -->
-            <div class="bg-gradient-to-r from-orange-500 to-red-600 px-6 py-4">
-                <div class="flex items-center justify-between">
+            <div class="bg-gradient-to-r from-primary-dark via-primary to-primary-dark px-5 py-4 rounded-t-2xl relative overflow-hidden">
+                <div class="absolute inset-0 opacity-20">
+                    <div class="absolute top-0 left-1/4 w-24 h-24 bg-secondary rounded-full filter blur-3xl"></div>
+                    <div class="absolute bottom-0 right-1/4 w-24 h-24 bg-primary-light rounded-full filter blur-3xl"></div>
+                </div>
+                <div class="relative flex items-center justify-between">
                     <div class="flex items-center space-x-3">
-                        <div class="p-2 bg-white/20 rounded-lg">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="p-2 bg-white/15 backdrop-blur rounded-lg">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
                             </svg>
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold text-white">Leider Reacties</h3>
-                            <p class="text-orange-100 text-sm">Kies een partijleider voor hun AI-gegenereerde reactie</p>
+                            <h3 class="text-lg font-bold text-white">Partijleider Reacties</h3>
+                            <p class="text-blue-200 text-xs">Kies een partijleider</p>
                         </div>
                     </div>
-                    <button id="closePartyModal" class="p-2 hover:bg-white/20 rounded-lg transition-colors">
+                    <button id="closePartyModal" class="p-2 hover:bg-white/10 rounded-lg transition-colors">
                         <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                         </svg>
@@ -1522,20 +1788,20 @@ require_once 'views/templates/header.php'; ?>
             </div>
             
             <!-- Modal Body -->
-            <div class="p-6 overflow-y-auto max-h-[70vh]">
-                <!-- Party Selection Grid - Dynamisch geladen uit database -->
-                <div id="partySelectionGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-6">
+            <div class="p-5 bg-gray-50">
+                <!-- Party Selection Grid -->
+                <div id="partySelectionGrid" class="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 mb-4">
                     <?php foreach ($dbParties as $partyKey => $party): ?>
                     <button type="button" class="party-select-btn" data-party="<?php echo htmlspecialchars($partyKey); ?>">
-                        <div class="p-4 border-2 border-gray-200 rounded-xl hover:border-gray-400 hover:bg-gray-50 transition-all cursor-pointer group">
+                        <div class="p-3 border border-gray-200 rounded-xl hover:border-primary hover:bg-primary/5 transition-all cursor-pointer group text-center">
                             <img src="<?php echo htmlspecialchars($party['logo']); ?>" 
                                  alt="<?php echo htmlspecialchars($partyKey); ?>" 
-                                 class="w-16 h-16 mx-auto mb-2 object-contain"
+                                 class="w-12 h-12 mx-auto mb-1.5 object-contain"
                                  onerror="this.style.display='none'">
-                            <h4 class="font-bold text-sm text-gray-900 group-hover:text-gray-700"><?php echo htmlspecialchars($partyKey); ?></h4>
-                            <p class="text-xs text-gray-600 mt-1 leader-name"><?php echo htmlspecialchars($party['leader']); ?></p>
+                            <h4 class="font-bold text-xs text-gray-900 group-hover:text-primary"><?php echo htmlspecialchars($partyKey); ?></h4>
+                            <p class="text-xs text-gray-500 mt-0.5 leader-name truncate"><?php echo htmlspecialchars($party['leader']); ?></p>
                             <?php if (!empty($party['leader_photo'])): ?>
-                            <img src="<?php echo htmlspecialchars($party['leader_photo']); ?>" alt="<?php echo htmlspecialchars($party['leader']); ?>" class="leader-photo w-12 h-12 rounded-full mx-auto mt-2 object-cover border-2 border-gray-200 hidden">
+                            <img src="<?php echo htmlspecialchars($party['leader_photo']); ?>" alt="<?php echo htmlspecialchars($party['leader']); ?>" class="leader-photo w-8 h-8 rounded-full mx-auto mt-1.5 object-cover border border-gray-200 hidden">
                             <?php endif; ?>
                         </div>
                     </button>
@@ -1543,58 +1809,210 @@ require_once 'views/templates/header.php'; ?>
                 </div>
                 
                 <!-- Loading State -->
-                <div id="partyLoading" class="hidden text-center py-8">
-                    <div class="inline-flex items-center space-x-3">
-                        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500"></div>
-                        <span class="text-gray-600 font-medium">Perspectief wordt gegenereerd...</span>
+                <div id="partyLoading" class="hidden text-center py-12">
+                    <div class="relative inline-flex">
+                        <div class="w-12 h-12 border-4 border-gray-200 rounded-full"></div>
+                        <div class="w-12 h-12 border-4 border-secondary rounded-full animate-spin border-t-transparent absolute top-0 left-0"></div>
                     </div>
-                    <p class="text-gray-500 text-sm mt-2">Dit kan een paar seconden duren</p>
+                    <p class="text-gray-700 font-medium mt-4">Reactie wordt gegenereerd...</p>
+                    <p class="text-gray-500 text-sm mt-1">Dit kan 10-15 seconden duren</p>
+                    <div class="flex justify-center gap-1.5 mt-3">
+                        <span class="w-1.5 h-1.5 bg-secondary rounded-full animate-bounce" style="animation-delay: 0ms"></span>
+                        <span class="w-1.5 h-1.5 bg-secondary rounded-full animate-bounce" style="animation-delay: 150ms"></span>
+                        <span class="w-1.5 h-1.5 bg-secondary rounded-full animate-bounce" style="animation-delay: 300ms"></span>
+                    </div>
                 </div>
                 
                 <!-- Error State -->
                 <div id="partyError" class="hidden">
-                    <div class="bg-red-50 border border-red-200 rounded-xl p-6">
-                        <div class="flex items-start">
-                            <svg class="w-6 h-6 text-red-500 mt-0.5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="bg-red-50 border border-red-200 rounded-xl p-6 text-center">
+                        <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <svg class="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.5 0L4.232 15.5c-.77.833.192 2.5 1.732 2.5z"/>
                             </svg>
-                            <div>
-                                <h4 class="text-red-800 font-medium mb-1">Genereren mislukt</h4>
-                                <p id="partyErrorMessage" class="text-red-700 text-sm"></p>
-                            </div>
                         </div>
+                        <h4 class="text-red-800 font-bold mb-1">Genereren mislukt</h4>
+                        <p id="partyErrorMessage" class="text-red-600 text-sm"></p>
                     </div>
                 </div>
                 
-                <!-- Results -->
-                <div id="partyResults" class="hidden">
-                    <div class="bg-gradient-to-r from-gray-50 to-orange-50 rounded-xl p-6 mb-6">
-                        <div class="flex items-start space-x-4">
-                            <img id="partyResultLogo" src="" alt="" class="w-20 h-20 object-contain">
+                <!-- Results - Uitgebreide versie -->
+                <div id="partyResults" class="hidden space-y-4">
+                    
+                    <!-- Leider Hero Card -->
+                    <div id="leaderHeroCard" class="relative bg-gradient-to-br from-primary-dark via-primary to-primary-dark rounded-xl p-5 text-white overflow-hidden">
+                        <div class="absolute inset-0 opacity-15">
+                            <div class="absolute top-0 right-0 w-32 h-32 bg-secondary rounded-full filter blur-3xl"></div>
+                            <div class="absolute bottom-0 left-0 w-32 h-32 bg-primary-light rounded-full filter blur-3xl"></div>
+                        </div>
+                        <div class="relative flex items-center gap-4">
+                            <img id="partyResultPhoto" src="" alt="" class="w-16 h-16 rounded-full object-cover border-2 border-white/30 shadow-lg">
                             <div class="flex-1">
-                                <h4 id="partyResultName" class="text-xl font-bold text-gray-900 mb-1"></h4>
-                                <p id="partyResultLeader" class="text-sm text-gray-600"></p>
+                                <p id="partyResultName" class="text-xl font-bold"></p>
+                                <p id="partyResultLeader" class="text-blue-200 text-sm"></p>
+                            </div>
+                            <img id="partyResultLogo" src="" alt="" class="w-12 h-12 object-contain opacity-80">
+                        </div>
+                    </div>
+                    
+                    <!-- Reactie Card -->
+                    <div class="bg-white rounded-xl border border-gray-200 p-4 shadow-sm">
+                        <h4 class="text-sm font-bold text-gray-800 mb-3 flex items-center gap-2">
+                            <svg class="w-4 h-4 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                            </svg>
+                            Reactie
+                        </h4>
+                        <div class="space-y-3">
+                            <p id="partyResultOpening" class="text-lg font-medium text-gray-900 italic border-l-4 border-secondary pl-3"></p>
+                            <div id="partyResultContent" class="text-gray-700 text-sm leading-relaxed"></div>
+                            <p id="partyResultAfsluiting" class="text-sm text-gray-600 font-medium border-l-4 border-primary pl-3"></p>
+                        </div>
+                    </div>
+                    
+                    <!-- Toon & Sentiment Analyse -->
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="bg-white rounded-xl border border-gray-200 p-4 shadow-sm">
+                            <h4 class="text-sm font-bold text-gray-800 mb-3 flex items-center gap-2">
+                                <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                </svg>
+                                Toon Analyse
+                            </h4>
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center py-1.5 border-b border-gray-100">
+                                    <span class="text-xs text-gray-600">Toon</span>
+                                    <span id="partyToon" class="text-xs font-medium text-gray-800 px-2 py-0.5 bg-gray-100 rounded"></span>
+                                </div>
+                                <div class="flex justify-between items-center py-1.5 border-b border-gray-100">
+                                    <span class="text-xs text-gray-600">Emotie</span>
+                                    <span id="partyEmotie" class="text-xs font-medium text-gray-800 px-2 py-0.5 bg-gray-100 rounded"></span>
+                                </div>
+                            <div>
+                                    <div class="flex justify-between items-center mb-1">
+                                        <span class="text-xs text-gray-600">Sentiment</span>
+                                        <span id="partySentimentValue" class="text-xs font-bold text-gray-800"></span>
+                            </div>
+                                    <div class="h-2 bg-gradient-to-r from-red-400 via-gray-200 to-green-400 rounded-full overflow-hidden relative">
+                                        <div class="absolute inset-0 flex items-center justify-center">
+                                            <div class="w-0.5 h-full bg-gray-400/50"></div>
+                        </div>
+                                        <div id="partySentimentMarker" class="absolute top-1/2 -translate-y-1/2 w-3 h-3 bg-white border-2 border-primary-dark rounded-full shadow transition-all duration-700" style="left: 50%"></div>
+                                    </div>
+                                    <div class="flex justify-between text-xs text-gray-400 mt-0.5">
+                                        <span>Negatief</span>
+                                        <span>Positief</span>
+                                    </div>
+                                </div>
+                    </div>
+                </div>
+                
+                        <div class="bg-white rounded-xl border border-gray-200 p-4 shadow-sm">
+                            <h4 class="text-sm font-bold text-gray-800 mb-3 flex items-center gap-2">
+                                <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                Authenticiteit
+                            </h4>
+                            <div class="space-y-3">
+                                <div>
+                                    <div class="flex justify-between items-center mb-1">
+                                        <span class="text-xs text-gray-600">Authenticiteit Score</span>
+                                        <span id="partyAuthenticiteit" class="text-xs font-bold text-gray-800"></span>
+                                    </div>
+                                    <div class="h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                                        <div id="partyAuthenticiteitBar" class="h-full bg-gradient-to-r from-secondary to-secondary-light transition-all duration-700" style="width: 0%"></div>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center py-1.5">
+                                    <span class="text-xs text-gray-600">Retorische Stijl</span>
+                                    <span id="partyRetoriek" class="text-xs font-medium text-gray-800 px-2 py-0.5 bg-gray-100 rounded"></span>
+                                </div>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="prose prose-lg max-w-none">
-                        <div id="partyResultContent" class="bg-white border border-gray-200 rounded-xl p-6"></div>
+                    <!-- Standpunten -->
+                    <div class="bg-white rounded-xl border border-gray-200 p-4 shadow-sm">
+                        <h4 class="text-sm font-bold text-gray-800 mb-3 flex items-center gap-2">
+                            <svg class="w-4 h-4 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                            </svg>
+                            Standpunten
+                        </h4>
+                        
+                        <div class="mb-3">
+                            <p class="text-xs text-gray-500 uppercase tracking-wider mb-2">Kernpunten</p>
+                            <ul id="partyKernpunten" class="space-y-1"></ul>
+                    </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-3">
+                            <div class="bg-green-50 rounded-lg p-3 border border-green-100">
+                                <p class="text-xs text-green-700 uppercase tracking-wider font-medium mb-2 flex items-center gap-1">
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                    </svg>
+                                    Eens met artikel
+                                </p>
+                                <ul id="partyEens" class="space-y-1"></ul>
+                            </div>
+                            <div class="bg-red-50 rounded-lg p-3 border border-red-100">
+                                <p class="text-xs text-red-700 uppercase tracking-wider font-medium mb-2 flex items-center gap-1">
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                    </svg>
+                                    Oneens met artikel
+                                </p>
+                                <ul id="partyOneens" class="space-y-1"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Partij Context -->
+                    <div class="bg-gradient-to-br from-primary/5 to-primary/10 rounded-xl p-4 border border-primary/20">
+                        <h4 class="text-sm font-bold text-primary-dark mb-3 flex items-center gap-2">
+                            <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                            </svg>
+                            Partij Context
+                        </h4>
+                        <div class="space-y-3">
+                            <div>
+                                <p class="text-xs text-gray-500 uppercase tracking-wider mb-1.5">Relevante Beloftes</p>
+                                <ul id="partyBeloftes" class="space-y-1"></ul>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-500 uppercase tracking-wider mb-1.5">Voorgestelde Oplossing</p>
+                                <p id="partyOplossing" class="text-sm text-gray-700"></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Disclaimer -->
+                    <div class="bg-gray-100 rounded-lg p-3 border border-gray-200">
+                        <div class="flex items-start gap-2">
+                            <svg class="w-4 h-4 text-gray-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            <div class="text-xs text-gray-600">
+                                <strong class="text-gray-700">Disclaimer:</strong> Dit is een AI-gegenereerde simulatie van hoe deze politicus zou kunnen reageren. Het is geen echte uitspraak.
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
             
             <!-- Modal Footer -->
-            <div class="bg-gray-50 px-6 py-4 border-t border-gray-200">
+            <div class="bg-white px-5 py-3 border-t border-gray-200 rounded-b-2xl">
                 <div class="flex justify-between items-center">
-                    <button id="backToPartySelection" class="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors hidden">
-                        <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <button id="backToPartySelection" class="px-3 py-1.5 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-colors hidden text-sm flex items-center gap-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                         </svg>
-                        Terug naar selectie
+                        Terug
                     </button>
-                    <div class="flex-1"></div>
-                    <button id="closePartyModalFooter" class="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors">
+                    <p class="text-xs text-gray-400">PolitiekPraat Analyse</p>
+                    <button id="closePartyModalFooter" class="px-4 py-1.5 bg-primary hover:bg-primary-dark text-white rounded-lg transition-colors text-sm font-medium">
                         Sluiten
                     </button>
                 </div>
@@ -2520,49 +2938,187 @@ function showBiasResults(analysis) {
     // Show results container
     document.getElementById('biasResults')?.classList.remove('hidden');
     
-    // Set orientation badge
+    // === OVERALL ORIENTATION ===
     const orientationBadge = document.getElementById('orientationBadge');
-    if (orientationBadge && analysis.orientation) {
-        const orientation = analysis.orientation.toLowerCase();
-        orientationBadge.textContent = getOrientationLabel(orientation);
-        orientationBadge.className = `px-4 py-2 rounded-full font-bold text-lg ${getOrientationColors(orientation)}`;
+    if (orientationBadge && analysis.overall?.orientatie) {
+        orientationBadge.textContent = analysis.overall.orientatie;
     }
     
-    // Set confidence
-    const confidenceBar = document.getElementById('confidenceBar');
+    // Set confidence with animated circle
     const confidenceText = document.getElementById('confidenceText');
-    if (confidenceBar && confidenceText && analysis.confidence) {
-        confidenceBar.style.width = analysis.confidence + '%';
-        confidenceText.textContent = analysis.confidence;
+    const confidenceCircle = document.getElementById('confidenceCircle');
+    if (confidenceText && analysis.overall?.confidence) {
+        const confidence = analysis.overall.confidence;
+        confidenceText.textContent = confidence;
+        
+        // Animate the SVG circle (r=24, circumference = 2 * PI * 24 = 150.8)
+        if (confidenceCircle) {
+            const circumference = 2 * Math.PI * 24;
+            const offset = circumference - (confidence / 100) * circumference;
+            setTimeout(() => {
+                confidenceCircle.style.strokeDashoffset = offset;
+            }, 100);
+        }
     }
     
-    // Set reasoning
-    const reasoningText = document.getElementById('reasoningText');
-    if (reasoningText && analysis.reasoning) {
-        reasoningText.textContent = analysis.reasoning;
+    // Set overall summary
+    const overallSummary = document.getElementById('overallSummary');
+    if (overallSummary && analysis.overall?.samenvatting) {
+        overallSummary.textContent = analysis.overall.samenvatting;
     }
     
-    // Set indicators
-    if (analysis.indicators) {
-        setIndicator('economicIndicator', analysis.indicators.economic);
-        setIndicator('socialIndicator', analysis.indicators.social);
-        setIndicator('immigrationIndicator', analysis.indicators.immigration);
+    // === SPECTRUM BREAKDOWN ===
+    if (analysis.spectrum) {
+        // Economisch
+        setSpectrumMarker('economisch', analysis.spectrum.economisch);
+        // Sociaal-cultureel
+        setSpectrumMarker('sociaal_cultureel', analysis.spectrum.sociaal_cultureel);
+        // EU/Internationaal
+        setSpectrumMarker('eu_internationaal', analysis.spectrum.eu_internationaal);
+        // Klimaat
+        setSpectrumMarker('klimaat', analysis.spectrum.klimaat);
+        // Immigratie
+        setSpectrumMarker('immigratie', analysis.spectrum.immigratie);
     }
     
-    // Set summary
-    const summaryText = document.getElementById('summaryText');
-    if (summaryText && analysis.summary) {
-        summaryText.textContent = analysis.summary;
+    // === RETORISCHE ANALYSE ===
+    if (analysis.retoriek) {
+        setTextContent('retoriekToon', capitalizeFirst(analysis.retoriek.toon || '-'));
+        setTextContent('retoriekFraming', capitalizeFirst(analysis.retoriek.framing || '-'));
+        setTextContent('retoriekStijl', capitalizeFirst(analysis.retoriek.stijl || '-'));
+        
+        const objectiviteit = analysis.retoriek.objectiviteit || 0;
+        setTextContent('retoriekObjectiviteitValue', objectiviteit + '%');
+        const objBar = document.getElementById('retoriekObjectiviteitBar');
+        if (objBar) {
+            setTimeout(() => { objBar.style.width = objectiviteit + '%'; }, 100);
+        }
+        
+        setTextContent('retoriekToelichting', analysis.retoriek.toelichting || '');
+    }
+    
+    // === SCHRIJFSTIJL ===
+    if (analysis.schrijfstijl) {
+        const feitelijk = analysis.schrijfstijl.feitelijk_vs_mening || 50;
+        setTextContent('schrijfstijlFeitelijkValue', feitelijk + '% mening');
+        const feitelijkBar = document.getElementById('schrijfstijlFeitelijkBar');
+        if (feitelijkBar) {
+            setTimeout(() => { feitelijkBar.style.width = feitelijk + '%'; }, 100);
+        }
+        
+        const emotie = analysis.schrijfstijl.emotionele_lading || 0;
+        setTextContent('schrijfstijlEmotieValue', emotie + '%');
+        const emotieBar = document.getElementById('schrijfstijlEmotieBar');
+        if (emotieBar) {
+            setTimeout(() => { emotieBar.style.width = emotie + '%'; }, 100);
+        }
+        
+        setTextContent('schrijfstijlBronnen', capitalizeFirst(analysis.schrijfstijl.bronverwijzingen || '-'));
+        setTextContent('schrijfstijlArgumentatie', capitalizeFirst(analysis.schrijfstijl.argumentatie_balans || '-'));
+    }
+    
+    // === PARTIJ MATCHING ===
+    if (analysis.partij_match) {
+        setTextContent('partijBestMatch', analysis.partij_match.best_match || '-');
+        
+        // Partijen die zouden onderschrijven
+        const onderschrijvenContainer = document.getElementById('partijOnderschrijven');
+        if (onderschrijvenContainer && analysis.partij_match.zou_onderschrijven) {
+            onderschrijvenContainer.innerHTML = '';
+            analysis.partij_match.zou_onderschrijven.forEach(partij => {
+                const badge = document.createElement('span');
+                badge.className = 'px-2 py-0.5 bg-green-100 text-green-800 rounded text-xs font-medium';
+                badge.textContent = partij;
+                onderschrijvenContainer.appendChild(badge);
+            });
+        }
+        
+        // Partijen die zouden afwijzen
+        const afwijzenContainer = document.getElementById('partijAfwijzen');
+        if (afwijzenContainer && analysis.partij_match.zou_afwijzen) {
+            afwijzenContainer.innerHTML = '';
+            analysis.partij_match.zou_afwijzen.forEach(partij => {
+                const badge = document.createElement('span');
+                badge.className = 'px-2 py-0.5 bg-red-100 text-red-800 rounded text-xs font-medium';
+                badge.textContent = partij;
+                afwijzenContainer.appendChild(badge);
+            });
+        }
+        
+        setTextContent('partijToelichting', analysis.partij_match.toelichting || '');
+    }
+    
+    // === DOELGROEP ===
+    if (analysis.doelgroep) {
+        setTextContent('doelgroepPrimair', analysis.doelgroep.primair || '-');
+        setTextContent('doelgroepDemografisch', analysis.doelgroep.demografisch || '');
+        setTextContent('doelgroepPolitiek', analysis.doelgroep.politiek_profiel || '');
+    }
+    
+    // === KERNPUNTEN ===
+    const kernpuntenList = document.getElementById('kernpuntenList');
+    if (kernpuntenList && analysis.kernpunten) {
+        kernpuntenList.innerHTML = '';
+        analysis.kernpunten.forEach(punt => {
+            const li = document.createElement('li');
+            li.className = 'flex items-start gap-1.5 text-xs text-gray-700';
+            li.innerHTML = `
+                <svg class="w-3 h-3 text-secondary mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+                <span>${punt}</span>
+            `;
+            kernpuntenList.appendChild(li);
+        });
     }
 }
 
-function setIndicator(elementId, value) {
-    const element = document.getElementById(elementId);
-    if (element && value) {
-        const normalized = value.toLowerCase();
-        element.textContent = getOrientationLabel(normalized);
-        element.className = `px-3 py-1 rounded-full text-sm font-medium ${getOrientationColors(normalized)}`;
+function setSpectrumMarker(spectrumKey, data) {
+    if (!data) return;
+    
+    // Map spectrum keys to element IDs
+    const idMappings = {
+        'economisch': { marker: 'economischMarker', label: 'economischLabel', toelichting: 'economischToelichting' },
+        'sociaal_cultureel': { marker: 'sociaal_cultureel_marker', label: 'sociaal_cultureel_label', toelichting: 'sociaal_cultureel_toelichting' },
+        'eu_internationaal': { marker: 'eu_internationaal_marker', label: 'eu_internationaal_label', toelichting: 'eu_internationaal_toelichting' },
+        'klimaat': { marker: 'klimaatMarker', label: 'klimaatLabel', toelichting: 'klimaatToelichting' },
+        'immigratie': { marker: 'immigratieMarker', label: 'immigratieLabel', toelichting: 'immigratieToelichting' }
+    };
+    
+    const ids = idMappings[spectrumKey];
+    if (!ids) return;
+    
+    const marker = document.getElementById(ids.marker);
+    const label = document.getElementById(ids.label);
+    const toelichting = document.getElementById(ids.toelichting);
+    
+    if (marker && typeof data.score === 'number') {
+        // Convert score (-100 to +100) to percentage (0 to 100)
+        const percentage = ((data.score + 100) / 200) * 100;
+        setTimeout(() => {
+            marker.style.left = `calc(${percentage}% - 10px)`;
+        }, 100);
     }
+    
+    if (label && data.label) {
+        label.textContent = data.label;
+    }
+    
+    if (toelichting && data.toelichting) {
+        toelichting.textContent = data.toelichting;
+    }
+}
+
+function setTextContent(elementId, text) {
+    const element = document.getElementById(elementId);
+    if (element) {
+        element.textContent = text;
+    }
+}
+
+function capitalizeFirst(str) {
+    if (!str) return '';
+    return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
 function showBiasError(errorMessage) {
@@ -2718,7 +3274,7 @@ async function performPartyAnalysis(party) {
 }
 
 function showPartyResults(data, partyKey) {
-    console.log('Showing party results for:', partyKey);
+    console.log('Showing party results for:', partyKey, data);
     
     // Dynamisch geladen partij data uit database
     const partyData = <?php 
@@ -2737,16 +3293,25 @@ function showPartyResults(data, partyKey) {
     const party = partyData[partyKey];
     if (!party) return;
     
+    // Check if we have structured data or legacy plain text
+    const analysis = data.analysis || data;
+    const isStructured = analysis.reactie && analysis.analyse;
+    
     // Show results container
     document.getElementById('partyResults')?.classList.remove('hidden');
     document.getElementById('backToPartySelection')?.classList.remove('hidden');
     
-    // Set party info - show leader photo for leader mode
+    // === LEIDER HERO CARD ===
+    const photo = document.getElementById('partyResultPhoto');
+    if (photo) {
+        photo.src = party.leaderPhoto || party.logo;
+        photo.alt = party.leader;
+    }
+    
     const logo = document.getElementById('partyResultLogo');
     if (logo) {
-        logo.src = party.leaderPhoto;
-        logo.alt = party.leader;
-        logo.className = 'w-20 h-20 object-cover rounded-full border-2 border-gray-300';
+        logo.src = party.logo;
+        logo.alt = partyKey;
     }
     
     const name = document.getElementById('partyResultName');
@@ -2759,10 +3324,106 @@ function showPartyResults(data, partyKey) {
         leader.textContent = `Partijleider ${party.name}`;
     }
     
-    // Set content
-    const content = document.getElementById('partyResultContent');
-    if (content) {
-        content.innerHTML = `<div class="text-gray-700 leading-relaxed whitespace-pre-wrap">${data.content}</div>`;
+    if (isStructured) {
+        // === REACTIE ===
+        setTextContent('partyResultOpening', analysis.reactie?.opening || '');
+        setTextContent('partyResultContent', analysis.reactie?.hoofdtekst || '');
+        setTextContent('partyResultAfsluiting', analysis.reactie?.afsluiting || '');
+        
+        // === TOON ANALYSE ===
+        setTextContent('partyToon', capitalizeFirst(analysis.analyse?.toon || '-'));
+        setTextContent('partyEmotie', capitalizeFirst(analysis.analyse?.emotie || '-'));
+        
+        const sentiment = analysis.analyse?.sentiment || 0;
+        setTextContent('partySentimentValue', (sentiment >= 0 ? '+' : '') + sentiment);
+        const sentimentMarker = document.getElementById('partySentimentMarker');
+        if (sentimentMarker) {
+            const percentage = ((sentiment + 100) / 200) * 100;
+            setTimeout(() => {
+                sentimentMarker.style.left = `calc(${percentage}% - 6px)`;
+            }, 100);
+        }
+        
+        // === AUTHENTICITEIT ===
+        const authenticiteit = analysis.meta?.authenticiteit_score || 0;
+        setTextContent('partyAuthenticiteit', authenticiteit + '%');
+        const authBar = document.getElementById('partyAuthenticiteitBar');
+        if (authBar) {
+            setTimeout(() => { authBar.style.width = authenticiteit + '%'; }, 100);
+        }
+        setTextContent('partyRetoriek', capitalizeFirst(analysis.meta?.retorische_stijl || '-'));
+        
+        // === STANDPUNTEN ===
+        const kernpuntenList = document.getElementById('partyKernpunten');
+        if (kernpuntenList && analysis.standpunten?.kernpunten) {
+            kernpuntenList.innerHTML = '';
+            analysis.standpunten.kernpunten.forEach(punt => {
+                const li = document.createElement('li');
+                li.className = 'flex items-start gap-1.5 text-xs text-gray-700';
+                li.innerHTML = `
+                    <svg class="w-3 h-3 text-secondary mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                    <span>${punt}</span>
+                `;
+                kernpuntenList.appendChild(li);
+            });
+        }
+        
+        // Eens met artikel
+        const eensList = document.getElementById('partyEens');
+        if (eensList && analysis.standpunten?.eens_met_artikel) {
+            eensList.innerHTML = '';
+            analysis.standpunten.eens_met_artikel.forEach(punt => {
+                const li = document.createElement('li');
+                li.className = 'text-xs text-green-800';
+                li.textContent = punt;
+                eensList.appendChild(li);
+            });
+        }
+        
+        // Oneens met artikel
+        const oneensList = document.getElementById('partyOneens');
+        if (oneensList && analysis.standpunten?.oneens_met_artikel) {
+            oneensList.innerHTML = '';
+            analysis.standpunten.oneens_met_artikel.forEach(punt => {
+                const li = document.createElement('li');
+                li.className = 'text-xs text-red-800';
+                li.textContent = punt;
+                oneensList.appendChild(li);
+            });
+        }
+        
+        // === PARTIJ CONTEXT ===
+        const beloftesList = document.getElementById('partyBeloftes');
+        if (beloftesList && analysis.partij_context?.relevante_beloftes) {
+            beloftesList.innerHTML = '';
+            analysis.partij_context.relevante_beloftes.forEach(belofte => {
+                const li = document.createElement('li');
+                li.className = 'flex items-start gap-1.5 text-xs text-gray-700';
+                li.innerHTML = `
+                    <svg class="w-3 h-3 text-primary mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                    </svg>
+                    <span>${belofte}</span>
+                `;
+                beloftesList.appendChild(li);
+            });
+        }
+        
+        setTextContent('partyOplossing', analysis.partij_context?.voorgestelde_oplossing || '');
+        
+    } else {
+        // Fallback for legacy plain text response
+        const content = data.content || '';
+        setTextContent('partyResultOpening', '');
+        setTextContent('partyResultContent', content);
+        setTextContent('partyResultAfsluiting', '');
+        
+        // Hide structured elements
+        ['partyToon', 'partyEmotie', 'partyAuthenticiteit', 'partyRetoriek'].forEach(id => {
+            setTextContent(id, '-');
+        });
     }
 }
 

@@ -13,6 +13,63 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_SERVER['HTTP_X_REQUESTED_W
 header('Content-Type: application/json');
 
 /**
+ * Valideer en standaardiseer de uitgebreide leider analyse response
+ */
+function validateLeaderAnalysis($analysis) {
+    $defaults = [
+        'reactie' => [
+            'opening' => '',
+            'hoofdtekst' => '',
+            'afsluiting' => ''
+        ],
+        'analyse' => [
+            'toon' => 'neutraal',
+            'sentiment' => 0,
+            'emotie' => 'neutraal'
+        ],
+        'standpunten' => [
+            'kernpunten' => [],
+            'eens_met_artikel' => [],
+            'oneens_met_artikel' => []
+        ],
+        'partij_context' => [
+            'relevante_beloftes' => [],
+            'voorgestelde_oplossing' => ''
+        ],
+        'meta' => [
+            'authenticiteit_score' => 50,
+            'retorische_stijl' => 'neutraal'
+        ]
+    ];
+    
+    $result = [];
+    
+    foreach ($defaults as $key => $defaultValue) {
+        if (isset($analysis[$key])) {
+            if (is_array($defaultValue) && is_array($analysis[$key])) {
+                $result[$key] = array_merge($defaultValue, $analysis[$key]);
+            } else {
+                $result[$key] = $analysis[$key];
+            }
+        } else {
+            $result[$key] = $defaultValue;
+        }
+    }
+    
+    // Zorg ervoor dat sentiment numeriek is en binnen bereik
+    if (isset($result['analyse']['sentiment'])) {
+        $result['analyse']['sentiment'] = max(-100, min(100, intval($result['analyse']['sentiment'])));
+    }
+    
+    // Zorg ervoor dat authenticiteit numeriek is
+    if (isset($result['meta']['authenticiteit_score'])) {
+        $result['meta']['authenticiteit_score'] = max(0, min(100, intval($result['meta']['authenticiteit_score'])));
+    }
+    
+    return $result;
+}
+
+/**
  * Verkort blog content voor veilige API calls
  */
 function truncateContentForAPI($content, $maxLength = 3000) {
@@ -356,15 +413,34 @@ try {
     }
     
     if ($result['success']) {
-        echo json_encode([
-            'success' => true,
-            'content' => $result['content'],
-            'party' => $partyData['name'],
-            'leader' => $partyData['leader'],
-            'leaderPhoto' => $partyData['leader_photo'] ?? null,
-            'logo' => $partyData['logo'] ?? null,
-            'type' => $type
-        ], JSON_UNESCAPED_UNICODE);
+        // Parse JSON response van nieuwe gestructureerde API
+        $analysis = json_decode($result['content'], true);
+        
+        if (json_last_error() === JSON_ERROR_NONE && isset($analysis['reactie'])) {
+            // Nieuwe gestructureerde response
+            $validatedAnalysis = validateLeaderAnalysis($analysis);
+            
+            echo json_encode([
+                'success' => true,
+                'analysis' => $validatedAnalysis,
+                'party' => $partyData['name'],
+                'leader' => $partyData['leader'],
+                'leaderPhoto' => $partyData['leader_photo'] ?? null,
+                'logo' => $partyData['logo'] ?? null,
+                'type' => $type
+            ], JSON_UNESCAPED_UNICODE);
+        } else {
+            // Fallback naar legacy plain text response
+            echo json_encode([
+                'success' => true,
+                'content' => $result['content'],
+                'party' => $partyData['name'],
+                'leader' => $partyData['leader'],
+                'leaderPhoto' => $partyData['leader_photo'] ?? null,
+                'logo' => $partyData['logo'] ?? null,
+                'type' => $type
+            ], JSON_UNESCAPED_UNICODE);
+        }
     } else {
         throw new Exception($result['error'] ?? 'Fout bij genereren perspectief');
     }

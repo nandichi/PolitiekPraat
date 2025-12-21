@@ -241,12 +241,100 @@ Schrijf persoonlijk en bemoedigend. Begin met 'Op basis van jouw stemwijzer antw
     }
     
     /**
-     * Analyseer politieke bias van een blog artikel
+     * Maak een gedetailleerde API call met hogere token limiet voor uitgebreide analyses
+     */
+    private function makeDetailedAPICall($prompt, $maxTokens = 1500) {
+        $data = [
+            'model' => $this->model,
+            'messages' => [
+                [
+                    'role' => 'system', 
+                    'content' => 'Je bent een gespecialiseerde Nederlandse politieke analist met expertise in media-analyse, retoriek en politieke communicatie. Je geeft uitgebreide, genuanceerde analyses in het gevraagde formaat. Je antwoordt ALLEEN in valid JSON wanneer daarom gevraagd wordt.'
+                ],
+                [
+                    'role' => 'user', 
+                    'content' => $prompt
+                ]
+            ],
+            'max_tokens' => $maxTokens,
+            'temperature' => 0.4
+        ];
+        
+        $headers = [
+            'Authorization: Bearer ' . $this->apiKey,
+            'Content-Type: application/json'
+        ];
+        
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $this->apiUrl);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+        
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $error = curl_error($ch);
+        curl_close($ch);
+        
+        if ($error) {
+            return [
+                'success' => false,
+                'error' => 'cURL error: ' . $error
+            ];
+        }
+        
+        if ($httpCode !== 200) {
+            return [
+                'success' => false,
+                'error' => 'HTTP error: ' . $httpCode,
+                'response' => $response
+            ];
+        }
+        
+        $decodedResponse = json_decode($response, true);
+        
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            return [
+                'success' => false,
+                'error' => 'JSON decode error: ' . json_last_error_msg()
+            ];
+        }
+        
+        if (!isset($decodedResponse['choices'][0]['message']['content'])) {
+            return [
+                'success' => false,
+                'error' => 'Unexpected API response format',
+                'response' => $decodedResponse
+            ];
+        }
+        
+        $content = trim($decodedResponse['choices'][0]['message']['content']);
+        
+        // Verwijder eventuele markdown code blocks
+        if (strpos($content, '```json') !== false) {
+            $content = preg_replace('/```json\s*/', '', $content);
+            $content = preg_replace('/```\s*$/', '', $content);
+            $content = trim($content);
+        } elseif (strpos($content, '```') !== false) {
+            $content = preg_replace('/```\s*/', '', $content);
+            $content = trim($content);
+        }
+        
+        return [
+            'success' => true,
+            'content' => $content
+        ];
+    }
+    
+    /**
+     * Analyseer politieke bias van een blog artikel - Uitgebreide multi-dimensionale versie
      */
     public function analyzePoliticalBias($title, $content) {
-        // Check of content te lang is (meer dan 1500 karakters)
-        if (mb_strlen($content) > 1500) {
-            // Vat eerst samen
+        // Check of content te lang is (meer dan 2000 karakters)
+        if (mb_strlen($content) > 2000) {
+            // Vat eerst samen met behoud van politiek relevante details
             $summaryResult = $this->summarizeContent($title, $content);
             if (!$summaryResult['success']) {
                 return $summaryResult;
@@ -254,37 +342,119 @@ Schrijf persoonlijk en bemoedigend. Begin met 'Op basis van jouw stemwijzer antw
             $content = $summaryResult['content'];
         }
         
-        $prompt = "Je bent een Nederlandse politieke expert gespecialiseerd in bias detectie. 
+        $prompt = "Je bent een gespecialiseerde Nederlandse politieke analist met expertise in media-analyse, retoriek en politieke communicatie. 
 
-Analyseer de volgende blog artikel op politieke orientatie:
+Voer een UITGEBREIDE analyse uit van het volgende blog artikel op alle relevante politieke dimensies.
 
 **Titel:** {$title}
 
 **Content:** {$content}
 
-Geef een gedetailleerde analyse in exact dit JSON formaat (geen extra tekst):
+===== ANALYSEER OP DE VOLGENDE DIMENSIES =====
+
+**1. POLITIEK SPECTRUM (score van -100 tot +100)**
+- Economisch: -100 = Extreem links (volledige staatscontrole) tot +100 = Extreem rechts (volledige vrije markt)
+- Sociaal-cultureel: -100 = Zeer progressief (radicale verandering) tot +100 = Zeer conservatief (traditie behouden)
+- EU/Internationaal: -100 = Federalistisch pro-EU tot +100 = Nationalistisch anti-EU
+- Klimaat: -100 = Radicaal groene agenda tot +100 = Economie boven klimaat
+- Immigratie: -100 = Open grenzen tot +100 = Volledige immigratiestop
+
+**2. RETORISCHE ANALYSE**
+- Toon: neutraal, emotioneel, fel, genuanceerd, provocerend, sarcastisch
+- Framing: positief, negatief, alarmerend, hoopvol, cynisch
+- Stijl: objectief-journalistiek, opiniestuk, activistisch, academisch, populistisch
+- Objectiviteit: 0-100 (0 = puur mening, 100 = volledig objectief)
+
+**3. PARTIJ-VERGELIJKING**
+Welke Nederlandse partijen (PVV, VVD, NSC, BBB, GL-PvdA, D66, SP, PvdD, CDA, FvD, DENK, Volt, CU, SGP, JA21) zouden:
+- Dit artikel onderschrijven?
+- Dit artikel afwijzen?
+
+**4. SCHRIJFSTIJL**
+- Feitelijk vs mening: 0-100 (0 = puur feiten, 100 = puur mening)
+- Emotionele lading: 0-100 (0 = droog/zakelijk, 100 = zeer emotioneel)
+- Bronverwijzingen: uitgebreid, beperkt, geen
+- Argumentatie: evenwichtig, eenzijdig-links, eenzijdig-rechts
+
+**5. DOELGROEP**
+Voor wie lijkt dit artikel geschreven? Welke kiezers zou dit aanspreken?
+
+===== GEEF JE ANTWOORD IN DIT EXACTE JSON FORMAAT =====
 
 {
-    \"orientation\": \"links|rechts|centrum\",
-    \"confidence\": 85,
-    \"reasoning\": \"Korte uitleg waarom deze classificatie is gekozen\",
-    \"indicators\": {
-        \"economic\": \"links|rechts|centrum\",
-        \"social\": \"links|rechts|centrum\",
-        \"immigration\": \"links|rechts|centrum|neutraal\"
+    \"spectrum\": {
+        \"economisch\": {
+            \"score\": 0,
+            \"label\": \"Centrum/Links/Rechts/etc\",
+            \"toelichting\": \"Korte uitleg waarom deze score\"
+        },
+        \"sociaal_cultureel\": {
+            \"score\": 0,
+            \"label\": \"Progressief/Conservatief/etc\",
+            \"toelichting\": \"Korte uitleg\"
+        },
+        \"eu_internationaal\": {
+            \"score\": 0,
+            \"label\": \"Pro-EU/Eurosceptisch/etc\",
+            \"toelichting\": \"Korte uitleg\"
+        },
+        \"klimaat\": {
+            \"score\": 0,
+            \"label\": \"Groen/Neutraal/Sceptisch\",
+            \"toelichting\": \"Korte uitleg\"
+        },
+        \"immigratie\": {
+            \"score\": 0,
+            \"label\": \"Open/Gematigd/Restrictief\",
+            \"toelichting\": \"Korte uitleg\"
+        }
     },
-    \"summary\": \"Een beknopte samenvatting van de politieke standpunten in dit artikel\"
+    \"overall\": {
+        \"orientatie\": \"Beschrijvende term zoals 'Links-progressief', 'Rechts-conservatief', 'Centrum-liberaal', etc.\",
+        \"primaire_as\": \"economisch|sociaal|eu|klimaat|immigratie - welke dimensie is het meest uitgesproken?\",
+        \"confidence\": 85,
+        \"samenvatting\": \"2-3 zinnen die de politieke lading van dit artikel samenvatten\"
+    },
+    \"retoriek\": {
+        \"toon\": \"neutraal|emotioneel|fel|genuanceerd|provocerend|sarcastisch\",
+        \"framing\": \"positief|negatief|alarmerend|hoopvol|cynisch\",
+        \"stijl\": \"objectief-journalistiek|opiniestuk|activistisch|academisch|populistisch\",
+        \"objectiviteit\": 50,
+        \"toelichting\": \"Korte uitleg over de retorische keuzes in dit artikel\"
+    },
+    \"partij_match\": {
+        \"zou_onderschrijven\": [\"Partij1\", \"Partij2\"],
+        \"zou_afwijzen\": [\"Partij3\", \"Partij4\"],
+        \"best_match\": \"De partij die dit artikel het meest zou omarmen\",
+        \"toelichting\": \"Waarom deze partijen?\"
+    },
+    \"schrijfstijl\": {
+        \"feitelijk_vs_mening\": 50,
+        \"emotionele_lading\": 50,
+        \"bronverwijzingen\": \"uitgebreid|beperkt|geen\",
+        \"argumentatie_balans\": \"evenwichtig|eenzijdig-links|eenzijdig-rechts\",
+        \"toelichting\": \"Korte analyse van de schrijfstijl\"
+    },
+    \"doelgroep\": {
+        \"primair\": \"Beschrijving van de primaire doelgroep\",
+        \"demografisch\": \"Leeftijd, opleiding, regio indicatie\",
+        \"politiek_profiel\": \"Welk type kiezer zou dit aanspreken?\"
+    },
+    \"kernpunten\": [
+        \"Belangrijkste politieke standpunt 1\",
+        \"Belangrijkste politieke standpunt 2\",
+        \"Belangrijkste politieke standpunt 3\"
+    ]
 }
 
-Criteria:
-- **Links**: Pro-sociale zekerheid, hogere belastingen voor rijken, milieubescherming, diversiteit, EU-integratie
-- **Rechts**: Vrije markt, lagere belastingen, traditionelle waarden, strenge immigratie, nationale soevereiniteit  
-- **Centrum**: Gematigde standpunten, compromissen, pragmatische oplossingen
+===== BELANGRIJKE INSTRUCTIES =====
+- Geef ALLEEN de JSON terug, geen extra tekst ervoor of erna
+- Wees zo objectief mogelijk in je analyse
+- Baseer je scores op concrete tekstuele bewijzen
+- Als het artikel neutraal is op een as, geef dan score 0
+- Als een dimensie niet van toepassing is, geef dan score 0 met toelichting \"Niet behandeld in artikel\"";
 
-Confidence score: 0-100 (hoe zeker ben je van de classificatie)
-Wees objectief en gebaseerd op de daadwerkelijke inhoud.";
-
-        return $this->makeAPICall($prompt);
+        return $this->makeDetailedAPICall($prompt);
     }
 
     /**
@@ -825,7 +995,7 @@ Schrijf in toegankelijke maar informatieve taal. Gebruik concrete voorbeelden en
     }
 
     /**
-     * Genereer perspectief van een politieke partij op een blog artikel
+     * Genereer perspectief van een politieke partij op een blog artikel - Uitgebreide versie met JSON response
      */
     public function generatePartyPerspective($partyName, $partyInfo, $blogTitle, $blogContent) {
         // Haal het leader persona profiel op indien beschikbaar
@@ -877,27 +1047,71 @@ Inhoud: {$blogContent}
 - Emotie: {$variationInstructions['emotional_angle']}
 - Structuur: {$variationInstructions['structure']}
 
-**BELANGRIJK - WAT JE MOET DOEN:**
-1. Begin DIRECT met je reactie - geen 'Als woordvoerder van...' of formele inleiding
-2. Gebruik de typische uitdrukkingen en spreekstijl hierboven beschreven
-3. Laat echte emotie zien: pauzes (...), uitroepen (!), retorische vragen
-4. Spreek de lezer direct aan
-5. Verwijs naar concrete standpunten van je partij
-6. Maak het persoonlijk met voorbeelden
+**WAT JE MOET DOEN:**
+Genereer een GESTRUCTUREERDE reactie in JSON formaat:
+
+1. **Reactie** - Je volledige reactie in drie delen:
+   - Opening: Een pakkende eerste zin
+   - Hoofdtekst: De kern van je reactie (150-200 woorden)
+   - Afsluiting: Een kenmerkende afsluiting
+
+2. **Analyse**:
+   - Toon: fel/genuanceerd/kritisch/enthousiast/bezorgd/sarcastisch
+   - Sentiment: -100 tot +100 over het artikel
+   - Emotie: De primaire emotie
+
+3. **Standpunten**:
+   - 3 kernpunten die je wilt benadrukken
+   - Waar je het wel/niet mee eens bent
+
+4. **Partij Context**:
+   - 2-3 relevante verkiezingsbeloftes
+   - Voorgestelde oplossing
+
+5. **Meta**:
+   - Authenticiteit score (0-100)
+   - Retorische stijl
 
 **WAT JE MOET VERMIJDEN:**
-- Generieke politieke taal die elke partij zou kunnen gebruiken
 - Formele openingen of inleidingen
-- Neutrale of diplomatieke toon (tenzij dat bij de partij past)
-- Het herhalen van standaard AI-achtige formuleringen
+- Generieke politieke taal
+- AI-achtige formuleringen
 
-Schrijf 200-300 woorden. Wees echt menselijk en herkenbaar als iemand van {$partyName}!";
+**GEEF JE ANTWOORD IN DIT EXACTE JSON FORMAAT:**
 
-        return $this->makeAPICall($prompt);
+{
+    \"reactie\": {
+        \"opening\": \"Pakkende openingszin\",
+        \"hoofdtekst\": \"Volledige reactie (150-200 woorden)\",
+        \"afsluiting\": \"Kenmerkende afsluiting\"
+    },
+    \"analyse\": {
+        \"toon\": \"fel|genuanceerd|kritisch|enthousiast|bezorgd|sarcastisch\",
+        \"sentiment\": 0,
+        \"emotie\": \"Primaire emotie\"
+    },
+    \"standpunten\": {
+        \"kernpunten\": [\"Punt 1\", \"Punt 2\", \"Punt 3\"],
+        \"eens_met_artikel\": [\"Punt\"],
+        \"oneens_met_artikel\": [\"Punt\"]
+    },
+    \"partij_context\": {
+        \"relevante_beloftes\": [\"Belofte 1\", \"Belofte 2\"],
+        \"voorgestelde_oplossing\": \"Wat {$partyName} als oplossing zou voorstellen\"
+    },
+    \"meta\": {
+        \"authenticiteit_score\": 85,
+        \"retorische_stijl\": \"populistisch|technocratisch|emotioneel|pragmatisch|idealistisch\"
+    }
+}
+
+GEEF ALLEEN DE JSON TERUG, GEEN EXTRA TEKST.";
+
+        return $this->makeDetailedAPICall($prompt, 1200);
     }
 
     /**
-     * Genereer perspectief van een politieke leider op een blog artikel
+     * Genereer perspectief van een politieke leider op een blog artikel - Uitgebreide versie met JSON response
      */
     public function generateLeaderPerspective($leaderName, $partyName, $partyInfo, $blogTitle, $blogContent) {
         // Haal het specifieke persona profiel op
@@ -953,28 +1167,67 @@ Inhoud: {$blogContent}
 - Structuur: {$variationInstructions['structure']}
 
 **WAT JE MOET DOEN:**
-1. Begin DIRECT met je reactie - gebruik een van de openingsvoorbeelden hierboven of iets vergelijkbaars
-2. Gebruik MINIMAAL 3-4 van de typische uitdrukkingen uit jouw profiel
-3. Laat je emotie zien met pauzes (...), uitroepen (!), retorische vragen (?)
-4. Spreek de lezer direct aan
-5. Verwijs naar wat jij als {$leaderName} belangrijk vindt
-6. Maak het persoonlijk - alsof je in een interview zit
+Genereer een GESTRUCTUREERDE reactie in JSON formaat met de volgende onderdelen:
+
+1. **Reactie** - Je volledige reactie in drie delen:
+   - Opening: Een pakkende eerste zin die typisch is voor jou
+   - Hoofdtekst: De kern van je reactie (150-200 woorden)
+   - Afsluiting: Een kenmerkende afsluiting
+
+2. **Analyse van je eigen reactie**:
+   - Toon: fel/genuanceerd/kritisch/enthousiast/bezorgd/sarcastisch
+   - Sentiment: -100 (zeer negatief) tot +100 (zeer positief) over het artikel
+   - Emotie: De primaire emotie die je voelt
+
+3. **Standpunten**:
+   - 3 kernpunten die je wilt benadrukken
+   - Aspecten waar je het WEL mee eens bent in het artikel
+   - Aspecten waar je het NIET mee eens bent
+
+4. **Partij Context**:
+   - 2-3 relevante verkiezingsbeloftes van {$partyName}
+   - Wat {$partyName} als oplossing zou voorstellen
+
+5. **Meta informatie**:
+   - Authenticiteit score (0-100): Hoe typisch is deze reactie voor {$leaderName}?
+   - Retorische stijl: populistisch/technocratisch/emotioneel/pragmatisch/idealistisch
 
 **WAT JE ABSOLUUT MOET VERMIJDEN:**
-- 'Als partijleider van...' of andere formele openingen
-- Generieke politieke taal die elke politicus zou kunnen gebruiken  
-- Neutrale of diplomatieke formuleringen (tenzij dat echt bij jouw stijl past)
+- Formele openingen zoals 'Als partijleider van...'
+- Generieke politieke taal
 - Het klinken als een AI-gegenereerde tekst
-- Zinnen beginnen met 'Ik als {$leaderName}...'
 
-**EXTRA AUTHENTICITEIT:**
-- Wat zou {$leaderName} ECHT zeggen als een journalist hem/haar dit artikel laat zien?
-- Welke emotie zou {$leaderName} voelen? Laat die emotie ZIEN.
-- Waar zou {$leaderName} meteen op inhaken? Doe dat.
+**GEEF JE ANTWOORD IN DIT EXACTE JSON FORMAAT:**
 
-Schrijf 200-300 woorden. Elke lezer moet na het lezen denken: 'Ja, dit klinkt echt als {$leaderName}!'";
+{
+    \"reactie\": {
+        \"opening\": \"De pakkende openingszin die typisch is voor {$leaderName}\",
+        \"hoofdtekst\": \"De volledige reactie in jouw authentieke stijl (150-200 woorden)\",
+        \"afsluiting\": \"Een kenmerkende afsluiting\"
+    },
+    \"analyse\": {
+        \"toon\": \"fel|genuanceerd|kritisch|enthousiast|bezorgd|sarcastisch\",
+        \"sentiment\": 0,
+        \"emotie\": \"De primaire emotie\"
+    },
+    \"standpunten\": {
+        \"kernpunten\": [\"Kernpunt 1\", \"Kernpunt 2\", \"Kernpunt 3\"],
+        \"eens_met_artikel\": [\"Punt waar je het mee eens bent\"],
+        \"oneens_met_artikel\": [\"Punt waar je het niet mee eens bent\"]
+    },
+    \"partij_context\": {
+        \"relevante_beloftes\": [\"Belofte 1\", \"Belofte 2\"],
+        \"voorgestelde_oplossing\": \"Wat {$partyName} als oplossing zou voorstellen\"
+    },
+    \"meta\": {
+        \"authenticiteit_score\": 85,
+        \"retorische_stijl\": \"populistisch|technocratisch|emotioneel|pragmatisch|idealistisch\"
+    }
+}
 
-        return $this->makeAPICall($prompt);
+GEEF ALLEEN DE JSON TERUG, GEEN EXTRA TEKST.";
+
+        return $this->makeDetailedAPICall($prompt, 1200);
     }
 
     /**
