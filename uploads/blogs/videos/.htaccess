@@ -1,16 +1,35 @@
-# Beveiligingsregels voor uploads
+# Beveiligingsregels voor video uploads
 Options -Indexes
 Options -ExecCGI
 AddHandler cgi-script .php .pl .py .jsp .asp .sh .cgi
 
-# Audio bestanden toestaan
-<FilesMatch "\.(mp3|wav|ogg)$">
-    Order Allow,Deny
-    Allow from all
+# Video bestanden toestaan (Apache 2.4+ syntax)
+<FilesMatch "\.(mp4|webm|ogg|mov|avi)$">
+    <IfModule mod_authz_core.c>
+        Require all granted
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order Allow,Deny
+        Allow from all
+    </IfModule>
 </FilesMatch>
 
-# PHP bestanden blokkeren
+# PHP bestanden blokkeren (Apache 2.4+ syntax)
 <FilesMatch "\.(php|phtml|php3|php4|php5|pl|py|jsp|asp|sh|cgi)$">
-    Order Deny,Allow
-    Deny from all
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order Deny,Allow
+        Deny from all
+    </IfModule>
 </FilesMatch>
+
+# Correct MIME type voor video bestanden
+<IfModule mod_mime.c>
+    AddType video/mp4 .mp4
+    AddType video/webm .webm
+    AddType video/ogg .ogg
+    AddType video/quicktime .mov
+    AddType video/x-msvideo .avi
+</IfModule>
