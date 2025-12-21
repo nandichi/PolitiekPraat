@@ -44,6 +44,15 @@ function sendCronJobEmail($jobName, $status, $summary, $details = '', $logFile =
         $mail->Port = $mailConfig['smtp_port'];
         $mail->CharSet = 'UTF-8';
         
+        // Extra opties voor betere SSL/TLS compatibiliteit
+        $mail->SMTPOptions = [
+            'ssl' => [
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+            ]
+        ];
+        
         // Zender
         $mail->setFrom($mailConfig['from_email'], $mailConfig['from_name']);
         

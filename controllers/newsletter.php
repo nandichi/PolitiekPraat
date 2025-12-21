@@ -115,6 +115,15 @@ class Newsletter extends Controller {
         $mail->Port = $mail_config['smtp_port'];
         $mail->CharSet = 'UTF-8';
         
+        // Extra opties voor betere SSL/TLS compatibiliteit
+        $mail->SMTPOptions = [
+            'ssl' => [
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+            ]
+        ];
+        
         // Recipients
         $mail->setFrom($mail_config['from_email'], $mail_config['from_name']);
         $mail->addAddress('info@politiekpraat.nl');
@@ -170,6 +179,15 @@ class Newsletter extends Controller {
                 $mail->SMTPSecure = $mail_config['smtp_secure'];
                 $mail->Port = $mail_config['smtp_port'];
                 $mail->CharSet = 'UTF-8';
+                
+                // Extra opties voor betere SSL/TLS compatibiliteit
+                $mail->SMTPOptions = [
+                    'ssl' => [
+                        'verify_peer' => false,
+                        'verify_peer_name' => false,
+                        'allow_self_signed' => true
+                    ]
+                ];
                 
                 // Recipients
                 $mail->setFrom($mail_config['from_email'], $mail_config['from_name']);

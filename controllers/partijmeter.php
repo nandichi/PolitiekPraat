@@ -246,49 +246,63 @@ $howToStructuredData = [
         
         <div class="container mx-auto px-4 relative z-10">
             <div class="max-w-5xl mx-auto">
-                <!-- Header badge -->
-                <div class="flex justify-center mb-8">
-                    <div class="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
-                        <div class="w-2 h-2 bg-secondary-light rounded-full mr-3 animate-pulse"></div>
-                        <span class="text-white/90 text-sm font-medium">Verkiezingen 2025 - Jouw stem telt</span>
-                    </div>
-                </div>
-                
                 <!-- Main title -->
-                <div class="text-center mb-12">
+                <div class="text-center mb-10">
                     <h1 class="text-5xl md:text-6xl lg:text-7xl font-black text-white mb-6 tracking-tight">
-                        PartijMeter 2025
+                        PartijMeter
                         <span class="block bg-gradient-to-r from-secondary-light via-secondary to-primary-light bg-clip-text text-transparent">
                             Nederland
                         </span>
                     </h1>
                     
-                    <p class="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
-                        Gratis online politieke test - Ontdek binnen 5 minuten welke Nederlandse politieke partij het beste bij jouw standpunten past
+                    <p class="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed mb-8">
+                        Ontdek welke Nederlandse politieke partij het beste bij jouw standpunten past
+                    </p>
+                    
+                    <!-- Compacte status badges -->
+                    <div class="flex flex-wrap justify-center gap-3 mb-6">
+                        <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-secondary/80 text-white border border-secondary-light/30">
+                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                            Verkiezingen 2025 afgerond
+                        </span>
+                        <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-white/10 text-white border border-white/20">
+                            D66 winnaar
+                        </span>
+                    </div>
+                    
+                    <p class="text-blue-200 text-sm max-w-xl mx-auto">
+                        Vul de PartijMeter nog steeds in om te ontdekken welke partij bij je past
                     </p>
                 </div>
                 
                 <!-- Quick stats -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
-                    <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
-                        <div class="text-center">
-                            <div class="text-3xl font-bold text-white mb-2"><?php echo $totalQuestions; ?></div>
-                            <div class="text-blue-200 text-sm uppercase tracking-wider">Stellingen</div>
-                        </div>
+                <div class="grid grid-cols-3 gap-4 max-w-2xl mx-auto mb-10">
+                    <div class="text-center py-4 px-2 rounded-xl bg-white/5 border border-white/10">
+                        <div class="text-2xl md:text-3xl font-bold text-white"><?php echo $totalQuestions; ?></div>
+                        <div class="text-blue-200 text-xs uppercase tracking-wider mt-1">Stellingen</div>
                     </div>
-                    
-                    <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
-                        <div class="text-center">
-                            <div class="text-3xl font-bold text-white mb-2"><?php echo count($partijmeterData['parties']); ?></div>
-                            <div class="text-blue-200 text-sm uppercase tracking-wider">Partijen</div>
-                        </div>
+                    <div class="text-center py-4 px-2 rounded-xl bg-white/5 border border-white/10">
+                        <div class="text-2xl md:text-3xl font-bold text-white"><?php echo count($partijmeterData['parties']); ?></div>
+                        <div class="text-blue-200 text-xs uppercase tracking-wider mt-1">Partijen</div>
                     </div>
-                    
-                    <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
-                        <div class="text-center">
-                            <div class="text-3xl font-bold text-white mb-2">2025</div>
-                            <div class="text-blue-200 text-sm uppercase tracking-wider">Verkiezingen</div>
-                        </div>
+                    <div class="text-center py-4 px-2 rounded-xl bg-white/5 border border-white/10">
+                        <div class="text-2xl md:text-3xl font-bold text-white">5</div>
+                        <div class="text-blue-200 text-xs uppercase tracking-wider mt-1">Minuten</div>
+                    </div>
+                </div>
+                
+                <!-- Gemeentelijke verkiezingen teaser -->
+                <div class="text-center">
+                    <div class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-primary-dark/50 border border-primary-light/20 text-sm">
+                        <svg class="w-4 h-4 text-secondary-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <span class="text-blue-100">
+                            <span class="text-secondary-light font-semibold">Binnenkort:</span> 
+                            Stemwijzer gemeenteraadsverkiezingen maart 2026
+                        </span>
                     </div>
                 </div>
             </div>
@@ -1934,433 +1948,6 @@ $howToStructuredData = [
                  </div>
              </div>
 
-            <!-- How It Works Section - Ultra Modern Design -->
-            <div class="max-w-7xl mx-auto mb-20">
-                <!-- Section Header with Enhanced Design -->
-                <div class="relative text-center mb-16">
-                    <!-- Background decorative elements -->
-                    <div class="absolute inset-0 flex items-center justify-center opacity-5">
-                        <svg class="w-80 h-80 text-primary" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                        </svg>
-                    </div>
-
-                    <!-- Badge with animation -->
-                    <div class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-primary/10 via-secondary/10 to-primary/10 
-                               rounded-full border border-primary/20 mb-8 backdrop-blur-sm">
-                        <div class="w-3 h-3 bg-primary rounded-full mr-3 animate-pulse"></div>
-                        <span class="text-primary font-semibold text-sm tracking-wide uppercase">Zo Simpel Werkt Het</span>
-                    </div>
-
-                    <!-- Main heading with enhanced typography -->
-                    <h2 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-gray-800 mb-6 leading-tight tracking-tight">
-                        <span class="block mb-2">Hoe werkt de</span>
-                        <span class="bg-gradient-to-r from-primary via-secondary to-primary-light bg-clip-text text-transparent">
-                            Online Stemtest?
-                        </span>
-                    </h2>
-                    
-                    <!-- Enhanced subtitle -->
-                    <p class="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed font-light">
-                        In slechts <span class="font-semibold text-primary">3 eenvoudige stappen</span> naar jouw 
-                        <span class="font-semibold text-secondary">perfecte politieke match</span>
-                    </p>
-
-                    <!-- Decorative line -->
-                    <div class="flex items-center justify-center mt-8 space-x-4">
-                        <div class="w-16 h-0.5 bg-gradient-to-r from-transparent to-primary"></div>
-                        <div class="w-3 h-3 bg-primary rounded-full animate-pulse"></div>
-                        <div class="w-24 h-0.5 bg-gradient-to-r from-primary via-secondary to-primary"></div>
-                        <div class="w-3 h-3 bg-secondary rounded-full animate-pulse animation-delay-500"></div>
-                        <div class="w-16 h-0.5 bg-gradient-to-r from-secondary to-transparent"></div>
-                    </div>
-                </div>
-
-                <!-- Steps Grid with Glassmorphism Cards -->
-                <div class="grid md:grid-cols-3 gap-8 lg:gap-12">
-                    <!-- Step 1 - Enhanced Interactive Card -->
-                    <div class="group relative">
-                        <!-- Animated background glow -->
-                        <div class="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-indigo-600/20 rounded-3xl 
-                                   opacity-0 group-hover:opacity-100 transition-all duration-500 blur-xl"></div>
-                        
-                        <!-- Main card -->
-                        <div class="relative bg-white/80 backdrop-blur-xl border border-white/30 rounded-3xl p-8 md:p-10 
-                                   shadow-2xl shadow-blue-500/10 transform transition-all duration-500 
-                                   group-hover:-translate-y-2 group-hover:shadow-3xl group-hover:shadow-blue-500/20">
-                            
-                            <!-- Icon container with advanced design -->
-                            <div class="relative mb-8">
-                                <!-- Outer glow ring -->
-                                <div class="absolute inset-0 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-3xl 
-                                           opacity-20 group-hover:opacity-40 transition-all duration-500 scale-110"></div>
-                                
-                                <!-- Main icon container -->
-                                <div class="relative w-20 h-20 mx-auto bg-gradient-to-br from-blue-500 to-indigo-600 
-                                           rounded-3xl flex items-center justify-center shadow-xl group-hover:scale-110 
-                                           transition-all duration-500">
-                                    <!-- Question/Survey icon -->
-                                    <svg class="w-10 h-10 text-white transform group-hover:rotate-12 transition-transform duration-500" 
-                                         fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                              d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
-                                    </svg>
-                                </div>
-                                
-                                <!-- Step number badge -->
-                                <div class="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-br from-yellow-400 to-orange-500 
-                                           rounded-full flex items-center justify-center shadow-lg">
-                                    <span class="text-sm font-bold text-white">1</span>
-                                </div>
-                            </div>
-
-                            <!-- Content -->
-                            <div class="text-center">
-                                <h3 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4 group-hover:text-blue-600 
-                                          transition-colors duration-300">
-                                    Beantwoord Stellingen
-                                </h3>
-                                <p class="text-gray-600 leading-relaxed text-base md:text-lg">
-                                    Doorloop <span class="font-semibold text-blue-600">30 actuele politieke stellingen</span> 
-                                    over belangrijke thema's zoals klimaat, zorg, economie en immigratie. 
-                                    Kies simpelweg uit <span class="font-semibold">'eens'</span>, 
-                                    <span class="font-semibold">'oneens'</span> of <span class="font-semibold">'neutraal'</span>.
-                                </p>
-                                
-                                <!-- Feature highlights -->
-                                <div class="mt-6 flex flex-wrap gap-2 justify-center">
-                                    <span class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-xs font-medium">
-                                        5-7 minuten
-                                    </span>
-                                    <span class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-xs font-medium">
-                                        30 vragen
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Step 2 - Enhanced Interactive Card -->
-                    <div class="group relative">
-                        <!-- Animated background glow -->
-                        <div class="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-pink-600/20 rounded-3xl 
-                                   opacity-0 group-hover:opacity-100 transition-all duration-500 blur-xl"></div>
-                        
-                        <!-- Main card -->
-                        <div class="relative bg-white/80 backdrop-blur-xl border border-white/30 rounded-3xl p-8 md:p-10 
-                                   shadow-2xl shadow-purple-500/10 transform transition-all duration-500 
-                                   group-hover:-translate-y-2 group-hover:shadow-3xl group-hover:shadow-purple-500/20">
-                            
-                            <!-- Icon container -->
-                            <div class="relative mb-8">
-                                <!-- Outer glow ring -->
-                                <div class="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-600 rounded-3xl 
-                                           opacity-20 group-hover:opacity-40 transition-all duration-500 scale-110"></div>
-                                
-                                <!-- Main icon container -->
-                                <div class="relative w-20 h-20 mx-auto bg-gradient-to-br from-purple-500 to-pink-600 
-                                           rounded-3xl flex items-center justify-center shadow-xl group-hover:scale-110 
-                                           transition-all duration-500">
-                                    <!-- Analysis/Compare icon -->
-                                    <svg class="w-10 h-10 text-white transform group-hover:rotate-12 transition-transform duration-500" 
-                                         fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                              d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                                    </svg>
-                                </div>
-                                
-                                <!-- Step number badge -->
-                                <div class="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-br from-yellow-400 to-orange-500 
-                                           rounded-full flex items-center justify-center shadow-lg">
-                                    <span class="text-sm font-bold text-white">2</span>
-                                </div>
-                            </div>
-
-                            <!-- Content -->
-                            <div class="text-center">
-                                <h3 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4 group-hover:text-purple-600 
-                                          transition-colors duration-300">
-                                    Intelligente Analyse
-                                </h3>
-                                <p class="text-gray-600 leading-relaxed text-base md:text-lg">
-                                    Ons geavanceerde algoritme vergelijkt jouw antwoorden met de 
-                                    <span class="font-semibold text-purple-600">officiële standpunten</span> van alle 
-                                    <span class="font-semibold">14 Nederlandse politieke partijen</span> uit hun 
-                                    verkiezingsprogramma's en recente uitspraken.
-                                </p>
-                                
-                                <!-- Feature highlights -->
-                                <div class="mt-6 flex flex-wrap gap-2 justify-center">
-                                    <span class="px-3 py-1 bg-purple-50 text-purple-700 rounded-full text-xs font-medium">
-                                        14 partijen
-                                    </span>
-                                    <span class="px-3 py-1 bg-purple-50 text-purple-700 rounded-full text-xs font-medium">
-                                        Realtime
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Step 3 - Enhanced Interactive Card -->
-                    <div class="group relative">
-                        <!-- Animated background glow -->
-                        <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/20 to-teal-600/20 rounded-3xl 
-                                   opacity-0 group-hover:opacity-100 transition-all duration-500 blur-xl"></div>
-                        
-                        <!-- Main card -->
-                        <div class="relative bg-white/80 backdrop-blur-xl border border-white/30 rounded-3xl p-8 md:p-10 
-                                   shadow-2xl shadow-emerald-500/10 transform transition-all duration-500 
-                                   group-hover:-translate-y-2 group-hover:shadow-3xl group-hover:shadow-emerald-500/20">
-                            
-                            <!-- Icon container -->
-                            <div class="relative mb-8">
-                                <!-- Outer glow ring -->
-                                <div class="absolute inset-0 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-3xl 
-                                           opacity-20 group-hover:opacity-40 transition-all duration-500 scale-110"></div>
-                                
-                                <!-- Main icon container -->
-                                <div class="relative w-20 h-20 mx-auto bg-gradient-to-br from-emerald-500 to-teal-600 
-                                           rounded-3xl flex items-center justify-center shadow-xl group-hover:scale-110 
-                                           transition-all duration-500">
-                                    <!-- Results/Analytics icon -->
-                                    <svg class="w-10 h-10 text-white transform group-hover:rotate-12 transition-transform duration-500" 
-                                         fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                              d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
-                                    </svg>
-                                </div>
-                                
-                                <!-- Step number badge -->
-                                <div class="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-br from-yellow-400 to-orange-500 
-                                           rounded-full flex items-center justify-center shadow-lg">
-                                    <span class="text-sm font-bold text-white">3</span>
-                                </div>
-                            </div>
-
-                            <!-- Content -->
-                            <div class="text-center">
-                                <h3 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4 group-hover:text-emerald-600 
-                                          transition-colors duration-300">
-                                    Persoonlijke Resultaten
-                                </h3>
-                                <p class="text-gray-600 leading-relaxed text-base md:text-lg">
-                                    Ontvang direct een <span class="font-semibold text-emerald-600">uitgebreid overzicht</span> 
-                                    van je politieke profiel, persoonlijkheidsanalyse en zie precies welke partijen 
-                                    het beste aansluiten bij jouw <span class="font-semibold">unieke standpunten</span>.
-                                </p>
-                                
-                                <!-- Feature highlights -->
-                                <div class="mt-6 flex flex-wrap gap-2 justify-center">
-                                    <span class="px-3 py-1 bg-emerald-50 text-emerald-700 rounded-full text-xs font-medium">
-                                        Direct resultaat
-                                    </span>
-                                    <span class="px-3 py-1 bg-emerald-50 text-emerald-700 rounded-full text-xs font-medium">
-                                        Deelbaar
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Bottom call-to-action with enhanced design -->
-                <div class="text-center mt-16">
-                    <div class="inline-flex items-center space-x-3 px-8 py-4 bg-gradient-to-r from-primary/10 to-secondary/10 
-                               rounded-2xl border border-primary/20 backdrop-blur-sm">
-                        <div class="w-3 h-3 bg-primary rounded-full animate-pulse"></div>
-                        <span class="text-gray-700 font-medium">Klaar om je politieke match te ontdekken?</span>
-                        <div class="w-3 h-3 bg-secondary rounded-full animate-pulse animation-delay-500"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Political Themes Preview - Completely Redesigned -->
-            <div class="max-w-7xl mx-auto">
-                <!-- Enhanced Section Header -->
-                <div class="relative text-center mb-16">
-                    <!-- Background decorative elements -->
-                    <div class="absolute inset-0 flex items-center justify-center opacity-5">
-                        <svg class="w-96 h-96 text-secondary" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                        </svg>
-                    </div>
-
-                    <!-- Badge -->
-                    <div class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-secondary/10 via-primary/10 to-secondary/10 
-                               rounded-full border border-secondary/20 mb-8 backdrop-blur-sm">
-                        <div class="w-3 h-3 bg-secondary rounded-full mr-3 animate-pulse"></div>
-                        <span class="text-secondary font-semibold text-sm tracking-wide uppercase">Alle Belangrijke Onderwerpen</span>
-                    </div>
-
-                    <!-- Main heading -->
-                    <h2 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-gray-800 mb-6 leading-tight tracking-tight">
-                        <span class="block mb-2">30 Actuele</span>
-                        <span class="bg-gradient-to-r from-secondary via-primary to-secondary-light bg-clip-text text-transparent">
-                            Politieke Thema's
-                        </span>
-                    </h2>
-                    
-                    <!-- Enhanced subtitle -->
-                    <p class="text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed font-light">
-                        Vergelijk <span class="font-semibold text-secondary">partijstandpunten</span> op alle belangrijke onderwerpen 
-                        van <span class="font-semibold text-primary">verkiezingen 2025</span>
-                    </p>
-
-                    <!-- Decorative line -->
-                    <div class="flex items-center justify-center mt-8 space-x-4">
-                        <div class="w-16 h-0.5 bg-gradient-to-r from-transparent to-secondary"></div>
-                        <div class="w-3 h-3 bg-secondary rounded-full animate-pulse"></div>
-                        <div class="w-24 h-0.5 bg-gradient-to-r from-secondary via-primary to-secondary"></div>
-                        <div class="w-3 h-3 bg-primary rounded-full animate-pulse animation-delay-500"></div>
-                        <div class="w-16 h-0.5 bg-gradient-to-r from-primary to-transparent"></div>
-                    </div>
-                </div>
-
-                <?php 
-                $themeCategories = [
-                    'Sociale & Zorg' => [
-                        'color' => 'from-emerald-500 to-teal-600',
-                        'bgColor' => 'from-emerald-50 to-teal-50',
-                        'textColor' => 'text-emerald-700',
-                        'borderColor' => 'border-emerald-200',
-                        'hoverColor' => 'hover:border-emerald-400',
-                        'icon' => '🏥',
-                        'themes' => ['Gezondheidszorg', 'Sociale Zekerheid', 'Zorg voor Ouderen', 'Kinderopvang', 'Pensioenen']
-                    ],
-                    'Economie & Werk' => [
-                        'color' => 'from-blue-500 to-indigo-600',
-                        'bgColor' => 'from-blue-50 to-indigo-50',
-                        'textColor' => 'text-blue-700',
-                        'borderColor' => 'border-blue-200',
-                        'hoverColor' => 'hover:border-blue-400',
-                        'icon' => '💼',
-                        'themes' => ['Economie & Werk', 'Belastingen', 'Startups & Innovatie', 'Internationale Handel']
-                    ],
-                    'Milieu & Klimaat' => [
-                        'color' => 'from-green-500 to-emerald-600',
-                        'bgColor' => 'from-green-50 to-emerald-50',
-                        'textColor' => 'text-green-700',
-                        'borderColor' => 'border-green-200',
-                        'hoverColor' => 'hover:border-green-400',
-                        'icon' => '🌍',
-                        'themes' => ['Klimaat & Energie', 'Milieu & Natuur', 'Duurzaamheid', 'Landbouw']
-                    ],
-                    'Samenleving & Veiligheid' => [
-                        'color' => 'from-red-500 to-pink-600',
-                        'bgColor' => 'from-red-50 to-pink-50',
-                        'textColor' => 'text-red-700',
-                        'borderColor' => 'border-red-200',
-                        'hoverColor' => 'hover:border-red-400',
-                        'icon' => '🛡️',
-                        'themes' => ['Veiligheid', 'Immigratie & Integratie', 'Justitie', 'Defensie', 'Discriminatie']
-                    ],
-                    'Wonen & Infrastructuur' => [
-                        'color' => 'from-orange-500 to-amber-600',
-                        'bgColor' => 'from-orange-50 to-amber-50',
-                        'textColor' => 'text-orange-700',
-                        'borderColor' => 'border-orange-200',
-                        'hoverColor' => 'hover:border-orange-400',
-                        'icon' => '🏠',
-                        'themes' => ['Wonen', 'Verkeer & Transport', 'Infrastructuur', 'Lokaal Bestuur']
-                    ],
-                    'Digitaal & Maatschappij' => [
-                        'color' => 'from-purple-500 to-violet-600',
-                        'bgColor' => 'from-purple-50 to-violet-50',
-                        'textColor' => 'text-purple-700',
-                        'borderColor' => 'border-purple-200',
-                        'hoverColor' => 'hover:border-purple-400',
-                        'icon' => '📱',
-                        'themes' => ['Digitalisering', 'Privacy & Data', 'Media', 'Onderwijs', 'Cultuur', 'Sport & Recreatie', 'Europa & EU', 'Mensenrechten']
-                    ]
-                ];
-                ?>
-
-                <!-- Theme Categories Grid -->
-                <div class="space-y-12">
-                    <?php foreach ($themeCategories as $categoryName => $categoryData): ?>
-                    <div class="group">
-                        <!-- Category Header -->
-                        <div class="flex items-center justify-center mb-8">
-                            <div class="inline-flex items-center px-6 py-3 bg-gradient-to-r <?= $categoryData['bgColor'] ?> 
-                                       rounded-2xl border <?= $categoryData['borderColor'] ?> shadow-sm">
-                                <span class="text-2xl mr-3"><?= $categoryData['icon'] ?></span>
-                                <span class="font-bold <?= $categoryData['textColor'] ?> text-lg"><?= $categoryName ?></span>
-                                <div class="ml-3 px-2 py-1 bg-white/60 rounded-full">
-                                    <span class="text-xs font-medium <?= $categoryData['textColor'] ?>"><?= count($categoryData['themes']) ?></span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Theme Cards Grid -->
-                        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                            <?php foreach ($categoryData['themes'] as $theme): ?>
-                            <div class="group/card relative">
-                                <!-- Hover glow effect -->
-                                <div class="absolute inset-0 bg-gradient-to-br <?= $categoryData['color'] ?> rounded-2xl 
-                                           opacity-0 group-hover/card:opacity-20 transition-all duration-500 blur-lg"></div>
-                                
-                                <!-- Main card -->
-                                <div class="relative bg-white/90 backdrop-blur-sm border <?= $categoryData['borderColor'] ?> 
-                                           rounded-2xl p-4 text-center shadow-lg <?= $categoryData['hoverColor'] ?> 
-                                           hover:shadow-xl transform transition-all duration-300 
-                                           group-hover/card:-translate-y-1 group-hover/card:scale-105">
-                                    
-                                    <!-- Theme icon (first letter styled) -->
-                                    <div class="w-12 h-12 mx-auto mb-3 bg-gradient-to-br <?= $categoryData['color'] ?> 
-                                               rounded-xl flex items-center justify-center shadow-lg">
-                                        <span class="text-white font-bold text-lg"><?= substr($theme, 0, 1) ?></span>
-                                    </div>
-
-                                    <!-- Theme name -->
-                                    <span class="text-sm font-semibold text-gray-700 group-hover/card:<?= $categoryData['textColor'] ?> 
-                                                transition-colors duration-300 leading-tight block">
-                                        <?= $theme ?>
-                                    </span>
-
-                                    <!-- Hover indicator -->
-                                    <div class="absolute top-2 right-2 w-2 h-2 bg-gradient-to-br <?= $categoryData['color'] ?> 
-                                               rounded-full opacity-0 group-hover/card:opacity-100 transition-opacity duration-300"></div>
-                                </div>
-                            </div>
-                            <?php endforeach; ?>
-                        </div>
-                    </div>
-                    <?php endforeach; ?>
-                </div>
-
-                <!-- Enhanced Bottom Section -->
-                <div class="mt-16 text-center">
-                    <!-- Stats Row -->
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto mb-8">
-                        <div class="bg-gradient-to-br from-primary/10 to-secondary/10 rounded-2xl p-6 border border-primary/20">
-                            <div class="text-3xl font-black text-primary mb-2">30</div>
-                            <div class="text-sm font-medium text-gray-600">Actuele Thema's</div>
-                        </div>
-                        <div class="bg-gradient-to-br from-secondary/10 to-primary/10 rounded-2xl p-6 border border-secondary/20">
-                            <div class="text-3xl font-black text-secondary mb-2">14</div>
-                            <div class="text-sm font-medium text-gray-600">Politieke Partijen</div>
-                        </div>
-                        <div class="bg-gradient-to-br from-primary/10 to-secondary/10 rounded-2xl p-6 border border-primary/20">
-                            <div class="text-3xl font-black text-primary mb-2">2025</div>
-                            <div class="text-sm font-medium text-gray-600">Verkiezingen</div>
-                        </div>
-                    </div>
-
-                    <!-- Data source info -->
-                    <div class="inline-flex items-center space-x-3 px-8 py-4 bg-gradient-to-r from-gray-50 to-gray-100 
-                               rounded-2xl border border-gray-200 shadow-sm">
-                        <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                        <span class="text-gray-600 font-medium">
-                            Alle thema's zijn gebaseerd op de <span class="font-semibold">verkiezingsprogramma's 2025</span> 
-                            en <span class="font-semibold">recente partijstandpunten</span>
-                        </span>
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
 
