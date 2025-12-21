@@ -268,112 +268,79 @@ require_once 'views/templates/header.php'; ?>
                     </div>
                     
                     <?php elseif (!empty($blog->audio_path) || !empty($blog->audio_url)): ?>
-                    <!-- Enhanced Fallback Audio Section -->
-                    <div class="relative overflow-hidden">
-                        <!-- Audio Header -->
-                        <div class="bg-gradient-to-r from-primary-dark via-primary to-secondary p-6">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center gap-4">
-                                    <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm shadow-lg">
-                                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>
-                                        </svg>
-                                    </div>
-                                    <div>
-                                        <h3 class="text-xl font-bold text-white mb-1">🎵 AI Audio Versie</h3>
-                                        <p class="text-white/90 text-sm">Luister naar de AI-gegenereerde podcast versie</p>
-                                    </div>
-                                </div>
-                                <div class="hidden sm:flex items-center gap-2">
-                                    <span class="inline-flex items-center px-4 py-2 rounded-full bg-white/20 text-white text-sm font-medium backdrop-blur-sm border border-white/30">
-                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>
-                                        </svg>
-                                        AI AUDIO
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Enhanced Audio Player -->
-                        <div class="bg-gradient-to-b from-gray-50 to-white p-6">
-                            <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
-                                <?php if (!empty($blog->audio_url)): ?>
-                                    <?php
-                                    // Extracteer file ID uit Google Drive URL
-                                    $fileId = '';
-                                    if (preg_match('/\/file\/d\/([a-zA-Z0-9_-]+)/', $blog->audio_url, $matches)) {
-                                        $fileId = $matches[1];
-                                    } elseif (preg_match('/[?&]id=([a-zA-Z0-9_-]+)/', $blog->audio_url, $matches)) {
-                                        $fileId = $matches[1];
-                                    }
-                                    ?>
-                                    
-                                    <?php if ($fileId): ?>
-                                        <div class="text-center space-y-4">
-                                            <div class="flex items-center justify-center gap-3">
-                                                <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-                                                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h1m4 0h1m-6-8h12a2 2 0 012 2v8a2 2 0 01-2 2H6a2 2 0 01-2-2V8a2 2 0 012-2z"/>
-                                                    </svg>
-                                                </div>
-                                                <div>
-                                                    <h4 class="text-lg font-semibold text-gray-900">AI Podcast Audio</h4>
-                                                    <p class="text-sm text-gray-600">Klik om de AI-gegenereerde podcast af te spelen</p>
-                                                </div>
-                                            </div>
-                                            
-                                            <button onclick="loadGoogleDrivePodcast('<?php echo $fileId; ?>')" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
-                                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h1m4 0h1m-6-8h12a2 2 0 012 2v8a2 2 0 01-2 2H6a2 2 0 01-2-2V8a2 2 0 012-2z"/>
-                                                </svg>
-                                                AI Podcast Afspelen
-                                            </button>
-                                            
-                                            <audio id="googleDrivePodcast" controls class="w-full mt-4 rounded-lg shadow-md" preload="none" style="display: none;">
-                                                <source src="https://docs.google.com/uc?export=download&id=<?php echo $fileId; ?>" type="audio/mpeg">
-                                            </audio>
-                                        </div>
-                                    <?php endif; ?>
-                                    
-                                <?php elseif (!empty($blog->audio_path)): ?>
-                                    <div class="space-y-4">
-                                        <div class="flex items-center gap-3 mb-4">
-                                            <div class="w-12 h-12 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full flex items-center justify-center">
+                    <!-- Podcast Audio Section -->
+                    <div class="relative overflow-hidden border-t border-gray-100">
+                        <!-- Audio Player Container -->
+                        <div class="bg-gradient-to-br from-primary-dark/5 via-white to-secondary/5 p-6 sm:p-8">
+                            <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+                                <!-- Header -->
+                                <div class="bg-gradient-to-r from-primary-dark via-primary to-primary-light p-5">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center gap-4">
+                                            <div class="w-12 h-12 bg-white/15 rounded-xl flex items-center justify-center backdrop-blur-sm">
                                                 <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/>
                                                 </svg>
                                             </div>
                                             <div>
-                                                <h4 class="text-lg font-semibold text-gray-900">AI Audio Podcast</h4>
-                                                <p class="text-sm text-gray-600">Luister naar de AI-gegenereerde podcast versie</p>
+                                                <h3 class="text-lg font-semibold text-white">Podcast versie</h3>
+                                                <p class="text-white/75 text-sm">Luister naar dit artikel</p>
                                             </div>
                                         </div>
+                                        <!-- Info tooltip -->
+                                        <div class="relative group">
+                                            <button type="button" class="w-8 h-8 bg-white/15 hover:bg-white/25 rounded-full flex items-center justify-center transition-colors" aria-label="Meer informatie">
+                                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                                </svg>
+                                            </button>
+                                            <div class="absolute right-0 top-full mt-2 w-64 p-3 bg-gray-900 text-white text-xs rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                                                <p>Deze podcast is automatisch gegenereerd op basis van de blogtekst door PolitiekPraat.</p>
+                                                <div class="absolute -top-1 right-3 w-2 h-2 bg-gray-900 transform rotate-45"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Audio Player -->
+                                <div class="p-5">
+                                    <?php if (!empty($blog->audio_url)): ?>
+                                        <?php
+                                        // Extracteer file ID uit Google Drive URL
+                                        $fileId = '';
+                                        if (preg_match('/\/file\/d\/([a-zA-Z0-9_-]+)/', $blog->audio_url, $matches)) {
+                                            $fileId = $matches[1];
+                                        } elseif (preg_match('/[?&]id=([a-zA-Z0-9_-]+)/', $blog->audio_url, $matches)) {
+                                            $fileId = $matches[1];
+                                        }
+                                        ?>
                                         
+                                        <?php if ($fileId): ?>
+                                            <div class="space-y-4">
+                                                <div id="googleDrivePodcastLoader" class="text-center">
+                                                    <button onclick="loadGoogleDrivePodcast('<?php echo $fileId; ?>')" class="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-primary to-primary-light text-white rounded-xl hover:from-primary-dark hover:to-primary transition-all duration-300 shadow-md hover:shadow-lg">
+                                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                                            <path d="M8 5v14l11-7z"/>
+                                                        </svg>
+                                                        <span class="font-medium">Podcast afspelen</span>
+                                                    </button>
+                                                </div>
+                                                
+                                                <audio id="googleDrivePodcast" controls class="w-full rounded-lg" preload="none" style="display: none;">
+                                                    <source src="https://docs.google.com/uc?export=download&id=<?php echo $fileId; ?>" type="audio/mpeg">
+                                                </audio>
+                                            </div>
+                                        <?php endif; ?>
+                                        
+                                    <?php elseif (!empty($blog->audio_path)): ?>
                                         <div class="bg-gray-50 rounded-xl p-4">
                                             <audio controls class="w-full rounded-lg" preload="metadata">
                                                 <source src="<?php echo URLROOT . '/' . $blog->audio_path; ?>" type="audio/mpeg">
                                                 Je browser ondersteunt geen audio weergave.
                                             </audio>
                                         </div>
-                                        
-                                        <!-- Audio Controls -->
-                                        <div class="flex items-center justify-center gap-3 pt-4">
-                                            <button onclick="changePlaybackSpeed()" class="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors">
-                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                                                </svg>
-                                                <span class="text-sm font-medium">Snelheid</span>
-                                            </button>
-                                            <button onclick="downloadAudio()" class="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-green-500 to-teal-600 text-white rounded-full hover:from-green-600 hover:to-teal-700 transition-all transform hover:scale-105">
-                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                                                </svg>
-                                                <span class="text-sm font-medium">Download</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                <?php endif; ?>
+                                    <?php endif; ?>
+                                </div>
                             </div>
                         </div>
                     </div>
