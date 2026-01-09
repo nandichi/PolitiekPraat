@@ -4017,14 +4017,11 @@ class InstagramStoryGenerator {
         canvas.height = this.height;
         const ctx = canvas.getContext('2d');
         
-        // Draw gradient background
-        this.drawBackground(ctx);
-        
-        // Draw decorative elements
-        this.drawDecorations(ctx);
+        // Draw background (with image if available)
+        await this.drawBackground(ctx);
         
         // Draw content
-        await this.drawContent(ctx);
+        this.drawContent(ctx);
         
         // Draw branding
         this.drawBranding(ctx);
@@ -4032,7 +4029,75 @@ class InstagramStoryGenerator {
         return canvas;
     }
     
-    drawBackground(ctx) {
+    async drawBackground(ctx) {
+        // Try to load and draw the blog image first
+        if (this.imageUrl) {
+            try {
+                const img = await this.loadImage(this.imageUrl);
+                
+                // Calculate cover dimensions (fill entire canvas)
+                const imgRatio = img.width / img.height;
+                const canvasRatio = this.width / this.height;
+                
+                let drawWidth, drawHeight, drawX, drawY;
+                
+                if (imgRatio > canvasRatio) {
+                    // Image is wider - fit height, crop width
+                    drawHeight = this.height;
+                    drawWidth = img.width * (this.height / img.height);
+                    drawX = (this.width - drawWidth) / 2;
+                    drawY = 0;
+                } else {
+                    // Image is taller - fit width, crop height
+                    drawWidth = this.width;
+                    drawHeight = img.height * (this.width / img.width);
+                    drawX = 0;
+                    drawY = (this.height - drawHeight) / 2;
+                }
+                
+                // Draw the image
+                ctx.drawImage(img, drawX, drawY, drawWidth, drawHeight);
+                
+                // Add dark overlay gradient for text readability
+                const overlay = ctx.createLinearGradient(0, 0, 0, this.height);
+                overlay.addColorStop(0, 'rgba(15, 42, 68, 0.85)');
+                overlay.addColorStop(0.3, 'rgba(15, 42, 68, 0.7)');
+                overlay.addColorStop(0.5, 'rgba(15, 42, 68, 0.6)');
+                overlay.addColorStop(0.7, 'rgba(15, 42, 68, 0.7)');
+                overlay.addColorStop(1, 'rgba(15, 42, 68, 0.9)');
+                ctx.fillStyle = overlay;
+                ctx.fillRect(0, 0, this.width, this.height);
+                
+                // Add colored accent overlay
+                const accentOverlay = ctx.createLinearGradient(0, this.height * 0.6, 0, this.height);
+                accentOverlay.addColorStop(0, 'transparent');
+                accentOverlay.addColorStop(1, 'rgba(196, 30, 58, 0.3)');
+                ctx.fillStyle = accentOverlay;
+                ctx.fillRect(0, 0, this.width, this.height);
+                
+            } catch (e) {
+                console.log('Could not load blog image, using gradient background');
+                this.drawGradientBackground(ctx);
+            }
+        } else {
+            this.drawGradientBackground(ctx);
+        }
+        
+        // Add subtle decorative elements
+        this.drawDecorations(ctx);
+    }
+    
+    loadImage(url) {
+        return new Promise((resolve, reject) => {
+            const img = new Image();
+            img.crossOrigin = 'anonymous';
+            img.onload = () => resolve(img);
+            img.onerror = () => reject(new Error('Failed to load image'));
+            img.src = url;
+        });
+    }
+    
+    drawGradientBackground(ctx) {
         // Create diagonal gradient
         const gradient = ctx.createLinearGradient(0, 0, this.width, this.height);
         gradient.addColorStop(0, this.colors.primaryDark);
@@ -4042,189 +4107,180 @@ class InstagramStoryGenerator {
         
         ctx.fillStyle = gradient;
         ctx.fillRect(0, 0, this.width, this.height);
-        
-        // Add subtle noise texture overlay
-        this.drawNoiseOverlay(ctx);
-    }
-    
-    drawNoiseOverlay(ctx) {
-        // Create subtle pattern overlay for depth
-        ctx.globalAlpha = 0.03;
-        for (let i = 0; i < 5000; i++) {
-            const x = Math.random() * this.width;
-            const y = Math.random() * this.height;
-            ctx.fillStyle = Math.random() > 0.5 ? '#ffffff' : '#000000';
-            ctx.fillRect(x, y, 2, 2);
-        }
-        ctx.globalAlpha = 1;
     }
     
     drawDecorations(ctx) {
         // Top ambient glow
         const topGlow = ctx.createRadialGradient(
-            this.width * 0.3, 200, 0,
-            this.width * 0.3, 200, 400
+            this.width * 0.3, 150, 0,
+            this.width * 0.3, 150, 350
         );
-        topGlow.addColorStop(0, 'rgba(196, 30, 58, 0.25)');
+        topGlow.addColorStop(0, 'rgba(196, 30, 58, 0.2)');
         topGlow.addColorStop(1, 'transparent');
         ctx.fillStyle = topGlow;
-        ctx.fillRect(0, 0, this.width, 600);
+        ctx.fillRect(0, 0, this.width, 500);
         
         // Bottom ambient glow
         const bottomGlow = ctx.createRadialGradient(
-            this.width * 0.7, this.height - 300, 0,
-            this.width * 0.7, this.height - 300, 500
+            this.width * 0.7, this.height - 200, 0,
+            this.width * 0.7, this.height - 200, 400
         );
-        bottomGlow.addColorStop(0, 'rgba(26, 54, 93, 0.3)');
+        bottomGlow.addColorStop(0, 'rgba(26, 54, 93, 0.25)');
         bottomGlow.addColorStop(1, 'transparent');
         ctx.fillStyle = bottomGlow;
-        ctx.fillRect(0, this.height - 800, this.width, 800);
+        ctx.fillRect(0, this.height - 600, this.width, 600);
         
-        // Decorative circles
-        ctx.globalAlpha = 0.08;
+        // Decorative circles (subtle)
+        ctx.globalAlpha = 0.06;
         ctx.strokeStyle = '#ffffff';
         ctx.lineWidth = 2;
         
-        // Large circle top right
         ctx.beginPath();
-        ctx.arc(this.width - 100, 150, 180, 0, Math.PI * 2);
+        ctx.arc(this.width - 80, 120, 150, 0, Math.PI * 2);
         ctx.stroke();
         
-        // Medium circle bottom left
         ctx.beginPath();
-        ctx.arc(100, this.height - 400, 120, 0, Math.PI * 2);
-        ctx.stroke();
-        
-        ctx.globalAlpha = 1;
-        
-        // Geometric accent lines
-        ctx.strokeStyle = this.colors.secondaryLight;
-        ctx.lineWidth = 3;
-        ctx.globalAlpha = 0.4;
-        
-        // Diagonal line top
-        ctx.beginPath();
-        ctx.moveTo(0, 350);
-        ctx.lineTo(200, 250);
-        ctx.stroke();
-        
-        // Diagonal line bottom
-        ctx.beginPath();
-        ctx.moveTo(this.width, this.height - 500);
-        ctx.lineTo(this.width - 250, this.height - 400);
+        ctx.arc(80, this.height - 350, 100, 0, Math.PI * 2);
         ctx.stroke();
         
         ctx.globalAlpha = 1;
     }
     
-    async drawContent(ctx) {
+    drawContent(ctx) {
         const centerX = this.width / 2;
+        const padding = 60;
+        const contentWidth = this.width - (padding * 2);
         
-        // Top badge - "POLITIEK ARTIKEL"
-        const badgeY = 280;
+        // ===== TOP SECTION =====
+        // "POLITIEK ARTIKEL" badge
+        const badgeY = 180;
         ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
-        this.roundRect(ctx, centerX - 140, badgeY - 25, 280, 50, 25);
+        this.roundRect(ctx, centerX - 130, badgeY - 22, 260, 44, 22);
         ctx.fill();
         
-        ctx.font = 'bold 24px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+        ctx.font = 'bold 22px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
         ctx.fillStyle = '#ffffff';
         ctx.textAlign = 'center';
-        ctx.fillText('POLITIEK ARTIKEL', centerX, badgeY + 8);
+        ctx.fillText('POLITIEK ARTIKEL', centerX, badgeY + 7);
         
-        // Main title area
-        const titleY = 520;
-        const maxTitleWidth = this.width - 120;
+        // ===== TITLE SECTION =====
+        // Calculate title with proper sizing
+        const titleFontSize = this.calculateTitleFontSize(ctx, this.title, contentWidth);
+        const titleLines = this.wrapText(ctx, this.title, contentWidth - 40, titleFontSize);
+        const lineHeight = titleFontSize * 1.2;
+        const titleBlockHeight = (titleLines.length * lineHeight) + 60;
+        
+        // Position title card in upper-middle area
+        const titleCardY = 280;
         
         // Title background card
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
-        const titleLines = this.wrapText(ctx, this.title, maxTitleWidth, 64);
-        const titleBlockHeight = titleLines.length * 80 + 80;
-        this.roundRect(ctx, 40, titleY - 60, this.width - 80, titleBlockHeight, 30);
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.12)';
+        this.roundRect(ctx, padding, titleCardY, contentWidth, titleBlockHeight, 24);
         ctx.fill();
         
         // Border accent
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
         ctx.lineWidth = 2;
-        this.roundRect(ctx, 40, titleY - 60, this.width - 80, titleBlockHeight, 30);
+        this.roundRect(ctx, padding, titleCardY, contentWidth, titleBlockHeight, 24);
         ctx.stroke();
         
         // Draw title text
-        ctx.font = 'bold 64px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+        ctx.font = `bold ${titleFontSize}px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`;
         ctx.fillStyle = '#ffffff';
         ctx.textAlign = 'center';
         
+        const titleStartY = titleCardY + 30 + titleFontSize;
         titleLines.forEach((line, index) => {
-            ctx.fillText(line, centerX, titleY + (index * 80));
+            ctx.fillText(line, centerX, titleStartY + (index * lineHeight));
         });
         
-        // Author and meta info
-        const metaY = titleY + titleBlockHeight + 60;
+        // ===== META INFO SECTION =====
+        const metaY = titleCardY + titleBlockHeight + 50;
         
-        // Author line
-        ctx.font = '600 36px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+        // Author
+        ctx.font = '600 32px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
         ctx.fillText(`Door ${this.author}`, centerX, metaY);
         
         // Date and reading time
-        ctx.font = '400 30px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+        ctx.font = '400 26px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
         ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
-        ctx.fillText(`${this.date}  |  ${this.readingTime} leestijd`, centerX, metaY + 50);
+        ctx.fillText(`${this.date}  |  ${this.readingTime} leestijd`, centerX, metaY + 45);
         
-        // Decorative separator
-        const sepY = metaY + 120;
+        // Decorative separator with diamond
+        const sepY = metaY + 100;
         ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
         ctx.lineWidth = 2;
         ctx.beginPath();
-        ctx.moveTo(centerX - 100, sepY);
-        ctx.lineTo(centerX + 100, sepY);
+        ctx.moveTo(centerX - 80, sepY);
+        ctx.lineTo(centerX + 80, sepY);
         ctx.stroke();
         
-        // Diamond accent in separator
+        // Diamond accent
         ctx.fillStyle = this.colors.secondaryLight;
         ctx.save();
         ctx.translate(centerX, sepY);
         ctx.rotate(Math.PI / 4);
-        ctx.fillRect(-8, -8, 16, 16);
+        ctx.fillRect(-7, -7, 14, 14);
         ctx.restore();
+    }
+    
+    calculateTitleFontSize(ctx, text, maxWidth) {
+        // Start with ideal size and reduce if needed
+        const sizes = [56, 52, 48, 44, 40, 36];
+        
+        for (const size of sizes) {
+            ctx.font = `bold ${size}px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`;
+            const lines = this.wrapText(ctx, text, maxWidth - 40, size);
+            
+            // Max 4 lines with reasonable total height
+            if (lines.length <= 4) {
+                return size;
+            }
+        }
+        
+        return 36; // Minimum size
     }
     
     drawBranding(ctx) {
         const centerX = this.width / 2;
-        const brandingY = this.height - 350;
+        const brandingY = this.height - 320;
+        const padding = 60;
+        const contentWidth = this.width - (padding * 2);
         
-        // CTA background
+        // CTA background card
         ctx.fillStyle = 'rgba(255, 255, 255, 0.12)';
-        this.roundRect(ctx, 80, brandingY - 40, this.width - 160, 200, 25);
+        this.roundRect(ctx, padding + 20, brandingY - 30, contentWidth - 40, 170, 20);
         ctx.fill();
         
-        // "Lees meer op" text
-        ctx.font = '400 32px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+        // "Lees het volledige artikel op" text
+        ctx.font = '400 28px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
         ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
         ctx.textAlign = 'center';
         ctx.fillText('Lees het volledige artikel op', centerX, brandingY + 20);
         
-        // PolitiekPraat.nl
-        ctx.font = 'bold 52px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+        // PolitiekPraat.nl - prominent
+        ctx.font = 'bold 48px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
         ctx.fillStyle = '#ffffff';
-        ctx.fillText('POLITIEKPRAAT.NL', centerX, brandingY + 90);
+        ctx.fillText('POLITIEKPRAAT.NL', centerX, brandingY + 85);
         
         // Swipe up indicator
-        const arrowY = this.height - 100;
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.6)';
+        const arrowY = this.height - 90;
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
         ctx.lineWidth = 3;
         ctx.lineCap = 'round';
         
         // Arrow up
         ctx.beginPath();
-        ctx.moveTo(centerX - 20, arrowY + 10);
-        ctx.lineTo(centerX, arrowY - 10);
-        ctx.lineTo(centerX + 20, arrowY + 10);
+        ctx.moveTo(centerX - 18, arrowY + 8);
+        ctx.lineTo(centerX, arrowY - 8);
+        ctx.lineTo(centerX + 18, arrowY + 8);
         ctx.stroke();
         
         // "Veeg omhoog" text
-        ctx.font = '400 24px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
-        ctx.fillText('Veeg omhoog voor meer', centerX, arrowY + 50);
+        ctx.font = '400 22px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.45)';
+        ctx.fillText('Veeg omhoog voor meer', centerX, arrowY + 45);
     }
     
     wrapText(ctx, text, maxWidth, fontSize) {
@@ -4252,7 +4308,12 @@ class InstagramStoryGenerator {
         // Limit to 4 lines max, truncate if needed
         if (lines.length > 4) {
             lines.length = 4;
-            lines[3] = lines[3].substring(0, lines[3].length - 3) + '...';
+            const lastLine = lines[3];
+            // Truncate last line properly
+            while (ctx.measureText(lastLine + '...').width > maxWidth && lastLine.length > 0) {
+                lines[3] = lastLine.substring(0, lastLine.length - 1);
+            }
+            lines[3] = lines[3].trim() + '...';
         }
         
         return lines;
@@ -4312,7 +4373,8 @@ async function shareToInstagramStory() {
             author: <?php echo json_encode($blog->author_name); ?>,
             date: <?php echo json_encode((new IntlDateFormatter('nl_NL', IntlDateFormatter::LONG, IntlDateFormatter::NONE))->format(strtotime($blog->published_at))); ?>,
             readingTime: document.getElementById('reading-minutes')?.textContent + ' min' || '5 min',
-            blogUrl: window.location.href
+            blogUrl: window.location.href,
+            imageUrl: <?php echo json_encode($blog->image_path ? getBlogImageUrl($blog->image_path) : null); ?>
         };
         
         // Generate the story image
@@ -4365,7 +4427,8 @@ async function previewInstagramStory() {
         author: <?php echo json_encode($blog->author_name); ?>,
         date: <?php echo json_encode((new IntlDateFormatter('nl_NL', IntlDateFormatter::LONG, IntlDateFormatter::NONE))->format(strtotime($blog->published_at))); ?>,
         readingTime: document.getElementById('reading-minutes')?.textContent + ' min' || '5 min',
-        blogUrl: window.location.href
+        blogUrl: window.location.href,
+        imageUrl: <?php echo json_encode($blog->image_path ? getBlogImageUrl($blog->image_path) : null); ?>
     };
     
     const generator = new InstagramStoryGenerator(blogData);
