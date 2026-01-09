@@ -857,6 +857,29 @@ require_once 'views/templates/header.php'; ?>
                             </div>
                         </button>
                         
+                        <!-- Instagram Story Enhanced -->
+                        <button id="instagramStoryBtn" 
+                                onclick="shareToInstagramStory()"
+                                class="group relative flex items-center gap-3 px-6 py-4 bg-gradient-to-r from-pink-500 via-purple-600 to-orange-500 text-white rounded-2xl hover:from-pink-600 hover:via-purple-700 hover:to-orange-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl overflow-hidden">
+                            <!-- Animated Background Effect -->
+                            <div class="absolute inset-0 bg-gradient-to-r from-pink-400 via-purple-500 to-orange-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            
+                            <!-- Shimmer Effect -->
+                            <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                            
+                            <!-- Content -->
+                            <div class="relative flex items-center gap-3">
+                                <!-- Instagram Icon -->
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                                </svg>
+                                <div class="hidden sm:block">
+                                    <div class="font-semibold text-sm">Story</div>
+                                    <div class="text-xs text-pink-100">Instagram</div>
+                                </div>
+                            </div>
+                        </button>
+                        
                     </div>
                 </div>
             </div>
@@ -3960,6 +3983,423 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeCommentLikes();
     initializeLoadMoreComments();
 });
+
+// ============================================
+// Instagram Story Generator Class
+// ============================================
+class InstagramStoryGenerator {
+    constructor(options) {
+        this.title = options.title || 'Blog';
+        this.author = options.author || 'PolitiekPraat';
+        this.date = options.date || '';
+        this.readingTime = options.readingTime || '5 min';
+        this.blogUrl = options.blogUrl || window.location.href;
+        this.imageUrl = options.imageUrl || null;
+        
+        // Instagram Story dimensions (9:16 aspect ratio)
+        this.width = 1080;
+        this.height = 1920;
+        
+        // PolitiekPraat colors
+        this.colors = {
+            primaryDark: '#0f2a44',
+            primary: '#1a365d',
+            primaryLight: '#2d4a6b',
+            secondary: '#c41e3a',
+            secondaryLight: '#d63856',
+            accent: '#F59E0B'
+        };
+    }
+    
+    async generateStory() {
+        const canvas = document.createElement('canvas');
+        canvas.width = this.width;
+        canvas.height = this.height;
+        const ctx = canvas.getContext('2d');
+        
+        // Draw gradient background
+        this.drawBackground(ctx);
+        
+        // Draw decorative elements
+        this.drawDecorations(ctx);
+        
+        // Draw content
+        await this.drawContent(ctx);
+        
+        // Draw branding
+        this.drawBranding(ctx);
+        
+        return canvas;
+    }
+    
+    drawBackground(ctx) {
+        // Create diagonal gradient
+        const gradient = ctx.createLinearGradient(0, 0, this.width, this.height);
+        gradient.addColorStop(0, this.colors.primaryDark);
+        gradient.addColorStop(0.4, this.colors.primary);
+        gradient.addColorStop(0.7, this.colors.primaryLight);
+        gradient.addColorStop(1, this.colors.secondary);
+        
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, this.width, this.height);
+        
+        // Add subtle noise texture overlay
+        this.drawNoiseOverlay(ctx);
+    }
+    
+    drawNoiseOverlay(ctx) {
+        // Create subtle pattern overlay for depth
+        ctx.globalAlpha = 0.03;
+        for (let i = 0; i < 5000; i++) {
+            const x = Math.random() * this.width;
+            const y = Math.random() * this.height;
+            ctx.fillStyle = Math.random() > 0.5 ? '#ffffff' : '#000000';
+            ctx.fillRect(x, y, 2, 2);
+        }
+        ctx.globalAlpha = 1;
+    }
+    
+    drawDecorations(ctx) {
+        // Top ambient glow
+        const topGlow = ctx.createRadialGradient(
+            this.width * 0.3, 200, 0,
+            this.width * 0.3, 200, 400
+        );
+        topGlow.addColorStop(0, 'rgba(196, 30, 58, 0.25)');
+        topGlow.addColorStop(1, 'transparent');
+        ctx.fillStyle = topGlow;
+        ctx.fillRect(0, 0, this.width, 600);
+        
+        // Bottom ambient glow
+        const bottomGlow = ctx.createRadialGradient(
+            this.width * 0.7, this.height - 300, 0,
+            this.width * 0.7, this.height - 300, 500
+        );
+        bottomGlow.addColorStop(0, 'rgba(26, 54, 93, 0.3)');
+        bottomGlow.addColorStop(1, 'transparent');
+        ctx.fillStyle = bottomGlow;
+        ctx.fillRect(0, this.height - 800, this.width, 800);
+        
+        // Decorative circles
+        ctx.globalAlpha = 0.08;
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 2;
+        
+        // Large circle top right
+        ctx.beginPath();
+        ctx.arc(this.width - 100, 150, 180, 0, Math.PI * 2);
+        ctx.stroke();
+        
+        // Medium circle bottom left
+        ctx.beginPath();
+        ctx.arc(100, this.height - 400, 120, 0, Math.PI * 2);
+        ctx.stroke();
+        
+        ctx.globalAlpha = 1;
+        
+        // Geometric accent lines
+        ctx.strokeStyle = this.colors.secondaryLight;
+        ctx.lineWidth = 3;
+        ctx.globalAlpha = 0.4;
+        
+        // Diagonal line top
+        ctx.beginPath();
+        ctx.moveTo(0, 350);
+        ctx.lineTo(200, 250);
+        ctx.stroke();
+        
+        // Diagonal line bottom
+        ctx.beginPath();
+        ctx.moveTo(this.width, this.height - 500);
+        ctx.lineTo(this.width - 250, this.height - 400);
+        ctx.stroke();
+        
+        ctx.globalAlpha = 1;
+    }
+    
+    async drawContent(ctx) {
+        const centerX = this.width / 2;
+        
+        // Top badge - "POLITIEK ARTIKEL"
+        const badgeY = 280;
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
+        this.roundRect(ctx, centerX - 140, badgeY - 25, 280, 50, 25);
+        ctx.fill();
+        
+        ctx.font = 'bold 24px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+        ctx.fillStyle = '#ffffff';
+        ctx.textAlign = 'center';
+        ctx.fillText('POLITIEK ARTIKEL', centerX, badgeY + 8);
+        
+        // Main title area
+        const titleY = 520;
+        const maxTitleWidth = this.width - 120;
+        
+        // Title background card
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+        const titleLines = this.wrapText(ctx, this.title, maxTitleWidth, 64);
+        const titleBlockHeight = titleLines.length * 80 + 80;
+        this.roundRect(ctx, 40, titleY - 60, this.width - 80, titleBlockHeight, 30);
+        ctx.fill();
+        
+        // Border accent
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+        ctx.lineWidth = 2;
+        this.roundRect(ctx, 40, titleY - 60, this.width - 80, titleBlockHeight, 30);
+        ctx.stroke();
+        
+        // Draw title text
+        ctx.font = 'bold 64px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+        ctx.fillStyle = '#ffffff';
+        ctx.textAlign = 'center';
+        
+        titleLines.forEach((line, index) => {
+            ctx.fillText(line, centerX, titleY + (index * 80));
+        });
+        
+        // Author and meta info
+        const metaY = titleY + titleBlockHeight + 60;
+        
+        // Author line
+        ctx.font = '600 36px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+        ctx.fillText(`Door ${this.author}`, centerX, metaY);
+        
+        // Date and reading time
+        ctx.font = '400 30px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+        ctx.fillText(`${this.date}  |  ${this.readingTime} leestijd`, centerX, metaY + 50);
+        
+        // Decorative separator
+        const sepY = metaY + 120;
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(centerX - 100, sepY);
+        ctx.lineTo(centerX + 100, sepY);
+        ctx.stroke();
+        
+        // Diamond accent in separator
+        ctx.fillStyle = this.colors.secondaryLight;
+        ctx.save();
+        ctx.translate(centerX, sepY);
+        ctx.rotate(Math.PI / 4);
+        ctx.fillRect(-8, -8, 16, 16);
+        ctx.restore();
+    }
+    
+    drawBranding(ctx) {
+        const centerX = this.width / 2;
+        const brandingY = this.height - 350;
+        
+        // CTA background
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.12)';
+        this.roundRect(ctx, 80, brandingY - 40, this.width - 160, 200, 25);
+        ctx.fill();
+        
+        // "Lees meer op" text
+        ctx.font = '400 32px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+        ctx.textAlign = 'center';
+        ctx.fillText('Lees het volledige artikel op', centerX, brandingY + 20);
+        
+        // PolitiekPraat.nl
+        ctx.font = 'bold 52px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+        ctx.fillStyle = '#ffffff';
+        ctx.fillText('POLITIEKPRAAT.NL', centerX, brandingY + 90);
+        
+        // Swipe up indicator
+        const arrowY = this.height - 100;
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.6)';
+        ctx.lineWidth = 3;
+        ctx.lineCap = 'round';
+        
+        // Arrow up
+        ctx.beginPath();
+        ctx.moveTo(centerX - 20, arrowY + 10);
+        ctx.lineTo(centerX, arrowY - 10);
+        ctx.lineTo(centerX + 20, arrowY + 10);
+        ctx.stroke();
+        
+        // "Veeg omhoog" text
+        ctx.font = '400 24px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+        ctx.fillText('Veeg omhoog voor meer', centerX, arrowY + 50);
+    }
+    
+    wrapText(ctx, text, maxWidth, fontSize) {
+        ctx.font = `bold ${fontSize}px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`;
+        const words = text.split(' ');
+        const lines = [];
+        let currentLine = '';
+        
+        for (const word of words) {
+            const testLine = currentLine ? `${currentLine} ${word}` : word;
+            const metrics = ctx.measureText(testLine);
+            
+            if (metrics.width > maxWidth && currentLine) {
+                lines.push(currentLine);
+                currentLine = word;
+            } else {
+                currentLine = testLine;
+            }
+        }
+        
+        if (currentLine) {
+            lines.push(currentLine);
+        }
+        
+        // Limit to 4 lines max, truncate if needed
+        if (lines.length > 4) {
+            lines.length = 4;
+            lines[3] = lines[3].substring(0, lines[3].length - 3) + '...';
+        }
+        
+        return lines;
+    }
+    
+    roundRect(ctx, x, y, width, height, radius) {
+        ctx.beginPath();
+        ctx.moveTo(x + radius, y);
+        ctx.lineTo(x + width - radius, y);
+        ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+        ctx.lineTo(x + width, y + height - radius);
+        ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+        ctx.lineTo(x + radius, y + height);
+        ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+        ctx.lineTo(x, y + radius);
+        ctx.quadraticCurveTo(x, y, x + radius, y);
+        ctx.closePath();
+    }
+    
+    async toBlob() {
+        const canvas = await this.generateStory();
+        return new Promise((resolve) => {
+            canvas.toBlob(resolve, 'image/png', 1.0);
+        });
+    }
+    
+    async toDataUrl() {
+        const canvas = await this.generateStory();
+        return canvas.toDataURL('image/png');
+    }
+}
+
+// ============================================
+// Instagram Story Share Functions
+// ============================================
+async function shareToInstagramStory() {
+    const shareButton = document.getElementById('instagramStoryBtn');
+    const originalContent = shareButton.innerHTML;
+    
+    // Show loading state
+    shareButton.disabled = true;
+    shareButton.innerHTML = `
+        <div class="absolute inset-0 bg-gradient-to-r from-pink-500 via-purple-500 to-orange-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <div class="relative flex items-center gap-3">
+            <svg class="w-6 h-6 animate-spin" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <span class="hidden sm:block text-sm font-semibold">Genereren...</span>
+        </div>
+    `;
+    
+    try {
+        // Get blog data from PHP
+        const blogData = {
+            title: <?php echo json_encode($blog->title); ?>,
+            author: <?php echo json_encode($blog->author_name); ?>,
+            date: <?php echo json_encode((new IntlDateFormatter('nl_NL', IntlDateFormatter::LONG, IntlDateFormatter::NONE))->format(strtotime($blog->published_at))); ?>,
+            readingTime: document.getElementById('reading-minutes')?.textContent + ' min' || '5 min',
+            blogUrl: window.location.href
+        };
+        
+        // Generate the story image
+        const generator = new InstagramStoryGenerator(blogData);
+        const blob = await generator.toBlob();
+        const file = new File([blob], 'politiekpraat-story.png', { type: 'image/png' });
+        
+        // Check if Web Share API with files is supported (mobile)
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            await navigator.share({
+                files: [file],
+                title: blogData.title,
+                text: `Lees "${blogData.title}" op PolitiekPraat.nl`,
+                url: blogData.blogUrl
+            });
+            showNotification('Story succesvol gedeeld!', 'success');
+        } else {
+            // Fallback: download the image
+            downloadStoryImage(blob, blogData.title);
+        }
+    } catch (error) {
+        if (error.name !== 'AbortError') {
+            console.error('Error sharing story:', error);
+            showNotification('Er ging iets mis bij het genereren van de story', 'error');
+        }
+    } finally {
+        // Restore button state
+        shareButton.disabled = false;
+        shareButton.innerHTML = originalContent;
+    }
+}
+
+function downloadStoryImage(blob, title) {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `politiekpraat-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-').substring(0, 50)}.png`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    
+    showNotification('Story afbeelding gedownload! Upload deze naar je Instagram Story.', 'success');
+}
+
+// Preview function for testing
+async function previewInstagramStory() {
+    const blogData = {
+        title: <?php echo json_encode($blog->title); ?>,
+        author: <?php echo json_encode($blog->author_name); ?>,
+        date: <?php echo json_encode((new IntlDateFormatter('nl_NL', IntlDateFormatter::LONG, IntlDateFormatter::NONE))->format(strtotime($blog->published_at))); ?>,
+        readingTime: document.getElementById('reading-minutes')?.textContent + ' min' || '5 min',
+        blogUrl: window.location.href
+    };
+    
+    const generator = new InstagramStoryGenerator(blogData);
+    const dataUrl = await generator.toDataUrl();
+    
+    // Open preview in new window
+    const previewWindow = window.open('', '_blank');
+    previewWindow.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Story Preview - ${blogData.title}</title>
+            <style>
+                body { 
+                    margin: 0; 
+                    display: flex; 
+                    justify-content: center; 
+                    align-items: center; 
+                    min-height: 100vh; 
+                    background: #1a1a1a;
+                }
+                img { 
+                    max-height: 90vh; 
+                    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+                    border-radius: 20px;
+                }
+            </style>
+        </head>
+        <body>
+            <img src="${dataUrl}" alt="Instagram Story Preview">
+        </body>
+        </html>
+    `);
+}
 
 console.log('Blog view script fully loaded and initialized');
 </script>
