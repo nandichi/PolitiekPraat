@@ -248,7 +248,7 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-    <!-- Google tag (gtag.js) -->
+    <!-- Google tag (gtag.js) - Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XLQMYP3CDD"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -256,6 +256,10 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
       gtag('js', new Date());
       gtag('config', 'G-XLQMYP3CDD');
     </script>
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5550921434025979"
+         crossorigin="anonymous"></script>
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -577,9 +581,6 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
     <!-- Accessibility & Privacy CSS -->
     <link rel="stylesheet" href="<?php echo URLROOT; ?>/public/css/accessibility.css">
     <link rel="stylesheet" href="<?php echo URLROOT; ?>/public/css/coffee-button.css">
-    
-    <!-- Google AdSense -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5550921434025979" crossorigin="anonymous"></script>
     
     <!-- Accessibility Scripts -->
     <script src="<?php echo URLROOT; ?>/public/js/accessibility.js" defer></script>
