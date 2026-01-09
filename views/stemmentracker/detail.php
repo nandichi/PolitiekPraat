@@ -66,15 +66,6 @@ function formatDutchDate($date) {
         <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-secondary/15 rounded-full blur-3xl"></div>
         
         <div class="container mx-auto px-6 relative z-10">
-            <!-- Breadcrumb -->
-            <nav class="flex items-center space-x-2 text-sm text-white/70 mb-8 fade-in-up">
-                <a href="/" class="hover:text-white transition-colors">Home</a>
-                <i class="fas fa-chevron-right text-white/50"></i>
-                <a href="stemmentracker" class="hover:text-white transition-colors">StemmenTracker</a>
-                <i class="fas fa-chevron-right text-white/50"></i>
-                <span class="text-white/90 font-medium">Motie Details</span>
-            </nav>
-
             <div class="max-w-5xl mx-auto">
                 <!-- Header badge -->
                 <div class="flex justify-center mb-8 fade-in-up stagger-1">

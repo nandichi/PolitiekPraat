@@ -886,20 +886,13 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
             animation: shimmer 3s infinite;
         }
 
-        /* Breadcrumb scroll styling */
+        /* Scrollbar hide utility */
         .scrollbar-hide {
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
         .scrollbar-hide::-webkit-scrollbar {
             display: none;
-        }
-
-        /* Breadcrumb responsive improvements */
-        @media (max-width: 768px) {
-            .breadcrumb-mobile {
-                max-width: 60vw;
-            }
         }
 
         /* Enhanced dropdown styling with glassmorphism */
@@ -1623,9 +1616,6 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
             </div>
         </div>
     </nav>
-
-    <!-- Breadcrumb Navigation -->
-    <?php echo renderBreadcrumbs(); ?>
 
     <!-- Mobile Menu - Fixed overlay and animations -->
     <div class="md:hidden fixed inset-0 z-[60] transition-all duration-300 opacity-0 invisible pointer-events-none" 

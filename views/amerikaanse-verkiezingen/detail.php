@@ -13,19 +13,6 @@
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="max-w-6xl mx-auto text-center">
                 
-                <!-- Breadcrumb -->
-                <div class="mb-8">
-                    <div class="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
-                        <a href="<?= URLROOT ?>/amerikaanse-verkiezingen" class="text-white/90 hover:text-white text-sm font-medium transition-colors">
-                            Amerikaanse Verkiezingen
-                        </a>
-                        <svg class="mx-3 w-4 h-4 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
-                        <span class="text-white text-sm font-medium"><?= $verkiezing->jaar ?></span>
-                    </div>
-                </div>
-                
                 <!-- Main Title -->
                 <h1 class="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-12 tracking-tight">
                     Verkiezing van

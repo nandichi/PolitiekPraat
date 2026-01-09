@@ -26,19 +26,6 @@
         <div class="absolute bottom-40 left-1/4 w-2 h-2 bg-orange-400 rounded-full animate-ping opacity-40 hidden md:block" style="animation-delay: 2s;"></div>
         <div class="absolute bottom-60 right-1/3 w-1.5 h-1.5 bg-white rounded-full animate-ping opacity-50 hidden md:block" style="animation-delay: 3s;"></div>
         
-        <!-- Nederlandse Breadcrumb Navigation -->
-        <div class="absolute top-4 left-4 z-20">
-            <nav class="flex items-center space-x-2 text-sm">
-                <a href="<?= URLROOT ?>/nederlandse-verkiezingen" class="text-orange-200 hover:text-white text-sm font-medium transition-colors">
-                    Nederlandse Verkiezingen
-                </a>
-                <svg class="w-4 h-4 text-orange-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                </svg>
-                <span class="text-white/70">Nederlandse Ministers-presidenten</span>
-            </nav>
-        </div>
-        
         <!-- Main Content Container -->
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="max-w-4xl mx-auto text-center">

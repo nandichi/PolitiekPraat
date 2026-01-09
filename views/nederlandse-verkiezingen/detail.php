@@ -13,19 +13,6 @@
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="max-w-6xl mx-auto text-center">
                 
-                <!-- Nederlandse Breadcrumb -->
-                <div class="mb-8">
-                    <div class="inline-flex items-center px-4 py-2 bg-orange-500/20 backdrop-blur-sm rounded-full border border-orange-400/30">
-                        <a href="<?= URLROOT ?>/nederlandse-verkiezingen" class="text-orange-200 hover:text-white text-sm font-medium transition-colors">
-                            Nederlandse Verkiezingen
-                        </a>
-                        <svg class="mx-3 w-4 h-4 text-orange-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
-                        <span class="text-white text-sm font-medium"><?= $verkiezing->jaar ?></span>
-                    </div>
-                </div>
-                
                 <!-- Nederlandse Kroon decoratie -->
                 <div class="mb-6 flex justify-center">
                     <div class="w-16 h-16 bg-gradient-to-br from-orange-400 via-orange-500 to-orange-600 rounded-full flex items-center justify-center shadow-2xl border-4 border-white/20">
