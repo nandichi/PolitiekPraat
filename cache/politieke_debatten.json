@@ -87,15 +87,11 @@ tags.async=!0,tags.src="https://pwk.tweedekamer.nl/"+id+".js"+qPString,scripts.p
               </li>
                 <li class="menu-item">
                 
-        <a href="/over" data-drupal-link-system-path="node/122">Over</a>
-              </li>
-                <li class="menu-item">
-                
         <a href="/veelgestelde-vragen" data-drupal-link-system-path="node/174">Veelgestelde vragen</a>
               </li>
                 <li class="menu-item">
                 
-        <a href="/contact" data-drupal-link-system-path="node/125">Contact</a>
+        <a href="/contact" data-drupal-link-system-path="node/123">Contact</a>
               </li>
         </ul>
   
@@ -116,7 +112,7 @@ tags.async=!0,tags.src="https://pwk.tweedekamer.nl/"+id+".js"+qPString,scripts.p
                 
         <a href="/documentatie/syncfeed-api" data-drupal-link-system-path="node/128">SyncFeed API</a>
               </li>
-                <li class="menu-item">
+                <li class="menu-item menu-item--collapsed">
                 
         <a href="/documentatie/informatiemodel" data-drupal-link-system-path="node/131">Informatiemodel</a>
               </li>
@@ -213,7 +209,7 @@ tags.async=!0,tags.src="https://pwk.tweedekamer.nl/"+id+".js"+qPString,scripts.p
 <ul>
 <li><a href="/search">Zoek</a>&nbsp;op de&nbsp;website</li>
 <li>Ga naar de&nbsp;<a href="/">landingspagina</a></li>
-<li>Neem&nbsp;<a href="/contact">contact</a>&nbsp;op met het supportteam</li>
+<li>Neem&nbsp;<a href="/contact" data-entity-type="node" data-entity-uuid="b20642f9-9b22-499a-92f5-439f8f0f478f" data-entity-substitution="canonical" title="Contact">contact</a>&nbsp;op met het supportteam</li>
 </ul>
 </div>
       
@@ -275,7 +271,7 @@ tags.async=!0,tags.src="https://pwk.tweedekamer.nl/"+id+".js"+qPString,scripts.p
 
     
     <script type="application/json" data-drupal-selector="drupal-settings-json">{"path":{"baseUrl":"\/","pathPrefix":"","currentPath":"","currentPathIsAdmin":false,"isFront":false,"currentLanguage":"nl"},"pluralDelimiter":"\u0003","suppressDeprecationErrors":true,"data":{"extlink":{"extTarget":false,"extTargetAppendNewWindowDisplay":true,"extTargetAppendNewWindowLabel":"(opens in a new window)","extTargetNoOverride":false,"extNofollow":false,"extTitleNoOverride":true,"extNoreferrer":true,"extFollowNoOverride":false,"extClass":"ext","extLabel":"(externe link)","extImgClass":false,"extSubdomains":true,"extExclude":"","extInclude":"","extCssExclude":".breadcrumb","extCssInclude":"","extCssExplicit":"","extAlert":false,"extAlertText":"Deze link leidt naar een externe website. We zijn niet verantwoordelijk voor hun inhoud.","extHideIcons":true,"mailtoClass":"0","telClass":"0","mailtoLabel":"(link stuurt e-mail)","telLabel":"(link is een telefoonnummer)","extUseFontAwesome":false,"extIconPlacement":"append","extPreventOrphan":true,"extFaLinkClasses":"fa fa-external-link","extFaMailtoClasses":"fa fa-envelope-o","extAdditionalLinkClasses":"","extAdditionalMailtoClasses":"","extAdditionalTelClasses":"","extFaTelClasses":"fa fa-phone","allowedDomains":[],"extExcludeNoreferrer":""}},"user":{"uid":0,"permissionsHash":"7ea855d31db0fc9145d5a88553524b81729d85b0f398c96cce55386752e22c6e"}}</script>
-<script src="/sites/default/files/js/js_EAFfphJlaRMDA5eYus97KJCqSFucWP3_eZL602vHRfU.js?scope=footer&amp;delta=0&amp;language=nl&amp;theme=odp&amp;include=eJxLrSjJyczL1k8pKi1IzNFLhXB18lMK9NNz8pMSc3SLSyqBQukAVM4QKg"></script>
+<script src="/sites/default/files/js/js_0TzkJ6YZqais_hfMe5FNcIsob8qVRAj2QJCPKUZL3jY.js?scope=footer&amp;delta=0&amp;language=nl&amp;theme=odp&amp;include=eJxLrSjJyczL1k8pKi1IzNFLhXB18lMK9NNz8pMSc3SLSyqBQukAVM4QKg"></script>
 
   </body>
 </html>

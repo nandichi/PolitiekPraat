@@ -16,7 +16,6 @@ class PollAPI {
         
         $response = curl_exec($ch);
         $data = json_decode($response, true);
-        curl_close($ch);
 
         if (!$data) {
             // Fallback data met recente peilingen
@@ -84,7 +83,6 @@ class PollAPI {
         
         $response = curl_exec($ch);
         $data = json_decode($response, true);
-        curl_close($ch);
 
         if (!$data) {
             // Fallback data met historische trend

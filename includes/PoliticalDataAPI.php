@@ -18,7 +18,6 @@ class PoliticalDataAPI {
         
         $response = curl_exec($ch);
         $data = json_decode($response, true);
-        curl_close($ch);
 
         if (!$data) {
             // Fallback data als de API niet beschikbaar is
@@ -60,7 +59,6 @@ class PoliticalDataAPI {
         
         $response = curl_exec($ch);
         $data = json_decode($response, true);
-        curl_close($ch);
 
         if (!$data) {
             // Fallback data
@@ -93,7 +91,6 @@ class PoliticalDataAPI {
         
         $response = curl_exec($ch);
         $data = json_decode($response, true);
-        curl_close($ch);
 
         if (!$data) {
             // Fallback data met actuele partij informatie
