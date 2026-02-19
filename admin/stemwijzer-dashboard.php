@@ -616,6 +616,21 @@ require_once '../views/templates/header.php';
                         </div>
                     </a>
 
+                    <a href="api-sleutels-beheer.php" 
+                       class="group p-6 bg-gradient-to-br from-gray-50 to-slate-50 border border-gray-200 rounded-xl hover:from-gray-100 hover:to-slate-100 transition-all duration-300 card-hover">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-gray-700 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-800">API Sleutels</h3>
+                                <p class="text-sm text-gray-600">Beheer API-sleutels voor blog publiceren</p>
+                            </div>
+                        </div>
+                    </a>
+
                     <a href="#" onclick="runAutoLikesMigration()" 
                        class="group p-6 bg-gradient-to-br from-rose-50 to-pink-50 border border-rose-200 rounded-xl hover:from-rose-100 hover:to-pink-100 transition-all duration-300 card-hover">
                         <div class="flex items-center space-x-4">
