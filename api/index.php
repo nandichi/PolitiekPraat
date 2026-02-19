@@ -98,6 +98,7 @@ try {
     // Andere belangrijke classes laden
     $requiredFiles = [
         '/includes/AuthController.php',
+        '/includes/CategoryController.php',
         '/includes/BlogController.php',
         '/includes/helpers.php'
     ];
