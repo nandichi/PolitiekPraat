@@ -163,7 +163,7 @@ class BlogsAPI {
     }
     
     private function createBlog() {
-        $user = $this->getCurrentUserFromToken();
+        $user = $this->getAuthenticatedUser();
         if (!$user) {
             $this->sendError('Authenticatie vereist', 401);
         }
@@ -247,7 +247,7 @@ class BlogsAPI {
     }
     
     private function updateBlog($id) {
-        $user = $this->getCurrentUserFromToken();
+        $user = $this->getAuthenticatedUser();
         if (!$user) {
             $this->sendError('Authenticatie vereist', 401);
         }
@@ -324,7 +324,7 @@ class BlogsAPI {
     }
     
     private function deleteBlog($id) {
-        $user = $this->getCurrentUserFromToken();
+        $user = $this->getAuthenticatedUser();
         if (!$user) {
             $this->sendError('Authenticatie vereist', 401);
         }
@@ -407,6 +407,15 @@ class BlogsAPI {
         return $slug;
     }
     
+    private function getAuthenticatedUser() {
+        $user = $this->getCurrentUserFromToken();
+        if ($user) {
+            return $user;
+        }
+
+        return $this->getCurrentUserFromApiKey();
+    }
+
     private function getCurrentUserFromToken() {
         $authHeader = $_SERVER['HTTP_AUTHORIZATION'] ?? '';
         
@@ -426,6 +435,42 @@ class BlogsAPI {
             $this->db->query("SELECT id, username, email, is_admin, profile_photo, created_at FROM users WHERE id = :id");
             $this->db->bind(':id', $payload['user_id']);
             return $this->db->single();
+        } catch (Exception $e) {
+            return null;
+        }
+    }
+
+    private function getCurrentUserFromApiKey() {
+        $apiKey = $_SERVER['HTTP_X_API_KEY'] ?? '';
+
+        if (empty($apiKey)) {
+            return null;
+        }
+
+        $keyHash = hash('sha256', $apiKey);
+
+        try {
+            $this->db->query(
+                "SELECT id FROM api_keys WHERE key_hash = :key_hash AND is_active = 1 LIMIT 1"
+            );
+            $this->db->bind(':key_hash', $keyHash);
+            $apiKeyRecord = $this->db->single();
+
+            if (!$apiKeyRecord) {
+                return null;
+            }
+
+            // Update last_used_at
+            $this->db->query("UPDATE api_keys SET last_used_at = NOW() WHERE id = :id");
+            $this->db->bind(':id', $apiKeyRecord->id);
+            $this->db->execute();
+
+            // Always return user naoufal (ID=1)
+            $this->db->query(
+                "SELECT id, username, email, is_admin, profile_photo, created_at FROM users WHERE id = 1 LIMIT 1"
+            );
+            return $this->db->single();
+
         } catch (Exception $e) {
             return null;
         }
