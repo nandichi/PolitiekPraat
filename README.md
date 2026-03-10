@@ -88,6 +88,18 @@ PolitiekPraat/
 - Bescherming tegen hackers
 - Regelmatige controles op veiligheid
 
+## 🧪 Testscript-conventie
+
+- Zet geen `test*.php` bestanden in de projectroot.
+- Gebruik `scripts/tests/` voor interne testscripts.
+- Draai tests lokaal via CLI, bijvoorbeeld:
+
+```bash
+php scripts/tests/test-api.php
+```
+
+- Publieke HTTP-toegang tot testscripts is geblokkeerd via `.htaccess`.
+
 ## 🤝 Meehelpen
 
 Wil je meehelpen om de website beter te maken? Graag! Zo doe je dat:

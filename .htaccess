@@ -13,6 +13,11 @@ php_value memory_limit 256M
 RewriteEngine On
 RewriteBase /
 
+# Blokkeer publieke toegang tot testscripts (alleen echte testbestanden)
+# Let op: niet te breed matchen, zodat legitieme bestanden zoals testimonials.php blijven werken.
+RewriteRule ^test[-_].*\.php$ - [F,L,NC]
+RewriteRule ^scripts/tests/.*$ - [F,L,NC]
+
 # Allow direct access to files
 RewriteCond %{REQUEST_FILENAME} -f
 RewriteRule ^ - [L]
