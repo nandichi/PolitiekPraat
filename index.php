@@ -1,7 +1,5 @@
 <?php
-// Error reporting aanzetten
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+require_once __DIR__ . '/includes/error_bootstrap.php';
 
 // Definieer het basis pad voor de applicatie
 $scriptDir = dirname($_SERVER['SCRIPT_FILENAME']);
@@ -27,7 +25,7 @@ require_once 'includes/CategoryController.php';
 require_once 'controllers/blogs.php';  // Add BlogsController
 
 // Debug informatie (tijdelijk)
-if (isset($_GET['debug'])) {
+if (APP_DEBUG && isset($_GET['debug'])) {
     echo "<pre>";
     echo "REQUEST_URI: " . $_SERVER['REQUEST_URI'] . "\n";
     echo "URLROOT: " . URLROOT . "\n";
@@ -188,7 +186,7 @@ try {
     require_once BASE_PATH . "/controllers/404.php";
 }
 
-if (isset($_GET['debug'])) {
+if (APP_DEBUG && isset($_GET['debug'])) {
     echo "<pre>";
     echo "Script Dir: " . $scriptDir . "\n";
     echo "Base Path: " . BASE_PATH . "\n";

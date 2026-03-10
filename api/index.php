@@ -1,8 +1,8 @@
 <?php
-// Enable error reporting voor debugging
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-ini_set('log_errors', 1);
+require_once __DIR__ . '/../includes/error_bootstrap.php';
+if (!defined('API_DEBUG')) {
+    define('API_DEBUG', APP_DEBUG);
+}
 
 // Set headers voor API responses
 header('Content-Type: application/json; charset=UTF-8');
