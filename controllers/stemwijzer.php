@@ -543,6 +543,11 @@ $howToStructuredData = [
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                                             </svg>
                                         </button>
+                                        <button @click="toggleImportant()"
+                                                :class="isImportant(currentStep) ? 'bg-amber-100 text-amber-700' : 'bg-gray-100 text-gray-600'"
+                                                class="px-3 sm:px-4 py-1.5 sm:py-2 hover:bg-amber-200 rounded-full text-xs sm:text-sm font-medium transition-colors">
+                                            Belangrijk
+                                        </button>
                                         <button @click="skipQuestion()"
                                                 class="px-3 sm:px-4 py-1.5 sm:py-2 bg-gray-100 hover:bg-gray-200 rounded-full text-xs sm:text-sm font-medium text-gray-600 transition-colors">
                                             Overslaan
@@ -1165,6 +1170,8 @@ $howToStructuredData = [
                     <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
                         Op basis van jouw antwoorden hebben we de partijen gerangschikt die het beste bij jouw politieke voorkeuren passen.
                     </p>
+
+                    
                 </div>
 
                 <!-- Top 3 Podium -->
@@ -2377,6 +2384,9 @@ function stemwijzer() {
         aiAdviceContent: '',
         loadingAIAdvice: false,
         answers: {},
+        weights: {},
+        minimumAnsweredForReliable: 8,
+        scoringMeta: null,
         eensParties: [],
         neutraalParties: [],
         oneensParties: [],
@@ -2647,8 +2657,21 @@ function stemwijzer() {
         countAnswerType(type) {
             return Object.values(this.answers).filter(answer => answer === type).length;
         },
+
+        toggleImportant() {
+            const key = String(this.currentStep);
+            if (this.weights[key] && this.weights[key] > 1) {
+                this.weights[key] = 1;
+            } else {
+                this.weights[key] = 2;
+            }
+        },
+
+        isImportant(index) {
+            return (this.weights[String(index)] || 1) > 1;
+        },
         
-        answerQuestion(answer) {
+        async answerQuestion(answer) {
             this.answers[this.currentStep] = answer;
             
             // Add subtle haptic feedback if available
@@ -2665,22 +2688,22 @@ function stemwijzer() {
                     this.updatePartyGroups();
                 }, 300); // Small delay for smooth transition
             } else {
-                setTimeout(() => {
-                    this.calculateResults();
+                setTimeout(async () => {
+                    await this.calculateResults();
                     this.screen = 'results';
                     this.saveResultsToDatabase();
                 }, 500);
             }
         },
         
-        skipQuestion() {
+        async skipQuestion() {
             if (this.currentStep < this.totalSteps - 1) {
                 this.currentStep++;
                 this.showExplanation = false;
                 this.selectedParty = null;
                 this.updatePartyGroups();
             } else {
-                this.calculateResults();
+                await this.calculateResults();
                 this.screen = 'results';
                 this.saveResultsToDatabase();
             }
@@ -2695,54 +2718,82 @@ function stemwijzer() {
             }
         },
         
-        calculateResults() {
+        async calculateResults() {
             if (!this.questions.length) return;
-            
-            const parties = Object.keys(this.questions[0].positions);
+
+            try {
+                const response = await fetch('/api/stemwijzer.php?action=calculate-v2', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        answers: this.answers,
+                        weights: this.weights,
+                        minimum_answered: this.minimumAnsweredForReliable
+                    })
+                });
+
+                const payload = await response.json();
+                if (!payload.success || !Array.isArray(payload.results)) {
+                    throw new Error('V2 scoring niet beschikbaar');
+                }
+
+                this.scoringMeta = payload.meta || null;
+                this.finalResults = payload.results.map(row => ({
+                    name: row.name,
+                    agreement: row.agreement,
+                    rank: row.rank,
+                    logo: this.partyLogos[row.name]
+                }));
+
+                this.results = this.finalResults.reduce((acc, row) => {
+                    acc[row.name] = { agreement: row.agreement, rank: row.rank };
+                    return acc;
+                }, {});
+            } catch (error) {
+                console.error('Fallback naar lokale scoring:', error);
+                this.localCalculateResultsFallback();
+            }
+
+            this.calculatePersonalityAnalysis();
+        },
+
+        localCalculateResultsFallback() {
+            const parties = Object.keys(this.questions[0]?.positions || {});
             const results = {};
-            
+
             parties.forEach(party => {
                 results[party] = { score: 0, total: 0, agreement: 0 };
             });
-            
+
             Object.keys(this.answers).forEach(questionIndex => {
                 const question = this.questions[questionIndex];
                 const userAnswer = this.answers[questionIndex];
-                
+                if (!question || !['eens', 'neutraal', 'oneens'].includes(userAnswer)) return;
+
+                const weight = this.weights[String(questionIndex)] || 1;
                 parties.forEach(party => {
-                    const partyAnswer = question.positions[party];
-                    
-                    if (userAnswer === partyAnswer) {
-                        results[party].score += 2;
-                    } else if (
-                        (userAnswer === 'neutraal' && (partyAnswer === 'eens' || partyAnswer === 'oneens')) ||
-                        ((userAnswer === 'eens' || userAnswer === 'oneens') && partyAnswer === 'neutraal')
-                    ) {
-                        results[party].score += 1;
-                    }
-                    
-                    results[party].total += 2;
+                    const partyAnswer = question.positions?.[party];
+                    if (!['eens', 'neutraal', 'oneens'].includes(partyAnswer)) return;
+
+                    let value = 0;
+                    if (userAnswer === partyAnswer) value = 1;
+                    else if (userAnswer === 'neutraal' || partyAnswer === 'neutraal') value = 0.5;
+
+                    results[party].score += value * weight;
+                    results[party].total += weight;
                 });
             });
-            
-            // Calculate percentages
+
             parties.forEach(party => {
-                results[party].agreement = Math.round((results[party].score / results[party].total) * 100);
+                results[party].agreement = results[party].total > 0
+                    ? Math.round((results[party].score / results[party].total) * 100)
+                    : 0;
             });
-            
+
             this.results = results;
-            
-            // Create sorted array for display
             this.finalResults = parties
-                .map(party => ({
-                    name: party,
-                    agreement: results[party].agreement,
-                    logo: this.partyLogos[party]
-                }))
-                .sort((a, b) => b.agreement - a.agreement);
-                
-            // Calculate personality analysis
-            this.calculatePersonalityAnalysis();
+                .map(party => ({ name: party, agreement: results[party].agreement, logo: this.partyLogos[party] }))
+                .sort((a, b) => b.agreement - a.agreement || a.name.localeCompare(b.name));
         },
 
         calculatePersonalityAnalysis() {

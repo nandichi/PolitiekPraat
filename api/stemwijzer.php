@@ -9,6 +9,7 @@ require_once '../includes/config.php';
 require_once '../includes/Database.php';
 require_once '../includes/StemwijzerController.php';
 require_once '../includes/ChatGPTAPI.php';
+require_once '../includes/StemwijzerScoringService.php';
 
 // Initialize controllers
 $stemwijzerController = new StemwijzerController();
@@ -94,7 +95,10 @@ try {
                         ],
                         'methodology' => [
                             'answers' => ['eens', 'neutraal', 'oneens', 'geen_mening'],
-                            'notes' => 'Weging aan; scoreberekening en transparantie worden in scoring engine v2 uitgewerkt.'
+                            'notes' => 'Scoring v2 actief: exact=1.0, neutraal-vs-uitgesproken=0.5, tegenovergesteld=0.0.',
+                            'version' => 'v2',
+                            'peildatum' => '2026-03-10',
+                            'method_link' => 'https://github.com/nandichi/PolitiekPraat/blob/main/docs/gemeentelijke-stemwijzer/legal-ethics.md'
                         ],
                         'message' => 'Meta context succesvol opgehaald'
                     ]);
@@ -216,6 +220,34 @@ try {
             $action = $_GET['action'] ?? '';
             
             switch ($action) {
+                case 'calculate-v2':
+                    $input = json_decode(file_get_contents('php://input'), true);
+
+                    if (!$input) {
+                        http_response_code(400);
+                        echo json_encode([
+                            'success' => false,
+                            'error' => 'Invalid JSON input'
+                        ]);
+                        break;
+                    }
+
+                    $answers = $input['answers'] ?? [];
+                    $weights = $input['weights'] ?? [];
+                    $minimumAnswered = max(1, (int)($input['minimum_answered'] ?? 8));
+
+                    $stemwijzerData = $stemwijzerController->getStemwijzerData();
+                    $scoringService = new StemwijzerScoringService();
+                    $scored = $scoringService->calculate($stemwijzerData['questions'] ?? [], $answers, $weights, $minimumAnswered);
+
+                    echo json_encode([
+                        'success' => true,
+                        'results' => $scored['results'],
+                        'meta' => $scored['meta'],
+                        'message' => 'Scoring v2 succesvol berekend'
+                    ]);
+                    break;
+
                 case 'save-results':
                     // Sla resultaten op
                     $input = json_decode(file_get_contents('php://input'), true);
