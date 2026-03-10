@@ -66,24 +66,50 @@ if (!function_exists('getBlogImageUrl')) {
      * @return string|null The full URL to the image or null if no image
      */
     function getBlogImageUrl($imagePath) {
-        if (empty($imagePath)) {
+        if (empty($imagePath) || !is_string($imagePath)) {
             return null;
         }
-        
-        // If path already starts with http:// or https://, return as is
-        if (preg_match('/^https?:\/\//', $imagePath)) {
+
+        $imagePath = trim($imagePath);
+        if ($imagePath === '') {
+            return null;
+        }
+
+        // Reject unsafe schemes explicitly
+        if (preg_match('/^(javascript|data|vbscript):/i', $imagePath)) {
+            return null;
+        }
+
+        // Allow only HTTP(S) for external URLs
+        if (preg_match('/^https?:\/\//i', $imagePath)) {
             return $imagePath;
         }
-        
-        // Remove any leading slash to normalize the path
-        $imagePath = ltrim($imagePath, '/');
-        
-        // Check if the file exists
-        if (file_exists(BASE_PATH . '/' . $imagePath)) {
-            return URLROOT . '/' . $imagePath;
+
+        // Reject absolute URLs with unsupported schemes
+        if (preg_match('/^[a-z][a-z0-9+.-]*:\/\//i', $imagePath)) {
+            return null;
         }
-        
-        // If file doesn't exist, still return the expected path for backwards compatibility
+
+        // Normalize internal path and block traversal/null byte attempts
+        $imagePath = ltrim($imagePath, '/');
+        if (strpos($imagePath, "\0") !== false || strpos($imagePath, '..') !== false) {
+            return null;
+        }
+
+        $candidatePaths = [
+            $imagePath,
+            'public/' . $imagePath,
+            'public/images/' . basename($imagePath),
+            'uploads/blogs/images/' . basename($imagePath),
+        ];
+
+        foreach ($candidatePaths as $candidatePath) {
+            if (file_exists(BASE_PATH . '/' . $candidatePath)) {
+                return URLROOT . '/' . ltrim($candidatePath, '/');
+            }
+        }
+
+        // Backwards compatibility fallback for relative paths that look safe
         return URLROOT . '/' . $imagePath;
     }
 }
