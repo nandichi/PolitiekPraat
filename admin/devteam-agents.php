@@ -33,25 +33,33 @@ if (isset($_GET['api'])) {
     </script>
     <style>
         body{background:#0a1e33;color:#ccd6e6}
-        .scr::-webkit-scrollbar{width:3px}.scr::-webkit-scrollbar-track{background:transparent}.scr::-webkit-scrollbar-thumb{background:rgba(45,74,107,.5);border-radius:2px}
+        *{scrollbar-width:thin;scrollbar-color:rgba(45,74,107,.5) transparent}
+        ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(45,74,107,.5);border-radius:2px}
         @keyframes rp{0%,100%{opacity:.4}50%{opacity:1}}
         @keyframes lb{0%,100%{opacity:1}50%{opacity:.3}}
-        @keyframes fu{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes fu{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
         @keyframes td{0%{opacity:.3}50%{opacity:1}100%{opacity:.3}}
         @keyframes spin{to{transform:rotate(360deg)}}
-        .fade{animation:fu .4s ease-out both}
+        @keyframes modalIn{from{opacity:0;transform:scale(.95) translateY(12px)}to{opacity:1;transform:scale(1) translateY(0)}}
+        @keyframes overlayIn{from{opacity:0}to{opacity:1}}
+        .fade{animation:fu .35s ease-out both}
         .tdots span{animation:td 1.4s ease-in-out infinite;display:inline-block;width:5px;height:5px;border-radius:50%;background:currentColor;margin:0 2px}
         .tdots span:nth-child(2){animation-delay:.2s}.tdots span:nth-child(3){animation-delay:.4s}
         .spinner{width:14px;height:14px;border:2px solid rgba(255,255,255,.15);border-top-color:currentColor;border-radius:50%;animation:spin .8s linear infinite}
-        #cp{position:fixed;top:0;right:0;width:420px;max-width:94vw;height:100vh;z-index:9999;background:#0f2a44;border-left:1px solid rgba(45,74,107,.6);display:flex;flex-direction:column;transform:translateX(100%);transition:transform .3s ease;box-shadow:-8px 0 40px rgba(0,0,0,.5)}
-        #cp.open{transform:translateX(0)}
-        #co{position:fixed;inset:0;z-index:9998;background:rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:opacity .25s}
-        #co.open{opacity:1;pointer-events:auto}
-        .cb{max-width:85%;padding:10px 14px;border-radius:14px;font-size:.85rem;line-height:1.6;word-wrap:break-word}
-        .cb-u{background:#1a365d;color:#e6ecf5;border-bottom-right-radius:4px}
-        .cb-a{background:#1d3461;color:#ccd6e6;border-bottom-left-radius:4px}
-        .cb-w{background:rgba(245,158,11,.08);color:#fbbf24;border:1px dashed rgba(245,158,11,.2);font-size:.8rem}
-        @media(max-width:640px){#cp{width:100%;max-width:100vw}}
+        #chatOverlay{position:fixed;inset:0;z-index:9998;background:rgba(5,12,24,.7);backdrop-filter:blur(4px);display:none;animation:overlayIn .2s ease-out}
+        #chatOverlay.open{display:flex;align-items:center;justify-content:center}
+        #chatModal{width:560px;max-width:92vw;height:600px;max-height:85vh;background:#0f2a44;border:1px solid rgba(45,74,107,.5);border-radius:20px;display:flex;flex-direction:column;box-shadow:0 25px 80px rgba(0,0,0,.6),0 0 0 1px rgba(45,74,107,.2);animation:modalIn .25s ease-out;overflow:hidden}
+        .cb{max-width:82%;padding:10px 14px;border-radius:16px;font-size:.84rem;line-height:1.7;word-wrap:break-word}
+        .cb-u{background:rgba(26,54,93,.7);color:#e6ecf5;border-bottom-right-radius:4px}
+        .cb-a{background:rgba(17,34,64,.8);color:#ccd6e6;border-bottom-left-radius:4px;border:1px solid rgba(45,74,107,.2)}
+        .cb-w{background:rgba(245,158,11,.06);color:#fbbf24;border:1px dashed rgba(245,158,11,.15);font-size:.8rem}
+        .cb-a strong{color:#94b8db;font-weight:600}
+        .cb-a ul,.cb-a ol{margin:6px 0 6px 16px;padding:0}.cb-a li{margin:2px 0}
+        .cb-a ul{list-style:disc}.cb-a ol{list-style:decimal}
+        .cb-a code{background:rgba(255,255,255,.06);padding:1px 5px;border-radius:4px;font-size:.78rem;font-family:'IBM Plex Mono',monospace}
+        .agent-card{display:flex;flex-direction:column}
+        .agent-card-body{flex:1}
+        @media(max-width:640px){#chatModal{width:100%;max-width:100vw;height:100vh;max-height:100vh;border-radius:0}}
     </style>
 </head>
 <body class="font-sans min-h-screen">
@@ -82,18 +90,19 @@ if (isset($_GET['api'])) {
         </section>
         <section id="queueSection" class="hidden bg-pp-surface border border-pp-light/30 rounded-2xl p-6"></section>
         <section id="feedSection" class="bg-pp-surface border border-pp-light/30 rounded-2xl"></section>
-        <footer class="text-center text-xs font-mono text-slate-600/40 pt-2 pb-2">PolitiekPraat DevTeam -- Live Agent Monitor v3.1</footer>
+        <footer class="text-center text-xs font-mono text-slate-600/40 pt-2 pb-2">PolitiekPraat DevTeam -- Live Agent Monitor v3.2</footer>
     </main>
 
-    <div id="co" onclick="App.closeChat()"></div>
-    <div id="cp">
-        <div class="flex items-center justify-between p-5 border-b border-white/[0.06]" id="cpHead"></div>
-        <div class="flex-1 overflow-y-auto p-5 space-y-3 scr" id="cpMsgs"></div>
-        <div class="p-4 border-t border-white/[0.06]">
-            <form onsubmit="App.sendChat(event)" class="flex gap-2.5">
-                <input type="text" id="cpIn" placeholder="Typ een bericht..." autocomplete="off" class="flex-1 rounded-xl px-4 py-2.5 text-sm placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-amber-500/30" style="background:#0a1e33;border:1px solid rgba(45,74,107,.4);color:#e6ecf5">
-                <button type="submit" class="px-4 py-2.5 rounded-xl transition text-sm font-semibold bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/20 cursor-pointer">Stuur</button>
-            </form>
+    <div id="chatOverlay" onclick="if(event.target===this)App.closeChat()">
+        <div id="chatModal">
+            <div class="flex items-center justify-between px-6 py-4 border-b border-white/[0.06]" id="cpHead"></div>
+            <div class="flex-1 overflow-y-auto px-6 py-5 space-y-4" id="cpMsgs"></div>
+            <div class="px-5 py-4 border-t border-white/[0.06]" style="background:rgba(10,30,51,.4)">
+                <form onsubmit="App.sendChat(event)" class="flex gap-2.5">
+                    <input type="text" id="cpIn" placeholder="Typ een bericht..." autocomplete="off" class="flex-1 rounded-xl px-4 py-2.5 text-sm placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500/20 transition" style="background:rgba(10,30,51,.6);border:1px solid rgba(45,74,107,.35);color:#e6ecf5">
+                    <button type="submit" class="px-5 py-2.5 rounded-xl transition text-sm font-semibold bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/20 cursor-pointer">Stuur</button>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -111,10 +120,11 @@ const AGENTS = [
 
 const App = {
     state: null, queue: null, chatAgent: null, chatName: '', chatColor: '', chatPoll: null, pollOk: false,
+    _prevHash: '', _prevFeedHash: '', _prevQueueHash: '', _prevChatHash: '',
 
     async init() {
         await this.poll();
-        setInterval(() => this.poll(), 4000);
+        setInterval(() => this.poll(), 5000);
     },
 
     async poll() {
@@ -125,18 +135,43 @@ const App = {
             this.state = d.state || {};
             this.queue = d.queue || {commands:[]};
             this.pollOk = true;
-            this.render();
+            this.smartRender();
         } catch(e) {
             this.pollOk = false;
             this.updateLive();
         }
     },
 
-    render() {
+    hash(obj) {
+        return JSON.stringify(obj);
+    },
+
+    smartRender() {
         this.updateLive();
-        this.renderAgents();
-        this.renderQueue();
-        this.renderFeed();
+
+        const agentHash = this.hash({
+            cron: this.state?.cron_states,
+            feed: (this.state?.activity_feed||[]).slice(0,8).map(f=>f.ts+f.role),
+            cmds: (this.queue?.commands||[]).map(c=>c.id+c.status),
+        });
+        if (agentHash !== this._prevHash) {
+            this._prevHash = agentHash;
+            this.renderAgents();
+        }
+
+        const qHash = this.hash((this.queue?.commands||[]).filter(c=>c.status==='pending'||c.status==='running'));
+        if (qHash !== this._prevQueueHash) {
+            this._prevQueueHash = qHash;
+            this.renderQueue();
+        }
+
+        const fHash = this.hash((this.state?.activity_feed||[]).slice(0,25).map(f=>f.ts));
+        if (fHash !== this._prevFeedHash) {
+            this._prevFeedHash = fHash;
+            this.renderFeed();
+        }
+
+        if (this.chatAgent) this.loadChat();
     },
 
     updateLive() {
@@ -160,6 +195,7 @@ const App = {
     timeAgo(ts) {
         if (!ts) return '';
         const s = Math.floor((Date.now() - new Date(ts).getTime()) / 1000);
+        if (s < 0) return 'nu';
         if (s < 60) return s + 's geleden';
         if (s < 3600) return Math.floor(s/60) + 'm geleden';
         if (s < 86400) return Math.floor(s/3600) + 'u geleden';
@@ -171,7 +207,30 @@ const App = {
         return `rgba(${r},${g},${b},${a})`;
     },
 
-    esc(t) { const d=document.createElement('div'); d.textContent=t; return d.innerHTML; },
+    esc(t) { if (!t) return ''; const d=document.createElement('div'); d.textContent=t; return d.innerHTML; },
+
+    md(text) {
+        if (!text) return '';
+        let h = this.esc(text);
+        h = h.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+        h = h.replace(/(?<!\*)\*([^*]+?)\*(?!\*)/g, '<em>$1</em>');
+        h = h.replace(/`([^`]+?)`/g, '<code>$1</code>');
+        const lines = h.split('\n');
+        let out = [], inList = false;
+        for (const line of lines) {
+            const li = line.match(/^\s*[-] (.+)/);
+            if (li) {
+                if (!inList) { out.push('<ul>'); inList = true; }
+                out.push('<li>' + li[1] + '</li>');
+            } else {
+                if (inList) { out.push('</ul>'); inList = false; }
+                if (line.trim() === '') out.push('<br>');
+                else out.push(line);
+            }
+        }
+        if (inList) out.push('</ul>');
+        return out.join('\n');
+    },
 
     renderAgents() {
         const el = document.getElementById('agents');
@@ -194,59 +253,59 @@ const App = {
 
             const timeInfo = qCmd ? this.timeAgo(qCmd.ts) : (lastRun ? this.timeAgo(lastRun) : a.schedule);
 
-            let queueDetail = '';
+            let infoBlock = '';
             if (qCmd) {
-                queueDetail = `<div class="mt-3 px-3 py-2.5 rounded-lg text-xs" style="background:${this.rgba(statusColor,.06)};border:1px solid ${this.rgba(statusColor,.12)}">
+                infoBlock = `<div class="px-3 py-2.5 rounded-lg text-xs" style="background:${this.rgba(statusColor,.06)};border:1px solid ${this.rgba(statusColor,.12)}">
                     <div class="flex items-center gap-2 mb-1">
-                        <div class="spinner" style="color:${statusColor};width:12px;height:12px;border-width:1.5px"></div>
+                        <div class="spinner" style="color:${statusColor};width:11px;height:11px;border-width:1.5px"></div>
                         <span style="color:${statusColor}" class="font-semibold">${qCmd.status === 'running' ? 'Agent is bezig...' : 'Wacht op verwerking'}</span>
                     </div>
-                    <span class="text-slate-500">${qCmd.type === 'chat' ? 'Chat: "'+this.esc((qCmd.message||'').substring(0,40))+'..."' : 'Trigger commando'} -- ${this.timeAgo(qCmd.ts)}</span>
+                    <span class="text-slate-500">${qCmd.type === 'chat' ? 'Chat: "'+this.esc((qCmd.message||'').substring(0,35))+'..."' : 'Trigger commando'} -- ${this.timeAgo(qCmd.ts)}</span>
                 </div>`;
-            }
-
-            let doneDetail = '';
-            if (!qCmd && doneCmds.length > 0) {
+            } else if (doneCmds.length > 0) {
                 const last = doneCmds[0];
-                const resp = (last.response || '').substring(0, 100);
-                doneDetail = `<div class="mt-3 px-3 py-2.5 rounded-lg text-xs" style="background:rgba(45,74,107,.12);border:1px solid rgba(45,74,107,.2)">
-                    <div class="flex items-center gap-1.5 mb-1"><svg class="w-3 h-3 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><span class="text-emerald-400 font-semibold">Laatste resultaat</span><span class="text-slate-500 ml-auto">${this.timeAgo(last.ts)}</span></div>
-                    <span class="text-slate-400 leading-relaxed">${this.esc(resp)}${resp.length >= 100 ? '...' : ''}</span>
+                const resp = (last.response || '').substring(0, 80);
+                infoBlock = `<div class="px-3 py-2.5 rounded-lg text-xs" style="background:rgba(45,74,107,.1);border:1px solid rgba(45,74,107,.18)">
+                    <div class="flex items-center gap-1.5 mb-1"><svg class="w-3 h-3 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><span class="text-emerald-400/80 font-semibold">Resultaat</span><span class="text-slate-600 ml-auto">${this.timeAgo(last.ts)}</span></div>
+                    <span class="text-slate-400/80">${this.esc(resp)}${resp.length>=80?'...':''}</span>
+                </div>`;
+            } else if (lastFeedEntry) {
+                infoBlock = `<div class="px-3 py-2 rounded-lg text-xs" style="background:rgba(45,74,107,.06)">
+                    <span class="text-slate-500">Laatste actie:</span> <span class="text-slate-400/80">${this.esc((lastFeedEntry.msg||'').substring(0,70))}${(lastFeedEntry.msg||'').length>70?'...':''}</span>
+                </div>`;
+            } else {
+                infoBlock = `<div class="px-3 py-2 rounded-lg text-xs" style="background:rgba(45,74,107,.04)">
+                    <span class="text-slate-500/60">Geen recente activiteit.</span>
                 </div>`;
             }
 
-            let lastActivity = '';
-            if (lastFeedEntry) {
-                lastActivity = `<div class="mt-3 px-3 py-2 rounded-lg text-xs" style="background:rgba(45,74,107,.08)">
-                    <span class="text-slate-500">Laatste actie:</span> <span class="text-slate-400">${this.esc((lastFeedEntry.msg||'').substring(0,80))}</span>
-                </div>`;
-            }
-
-            return `<div class="bg-pp-surface border border-pp-light/30 rounded-2xl p-5 relative overflow-hidden transition-all duration-300 hover:border-pp-light/50 fade" style="animation-delay:${i*0.05}s">
-                <div class="absolute top-0 left-0 right-0 h-[3px] rounded-t-2xl" style="background:${a.color};opacity:${isActive?1:.2}"></div>
-                ${isActive ? `<div class="absolute inset-[-3px] rounded-[19px] border-2 pointer-events-none" style="border-color:${a.color};opacity:.3;animation:rp 2s ease-in-out infinite"></div>` : ''}
-                <div class="flex items-start gap-3.5 mb-3">
-                    <div class="w-12 h-12 rounded-[14px] flex items-center justify-center flex-shrink-0" style="background:${this.rgba(a.color,.08)};border:1px solid ${this.rgba(a.color,.15)}">
-                        <svg class="w-[22px] h-[22px]" style="color:${a.color}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="${a.icon}"/></svg>
+            return `<div class="agent-card bg-pp-surface border border-pp-light/30 rounded-2xl p-5 relative overflow-hidden transition-all duration-300 hover:border-pp-light/50 fade" style="animation-delay:${i*0.04}s">
+                <div class="absolute top-0 left-0 right-0 h-[3px] rounded-t-2xl" style="background:${a.color};opacity:${isActive?1:.15}"></div>
+                ${isActive ? `<div class="absolute inset-[-3px] rounded-[19px] border-2 pointer-events-none" style="border-color:${a.color};opacity:.25;animation:rp 2s ease-in-out infinite"></div>` : ''}
+                <div class="agent-card-body">
+                    <div class="flex items-start gap-3.5 mb-3">
+                        <div class="w-11 h-11 rounded-[13px] flex items-center justify-center flex-shrink-0" style="background:${this.rgba(a.color,.07)};border:1px solid ${this.rgba(a.color,.12)}">
+                            <svg class="w-5 h-5" style="color:${a.color}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="${a.icon}"/></svg>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-2"><span class="font-semibold text-sm text-slate-200">${a.name}</span><div class="w-2 h-2 rounded-full flex-shrink-0" style="background:${statusColor};box-shadow:0 0 6px ${statusColor}"></div></div>
+                            <span class="text-xs font-medium" style="color:${a.color};opacity:.8">${a.role}</span>
+                        </div>
                     </div>
-                    <div class="flex-1 min-w-0">
-                        <div class="flex items-center gap-2"><span class="font-semibold text-sm text-slate-200">${a.name}</span><div class="w-2 h-2 rounded-full" style="background:${statusColor};box-shadow:0 0 6px ${statusColor}"></div></div>
-                        <span class="text-xs font-medium" style="color:${a.color}">${a.role}</span>
+                    <p class="text-xs text-slate-500 mb-3 leading-relaxed">${a.desc}</p>
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-semibold" style="background:${this.rgba(statusColor,.08)};color:${statusColor};border:1px solid ${this.rgba(statusColor,.12)}">
+                            ${isActive ? '<span class="tdots"><span></span><span></span><span></span></span>' : ''}${statusText}
+                        </span>
+                        <span class="text-[11px] font-mono text-slate-600">${timeInfo}</span>
                     </div>
+                    ${infoBlock}
                 </div>
-                <p class="text-xs text-slate-400 mb-3 leading-relaxed">${a.desc}</p>
-                <div class="flex items-center justify-between">
-                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-semibold" style="background:${this.rgba(statusColor,.1)};color:${statusColor};border:1px solid ${this.rgba(statusColor,.15)}">
-                        ${isActive ? '<span class="tdots"><span></span><span></span><span></span></span>' : ''}${statusText}
-                    </span>
-                    <span class="text-xs font-mono text-slate-500">${timeInfo}</span>
-                </div>
-                ${queueDetail}${doneDetail}${!qCmd && doneCmds.length === 0 ? lastActivity : ''}
-                <div class="flex gap-2 pt-4 mt-4 border-t border-white/5">
-                    <button onclick="App.trigger('${a.id}','${a.name}')" class="flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-lg text-xs font-semibold transition border cursor-pointer ${qCmd ? 'opacity-40 cursor-not-allowed text-slate-500 border-slate-600/20 bg-slate-600/5' : 'text-emerald-400 border-emerald-500/20 bg-emerald-500/10 hover:bg-emerald-500/20'}" ${qCmd ? 'disabled' : ''}>
+                <div class="flex gap-2 pt-4 mt-4 border-t border-white/[0.04]">
+                    <button onclick="App.trigger('${a.id}','${a.name}')" class="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold transition border cursor-pointer ${qCmd ? 'opacity-30 cursor-not-allowed text-slate-500 border-slate-700/20 bg-slate-700/5' : 'text-emerald-400 border-emerald-500/15 bg-emerald-500/8 hover:bg-emerald-500/15'}" ${qCmd ? 'disabled' : ''}>
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/></svg>Start
                     </button>
-                    <button onclick="App.openChat('${a.id}','${a.name}','${a.color}','${a.role}')" class="flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-lg text-xs font-semibold transition border text-blue-400 border-blue-500/20 bg-blue-500/10 hover:bg-blue-500/20 cursor-pointer">
+                    <button onclick="App.openChat('${a.id}','${a.name}','${a.color}','${a.role}')" class="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold transition border text-blue-400 border-blue-500/15 bg-blue-500/8 hover:bg-blue-500/15 cursor-pointer">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>Chat
                     </button>
                 </div>
@@ -271,7 +330,7 @@ const App = {
                 <span class="text-xs text-slate-500 ml-auto font-mono">${c.status === 'running' ? 'bezig' : 'wacht'} -- ${this.timeAgo(c.ts)}</span>
             </div>`;
         }).join('')}</div>
-        <p class="text-[11px] text-slate-500 mt-3">De queue wordt elke ~5 minuten verwerkt door de OpenClaw agent op de CachyOS PC.</p>`;
+        <p class="text-[11px] text-slate-600 mt-3">Queue wordt elke ~5 min verwerkt door de OpenClaw agent.</p>`;
     },
 
     renderFeed() {
@@ -284,7 +343,7 @@ const App = {
             </h2>
             <span class="text-xs font-mono text-slate-500">${feed.length} events</span>
         </div>
-        <div class="max-h-[32rem] overflow-y-auto scr">${feed.length === 0
+        <div class="max-h-[32rem] overflow-y-auto">${feed.length === 0
             ? '<div class="p-8 text-center text-sm text-slate-500">Nog geen activiteiten.</div>'
             : feed.slice(0, 25).map(ev => {
                 const agent = AGENTS.find(a => a.name === ev.role || a.role === ev.role || (ev.role && a.role.split(' ')[0] && ev.role.includes(a.role.split(' ')[0])));
@@ -303,7 +362,7 @@ const App = {
                             <span class="inline-flex px-2 py-0.5 rounded text-[10px] font-semibold uppercase" style="background:${this.rgba(c,.08)};color:${c}">${this.esc(ev.role||'')}</span>
                             ${!ok ? '<span class="inline-flex px-2 py-0.5 rounded text-[10px] font-semibold bg-red-500/10 text-red-400">FOUT</span>' : ''}
                         </div>
-                        <p class="text-sm text-slate-300 leading-relaxed">${this.esc(ev.msg||'')}</p>
+                        <p class="text-sm text-slate-300/80 leading-relaxed">${this.esc(ev.msg||'')}</p>
                     </div>
                 </div>`;
             }).join('')
@@ -311,6 +370,8 @@ const App = {
     },
 
     async trigger(id, name) {
+        const btn = event?.target?.closest('button');
+        if (btn) { btn.disabled = true; btn.classList.add('opacity-30'); }
         const fd = new FormData();
         fd.append('agent_id', id);
         fd.append('agent_name', name);
@@ -318,68 +379,78 @@ const App = {
             const r = await fetch('devteam-api.php?action=trigger', {method:'POST', body:fd});
             const d = await r.json();
             if (d.ok) { await this.poll(); }
-            else { alert(d.msg || d.error || 'Fout'); }
-        } catch(e) { alert('API niet bereikbaar.'); }
+            else { alert(d.msg || d.error || 'Fout'); if(btn){btn.disabled=false;btn.classList.remove('opacity-30');} }
+        } catch(e) { alert('API niet bereikbaar.'); if(btn){btn.disabled=false;btn.classList.remove('opacity-30');} }
     },
 
     openChat(id, name, color, role) {
         this.chatAgent = id;
         this.chatName = name;
         this.chatColor = color;
+        this._prevChatHash = '';
         document.getElementById('cpHead').innerHTML = `<div class="flex items-center gap-3">
-            <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:${this.rgba(color,.1)};border:1px solid ${this.rgba(color,.15)}">
-                <svg class="w-4 h-4" style="color:${color}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+            <div class="w-10 h-10 rounded-[13px] flex items-center justify-center" style="background:${this.rgba(color,.08)};border:1px solid ${this.rgba(color,.12)}">
+                <svg class="w-5 h-5" style="color:${color}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
             </div>
-            <div><div class="text-sm font-semibold text-slate-200">${this.esc(name)}</div><div class="text-xs text-slate-500">${this.esc(role)}</div></div>
+            <div><div class="font-semibold text-slate-200">${this.esc(name)}</div><div class="text-xs text-slate-500">${this.esc(role)}</div></div>
         </div>
-        <button onclick="App.closeChat()" class="text-slate-400 hover:text-white transition p-1.5 rounded-lg hover:bg-white/5 cursor-pointer">
+        <button onclick="App.closeChat()" class="text-slate-400 hover:text-white transition p-2 rounded-lg hover:bg-white/5 cursor-pointer" title="Sluiten">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>`;
-        document.getElementById('cp').classList.add('open');
-        document.getElementById('co').classList.add('open');
+        document.getElementById('chatOverlay').classList.add('open');
         document.getElementById('cpIn').focus();
-        this.loadChat();
+        this.loadChat(true);
         if (this.chatPoll) clearInterval(this.chatPoll);
         this.chatPoll = setInterval(() => this.loadChat(), 3000);
     },
 
     closeChat() {
-        document.getElementById('cp').classList.remove('open');
-        document.getElementById('co').classList.remove('open');
+        document.getElementById('chatOverlay').classList.remove('open');
         this.chatAgent = null;
+        this._prevChatHash = '';
         if (this.chatPoll) { clearInterval(this.chatPoll); this.chatPoll = null; }
     },
 
-    async loadChat() {
+    async loadChat(force) {
         if (!this.chatAgent) return;
         try {
             const r = await fetch('devteam-api.php?action=chat_history&agent_id='+this.chatAgent+'&_='+Date.now());
             const d = await r.json();
             const msgs = d.messages || [];
-            const container = document.getElementById('cpMsgs');
-
             const qCmd = this.getAgentQueue(this.chatAgent);
             const hasPendingChat = qCmd && qCmd.type === 'chat';
+            const chatHash = JSON.stringify(msgs) + (hasPendingChat ? qCmd.id : '');
+            if (!force && chatHash === this._prevChatHash) return;
+            this._prevChatHash = chatHash;
+
+            const container = document.getElementById('cpMsgs');
 
             if (msgs.length === 0 && !hasPendingChat) {
-                container.innerHTML = `<div class="text-center py-10"><p class="text-sm text-slate-500 mb-2">Nog geen berichten met ${this.esc(this.chatName)}.</p><p class="text-xs text-slate-600">Stuur een bericht -- het antwoord komt binnen ~5 minuten via de agent queue.</p></div>`;
+                container.innerHTML = `<div class="flex flex-col items-center justify-center py-12 text-center">
+                    <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-4" style="background:${this.rgba(this.chatColor,.06)};border:1px solid ${this.rgba(this.chatColor,.1)}">
+                        <svg class="w-7 h-7" style="color:${this.chatColor};opacity:.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+                    </div>
+                    <p class="text-sm text-slate-400 mb-1.5">Nog geen berichten met ${this.esc(this.chatName)}</p>
+                    <p class="text-xs text-slate-600">Stel een vraag -- antwoord komt binnen ~5 min.</p>
+                </div>`;
                 return;
             }
 
             let html = msgs.map(m => {
                 const isUser = m.from === 'user';
                 const t = m.ts ? new Date(m.ts).toTimeString().substring(0,5) : '';
+                const content = isUser ? this.esc(m.msg) : this.md(m.msg);
                 return `<div class="flex flex-col ${isUser ? 'items-end' : 'items-start'}">
-                    <div class="cb ${isUser ? 'cb-u' : 'cb-a'}">${this.esc(m.msg)}</div>
-                    <span class="text-[10px] text-slate-600 mt-1 font-mono">${t}</span>
+                    <div class="cb ${isUser ? 'cb-u' : 'cb-a'}">${content}</div>
+                    <span class="text-[10px] text-slate-600 mt-1 px-1 font-mono">${isUser ? 'Jij' : this.esc(this.chatName)} -- ${t}</span>
                 </div>`;
             }).join('');
 
             if (hasPendingChat) {
                 html += `<div class="flex flex-col items-start">
-                    <div class="cb cb-w flex items-center gap-2">
+                    <div class="cb cb-w flex items-center gap-2.5">
                         <div class="spinner" style="color:#fbbf24;width:12px;height:12px;border-width:1.5px"></div>
-                        Wacht op antwoord van ${this.esc(this.chatName)}... (${this.timeAgo(qCmd.ts)})
+                        <span>${this.esc(this.chatName)} denkt na... (${this.timeAgo(qCmd.ts)})</span>
                     </div>
                 </div>`;
             }
@@ -396,6 +467,11 @@ const App = {
         if (!msg || !this.chatAgent) return;
         input.value = '';
 
+        const container = document.getElementById('cpMsgs');
+        const t = new Date().toTimeString().substring(0,5);
+        container.insertAdjacentHTML('beforeend', `<div class="flex flex-col items-end"><div class="cb cb-u">${this.esc(msg)}</div><span class="text-[10px] text-slate-600 mt-1 px-1 font-mono">Jij -- ${t}</span></div>`);
+        container.scrollTop = container.scrollHeight;
+
         const fd = new FormData();
         fd.append('agent_id', this.chatAgent);
         fd.append('agent_name', this.chatName);
@@ -404,12 +480,15 @@ const App = {
             const r = await fetch('devteam-api.php?action=chat', {method:'POST', body:fd});
             const d = await r.json();
             if (d.ok) {
+                this._prevChatHash = '';
                 await this.poll();
-                await this.loadChat();
+                await this.loadChat(true);
             } else {
-                alert('Fout: ' + (d.error || 'onbekend'));
+                container.insertAdjacentHTML('beforeend', `<div class="text-xs text-red-400 text-center py-1">Fout: ${this.esc(d.error||'onbekend')}</div>`);
             }
-        } catch(e) { alert('API niet bereikbaar.'); }
+        } catch(e) {
+            container.insertAdjacentHTML('beforeend', '<div class="text-xs text-red-400 text-center py-1">Verbinding mislukt.</div>');
+        }
     },
 };
 
