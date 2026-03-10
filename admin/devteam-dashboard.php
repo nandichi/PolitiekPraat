@@ -79,7 +79,7 @@ require_once '../views/templates/header.php';
     padding: 1.25rem 1.5rem;
 }
 .dt-stat-value { font-size: 1.75rem; font-weight: 800; line-height: 1; }
-.dt-stat-label { font-size: 0.8rem; color: #94a3b8; margin-top: 4px; }
+.dt-stat-label { font-size: 0.8rem; color: #94a3b8; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
 .dt-timeline-dot {
     width: 10px; height: 10px;
@@ -109,12 +109,19 @@ require_once '../views/templates/header.php';
 .dt-cron-row {
     display: grid;
     grid-template-columns: 1fr auto auto auto;
-    gap: 12px;
+    gap: 8px 12px;
     align-items: center;
     padding: 10px 16px;
     border-bottom: 1px solid #1e293b;
 }
 .dt-cron-row:last-child { border-bottom: none; }
+.dt-cron-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dt-cron-role { white-space: nowrap; }
+
+.dt-grid-main { grid-template-columns: 3fr 2fr; }
+@media (max-width: 1024px) {
+    .dt-grid-main { grid-template-columns: 1fr; }
+}
 
 @keyframes pulse-dot {
     0%, 100% { opacity: 1; }
@@ -125,8 +132,32 @@ require_once '../views/templates/header.php';
 @media (max-width: 1024px) {
     .dt-grid-2 { grid-template-columns: 1fr !important; }
 }
+@media (max-width: 768px) {
+    .dt-cron-row {
+        grid-template-columns: 1fr auto;
+        gap: 4px 8px;
+        padding: 10px 12px;
+    }
+    .dt-cron-schedule { display: none; }
+    .dt-pr-meta { display: none; }
+    .dt-commit-author { display: none; }
+}
 @media (max-width: 640px) {
     .dt-stats-grid { grid-template-columns: 1fr 1fr !important; }
+    .dt-stat-card { padding: 0.875rem 1rem; }
+    .dt-stat-value { font-size: 1.35rem; }
+    .dt-stat-label { font-size: 0.7rem; }
+    .dt-card { padding: 1rem; border-radius: 10px; }
+    .dt-card > .p-5 { padding: 0; }
+    .dt-header-ts { display: none; }
+    .dt-header-btns { width: 100%; }
+    .dt-header-btns a { flex: 1; text-align: center; }
+}
+@media (max-width: 380px) {
+    .dt-stats-grid { grid-template-columns: 1fr !important; }
+    .dt-stat-card { flex-direction: row; align-items: center; display: flex; gap: 12px; }
+    .dt-stat-card > div:last-child { display: none; }
+    .dt-cron-row { padding: 8px 10px; }
 }
 </style>
 
@@ -142,9 +173,9 @@ require_once '../views/templates/header.php';
                 </h1>
                 <p class="text-slate-400 text-sm mt-1">PolitiekPraat -- Virtueel ICT-Bedrijf</p>
             </div>
-            <div class="flex items-center gap-3 mt-3 md:mt-0">
+            <div class="flex flex-wrap items-center gap-2 mt-3 md:mt-0 dt-header-btns">
                 <?php if ($state && $state['last_updated']): ?>
-                    <span class="text-slate-500 text-xs dt-mono">Laatst bijgewerkt: <?= htmlspecialchars($state['last_updated']) ?></span>
+                    <span class="text-slate-500 text-xs dt-mono dt-header-ts">Bijgewerkt: <?= htmlspecialchars($state['last_updated']) ?></span>
                 <?php endif; ?>
                 <a href="dashboard.php" class="text-sm bg-slate-700 hover:bg-slate-600 text-slate-200 px-4 py-2 rounded-lg transition">
                     Admin Panel
@@ -219,7 +250,7 @@ require_once '../views/templates/header.php';
         </div>
 
         <!-- Main grid: Activity + Sprint Board -->
-        <div class="grid grid-cols-1 lg:grid-cols-5 gap-4 mb-6 dt-grid-2" style="grid-template-columns: 3fr 2fr;">
+        <div class="grid gap-4 mb-6 dt-grid-main">
             <!-- Activity Feed -->
             <div class="dt-card p-5">
                 <h2 class="text-white font-semibold mb-4 flex items-center gap-2">
@@ -330,11 +361,11 @@ require_once '../views/templates/header.php';
                     $duration = $cs['duration_ms'] ?? null;
                 ?>
                 <div class="dt-cron-row">
-                    <div>
+                    <div class="dt-cron-name">
                         <span class="text-slate-200 text-sm font-medium"><?= $cron['name'] ?></span>
-                        <span class="text-slate-500 text-xs ml-2"><?= $cron['role'] ?></span>
+                        <span class="text-slate-500 text-xs ml-1 dt-cron-role"><?= $cron['role'] ?></span>
                     </div>
-                    <span class="text-slate-400 text-xs dt-mono"><?= $cron['schedule'] ?></span>
+                    <span class="text-slate-400 text-xs dt-mono dt-cron-schedule"><?= $cron['schedule'] ?></span>
                     <span class="text-slate-500 text-xs dt-mono"><?= $last_run ? htmlspecialchars(substr($last_run, 11, 5)) : '--:--' ?></span>
                     <?php if ($status === 'ok'): ?>
                         <span class="dt-badge dt-green">OK<?= $duration ? ' ' . round($duration / 1000) . 's' : '' ?></span>
@@ -414,7 +445,7 @@ require_once '../views/templates/header.php';
                             <code class="text-indigo-400 text-xs dt-mono flex-shrink-0 mt-0.5"><?= $sha ?></code>
                             <div class="min-w-0 flex-1">
                                 <p class="text-slate-200 text-sm truncate"><?= htmlspecialchars($msg_first) ?></p>
-                                <span class="text-slate-500 text-xs"><?= htmlspecialchars($author) ?> -- <?= $date_short ?></span>
+                                <span class="text-slate-500 text-xs"><span class="dt-commit-author"><?= htmlspecialchars($author) ?> -- </span><?= $date_short ?></span>
                             </div>
                         </div>
                     <?php endforeach; endif; ?>
@@ -485,15 +516,15 @@ require_once '../views/templates/header.php';
                     $pr_date = $pr['created_at'] ? date('d M H:i', strtotime($pr['created_at'])) : '';
                 ?>
                 <div class="flex items-center gap-3 py-2 border-b border-slate-700/50 last:border-0">
-                    <span class="dt-badge dt-blue">#<?= $pr['number'] ?></span>
+                    <span class="dt-badge dt-blue flex-shrink-0">#<?= $pr['number'] ?></span>
                     <div class="flex-1 min-w-0">
                         <a href="<?= htmlspecialchars($pr['html_url'] ?? '#') ?>" target="_blank" class="text-slate-200 text-sm hover:text-indigo-400 transition truncate block">
                             <?= htmlspecialchars($pr['title'] ?? '?') ?>
                         </a>
                     </div>
-                    <span class="text-slate-500 text-xs dt-mono"><?= $pr_date ?></span>
-                    <span class="text-emerald-400 text-xs dt-mono">+<?= $pr['additions'] ?? 0 ?></span>
-                    <span class="text-red-400 text-xs dt-mono">-<?= $pr['deletions'] ?? 0 ?></span>
+                    <span class="text-slate-500 text-xs dt-mono dt-pr-meta"><?= $pr_date ?></span>
+                    <span class="text-emerald-400 text-xs dt-mono dt-pr-meta">+<?= $pr['additions'] ?? 0 ?></span>
+                    <span class="text-red-400 text-xs dt-mono dt-pr-meta">-<?= $pr['deletions'] ?? 0 ?></span>
                 </div>
                 <?php endforeach; ?>
             </div>
