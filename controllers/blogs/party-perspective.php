@@ -174,7 +174,7 @@ try {
         'VVD' => [
             'name' => 'Volkspartij voor Vrijheid en Democratie',
             'leader' => 'Dilan Yeşilgöz-Zegerius',
-            'logo' => 'https://logo.clearbit.com/vvd.nl',
+            'logo' => '/public/images/party-logos/vvd.png',
             'leader_photo' => '/partijleiders/dilan.jpg',
             'description' => 'De VVD is een liberale partij die voorstander is van ondernemerschap, vrijheid en een sterke economie.',
             'leader_info' => 'Dilan Yeşilgöz-Zegerius, partijleider sinds 2023, brengt een rijke ervaring mee als voormalig minister.',
@@ -230,7 +230,7 @@ try {
         'D66' => [
             'name' => 'Democraten 66',
             'leader' => 'Rob Jetten',
-            'logo' => 'https://logo.clearbit.com/d66.nl',
+            'logo' => '/public/images/party-logos/d66.png',
             'leader_photo' => '/partijleiders/rob.jpg',
             'description' => 'D66 staat voor een open, progressief-liberale samenleving.',
             'leader_info' => 'Rob Jetten, voormalig minister voor Klimaat en Energie.',
@@ -244,7 +244,7 @@ try {
         'SP' => [
             'name' => 'Socialistische Partij',
             'leader' => 'Jimmy Dijk',
-            'logo' => 'https://logo.clearbit.com/sp.nl',
+            'logo' => '/public/images/party-logos/sp.png',
             'leader_photo' => '/partijleiders/jimmy.jpg',
             'description' => 'De SP strijdt tegen sociale ongelijkheid.',
             'leader_info' => 'Jimmy Dijk, energieke leider uit lokale politiek.',
@@ -258,7 +258,7 @@ try {
         'PvdD' => [
             'name' => 'Partij voor de Dieren',
             'leader' => 'Esther Ouwehand',
-            'logo' => 'https://logo.clearbit.com/partijvoordedieren.nl',
+            'logo' => '/public/images/party-logos/pvdd.png',
             'leader_photo' => '/partijleiders/esther.jpg',
             'description' => 'De PvdD combineert dierenwelzijn met duurzaamheid.',
             'leader_info' => 'Esther Ouwehand, drijvende kracht achter de PvdD.',
@@ -272,7 +272,7 @@ try {
         'CDA' => [
             'name' => 'Christen-Democratisch Appèl',
             'leader' => 'Henri Bontenbal',
-            'logo' => 'https://logo.clearbit.com/cda.nl',
+            'logo' => '/public/images/party-logos/cda.png',
             'leader_photo' => '/partijleiders/Henri.jpg',
             'description' => 'Het CDA staat voor christendemocratische waarden.',
             'leader_info' => 'Henri Bontenbal, ervaren politicus uit energiesector.',
@@ -286,7 +286,7 @@ try {
         'JA21' => [
             'name' => 'Juiste Antwoord 2021',
             'leader' => 'Joost Eerdmans',
-            'logo' => 'https://logo.clearbit.com/ja21.nl',
+            'logo' => '/public/images/party-logos/ja21.png',
             'leader_photo' => '/partijleiders/joost.jpg',
             'description' => 'JA21 is een conservatief-liberale partij.',
             'leader_info' => 'Joost Eerdmans, medeoprichter met kleurrijke achtergrond.',
@@ -300,7 +300,7 @@ try {
         'SGP' => [
             'name' => 'Staatkundig Gereformeerde Partij',
             'leader' => 'Chris Stoffer',
-            'logo' => 'https://logo.clearbit.com/sgp.nl',
+            'logo' => '/public/images/party-logos/sgp.png',
             'leader_photo' => '/partijleiders/Chris.jpg',
             'description' => 'De SGP baseert politiek op bijbelse principes.',
             'leader_info' => 'Chris Stoffer, compromisloze inzet voor christelijke waarden.',
@@ -314,7 +314,7 @@ try {
         'FvD' => [
             'name' => 'Forum voor Democratie',
             'leader' => 'Thierry Baudet',
-            'logo' => 'https://logo.clearbit.com/fvd.nl',
+            'logo' => '/public/images/party-logos/fvd.png',
             'leader_photo' => '/partijleiders/thierry.jpg',
             'description' => 'FvD is een rechts-conservatieve partij.',
             'leader_info' => 'Thierry Baudet, intellectueel en controversieel denker.',
@@ -328,7 +328,7 @@ try {
         'DENK' => [
             'name' => 'DENK',
             'leader' => 'Stephan van Baarle',
-            'logo' => 'https://logo.clearbit.com/bewegingdenk.nl',
+            'logo' => '/public/images/party-logos/denk.png',
             'leader_photo' => '/partijleiders/baarle.jpg',
             'description' => 'DENK staat voor inclusieve samenleving.',
             'leader_info' => 'Stephan van Baarle, inzet voor rechten van minderheden.',
@@ -342,7 +342,7 @@ try {
         'Volt' => [
             'name' => 'Volt Nederland',
             'leader' => 'Laurens Dassen',
-            'logo' => 'https://logo.clearbit.com/voltnederland.org',
+            'logo' => '/public/images/party-logos/volt.png',
             'leader_photo' => '/partijleiders/dassen.jpg',
             'description' => 'Volt Nederland is een pan-Europese partij.',
             'leader_info' => 'Laurens Dassen, medeoprichter met financiële achtergrond.',
@@ -356,7 +356,7 @@ try {
         'CU' => [
             'name' => 'ChristenUnie',
             'leader' => 'Mirjam Bikker',
-            'logo' => 'https://logo.clearbit.com/christenunie.nl',
+            'logo' => '/public/images/party-logos/christenunie.svg',
             'leader_photo' => 'https://i.ibb.co/wh3wwQ66/Bikker.jpg',
             'description' => 'De ChristenUnie is een sociaal-christelijke partij.',
             'leader_info' => 'Mirjam Bikker, doortastende en constructieve aanpak.',

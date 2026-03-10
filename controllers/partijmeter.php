@@ -2160,19 +2160,19 @@ function partijmeter() {
         getFallbackPartyLogos() {
             return {
                 'PVV': 'https://i.ibb.co/DfR8pS2Y/403880390-713625330344634-198487231923339026-n.jpg',
-                'VVD': 'https://logo.clearbit.com/vvd.nl',
+                'VVD': '/public/images/party-logos/vvd.png',
                 'NSC': 'https://i.ibb.co/YT2fJZb4/nsc.png',
                 'BBB': 'https://i.ibb.co/qMjw7jDV/bbb.png',
                 'GL-PvdA': 'https://i.ibb.co/67hkc5Hv/gl-pvda.png',
-                'D66': 'https://logo.clearbit.com/d66.nl',
-                'SP': 'https://logo.clearbit.com/sp.nl',
-                'PvdD': 'https://logo.clearbit.com/partijvoordedieren.nl',
-                'CDA': 'https://logo.clearbit.com/cda.nl',
-                'JA21': 'https://logo.clearbit.com/ja21.nl',
-                'SGP': 'https://logo.clearbit.com/sgp.nl',
-                'FvD': 'https://logo.clearbit.com/fvd.nl',
-                'DENK': 'https://logo.clearbit.com/bewegingdenk.nl',
-                'Volt': 'https://logo.clearbit.com/voltnederland.org'
+                'D66': '/public/images/party-logos/d66.png',
+                'SP': '/public/images/party-logos/sp.png',
+                'PvdD': '/public/images/party-logos/pvdd.png',
+                'CDA': '/public/images/party-logos/cda.png',
+                'JA21': '/public/images/party-logos/ja21.png',
+                'SGP': '/public/images/party-logos/sgp.png',
+                'FvD': '/public/images/party-logos/fvd.png',
+                'DENK': '/public/images/party-logos/denk.png',
+                'Volt': '/public/images/party-logos/volt.png'
             };
         },
         
