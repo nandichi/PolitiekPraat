@@ -473,7 +473,7 @@
             <?php if (isset($_GET['debug'])): ?>
                 <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded mb-8">
                     <strong>Debug Info:</strong><br>
-                    - Huidige pagina: <?php echo $currentPage; ?><br>
+                    - Huidige pagina: <?php echo $newsCurrentPage; ?><br>
                     - Totaal pagina's: <?php echo $totalPages; ?><br>
                     - Totaal artikelen: <?php echo $totalArticles; ?><br>
                     - Artikelen per pagina: <?php echo $articlesPerPage; ?><br>
@@ -597,7 +597,7 @@
                         <!-- Pagination Header -->
                         <div class="mb-8">
                             <h3 class="text-2xl font-black text-slate-900 mb-2">
-                                Pagina <?php echo $currentPage; ?> van <?php echo $totalPages; ?>
+                                Pagina <?php echo $newsCurrentPage; ?> van <?php echo $totalPages; ?>
                             </h3>
                             <p class="text-slate-600">
                                 <?php echo $totalArticles; ?> artikelen gevonden in totaal
@@ -609,11 +609,11 @@
                             <div class="flex items-center justify-center flex-wrap gap-3">
                                 
                                 <!-- Vorige Pagina -->
-                                <?php if ($currentPage > 1): ?>
+                                <?php if ($newsCurrentPage > 1): ?>
                                     <a href="?<?php 
                                         $params = [];
                                         if ($filter !== 'alle') $params[] = "filter=$filter";
-                                        $params[] = "page=" . ($currentPage - 1);
+                                        $params[] = "page=" . ($newsCurrentPage - 1);
                                         echo implode('&', $params);
                                     ?>#artikelen" 
                                        class="group flex items-center px-6 py-3 bg-slate-100 hover:bg-primary text-slate-700 hover:text-white rounded-xl transition-all duration-300 hover:scale-105 shadow-md hover:shadow-lg font-semibold">
@@ -626,8 +626,8 @@
                                 
                                 <!-- Pagina Nummers -->
                                 <?php
-                                $startPage = max(1, $currentPage - 2);
-                                $endPage = min($totalPages, $currentPage + 2);
+                                $startPage = max(1, $newsCurrentPage - 2);
+                                $endPage = min($totalPages, $newsCurrentPage + 2);
                                 
                                 // Eerste pagina
                                 if ($startPage > 1):
@@ -654,7 +654,7 @@
                                         $params[] = "page=$i";
                                         echo implode('&', $params);
                                     ?>#artikelen" 
-                                       class="flex items-center justify-center w-12 h-12 <?php echo $i === $currentPage ? 'bg-gradient-to-br from-primary to-primary-dark text-white shadow-lg' : 'text-slate-700 bg-slate-100 hover:bg-primary hover:text-white'; ?> rounded-xl transition-all duration-300 hover:scale-105 shadow-md hover:shadow-lg font-semibold">
+                                       class="flex items-center justify-center w-12 h-12 <?php echo  $i === $newsCurrentPage ? 'bg-gradient-to-br from-primary to-primary-dark text-white shadow-lg' : 'text-slate-700 bg-slate-100 hover:bg-primary hover:text-white'; ?> rounded-xl transition-all duration-300 hover:scale-105 shadow-md hover:shadow-lg font-semibold">
                                         <?php echo $i; ?>
                                     </a>
                                 <?php endfor; ?>
@@ -676,11 +676,11 @@
                                 <?php endif; ?>
                                 
                                 <!-- Volgende Pagina -->
-                                <?php if ($currentPage < $totalPages): ?>
+                                <?php if ($newsCurrentPage < $totalPages): ?>
                                     <a href="?<?php 
                                         $params = [];
                                         if ($filter !== 'alle') $params[] = "filter=$filter";
-                                        $params[] = "page=" . ($currentPage + 1);
+                                        $params[] = "page=" . ($newsCurrentPage + 1);
                                         echo implode('&', $params);
                                     ?>#artikelen" 
                                        class="group flex items-center px-6 py-3 bg-slate-100 hover:bg-primary text-slate-700 hover:text-white rounded-xl transition-all duration-300 hover:scale-105 shadow-md hover:shadow-lg font-semibold">
@@ -697,7 +697,7 @@
                                 <a href="?clear_cache=1<?php 
                                     $params = [];
                                     if ($filter !== 'alle') $params[] = "filter=$filter";
-                                    if ($currentPage > 1) $params[] = "page=$currentPage";
+                                    if ($newsCurrentPage > 1) $params[] = "page=$newsCurrentPage";
                                     echo !empty($params) ? '&' . implode('&', $params) : '';
                                 ?>#artikelen" 
                                    class="group inline-flex items-center px-8 py-3 bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white font-bold rounded-xl transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl">

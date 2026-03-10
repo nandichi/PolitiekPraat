@@ -31,10 +31,10 @@ $filter = isset($_GET['filter']) ? $_GET['filter'] : 'alle';
 
 // Paginering instellingen
 $articlesPerPage = 9;
-$currentPage = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
+$newsCurrentPage = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
 
 // Haal nieuws op uit database via NewsModel met paginering
-$latest_news = $newsModel->getFilteredNewsPaginated($filter, $currentPage, $articlesPerPage);
+$latest_news = $newsModel->getFilteredNewsPaginated($filter, $newsCurrentPage, $articlesPerPage);
 
 // Haal totaal aantal artikelen op voor paginering
 $totalArticles = $newsModel->getTotalCount($filter);
@@ -94,7 +94,7 @@ $stats = $newsModel->getNewsStats();
 error_log("Aantal totale artikelen: " . $stats['total_articles']);
 error_log("Aantal progressieve artikelen: " . $stats['progressive_count']);
 error_log("Aantal conservatieve artikelen: " . $stats['conservative_count']);
-error_log("Huidige pagina: $currentPage van $totalPages");
+error_log("Huidige pagina: $newsCurrentPage van $totalPages");
 error_log("Aantal artikelen op huidige pagina: " . count($latest_news));
 error_log("TotalArticles voor paginering: " . $totalArticles);
 
@@ -106,8 +106,8 @@ if (isset($_GET['clear_cache']) && $_GET['clear_cache'] === '1') {
     if (!empty($filter) && $filter !== 'alle') {
         $params[] = "filter=$filter";
     }
-    if ($currentPage > 1) {
-        $params[] = "page=$currentPage";
+    if ($newsCurrentPage > 1) {
+        $params[] = "page=$newsCurrentPage";
     }
     
     $redirectUrl .= !empty($params) ? '?' . implode('&', $params) : '';
