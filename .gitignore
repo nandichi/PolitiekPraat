@@ -1,5 +1,6 @@
 # IDE en systeem bestanden
 .DS_Store
+**/.DS_Store
 .idea/
 .vscode/
 
@@ -34,5 +35,8 @@ public/uploads/profile_photos/*
 node_modules/
 
 # Sitemap (server-generated)
-sitemap.xmladmin/devteam-state.json
+sitemap.xml
+
+# Lokale devteam state
+admin/devteam-state.json
 admin/devteam-queue.json
