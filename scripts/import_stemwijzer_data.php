@@ -12,19 +12,19 @@ $db = new Database();
 // Partijen data
 $parties = [
     ['name' => 'Partij voor de Vrijheid', 'short_name' => 'PVV', 'logo_url' => 'https://i.ibb.co/DfR8pS2Y/403880390-713625330344634-198487231923339026-n.jpg'],
-    ['name' => 'Volkspartij voor Vrijheid en Democratie', 'short_name' => 'VVD', 'logo_url' => 'https://logo.clearbit.com/vvd.nl'],
+    ['name' => 'Volkspartij voor Vrijheid en Democratie', 'short_name' => 'VVD', 'logo_url' => '/public/images/party-logos/vvd.png'],
     ['name' => 'Nieuw Sociaal Contract', 'short_name' => 'NSC', 'logo_url' => 'https://i.ibb.co/YT2fJZb4/nsc.png'],
     ['name' => 'BoerBurgerBeweging', 'short_name' => 'BBB', 'logo_url' => 'https://i.ibb.co/qMjw7jDV/bbb.png'],
     ['name' => 'GroenLinks-PvdA', 'short_name' => 'GL-PvdA', 'logo_url' => 'https://i.ibb.co/67hkc5Hv/gl-pvda.png'],
-    ['name' => 'Democraten 66', 'short_name' => 'D66', 'logo_url' => 'https://logo.clearbit.com/d66.nl'],
-    ['name' => 'Socialistische Partij', 'short_name' => 'SP', 'logo_url' => 'https://logo.clearbit.com/sp.nl'],
-    ['name' => 'Partij voor de Dieren', 'short_name' => 'PvdD', 'logo_url' => 'https://logo.clearbit.com/partijvoordedieren.nl'],
-    ['name' => 'Christen-Democratisch Appèl', 'short_name' => 'CDA', 'logo_url' => 'https://logo.clearbit.com/cda.nl'],
-    ['name' => 'JA21', 'short_name' => 'JA21', 'logo_url' => 'https://logo.clearbit.com/ja21.nl'],
-    ['name' => 'Staatkundig Gereformeerde Partij', 'short_name' => 'SGP', 'logo_url' => 'https://logo.clearbit.com/sgp.nl'],
-    ['name' => 'Forum voor Democratie', 'short_name' => 'FvD', 'logo_url' => 'https://logo.clearbit.com/fvd.nl'],
-    ['name' => 'DENK', 'short_name' => 'DENK', 'logo_url' => 'https://logo.clearbit.com/bewegingdenk.nl'],
-    ['name' => 'Volt Nederland', 'short_name' => 'Volt', 'logo_url' => 'https://logo.clearbit.com/voltnederland.org']
+    ['name' => 'Democraten 66', 'short_name' => 'D66', 'logo_url' => '/public/images/party-logos/d66.png'],
+    ['name' => 'Socialistische Partij', 'short_name' => 'SP', 'logo_url' => '/public/images/party-logos/sp.png'],
+    ['name' => 'Partij voor de Dieren', 'short_name' => 'PvdD', 'logo_url' => '/public/images/party-logos/pvdd.png'],
+    ['name' => 'Christen-Democratisch Appèl', 'short_name' => 'CDA', 'logo_url' => '/public/images/party-logos/cda.png'],
+    ['name' => 'JA21', 'short_name' => 'JA21', 'logo_url' => '/public/images/party-logos/ja21.png'],
+    ['name' => 'Staatkundig Gereformeerde Partij', 'short_name' => 'SGP', 'logo_url' => '/public/images/party-logos/sgp.png'],
+    ['name' => 'Forum voor Democratie', 'short_name' => 'FvD', 'logo_url' => '/public/images/party-logos/fvd.png'],
+    ['name' => 'DENK', 'short_name' => 'DENK', 'logo_url' => '/public/images/party-logos/denk.png'],
+    ['name' => 'Volt Nederland', 'short_name' => 'Volt', 'logo_url' => '/public/images/party-logos/volt.png']
 ];
 
 // Vragen data
