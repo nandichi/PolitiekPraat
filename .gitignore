@@ -11,4 +11,27 @@ composer.lock
 /includes/mail_config.php
 .env
 .env.local
-/config/api_keys.php 
+/config/api_keys.php
+
+# Cache bestanden (server-generated)
+cache/*.json
+cache/*.html
+
+# Logs
+logs/*.log
+error.log
+
+# User uploads (server-specifiek)
+uploads/blogs/images/*
+uploads/blogs/audio/*
+public/uploads/profile_photos/*
+
+# Backup bestanden
+*.bak
+*.sql.bak
+
+# Node modules
+node_modules/
+
+# Sitemap (server-generated)
+sitemap.xml
