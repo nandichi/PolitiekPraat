@@ -114,6 +114,16 @@ switch ($action) {
         echo json_encode(['messages' => $chats]);
         break;
 
+    case 'full_state':
+        $st = file_exists($state_file) ? json_decode(file_get_contents($state_file), true) : [];
+        $q = read_queue($queue_file);
+        echo json_encode([
+            'state' => $st,
+            'queue' => $q,
+            'server_time' => date('c'),
+        ], JSON_UNESCAPED_UNICODE);
+        break;
+
     default:
         http_response_code(400);
         echo json_encode(['error' => 'unknown action', 'available' => ['trigger', 'chat', 'queue_status', 'chat_history']]);
