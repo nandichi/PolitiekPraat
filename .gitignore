@@ -35,3 +35,4 @@ node_modules/
 
 # Sitemap (server-generated)
 sitemap.xmladmin/devteam-state.json
+admin/devteam-queue.json
