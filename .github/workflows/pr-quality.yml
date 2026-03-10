@@ -1,0 +1,33 @@
+name: PR Quality Gate
+
+on:
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  lint-and-smoke:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+
+      - name: PHP lint (all files)
+        run: |
+          set -euo pipefail
+          files=$(git ls-files '*.php')
+          if [ -z "$files" ]; then
+            echo "Geen PHP-bestanden gevonden"
+            exit 1
+          fi
+          while IFS= read -r file; do
+            php -l "$file"
+          done <<< "$files"
+
+      - name: Smoke checks
+        run: bash scripts/tests/ci_smoke.sh
