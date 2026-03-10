@@ -431,7 +431,18 @@ Toegang tot bestaande stemwijzer API (zie `api/stemwijzer.php`).
 
 ## Rate Limiting
 
-De API heeft momenteel geen rate limiting geïmplementeerd, maar dit wordt aanbevolen voor productie.
+Rate limiting is centraal actief op alle `/api/*` requests.
+
+- **Standaardlimiet**: `120` requests per `60` seconden per IP + endpoint + method
+- **Strengere limiet** (`auth`, `contact`, `comments`, `polls`): `30` requests per `60` seconden
+- **Headers**: `X-RateLimit-Limit`, `X-RateLimit-Remaining`, `X-RateLimit-Reset`
+- **Bij overschrijding**: HTTP `429` met `Retry-After` header en JSON foutresponse
+
+Configuratie via environment variables:
+
+- `POLITIEKPRAAT_API_RATE_LIMIT_WINDOW` (default: `60`)
+- `POLITIEKPRAAT_API_RATE_LIMIT_MAX` (default: `120`)
+- `POLITIEKPRAAT_API_RATE_LIMIT_STRICT_MAX` (default: `30`)
 
 ## CORS
 
