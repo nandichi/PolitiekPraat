@@ -13,6 +13,10 @@ php_value memory_limit 256M
 RewriteEngine On
 RewriteBase /
 
+# Blokkeer publieke toegang tot testscripts
+RewriteRule ^test.*\.php$ - [F,L,NC]
+RewriteRule ^scripts/tests/.*$ - [F,L,NC]
+
 # Allow direct access to files
 RewriteCond %{REQUEST_FILENAME} -f
 RewriteRule ^ - [L]
