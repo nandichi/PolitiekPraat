@@ -184,6 +184,10 @@ class APIRouter {
                 case 'partijen':
                     $this->handleParties($segments);
                     break;
+
+                case 'endpoints':
+                    $this->handleLegacyEndpointsAlias($segments);
+                    break;
                     
                 case 'forum':
                     $this->handleForum($segments);
@@ -417,6 +421,21 @@ class APIRouter {
         $this->requireEndpoint('parties');
         $partiesAPI = new PartiesAPI();
         $partiesAPI->handle($this->method, $segments);
+    }
+
+    /**
+     * Backward-compatible alias voor legacy calls zoals /api/endpoints/parties.
+     */
+    private function handleLegacyEndpointsAlias($segments) {
+        $legacyEndpoint = $segments[1] ?? '';
+
+        if ($legacyEndpoint === 'parties' || $legacyEndpoint === 'partijen') {
+            $forwardedSegments = array_slice($segments, 1);
+            $this->handleParties($forwardedSegments);
+            return;
+        }
+
+        sendApiError('Legacy endpoint niet gevonden: endpoints/' . $legacyEndpoint, 404);
     }
     
     private function handleForum($segments) {
