@@ -1171,7 +1171,7 @@ $howToStructuredData = [
                         Op basis van jouw antwoorden hebben we de partijen gerangschikt die het beste bij jouw politieke voorkeuren passen.
                     </p>
 
-                    <?php $datasetVersion = 'v2'; $peildatum = '2026-03-10'; include __DIR__ . '/../views/templates/stemwijzer-disclaimer.php'; ?>
+                    <?php $datasetVersion = 'ede-2026-v1.0'; $peildatum = '2026-03-10'; include __DIR__ . '/../views/templates/stemwijzer-disclaimer.php'; ?>
                 </div>
 
                 <!-- Top 3 Podium -->

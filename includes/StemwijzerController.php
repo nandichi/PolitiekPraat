@@ -59,9 +59,61 @@ class StemwijzerController {
     }
 
     /**
+     * Laad Ede 2026 vraagset v1.0 uit bestand (scope-lock gemeentelijke stemwijzer).
+     */
+    private function getEdeMunicipalQuestionsFromFile() {
+        $filePath = __DIR__ . '/../docs/gemeentelijke-stemwijzer/ede-2026-stellingen-v1.0.json';
+        if (!file_exists($filePath)) {
+            return [];
+        }
+
+        $raw = file_get_contents($filePath);
+        if ($raw === false || trim($raw) === '') {
+            return [];
+        }
+
+        $decoded = json_decode($raw, true);
+        if (!is_array($decoded)) {
+            return [];
+        }
+
+        $questions = [];
+        foreach ($decoded as $index => $item) {
+            if (!is_array($item) || empty($item['title'])) {
+                continue;
+            }
+
+            $id = isset($item['id']) ? (int) $item['id'] : ($index + 1);
+            $theme = isset($item['theme']) ? (string) $item['theme'] : '';
+
+            $questions[] = (object) [
+                'id' => $id,
+                'title' => (string) $item['title'],
+                'description' => 'Gemeentelijke stelling Ede 2026 (' . ($theme !== '' ? $theme : 'lokaal thema') . ').',
+                'context' => 'Scope: gemeenteraadsverkiezingen Ede 2026. Dataset v1.0.',
+                'left_view' => 'Oneens',
+                'right_view' => 'Eens',
+                'order_number' => $id
+            ];
+        }
+
+        usort($questions, function($a, $b) {
+            return ($a->order_number ?? 0) <=> ($b->order_number ?? 0);
+        });
+
+        return $questions;
+    }
+
+    /**
      * Haal alle actieve vragen op uit de database
      */
     public function getQuestions() {
+        $municipalQuestions = $this->getEdeMunicipalQuestionsFromFile();
+        if (!empty($municipalQuestions)) {
+            error_log("StemwijzerController: getQuestions - Using Ede 2026 municipal dataset v1.0 from file");
+            return $municipalQuestions;
+        }
+
         if (!$this->hasValidConnection || $this->schemaType === 'fallback') {
             error_log("StemwijzerController: getQuestions using fallback (no connection or fallback schema)");
             return $this->getFallbackQuestions();
