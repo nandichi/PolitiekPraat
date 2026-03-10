@@ -1,8 +1,8 @@
 <?php
+require_once __DIR__ . '/../includes/cors.php';
+
 header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: POST');
-header('Access-Control-Allow-Headers: Content-Type');
+apply_cors_policy(['POST', 'OPTIONS'], ['Content-Type']);
 
 // Error reporting
 error_reporting(E_ALL);

@@ -435,7 +435,7 @@ De API heeft momenteel geen rate limiting geïmplementeerd, maar dit wordt aanbe
 
 ## CORS
 
-CORS is geconfigureerd om alle origins toe te staan. Voor productie wordt aanbevolen dit te beperken tot specifieke domains.
+CORS gebruikt een expliciete allowlist. Toegestane origins zijn standaard: `https://politiekpraat.nl`, `https://www.politiekpraat.nl`, localhost varianten voor development (`3000`, `5173`, `8000`) en zijn overschrijfbaar via `POLITIEKPRAAT_CORS_ORIGINS` (comma-separated). Niet-toegestane origins krijgen HTTP 403.
 
 ## Foutafhandeling
 

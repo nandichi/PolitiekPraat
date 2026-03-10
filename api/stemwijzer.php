@@ -1,8 +1,8 @@
 <?php
+require_once __DIR__ . '/../includes/cors.php';
+
 header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, POST');
-header('Access-Control-Allow-Headers: Content-Type');
+apply_cors_policy(['GET', 'POST', 'OPTIONS'], ['Content-Type']);
 
 // Include necessary files
 require_once '../includes/config.php';

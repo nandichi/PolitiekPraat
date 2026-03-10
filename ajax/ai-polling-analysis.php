@@ -12,11 +12,11 @@ if (!defined('BASE_PATH')) {
 require_once BASE_PATH . '/includes/config.php';
 require_once BASE_PATH . '/includes/ChatGPTAPI.php';
 
+require_once BASE_PATH . '/includes/cors.php';
+
 // Headers voor JSON response
 header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: POST');
-header('Access-Control-Allow-Headers: Content-Type');
+apply_cors_policy(['POST', 'OPTIONS'], ['Content-Type']);
 
 // Controleer of het een POST request is
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
