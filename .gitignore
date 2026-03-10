@@ -34,4 +34,4 @@ public/uploads/profile_photos/*
 node_modules/
 
 # Sitemap (server-generated)
-sitemap.xml
+sitemap.xmladmin/devteam-state.json
