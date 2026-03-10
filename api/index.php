@@ -5,6 +5,7 @@ if (!defined('API_DEBUG')) {
 }
 
 require_once __DIR__ . '/../includes/cors.php';
+require_once __DIR__ . '/../includes/rate_limiter.php';
 
 // Set headers voor API responses
 header('Content-Type: application/json; charset=UTF-8');
@@ -12,6 +13,7 @@ apply_cors_policy(
     ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     ['Content-Type', 'Authorization', 'X-Requested-With', 'X-API-Key']
 );
+enforce_api_rate_limit();
 
 // Debug functie
 function debug_log($message) {
