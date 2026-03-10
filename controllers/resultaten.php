@@ -1,16 +1,12 @@
 <?php
+require_once dirname(__DIR__) . '/includes/error_bootstrap.php';
 require_once 'includes/config.php';
 require_once 'includes/Database.php';
 require_once 'includes/StemwijzerController.php';
 require_once 'includes/ChatGPTAPI.php';
 
 // Debug mode - zet op true voor live debugging
-$debugMode = false;
-
-if ($debugMode) {
-    error_reporting(E_ALL);
-    ini_set('display_errors', 1);
-}
+$debugMode = APP_DEBUG;
 
 // Haal share_id uit de URL
 $shareId = $_GET['id'] ?? '';
