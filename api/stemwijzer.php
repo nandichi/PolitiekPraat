@@ -74,6 +74,31 @@ try {
                         'message' => 'Statistieken succesvol opgehaald'
                     ]);
                     break;
+
+                case 'meta':
+                    // Sprint 1 context-lock voor gemeentelijke stemwijzer
+                    echo json_encode([
+                        'success' => true,
+                        'scope' => [
+                            'municipality' => 'ede',
+                            'municipality_name' => 'Ede',
+                            'election' => 'gemeenteraadsverkiezingen-2026',
+                            'election_year' => 2026,
+                            'mvp_statements' => 25,
+                            'scope_locked' => true
+                        ],
+                        'features' => [
+                            'weighting_enabled' => true,
+                            'publication_authority' => 'devteam',
+                            'publication_authority_label' => 'DevTeam (Nova + team)'
+                        ],
+                        'methodology' => [
+                            'answers' => ['eens', 'neutraal', 'oneens', 'geen_mening'],
+                            'notes' => 'Weging aan; scoreberekening en transparantie worden in scoring engine v2 uitgewerkt.'
+                        ],
+                        'message' => 'Meta context succesvol opgehaald'
+                    ]);
+                    break;
                     
                 case 'results':
                     // Haal opgeslagen resultaten op via share_id
