@@ -32,6 +32,13 @@ function stripMarkdown($text) {
     return $text;
 }
 
+// Force canonical homepage URL: /home -> / (SEO duplicate content prevention)
+$requestPath = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?? '/';
+if (rtrim($requestPath, '/') === '/home') {
+    header('Location: ' . URLROOT . '/', true, 301);
+    exit;
+}
+
 // PERFORMANCE TODO: Implement server-side caching (e.g., Redis, Memcached) for database queries and API responses to significantly improve TTFB (Time To First Byte).
 $db = new Database();
 $newsAPI = new NewsAPI();
@@ -698,14 +705,20 @@ require_once 'views/templates/header.php';
                                     </div>
                                     <!-- Blog afbeelding -->
                                     <?php if (!empty($latestBlog->image_path)): ?>
-                                        <div class="aspect-video overflow-hidden relative">
-                                            <img src="<?php echo URLROOT . '/' . $latestBlog->image_path; ?>" 
-                                                 alt="<?php echo htmlspecialchars($latestBlog->title); ?>"
-                                                 class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
-                                            
-                                            <!-- Gradient overlay voor betere tekst leesbaarheid -->
-                                            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-                                        </div>
+                                        <?php $heroImageUrl = getBlogImageUrl($latestBlog->image_path); ?>
+                                        <?php if (!empty($heroImageUrl)): ?>
+                                            <div class="aspect-video overflow-hidden relative">
+                                                <img src="<?php echo htmlspecialchars($heroImageUrl); ?>" 
+                                                     alt="<?php echo htmlspecialchars($latestBlog->title); ?>"
+                                                     class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                                     fetchpriority="high"
+                                                     decoding="async"
+                                                     onerror="this.onerror=null;this.src='<?php echo URLROOT; ?>/metadata-foto.png';">
+                                                
+                                                <!-- Gradient overlay voor betere tekst leesbaarheid -->
+                                                <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                                            </div>
+                                        <?php endif; ?>
                                     <?php endif; ?>
                                     
                                     <!-- Blog content -->
