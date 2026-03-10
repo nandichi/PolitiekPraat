@@ -309,9 +309,35 @@ $cron_states = $state['cron_states'] ?? [];
                             <span class="text-[11px] font-semibold uppercase tracking-wider" style="color:<?= $col['color'] ?>"><?= $col['label'] ?></span>
                             <span class="text-[11px] text-slate-500"><?= count($tasks) ?></span>
                         </div>
-                        <?php if (!empty($tasks)): foreach ($tasks as $task): ?>
+                        <?php if (!empty($tasks)): foreach ($tasks as $task):
+                            $gh = "https://github.com/{$github_repo}";
+                            if (is_string($task)) {
+                                $display = htmlspecialchars($task);
+                            } elseif (is_array($task)) {
+                                $parts = [];
+                                if (isset($task['issue'])) {
+                                    $parts[] = '<a href="' . $gh . '/issues/' . (int)$task['issue'] . '" target="_blank" class="text-amber-400/80 hover:text-amber-300 no-underline font-mono">#' . (int)$task['issue'] . '</a>';
+                                }
+                                if (isset($task['pr'])) {
+                                    $parts[] = '<a href="' . $gh . '/pull/' . (int)$task['pr'] . '" target="_blank" class="text-blue-400/80 hover:text-blue-300 no-underline font-mono">PR #' . (int)$task['pr'] . '</a>';
+                                }
+                                if (isset($task['title'])) {
+                                    $parts[] = htmlspecialchars($task['title']);
+                                }
+                                $display = implode(' <span class="text-slate-600 mx-0.5">/</span> ', $parts);
+                                if (isset($task['status']) && $task['status'] !== 'open') {
+                                    $sc = match($task['status']) { 'blocked'=>'#f87171', 'stale'=>'#fbbf24', default=>'#94a3b8' };
+                                    $display .= ' <span class="inline-flex px-1.5 py-0.5 rounded text-[10px] font-semibold uppercase ml-1" style="background:' . hex2rgba($sc, 0.1) . ';color:' . $sc . '">' . htmlspecialchars($task['status']) . '</span>';
+                                }
+                                if (isset($task['reason'])) {
+                                    $display .= '<br><span class="text-xs text-slate-500 italic">' . htmlspecialchars($task['reason']) . '</span>';
+                                }
+                            } else {
+                                $display = htmlspecialchars(json_encode($task));
+                            }
+                        ?>
                             <div class="ml-4 py-2 pl-3 mb-1" style="border-left:2px solid <?= hex2rgba($col['color'], 0.3) ?>">
-                                <span class="text-sm text-slate-300"><?= htmlspecialchars(is_string($task) ? $task : ($task['title'] ?? json_encode($task))) ?></span>
+                                <span class="text-sm text-slate-300 leading-relaxed"><?= $display ?></span>
                             </div>
                         <?php endforeach; else: ?>
                             <div class="ml-4 py-1"><span class="text-xs text-slate-600">--</span></div>
@@ -530,7 +556,7 @@ $cron_states = $state['cron_states'] ?? [];
         ctx.parentElement.innerHTML = '<p class="text-sm text-slate-500 text-center pt-16">Grafiek verschijnt na meerdere health checks.</p>';
     }
 
-    setTimeout(() => location.reload(), 60000);
+    // No auto-reload; manual refresh via header button
     </script>
 </body>
 </html>
