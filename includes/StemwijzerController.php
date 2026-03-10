@@ -379,6 +379,10 @@ class StemwijzerController {
             
             if ($success) {
                 $insertedId = $this->db->lastInsertId();
+
+                // Niet-brekende hook voor gemeentelijke context (optioneel)
+                $this->saveMunicipalResultContext($insertedId, $results);
+
                 error_log("StemwijzerController: saveResults - Resultaten succesvol opgeslagen met ID: " . $insertedId . ", Share ID: " . $shareId);
                 error_log("StemwijzerController: saveResults - Session: $sessionId, Antwoorden: " . count($answers) . ", User: " . ($userId ?? 'anonymous'));
                 return $shareId; // Return share_id instead of boolean for link generation
@@ -765,6 +769,66 @@ class StemwijzerController {
             
         } catch (Exception $e) {
             error_log("StemwijzerController: addShareIdColumnIfMissing - FOUT: " . $e->getMessage());
+        }
+    }
+
+    /**
+     * Sla optionele gemeentelijke context op voor reproduceerbaarheid van resultaten.
+     * Verwacht in $results: ['_municipal_context' => ['election_municipality_id' => ?, 'thesis_version_id' => ?, 'weighting_enabled' => bool, ...]]
+     */
+    private function saveMunicipalResultContext($stemwijzerResultId, $results) {
+        try {
+            if (empty($stemwijzerResultId) || !is_array($results)) {
+                return;
+            }
+
+            $municipalContext = $results['_municipal_context'] ?? null;
+            if (!is_array($municipalContext)) {
+                return; // Geen context meegegeven: niets doen (backward compatible)
+            }
+
+            $this->db->query("SHOW TABLES LIKE 'stemwijzer_result_contexts'");
+            $contextTableExists = $this->db->single();
+            if (!$contextTableExists) {
+                return;
+            }
+
+            $electionMunicipalityId = isset($municipalContext['election_municipality_id']) ? (int) $municipalContext['election_municipality_id'] : null;
+            $thesisVersionId = isset($municipalContext['thesis_version_id']) ? (int) $municipalContext['thesis_version_id'] : null;
+            $weightingEnabled = isset($municipalContext['weighting_enabled']) ? ((bool) $municipalContext['weighting_enabled'] ? 1 : 0) : 1;
+
+            $this->db->query("SELECT id FROM stemwijzer_result_contexts WHERE stemwijzer_result_id = :result_id");
+            $this->db->bind(':result_id', $stemwijzerResultId);
+            $existing = $this->db->single();
+
+            if ($existing) {
+                $this->db->query("
+                    UPDATE stemwijzer_result_contexts
+                    SET election_municipality_id = :election_municipality_id,
+                        thesis_version_id = :thesis_version_id,
+                        weighting_enabled = :weighting_enabled,
+                        context_payload = :context_payload,
+                        updated_at = NOW()
+                    WHERE stemwijzer_result_id = :result_id
+                ");
+            } else {
+                $this->db->query("
+                    INSERT INTO stemwijzer_result_contexts
+                    (stemwijzer_result_id, election_municipality_id, thesis_version_id, weighting_enabled, context_payload)
+                    VALUES
+                    (:result_id, :election_municipality_id, :thesis_version_id, :weighting_enabled, :context_payload)
+                ");
+            }
+
+            $this->db->bind(':result_id', $stemwijzerResultId);
+            $this->db->bind(':election_municipality_id', $electionMunicipalityId);
+            $this->db->bind(':thesis_version_id', $thesisVersionId);
+            $this->db->bind(':weighting_enabled', $weightingEnabled);
+            $this->db->bind(':context_payload', json_encode($municipalContext));
+            $this->db->execute();
+        } catch (Exception $e) {
+            // Nooit resultaten-opslag breken door optionele context-hook
+            error_log("StemwijzerController: saveMunicipalResultContext - FOUT: " . $e->getMessage());
         }
     }
 
