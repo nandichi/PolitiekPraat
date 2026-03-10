@@ -19,7 +19,7 @@ Deze stemwijzer geeft een **voorkeursovereenkomst** tussen gebruiker en partijst
 Per stelling wordt bronverwijzing bijgehouden in de dataset/methodedocumentatie. Publicatie op de uitslagpagina linkt naar deze methodepagina.
 
 ## Versie en peildatum
-- Datasetversie: `v2`
+- Datasetversie: `ede-2026-v1.0`
 - Peildatum publicatie: `2026-03-10`
 
 ## Correctiebeleid

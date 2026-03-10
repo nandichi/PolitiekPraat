@@ -95,8 +95,8 @@ try {
                         ],
                         'methodology' => [
                             'answers' => ['eens', 'neutraal', 'oneens', 'geen_mening'],
-                            'notes' => 'Scoring v2 actief: exact=1.0, neutraal-vs-uitgesproken=0.5, tegenovergesteld=0.0. Geen stemadviesclaim.',
-                            'version' => 'v2',
+                            'notes' => 'Scoring v2 actief: exact=1.0, neutraal-vs-uitgesproken=0.5, tegenovergesteld=0.0. Dataset: Ede 2026 stellingen v1.0 (25). Geen stemadviesclaim.',
+                            'version' => 'ede-2026-v1.0',
                             'peildatum' => '2026-03-10',
                             'method_link' => 'https://github.com/nandichi/PolitiekPraat/blob/main/docs/gemeentelijke-stemwijzer/legal-ethics.md'
                         ],
