@@ -88,6 +88,15 @@ PolitiekPraat/
 - Bescherming tegen hackers
 - Regelmatige controles op veiligheid
 
+## ✅ CI / PR merge gate
+
+Voor elke pull request naar `main` draait GitHub Actions:
+
+- PHP lint op alle `.php` bestanden
+- Basis smoke checks via `scripts/tests/ci_smoke.sh`
+
+Een falende check blokkeert merge totdat de PR groen is.
+
 ## 🧪 Testscript-conventie
 
 - Zet geen `test*.php` bestanden in de projectroot.
