@@ -95,7 +95,7 @@ try {
                         ],
                         'methodology' => [
                             'answers' => ['eens', 'neutraal', 'oneens', 'geen_mening'],
-                            'notes' => 'Scoring v2 actief: exact=1.0, neutraal-vs-uitgesproken=0.5, tegenovergesteld=0.0.',
+                            'notes' => 'Scoring v2 actief: exact=1.0, neutraal-vs-uitgesproken=0.5, tegenovergesteld=0.0. Geen stemadviesclaim.',
                             'version' => 'v2',
                             'peildatum' => '2026-03-10',
                             'method_link' => 'https://github.com/nandichi/PolitiekPraat/blob/main/docs/gemeentelijke-stemwijzer/legal-ethics.md'
