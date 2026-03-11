@@ -15,6 +15,16 @@ apply_cors_policy(
 );
 enforce_api_rate_limit();
 
+function can_access_diagnostics(): bool {
+    $apiDebugEnv = getenv('API_DEBUG');
+    $apiDebugEnabled = in_array(strtolower((string) $apiDebugEnv), ['1', 'true', 'yes', 'on'], true);
+
+    $nonProductionEnvs = ['local', 'development', 'dev', 'staging', 'test', 'testing'];
+    $isNonProduction = in_array(APP_ENV, $nonProductionEnvs, true);
+
+    return $isNonProduction || (defined('API_DEBUG') && API_DEBUG) || $apiDebugEnabled;
+}
+
 // Debug functie
 function debug_log($message) {
     if (defined('API_DEBUG') && API_DEBUG) {
@@ -346,8 +356,15 @@ class APIRouter {
     }
     
     private function handleTest() {
+        if (!can_access_diagnostics()) {
+            sendApiResponse([
+                'overall_status' => 'API is bereikbaar',
+                'timestamp' => date('Y-m-d H:i:s')
+            ]);
+        }
+
         $tests = [];
-        
+
         // Test database
         try {
             $db = new Database();
@@ -355,7 +372,7 @@ class APIRouter {
         } catch (Exception $e) {
             $tests['database'] = 'FOUT: ' . $e->getMessage();
         }
-        
+
         // Test config constants
         $tests['config'] = [
             'URLROOT' => defined('URLROOT') ? URLROOT : 'NIET GEDEFINIEERD',
@@ -363,7 +380,7 @@ class APIRouter {
             'DB_HOST' => defined('DB_HOST') ? 'GEDEFINIEERD' : 'NIET GEDEFINIEERD',
             'DB_NAME' => defined('DB_NAME') ? DB_NAME : 'NIET GEDEFINIEERD'
         ];
-        
+
         // Test classes
         $tests['classes'] = [
             'Database' => class_exists('Database') ? 'OK' : 'NIET GEVONDEN',
@@ -371,13 +388,13 @@ class APIRouter {
             'BlogController' => class_exists('BlogController') ? 'OK' : 'NIET GEVONDEN',
             'NewsModel' => class_exists('NewsModel') ? 'OK' : 'NIET GEVONDEN'
         ];
-        
+
         // Test file permissions
         $tests['permissions'] = [
             'api_dir_readable' => is_readable(__DIR__) ? 'OK' : 'NIET LEESBAAR',
             'includes_dir_readable' => is_readable(dirname(__DIR__) . '/includes') ? 'OK' : 'NIET LEESBAAR'
         ];
-        
+
         sendApiResponse([
             'test_results' => $tests,
             'overall_status' => 'API is bereikbaar',
