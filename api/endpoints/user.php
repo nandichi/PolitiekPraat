@@ -2,11 +2,11 @@
 
 class UserAPI {
     private $db;
-    private $secretKey;
+    private $jwtService;
     
     public function __construct() {
         $this->db = new Database();
-        $this->secretKey = 'PolitiekPraat_JWT_Secret_2024_Secure_Key_' . (defined('DB_NAME') ? DB_NAME : 'default');
+        $this->jwtService = new JwtService();
     }
     
     public function handle($method, $segments) {
@@ -440,27 +440,7 @@ class UserAPI {
     }
     
     private function verifyJWT($token) {
-        $tokenParts = explode('.', $token);
-        if (count($tokenParts) !== 3) {
-            return false;
-        }
-        
-        list($header, $payload, $signature) = $tokenParts;
-        
-        $expectedSignature = hash_hmac('sha256', $header . "." . $payload, $this->secretKey, true);
-        $expectedSignature = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($expectedSignature));
-        
-        if (!hash_equals($signature, $expectedSignature)) {
-            return false;
-        }
-        
-        $payload = json_decode(base64_decode(str_replace(['-', '_'], ['+', '/'], $payload)), true);
-        
-        if ($payload['exp'] < time()) {
-            return false;
-        }
-        
-        return $payload;
+        return $this->jwtService->verify($token);
     }
     
     private function getJsonInput() {

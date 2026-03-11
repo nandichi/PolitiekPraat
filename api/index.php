@@ -109,6 +109,7 @@ try {
         '/includes/AuthController.php',
         '/includes/CategoryController.php',
         '/includes/BlogController.php',
+        '/includes/JwtService.php',
         '/includes/helpers.php'
     ];
     
