@@ -4,6 +4,7 @@ class AuthAPI {
     private $db;
     private $authController;
     private $secretKey;
+    private $jwtService;
     
     public function __construct() {
         $this->db = new Database();
@@ -11,6 +12,7 @@ class AuthAPI {
         
         // JWT secret key - in productie moet dit in een config file
         $this->secretKey = 'PolitiekPraat_JWT_Secret_2024_Secure_Key_' . (defined('DB_NAME') ? DB_NAME : 'default');
+        $this->jwtService = new JwtService($this->secretKey);
     }
     
     public function handle($method, $segments) {
@@ -272,30 +274,7 @@ class AuthAPI {
     }
     
     private function verifyJWT($token) {
-        $tokenParts = explode('.', $token);
-        if (count($tokenParts) !== 3) {
-            return false;
-        }
-        
-        list($header, $payload, $signature) = $tokenParts;
-        
-        // Verificeer signature
-        $expectedSignature = hash_hmac('sha256', $header . "." . $payload, $this->secretKey, true);
-        $expectedSignature = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($expectedSignature));
-        
-        if (!hash_equals($signature, $expectedSignature)) {
-            return false;
-        }
-        
-        // Decode payload
-        $payload = json_decode(base64_decode(str_replace(['-', '_'], ['+', '/'], $payload)), true);
-        
-        // Controleer expiration
-        if ($payload['exp'] < time()) {
-            return false;
-        }
-        
-        return $payload;
+        return $this->jwtService->verify($token);
     }
     
     private function getCurrentUserFromToken() {
