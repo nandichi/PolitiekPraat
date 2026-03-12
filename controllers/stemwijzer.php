@@ -661,6 +661,7 @@ $howToStructuredData = [
                                 <div class="space-y-3 sm:space-y-4">
                                     <!-- Eens Option -->
                                     <button @click="answerQuestion('eens')"
+                                            aria-label="Kies antwoord Eens"
                                             class="group w-full p-4 sm:p-5 md:p-6 bg-gradient-to-r from-emerald-50 to-green-50 hover:from-emerald-100 hover:to-green-100 border-2 border-emerald-200 hover:border-emerald-300 rounded-xl sm:rounded-2xl transition-all duration-300 hover:shadow-lg hover:shadow-emerald-100 transform hover:-translate-y-1">
                                         <div class="flex items-center space-x-3 sm:space-x-4 md:space-x-5">
                                             <div class="w-10 sm:w-12 md:w-14 h-10 sm:h-12 md:h-14 rounded-lg sm:rounded-xl bg-gradient-to-br from-emerald-500 to-green-600 flex items-center justify-center shadow-lg shadow-emerald-500/25 group-hover:scale-110 transition-transform">
@@ -680,6 +681,7 @@ $howToStructuredData = [
 
                                     <!-- Neutraal Option -->
                                     <button @click="answerQuestion('neutraal')"
+                                            aria-label="Kies antwoord Neutraal"
                                             class="group w-full p-4 sm:p-5 md:p-6 bg-gradient-to-r from-blue-50 to-indigo-50 hover:from-blue-100 hover:to-indigo-100 border-2 border-blue-200 hover:border-blue-300 rounded-xl sm:rounded-2xl transition-all duration-300 hover:shadow-lg hover:shadow-blue-100 transform hover:-translate-y-1">
                                         <div class="flex items-center space-x-3 sm:space-x-4 md:space-x-5">
                                             <div class="w-10 sm:w-12 md:w-14 h-10 sm:h-12 md:h-14 rounded-lg sm:rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-500/25 group-hover:scale-110 transition-transform">
@@ -699,6 +701,7 @@ $howToStructuredData = [
 
                                                                         <!-- Oneens Option -->
                                     <button @click="answerQuestion('oneens')"
+                                            aria-label="Kies antwoord Oneens"
                                             class="group w-full p-4 sm:p-5 md:p-6 bg-gradient-to-r from-red-50 to-pink-50 hover:from-red-100 hover:to-pink-100 border-2 border-red-200 hover:border-red-300 rounded-xl sm:rounded-2xl transition-all duration-300 hover:shadow-lg hover:shadow-red-100 transform hover:-translate-y-1">
                                         <div class="flex items-center space-x-3 sm:space-x-4 md:space-x-5">
                                             <div class="w-10 sm:w-12 md:w-14 h-10 sm:h-12 md:h-14 rounded-lg sm:rounded-xl bg-gradient-to-br from-red-500 to-pink-600 flex items-center justify-center shadow-lg shadow-red-500/25 group-hover:scale-110 transition-transform">
@@ -715,6 +718,14 @@ $howToStructuredData = [
                                             </svg>
                                         </div>
                                     </button>
+                                </div>
+
+                                <div class="xl:hidden sticky bottom-3 z-20 mt-4">
+                                    <div class="bg-white/95 backdrop-blur rounded-2xl border border-gray-200 shadow-lg p-2 grid grid-cols-3 gap-2">
+                                        <button @click="previousQuestion()" :disabled="currentStep === 0" class="min-h-11 rounded-xl bg-gray-100 text-gray-700 text-sm font-semibold disabled:opacity-40">Terug</button>
+                                        <button @click="toggleImportant()" :class="isImportant(currentStep) ? 'bg-amber-200 text-amber-800' : 'bg-amber-100 text-amber-700'" class="min-h-11 rounded-xl text-sm font-semibold">Belangrijk</button>
+                                        <button @click="skipQuestion()" class="min-h-11 rounded-xl bg-gray-100 text-gray-700 text-sm font-semibold">Overslaan</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -2426,6 +2437,7 @@ function stemwijzer() {
         
         // Loading state
         isLoading: false,
+        progressStorageKey: 'pp_stemwijzer_progress_v1',
         
         init() {
             // Debug informatie loggen
@@ -2448,6 +2460,8 @@ function stemwijzer() {
                 
                 // Valideer dat alle vragen de juiste properties hebben
                 this.validateQuestionsData();
+                this.restoreProgress();
+                this.updatePartyGroups();
                 
                 // Voeg een kleine vertraging toe voor animatie-effecten
                 setTimeout(() => {
@@ -2610,9 +2624,10 @@ function stemwijzer() {
             }
             
             this.screen = 'questions';
-            this.currentStep = 0;
+            this.currentStep = Object.keys(this.answers || {}).length > 0 ? this.currentStep : 0;
             this.showExplanation = false;
             this.updatePartyGroups();
+            this.persistProgress();
         },
         
         updatePartyGroups() {
@@ -2665,6 +2680,7 @@ function stemwijzer() {
             } else {
                 this.weights[key] = 2;
             }
+            this.persistProgress();
         },
 
         isImportant(index) {
@@ -2686,11 +2702,13 @@ function stemwijzer() {
                     this.showExplanation = false;
                     this.selectedParty = null;
                     this.updatePartyGroups();
+                    this.persistProgress();
                 }, 300); // Small delay for smooth transition
             } else {
                 setTimeout(async () => {
                     await this.calculateResults();
                     this.screen = 'results';
+                    this.clearProgress();
                     this.saveResultsToDatabase();
                 }, 500);
             }
@@ -2702,9 +2720,11 @@ function stemwijzer() {
                 this.showExplanation = false;
                 this.selectedParty = null;
                 this.updatePartyGroups();
+                this.persistProgress();
             } else {
                 await this.calculateResults();
                 this.screen = 'results';
+                this.clearProgress();
                 this.saveResultsToDatabase();
             }
         },
@@ -2715,7 +2735,45 @@ function stemwijzer() {
                 this.showExplanation = false;
                 this.selectedParty = null;
                 this.updatePartyGroups();
+                this.persistProgress();
             }
+        },
+
+        persistProgress() {
+            if (!window.localStorage) return;
+            const payload = {
+                screen: this.screen,
+                currentStep: this.currentStep,
+                answers: this.answers,
+                weights: this.weights,
+                ts: Date.now()
+            };
+            localStorage.setItem(this.progressStorageKey, JSON.stringify(payload));
+        },
+
+        restoreProgress() {
+            if (!window.localStorage) return;
+            const raw = localStorage.getItem(this.progressStorageKey);
+            if (!raw) return;
+
+            try {
+                const saved = JSON.parse(raw);
+                if (!saved || typeof saved !== 'object') return;
+                this.screen = saved.screen === 'results' ? 'start' : (saved.screen || 'start');
+                this.currentStep = Number.isInteger(saved.currentStep) ? Math.min(Math.max(saved.currentStep, 0), Math.max(this.totalSteps - 1, 0)) : 0;
+                this.answers = saved.answers && typeof saved.answers === 'object' ? saved.answers : {};
+                this.weights = saved.weights && typeof saved.weights === 'object' ? saved.weights : {};
+                if (Object.keys(this.answers).length > 0) {
+                    this.showNotification('Je vorige sessie is hersteld.', 'success');
+                }
+            } catch (error) {
+                console.warn('Kon opgeslagen voortgang niet herstellen:', error);
+            }
+        },
+
+        clearProgress() {
+            if (!window.localStorage) return;
+            localStorage.removeItem(this.progressStorageKey);
         },
         
         async calculateResults() {
