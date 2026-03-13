@@ -393,23 +393,23 @@ require_once 'views/templates/header.php';
             <div class="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.18),transparent_45%),radial-gradient(circle_at_80%_10%,rgba(255,255,255,0.10),transparent_40%)]"></div>
         </div>
 
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20 relative z-10">
-            <div class="grid grid-cols-1 xl:grid-cols-12 gap-8 lg:gap-10 items-start">
-                <div class="xl:col-span-7 text-white space-y-6 sm:space-y-8">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 md:py-16 lg:py-20 relative z-10 hero-shell">
+            <div class="grid grid-cols-1 xl:grid-cols-12 gap-7 sm:gap-8 lg:gap-10 items-start hero-main-grid">
+                <div class="xl:col-span-7 text-white space-y-5 sm:space-y-7 hero-copy-col">
                     <p class="inline-flex items-center gap-2 rounded-full bg-white/12 border border-white/20 px-4 py-2 text-sm font-semibold tracking-wide">
                         <span class="w-2 h-2 rounded-full bg-secondary-light"></span>
                         PolitiekPraat · onafhankelijke politieke duiding
                     </p>
 
-                    <h1 id="home-hero-title" class="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black leading-tight max-w-3xl">
+                    <h1 id="home-hero-title" class="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black leading-tight max-w-3xl hero-title">
                         Snel snappen wat er speelt in Den Haag
                     </h1>
 
-                    <p class="text-base sm:text-lg lg:text-xl text-white/90 max-w-2xl leading-relaxed">
+                    <p class="text-base sm:text-lg lg:text-xl text-white/90 max-w-2xl leading-relaxed hero-lead">
                         In 3 minuten bij wat er écht speelt: scherpe analyses, heldere samenvattingen en direct door naar de nieuwste blogs.
                     </p>
 
-                    <div class="grid grid-cols-3 gap-3 sm:gap-4 max-w-lg" aria-label="Platform statistieken">
+                    <div class="grid grid-cols-3 gap-2.5 sm:gap-3.5 max-w-lg hero-stats-grid" aria-label="Platform statistieken">
                         <div class="rounded-xl bg-white/10 border border-white/20 p-3 sm:p-4">
                             <p class="text-2xl sm:text-3xl font-extrabold leading-none"><?php echo max(150, count($latest_blogs) * 25); ?>+</p>
                             <p class="text-sm text-white/80 mt-1">Politieke blogs</p>
@@ -424,9 +424,9 @@ require_once 'views/templates/header.php';
                         </div>
                     </div>
 
-                    <div class="pt-1 space-y-3">
+                    <div class="pt-1 space-y-3 hero-cta-wrap">
                         <p class="text-sm sm:text-base text-white/85">Begin met de nieuwste analyses en praat beter mee.</p>
-                        <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                        <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 hero-cta-row">
                             <a href="<?php echo URLROOT; ?>/blogs" class="new-hero-cta-primary hero-focus-ring" aria-label="Ga direct naar de nieuwste blogs op PolitiekPraat">
                                 Lees nieuwste blogs
                             </a>
@@ -437,8 +437,8 @@ require_once 'views/templates/header.php';
                     </div>
                 </div>
 
-                <aside class="xl:col-span-5 space-y-4 sm:space-y-5" aria-label="Recente blog highlights">
-                    <div class="rounded-2xl bg-white p-4 sm:p-5 shadow-2xl border border-slate-200/80">
+                <aside class="xl:col-span-5 space-y-4 sm:space-y-5 hero-highlights-col" aria-label="Recente blog highlights">
+                    <div class="rounded-2xl bg-white p-4 sm:p-5 shadow-2xl border border-slate-200/80 hero-highlights-card">
                         <div class="flex items-center justify-between mb-3">
                             <h2 class="text-lg sm:text-xl font-bold text-slate-900">Recente highlights</h2>
                             <a href="<?php echo URLROOT; ?>/blogs" class="text-sm font-semibold text-primary hover:text-secondary transition-colors hero-focus-ring rounded-md px-2 py-1">Alles bekijken</a>

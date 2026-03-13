@@ -388,6 +388,112 @@
   font-weight: 700;
 }
 
+/* ===== HERO FINE-TUNE (SPACING/TYPO BALANCE) ===== */
+.hero-section .hero-title {
+  text-wrap: balance;
+  letter-spacing: -0.02em;
+}
+
+.hero-section .hero-lead {
+  text-wrap: pretty;
+}
+
+.hero-section .hero-main-grid {
+  align-items: start;
+}
+
+.hero-section .hero-highlights-card {
+  backdrop-filter: blur(2px);
+}
+
+@media (max-width: 374px) {
+  .hero-section .hero-shell {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  .hero-section .hero-title {
+    font-size: 1.75rem;
+    line-height: 1.12;
+  }
+
+  .hero-section .hero-lead {
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+
+  .hero-section .hero-stats-grid {
+    gap: 0.5rem;
+  }
+
+  .hero-section .hero-stats-grid > div {
+    padding: 0.625rem;
+    border-radius: 0.625rem;
+  }
+
+  .hero-section .hero-stats-grid > div p:first-child {
+    font-size: 1.1rem;
+  }
+
+  .hero-section .hero-stats-grid > div p:last-child {
+    margin-top: 0.2rem;
+    font-size: 0.72rem;
+    line-height: 1.2;
+  }
+
+  .hero-section .hero-cta-wrap {
+    padding-top: 0.1rem;
+  }
+
+  .hero-section .hero-highlights-card {
+    padding: 0.85rem;
+  }
+}
+
+@media (min-width: 375px) and (max-width: 767px) {
+  .hero-section .hero-shell {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .hero-section .hero-title {
+    line-height: 1.14;
+  }
+
+  .hero-section .hero-cta-row a {
+    min-height: 50px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .hero-section .hero-shell {
+    padding-top: 3.5rem;
+    padding-bottom: 3.5rem;
+  }
+
+  .hero-section .hero-main-grid {
+    gap: 2rem;
+  }
+
+  .hero-section .hero-copy-col {
+    max-width: 46rem;
+  }
+
+  .hero-section .hero-highlights-col {
+    max-width: 40rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-section .hero-copy-col {
+    padding-right: 0.75rem;
+  }
+
+  .hero-section .hero-highlights-col {
+    padding-top: 0.25rem;
+  }
+}
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 640px) {
   .new-hero-cta-primary,
