@@ -5,7 +5,6 @@ require_once 'includes/OpenDataAPI.php';
 require_once 'includes/PoliticalDataAPI.php';
 require_once 'includes/PollAPI.php';
 require_once 'includes/BlogController.php';
-require_once 'models/PartyModel.php';
 
 // Helper functie om Markdown syntax te strippen
 function stripMarkdown($text) {
@@ -388,429 +387,87 @@ require_once 'views/templates/header.php';
 ?>
 
 <main class="bg-gray-50 overflow-x-hidden">
-    <!-- Hero Section - Moderne SaaS versie met nieuwste blog -->
-    <section class="hero-section relative min-h-screen bg-gradient-to-br from-primary-dark via-primary to-secondary overflow-hidden">
-        
-        <!-- Moderne achtergrond met subtiele effecten -->
-        <div class="absolute inset-0 z-0">
-            <!-- Subtiele pattern overlay -->
-            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg opacity=\"0.03\"%3E%3Ccircle cx=\"30\" cy=\"30\" r=\"1.5\" fill=\"white\"/%3E%3Ccircle cx=\"0\" cy=\"30\" r=\"1\" fill=\"white\"/%3E%3Ccircle cx=\"60\" cy=\"30\" r=\"1\" fill=\"white\"/%3E%3Ccircle cx=\"30\" cy=\"0\" r=\"1\" fill=\"white\"/%3E%3Ccircle cx=\"30\" cy=\"60\" r=\"1\" fill=\"white\"/%3E%3C/g%3E%3C/svg%3E')] opacity-40"></div>
-            
-            <!-- Ambient light effects -->
-            <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-pulse"></div>
-            <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-secondary/15 rounded-full blur-3xl animate-pulse" style="animation-delay: 2s;"></div>
-            </div>
-            
-        <!-- Floating partij logos -->
-        <div class="absolute inset-0 z-10 pointer-events-none overflow-hidden">
-            <?php
-            // Haal partij logo's dynamisch op uit de database
-            $partyModel = new PartyModel();
-            $allDbParties = $partyModel->getAllParties();
-            $partyLogos = [];
-            $partyColors = [];
-            foreach ($allDbParties as $key => $party) {
-                $partyLogos[$key] = $party['logo'];
-                $partyColors[$key] = $party['color'];
-            }
-            
-            // Partijen configuratie met kleuren uit database - posities worden random gegenereerd
-            $floatingPartijen = [
-                ['naam' => 'VVD', 'kleur' => $partyColors['VVD'] ?? '#FF9900', 'logo' => $partyLogos['VVD'] ?? '', 'delay' => '0s', 'duration' => '20s', 'size' => 'large'],
-                ['naam' => 'PVV', 'kleur' => $partyColors['PVV'] ?? '#0078D7', 'logo' => $partyLogos['PVV'] ?? '', 'delay' => '3s', 'duration' => '22s', 'size' => 'large'],
-                ['naam' => 'GL-PvdA', 'kleur' => $partyColors['GL-PvdA'] ?? '#008800', 'logo' => $partyLogos['GL-PvdA'] ?? '', 'delay' => '6s', 'duration' => '24s', 'size' => 'large'],
-                ['naam' => 'CDA', 'kleur' => $partyColors['CDA'] ?? '#1E8449', 'logo' => $partyLogos['CDA'] ?? '', 'delay' => '2s', 'duration' => '18s', 'size' => 'medium'],
-                ['naam' => 'D66', 'kleur' => $partyColors['D66'] ?? '#00B13C', 'logo' => $partyLogos['D66'] ?? '', 'delay' => '4s', 'duration' => '26s', 'size' => 'medium'],
-                ['naam' => 'SP', 'kleur' => $partyColors['SP'] ?? '#EE0000', 'logo' => $partyLogos['SP'] ?? '', 'delay' => '7s', 'duration' => '19s', 'size' => 'small'],
-                ['naam' => 'PvdD', 'kleur' => $partyColors['PvdD'] ?? '#006400', 'logo' => $partyLogos['PvdD'] ?? '', 'delay' => '8s', 'duration' => '21s', 'size' => 'small'],
-                ['naam' => 'Volt', 'kleur' => $partyColors['Volt'] ?? '#800080', 'logo' => $partyLogos['Volt'] ?? '', 'delay' => '10s', 'duration' => '25s', 'size' => 'small'],
-                ['naam' => 'JA21', 'kleur' => $partyColors['JA21'] ?? '#4B0082', 'logo' => $partyLogos['JA21'] ?? '', 'delay' => '12s', 'duration' => '27s', 'size' => 'small'],
-                ['naam' => 'SGP', 'kleur' => $partyColors['SGP'] ?? '#ff7f00', 'logo' => $partyLogos['SGP'] ?? '', 'delay' => '14s', 'duration' => '29s', 'size' => 'small']
-            ];
-            
-            // Array om gebruikte posities bij te houden
-            $usedPositions = [];
-            
-            // Functie om random posities te genereren die niet overlappen
-            function generateRandomPosition($index, $total, &$usedPositions) {
-                $attempts = 0;
-                $maxAttempts = 50;
-                
-                do {
-                    $attempts++;
-                    
-                    // Genereer random positie
-                    $isLeft = (rand(0, 1) === 0);
-                    
-                    if ($isLeft) {
-                        $position = [
-                            'top' => rand(5, 90),
-                            'left' => rand(2, 18),
-                            'right' => null
-                        ];
-                    } else {
-                        $position = [
-                            'top' => rand(5, 90),
-                            'left' => null,
-                            'right' => rand(2, 18)
-                        ];
-                    }
-                    
-                    // Check overlap met bestaande posities
-                    $hasOverlap = false;
-                    foreach ($usedPositions as $used) {
-                        $topDiff = abs($position['top'] - $used['top']);
-                        
-                        if ($isLeft && isset($used['left'])) {
-                            $sideDiff = abs($position['left'] - $used['left']);
-                            if ($topDiff < 15 && $sideDiff < 8) {
-                                $hasOverlap = true;
-                                break;
-                            }
-                        } elseif (!$isLeft && isset($used['right'])) {
-                            $sideDiff = abs($position['right'] - $used['right']);
-                            if ($topDiff < 15 && $sideDiff < 8) {
-                                $hasOverlap = true;
-                                break;
-                            }
-                        }
-                    }
-                    
-                    // Vermijd centrale zone (waar content staat)
-                    if ($position['top'] > 30 && $position['top'] < 70) {
-                        if (($isLeft && $position['left'] > 15) || (!$isLeft && $position['right'] > 15)) {
-                            $hasOverlap = true;
-                        }
-                    }
-                    
-                } while ($hasOverlap && $attempts < $maxAttempts);
-                
-                // Voeg positie toe aan gebruikte posities
-                $usedPositions[] = $position;
-                
-                return $position;
-            }
-            
-            foreach($floatingPartijen as $index => $partij):
-                // Bepaal grootte op basis van size parameter
-                $sizeClasses = match($partij['size']) {
-                    'large' => 'w-16 h-16 sm:w-20 sm:h-20',
-                    'medium' => 'w-12 h-12 sm:w-16 sm:h-16',
-                    'small' => 'w-8 h-8 sm:w-12 sm:h-12',
-                    default => 'w-12 h-12 sm:w-16 sm:h-16'
-                };
-                
-                $logoSizeClasses = match($partij['size']) {
-                    'large' => 'w-10 h-10 sm:w-14 sm:h-14',
-                    'medium' => 'w-8 h-8 sm:w-10 sm:h-10',
-                    'small' => 'w-6 h-6 sm:w-8 sm:h-8',
-                    default => 'w-8 h-8 sm:w-10 sm:h-10'
-                };
-                
-                // Genereer unieke random positie
-                $position = generateRandomPosition($index, count($floatingPartijen), $usedPositions);
-                $positionStyle = "top: {$position['top']}%;";
-                if ($position['left'] !== null) {
-                    $positionStyle .= " left: {$position['left']}%;";
-                } else {
-                    $positionStyle .= " right: {$position['right']}%;";
-                }
-            ?>
-            <div class="absolute opacity-15 hover:opacity-30 transition-opacity duration-500 party-float-<?php echo $index; ?>" 
-                 style="<?php echo $positionStyle; ?> animation: floating-<?php echo $index; ?> <?php echo $partij['duration']; ?> infinite ease-in-out; animation-delay: <?php echo $partij['delay']; ?>;">
-                <!-- Partij logo container met mooie styling -->
-                <div class="relative group cursor-pointer">
-                    <!-- Multi-layer glow effect -->
-                    <div class="absolute inset-0 <?php echo $sizeClasses; ?> rounded-3xl blur-xl transform scale-125 group-hover:scale-150 transition-transform duration-700 opacity-40"
-                         style="background: linear-gradient(135deg, <?php echo $partij['kleur']; ?>, <?php echo $partij['kleur']; ?>80);"></div>
-                    
-                    <div class="absolute inset-0 <?php echo $sizeClasses; ?> rounded-3xl blur-md transform scale-110 group-hover:scale-125 transition-transform duration-500 opacity-60"
-                         style="background: <?php echo $partij['kleur']; ?>;"></div>
-                    
-                    <!-- Main logo container -->
-                    <div class="relative <?php echo $sizeClasses; ?> bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/50 flex items-center justify-center transform group-hover:rotate-12 group-hover:scale-110 transition-all duration-700 overflow-hidden">
-                        <!-- Shimmer effect -->
-                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent transform -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
-                        
-                        <!-- Logo afbeelding -->
-                        <div class="<?php echo $logoSizeClasses; ?> rounded-2xl overflow-hidden transform group-hover:scale-110 transition-transform duration-500 flex items-center justify-center relative z-10">
-                            <img src="<?php echo $partij['logo']; ?>" 
-                                 alt="<?php echo $partij['naam']; ?> logo"
-                                 class="w-full h-full object-contain transition-all duration-500 group-hover:brightness-110"
-                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-                                 loading="lazy">
-                            <!-- Fallback met gradient -->
-                            <div class="hidden w-full h-full rounded-2xl font-black text-white items-center justify-center transform group-hover:scale-110 transition-transform duration-500 text-center"
-                                 style="background: linear-gradient(135deg, <?php echo $partij['kleur']; ?>, <?php echo $partij['kleur']; ?>CC); text-shadow: 0 2px 4px rgba(0,0,0,0.4); font-size: <?php echo $partij['size'] === 'large' ? '14px' : ($partij['size'] === 'medium' ? '12px' : '10px'); ?>;">
-                                <?php 
-                                // Optimized fallback text
-                                $afkorting = $partij['naam'];
-                                if (strpos($afkorting, '/') !== false) {
-                                    $delen = explode('/', $afkorting);
-                                    echo substr($delen[0], 0, 3);
-                                } else {
-                                    echo substr($afkorting, 0, min(4, strlen($afkorting)));
-                                }
-                                ?>
-                            </div>
-                        </div>
-                        
-                        <!-- Animated border -->
-                        <div class="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                             style="background: linear-gradient(45deg, <?php echo $partij['kleur']; ?>, transparent, <?php echo $partij['kleur']; ?>); padding: 2px;">
-                            <div class="w-full h-full rounded-3xl bg-white/95"></div>
-                        </div>
-                    </div>
-                    
-                    <!-- Floating particles -->
-                    <div class="absolute -top-2 -right-2 w-3 h-3 rounded-full animate-ping opacity-60"
-                         style="background: <?php echo $partij['kleur']; ?>; animation-delay: 0.5s;"></div>
-                    <div class="absolute -bottom-2 -left-2 w-2 h-2 rounded-full animate-ping opacity-40"
-                         style="background: <?php echo $partij['kleur']; ?>; animation-delay: 1s;"></div>
-                    
-                    <!-- Enhanced tooltip -->
-                    <div class="absolute -bottom-12 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none z-50">
-                        <div class="relative">
-                            <div class="absolute inset-0 bg-slate-900 rounded-lg blur-sm"></div>
-                            <div class="relative bg-slate-900/95 backdrop-blur-sm text-white text-sm px-3 py-2 rounded-lg shadow-xl border border-slate-700 whitespace-nowrap">
-                                <div class="font-bold"><?php echo $partij['naam']; ?></div>
-                                <div class="text-xs text-slate-300">Nederlandse Politieke Partij</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <?php endforeach; ?>
+    <!-- Hero Section - vernieuwd: mobiel-first, toegankelijk en blog-gericht -->
+    <section class="hero-section new-hero-section relative overflow-hidden bg-gradient-to-br from-primary-dark via-primary to-secondary" aria-labelledby="home-hero-title">
+        <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+            <div class="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.18),transparent_45%),radial-gradient(circle_at_80%_10%,rgba(255,255,255,0.10),transparent_40%)]"></div>
         </div>
 
-        <!-- CSS animaties voor partij logos -->
-        <style>
-        /* Floating animaties voor partij logos */
-        <?php foreach($floatingPartijen as $index => $partij): ?>
-        @keyframes floating-<?php echo $index; ?> {
-            0% { 
-                transform: translateX(0px) translateY(0px) rotate(0deg) scale(1); 
-            }
-            25% { 
-                transform: translateX(<?php echo 15 + ($index * 3); ?>px) translateY(-<?php echo 20 + ($index * 2); ?>px) rotate(<?php echo 5 + ($index * 2); ?>deg) scale(1.05); 
-            }
-            50% { 
-                transform: translateX(-<?php echo 10 + ($index * 3); ?>px) translateY(<?php echo 25 + ($index * 2); ?>px) rotate(-<?php echo 7 + ($index * 2); ?>deg) scale(0.95); 
-            }
-            75% { 
-                transform: translateX(<?php echo 20 + ($index * 2); ?>px) translateY(<?php echo 15 + ($index * 3); ?>px) rotate(<?php echo 3 + ($index * 2); ?>deg) scale(1.02); 
-            }
-            100% { 
-                transform: translateX(0px) translateY(0px) rotate(0deg) scale(1); 
-            }
-        }
-        <?php endforeach; ?>
-        
-        /* Responsieve aanpassingen */
-        @media (max-width: 768px) {
-            .party-float-container {
-                animation-duration: 15s !important;
-            }
-        }
-        
-        @media (prefers-reduced-motion: reduce) {
-            .party-float-container {
-                animation: none !important;
-            }
-        }
-        </style>
-        
-        <!-- Main content container -->
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
-            <div class="flex items-center justify-center min-h-screen py-20">
-                
-                <!-- Modern hero layout met nieuwste blog -->
-                <div class="max-w-7xl mx-auto">
-                    <div class="grid lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-16 items-center">
-                        
-                        <!-- Links: Hoofdcontent -->
-                        <div class="text-left space-y-8">
-                            <!-- Header badge -->
-                            <div class="hidden sm:inline-flex items-center px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full">
-                                <div class="w-2 h-2 bg-secondary-light rounded-full mr-3 animate-pulse"></div>
-                                <span class="text-white/90 text-sm font-medium">De nieuwste politieke insights</span>
-                            </div>
-                            
-                            <!-- Hoofdtitel -->
-                            <div class="space-y-6">
-                                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight">
-                                    <span class="block bg-gradient-to-r from-secondary-light via-secondary to-primary-light bg-clip-text text-transparent mb-2">
-                                PolitiekPraat
-                            </span>
-                                    <span class="block text-white/95 text-2xl sm:text-3xl lg:text-4xl font-light">
-                                Jouw politieke kompas
-                            </span>
-                        </h1>
-                    
-                                <p class="text-lg sm:text-xl text-white/80 leading-relaxed max-w-lg">
-                                    Ontdek de Nederlandse politiek via diepgaande analyses, actueel nieuws en interactieve tools.
-                                </p>
-                            </div>
-                            
-                            <!-- Stats cards -->
-                            <div class="grid grid-cols-3 gap-4 max-w-md">
-                                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center border border-white/20">
-                                    <div class="text-2xl font-bold text-white">150+</div>
-                                    <div class="text-sm text-white/70">Blogs</div>
-                            </div>
-                                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center border border-white/20">
-                                    <div class="text-2xl font-bold text-white">15</div>
-                                    <div class="text-sm text-white/70">Partijen</div>
-                            </div>
-                                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center border border-white/20">
-                                    <div class="text-2xl font-bold text-white">25</div>
-                                    <div class="text-sm text-white/70">Tools</div>
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20 relative z-10">
+            <div class="grid grid-cols-1 xl:grid-cols-12 gap-8 lg:gap-10 items-start">
+                <div class="xl:col-span-7 text-white space-y-6 sm:space-y-8">
+                    <p class="inline-flex items-center gap-2 rounded-full bg-white/12 border border-white/20 px-4 py-2 text-sm font-semibold tracking-wide">
+                        <span class="w-2 h-2 rounded-full bg-secondary-light"></span>
+                        PolitiekPraat · onafhankelijke politieke duiding
+                    </p>
+
+                    <h1 id="home-hero-title" class="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black leading-tight max-w-3xl">
+                        Snel snappen wat er speelt in Den Haag
+                    </h1>
+
+                    <p class="text-base sm:text-lg lg:text-xl text-white/90 max-w-2xl leading-relaxed">
+                        Diepe analyses, heldere samenvattingen en directe toegang tot de nieuwste blogs. Geen ruis, wel context.
+                    </p>
+
+                    <div class="grid grid-cols-3 gap-3 sm:gap-4 max-w-lg" aria-label="Platform statistieken">
+                        <div class="rounded-xl bg-white/10 border border-white/20 p-3 sm:p-4">
+                            <p class="text-2xl sm:text-3xl font-extrabold leading-none"><?php echo max(150, count($latest_blogs) * 25); ?>+</p>
+                            <p class="text-sm text-white/80 mt-1">Politieke blogs</p>
+                        </div>
+                        <div class="rounded-xl bg-white/10 border border-white/20 p-3 sm:p-4">
+                            <p class="text-2xl sm:text-3xl font-extrabold leading-none">15+</p>
+                            <p class="text-sm text-white/80 mt-1">Partijen gevolgd</p>
+                        </div>
+                        <div class="rounded-xl bg-white/10 border border-white/20 p-3 sm:p-4">
+                            <p class="text-2xl sm:text-3xl font-extrabold leading-none">Dagelijks</p>
+                            <p class="text-sm text-white/80 mt-1">Nieuwe updates</p>
                         </div>
                     </div>
-                    
-                            <!-- CTA buttons -->
-                            <div class="flex flex-col sm:flex-row gap-4">
-                                <a href="<?php echo URLROOT; ?>/blogs" class="inline-flex items-center justify-center px-8 py-4 bg-white text-primary font-bold rounded-xl hover:shadow-2xl hover:scale-105 transition-all duration-300">
-                                    <span>Ontdek onze Blogs</span>
-                                    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                                    </svg>
-                                </a>
-                                <a href="<?php echo URLROOT; ?>/partijmeter" class="inline-flex items-center justify-center px-8 py-4 bg-transparent border-2 border-white/30 text-white font-bold rounded-xl hover:bg-white/10 hover:border-white/50 transition-all duration-300">
-                                    Start PartijMeter
-                                </a>
-                                </div>
-                            </div>
-                            
-                        <!-- Rechts: Nieuwste blog post -->
-                        <div class="order-last lg:order-last">
-                            <!-- Header voor blog sectie -->
-                            <div class="text-center mb-6 lg:mb-8">
-                                <div class="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 mb-3">
-                                    <div class="w-2 h-2 bg-secondary-light rounded-full mr-2 animate-pulse"></div>
-                                    <span class="text-white/90 text-sm font-medium">Nieuwste Artikel</span>
-                                </div>
-                            </div>
-                            
-                            <?php if ($latestBlog): ?>
-                                <div class="relative bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl overflow-hidden border border-white/20 hover:shadow-3xl transition-all duration-500 transform hover:scale-105 
-                                           max-w-sm mx-auto lg:max-w-none lg:mx-0 before:absolute before:inset-0 before:bg-gradient-to-br before:from-primary/5 before:via-transparent before:to-secondary/5 before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-500">
-                                    
-                                    <!-- NIEUW badge -->
-                                    <div class="absolute top-4 right-4 z-20">
-                                        <div class="relative bg-gradient-to-r from-secondary to-primary text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
-                                            <div class="absolute inset-0 bg-gradient-to-r from-secondary to-primary rounded-full animate-ping opacity-75"></div>
-                                            <span class="relative">NIEUW</span>
-                                        </div>
-                                    </div>
-                                    <!-- Blog afbeelding -->
-                                    <?php if (!empty($latestBlog->image_path)): ?>
-                                        <?php $heroImageUrl = getBlogImageUrl($latestBlog->image_path); ?>
-                                        <?php if (!empty($heroImageUrl)): ?>
-                                            <div class="aspect-video overflow-hidden relative">
-                                                <img src="<?php echo htmlspecialchars($heroImageUrl); ?>" 
-                                                     alt="<?php echo htmlspecialchars($latestBlog->title); ?>"
-                                                     class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-                                                     fetchpriority="high"
-                                                     decoding="async"
-                                                     onerror="this.onerror=null;this.src='<?php echo URLROOT; ?>/metadata-foto.png';">
-                                                
-                                                <!-- Gradient overlay voor betere tekst leesbaarheid -->
-                                                <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-                                            </div>
-                                        <?php endif; ?>
-                                    <?php endif; ?>
-                                    
-                                    <!-- Blog content -->
-                                    <div class="p-4 sm:p-6 lg:p-8">
-                                        <!-- Categorie badge -->
-                                        <?php if (!empty($latestBlog->category_name)): ?>
-                                            <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold mb-4"
-                                                 style="background-color: <?php echo $latestBlog->category_color ?? '#3B82F6'; ?>20; color: <?php echo $latestBlog->category_color ?? '#3B82F6'; ?>;">
-                                                <?php if (!empty($latestBlog->category_icon)): ?>
-                                                    <span class="mr-1"><?php echo $latestBlog->category_icon; ?></span>
-                                                <?php endif; ?>
-                                                <?php echo htmlspecialchars($latestBlog->category_name); ?>
-                                            </div>
-                                        <?php endif; ?>
-                                        
-                                        <!-- Titel -->
-                                        <h3 class="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 mb-3 lg:mb-4 leading-tight">
-                                            <?php echo htmlspecialchars($latestBlog->title); ?>
-                                        </h3>
-                                        
-                                        <!-- Samenvatting -->
-                                        <p class="text-sm sm:text-base text-gray-600 mb-4 lg:mb-6 leading-relaxed">
-                                            <?php echo htmlspecialchars(substr($latestBlog->summary ?? '', 0, 150)) . '...'; ?>
-                                        </p>
-                                        
-                                        <!-- Meta info -->
-                                        <div class="flex items-center justify-between text-xs text-gray-500 mb-6 pt-4 border-t border-gray-100">
-                                            <div class="flex items-center space-x-3">
-                                                <!-- Datum -->
-                                                <div class="flex items-center">
-                                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                                    </svg>
-                                                    <span><?php echo date('d M Y', strtotime($latestBlog->published_at ?? date('Y-m-d'))); ?></span>
-                                                </div>
-                                                
-                                                <!-- Auteur -->
-                                                <?php if (!empty($latestBlog->author_name)): ?>
-                                                    <div class="flex items-center">
-                                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                                                        </svg>
-                                                        <span><?php echo htmlspecialchars($latestBlog->author_name); ?></span>
-                                                    </div>
-                                                <?php endif; ?>
-                                            </div>
-                                            
-                                            <!-- Leestijd -->
-                                            <div class="flex items-center bg-gray-50 rounded-full px-2 py-1">
-                                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                                </svg>
-                                                <span class="font-medium">5 min</span>
-                                            </div>
-                                        </div>
 
-                            </div>
-                            
-                                        <!-- Lees meer button -->
-                                        <a href="<?php echo URLROOT; ?>/blogs/<?php echo $latestBlog->slug; ?>" 
-                                           class="group relative inline-flex items-center justify-center w-full px-4 sm:px-6 py-3 sm:py-4 bg-gradient-to-r from-primary-dark via-primary to-secondary text-white text-sm sm:text-base font-bold rounded-xl hover:shadow-lg hover:shadow-primary/25 transition-all duration-300 overflow-hidden">
-                                            
-                                            <!-- Shimmer effect -->
-                                            <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
-                                            
-                                            <span class="relative z-10">Lees het volledige artikel</span>
-                                            <svg class="relative z-10 w-4 h-4 sm:w-5 sm:h-5 ml-2 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                                            </svg>
+                    <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-1">
+                        <a href="<?php echo URLROOT; ?>/blogs" class="new-hero-cta-primary hero-focus-ring" aria-label="Bekijk alle blogs op PolitiekPraat">
+                            Naar blogoverzicht
+                        </a>
+                        <a href="<?php echo URLROOT; ?>/partijmeter" class="new-hero-cta-secondary hero-focus-ring" aria-label="Start de PartijMeter">
+                            Start PartijMeter
+                        </a>
+                    </div>
+                </div>
+
+                <aside class="xl:col-span-5 space-y-4 sm:space-y-5" aria-label="Recente blog highlights">
+                    <div class="rounded-2xl bg-white p-4 sm:p-5 shadow-2xl border border-slate-200/80">
+                        <div class="flex items-center justify-between mb-3">
+                            <h2 class="text-lg sm:text-xl font-bold text-slate-900">Recente highlights</h2>
+                            <a href="<?php echo URLROOT; ?>/blogs" class="text-sm font-semibold text-primary hover:text-secondary transition-colors hero-focus-ring rounded-md px-2 py-1">Alles bekijken</a>
+                        </div>
+
+                        <div class="space-y-3">
+                            <?php if (!empty($featured_blogs)): ?>
+                                <?php foreach (array_slice($featured_blogs, 0, 3) as $index => $heroBlog): ?>
+                                    <article class="rounded-xl border border-slate-200 p-3 sm:p-4 hover:border-primary/40 hover:bg-slate-50 transition-colors">
+                                        <a href="<?php echo URLROOT; ?>/blogs/<?php echo htmlspecialchars($heroBlog->slug); ?>" class="block hero-focus-ring rounded-md">
+                                            <p class="text-xs font-semibold uppercase tracking-wide text-slate-500 mb-2">Highlight <?php echo $index + 1; ?> · <?php echo htmlspecialchars($heroBlog->relative_date ?? getRelativeTime($heroBlog->published_at)); ?></p>
+                                            <h3 class="text-sm sm:text-base font-bold text-slate-900 leading-snug line-clamp-2 mb-2"><?php echo htmlspecialchars($heroBlog->title); ?></h3>
+                                            <p class="text-sm text-slate-600 line-clamp-2"><?php echo htmlspecialchars(substr($heroBlog->summary ?? '', 0, 110)); ?>...</p>
                                         </a>
-                                </div>
-                            </div>
+                                    </article>
+                                <?php endforeach; ?>
+                            <?php elseif (!empty($latest_blogs)): ?>
+                                <?php foreach (array_slice($latest_blogs, 0, 3) as $index => $heroBlog): ?>
+                                    <article class="rounded-xl border border-slate-200 p-3 sm:p-4">
+                                        <a href="<?php echo URLROOT; ?>/blogs/<?php echo htmlspecialchars($heroBlog->slug); ?>" class="block hero-focus-ring rounded-md">
+                                            <p class="text-xs font-semibold uppercase tracking-wide text-slate-500 mb-2">Recent <?php echo $index + 1; ?></p>
+                                            <h3 class="text-sm sm:text-base font-bold text-slate-900 line-clamp-2 mb-2"><?php echo htmlspecialchars($heroBlog->title); ?></h3>
+                                            <p class="text-sm text-slate-600 line-clamp-2"><?php echo htmlspecialchars(substr($heroBlog->summary ?? '', 0, 110)); ?>...</p>
+                                        </a>
+                                    </article>
+                                <?php endforeach; ?>
                             <?php else: ?>
-                                <!-- Fallback indien geen blog beschikbaar -->
-                                <div class="relative bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-4 sm:p-6 lg:p-8 border border-white/20 max-w-sm mx-auto lg:max-w-none lg:mx-0 before:absolute before:inset-0 before:bg-gradient-to-br before:from-primary/5 before:via-transparent before:to-secondary/5 before:opacity-50">
-                                    <div class="text-center">
-                                        <div class="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                                            <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
-                                            </svg>
-                                        </div>
-                                        <h3 class="text-xl font-bold text-gray-900 mb-2">Nieuwe content komt eraan!</h3>
-                                        <p class="text-gray-600 mb-6">We werken hard aan nieuwe politieke analyses en inzichten.</p>
-                                        <a href="<?php echo URLROOT; ?>/blogs" class="inline-flex items-center px-6 py-3 bg-primary text-white font-bold rounded-xl hover:bg-primary-dark transition-colors duration-300">
-                                            Bekijk alle blogs
-                                        </a>
-                                    </div>
-                                </div>
+                                <p class="text-sm text-slate-600">Er zijn nog geen blog highlights beschikbaar. Kom straks terug voor nieuwe analyses.</p>
                             <?php endif; ?>
                         </div>
                     </div>
-                </div>
+                </aside>
             </div>
         </div>
     </section>
