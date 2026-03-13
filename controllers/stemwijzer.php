@@ -332,7 +332,7 @@ $howToStructuredData = [
                                         <circle cx="18" cy="18" r="16" fill="none" stroke="url(#progressGradient)" stroke-width="2" 
                                                 stroke-linecap="round" class="progress-circle"
                                                 :stroke-dasharray="100"
-                                                :stroke-dashoffset="100 - (currentStep / totalSteps * 100)">
+                                                :stroke-dashoffset="100 - progressPercent()">
                                         </circle>
                                     </svg>
                                     <div class="absolute inset-0 flex items-center justify-center">
@@ -355,7 +355,7 @@ $howToStructuredData = [
                             
                             <!-- Progress Percentage -->
                             <div class="text-right">
-                                <div class="text-2xl font-bold text-blue-600" x-text="Math.round((currentStep / totalSteps) * 100) + '%'"></div>
+                                <div class="text-2xl font-bold text-blue-600" x-text="progressPercent() + '%'"></div>
                                 <div class="text-xs text-gray-500">voltooid</div>
                             </div>
                         </div>
@@ -364,7 +364,7 @@ $howToStructuredData = [
                         <div class="relative">
                             <div class="h-3 bg-gray-100 rounded-full overflow-hidden shadow-inner">
                                 <div class="h-full bg-gradient-to-r from-blue-500 via-red-500 to-blue-600 rounded-full transition-all duration-700 ease-out relative"
-                                     :style="'width: ' + (currentStep / totalSteps * 100) + '%'">
+                                     :style="'width: ' + progressPercent() + '%'">
                                     <!-- Shine effect -->
                                     <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-pulse"></div>
                                 </div>
@@ -377,11 +377,11 @@ $howToStructuredData = [
                                     <span>Start</span>
                                 </div>
                                 <div class="text-xs text-gray-400 flex flex-col items-center">
-                                    <div class="w-2 h-2 rounded-full" :class="currentStep >= totalSteps/2 ? 'bg-blue-500' : 'bg-gray-300'"></div>
+                                    <div class="w-2 h-2 rounded-full" :class="completedSteps() >= Math.ceil(totalSteps / 2) ? 'bg-blue-500' : 'bg-gray-300'"></div>
                                     <span>Halverwege</span>
                                 </div>
                                 <div class="text-xs text-gray-400 flex flex-col items-center">
-                                    <div class="w-2 h-2 rounded-full" :class="currentStep >= totalSteps-1 ? 'bg-blue-500' : 'bg-gray-300'"></div>
+                                    <div class="w-2 h-2 rounded-full" :class="completedSteps() >= totalSteps ? 'bg-blue-500' : 'bg-gray-300'"></div>
                                     <span>Einde</span>
                                 </div>
                             </div>
@@ -2438,7 +2438,23 @@ function stemwijzer() {
         // Loading state
         isLoading: false,
         progressStorageKey: 'pp_stemwijzer_progress_v1',
-        
+
+        completedSteps() {
+            if (this.totalSteps <= 0) {
+                return 0;
+            }
+
+            return Math.min(this.totalSteps, this.currentStep + 1);
+        },
+
+        progressPercent() {
+            if (this.totalSteps <= 0) {
+                return 0;
+            }
+
+            return Math.round((this.completedSteps() / this.totalSteps) * 100);
+        },
+
         init() {
             // Debug informatie loggen
             console.log('=== STEMWIJZER DEBUG INFO ===');
