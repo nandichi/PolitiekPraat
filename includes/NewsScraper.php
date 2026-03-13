@@ -213,7 +213,7 @@ class NewsScraper {
     
     private function normalizePublishedAt($publishedAt) {
         $timestamp = strtotime((string)$publishedAt);
-        if ($timestamp === false) {
+        if ($timestamp === false || $timestamp < 946684800) { // voor 2000 als safeguard
             return date('Y-m-d H:i:s');
         }
 
