@@ -9,12 +9,12 @@ class NewsScraper {
     // Configuratie voor nieuwsbronnen met hun RSS feeds en oriëntatie
     private $newsSources = [
         'De Volkskrant' => [
-            'rss_url' => 'https://www.volkskrant.nl/nieuws-achtergrond/politiek/rss.xml',
+            'rss_url' => 'https://www.volkskrant.nl/voorpagina/rss.xml',
             'orientation' => 'links',
             'bias' => 'Progressief'
         ],
         'NRC' => [
-            'rss_url' => 'https://www.nrc.nl/sectie/politiek/rss/',
+            'rss_url' => 'https://www.nrc.nl/rss/',
             'orientation' => 'links',
             'bias' => 'Liberaal'
         ],
@@ -24,7 +24,7 @@ class NewsScraper {
             'bias' => 'Progressief'
         ],
         'Telegraaf' => [
-            'rss_url' => 'https://www.telegraaf.nl/nieuws/politiek/rss',
+            'rss_url' => 'https://www.telegraaf.nl/rss',
             'orientation' => 'rechts',
             'bias' => 'Conservatief'
         ],
