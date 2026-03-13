@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../../includes/config.php';
 require_once __DIR__ . '/../../includes/auth_check.php';
 require_once __DIR__ . '/../../includes/Database.php';
+require_once __DIR__ . '/../../includes/helpers.php';
 
 $user_id = $_SESSION['user_id'];
 $error = '';
@@ -24,42 +25,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $photo_updated = false;
     
     if (isset($_FILES['profile_photo']) && $_FILES['profile_photo']['error'] === UPLOAD_ERR_OK) {
-        $allowed_types = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-        $file_type = $_FILES['profile_photo']['type'];
-        $file_size = $_FILES['profile_photo']['size'];
-        $max_size = 5 * 1024 * 1024; // 5MB max size
-        
-        if (!in_array($file_type, $allowed_types)) {
-            $error = "Alleen JPG, PNG, GIF of WEBP afbeeldingen zijn toegestaan.";
-        } elseif ($file_size > $max_size) {
-            $error = "De afbeelding mag niet groter zijn dan 5MB.";
+        $result = store_uploaded_media(
+            $_FILES['profile_photo'],
+            BASE_PATH . '/public/uploads/profile_photos/',
+            'uploads/profile_photos/',
+            ['jpg', 'jpeg', 'png', 'gif', 'webp'],
+            ['image/jpeg', 'image/png', 'image/gif', 'image/webp'],
+            5 * 1024 * 1024
+        );
+
+        if (!$result['ok']) {
+            $error = $result['error'] === 'file_too_large'
+                ? "De afbeelding mag niet groter zijn dan 5MB."
+                : "Alleen geldige JPG, PNG, GIF of WEBP afbeeldingen zijn toegestaan.";
         } else {
-            // Create upload directory if it doesn't exist
-            $upload_dir = BASE_PATH . '/public/uploads/profile_photos/';
-            if (!file_exists($upload_dir)) {
-                mkdir($upload_dir, 0755, true);
-            }
-            
-            // Generate unique filename
-            $file_extension = pathinfo($_FILES['profile_photo']['name'], PATHINFO_EXTENSION);
-            $filename = 'profile_' . $user_id . '_' . uniqid() . '.' . $file_extension;
-            $destination = $upload_dir . $filename;
-            
-            // Move uploaded file
-            if (move_uploaded_file($_FILES['profile_photo']['tmp_name'], $destination)) {
-                $profile_photo = 'uploads/profile_photos/' . $filename;
-                $photo_updated = true;
-                
-                // Delete old photo if exists
-                $stmt = $pdo->prepare("SELECT profile_photo FROM users WHERE id = ?");
-                $stmt->execute([$user_id]);
-                $old_photo = $stmt->fetchColumn();
-                
-                if ($old_photo && file_exists(BASE_PATH . '/public/' . $old_photo)) {
-                    unlink(BASE_PATH . '/public/' . $old_photo);
-                }
-            } else {
-                $error = "Er is een fout opgetreden bij het uploaden van de afbeelding.";
+            $profile_photo = $result['path'];
+            $photo_updated = true;
+
+            // Delete old photo if exists
+            $stmt = $pdo->prepare("SELECT profile_photo FROM users WHERE id = ?");
+            $stmt->execute([$user_id]);
+            $old_photo = $stmt->fetchColumn();
+
+            if ($old_photo && file_exists(BASE_PATH . '/public/' . $old_photo)) {
+                unlink(BASE_PATH . '/public/' . $old_photo);
             }
         }
     } elseif (isset($_POST['remove_photo']) && $_POST['remove_photo'] === '1') {

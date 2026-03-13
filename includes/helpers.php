@@ -58,6 +58,86 @@ if (!function_exists('isAdmin')) {
     }
 }
 
+if (!function_exists('ensure_upload_directory')) {
+    /**
+     * Zorgt dat de upload map bestaat met veilige permissies.
+     */
+    function ensure_upload_directory($upload_dir) {
+        if (!is_dir($upload_dir)) {
+            if (!mkdir($upload_dir, 0755, true)) {
+                return false;
+            }
+        }
+
+        return chmod($upload_dir, 0755) || is_writable($upload_dir);
+    }
+}
+
+if (!function_exists('get_uploaded_mime_type')) {
+    /**
+     * Bepaalt MIME-type server-side met finfo.
+     */
+    function get_uploaded_mime_type($tmp_name) {
+        if (!is_uploaded_file($tmp_name) || !function_exists('finfo_open')) {
+            return null;
+        }
+
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        if (!$finfo) {
+            return null;
+        }
+
+        $mime = finfo_file($finfo, $tmp_name) ?: null;
+        finfo_close($finfo);
+
+        return $mime;
+    }
+}
+
+if (!function_exists('store_uploaded_media')) {
+    /**
+     * Valideert en slaat media upload veilig op.
+     */
+    function store_uploaded_media($file, $upload_dir, $relative_upload_dir, $allowed_extensions, $allowed_mimes, $max_size_bytes = null) {
+        if (!isset($file['error']) || $file['error'] !== UPLOAD_ERR_OK) {
+            return ['ok' => false, 'error' => 'upload_error'];
+        }
+
+        if (!ensure_upload_directory($upload_dir)) {
+            return ['ok' => false, 'error' => 'directory_error'];
+        }
+
+        $extension = strtolower(pathinfo($file['name'] ?? '', PATHINFO_EXTENSION));
+        if (!in_array($extension, $allowed_extensions, true)) {
+            return ['ok' => false, 'error' => 'invalid_extension'];
+        }
+
+        $mime = get_uploaded_mime_type($file['tmp_name'] ?? '');
+        if ($mime === null || !in_array($mime, $allowed_mimes, true)) {
+            return ['ok' => false, 'error' => 'invalid_mime'];
+        }
+
+        if ($max_size_bytes !== null && isset($file['size']) && (int)$file['size'] > $max_size_bytes) {
+            return ['ok' => false, 'error' => 'file_too_large'];
+        }
+
+        $filename = uniqid('', true) . '.' . $extension;
+        $target_path = rtrim($upload_dir, '/') . '/' . $filename;
+
+        if (!move_uploaded_file($file['tmp_name'], $target_path)) {
+            return ['ok' => false, 'error' => 'move_failed'];
+        }
+
+        chmod($target_path, 0644);
+
+        return [
+            'ok' => true,
+            'path' => rtrim($relative_upload_dir, '/') . '/' . $filename,
+            'mime' => $mime,
+        ];
+    }
+}
+
 if (!function_exists('getBlogImageUrl')) {
     /**
      * Gets the correct URL for a blog image
