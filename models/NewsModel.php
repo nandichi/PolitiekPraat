@@ -140,13 +140,45 @@ class NewsModel {
      * Voeg een nieuw artikel toe
      */
     public function addNewsArticle($title, $description, $url, $source, $bias, $orientation, $publishedAt) {
-        $sql = "INSERT INTO news_articles (title, description, url, source, bias, orientation, published_at) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        
+        $normalizedUrl = $this->normalizeUrl($url);
+
+        if (!$this->isValidHttpUrl($normalizedUrl)) {
+            error_log("NewsModel::addNewsArticle overgeslagen, ongeldige URL: " . $url);
+            return false;
+        }
+
         try {
+            // Idempotent: update bestaand artikel op dezelfde URL i.p.v. duplicaat inserten
+            $this->db->query("SELECT id, published_at FROM news_articles WHERE url = ? LIMIT 1");
+            $this->db->bind(1, $normalizedUrl);
+            $this->db->execute();
+            $existing = $this->db->single();
+
+            if ($existing) {
+                $existingPublished = strtotime($existing->published_at ?? '1970-01-01 00:00:00');
+                $incomingPublished = strtotime($publishedAt ?: '1970-01-01 00:00:00');
+
+                // Alleen upgraden als inkomende data recenter is of missende velden vult
+                if ($incomingPublished >= $existingPublished || empty($existing->published_at)) {
+                    $this->db->query("UPDATE news_articles SET title = ?, description = ?, source = ?, bias = ?, orientation = ?, published_at = ? WHERE id = ?");
+                    $this->db->bind(1, $title);
+                    $this->db->bind(2, $description);
+                    $this->db->bind(3, $source);
+                    $this->db->bind(4, $bias);
+                    $this->db->bind(5, $orientation);
+                    $this->db->bind(6, $publishedAt);
+                    $this->db->bind(7, intval($existing->id));
+                    $this->db->execute();
+                }
+
+                return true;
+            }
+
+            $sql = "INSERT INTO news_articles (title, description, url, source, bias, orientation, published_at) VALUES (?, ?, ?, ?, ?, ?, ?)";
             $this->db->query($sql);
             $this->db->bind(1, $title);
             $this->db->bind(2, $description);
-            $this->db->bind(3, $url);
+            $this->db->bind(3, $normalizedUrl);
             $this->db->bind(4, $source);
             $this->db->bind(5, $bias);
             $this->db->bind(6, $orientation);
@@ -248,10 +280,107 @@ class NewsModel {
     }
     
     /**
+     * Haal recente artikelen op per perspectief op voor homepage
+     */
+    public function getHomepageNews($perOrientation = 3, $maxAgeHours = 48) {
+        $result = [
+            'links' => [],
+            'rechts' => []
+        ];
+
+        foreach (['links', 'rechts'] as $orientation) {
+            $result[$orientation] = $this->getRecentNewsByOrientation($orientation, $perOrientation, $maxAgeHours);
+
+            // Fallback: als er te weinig recente items zijn, pak laatste items zonder tijdsfilter
+            if (count($result[$orientation]) < $perOrientation) {
+                $fallback = $this->getNewsByOrientation($orientation, $perOrientation);
+                $merged = array_merge($result[$orientation], $fallback);
+
+                // Uniek op URL en terugknippen
+                $unique = [];
+                foreach ($merged as $article) {
+                    $key = $article['url'] ?? md5(json_encode($article));
+                    if (!isset($unique[$key])) {
+                        $unique[$key] = $article;
+                    }
+                }
+
+                $result[$orientation] = array_slice(array_values($unique), 0, $perOrientation);
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Recente artikelen per oriëntatie met tijdsfilter
+     */
+    public function getRecentNewsByOrientation($orientation, $limit = 3, $maxAgeHours = 48) {
+        $sql = "SELECT * FROM news_articles WHERE orientation = ? AND published_at >= DATE_SUB(NOW(), INTERVAL ? HOUR) ORDER BY published_at DESC LIMIT ?";
+
+        try {
+            $this->db->query($sql);
+            $this->db->bind(1, $orientation);
+            $this->db->bind(2, intval($maxAgeHours));
+            $this->db->bind(3, intval($limit));
+            $this->db->execute();
+            return $this->formatNewsResultsFromObject($this->db->resultSet());
+        } catch (Exception $e) {
+            error_log("NewsModel::getRecentNewsByOrientation fout: " . $e->getMessage());
+            return [];
+        }
+    }
+
+    /**
      * Geef toegang tot database object voor NewsScraper
      */
     public function getDatabase() {
         return $this->db;
+    }
+
+    private function isValidHttpUrl($url) {
+        if (empty($url) || !filter_var($url, FILTER_VALIDATE_URL)) {
+            return false;
+        }
+
+        $scheme = parse_url($url, PHP_URL_SCHEME);
+        return in_array(strtolower((string)$scheme), ['http', 'https'], true);
+    }
+
+    private function normalizeUrl($url) {
+        if (!is_string($url)) {
+            return '';
+        }
+
+        $url = trim($url);
+        if ($url === '') {
+            return '';
+        }
+
+        $parts = parse_url($url);
+        if ($parts === false || empty($parts['host']) || empty($parts['scheme'])) {
+            return $url;
+        }
+
+        $scheme = strtolower($parts['scheme']);
+        $host = strtolower($parts['host']);
+        $path = $parts['path'] ?? '/';
+
+        // Strip tracking query params maar behoud inhoudelijke params
+        $query = '';
+        if (!empty($parts['query'])) {
+            parse_str($parts['query'], $queryParams);
+            foreach (array_keys($queryParams) as $key) {
+                if (stripos($key, 'utm_') === 0 || in_array(strtolower($key), ['fbclid', 'gclid'], true)) {
+                    unset($queryParams[$key]);
+                }
+            }
+            if (!empty($queryParams)) {
+                $query = '?' . http_build_query($queryParams);
+            }
+        }
+
+        return $scheme . '://' . $host . $path . $query;
     }
 }
 ?> 
