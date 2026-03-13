@@ -145,8 +145,8 @@ class BlogsController {
                 $newsletterController = new Newsletter();
                 $newsletterController->sendNewBlogNotifications($blogId);
                 
-                // Automatically regenerate sitemap
-                $this->regenerateSitemap();
+                // Trigger asynchrone sitemap-regeneratie (non-blocking)
+                $this->queueSitemapRegeneration();
                 
                 // Redirect to blogs page
                 header('Location: ' . URLROOT . '/blogs');
@@ -368,8 +368,8 @@ class BlogsController {
             ];
             
             if ($this->blogModel->update($data)) {
-                // Automatically regenerate sitemap after blog update
-                $this->regenerateSitemap();
+                // Trigger asynchrone sitemap-regeneratie na update (non-blocking)
+                $this->queueSitemapRegeneration();
                 
                 header('Location: ' . URLROOT . '/blogs/manage');
                 exit;
@@ -419,8 +419,8 @@ class BlogsController {
                 unlink(BASE_PATH . '/' . $blog->audio_path);
             }
             
-            // Automatically regenerate sitemap after blog deletion
-            $this->regenerateSitemap();
+            // Trigger asynchrone sitemap-regeneratie na verwijderen (non-blocking)
+            $this->queueSitemapRegeneration();
         }
         
         header('Location: ' . URLROOT . '/blogs/manage');
@@ -497,42 +497,29 @@ class BlogsController {
         }
     }
     
-    private function regenerateSitemap() {
+    private function queueSitemapRegeneration() {
+        $queueDir = BASE_PATH . '/storage/queues';
+        $queueFile = $queueDir . '/sitemap-regenerate.json';
+
         try {
-            // Voer het sitemap generatie script uit
-            $output = shell_exec('cd ' . BASE_PATH . ' && php generate-sitemap.php > sitemap.xml 2>&1');
-            
-            // Log voor debugging
-            error_log("Sitemap automatically regenerated after new blog post");
-            
-            // Optioneel: ping Google om de nieuwe sitemap te melden
-            $this->pingGoogleSitemap();
-            
-        } catch (Exception $e) {
-            // Log de fout maar laat de blog posting niet falen
-            error_log("Failed to regenerate sitemap: " . $e->getMessage());
+            if (!is_dir($queueDir) && !mkdir($queueDir, 0755, true) && !is_dir($queueDir)) {
+                throw new RuntimeException('Kon sitemap queue map niet aanmaken');
+            }
+
+            $payload = [
+                'queued_at' => date('c'),
+                'source' => 'blogs_controller',
+            ];
+
+            file_put_contents($queueFile, json_encode($payload, JSON_UNESCAPED_SLASHES));
+            error_log('Sitemap regeneratie in queue gezet');
+
+            // Fire-and-forget worker; faalt dit, dan kan cron scripts/process_sitemap_queue.php oppakken.
+            $worker = escapeshellarg(BASE_PATH . '/scripts/process_sitemap_queue.php');
+            @shell_exec('php ' . $worker . ' > /dev/null 2>&1 &');
+        } catch (Throwable $e) {
+            // Nooit blog-publicatie blokkeren
+            error_log('Kon sitemap regeneratie niet in queue zetten: ' . $e->getMessage());
         }
     }
-    
-    private function pingGoogleSitemap() {
-        try {
-            // Ping Google Search Console om nieuwe sitemap te melden
-            $sitemapUrl = urlencode('https://politiekpraat.nl/sitemap.xml');
-            $pingUrl = "https://www.google.com/ping?sitemap=" . $sitemapUrl;
-            
-            // Maak een non-blocking HTTP request
-            $context = stream_context_create([
-                'http' => [
-                    'timeout' => 5, // 5 seconden timeout
-                    'ignore_errors' => true
-                ]
-            ]);
-            
-            $result = file_get_contents($pingUrl, false, $context);
-            error_log("Google sitemap ping sent successfully");
-            
-        } catch (Exception $e) {
-            error_log("Failed to ping Google sitemap: " . $e->getMessage());
-        }
-    }
-} 
+}
