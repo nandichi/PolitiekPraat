@@ -51,6 +51,15 @@
   transform: scale(1.05);
 }
 
+.new-hero-cta-primary:focus-visible {
+  box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.35),
+    0 12px 20px -8px rgba(0, 0, 0, 0.35);
+}
+
+.new-hero-cta-primary:active {
+  transform: scale(0.98);
+}
+
 .new-hero-cta-primary::before {
   content: "";
   position: absolute;
@@ -96,6 +105,17 @@
   transform: scale(1.05);
   border-color: var(--color-primary);
   color: var(--color-primary);
+}
+
+.new-hero-cta-secondary:focus-visible {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.3),
+    0 10px 16px -8px rgba(0, 0, 0, 0.3);
+}
+
+.new-hero-cta-secondary:active {
+  transform: scale(0.98);
+  background: #f8fafc;
 }
 
 .new-hero-cta-secondary::before {
@@ -372,7 +392,10 @@
 @media (max-width: 640px) {
   .new-hero-cta-primary,
   .new-hero-cta-secondary {
-    padding: 0.875rem 1.5rem;
+    width: 100%;
+    justify-content: center;
+    min-height: 48px;
+    padding: 0.875rem 1.25rem;
     font-size: 1rem;
   }
 
@@ -417,6 +440,13 @@
   /* NIEUW badge animatie vertraagd op mobile */
   .hero-section .animate-ping {
     animation-duration: 2s;
+  }
+}
+
+@media (max-width: 360px) {
+  .hero-section [aria-label="Platform statistieken"] {
+    grid-template-columns: 1fr;
+    max-width: 100%;
   }
 }
 

@@ -406,7 +406,7 @@ require_once 'views/templates/header.php';
                     </h1>
 
                     <p class="text-base sm:text-lg lg:text-xl text-white/90 max-w-2xl leading-relaxed">
-                        Diepe analyses, heldere samenvattingen en directe toegang tot de nieuwste blogs. Geen ruis, wel context.
+                        In 3 minuten bij wat er écht speelt: scherpe analyses, heldere samenvattingen en direct door naar de nieuwste blogs.
                     </p>
 
                     <div class="grid grid-cols-3 gap-3 sm:gap-4 max-w-lg" aria-label="Platform statistieken">
@@ -424,13 +424,16 @@ require_once 'views/templates/header.php';
                         </div>
                     </div>
 
-                    <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-1">
-                        <a href="<?php echo URLROOT; ?>/blogs" class="new-hero-cta-primary hero-focus-ring" aria-label="Bekijk alle blogs op PolitiekPraat">
-                            Naar blogoverzicht
-                        </a>
-                        <a href="<?php echo URLROOT; ?>/partijmeter" class="new-hero-cta-secondary hero-focus-ring" aria-label="Start de PartijMeter">
-                            Start PartijMeter
-                        </a>
+                    <div class="pt-1 space-y-3">
+                        <p class="text-sm sm:text-base text-white/85">Begin met de nieuwste analyses en praat beter mee.</p>
+                        <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                            <a href="<?php echo URLROOT; ?>/blogs" class="new-hero-cta-primary hero-focus-ring" aria-label="Ga direct naar de nieuwste blogs op PolitiekPraat">
+                                Lees nieuwste blogs
+                            </a>
+                            <a href="<?php echo URLROOT; ?>/partijmeter" class="new-hero-cta-secondary hero-focus-ring" aria-label="Vergelijk partijen met de PartijMeter">
+                                Vergelijk partijen
+                            </a>
+                        </div>
                     </div>
                 </div>
 
