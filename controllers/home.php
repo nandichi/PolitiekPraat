@@ -5,6 +5,7 @@ require_once 'includes/OpenDataAPI.php';
 require_once 'includes/PoliticalDataAPI.php';
 require_once 'includes/PollAPI.php';
 require_once 'includes/BlogController.php';
+require_once 'models/NewsModel.php';
 
 // Helper functie om Markdown syntax te strippen
 function stripMarkdown($text) {
@@ -45,6 +46,7 @@ $openDataAPI = new OpenDataAPI();
 $politicalDataAPI = new PoliticalDataAPI();
 $pollAPI = new PollAPI();
 $blogController = new BlogController();
+$newsModel = new NewsModel($db);
 
 // Haal actuele politieke data op
 $kamerStats = $politicalDataAPI->getKamerStatistieken();
@@ -299,76 +301,54 @@ foreach ($featured_blogs as $blog) {
     $blog->summary = stripMarkdown($blog->summary);
 }
 
-// Haal het laatste nieuws op
-$news_sources = [
-    'links' => [
-        ['name' => 'De Volkskrant', 'bias' => 'links', 'url' => 'https://www.volkskrant.nl/voorpagina/rss.xml'],
-        ['name' => 'Trouw', 'bias' => 'centrum-links', 'url' => 'https://www.trouw.nl/rss.xml'],
-        ['name' => 'NRC', 'bias' => 'centrum-links', 'url' => 'https://www.nrc.nl/rss/']
-    ],
-    'rechts' => [
-        ['name' => 'Telegraaf', 'bias' => 'rechts', 'url' => 'https://www.telegraaf.nl/rss'],
-        ['name' => 'Reformatorisch Dagblad', 'bias' => 'rechts', 'url' => 'https://rd.nl/rss'],
-        ['name' => 'AD', 'bias' => 'centrum-rechts', 'url' => 'https://www.ad.nl/rss.xml']
-    ]
-];
+// Haal het laatste nieuws op uit database (primair) met robuuste fallback
+$latest_news = [];
 
-$latest_news = [
-    [
-        'orientation' => 'links',
-        'source' => 'De Volkskrant',
-        'bias' => 'centrum-links', 
-        'publishedAt' => date('Y-m-d H:i:s'), // Vandaag 08:30
-        'title' => 'Relschoppers in Den Haag beschadigden ook Binnenhof tijdens tocht door de stad',
-        'description' => 'Tijdens de rellen in Den Haag hebben relschoppers ook schade aangericht aan het Binnenhof. De ongeregeldheden verspreidden zich door de hele stad en het politieke hart van Nederland werd niet gespaard tijdens de gewelddadige tocht.',
-        'url' => 'https://www.volkskrant.nl/binnenland/relschoppers-in-den-haag-beschadigden-ook-binnenhof-tijdens-tocht-door-de-stad~b6bbfd7d/'
-    ],
-    [
-        'orientation' => 'links',
-        'source' => 'NRC',
-        'bias' => 'centrum-links', 
-        'publishedAt' => date('Y-m-d H:i:s', strtotime('-2 hours')), // 2 uur geleden
-        'title' => 'Burgers hebben genoeg van al die meningen, zodat Den Haag maar afziet van al te verhit debat',
-        'description' => 'Nederlandse burgers tonen steeds minder belangstelling voor verhitte politieke debatten. Politici in Den Haag worstelen met de vraag hoe zij nog kunnen doordringen tot een publiek dat moe is geworden van polarisatie en eindeloze meningsvorming.',
-        'url' => 'https://www.nrc.nl/nieuws/2025/09/19/burgers-hebben-genoeg-van-al-die-meningen-zodat-den-haag-maar-afziet-van-al-te-verhit-debat-a4906809'
-    ],
-    [
-        'orientation' => 'links',
-        'source' => 'Trouw',
-        'bias' => 'centrum-links', 
-        'publishedAt' => date('Y-m-d H:i:s', strtotime('-4 hours')), // 4 uur geleden
-        'title' => 'De Kamer noemt antifa een terroristische organisatie, maar antifa is niet terroristisch en ook geen organisatie',
-        'description' => 'De Tweede Kamer heeft een motie aangenomen waarin antifa wordt bestempeld als terroristische organisatie. Experts wijzen erop dat antifa echter geen georganiseerde structuur heeft en niet voldoet aan de definitie van terrorisme.',
-        'url' => 'https://www.trouw.nl/politiek/de-kamer-noemt-antifa-een-terroristische-organisatie-maar-antifa-is-niet-terroristisch-en-ook-geen-organisatie~b8651a25/'
-    ],
-    [
-        'orientation' => 'rechts',
-        'source' => 'Dagelijkse Standaard',
-        'bias' => 'rechts',
-        'publishedAt' => date('Y-m-d H:i:s', strtotime('-6 hours')), // 6 uur geleden
-        'title' => 'Timmermans misleidt: rellen Den Haag door hooligans, niet door extreemrechts',
-        'description' => 'Frans Timmermans wijt de rellen in Den Haag ten onrechte aan extreemrechts, terwijl het hooligans betrof. Een analyse van de werkelijke oorzaken achter de ongeregeldheden en de politieke framing die daarop volgde.',
-        'url' => 'https://www.dagelijksestandaard.nl/politiek/timmermans-misleidt-rellen-den-haag-door-hooligans-niet-door-extreemrechts'
-    ],
-    [
-        'orientation' => 'rechts',
-        'source' => 'De Telegraaf',
-        'bias' => 'rechts', 
-        'publishedAt' => date('Y-m-d H:i:s', strtotime('-8 hours')), // 8 uur geleden
-        'title' => 'Rob Jetten over aanval op D66-kantoor: \'Deze mensen hebben zich laten ophitsen\'',
-        'description' => 'D66-leider Rob Jetten reageert op de aanval op het partijkantoor. Hij stelt dat de daders zich hebben laten ophitsen door politieke retoriek en roept op tot meer respect in het politieke debat.',
-        'url' => 'https://www.telegraaf.nl/politiek/rob-jetten-over-aanval-op-d66-kantoor-deze-mensen-hebben-zich-laten-ophitsen/91850069.html'
-    ],
-    [
-        'orientation' => 'rechts',
-        'source' => 'Nieuw Rechts',
-        'bias' => 'rechts', 
-        'publishedAt' => date('Y-m-d H:i:s', strtotime('-10 hours')), // 10 uur geleden
-        'title' => 'Rapport onthult: EU gebruikt 250 miljoen voor academische propaganda',
-        'description' => 'Een nieuw rapport toont aan dat de Europese Unie jaarlijks 250 miljoen euro besteedt aan wat critici academische propaganda noemen. Het geld wordt gebruikt om universiteiten en onderzoeksinstellingen te financieren die de EU-agenda ondersteunen.',
-        'url' => 'https://nieuwrechts.nl/106542-rapport-onthult-eu-gebruikt-250-miljoen-voor-academische-propaganda'
-    ]
-];
+try {
+    $homepageNews = $newsModel->getHomepageNews(3, 48);
+    $latest_news = array_merge($homepageNews['links'], $homepageNews['rechts']);
+
+    // Filter op geldige externe links
+    $latest_news = array_values(array_filter($latest_news, function($article) {
+        if (empty($article['url']) || !filter_var($article['url'], FILTER_VALIDATE_URL)) {
+            return false;
+        }
+
+        $scheme = parse_url($article['url'], PHP_URL_SCHEME);
+        return in_array(strtolower((string)$scheme), ['http', 'https'], true);
+    }));
+
+    if (count($homepageNews['links']) < 3 || count($homepageNews['rechts']) < 3) {
+        error_log("home.php: fallback geactiveerd, onvoldoende recente items per perspectief (links=" . count($homepageNews['links']) . ", rechts=" . count($homepageNews['rechts']) . ")");
+    }
+} catch (Exception $e) {
+    error_log("home.php: ophalen homepage nieuws mislukt: " . $e->getMessage());
+}
+
+// Noodfallback zodat homepage nooit leeg is
+if (empty($latest_news)) {
+    error_log("home.php: noodfallback actief voor Laatste Politiek Nieuws");
+    $latest_news = [
+        [
+            'orientation' => 'links',
+            'source' => 'PolitiekPraat',
+            'bias' => 'Centrum-links',
+            'publishedAt' => date('Y-m-d H:i:s'),
+            'title' => 'Progressief nieuws wordt momenteel opnieuw geladen',
+            'description' => 'De live nieuwsfeed is tijdelijk niet beschikbaar. Probeer het over enkele minuten opnieuw.',
+            'url' => URLROOT . '/nieuws?filter=progressief'
+        ],
+        [
+            'orientation' => 'rechts',
+            'source' => 'PolitiekPraat',
+            'bias' => 'Centrum-rechts',
+            'publishedAt' => date('Y-m-d H:i:s'),
+            'title' => 'Conservatief nieuws wordt momenteel opnieuw geladen',
+            'description' => 'De live nieuwsfeed is tijdelijk niet beschikbaar. Probeer het over enkele minuten opnieuw.',
+            'url' => URLROOT . '/nieuws?filter=conservatief'
+        ]
+    ];
+}
 
 // Haal actuele data op
 $actuele_themas = $openDataAPI->getActueleThemas();

@@ -9,12 +9,12 @@ class NewsScraper {
     // Configuratie voor nieuwsbronnen met hun RSS feeds en oriëntatie
     private $newsSources = [
         'De Volkskrant' => [
-            'rss_url' => 'https://www.volkskrant.nl/columns-van-de-dag/rss.xml',
+            'rss_url' => 'https://www.volkskrant.nl/nieuws-achtergrond/politiek/rss.xml',
             'orientation' => 'links',
             'bias' => 'Progressief'
         ],
         'NRC' => [
-            'rss_url' => 'https://www.nrc.nl/rss/',
+            'rss_url' => 'https://www.nrc.nl/sectie/politiek/rss/',
             'orientation' => 'links',
             'bias' => 'Liberaal'
         ],
@@ -24,14 +24,14 @@ class NewsScraper {
             'bias' => 'Progressief'
         ],
         'Telegraaf' => [
-            'rss_url' => 'https://www.telegraaf.nl/rss/',
+            'rss_url' => 'https://www.telegraaf.nl/nieuws/politiek/rss',
             'orientation' => 'rechts',
             'bias' => 'Conservatief'
         ],
         'AD' => [
             'rss_url' => 'https://www.ad.nl/politiek/rss.xml',
-            'orientation' => 'midden',
-            'bias' => 'conservatief'
+            'orientation' => 'rechts',
+            'bias' => 'Centrum-rechts'
         ],
         'NU.nl' => [
             'rss_url' => 'https://www.nu.nl/rss/Politiek',
@@ -92,6 +92,8 @@ class NewsScraper {
                         
                         if ($success) {
                             $scrapedCount++;
+                        } else if ($isCLI) {
+                            echo "  Artikel overgeslagen (invalid/duplicate): " . ($article['url'] ?? 'onbekende-url') . "\n";
                         }
                     }
                     
@@ -152,20 +154,25 @@ class NewsScraper {
         $newArticles = [];
         
         foreach ($articles as $article) {
+            $articleUrl = $this->normalizeArticleUrl($article['url'] ?? '');
+
+            if (!$this->isValidHttpUrl($articleUrl)) {
+                continue;
+            }
+
             // Stop zodra we een artikel vinden dat we al eerder hebben gezien
-            if ($article['url'] === $lastArticleUrl) {
+            if (!empty($lastArticleUrl) && $articleUrl === $lastArticleUrl) {
                 break;
             }
-            
+
             // Voeg metadata toe
+            $article['url'] = $articleUrl;
             $article['source'] = $sourceName;
             $article['orientation'] = $sourceConfig['orientation'];
             $article['bias'] = $sourceConfig['bias'];
-            
-            // Controleer of artikel al in database staat
-            if (!$this->articleExistsInDatabase($article['url'])) {
-                $newArticles[] = $article;
-            }
+            $article['publishedAt'] = $this->normalizePublishedAt($article['publishedAt'] ?? '');
+
+            $newArticles[] = $article;
         }
         
         return $newArticles;
@@ -204,6 +211,56 @@ class NewsScraper {
         file_put_contents($this->lastScrapedFile, json_encode($data, JSON_PRETTY_PRINT));
     }
     
+    private function normalizePublishedAt($publishedAt) {
+        $timestamp = strtotime((string)$publishedAt);
+        if ($timestamp === false) {
+            return date('Y-m-d H:i:s');
+        }
+
+        return date('Y-m-d H:i:s', $timestamp);
+    }
+
+    private function isValidHttpUrl($url) {
+        if (empty($url) || !filter_var($url, FILTER_VALIDATE_URL)) {
+            return false;
+        }
+
+        $scheme = parse_url($url, PHP_URL_SCHEME);
+        return in_array(strtolower((string)$scheme), ['http', 'https'], true);
+    }
+
+    private function normalizeArticleUrl($url) {
+        if (!is_string($url)) {
+            return '';
+        }
+
+        $url = trim($url);
+        if ($url === '') {
+            return '';
+        }
+
+        $parts = parse_url($url);
+        if ($parts === false || empty($parts['scheme']) || empty($parts['host'])) {
+            return $url;
+        }
+
+        $query = '';
+        if (!empty($parts['query'])) {
+            parse_str($parts['query'], $queryParams);
+            foreach (array_keys($queryParams) as $key) {
+                if (stripos($key, 'utm_') === 0 || in_array(strtolower($key), ['fbclid', 'gclid'], true)) {
+                    unset($queryParams[$key]);
+                }
+            }
+            if (!empty($queryParams)) {
+                $query = '?' . http_build_query($queryParams);
+            }
+        }
+
+        $path = $parts['path'] ?? '/';
+        return strtolower($parts['scheme']) . '://' . strtolower($parts['host']) . $path . $query;
+    }
+
     /**
      * Clean up oude artikelen (ouder dan X dagen)
      */
