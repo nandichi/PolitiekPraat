@@ -14,6 +14,10 @@ class NewsAPI {
             'politiek' => 'https://www.nrc.nl/sectie/politiek/rss/',
             'algemeen' => 'https://www.nrc.nl/rss/'
         ],
+        'Het Parool' => [
+            'politiek' => 'https://www.parool.nl/nieuws-achtergrond/politiek/rss.xml',
+            'algemeen' => 'https://www.parool.nl/rss.xml'
+        ],
         'WNL' => [
             'politiek' => 'https://wnl.tv/category/politiek/feed/',
             'algemeen' => 'https://wnl.tv/feed/'
