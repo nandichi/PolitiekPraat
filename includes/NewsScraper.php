@@ -9,32 +9,50 @@ class NewsScraper {
     // Configuratie voor nieuwsbronnen met hun RSS feeds en oriëntatie
     private $newsSources = [
         'De Volkskrant' => [
-            'rss_url' => 'https://www.volkskrant.nl/voorpagina/rss.xml',
+            'rss_urls' => [
+                'https://www.volkskrant.nl/voorpagina/rss.xml',
+                'https://www.volkskrant.nl/nieuws-achtergrond/politiek/rss.xml'
+            ],
             'orientation' => 'links',
             'bias' => 'Progressief'
         ],
         'NRC' => [
-            'rss_url' => 'https://www.nrc.nl/rss/',
+            'rss_urls' => [
+                'https://www.nrc.nl/rss/',
+                'https://www.nrc.nl/sectie/politiek/rss/'
+            ],
             'orientation' => 'links',
             'bias' => 'Liberaal'
         ],
         'Trouw' => [
-            'rss_url' => 'https://www.trouw.nl/politiek/rss.xml',
+            'rss_urls' => [
+                'https://www.trouw.nl/politiek/rss.xml',
+                'https://www.trouw.nl/rss.xml'
+            ],
             'orientation' => 'links',
             'bias' => 'Progressief'
         ],
         'Telegraaf' => [
-            'rss_url' => 'https://www.telegraaf.nl/rss',
+            'rss_urls' => [
+                'https://www.telegraaf.nl/rss',
+                'https://www.telegraaf.nl/nieuws/politiek/rss'
+            ],
             'orientation' => 'rechts',
             'bias' => 'Conservatief'
         ],
         'AD' => [
-            'rss_url' => 'https://www.ad.nl/politiek/rss.xml',
+            'rss_urls' => [
+                'https://www.ad.nl/politiek/rss.xml',
+                'https://www.ad.nl/rss.xml'
+            ],
             'orientation' => 'rechts',
             'bias' => 'Centrum-rechts'
         ],
         'NU.nl' => [
-            'rss_url' => 'https://www.nu.nl/rss/Politiek',
+            'rss_urls' => [
+                'https://www.nu.nl/rss/Politiek',
+                'https://www.nu.nl/rss'
+            ],
             'orientation' => 'rechts',
             'bias' => 'Conservatief'
         ]
@@ -143,38 +161,64 @@ class NewsScraper {
      * Scrape een specifieke nieuwsbron
      */
     private function scrapeSource($sourceName, $sourceConfig, $lastScrapedData) {
-        $articles = $this->newsAPI->scrapeRSSFeed($sourceConfig['rss_url'], 10);
-        
+        $rssUrls = $sourceConfig['rss_urls'] ?? [];
+        if (empty($rssUrls) && !empty($sourceConfig['rss_url'])) {
+            $rssUrls = [$sourceConfig['rss_url']];
+        }
+
+        $articles = [];
+        foreach ($rssUrls as $rssUrl) {
+            $candidate = $this->newsAPI->scrapeRSSFeed($rssUrl, 12);
+            if (!empty($candidate)) {
+                $articles = $candidate;
+                break;
+            }
+        }
+
         if (empty($articles)) {
             return [];
         }
-        
-        // Check of er nieuwe artikelen zijn
+
         $lastArticleUrl = isset($lastScrapedData[$sourceName]) ? $lastScrapedData[$sourceName]['last_article_url'] : '';
         $newArticles = [];
-        
+        $seenKeys = [];
+
         foreach ($articles as $article) {
             $articleUrl = $this->normalizeArticleUrl($article['url'] ?? '');
-
             if (!$this->isValidHttpUrl($articleUrl)) {
                 continue;
             }
 
-            // Stop zodra we een artikel vinden dat we al eerder hebben gezien
             if (!empty($lastArticleUrl) && $articleUrl === $lastArticleUrl) {
                 break;
             }
 
-            // Voeg metadata toe
+            $title = trim((string)($article['title'] ?? ''));
+            if ($title === '') {
+                continue;
+            }
+
+            $publishedAt = $this->normalizePublishedAt($article['publishedAt'] ?? '');
+            if (!$this->isPlausiblePublishedAt($publishedAt)) {
+                continue;
+            }
+
+            $dedupeKey = md5(mb_strtolower($title) . '|' . $articleUrl);
+            if (isset($seenKeys[$dedupeKey])) {
+                continue;
+            }
+            $seenKeys[$dedupeKey] = true;
+
+            $article['title'] = $title;
             $article['url'] = $articleUrl;
             $article['source'] = $sourceName;
             $article['orientation'] = $sourceConfig['orientation'];
             $article['bias'] = $sourceConfig['bias'];
-            $article['publishedAt'] = $this->normalizePublishedAt($article['publishedAt'] ?? '');
+            $article['publishedAt'] = $publishedAt;
 
             $newArticles[] = $article;
         }
-        
+
         return $newArticles;
     }
     
@@ -218,6 +262,19 @@ class NewsScraper {
         }
 
         return date('Y-m-d H:i:s', $timestamp);
+    }
+
+    private function isPlausiblePublishedAt($publishedAt) {
+        $timestamp = strtotime((string)$publishedAt);
+        if ($timestamp === false) {
+            return false;
+        }
+
+        $now = time();
+        $maxFutureSkew = 2 * 3600;
+        $maxPastAge = 14 * 24 * 3600;
+
+        return $timestamp <= ($now + $maxFutureSkew) && $timestamp >= ($now - $maxPastAge);
     }
 
     private function isValidHttpUrl($url) {
@@ -294,7 +351,7 @@ class NewsScraper {
             $stats[$sourceName] = [
                 'last_scraped' => isset($lastScrapedData[$sourceName]) ? $lastScrapedData[$sourceName]['last_scraped_at'] : 'Nog nooit',
                 'last_articles_found' => isset($lastScrapedData[$sourceName]) ? $lastScrapedData[$sourceName]['articles_found'] : 0,
-                'rss_url' => $sourceConfig['rss_url'],
+                'rss_urls' => $sourceConfig['rss_urls'] ?? [($sourceConfig['rss_url'] ?? '')],
                 'orientation' => $sourceConfig['orientation']
             ];
         }

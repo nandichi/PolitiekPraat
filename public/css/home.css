@@ -12,14 +12,9 @@
 /* ===== HERO SECTION ===== */
 .new-hero-section {
   position: relative;
-  min-height: clamp(520px, 88vh, 900px);
+  min-height: 100vh;
   font-family: "Inter", "Segoe UI", "Roboto", "Helvetica Neue", sans-serif;
   overflow: hidden;
-}
-
-.hero-focus-ring:focus-visible {
-  outline: 3px solid #fbbf24;
-  outline-offset: 2px;
 }
 
 /* Hero CTA Buttons */
@@ -49,15 +44,6 @@
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
     0 10px 10px -5px rgba(0, 0, 0, 0.04);
   transform: scale(1.05);
-}
-
-.new-hero-cta-primary:focus-visible {
-  box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.35),
-    0 12px 20px -8px rgba(0, 0, 0, 0.35);
-}
-
-.new-hero-cta-primary:active {
-  transform: scale(0.98);
 }
 
 .new-hero-cta-primary::before {
@@ -105,17 +91,6 @@
   transform: scale(1.05);
   border-color: var(--color-primary);
   color: var(--color-primary);
-}
-
-.new-hero-cta-secondary:focus-visible {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.3),
-    0 10px 16px -8px rgba(0, 0, 0, 0.3);
-}
-
-.new-hero-cta-secondary:active {
-  transform: scale(0.98);
-  background: #f8fafc;
 }
 
 .new-hero-cta-secondary::before {
@@ -388,120 +363,11 @@
   font-weight: 700;
 }
 
-/* ===== HERO FINE-TUNE (SPACING/TYPO BALANCE) ===== */
-.hero-section .hero-title {
-  text-wrap: balance;
-  letter-spacing: -0.02em;
-}
-
-.hero-section .hero-lead {
-  text-wrap: pretty;
-}
-
-.hero-section .hero-main-grid {
-  align-items: start;
-}
-
-.hero-section .hero-highlights-card {
-  backdrop-filter: blur(2px);
-}
-
-@media (max-width: 374px) {
-  .hero-section .hero-shell {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-  }
-
-  .hero-section .hero-title {
-    font-size: 1.75rem;
-    line-height: 1.12;
-  }
-
-  .hero-section .hero-lead {
-    font-size: 0.95rem;
-    line-height: 1.55;
-  }
-
-  .hero-section .hero-stats-grid {
-    gap: 0.5rem;
-  }
-
-  .hero-section .hero-stats-grid > div {
-    padding: 0.625rem;
-    border-radius: 0.625rem;
-  }
-
-  .hero-section .hero-stats-grid > div p:first-child {
-    font-size: 1.1rem;
-  }
-
-  .hero-section .hero-stats-grid > div p:last-child {
-    margin-top: 0.2rem;
-    font-size: 0.72rem;
-    line-height: 1.2;
-  }
-
-  .hero-section .hero-cta-wrap {
-    padding-top: 0.1rem;
-  }
-
-  .hero-section .hero-highlights-card {
-    padding: 0.85rem;
-  }
-}
-
-@media (min-width: 375px) and (max-width: 767px) {
-  .hero-section .hero-shell {
-    padding-top: 2.5rem;
-    padding-bottom: 2.5rem;
-  }
-
-  .hero-section .hero-title {
-    line-height: 1.14;
-  }
-
-  .hero-section .hero-cta-row a {
-    min-height: 50px;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 1023px) {
-  .hero-section .hero-shell {
-    padding-top: 3.5rem;
-    padding-bottom: 3.5rem;
-  }
-
-  .hero-section .hero-main-grid {
-    gap: 2rem;
-  }
-
-  .hero-section .hero-copy-col {
-    max-width: 46rem;
-  }
-
-  .hero-section .hero-highlights-col {
-    max-width: 40rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .hero-section .hero-copy-col {
-    padding-right: 0.75rem;
-  }
-
-  .hero-section .hero-highlights-col {
-    padding-top: 0.25rem;
-  }
-}
-
 /* ===== RESPONSIVE ===== */
 @media (max-width: 640px) {
   .new-hero-cta-primary,
   .new-hero-cta-secondary {
-    width: 100%;
-    justify-content: center;
-    min-height: 48px;
-    padding: 0.875rem 1.25rem;
+    padding: 0.875rem 1.5rem;
     font-size: 1rem;
   }
 
@@ -546,13 +412,6 @@
   /* NIEUW badge animatie vertraagd op mobile */
   .hero-section .animate-ping {
     animation-duration: 2s;
-  }
-}
-
-@media (max-width: 360px) {
-  .hero-section [aria-label="Platform statistieken"] {
-    grid-template-columns: 1fr;
-    max-width: 100%;
   }
 }
 

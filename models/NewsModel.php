@@ -289,24 +289,40 @@ class NewsModel {
         ];
 
         foreach (['links', 'rechts'] as $orientation) {
-            $result[$orientation] = $this->getRecentNewsByOrientation($orientation, $perOrientation, $maxAgeHours);
+            $buckets = [
+                $this->getRecentNewsByOrientation($orientation, $perOrientation, $maxAgeHours),
+                $this->getRecentNewsByOrientation($orientation, $perOrientation, 72),
+                $this->getRecentNewsByOrientation($orientation, $perOrientation, 168),
+                $this->getNewsByOrientation($orientation, $perOrientation)
+            ];
 
-            // Fallback: als er te weinig recente items zijn, pak laatste items zonder tijdsfilter
-            if (count($result[$orientation]) < $perOrientation) {
-                $fallback = $this->getNewsByOrientation($orientation, $perOrientation);
-                $merged = array_merge($result[$orientation], $fallback);
+            $merged = [];
+            foreach ($buckets as $bucket) {
+                $merged = array_merge($merged, $bucket);
+            }
 
-                // Uniek op URL en terugknippen
-                $unique = [];
-                foreach ($merged as $article) {
-                    $key = $article['url'] ?? md5(json_encode($article));
-                    if (!isset($unique[$key])) {
-                        $unique[$key] = $article;
-                    }
+            $unique = [];
+            foreach ($merged as $article) {
+                $url = $this->normalizeUrl($article['url'] ?? '');
+                if (!$this->isValidHttpUrl($url)) {
+                    continue;
                 }
 
-                $result[$orientation] = array_slice(array_values($unique), 0, $perOrientation);
+                $title = trim((string)($article['title'] ?? ''));
+                if ($title === '') {
+                    continue;
+                }
+
+                $key = md5(mb_strtolower($title) . '|' . $url);
+                if (isset($unique[$key])) {
+                    continue;
+                }
+
+                $article['url'] = $url;
+                $unique[$key] = $article;
             }
+
+            $result[$orientation] = array_slice(array_values($unique), 0, $perOrientation);
         }
 
         return $result;
