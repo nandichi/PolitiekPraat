@@ -172,6 +172,24 @@ class NewsAPI {
                 'orientation' => 'rechts',
                 'bias' => 'Rechts-conservatief',
                 'description' => 'Nederlands online opinieplatform met nadruk op politiek en bestuur'
+            ],
+            [
+                'name' => 'Het Parool',
+                'orientation' => 'links',
+                'bias' => 'Centrum-links',
+                'description' => 'Amsterdamse kwaliteitskrant met nadruk op politiek en stadsbestuur'
+            ],
+            [
+                'name' => 'Reformatorisch Dagblad',
+                'orientation' => 'rechts',
+                'bias' => 'Christelijk-conservatief',
+                'description' => 'Landelijke krant met christelijk-conservatieve invalshoek'
+            ],
+            [
+                'name' => 'NOS',
+                'orientation' => 'midden',
+                'bias' => 'Neutraal',
+                'description' => 'Publieke nieuwsvoorziening met brede politieke verslaggeving'
             ]
         ];
         

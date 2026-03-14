@@ -289,11 +289,14 @@ class NewsModel {
         ];
 
         foreach (['links', 'rechts'] as $orientation) {
+            // Ruimere pool ophalen zodat source-diversiteit echt mogelijk is
+            $candidateLimit = max(12, $perOrientation * 5);
+
             $buckets = [
-                $this->getRecentNewsByOrientation($orientation, $perOrientation, $maxAgeHours),
-                $this->getRecentNewsByOrientation($orientation, $perOrientation, 72),
-                $this->getRecentNewsByOrientation($orientation, $perOrientation, 168),
-                $this->getNewsByOrientation($orientation, $perOrientation)
+                $this->getRecentNewsByOrientation($orientation, $candidateLimit, $maxAgeHours),
+                $this->getRecentNewsByOrientation($orientation, $candidateLimit, 72),
+                $this->getRecentNewsByOrientation($orientation, $candidateLimit, 168),
+                $this->getNewsByOrientation($orientation, $candidateLimit)
             ];
 
             $merged = [];
@@ -322,7 +325,8 @@ class NewsModel {
                 $unique[$key] = $article;
             }
 
-            $result[$orientation] = array_slice(array_values($unique), 0, $perOrientation);
+            $diverse = $this->applySourceDiversity(array_values($unique), $perOrientation);
+            $result[$orientation] = $diverse;
         }
 
         return $result;
@@ -345,6 +349,63 @@ class NewsModel {
             error_log("NewsModel::getRecentNewsByOrientation fout: " . $e->getMessage());
             return [];
         }
+    }
+
+    /**
+     * Diversiteitslogica: eerst max 1 item per bron, daarna roteren om aan te vullen
+     */
+    private function applySourceDiversity($articles, $limit = 3) {
+        if (empty($articles) || $limit <= 0) {
+            return [];
+        }
+
+        usort($articles, function($a, $b) {
+            return strtotime($b['publishedAt'] ?? '') <=> strtotime($a['publishedAt'] ?? '');
+        });
+
+        $bySource = [];
+        foreach ($articles as $article) {
+            $sourceName = trim((string)($article['source'] ?? 'Onbekende bron'));
+            $sourceKey = mb_strtolower($sourceName);
+            if (!isset($bySource[$sourceKey])) {
+                $bySource[$sourceKey] = [];
+            }
+            $bySource[$sourceKey][] = $article;
+        }
+
+        $selected = [];
+
+        // Ronde 1: maximaal 1 per bron
+        foreach ($bySource as $sourceKey => $sourceArticles) {
+            if (count($selected) >= $limit) {
+                break;
+            }
+            if (!empty($sourceArticles)) {
+                $selected[] = array_shift($bySource[$sourceKey]);
+            }
+        }
+
+        // Ronde 2+: aanvullen met bron-rotatie
+        while (count($selected) < $limit) {
+            $addedInRound = false;
+            foreach ($bySource as $sourceKey => $sourceArticles) {
+                if (count($selected) >= $limit) {
+                    break;
+                }
+                if (empty($sourceArticles)) {
+                    continue;
+                }
+
+                $selected[] = array_shift($bySource[$sourceKey]);
+                $addedInRound = true;
+            }
+
+            if (!$addedInRound) {
+                break;
+            }
+        }
+
+        return array_slice($selected, 0, $limit);
     }
 
     /**

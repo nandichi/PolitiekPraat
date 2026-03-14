@@ -351,6 +351,34 @@ if (empty($latest_news)) {
     ];
 }
 
+// Bronlogo mapping (kleine externe SVG/PNG logo's) + nette fallback
+$newsSourceLogoMap = [
+    'de volkskrant' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/De_Volkskrant_logo.svg/200px-De_Volkskrant_logo.svg.png',
+    'nrc' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/NRC_logo.svg/200px-NRC_logo.svg.png',
+    'trouw' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Trouw_logo.svg/200px-Trouw_logo.svg.png',
+    'telegraaf' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/De_Telegraaf_logo.svg/200px-De_Telegraaf_logo.svg.png',
+    'ad' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Algemeen_Dagblad_logo.svg/200px-Algemeen_Dagblad_logo.svg.png',
+    'nu.nl' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Nu.nl_logo.svg/200px-Nu.nl_logo.svg.png',
+    'ew magazine' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/EW_logo.svg/200px-EW_logo.svg.png',
+    'wynia\'s week' => 'https://www.wyniasweek.nl/wp-content/uploads/2022/08/WW-logo.png',
+    'het parool' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Het_Parool_logo.svg/200px-Het_Parool_logo.svg.png',
+    'fd' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Het_Financieele_Dagblad_logo.svg/220px-Het_Financieele_Dagblad_logo.svg.png',
+    'nos' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/NOS_logo.svg/200px-NOS_logo.svg.png',
+    'rtl nieuws' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/RTL_Nieuws_logo_2023.svg/220px-RTL_Nieuws_logo_2023.svg.png',
+    'bnr' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/BNR_Nieuwsradio_logo.svg/220px-BNR_Nieuwsradio_logo.svg.png',
+    'politiekpraat' => URLROOT . '/public/img/logo.png'
+];
+
+$resolveNewsLogo = static function(string $source) use ($newsSourceLogoMap): ?string {
+    $normalized = mb_strtolower(trim($source));
+
+    if (isset($newsSourceLogoMap[$normalized])) {
+        return $newsSourceLogoMap[$normalized];
+    }
+
+    return null;
+};
+
 // Haal actuele data op
 $actuele_themas = $openDataAPI->getActueleThemas();
 $debatten = $openDataAPI->getPolitiekeDebatten();
@@ -2091,9 +2119,18 @@ require_once 'views/templates/header.php';
                                                     <div class="flex items-center space-x-4">
                                                         <!-- Bron logo/avatar -->
                                                         <div class="relative">
-                                                            <div class="w-14 h-14 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                                                                <span class="text-blue-700 font-black text-lg">
-                                                                    <?php echo substr($news['source'], 0, 2); ?>
+                                                            <?php $sourceLogo = $resolveNewsLogo($news['source'] ?? ''); ?>
+                                                            <div class="w-14 h-14 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg overflow-hidden">
+                                                                <?php if (!empty($sourceLogo)): ?>
+                                                                    <img src="<?php echo htmlspecialchars($sourceLogo); ?>"
+                                                                         alt="Logo van <?php echo htmlspecialchars($news['source'] ?? 'nieuwsbron'); ?>"
+                                                                         class="w-10 h-10 object-contain"
+                                                                         loading="lazy"
+                                                                         decoding="async"
+                                                                         onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-flex';">
+                                                                <?php endif; ?>
+                                                                <span class="text-blue-700 font-black text-lg <?php echo !empty($sourceLogo) ? 'hidden' : 'inline-flex'; ?> items-center justify-center w-10 h-10">
+                                                                    <?php echo strtoupper(substr((string)($news['source'] ?? '?'), 0, 2)); ?>
                                                                 </span>
                                                             </div>
                                                             <!-- Online indicator -->
@@ -2214,9 +2251,18 @@ require_once 'views/templates/header.php';
                                                     <div class="flex items-center space-x-4">
                                                         <!-- Bron logo/avatar -->
                                                         <div class="relative">
-                                                            <div class="w-14 h-14 bg-gradient-to-br from-red-100 to-orange-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                                                                <span class="text-red-700 font-black text-lg">
-                                                                    <?php echo substr($news['source'], 0, 2); ?>
+                                                            <?php $sourceLogo = $resolveNewsLogo($news['source'] ?? ''); ?>
+                                                            <div class="w-14 h-14 bg-gradient-to-br from-red-100 to-orange-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg overflow-hidden">
+                                                                <?php if (!empty($sourceLogo)): ?>
+                                                                    <img src="<?php echo htmlspecialchars($sourceLogo); ?>"
+                                                                         alt="Logo van <?php echo htmlspecialchars($news['source'] ?? 'nieuwsbron'); ?>"
+                                                                         class="w-10 h-10 object-contain"
+                                                                         loading="lazy"
+                                                                         decoding="async"
+                                                                         onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-flex';">
+                                                                <?php endif; ?>
+                                                                <span class="text-red-700 font-black text-lg <?php echo !empty($sourceLogo) ? 'hidden' : 'inline-flex'; ?> items-center justify-center w-10 h-10">
+                                                                    <?php echo strtoupper(substr((string)($news['source'] ?? '?'), 0, 2)); ?>
                                                                 </span>
                                                             </div>
                                                             <!-- Online indicator -->

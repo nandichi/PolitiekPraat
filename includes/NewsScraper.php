@@ -32,6 +32,14 @@ class NewsScraper {
             'orientation' => 'links',
             'bias' => 'Progressief'
         ],
+        'Het Parool' => [
+            'rss_urls' => [
+                'https://www.parool.nl/rss.xml',
+                'https://www.parool.nl/nieuws-achtergrond/politiek/rss.xml'
+            ],
+            'orientation' => 'links',
+            'bias' => 'Centrum-links'
+        ],
         'Telegraaf' => [
             'rss_urls' => [
                 'https://www.telegraaf.nl/rss',
@@ -71,6 +79,13 @@ class NewsScraper {
             ],
             'orientation' => 'rechts',
             'bias' => 'Rechts-conservatief'
+        ],
+        'Reformatorisch Dagblad' => [
+            'rss_urls' => [
+                'https://www.rd.nl/rss'
+            ],
+            'orientation' => 'rechts',
+            'bias' => 'Christelijk-conservatief'
         ]
     ];
     
