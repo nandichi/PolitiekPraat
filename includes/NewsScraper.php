@@ -55,6 +55,22 @@ class NewsScraper {
             ],
             'orientation' => 'rechts',
             'bias' => 'Conservatief'
+        ],
+        'EW Magazine' => [
+            'rss_urls' => [
+                'https://www.ewmagazine.nl/politiek/feed/',
+                'https://www.ewmagazine.nl/feed/'
+            ],
+            'orientation' => 'rechts',
+            'bias' => 'Centrum-rechts'
+        ],
+        'Wynia\'s Week' => [
+            'rss_urls' => [
+                'https://www.wyniasweek.nl/category/politiek/feed/',
+                'https://www.wyniasweek.nl/feed/'
+            ],
+            'orientation' => 'rechts',
+            'bias' => 'Rechts-conservatief'
         ]
     ];
     
@@ -348,15 +364,66 @@ class NewsScraper {
         $stats = [];
         
         foreach ($this->newsSources as $sourceName => $sourceConfig) {
+            $rssUrls = $sourceConfig['rss_urls'] ?? [($sourceConfig['rss_url'] ?? '')];
             $stats[$sourceName] = [
                 'last_scraped' => isset($lastScrapedData[$sourceName]) ? $lastScrapedData[$sourceName]['last_scraped_at'] : 'Nog nooit',
                 'last_articles_found' => isset($lastScrapedData[$sourceName]) ? $lastScrapedData[$sourceName]['articles_found'] : 0,
-                'rss_urls' => $sourceConfig['rss_urls'] ?? [($sourceConfig['rss_url'] ?? '')],
+                'rss_url' => $rssUrls[0] ?? '', // backward compatibility voor admin views
+                'rss_urls' => $rssUrls,
                 'orientation' => $sourceConfig['orientation']
             ];
         }
-        
+
         return $stats;
+    }
+
+    /**
+     * Basale health-check per bron en per perspectief (zonder overkill)
+     */
+    public function getHealthReport($freshHours = 48) {
+        $report = [
+            'sources' => [],
+            'orientation' => [
+                'links' => 0,
+                'rechts' => 0
+            ],
+            'fresh_hours' => $freshHours,
+            'generated_at' => date('Y-m-d H:i:s')
+        ];
+
+        try {
+            $db = $this->newsModel->getDatabase();
+            $lastScrapedData = $this->loadLastScrapedData();
+            $freshHours = max(1, intval($freshHours));
+
+            foreach ($this->newsSources as $sourceName => $sourceConfig) {
+                $quotedSource = $db->getConnection()->quote($sourceName);
+                $sql = "SELECT COUNT(*) as cnt, MAX(published_at) as newest FROM news_articles WHERE source = $quotedSource AND published_at >= DATE_SUB(NOW(), INTERVAL $freshHours HOUR)";
+                $row = $db->directQuery($sql)->fetch(PDO::FETCH_ASSOC);
+
+                $recentCount = intval($row['cnt'] ?? 0);
+                $lastPublished = $row['newest'] ?? null;
+                $lastScraped = $lastScrapedData[$sourceName]['last_scraped_at'] ?? null;
+
+                $report['sources'][$sourceName] = [
+                    'orientation' => $sourceConfig['orientation'],
+                    'recent_articles' => $recentCount,
+                    'last_published_at' => $lastPublished,
+                    'last_scraped_at' => $lastScraped,
+                    'is_healthy' => $recentCount > 0
+                ];
+            }
+
+            foreach (['links', 'rechts'] as $orientation) {
+                $sql = "SELECT COUNT(*) as cnt FROM news_articles WHERE orientation = '$orientation' AND published_at >= DATE_SUB(NOW(), INTERVAL $freshHours HOUR)";
+                $row = $db->directQuery($sql)->fetch(PDO::FETCH_ASSOC);
+                $report['orientation'][$orientation] = intval($row['cnt'] ?? 0);
+            }
+        } catch (Exception $e) {
+            error_log('NewsScraper::getHealthReport fout: ' . $e->getMessage());
+        }
+
+        return $report;
     }
 }
 ?> 

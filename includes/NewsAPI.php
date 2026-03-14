@@ -26,6 +26,14 @@ class NewsAPI {
             'politiek' => 'https://www.ad.nl/politiek/rss.xml',
             'algemeen' => 'https://www.ad.nl/rss.xml'
         ],
+        'EW Magazine' => [
+            'politiek' => 'https://www.ewmagazine.nl/politiek/feed/',
+            'algemeen' => 'https://www.ewmagazine.nl/feed/'
+        ],
+        'Wynia\'s Week' => [
+            'politiek' => 'https://www.wyniasweek.nl/category/politiek/feed/',
+            'algemeen' => 'https://www.wyniasweek.nl/feed/'
+        ],
         'Reformatorisch Dagblad' => [
             'politiek' => 'https://www.rd.nl/rss',
             'algemeen' => 'https://www.rd.nl/rss'
@@ -201,10 +209,8 @@ class NewsAPI {
                 throw new Exception("Kon feed niet ophalen: HTTP code " . $httpCode . " Error: " . $error);
             }
 
-            // Fix mogelijk slecht gevormde XML (specifiek voor NU.nl)
-            if (strpos($feed_url, 'nu.nl') !== false) {
-                $response = preg_replace('/(&(?!amp;|lt;|gt;|quot;|apos;|#\d+;))/i', '&amp;', $response);
-            }
+            // Fix mogelijk slecht gevormde XML (geldt ook voor sommige WordPress/CDN feeds)
+            $response = preg_replace('/(&(?!amp;|lt;|gt;|quot;|apos;|#\d+;))/i', '&amp;', $response);
 
             // Converteer de response naar een SimpleXML object
             libxml_use_internal_errors(true);

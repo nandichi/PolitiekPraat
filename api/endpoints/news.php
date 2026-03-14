@@ -160,6 +160,18 @@ class NewsAPI {
                 'orientation' => 'rechts',
                 'bias' => 'Conservatief',
                 'description' => 'Nieuwssite met brede berichtgeving'
+            ],
+            [
+                'name' => 'EW Magazine',
+                'orientation' => 'rechts',
+                'bias' => 'Centrum-rechts',
+                'description' => 'Opinie- en nieuwsmagazine met liberaal-conservatieve invalshoek'
+            ],
+            [
+                'name' => 'Wynia\'s Week',
+                'orientation' => 'rechts',
+                'bias' => 'Rechts-conservatief',
+                'description' => 'Nederlands online opinieplatform met nadruk op politiek en bestuur'
             ]
         ];
         

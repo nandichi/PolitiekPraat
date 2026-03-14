@@ -71,18 +71,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 
                 foreach ($scrapingStats as $source => $sourceStats) {
                     try {
-                        $rss = simplexml_load_string(file_get_contents($sourceStats['rss_url']));
-                        if ($rss !== false) {
-                            $itemCount = count($rss->channel->item);
-                            $testResults[$source] = [
-                                'status' => 'success',
-                                'items' => $itemCount,
-                                'message' => "RSS feed werkt - {$itemCount} items gevonden"
-                            ];
-                        } else {
+                        $rssUrls = $sourceStats['rss_urls'] ?? [$sourceStats['rss_url'] ?? ''];
+                        $found = false;
+                        $lastError = 'Geen RSS URL geconfigureerd';
+
+                        foreach ($rssUrls as $rssUrl) {
+                            if (empty($rssUrl)) {
+                                continue;
+                            }
+
+                            $raw = @file_get_contents($rssUrl);
+                            if ($raw === false) {
+                                $lastError = "Feed niet bereikbaar: $rssUrl";
+                                continue;
+                            }
+
+                            // Fix mogelijk malformed XML (bare ampersands)
+                            $raw = preg_replace('/(&(?!amp;|lt;|gt;|quot;|apos;|#\\d+;))/i', '&amp;', $raw);
+                            $rss = @simplexml_load_string($raw);
+
+                            if ($rss !== false) {
+                                $itemCount = isset($rss->channel->item) ? count($rss->channel->item) : 0;
+                                $testResults[$source] = [
+                                    'status' => 'success',
+                                    'items' => $itemCount,
+                                    'message' => "RSS feed werkt via {$rssUrl} - {$itemCount} items gevonden"
+                                ];
+                                $found = true;
+                                break;
+                            }
+
+                            $lastError = "RSS feed kan niet worden gelezen: $rssUrl";
+                        }
+
+                        if (!$found) {
                             $testResults[$source] = [
                                 'status' => 'error',
-                                'message' => 'RSS feed kan niet worden gelezen'
+                                'message' => $lastError
                             ];
                         }
                     } catch (Exception $e) {

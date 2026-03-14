@@ -39,7 +39,28 @@ try {
         echo "$source:\n";
         echo "  Laatst gescraped: " . $sourceStats['last_scraped'] . "\n";
         echo "  Laatste run artikelen: " . $sourceStats['last_articles_found'] . "\n";
-        echo "  RSS: " . $sourceStats['rss_url'] . "\n\n";
+        echo "  RSS primair: " . ($sourceStats['rss_url'] ?? '-') . "\n";
+        if (!empty($sourceStats['rss_urls']) && is_array($sourceStats['rss_urls'])) {
+            echo "  RSS fallback(s): " . implode(' | ', $sourceStats['rss_urls']) . "\n";
+        }
+        echo "\n";
+    }
+
+    // Compacte health check: genoeg recente artikelen per perspectief?
+    echo "=== Health Check (48h) ===\n";
+    $health = $scraper->getHealthReport(48);
+    echo "Links recent (48h): " . ($health['orientation']['links'] ?? 0) . "\n";
+    echo "Rechts recent (48h): " . ($health['orientation']['rechts'] ?? 0) . "\n";
+
+    $unhealthySources = [];
+    foreach (($health['sources'] ?? []) as $sourceName => $sourceHealth) {
+        if (empty($sourceHealth['is_healthy'])) {
+            $unhealthySources[] = $sourceName;
+        }
+    }
+
+    if (!empty($unhealthySources)) {
+        echo "Waarschuwing: geen recente artikelen in 48h voor: " . implode(', ', $unhealthySources) . "\n";
     }
     
     // Cleanup oude artikelen (elke dag om 6:00 AM)

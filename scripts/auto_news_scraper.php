@@ -97,6 +97,23 @@ try {
     foreach ($scrapingStats as $source => $sourceStats) {
         logMessage("  $source: " . ($sourceStats['last_articles_found'] ?? 0) . " articles, last scraped: " . ($sourceStats['last_scraped'] ?? 'never'));
     }
+
+    // Compacte health-check op recente dekking per perspectief
+    $health = $scraper->getHealthReport(48);
+    $recentLinks = $health['orientation']['links'] ?? 0;
+    $recentRechts = $health['orientation']['rechts'] ?? 0;
+    logMessage("Health (48h): links={$recentLinks}, rechts={$recentRechts}");
+
+    $staleSources = [];
+    foreach (($health['sources'] ?? []) as $sourceName => $sourceHealth) {
+        if (empty($sourceHealth['is_healthy'])) {
+            $staleSources[] = $sourceName;
+        }
+    }
+
+    if (!empty($staleSources)) {
+        logMessage("Waarschuwing: geen recente artikelen in 48h voor: " . implode(', ', $staleSources));
+    }
     
     // Automatische cleanup als ingeschakeld
     if ($autoSettings['auto_cleanup'] ?? false) {
@@ -136,7 +153,8 @@ try {
     $emailDetails .= "- Fouten: " . count($errors) . "\n";
     $emailDetails .= "- Memory gebruik: {$memoryUsage}MB\n";
     $emailDetails .= "- Uitvoeringstijd: {$executionTime}s\n";
-    $emailDetails .= "- Database artikelen totaal: " . ($statsAfter['total_articles'] ?? 0) . "\n\n";
+    $emailDetails .= "- Database artikelen totaal: " . ($statsAfter['total_articles'] ?? 0) . "\n";
+    $emailDetails .= "- Health 48h (links/rechts): {$recentLinks}/{$recentRechts}\n\n";
     
     if (!empty($errors)) {
         $emailDetails .= "Fouten tijdens scraping:\n";
