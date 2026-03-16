@@ -38,6 +38,10 @@ $db->query("SELECT comments.*,
 $db->bind(':blog_id', $blog->id);
 $comments = $db->resultSet();
 
+$escape = static function ($value): string {
+    return htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8');
+};
+
 // Comment toevoegen (zowel voor ingelogde als anonieme gebruikers)
 $comment_error = '';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -80,34 +84,34 @@ require_once BASE_PATH . '/views/templates/header.php';
 <main class="container mx-auto px-4 py-12">
     <article class="max-w-4xl mx-auto">
         <?php if($blog->image_path): ?>
-            <img src="<?php echo URLROOT; ?>/public/images/<?php echo $blog->image_path; ?>" 
-                 alt="<?php echo $blog->title; ?>"
+            <img src="<?php echo URLROOT; ?>/public/images/<?php echo $escape($blog->image_path); ?>" 
+                 alt="<?php echo $escape($blog->title); ?>"
                  class="w-full h-96 object-cover rounded-lg mb-8">
         <?php endif; ?>
 
-        <h1 class="text-4xl font-bold mb-4"><?php echo $blog->title; ?></h1>
+        <h1 class="text-4xl font-bold mb-4"><?php echo $escape($blog->title); ?></h1>
         
         <div class="flex items-center text-gray-500 mb-8">
-            <span>Door <?php echo $blog->author_name; ?></span>
+            <span>Door <?php echo $escape($blog->author_name); ?></span>
             <span class="mx-2">•</span>
             <span><?php echo date('d-m-Y', strtotime($blog->published_at)); ?></span>
             <span class="mx-2">•</span>
-            <span><?php echo $blog->views; ?> views</span>
+            <span><?php echo (int) $blog->views; ?> views</span>
         </div>
 
         <div class="prose max-w-none mb-12">
-            <?php echo nl2br($blog->content); ?>
+            <?php echo nl2br($escape($blog->content)); ?>
         </div>
 
         <!-- Comments Section -->
         <section id="comments" class="mt-12 pt-12 border-t">
             <h2 class="text-2xl font-bold mb-8">Reacties (<?php echo count($comments); ?>)</h2>
 
-            <form method="POST" action="<?php echo URLROOT; ?>/blogs/<?php echo $blog->slug; ?>#comments" 
+            <form method="POST" action="<?php echo URLROOT; ?>/blogs/<?php echo $escape($blog->slug); ?>#comments" 
                   class="mb-8">
                 <?php if ($comment_error): ?>
                     <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-                        <?php echo $comment_error; ?>
+                        <?php echo $escape($comment_error); ?>
                     </div>
                 <?php endif; ?>
 
@@ -170,7 +174,7 @@ require_once BASE_PATH . '/views/templates/header.php';
                                 <?php if(isset($_SESSION['user_id']) && $comment->author_type === 'registered' && 
                                         ($_SESSION['user_id'] == $comment->user_id || $_SESSION['is_admin'])): ?>
                                     <form method="POST" 
-                                          action="<?php echo URLROOT; ?>/comments/delete/<?php echo $comment->id; ?>"
+                                          action="<?php echo URLROOT; ?>/comments/delete/<?php echo (int) $comment->id; ?>"
                                           class="inline">
                                         <button type="submit" 
                                                 class="text-red-600 hover:text-red-800 text-sm"
@@ -180,7 +184,7 @@ require_once BASE_PATH . '/views/templates/header.php';
                                     </form>
                                 <?php elseif($_SESSION['is_admin'] ?? false): ?>
                                     <form method="POST" 
-                                          action="<?php echo URLROOT; ?>/comments/delete/<?php echo $comment->id; ?>"
+                                          action="<?php echo URLROOT; ?>/comments/delete/<?php echo (int) $comment->id; ?>"
                                           class="inline">
                                         <button type="submit" 
                                                 class="text-red-600 hover:text-red-800 text-sm"
