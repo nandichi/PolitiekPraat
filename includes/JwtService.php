@@ -5,10 +5,33 @@ class JwtService {
 
     public function __construct($secret_key = null) {
         if ($secret_key === null) {
-            $secret_key = 'PolitiekPraat_JWT_Secret_2024_Secure_Key_' . (defined('DB_NAME') ? DB_NAME : 'default');
+            $secret_key = self::resolveSecretKey();
         }
 
         $this->secret_key = $secret_key;
+    }
+
+    public static function resolveSecretKey() {
+        $secret = getenv('POLITIEKPRAAT_JWT_SECRET');
+
+        if (is_string($secret)) {
+            $secret = trim($secret);
+        }
+
+        if (is_string($secret) && $secret !== '') {
+            return $secret;
+        }
+
+        $app_env = defined('APP_ENV') ? APP_ENV : strtolower((string) (getenv('APP_ENV') ?: 'production'));
+        $is_production = !in_array($app_env, ['local', 'development', 'dev', 'test', 'testing', 'staging'], true);
+
+        if ($is_production) {
+            throw new RuntimeException('POLITIEKPRAAT_JWT_SECRET ontbreekt. Zet een sterke secret in de environment voordat de API start.');
+        }
+
+        trigger_error('POLITIEKPRAAT_JWT_SECRET ontbreekt; development fallback actief. Zet alsnog een lokale secret voor consistente tests.', E_USER_WARNING);
+
+        return 'dev-only-jwt-secret-change-me';
     }
 
     public function verify($token) {
