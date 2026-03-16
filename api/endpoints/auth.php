@@ -10,8 +10,7 @@ class AuthAPI {
         $this->db = new Database();
         $this->authController = new AuthController();
         
-        // JWT secret key - in productie moet dit in een config file
-        $this->secretKey = 'PolitiekPraat_JWT_Secret_2024_Secure_Key_' . (defined('DB_NAME') ? DB_NAME : 'default');
+        $this->secretKey = JwtService::resolveSecretKey();
         $this->jwtService = new JwtService($this->secretKey);
     }
     

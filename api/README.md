@@ -457,6 +457,15 @@ Alle endpoints hebben consistente foutafhandeling met duidelijke error messages 
 - **Geldigheid**: 24 uur
 - **Algoritme**: HS256
 - **Refresh**: Gebruik `/api/auth/refresh` endpoint
+- **Secret config**: zet `POLITIEKPRAAT_JWT_SECRET` als environment variable (minimaal 32 random tekens)
+- **Fail-fast productie**: API stopt in productie als `POLITIEKPRAAT_JWT_SECRET` ontbreekt
+
+### JWT secret rotatie (zonder downtime)
+
+1. Genereer een nieuwe sterke secret (minimaal 32 tekens) en zet die in `POLITIEKPRAAT_JWT_SECRET`.
+2. Deploy de wijziging en herstart PHP-FPM/webserver zodat de nieuwe env actief is.
+3. Houd rekening met max. 24 uur overlap: bestaande tokens met oude secret verlopen vanzelf binnen de TTL.
+4. Na 24 uur zijn alle oude tokens ongeldig; forceer desgewenst eerder herauthenticatie via logout/session reset.
 
 ## Voorbeelden
 
