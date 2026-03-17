@@ -32,9 +32,12 @@ try {
     $monthResults = $db->single()->count ?? 0;
     
     // Inzendingen met paginering en filtering (standaard laatste 50)
-    $page = $_GET['page'] ?? 1;
-    $limit = $_GET['limit'] ?? 50;
-    $offset = ($page - 1) * $limit;
+    $rawPage = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+    $rawLimit = isset($_GET['limit']) ? (int) $_GET['limit'] : 50;
+
+    $page = max(1, $rawPage);
+    $limit = min(200, max(10, $rawLimit));
+    $offset = max(0, ($page - 1) * $limit);
     
     // Filter parameters
     $searchTerm = $_GET['search'] ?? '';
@@ -71,10 +74,20 @@ try {
         $db->query($countQuery);
     }
     $totalRecords = $db->single()->total ?? 0;
-    $totalPages = ceil($totalRecords / $limit);
+    $totalPages = max(1, (int) ceil($totalRecords / $limit));
+
+    if ($page > $totalPages) {
+        $page = $totalPages;
+        $offset = max(0, ($page - 1) * $limit);
+    }
     
     // Haal gefilterde resultaten op
-    $dataQuery = "SELECT id, session_id, completed_at, ip_address, answers, results FROM stemwijzer_results $whereClause ORDER BY completed_at DESC LIMIT $limit OFFSET $offset";
+    $dataQuery = sprintf(
+        "SELECT id, session_id, completed_at, ip_address, answers, results FROM stemwijzer_results %s ORDER BY completed_at DESC LIMIT %d OFFSET %d",
+        $whereClause,
+        $limit,
+        $offset
+    );
     if (!empty($params)) {
         $db->query($dataQuery, $params);
     } else {
