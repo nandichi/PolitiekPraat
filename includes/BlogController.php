@@ -30,46 +30,91 @@ class BlogController {
     }
 
     public function getAll($limit = null, $categoryId = null) {
+        if ($limit) {
+            return $this->getPaginated(1, (int) $limit, $categoryId);
+        }
+
         $sql = "SELECT blogs.*, users.username as author_name, users.profile_photo as author_photo,
-                       blog_categories.name as category_name, blog_categories.slug as category_slug, 
+                       blog_categories.name as category_name, blog_categories.slug as category_slug,
                        blog_categories.color as category_color, blog_categories.icon as category_icon
-                FROM blogs 
-                JOIN users ON blogs.author_id = users.id 
+                FROM blogs
+                JOIN users ON blogs.author_id = users.id
                 LEFT JOIN blog_categories ON blogs.category_id = blog_categories.id";
-        
+
         if ($categoryId) {
             $sql .= " WHERE blogs.category_id = :category_id";
         }
-        
+
         $sql .= " ORDER BY published_at DESC";
-        
-        if ($limit) {
-            $sql .= " LIMIT " . intval($limit);
-        }
-        
+
         $this->db->query($sql);
-        
+
         if ($categoryId) {
             $this->db->bind(':category_id', $categoryId);
         }
-        
+
         $blogs = $this->db->resultSet();
-        
-        // Wijs consistente kleuren toe
+        return $this->hydrateBlogCollection($blogs);
+    }
+
+    public function getPaginated($page = 1, $perPage = 9, $categoryId = null) {
+        $page = max(1, (int) $page);
+        $perPage = max(1, (int) $perPage);
+        $offset = ($page - 1) * $perPage;
+
+        $sql = "SELECT blogs.*, users.username as author_name, users.profile_photo as author_photo,
+                       blog_categories.name as category_name, blog_categories.slug as category_slug,
+                       blog_categories.color as category_color, blog_categories.icon as category_icon
+                FROM blogs
+                JOIN users ON blogs.author_id = users.id
+                LEFT JOIN blog_categories ON blogs.category_id = blog_categories.id";
+
+        if ($categoryId) {
+            $sql .= " WHERE blogs.category_id = :category_id";
+        }
+
+        $sql .= " ORDER BY published_at DESC LIMIT :offset, :per_page";
+
+        $this->db->query($sql);
+
+        if ($categoryId) {
+            $this->db->bind(':category_id', $categoryId);
+        }
+
+        $this->db->bind(':offset', $offset, PDO::PARAM_INT);
+        $this->db->bind(':per_page', $perPage, PDO::PARAM_INT);
+
+        $blogs = $this->db->resultSet();
+        return $this->hydrateBlogCollection($blogs);
+    }
+
+    public function getTotalBlogCount($categoryId = null) {
+        $sql = "SELECT COUNT(*) as total FROM blogs";
+
+        if ($categoryId) {
+            $sql .= " WHERE category_id = :category_id";
+        }
+
+        $this->db->query($sql);
+
+        if ($categoryId) {
+            $this->db->bind(':category_id', $categoryId);
+        }
+
+        $result = $this->db->single();
+        return (int) ($result->total ?? 0);
+    }
+
+    private function hydrateBlogCollection($blogs) {
         $blogs = $this->categoryController->assignCategoryColors($blogs, true);
 
-        // Parse Markdown naar HTML voor elk blog
         foreach ($blogs as $blog) {
-            // Bewaar de originele content voor de samenvatting
             $originalContent = $blog->content;
-            // Converteer Markdown naar HTML voor de volledige content
             $blog->content = $this->parsedown->text($blog->content);
-            // Maak een samenvatting van de originele content
             $blog->summary = substr(strip_tags($this->parsedown->text($originalContent)), 0, 200) . '...';
-            // Bereken leestijd
             $blog->reading_time = $this->calculateReadingTime($originalContent);
         }
-        
+
         return $blogs;
     }
 
