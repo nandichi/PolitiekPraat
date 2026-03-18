@@ -198,19 +198,37 @@ class NewsAPI {
             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
             curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36');
             curl_setopt($ch, CURLOPT_TIMEOUT, 15); // Increase timeout
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
             
             // Voer het verzoek uit
             $response = curl_exec($ch);
             $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            $curlErrno = curl_errno($ch);
             $error = curl_error($ch);
             
             // Sluit cURL
             curl_close($ch);
+
+            $source = $this->getSourceFromFeedUrl($feed_url);
+
+            if ($curlErrno !== 0) {
+                $isTlsError = stripos($error, 'ssl') !== false
+                    || stripos($error, 'tls') !== false
+                    || stripos($error, 'certificate') !== false;
+
+                if ($isTlsError) {
+                    error_log("RSS TLS-verificatie gefaald voor bron '{$source}' ({$feed_url}): cURL #{$curlErrno} {$error}");
+                } else {
+                    error_log("RSS cURL-fout voor bron '{$source}' ({$feed_url}): cURL #{$curlErrno} {$error}");
+                }
+
+                return [];
+            }
             
             // Controleer of we een geldige response hebben
             if ($httpCode !== 200 || !$response) {
-                throw new Exception("Kon feed niet ophalen: HTTP code " . $httpCode . " Error: " . $error);
+                throw new Exception("Kon feed niet ophalen voor bron '" . $source . "': HTTP code " . $httpCode);
             }
 
             // Fix mogelijk slecht gevormde XML (geldt ook voor sommige WordPress/CDN feeds)
