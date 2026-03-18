@@ -10,19 +10,39 @@ class BlogsController {
         // Check for category filtering via query parameter
         $categoryId = null;
         $selectedCategory = null;
-        
+
         if (isset($_GET['category'])) {
             $categoryController = new CategoryController();
             $selectedCategory = $categoryController->getBySlug($_GET['category']);
-            
+
             if ($selectedCategory) {
                 $categoryId = $selectedCategory->id;
             }
         }
-        
+
+        $currentPage = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+        if ($currentPage < 1) {
+            $currentPage = 1;
+        }
+
+        $perPage = 9;
+        $totalBlogs = $this->blogModel->getTotalBlogCount($categoryId);
+        $totalPages = (int) ceil($totalBlogs / $perPage);
+
+        if ($totalPages > 0 && $currentPage > $totalPages) {
+            $currentPage = $totalPages;
+        }
+
         // Get blogs with optional category filtering
-        $blogs = $this->blogModel->getAll(null, $categoryId);
-        
+        $blogs = $this->blogModel->getPaginated($currentPage, $perPage, $categoryId);
+
+        $paginationData = [
+            'currentPage' => $currentPage,
+            'totalPages' => $totalPages,
+            'perPage' => $perPage,
+            'totalBlogs' => $totalBlogs,
+        ];
+
         require_once BASE_PATH . '/views/blogs/index.php';
     }
     

@@ -469,44 +469,37 @@
                     <?php endif; ?>
                 </div>
             <?php endif; ?>
+
+            <?php if (!empty($paginationData) && ($paginationData['totalPages'] ?? 0) > 1): ?>
+                <?php
+                    $page = (int) ($paginationData['currentPage'] ?? 1);
+                    $totalPages = (int) ($paginationData['totalPages'] ?? 1);
+                    $baseParams = $_GET;
+                    unset($baseParams['page']);
+                    $baseQuery = http_build_query($baseParams);
+                    $baseUrl = URLROOT . '/blogs' . ($baseQuery ? '?' . $baseQuery . '&' : '?');
+                ?>
+                <nav class="mt-10 flex items-center justify-center gap-2" aria-label="Paginering blogs">
+                    <a href="<?php echo $page > 1 ? $baseUrl . 'page=' . ($page - 1) : '#'; ?>"
+                       class="inline-flex items-center px-3 py-2 rounded-lg border text-sm font-medium transition <?php echo $page > 1 ? 'border-gray-300 text-gray-700 hover:bg-gray-50' : 'border-gray-200 text-gray-300 pointer-events-none'; ?>">
+                        Vorige
+                    </a>
+
+                    <?php for ($i = max(1, $page - 2); $i <= min($totalPages, $page + 2); $i++): ?>
+                        <a href="<?php echo $baseUrl . 'page=' . $i; ?>"
+                           class="inline-flex items-center justify-center w-10 h-10 rounded-lg text-sm font-semibold transition <?php echo $i === $page ? 'bg-primary text-white shadow-md' : 'border border-gray-300 text-gray-700 hover:bg-gray-50'; ?>">
+                            <?php echo $i; ?>
+                        </a>
+                    <?php endfor; ?>
+
+                    <a href="<?php echo $page < $totalPages ? $baseUrl . 'page=' . ($page + 1) : '#'; ?>"
+                       class="inline-flex items-center px-3 py-2 rounded-lg border text-sm font-medium transition <?php echo $page < $totalPages ? 'border-gray-300 text-gray-700 hover:bg-gray-50' : 'border-gray-200 text-gray-300 pointer-events-none'; ?>">
+                        Volgende
+                    </a>
+                </nav>
+            <?php endif; ?>
         </div>
     </section>
 </main>
 
-<!-- Scripts voor Markdown parsing -->
-<script src="https://cdn.jsdelivr.net/npm/marked@4.3.0/marked.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/dompurify@2.3.3/dist/purify.min.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Configureer marked
-    marked.use({ 
-        breaks: true,
-        gfm: true,
-        headerIds: false
-    });
-
-    // Functie om markdown te parsen en te strippen van HTML tags
-    function parseAndStripMarkdown(markdown, length = 150) {
-        try {
-            // Parse markdown naar HTML
-            const html = marked.parse(markdown);
-            // Sanitize de HTML
-            const cleanHtml = DOMPurify.sanitize(html);
-            // Strip HTML tags en limiteer lengte
-            const text = cleanHtml.replace(/<[^>]*>/g, '');
-            return text.length > length ? text.substring(0, length) + '...' : text;
-        } catch (error) {
-            console.error('Markdown parsing error:', error);
-            return markdown;
-        }
-    }
-
-    // Pas toe op alle blog samenvattingen
-    document.querySelectorAll('.blog-summary').forEach(summary => {
-        const markdown = summary.textContent;
-        summary.textContent = parseAndStripMarkdown(markdown);
-    });
-});
-</script>
-
-<?php require_once 'views/templates/footer.php'; ?> 
+<?php require_once 'views/templates/footer.php'; ?>
