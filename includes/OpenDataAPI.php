@@ -13,22 +13,59 @@ class OpenDataAPI {
 
     private function fetchWithCache($url, $cache_key) {
         $cache_file = $this->cache_dir . $cache_key . '.json';
-        
+
         // Check if cache exists and is still valid
         if (file_exists($cache_file) && (time() - filemtime($cache_file) < $this->cache_time)) {
             return json_decode(file_get_contents($cache_file), true);
         }
-        
-        // Fetch new data
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        $response = curl_exec($ch);
-        curl_close($ch);
-        
-        if ($response) {
+
+        $attempts = 0;
+        $max_attempts = 3;
+        $response = false;
+        $last_errno = 0;
+        $last_error = '';
+        $request_ok = false;
+
+        while ($attempts < $max_attempts) {
+            $attempts++;
+
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 15);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+
+            $response = curl_exec($ch);
+            $last_errno = curl_errno($ch);
+            $last_error = curl_error($ch);
+            $http_code = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
+
+            if ($response !== false && $http_code >= 200 && $http_code < 300) {
+                $request_ok = true;
+                break;
+            }
+
+            $is_tls_error = in_array($last_errno, [35, 51, 53, 58, 59, 60, 66, 77, 80, 82, 83, 90], true);
+            if ($is_tls_error) {
+                error_log(sprintf(
+                    '[OpenDataAPI] TLS-verificatie mislukt voor URL %s (errno=%d, error=%s)',
+                    $url,
+                    $last_errno,
+                    $last_error
+                ));
+                return null;
+            }
+
+            if ($attempts < $max_attempts) {
+                usleep($attempts * 250000);
+            }
+        }
+
+        if ($request_ok && $response !== false) {
             // Save to cache
             if (!is_dir($this->cache_dir)) {
                 mkdir($this->cache_dir, 0777, true);
@@ -36,7 +73,15 @@ class OpenDataAPI {
             file_put_contents($cache_file, $response);
             return json_decode($response, true);
         }
-        
+
+        error_log(sprintf(
+            '[OpenDataAPI] Request mislukt voor URL %s na %d pogingen (errno=%d, error=%s)',
+            $url,
+            $max_attempts,
+            $last_errno,
+            $last_error
+        ));
+
         return null;
     }
 
