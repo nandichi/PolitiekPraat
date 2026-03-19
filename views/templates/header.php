@@ -219,8 +219,36 @@ function generateDynamicMetaDescription($type, $data, $fallback) {
     return $fallback;
 }
 
+// Unieke fallback titels voor kernpagina's (Issue #65)
+$defaultPageTitles = [
+    'home' => 'PolitiekPraat - Politiek nieuws, blogs en stemhulp',
+    'blogs' => 'Politieke blogs en opinie - PolitiekPraat',
+    'nieuws' => 'Laatste politieke nieuws uit Nederland - PolitiekPraat',
+    'partijmeter' => 'PartijMeter 2025: Ontdek welke partij bij je past - PolitiekPraat',
+    'politiek-kompas' => 'Politiek Kompas: vergelijk standpunten per thema - PolitiekPraat',
+    'partijen' => 'Overzicht Nederlandse politieke partijen - PolitiekPraat',
+    'themas' => 'Politieke thema\'s uitgelegd: klimaat, zorg, economie - PolitiekPraat',
+    'forum' => 'Politiek forum: discussies en debat - PolitiekPraat',
+    'contact' => 'Contact met PolitiekPraat',
+    'donatie' => 'Steun PolitiekPraat met een donatie',
+    'over-mij' => 'Over PolitiekPraat: missie en platform',
+    'resultaten' => 'Jouw PartijMeter resultaten - PolitiekPraat',
+    'amerikaanse-verkiezingen' => 'Amerikaanse verkiezingen: geschiedenis en statistieken - PolitiekPraat',
+    'nederlandse-verkiezingen' => 'Nederlandse verkiezingen: 175 jaar democratie - PolitiekPraat',
+    'blog-detail' => 'Politieke blog lezen - PolitiekPraat',
+    'partij-detail' => 'Partijprofiel en standpunten - PolitiekPraat',
+    'thema-detail' => 'Thema-analyse en partijstandpunten - PolitiekPraat',
+    '404' => 'Pagina niet gevonden - PolitiekPraat',
+];
+
 // Controleer of we specifieke meta data hebben voor deze pagina (bijv. voor blogs)
-$metaTitle = isset($data['title']) ? $data['title'] . ' - ' . SITENAME : (SITENAME . ' - Politiek voor iedereen');
+if (isset($data['title']) && trim((string) $data['title']) !== '') {
+    $metaTitle = trim((string) $data['title']) . ' - ' . SITENAME;
+} elseif (isset($defaultPageTitles[$currentPage])) {
+    $metaTitle = $defaultPageTitles[$currentPage];
+} else {
+    $metaTitle = SITENAME . ' - Politiek voor iedereen';
+}
 
 // Genereer dynamische meta description indien mogelijk
 if (isset($data['description'])) {
