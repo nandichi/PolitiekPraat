@@ -8,6 +8,57 @@ require_once __DIR__ . '/../includes/cors.php';
 require_once __DIR__ . '/../includes/rate_limiter.php';
 require_once __DIR__ . '/../includes/api_error_helpers.php';
 
+if (!defined('API_OUTPUT_BUFFER_STARTED')) {
+    ob_start();
+    define('API_OUTPUT_BUFFER_STARTED', true);
+}
+
+function api_clear_output_buffers(): void {
+    while (ob_get_level() > 0) {
+        ob_end_clean();
+    }
+}
+
+function api_emit_json_response(array $payload, int $statusCode = 200): void {
+    api_clear_output_buffers();
+    http_response_code($statusCode);
+    header('Content-Type: application/json; charset=UTF-8');
+    echo json_encode($payload, JSON_UNESCAPED_UNICODE);
+    exit();
+}
+
+register_shutdown_function(static function (): void {
+    $fatal = error_get_last();
+
+    if ($fatal === null) {
+        return;
+    }
+
+    $fatalTypes = [E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR, E_USER_ERROR];
+    if (!in_array($fatal['type'], $fatalTypes, true)) {
+        return;
+    }
+
+    $leakedOutput = '';
+    if (ob_get_level() > 0) {
+        $leakedOutput = (string) ob_get_contents();
+    }
+
+    if ($leakedOutput !== '') {
+        error_log('[API OUTPUT LEAK] ' . substr($leakedOutput, 0, 500));
+    }
+
+    api_emit_json_response(
+        api_build_error_response('Interne serverfout', 500, [
+            'type' => $fatal['type'] ?? null,
+            'file' => $fatal['file'] ?? null,
+            'line' => $fatal['line'] ?? null,
+            'message' => $fatal['message'] ?? null,
+        ]),
+        500
+    );
+});
+
 // Set headers voor API responses
 header('Content-Type: application/json; charset=UTF-8');
 apply_cors_policy(
@@ -35,23 +86,19 @@ function debug_log($message) {
 
 // Error handler functie
 function sendApiError($message, $statusCode = 500, $debug = null) {
-    http_response_code($statusCode);
-    echo json_encode(
+    api_emit_json_response(
         api_build_error_response($message, (int) $statusCode, $debug),
-        JSON_UNESCAPED_UNICODE
+        (int) $statusCode
     );
-    exit();
 }
 
 // Success response functie
 function sendApiResponse($data, $statusCode = 200) {
-    http_response_code($statusCode);
-    echo json_encode([
+    api_emit_json_response([
         'success' => true,
         'data' => $data,
         'timestamp' => date('c')
-    ], JSON_UNESCAPED_UNICODE);
-    exit();
+    ], (int) $statusCode);
 }
 
 // Get base path

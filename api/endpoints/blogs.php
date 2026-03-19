@@ -86,10 +86,12 @@ class BlogsAPI {
                 $this->db->bind($param, $value);
             }
             $totalResult = $this->db->single();
-            $total = $totalResult->total;
+            $total = is_object($totalResult) && isset($totalResult->total)
+                ? (int) $totalResult->total
+                : 0;
             
             // Get blogs
-            $sql = "SELECT blogs.*, users.username as author_name, users.profile_photo as author_photo
+            $sql = "SELECT blogs.*, users.username as author_name, NULL as author_photo
                    FROM blogs 
                    JOIN users ON blogs.author_id = users.id 
                    $whereClause
@@ -113,15 +115,15 @@ class BlogsAPI {
                 'pagination' => [
                     'current_page' => $page,
                     'limit' => $limit,
-                    'total' => (int)$total,
-                    'total_pages' => ceil($total / $limit),
+                    'total' => $total,
+                    'total_pages' => $total > 0 ? (int) ceil($total / $limit) : 0,
                     'has_next' => ($page * $limit) < $total,
                     'has_prev' => $page > 1
                 ]
             ]);
             
-        } catch (Exception $e) {
-            $this->sendError('Database fout: ' . $e->getMessage(), 500);
+        } catch (Throwable $e) {
+            $this->sendError('Interne serverfout', 500);
         }
     }
     
@@ -129,12 +131,12 @@ class BlogsAPI {
         try {
             // Check if identifier is numeric (ID) or string (slug)
             if (is_numeric($identifier)) {
-                $sql = "SELECT blogs.*, users.username as author_name, users.profile_photo as author_photo
+                $sql = "SELECT blogs.*, users.username as author_name, NULL as author_photo
                        FROM blogs 
                        JOIN users ON blogs.author_id = users.id 
                        WHERE blogs.id = :identifier";
             } else {
-                $sql = "SELECT blogs.*, users.username as author_name, users.profile_photo as author_photo
+                $sql = "SELECT blogs.*, users.username as author_name, NULL as author_photo
                        FROM blogs 
                        JOIN users ON blogs.author_id = users.id 
                        WHERE blogs.slug = :identifier";
@@ -157,8 +159,8 @@ class BlogsAPI {
                 'blog' => $this->formatBlogForAPI($blog, true)
             ]);
             
-        } catch (Exception $e) {
-            $this->sendError('Database fout: ' . $e->getMessage(), 500);
+        } catch (Throwable $e) {
+            $this->sendError('Interne serverfout', 500);
         }
     }
     
@@ -226,7 +228,7 @@ class BlogsAPI {
                 $blogId = $this->db->lastInsertId();
                 
                 // Get the created blog
-                $this->db->query("SELECT blogs.*, users.username as author_name, users.profile_photo as author_photo
+                $this->db->query("SELECT blogs.*, users.username as author_name, NULL as author_photo
                                  FROM blogs 
                                  JOIN users ON blogs.author_id = users.id 
                                  WHERE blogs.id = :id");
@@ -241,8 +243,8 @@ class BlogsAPI {
                 $this->sendError('Fout bij aanmaken van blog', 500);
             }
             
-        } catch (Exception $e) {
-            $this->sendError('Database fout: ' . $e->getMessage(), 500);
+        } catch (Throwable $e) {
+            $this->sendError('Interne serverfout', 500);
         }
     }
     
@@ -303,7 +305,7 @@ class BlogsAPI {
             
             if ($this->db->execute()) {
                 // Get updated blog
-                $this->db->query("SELECT blogs.*, users.username as author_name, users.profile_photo as author_photo
+                $this->db->query("SELECT blogs.*, users.username as author_name, NULL as author_photo
                                  FROM blogs 
                                  JOIN users ON blogs.author_id = users.id 
                                  WHERE blogs.id = :id");
@@ -318,8 +320,8 @@ class BlogsAPI {
                 $this->sendError('Fout bij bijwerken van blog', 500);
             }
             
-        } catch (Exception $e) {
-            $this->sendError('Database fout: ' . $e->getMessage(), 500);
+        } catch (Throwable $e) {
+            $this->sendError('Interne serverfout', 500);
         }
     }
     
@@ -354,12 +356,17 @@ class BlogsAPI {
                 $this->sendError('Fout bij verwijderen van blog', 500);
             }
             
-        } catch (Exception $e) {
-            $this->sendError('Database fout: ' . $e->getMessage(), 500);
+        } catch (Throwable $e) {
+            $this->sendError('Interne serverfout', 500);
         }
     }
     
     private function formatBlogForAPI($blog, $includeContent = false) {
+        $authorPhoto = property_exists($blog, 'author_photo') ? $blog->author_photo : null;
+        $imagePath = property_exists($blog, 'image_path') ? $blog->image_path : null;
+        $videoUrl = property_exists($blog, 'video_url') ? $blog->video_url : null;
+        $audioUrl = property_exists($blog, 'audio_url') ? $blog->audio_url : null;
+
         $formatted = [
             'id' => (int)$blog->id,
             'title' => $blog->title,
@@ -368,15 +375,15 @@ class BlogsAPI {
             'author' => [
                 'id' => (int)$blog->author_id,
                 'name' => $blog->author_name,
-                'profile_photo' => $blog->author_photo
+                'profile_photo' => $authorPhoto
             ],
             'published_at' => $blog->published_at,
             'views' => (int)($blog->views ?? 0),
             'likes' => (int)($blog->likes ?? 0),
             'media' => [
-                'image_url' => $blog->image_path ? $this->formatMediaUrl($blog->image_path) : null,
-                'video_url' => $blog->video_url ?: null,
-                'audio_url' => $blog->audio_url ?: null
+                'image_url' => $imagePath ? $this->formatMediaUrl($imagePath) : null,
+                'video_url' => $videoUrl ?: null,
+                'audio_url' => $audioUrl ?: null
             ]
         ];
         
