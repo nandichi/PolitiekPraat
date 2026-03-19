@@ -316,11 +316,10 @@ class AuthAPI {
     
     private function sendError($message, $statusCode = 400) {
         http_response_code($statusCode);
-        echo json_encode([
-            'success' => false,
-            'error' => $message,
-            'timestamp' => date('c')
-        ], JSON_UNESCAPED_UNICODE);
+        echo json_encode(
+            api_build_error_response($message, (int) $statusCode),
+            JSON_UNESCAPED_UNICODE
+        );
         exit();
     }
 } 
