@@ -6,6 +6,7 @@ if (!defined('API_DEBUG')) {
 
 require_once __DIR__ . '/../includes/cors.php';
 require_once __DIR__ . '/../includes/rate_limiter.php';
+require_once __DIR__ . '/../includes/api_error_helpers.php';
 
 // Set headers voor API responses
 header('Content-Type: application/json; charset=UTF-8');
@@ -35,17 +36,10 @@ function debug_log($message) {
 // Error handler functie
 function sendApiError($message, $statusCode = 500, $debug = null) {
     http_response_code($statusCode);
-    $response = [
-        'success' => false,
-        'error' => $message,
-        'timestamp' => date('c')
-    ];
-    
-    if ($debug && defined('API_DEBUG') && API_DEBUG) {
-        $response['debug'] = $debug;
-    }
-    
-    echo json_encode($response, JSON_UNESCAPED_UNICODE);
+    echo json_encode(
+        api_build_error_response($message, (int) $statusCode, $debug),
+        JSON_UNESCAPED_UNICODE
+    );
     exit();
 }
 
