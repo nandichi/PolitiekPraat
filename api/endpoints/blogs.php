@@ -86,7 +86,9 @@ class BlogsAPI {
                 $this->db->bind($param, $value);
             }
             $totalResult = $this->db->single();
-            $total = $totalResult->total;
+            $total = is_object($totalResult) && isset($totalResult->total)
+                ? (int) $totalResult->total
+                : 0;
             
             // Get blogs
             $sql = "SELECT blogs.*, users.username as author_name, users.profile_photo as author_photo
@@ -113,15 +115,15 @@ class BlogsAPI {
                 'pagination' => [
                     'current_page' => $page,
                     'limit' => $limit,
-                    'total' => (int)$total,
-                    'total_pages' => ceil($total / $limit),
+                    'total' => $total,
+                    'total_pages' => $total > 0 ? (int) ceil($total / $limit) : 0,
                     'has_next' => ($page * $limit) < $total,
                     'has_prev' => $page > 1
                 ]
             ]);
             
-        } catch (Exception $e) {
-            $this->sendError('Database fout: ' . $e->getMessage(), 500);
+        } catch (Throwable $e) {
+            $this->sendError('Interne serverfout', 500);
         }
     }
     
@@ -157,8 +159,8 @@ class BlogsAPI {
                 'blog' => $this->formatBlogForAPI($blog, true)
             ]);
             
-        } catch (Exception $e) {
-            $this->sendError('Database fout: ' . $e->getMessage(), 500);
+        } catch (Throwable $e) {
+            $this->sendError('Interne serverfout', 500);
         }
     }
     
@@ -241,8 +243,8 @@ class BlogsAPI {
                 $this->sendError('Fout bij aanmaken van blog', 500);
             }
             
-        } catch (Exception $e) {
-            $this->sendError('Database fout: ' . $e->getMessage(), 500);
+        } catch (Throwable $e) {
+            $this->sendError('Interne serverfout', 500);
         }
     }
     
@@ -318,8 +320,8 @@ class BlogsAPI {
                 $this->sendError('Fout bij bijwerken van blog', 500);
             }
             
-        } catch (Exception $e) {
-            $this->sendError('Database fout: ' . $e->getMessage(), 500);
+        } catch (Throwable $e) {
+            $this->sendError('Interne serverfout', 500);
         }
     }
     
@@ -354,8 +356,8 @@ class BlogsAPI {
                 $this->sendError('Fout bij verwijderen van blog', 500);
             }
             
-        } catch (Exception $e) {
-            $this->sendError('Database fout: ' . $e->getMessage(), 500);
+        } catch (Throwable $e) {
+            $this->sendError('Interne serverfout', 500);
         }
     }
     

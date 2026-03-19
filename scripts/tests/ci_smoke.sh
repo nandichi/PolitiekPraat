@@ -17,4 +17,11 @@ echo "[smoke] Check gitignore hygiene"
 grep -q "^node_modules/" .gitignore
 grep -q "^\.DS_Store$" .gitignore
 
+
+if [[ "${RUN_API_CONTRACT_TESTS:-0}" == "1" ]]; then
+  echo "[smoke] Run API contract checks"
+  bash scripts/tests/test-api-contract-parties.sh "${API_CONTRACT_BASE_URL:-https://politiekpraat.nl}"
+  bash scripts/tests/test-api-contract-blogs.sh "${API_CONTRACT_BASE_URL:-https://politiekpraat.nl}"
+fi
+
 echo "[smoke] OK"
