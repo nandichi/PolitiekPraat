@@ -17,9 +17,16 @@ class Database {
 
         try {
             $this->dbh = new PDO($dsn, $this->user, $this->pass, $options);
-        } catch(PDOException $e) {
-            $this->error = $e->getMessage();
-            echo $this->error;
+        } catch (PDOException $e) {
+            $this->error = 'Database connection failed';
+            error_log(sprintf(
+                '[Database] Connection failed: %s in %s:%d',
+                $e->getMessage(),
+                $e->getFile(),
+                $e->getLine()
+            ));
+
+            throw new RuntimeException('Er is een tijdelijk databaseprobleem. Probeer het later opnieuw.');
         }
     }
 
