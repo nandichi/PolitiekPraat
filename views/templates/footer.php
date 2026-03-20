@@ -348,13 +348,6 @@
         });
     </script>
 
-    <?php if (isAdmin() && isset($_GET['debug_photo'])): ?>
-    <div class="fixed bottom-0 right-0 bg-black/80 text-white p-4 rounded-tl-lg text-xs font-mono max-w-lg overflow-auto max-h-64">
-        <h3 class="font-bold mb-2">Profile Photo Debug:</h3>
-        <?php print_r($_SESSION['profile_photo_debug'] ?? 'No debug info available'); ?>
-    </div>
-    <?php endif; ?>
-
     <!-- Dynamic Scripts -->
     <?php if (basename($_SERVER['PHP_SELF']) == 'blogs.php' || strpos($_SERVER['REQUEST_URI'], '/blogs/') !== false): ?>
         <script src="<?php echo URLROOT; ?>/js/blog_likes.js"></script>
