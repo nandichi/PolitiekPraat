@@ -36,7 +36,7 @@ class BlogsController {
         
         // Check if user is logged in
         if (!isset($_SESSION['user_id'])) {
-            header('Location: ' . URLROOT . '/auth/login');
+            header('Location: ' . URLROOT . '/login');
             exit;
         }
         
@@ -165,7 +165,7 @@ class BlogsController {
     public function manage() {
         // Check if user is logged in
         if (!isset($_SESSION['user_id'])) {
-            header('Location: ' . URLROOT . '/auth/login');
+            header('Location: ' . URLROOT . '/login');
             exit;
         }
         
@@ -215,7 +215,7 @@ class BlogsController {
         
         // Check if user is logged in
         if (!isset($_SESSION['user_id'])) {
-            header('Location: ' . URLROOT . '/auth/login');
+            header('Location: ' . URLROOT . '/login');
             exit;
         }
         
@@ -387,7 +387,7 @@ class BlogsController {
     public function delete($id = null) {
         // Check if user is logged in
         if (!isset($_SESSION['user_id'])) {
-            header('Location: ' . URLROOT . '/auth/login');
+            header('Location: ' . URLROOT . '/login');
             exit;
         }
         
@@ -430,7 +430,7 @@ class BlogsController {
     public function updateLikes($id = null) {
         // Check if user is logged in
         if (!isset($_SESSION['user_id'])) {
-            header('Location: ' . URLROOT . '/auth/login');
+            header('Location: ' . URLROOT . '/login');
             exit;
         }
         

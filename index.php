@@ -57,6 +57,10 @@ $router->add('blogs/manage', function() {
     $controller = new BlogsController();
     $controller->manage();
 });
+$router->add('blogs/edit', function() {
+    header('Location: ' . URLROOT . '/blogs/manage');
+    exit;
+});
 $router->add('blogs/edit/([0-9]+)', function($id) {
     $controller = new BlogsController();
     $controller->edit($id);
@@ -82,8 +86,11 @@ $router->add('forum/create', 'controllers/forum/create.php');
 $router->add('contact', 'controllers/contact.php');
 $router->add('donatie', 'controllers/donatie.php');
 $router->add('login', 'controllers/auth/login.php');
+$router->add('auth/login', 'controllers/auth/login.php');
 $router->add('register', 'controllers/auth/register.php');
+$router->add('auth/register', 'controllers/auth/register.php');
 $router->add('logout', 'controllers/auth/logout.php');
+$router->add('auth/logout', 'controllers/auth/logout.php');
 $router->add('themas', 'controllers/themas.php');
 $router->add('thema/([^/]+)', 'controllers/thema.php');
 $router->add('over-mij', 'controllers/over-mij.php');
