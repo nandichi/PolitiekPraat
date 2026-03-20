@@ -143,12 +143,18 @@ class BlogController {
         // Genereer een samenvatting van de content
         $summary = substr(strip_tags($this->parsedown->text($content)), 0, 200) . '...';
         
-        $this->db->query("UPDATE blogs 
-                         SET title = :title, content = :content, 
-                             summary = :summary, category_id = :category_id, image_path = :image_path,
-                             video_path = :video_path, video_url = :video_url, 
-                             audio_path = :audio_path, audio_url = :audio_url, soundcloud_url = :soundcloud_url
-                         WHERE id = :id AND author_id = :author_id");
+        $sql = "UPDATE blogs 
+                SET title = :title, content = :content, 
+                    summary = :summary, category_id = :category_id, image_path = :image_path,
+                    video_path = :video_path, video_url = :video_url, 
+                    audio_path = :audio_path, audio_url = :audio_url, soundcloud_url = :soundcloud_url
+                WHERE id = :id";
+
+        if (!isAdmin()) {
+            $sql .= " AND author_id = :author_id";
+        }
+
+        $this->db->query($sql);
         
         $this->db->bind(':title', $data['title']);
         $this->db->bind(':content', $content);
@@ -161,15 +167,28 @@ class BlogController {
         $this->db->bind(':audio_url', $data['audio_url'] ?? null);
         $this->db->bind(':soundcloud_url', $data['soundcloud_url'] ?? null);
         $this->db->bind(':id', $data['id']);
-        $this->db->bind(':author_id', $_SESSION['user_id']);
+
+        if (!isAdmin()) {
+            $this->db->bind(':author_id', $_SESSION['user_id']);
+        }
 
         return $this->db->execute();
     }
 
     public function delete($id) {
-        $this->db->query("DELETE FROM blogs WHERE id = :id AND author_id = :author_id");
+        $sql = "DELETE FROM blogs WHERE id = :id";
+
+        if (!isAdmin()) {
+            $sql .= " AND author_id = :author_id";
+        }
+
+        $this->db->query($sql);
         $this->db->bind(':id', $id);
-        $this->db->bind(':author_id', $_SESSION['user_id']);
+
+        if (!isAdmin()) {
+            $this->db->bind(':author_id', $_SESSION['user_id']);
+        }
+
         return $this->db->execute();
     }
 
@@ -200,11 +219,20 @@ class BlogController {
 
     public function updateLikesDirectly($id, $likes) {
         $likes = max(0, (int)$likes); // Voorkom negatieve likes
-        
-        $this->db->query("UPDATE blogs SET likes = :likes WHERE id = :id AND author_id = :author_id");
+
+        $sql = "UPDATE blogs SET likes = :likes WHERE id = :id";
+
+        if (!isAdmin()) {
+            $sql .= " AND author_id = :author_id";
+        }
+
+        $this->db->query($sql);
         $this->db->bind(':likes', $likes);
         $this->db->bind(':id', $id);
-        $this->db->bind(':author_id', $_SESSION['user_id']);
+
+        if (!isAdmin()) {
+            $this->db->bind(':author_id', $_SESSION['user_id']);
+        }
         
         return $this->db->execute();
     }

@@ -226,8 +226,8 @@ class BlogsController {
         
         $blog = $this->blogModel->getById($id);
         
-        // Check if blog exists and belongs to the current user
-        if (!$blog || $blog->author_id != $_SESSION['user_id']) {
+        // Check if blog exists and user has permission (owner or admin)
+        if (!$blog || ($blog->author_id != $_SESSION['user_id'] && !isAdmin())) {
             header('Location: ' . URLROOT . '/blogs/manage');
             exit;
         }
@@ -396,10 +396,10 @@ class BlogsController {
             exit;
         }
         
-        // Check if blog exists and belongs to the current user
+        // Check if blog exists and user has permission (owner or admin)
         $blog = $this->blogModel->getById($id);
         
-        if (!$blog || $blog->author_id != $_SESSION['user_id']) {
+        if (!$blog || ($blog->author_id != $_SESSION['user_id'] && !isAdmin())) {
             header('Location: ' . URLROOT . '/blogs/manage');
             exit;
         }
@@ -439,10 +439,10 @@ class BlogsController {
             exit;
         }
         
-        // Check if blog exists and belongs to the current user
+        // Check if blog exists and user has permission (owner or admin)
         $blog = $this->blogModel->getById($id);
         
-        if (!$blog || $blog->author_id != $_SESSION['user_id']) {
+        if (!$blog || ($blog->author_id != $_SESSION['user_id'] && !isAdmin())) {
             header('Location: ' . URLROOT . '/blogs/manage');
             exit;
         }
