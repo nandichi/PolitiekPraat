@@ -243,6 +243,25 @@ Bijwerken van bestaande blog.
 
 **Requires Authentication + Ownership/Admin**
 
+**Image veldcontract (featured image):**
+
+- Primair veld: `image_url`
+- Backward-compatible aliases: `image_path`, `featured_image`
+- Gedrag: eerste meegegeven image-key wordt gebruikt
+- Als een image-key expliciet wordt meegestuurd met lege waarde: `422` fout
+
+Voorbeeld update:
+
+```json
+{
+  "title": "Bijgewerkte titel",
+  "content": "Nieuwe content",
+  "image_path": "uploads/blogs/images/nieuwe-featured.jpg"
+}
+```
+
+> Deprecatiepad: gebruik voor nieuwe clients altijd `image_url`; aliases blijven voorlopig ondersteund voor oudere flows.
+
 #### DELETE /api/blogs/{id}
 
 Verwijderen van blog.
