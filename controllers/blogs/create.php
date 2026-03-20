@@ -38,35 +38,57 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         
         // Upload afbeelding als die is meegestuurd
         $image_path = null;
-        if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-            $allowed = ['jpg', 'jpeg', 'png', 'gif'];
-            $file_ext = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
-            
-            if (in_array($file_ext, $allowed)) {
-                $image_path = 'blog-' . time() . '.' . $file_ext;
-                move_uploaded_file(
-                    $_FILES['image']['tmp_name'], 
-                    dirname(dirname(__DIR__)) . '/public/images/' . $image_path
-                );
+        if (isset($_FILES['image']) && ($_FILES['image']['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_NO_FILE) {
+            $upload_dir = BASE_PATH . '/public/uploads/blogs/images';
+            $relative_upload_dir = 'public/uploads/blogs/images';
+            $allowed_extensions = ['jpg', 'jpeg', 'png', 'gif'];
+            $allowed_mimes = ['image/jpeg', 'image/png', 'image/gif'];
+            $max_image_size_bytes = 5 * 1024 * 1024; // 5 MB
+
+            $upload_result = store_uploaded_media(
+                $_FILES['image'],
+                $upload_dir,
+                $relative_upload_dir,
+                $allowed_extensions,
+                $allowed_mimes,
+                $max_image_size_bytes
+            );
+
+            if (!$upload_result['ok']) {
+                $upload_errors = [
+                    'upload_error' => 'Uploaden van de afbeelding is mislukt. Probeer het opnieuw.',
+                    'directory_error' => 'Uploadmap is niet beschikbaar. Neem contact op met een beheerder.',
+                    'invalid_extension' => 'Alleen JPG, JPEG, PNG en GIF bestanden zijn toegestaan.',
+                    'invalid_mime' => 'Ongeldig bestandstype. Upload een echte afbeelding (JPG, PNG of GIF).',
+                    'file_too_large' => 'Afbeelding is te groot. Maximum is 5 MB.',
+                    'move_failed' => 'Opslaan van de afbeelding is mislukt. Probeer het opnieuw.',
+                ];
+
+                $error_key = $upload_result['error'] ?? 'upload_error';
+                $error = $upload_errors[$error_key] ?? $upload_errors['upload_error'];
+            } else {
+                $image_path = $upload_result['path'];
             }
         }
-        
-        // Voeg blog toe
-        $db->query("INSERT INTO blogs (title, slug, summary, content, image_path, category_id, author_id) 
-                   VALUES (:title, :slug, :summary, :content, :image_path, :category_id, :author_id)");
-        $db->bind(':title', $title);
-        $db->bind(':slug', $slug);
-        $db->bind(':summary', $summary);
-        $db->bind(':content', $content);
-        $db->bind(':image_path', $image_path);
-        $db->bind(':category_id', $category_id);
-        $db->bind(':author_id', $_SESSION['user_id']);
-        
-        if ($db->execute()) {
-            header('Location: ' . URLROOT . '/blogs/' . $slug);
-            exit;
-        } else {
-            $error = 'Er is iets misgegaan bij het aanmaken van je blog';
+
+        if (empty($error)) {
+            // Voeg blog toe
+            $db->query("INSERT INTO blogs (title, slug, summary, content, image_path, category_id, author_id) 
+                       VALUES (:title, :slug, :summary, :content, :image_path, :category_id, :author_id)");
+            $db->bind(':title', $title);
+            $db->bind(':slug', $slug);
+            $db->bind(':summary', $summary);
+            $db->bind(':content', $content);
+            $db->bind(':image_path', $image_path);
+            $db->bind(':category_id', $category_id);
+            $db->bind(':author_id', $_SESSION['user_id']);
+            
+            if ($db->execute()) {
+                header('Location: ' . URLROOT . '/blogs/' . $slug);
+                exit;
+            } else {
+                $error = 'Er is iets misgegaan bij het aanmaken van je blog';
+            }
         }
     }
 }
@@ -140,7 +162,7 @@ require_once BASE_PATH . '/views/templates/header.php';
                        accept="image/*"
                        class="w-full">
                 <p class="text-sm text-gray-500 mt-1">
-                    Toegestane formaten: JPG, JPEG, PNG, GIF
+                    Toegestane formaten: JPG, JPEG, PNG, GIF (max 5 MB)
                 </p>
             </div>
 
