@@ -56,7 +56,7 @@ class BlogsController {
         
         // Check if user is logged in
         if (!isset($_SESSION['user_id'])) {
-            header('Location: ' . URLROOT . '/auth/login');
+            header('Location: ' . URLROOT . '/login');
             exit;
         }
         
@@ -185,7 +185,7 @@ class BlogsController {
     public function manage() {
         // Check if user is logged in
         if (!isset($_SESSION['user_id'])) {
-            header('Location: ' . URLROOT . '/auth/login');
+            header('Location: ' . URLROOT . '/login');
             exit;
         }
         
@@ -235,7 +235,7 @@ class BlogsController {
         
         // Check if user is logged in
         if (!isset($_SESSION['user_id'])) {
-            header('Location: ' . URLROOT . '/auth/login');
+            header('Location: ' . URLROOT . '/login');
             exit;
         }
         
@@ -246,8 +246,8 @@ class BlogsController {
         
         $blog = $this->blogModel->getById($id);
         
-        // Check if blog exists and belongs to the current user
-        if (!$blog || $blog->author_id != $_SESSION['user_id']) {
+        // Check if blog exists and user has permission (owner or admin)
+        if (!$blog || ($blog->author_id != $_SESSION['user_id'] && !isAdmin())) {
             header('Location: ' . URLROOT . '/blogs/manage');
             exit;
         }
@@ -407,7 +407,7 @@ class BlogsController {
     public function delete($id = null) {
         // Check if user is logged in
         if (!isset($_SESSION['user_id'])) {
-            header('Location: ' . URLROOT . '/auth/login');
+            header('Location: ' . URLROOT . '/login');
             exit;
         }
         
@@ -416,10 +416,10 @@ class BlogsController {
             exit;
         }
         
-        // Check if blog exists and belongs to the current user
+        // Check if blog exists and user has permission (owner or admin)
         $blog = $this->blogModel->getById($id);
         
-        if (!$blog || $blog->author_id != $_SESSION['user_id']) {
+        if (!$blog || ($blog->author_id != $_SESSION['user_id'] && !isAdmin())) {
             header('Location: ' . URLROOT . '/blogs/manage');
             exit;
         }
@@ -450,7 +450,7 @@ class BlogsController {
     public function updateLikes($id = null) {
         // Check if user is logged in
         if (!isset($_SESSION['user_id'])) {
-            header('Location: ' . URLROOT . '/auth/login');
+            header('Location: ' . URLROOT . '/login');
             exit;
         }
         
@@ -459,10 +459,10 @@ class BlogsController {
             exit;
         }
         
-        // Check if blog exists and belongs to the current user
+        // Check if blog exists and user has permission (owner or admin)
         $blog = $this->blogModel->getById($id);
         
-        if (!$blog || $blog->author_id != $_SESSION['user_id']) {
+        if (!$blog || ($blog->author_id != $_SESSION['user_id'] && !isAdmin())) {
             header('Location: ' . URLROOT . '/blogs/manage');
             exit;
         }

@@ -178,7 +178,7 @@ class BlogsAPI {
         $title = trim($input['title'] ?? '');
         $content = trim($input['content'] ?? '');
         $summary = trim($input['summary'] ?? '');
-        $image_url = trim($input['image_url'] ?? '');
+        $image_url = $this->resolveImagePathFromInput($input, (object)['image_path' => '']);
         $video_url = trim($input['video_url'] ?? '');
         $audio_url = trim($input['audio_url'] ?? '');
         
@@ -275,7 +275,7 @@ class BlogsAPI {
         $title = trim($input['title'] ?? $existingBlog->title);
         $content = trim($input['content'] ?? $existingBlog->content);
         $summary = trim($input['summary'] ?? $existingBlog->summary);
-        $image_url = trim($input['image_url'] ?? $existingBlog->image_path);
+        $image_url = $this->resolveImagePathFromInput($input, $existingBlog);
         $video_url = trim($input['video_url'] ?? $existingBlog->video_url);
         $audio_url = trim($input['audio_url'] ?? $existingBlog->audio_url);
         
@@ -361,6 +361,25 @@ class BlogsAPI {
         }
     }
     
+    private function resolveImagePathFromInput($input, $existingBlog) {
+        $imageKeys = ['image_url', 'image_path', 'featured_image'];
+
+        foreach ($imageKeys as $key) {
+            if (!array_key_exists($key, $input)) {
+                continue;
+            }
+
+            $value = trim((string)($input[$key] ?? ''));
+            if ($value === '') {
+                $this->sendError("Veld '{$key}' mag niet leeg zijn", 422);
+            }
+
+            return $value;
+        }
+
+        return trim((string)($existingBlog->image_path ?? ''));
+    }
+
     private function formatBlogForAPI($blog, $includeContent = false) {
         $authorPhoto = property_exists($blog, 'author_photo') ? $blog->author_photo : null;
         $imagePath = property_exists($blog, 'image_path') ? $blog->image_path : null;
