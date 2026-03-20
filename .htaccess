@@ -16,7 +16,9 @@ RewriteBase /
 # Blokkeer publieke toegang tot testscripts (alleen echte testbestanden)
 # Let op: niet te breed matchen, zodat legitieme bestanden zoals testimonials.php blijven werken.
 RewriteRule ^test[-_].*\.php$ - [F,L,NC]
+RewriteRule ^scripts/test_.*\.php$ - [F,L,NC]
 RewriteRule ^scripts/tests/.*$ - [F,L,NC]
+RewriteRule ^admin/test_.*\.php$ - [F,L,NC]
 
 # Allow direct access to files
 RewriteCond %{REQUEST_FILENAME} -f

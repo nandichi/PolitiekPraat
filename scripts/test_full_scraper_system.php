@@ -1,4 +1,11 @@
 <?php
+if (php_sapi_name() !== 'cli') {
+    http_response_code(403);
+    header('Content-Type: text/plain; charset=utf-8');
+    echo "403 Forbidden\n";
+    exit;
+}
+
 require_once __DIR__ . '/../includes/config.php';
 require_once __DIR__ . '/../includes/Database.php';
 require_once __DIR__ . '/../models/NewsModel.php';
