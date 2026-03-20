@@ -1,4 +1,11 @@
 <?php
+if (php_sapi_name() !== 'cli') {
+    http_response_code(403);
+    header('Content-Type: text/plain; charset=utf-8');
+    echo "403 Forbidden\n";
+    exit;
+}
+
 // Test script voor cron job email functionaliteit
 // Gebruik dit om te testen of de email configuratie werkt
 
