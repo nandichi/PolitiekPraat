@@ -6,6 +6,7 @@ $metaDescriptions = [
     'blogs' => 'Lees politieke blogs van experts en ervaren columnisten over actuele Nederlandse thema\'s. Deel je mening en ontdek nieuwe perspectieven op de politiek.',
     'nieuws' => 'Het laatste Nederlandse politieke nieuws uit betrouwbare bronnen. Blijf dagelijks geïnformeerd over regering, oppositie en belangrijke ontwikkelingen.',
     'partijmeter' => 'Doe de gratis online PartijMeter test 2025 en ontdek binnen 5 minuten welke Nederlandse politieke partij het beste bij jouw standpunten past. Vergelijk 14 partijen op basis van 30 actuele thema\'s.',
+    'stemwijzer' => 'Gemeentelijke Stemwijzer Ede 2026 met 25 stellingen en weging. Krijg hulp bij het vergelijken van partijstandpunten voor de gemeenteraadsverkiezingen.',
     'politiek-kompas' => 'Ontdek jouw politieke kompas door partijstandpunten te vergelijken op thema\'s als klimaat, zorg, economie en onderwijs. Maak een geïnformeerde stemkeuze.',
     'partijen' => 'Volledig overzicht van Nederlandse politieke partijen met hun standpunten, lijsttrekkers en verkiezingsprogramma\'s. Van VVD tot PvdA en alle anderen.',
     'themas' => 'Verdiep je in actuele politieke thema\'s als klimaatbeleid, gezondheidszorg en economie. Analyses, standpunten en expert discussies over Nederlandse politiek.',
@@ -58,6 +59,7 @@ $metaKeywords = [
     'blogs' => 'politieke blogs, opinieartikelen, politieke analyses, Nederlandse politiek, politiek commentaar, verkiezingen, columnisten, PolitiekPraat',
     'nieuws' => 'politiek nieuws, Nederlands nieuws, Haags nieuws, regering, oppositie, kabinet, ministeries, Tweede Kamer, PolitiekPraat',
     'partijmeter' => 'partijmeter, stemwijzer, stemwijzer 2025, partijmeter 2025, online politieke test nederland, politieke partijen vergelijken, verkiezingen 2025, stemhulp, kieskompas, gratis partijmeter, nederlandse partijmeter, partijkeuze, stemadvies, PolitiekPraat',
+    'stemwijzer' => 'gemeentelijke stemwijzer ede 2026, gemeenteraadsverkiezingen ede, stemhulp ede, partijen vergelijken ede, 25 stellingen stemwijzer, weging stemwijzer',
     'politiek-kompas' => 'politiek kompas, partijen vergelijken, politieke standpunten, stemadvies, Nederlandse partijen, verkiezingen, PolitiekPraat',
     'partijen' => 'politieke partijen Nederland, VVD, PvdA, VVD, CDA, D66, PVV, GroenLinks, partijoverzicht, lijsttrekkers, PolitiekPraat',
     'themas' => 'politieke thema\'s, klimaat, zorg, economie, onderwijs, immigratie, standpunten, analyses, Nederlandse politiek, PolitiekPraat',
@@ -107,6 +109,8 @@ $metaKeywords = [
 $requestUri = $_SERVER['REQUEST_URI'];
 $requestPath = parse_url($requestUri, PHP_URL_PATH);
 $pathSegments = explode('/', trim($requestPath, '/'));
+$normalizedPath = '/' . ltrim((string) $requestPath, '/');
+$canonicalUrl = URLROOT . ($normalizedPath === '//' ? '/' : $normalizedPath);
 
 // Bepaal de huidige pagina op basis van URL structuur
 $currentPage = 'home'; // default
@@ -154,6 +158,9 @@ if (empty($pathSegments[0])) {
             break;
         case 'resultaten':
             $currentPage = 'resultaten';
+            break;
+        case 'stemwijzer':
+            $currentPage = 'stemwijzer';
             break;
         case 'amerikaanse-verkiezingen':
             $currentPage = 'amerikaanse-verkiezingen';
@@ -225,6 +232,7 @@ $defaultPageTitles = [
     'blogs' => 'Politieke blogs en opinie - PolitiekPraat',
     'nieuws' => 'Laatste politieke nieuws uit Nederland - PolitiekPraat',
     'partijmeter' => 'PartijMeter 2025: Ontdek welke partij bij je past - PolitiekPraat',
+    'stemwijzer' => 'Gemeentelijke Stemwijzer Ede 2026 - Vergelijk partijen op 25 stellingen',
     'politiek-kompas' => 'Politiek Kompas: vergelijk standpunten per thema - PolitiekPraat',
     'partijen' => 'Overzicht Nederlandse politieke partijen - PolitiekPraat',
     'themas' => 'Politieke thema\'s uitgelegd: klimaat, zorg, economie - PolitiekPraat',
@@ -316,7 +324,7 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
     
     <!-- Open Graph / Social Media Meta Tags -->
     <meta property="og:type" content="<?php echo isset($data['og_type']) ? $data['og_type'] : (isset($data['title']) ? 'article' : 'website'); ?>">
-    <meta property="og:url" content="<?php echo isset($data['og_url']) ? htmlspecialchars($data['og_url']) : htmlspecialchars(URLROOT . $_SERVER['REQUEST_URI']); ?>">
+    <meta property="og:url" content="<?php echo isset($data['og_url']) ? htmlspecialchars($data['og_url']) : htmlspecialchars($canonicalUrl); ?>">
     <meta property="og:title" content="<?php echo htmlspecialchars($metaTitle); ?>">
     <meta property="og:description" content="<?php echo htmlspecialchars($metaDescription); ?>">
     <meta property="og:image" content="<?php echo htmlspecialchars($metaImage); ?>">
@@ -344,13 +352,13 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
     <meta name="twitter:image:alt" content="<?php echo htmlspecialchars($metaTitle); ?>">
 
     <!-- Canonical URL -->
-    <link rel="canonical" href="<?php echo URLROOT . $_SERVER['REQUEST_URI']; ?>">
+    <link rel="canonical" href="<?php echo $canonicalUrl; ?>">
 
     <!-- Sitemap Link -->
     <link rel="sitemap" type="application/xml" href="<?php echo URLROOT; ?>/sitemap.xml">
     
     <!-- Provide translation alternates if available in the future -->
-    <link rel="alternate" hreflang="nl-nl" href="<?php echo URLROOT . $_SERVER['REQUEST_URI']; ?>">
+    <link rel="alternate" hreflang="nl-nl" href="<?php echo $canonicalUrl; ?>">
     
     <!-- Browser configs -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -527,7 +535,7 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
         "@type": "WebPage",
         "name": "<?php echo htmlspecialchars($metaTitle); ?>",
         "description": "<?php echo htmlspecialchars($metaDescription); ?>",
-        "url": "<?php echo URLROOT . $_SERVER['REQUEST_URI']; ?>",
+        "url": "<?php echo $canonicalUrl; ?>",
         "publisher": {
             "@type": "Organization",
             "name": "<?php echo SITENAME; ?>",
@@ -543,6 +551,62 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
         }
     }
     </script>
+
+    <?php if ($currentPage === 'stemwijzer'): ?>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "<?php echo URLROOT; ?>/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Gemeentelijke Stemwijzer Ede 2026",
+                "item": "<?php echo URLROOT; ?>/stemwijzer"
+            }
+        ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Is dit een stemadvies?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Nee. Deze stemwijzer geeft hulp bij vergelijking van partijstandpunten voor de gemeenteraadsverkiezingen in Ede (2026)."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Voor welke verkiezing geldt deze stemwijzer?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "De huidige versie is expliciet bedoeld voor de gemeenteraadsverkiezingen 2026 in Ede."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Hoeveel stellingen en weging gebruikt de stemwijzer?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "De stemwijzer gebruikt 25 stellingen. Je kunt weging gebruiken om stellingen zwaarder mee te laten tellen in je vergelijking."
+                }
+            }
+        ]
+    }
+    </script>
+    <?php endif; ?>
     
     <?php if(isset($data['is_blog']) && $data['is_blog']): ?>
     <!-- Schema.org Structured Data for Blog Article -->
@@ -552,7 +616,7 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
         "@type": "BlogPosting",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "<?php echo URLROOT . $_SERVER['REQUEST_URI']; ?>"
+            "@id": "<?php echo $canonicalUrl; ?>"
         },
         "headline": "<?php echo htmlspecialchars($data['title']); ?>",
         "description": "<?php echo htmlspecialchars($data['description']); ?>",
@@ -583,7 +647,7 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
         "@type": "NewsArticle",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "<?php echo URLROOT . $_SERVER['REQUEST_URI']; ?>"
+            "@id": "<?php echo $canonicalUrl; ?>"
         },
         "headline": "<?php echo htmlspecialchars($data['title']); ?>",
         "description": "<?php echo htmlspecialchars($data['description']); ?>",
