@@ -12,16 +12,28 @@ $categories = $categoryController->getAll();
 $error = '';
 $success = '';
 
+if (empty($_SESSION['blog_create_csrf_token']) || !is_string($_SESSION['blog_create_csrf_token'])) {
+    $_SESSION['blog_create_csrf_token'] = bin2hex(random_bytes(32));
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $csrf_token = filter_input(INPUT_POST, 'csrf_token', FILTER_UNSAFE_RAW);
+
+    if (!is_string($csrf_token) || !hash_equals($_SESSION['blog_create_csrf_token'], $csrf_token)) {
+        $error = 'Je sessie is verlopen of ongeldig. Ververs de pagina en probeer opnieuw.';
+    }
+
     $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_SPECIAL_CHARS);
     $summary = filter_input(INPUT_POST, 'summary', FILTER_SANITIZE_SPECIAL_CHARS);
     $content = filter_input(INPUT_POST, 'content', FILTER_SANITIZE_SPECIAL_CHARS);
     $category_id = filter_input(INPUT_POST, 'category_id', FILTER_VALIDATE_INT);
     
     // Validatie
-    if (empty($title) || empty($summary) || empty($content)) {
+    if (empty($error) && (empty($title) || empty($summary) || empty($content))) {
         $error = 'Vul alle velden in';
-    } else {
+    }
+
+    if (empty($error)) {
         $db = new Database();
         
         // Maak een slug van de titel
@@ -84,6 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $db->bind(':author_id', $_SESSION['user_id']);
             
             if ($db->execute()) {
+                $_SESSION['blog_create_csrf_token'] = bin2hex(random_bytes(32));
                 header('Location: ' . URLROOT . '/blogs/' . $slug);
                 exit;
             } else {
@@ -107,6 +120,8 @@ require_once BASE_PATH . '/views/templates/header.php';
         <?php endif; ?>
 
         <form method="POST" action="<?php echo URLROOT; ?>/blogs/create" enctype="multipart/form-data">
+            <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['blog_create_csrf_token']); ?>">
+
             <div class="mb-4">
                 <label for="title" class="block text-gray-700 font-bold mb-2">Titel</label>
                 <input type="text" 
