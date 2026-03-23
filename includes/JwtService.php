@@ -12,6 +12,8 @@ class JwtService {
     }
 
     public static function resolveSecretKey() {
+        self::loadLocalEnvFallback();
+
         $secret = getenv('POLITIEKPRAAT_JWT_SECRET');
 
         if (is_string($secret)) {
@@ -32,6 +34,19 @@ class JwtService {
         trigger_error('POLITIEKPRAAT_JWT_SECRET ontbreekt; development fallback actief. Zet alsnog een lokale secret voor consistente tests.', E_USER_WARNING);
 
         return 'dev-only-jwt-secret-change-me';
+    }
+
+    private static function loadLocalEnvFallback() {
+        if (!empty(getenv('POLITIEKPRAAT_JWT_SECRET'))) {
+            return;
+        }
+
+        $base_path = defined('BASE_PATH') ? BASE_PATH : dirname(__DIR__);
+        $local_env_file = rtrim($base_path, '/\\') . '/includes/env.local.php';
+
+        if (is_readable($local_env_file)) {
+            require_once $local_env_file;
+        }
     }
 
     public function verify($token) {
