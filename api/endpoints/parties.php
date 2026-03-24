@@ -171,7 +171,7 @@ class PartiesAPI {
         if (!$this->requireAdmin()) return;
         
         try {
-            $data = json_decode(file_get_contents('php://input'), true);
+            $data = api_get_request_json();
             
             $required = ['party_key', 'name', 'leader', 'description', 'current_seats', 'color'];
             foreach ($required as $field) {
@@ -223,7 +223,7 @@ class PartiesAPI {
         if (!$this->requireAdmin()) return;
         
         try {
-            $data = json_decode(file_get_contents('php://input'), true);
+            $data = api_get_request_json();
             
             $fields = [];
             $allowed_fields = ['party_key', 'name', 'leader', 'logo', 'leader_photo', 
@@ -292,6 +292,11 @@ class PartiesAPI {
             sendApiError('Admin rechten vereist', 403);
             return false;
         }
+
+        if (!api_require_admin_csrf()) {
+            return false;
+        }
+
         return true;
     }
 }

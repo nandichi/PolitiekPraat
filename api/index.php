@@ -7,6 +7,7 @@ if (!defined('API_DEBUG')) {
 require_once __DIR__ . '/../includes/cors.php';
 require_once __DIR__ . '/../includes/rate_limiter.php';
 require_once __DIR__ . '/../includes/api_error_helpers.php';
+require_once __DIR__ . '/../includes/api_csrf.php';
 
 if (!defined('API_OUTPUT_BUFFER_STARTED')) {
     ob_start();
@@ -63,7 +64,7 @@ register_shutdown_function(static function (): void {
 header('Content-Type: application/json; charset=UTF-8');
 apply_cors_policy(
     ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    ['Content-Type', 'Authorization', 'X-Requested-With', 'X-API-Key']
+    ['Content-Type', 'Authorization', 'X-Requested-With', 'X-API-Key', 'X-CSRF-Token']
 );
 enforce_api_rate_limit();
 

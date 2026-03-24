@@ -91,7 +91,7 @@ class VerkiezingenUSAAPI {
         if (!$this->requireAdmin()) return;
         
         try {
-            $data = json_decode(file_get_contents('php://input'), true);
+            $data = api_get_request_json();
             
             $required = ['jaar', 'winnaar', 'winnaar_partij', 'winnaar_kiesmannen',
                         'verliezer', 'verliezer_partij', 'verliezer_kiesmannen',
@@ -140,7 +140,7 @@ class VerkiezingenUSAAPI {
         if (!$this->requireAdmin()) return;
         
         try {
-            $data = json_decode(file_get_contents('php://input'), true);
+            $data = api_get_request_json();
             
             $fields = [];
             $allowed = ['winnaar', 'winnaar_partij', 'winnaar_kiesmannen', 'verliezer',
@@ -236,6 +236,11 @@ class VerkiezingenUSAAPI {
             sendApiError('Admin rechten vereist', 403);
             return false;
         }
+
+        if (!api_require_admin_csrf()) {
+            return false;
+        }
+
         return true;
     }
 }
