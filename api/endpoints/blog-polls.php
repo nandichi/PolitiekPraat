@@ -67,7 +67,7 @@ class BlogPollsAPI {
             sendApiResponse(['poll' => $poll]);
             
         } catch (Exception $e) {
-            sendApiError('Fout bij ophalen poll: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     
@@ -92,7 +92,7 @@ class BlogPollsAPI {
             sendApiResponse(['poll' => $poll]);
             
         } catch (Exception $e) {
-            sendApiError('Fout bij ophalen poll: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     
@@ -147,7 +147,7 @@ class BlogPollsAPI {
             }
             
         } catch (Exception $e) {
-            sendApiError('Fout bij aanmaken poll: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     
@@ -178,7 +178,7 @@ class BlogPollsAPI {
             }
             
         } catch (Exception $e) {
-            sendApiError('Fout bij stemmen: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
 }

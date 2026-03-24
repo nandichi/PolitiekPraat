@@ -103,7 +103,7 @@ class ForumAPI {
             ]);
             
         } catch (Exception $e) {
-            sendApiError('Fout bij ophalen topics: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     
@@ -145,7 +145,7 @@ class ForumAPI {
             ]);
             
         } catch (Exception $e) {
-            sendApiError('Fout bij ophalen topic: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     
@@ -180,7 +180,7 @@ class ForumAPI {
             }
             
         } catch (Exception $e) {
-            sendApiError('Fout bij aanmaken topic: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     
@@ -230,7 +230,7 @@ class ForumAPI {
             }
             
         } catch (Exception $e) {
-            sendApiError('Fout bij bijwerken topic: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     
@@ -265,7 +265,7 @@ class ForumAPI {
             }
             
         } catch (Exception $e) {
-            sendApiError('Fout bij verwijderen topic: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     
@@ -311,7 +311,7 @@ class ForumAPI {
             }
             
         } catch (Exception $e) {
-            sendApiError('Fout bij toevoegen reply: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     
@@ -354,7 +354,7 @@ class ForumAPI {
             }
             
         } catch (Exception $e) {
-            sendApiError('Fout bij bijwerken reply: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     
@@ -389,7 +389,7 @@ class ForumAPI {
             }
             
         } catch (Exception $e) {
-            sendApiError('Fout bij verwijderen reply: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
 }

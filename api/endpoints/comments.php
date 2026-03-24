@@ -76,7 +76,7 @@ class CommentsAPI {
             ]);
             
         } catch (Exception $e) {
-            sendApiError('Fout bij ophalen comments: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     
@@ -118,7 +118,7 @@ class CommentsAPI {
             }
             
         } catch (Exception $e) {
-            sendApiError('Fout bij toevoegen comment: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     
@@ -161,7 +161,7 @@ class CommentsAPI {
             }
             
         } catch (Exception $e) {
-            sendApiError('Fout bij bijwerken comment: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     
@@ -196,7 +196,7 @@ class CommentsAPI {
             }
             
         } catch (Exception $e) {
-            sendApiError('Fout bij verwijderen comment: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     
@@ -220,7 +220,7 @@ class CommentsAPI {
             ]);
             
         } catch (Exception $e) {
-            sendApiError('Fout bij liken comment: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
 }

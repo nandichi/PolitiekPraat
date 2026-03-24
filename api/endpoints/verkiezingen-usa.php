@@ -63,7 +63,7 @@ class VerkiezingenUSAAPI {
             ]);
             
         } catch (Exception $e) {
-            sendApiError('Fout bij ophalen verkiezingen: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     
@@ -83,7 +83,7 @@ class VerkiezingenUSAAPI {
             sendApiResponse(['verkiezing' => $verkiezing]);
             
         } catch (Exception $e) {
-            sendApiError('Fout bij ophalen verkiezing: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     
@@ -132,7 +132,7 @@ class VerkiezingenUSAAPI {
             }
             
         } catch (Exception $e) {
-            sendApiError('Fout bij aanmaken verkiezing: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     
@@ -176,7 +176,7 @@ class VerkiezingenUSAAPI {
             }
             
         } catch (Exception $e) {
-            sendApiError('Fout bij bijwerken verkiezing: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     
@@ -194,7 +194,7 @@ class VerkiezingenUSAAPI {
             }
             
         } catch (Exception $e) {
-            sendApiError('Fout bij verwijderen verkiezing: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     

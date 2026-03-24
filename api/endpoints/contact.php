@@ -69,7 +69,7 @@ class ContactAPI {
             ]);
             
         } catch (Exception $e) {
-            sendApiError('Fout bij verzenden contactbericht: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
 }

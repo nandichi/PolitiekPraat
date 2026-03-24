@@ -143,7 +143,10 @@ try {
         $testDb = new Database();
         debug_log("Database verbinding succesvol");
     } catch (Exception $e) {
-        sendApiError("Database verbinding mislukt: " . $e->getMessage(), 500);
+        sendApiError("Interne serverfout", 500, [
+            "context" => "database_connect",
+            "exception" => $e->getMessage()
+        ]);
     }
     
     // Andere belangrijke classes laden
@@ -173,7 +176,9 @@ try {
     }
     
 } catch (Exception $e) {
-    sendApiError("Include fout: " . $e->getMessage(), 500, [
+    sendApiError("Interne serverfout", 500, [
+        "context" => "include_bootstrap",
+        "exception" => $e->getMessage(),
         'file' => $e->getFile(),
         'line' => $e->getLine()
     ]);
@@ -289,7 +294,9 @@ class APIRouter {
             }
             
         } catch (Exception $e) {
-            sendApiError('Router fout: ' . $e->getMessage(), 500, [
+            sendApiError('Interne serverfout', 500, [
+                'context' => 'router_dispatch',
+                'exception' => $e->getMessage(),
                 'file' => $e->getFile(),
                 'line' => $e->getLine(),
                 'trace' => API_DEBUG ? $e->getTraceAsString() : null
@@ -582,7 +589,9 @@ try {
     $router = new APIRouter();
     $router->route();
 } catch (Exception $e) {
-    sendApiError('Fatale fout: ' . $e->getMessage(), 500, [
+    sendApiError('Interne serverfout', 500, [
+        'context' => 'api_index_catch',
+        'exception' => $e->getMessage(),
         'file' => $e->getFile(),
         'line' => $e->getLine(),
         'trace' => API_DEBUG ? $e->getTraceAsString() : null
