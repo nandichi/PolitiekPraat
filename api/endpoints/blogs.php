@@ -638,21 +638,67 @@ class BlogsAPI {
     }
     
     private function sendResponse($data, $statusCode = 200) {
-        http_response_code($statusCode);
-        echo json_encode([
+        $payload = [
             'success' => true,
             'data' => $data,
             'timestamp' => date('c')
-        ], JSON_UNESCAPED_UNICODE);
+        ];
+
+        $encoded = $this->encodeJsonPayload($payload, '/api/blogs success response');
+
+        if ($encoded === false) {
+            $this->sendEncodingFailureResponse();
+        }
+
+        http_response_code($statusCode);
+        echo $encoded;
         exit();
     }
-    
+
     private function sendError($message, $statusCode = 400) {
+        $payload = api_build_error_response($message, (int) $statusCode);
+        $encoded = $this->encodeJsonPayload($payload, '/api/blogs error response');
+
+        if ($encoded === false) {
+            $this->sendEncodingFailureResponse();
+        }
+
         http_response_code($statusCode);
-        echo json_encode(
-            api_build_error_response($message, (int) $statusCode),
+        echo $encoded;
+        exit();
+    }
+
+    private function encodeJsonPayload($payload, $context) {
+        $options = JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE;
+        $encoded = json_encode($payload, $options);
+
+        if ($encoded !== false) {
+            return $encoded;
+        }
+
+        error_log(sprintf(
+            '[BLOGS API JSON ENCODE ERROR] context=%s error=%s',
+            (string) $context,
+            json_last_error_msg()
+        ));
+
+        return false;
+    }
+
+    private function sendEncodingFailureResponse() {
+        $fallback = json_encode(
+            api_build_error_response('Interne serverfout bij serialiseren van response.', 500),
             JSON_UNESCAPED_UNICODE
         );
+
+        http_response_code(500);
+
+        if ($fallback === false) {
+            echo '{"success":false,"error":"Interne serverfout","code":500}';
+            exit();
+        }
+
+        echo $fallback;
         exit();
     }
 } 
