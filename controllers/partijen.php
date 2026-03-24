@@ -23,6 +23,10 @@ require_once __DIR__ . '/../models/PartyModel.php';
 // Krijg alle partijen uit de database
 $partyModel = new PartyModel();
 $parties = $partyModel->getAllParties();
+$parties_json = json_encode($parties, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT);
+if ($parties_json === false) {
+    $parties_json = '{}';
+}
 
 // Include the header
 $title = "Politieke Partijen Overzicht";
@@ -31,6 +35,7 @@ include_once BASE_PATH . '/views/templates/header.php';
 ?>
 
 <main class="bg-gradient-to-b from-slate-50 to-white min-h-screen">
+    <script>window.__PP_PARTIES__ = <?php echo $parties_json; ?>;</script>
     <?php include BASE_PATH . '/views/partijen/partials/hero-section.php'; ?>
     
     <!-- Enhanced Scripts for Political Dashboard -->
@@ -1501,7 +1506,7 @@ include_once BASE_PATH . '/views/templates/header.php';
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Party data from PHP
-    const partyData = <?php echo json_encode($parties); ?>;
+    const partyData = window.__PP_PARTIES__;
     
     // Handle image errors
     document.querySelectorAll('img').forEach(img => {
@@ -2080,7 +2085,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // Completely Rebuilt Modern Coalition Maker - Tap/Click Only
 document.addEventListener('DOMContentLoaded', function() {
     const NewCoalitionMaker = {
-        parties: <?php echo json_encode($parties); ?>,
+        parties: window.__PP_PARTIES__,
         currentView: 'current',
         selectedParties: new Set(),
         
@@ -2499,7 +2504,7 @@ document.addEventListener('DOMContentLoaded', function() {
     window.NewCoalitionMaker = NewCoalitionMaker;
     
     // Additional party functionality (existing code)
-    const partyData = <?php echo json_encode($parties); ?>;
+    const partyData = window.__PP_PARTIES__;
     
     // Handle image errors
     document.querySelectorAll('img').forEach(img => {
@@ -2633,7 +2638,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Gather polling data for AI analysis
         const pollingData = {
-            parties: <?php echo json_encode($parties); ?>,
+            parties: window.__PP_PARTIES__,
             date: new Date().toISOString().split('T')[0]
         };
 
@@ -3321,7 +3326,7 @@ html {
     ModernCoalitionMaker.init();
     
     // Additional party functionality (existing code)
-    const partyData = <?php echo json_encode($parties); ?>;
+    const partyData = window.__PP_PARTIES__;
     
     // Handle image errors
     document.querySelectorAll('img').forEach(img => {
@@ -3455,7 +3460,7 @@ html {
 
         // Gather polling data for AI analysis
         const pollingData = {
-            parties: <?php echo json_encode($parties); ?>,
+            parties: window.__PP_PARTIES__,
             date: new Date().toISOString().split('T')[0]
         };
 
