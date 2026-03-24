@@ -1,15 +1,16 @@
 {
   "last_techlead_run": {
-    "ts": "2026-03-22T13:54:00+01:00",
+    "ts": "2026-03-24T08:20:00+01:00",
     "role": "Tech Lead",
-    "summary": "Codebase scan afgerond, open issues gecheckt, nieuwe issues #105 #106 #107 aangemaakt.",
+    "summary": "Team-chat gecheckt, repo gesynct, scan gedaan en nieuwe issues #117 #118 #119 aangemaakt.",
     "top3_today": [
-      105,
-      106,
-      103
+      117,
+      118,
+      119
     ],
     "blockers": [
-      "Issue #20 workflow token scope blijft blocker voor CI/workflow push"
+      "Issue #20 workflow token scope blijft blocker voor CI/workflow push",
+      "PR #116 wacht nog op review/merge voordat deploy-stabiliteit definitief groen is"
     ],
     "team_chat_reviewed": true
   },
