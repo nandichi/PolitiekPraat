@@ -40,3 +40,6 @@ sitemap.xml
 # Lokale devteam state
 admin/devteam-state.json
 admin/devteam-queue.json
+
+# Lokale environment variabelen
+/includes/env.local.php
