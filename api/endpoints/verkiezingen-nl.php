@@ -91,7 +91,7 @@ class VerkiezingenNLAPI {
         if (!$this->requireAdmin()) return;
         
         try {
-            $data = json_decode(file_get_contents('php://input'), true);
+            $data = api_get_request_json();
             
             $required = ['jaar', 'minister_president', 'minister_president_partij', 
                         'totaal_stemmen', 'opkomst_percentage', 'verkiezingsdata'];
@@ -151,7 +151,7 @@ class VerkiezingenNLAPI {
         if (!$this->requireAdmin()) return;
         
         try {
-            $data = json_decode(file_get_contents('php://input'), true);
+            $data = api_get_request_json();
             
             $fields = [];
             $allowed = ['partij_uitslagen', 'coalitie_partijen', 'coalitie_zetels', 'coalitie_type',
@@ -260,6 +260,11 @@ class VerkiezingenNLAPI {
             sendApiError('Admin rechten vereist', 403);
             return false;
         }
+
+        if (!api_require_admin_csrf()) {
+            return false;
+        }
+
         return true;
     }
 }

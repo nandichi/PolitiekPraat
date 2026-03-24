@@ -99,7 +99,7 @@ class PresidentenAPI {
         if (!$this->requireAdmin()) return;
         
         try {
-            $data = json_decode(file_get_contents('php://input'), true);
+            $data = api_get_request_json();
             
             if ($country === 'usa') {
                 $this->createUSAPresident($data);
@@ -177,7 +177,7 @@ class PresidentenAPI {
         if (!$this->requireAdmin()) return;
         
         try {
-            $data = json_decode(file_get_contents('php://input'), true);
+            $data = api_get_request_json();
             $table = $country === 'usa' ? 'amerikaanse_presidenten' : 'nederlandse_ministers_presidenten';
             
             $fields = [];
@@ -243,6 +243,11 @@ class PresidentenAPI {
             sendApiError('Admin rechten vereist', 403);
             return false;
         }
+
+        if (!api_require_admin_csrf()) {
+            return false;
+        }
+
         return true;
     }
 }

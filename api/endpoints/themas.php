@@ -98,7 +98,7 @@ class ThemasAPI {
         if (!$this->requireAdmin()) return;
         
         try {
-            $data = json_decode(file_get_contents('php://input'), true);
+            $data = api_get_request_json();
             
             if (empty($data['name'])) {
                 sendApiError('Naam is verplicht', 400);
@@ -130,7 +130,7 @@ class ThemasAPI {
         if (!$this->requireAdmin()) return;
         
         try {
-            $data = json_decode(file_get_contents('php://input'), true);
+            $data = api_get_request_json();
             
             $fields = [];
             $allowed = ['name', 'description', 'color', 'is_active'];
@@ -190,6 +190,11 @@ class ThemasAPI {
             sendApiError('Admin rechten vereist', 403);
             return false;
         }
+
+        if (!api_require_admin_csrf()) {
+            return false;
+        }
+
         return true;
     }
 }
