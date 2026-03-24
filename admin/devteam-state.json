@@ -14,11 +14,11 @@
     "team_chat_reviewed": true
   },
   "last_developer_run": {
-    "ts": "2026-03-23T09:16:00+01:00",
+    "ts": "2026-03-24T09:00:00+01:00",
     "role": "Developer",
-    "issue": 110,
-    "branch": "dev/issue-110-api-key-owner-scope",
-    "summary": "Hardcoded admin-impersonatie verwijderd in blogs API-key auth; key-owner user mapping + scope checks + audit logging toegevoegd.",
+    "issue": 117,
+    "branch": "dev/issue-117-csrf-admin-api-mutations",
+    "summary": "Centrale CSRF-validatie (token + same-site origin check) toegevoegd voor admin mutatie-endpoints parties/presidenten/themas/verkiezingen en PR #120 geopend.",
     "status": "in_review"
   }
 }
