@@ -15,13 +15,13 @@
     "team_chat_reviewed": true
   },
   "last_developer_run": {
-    "ts": "2026-03-25T20:39:00+01:00",
+    "ts": "2026-03-25T21:08:00+01:00",
     "role": "Developer",
-    "issue": 130,
-    "branch": "dev/issue-130-api-error-leak",
-    "pr_number": 133,
-    "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/133",
-    "summary": "API bootstrap/router errorpaden gehard: geen exception/file/line/trace meer in response payloads, wel server-side exception logging met request_id correlatie. Regressietest toegevoegd voor bootstrap/router 5xx sanitization.",
+    "issue": 134,
+    "branch": "dev/issue-134-fix-forum-stored-xss",
+    "pr_number": 137,
+    "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/137",
+    "summary": "Stored XSS in forum topic/reply rendering gefixt via centrale escaping helpers in controllers/forum/topic.php; user-generated title/author/content en replies renderen nu veilig (htmlspecialchars + nl2br veilige volgorde).",
     "status": "in_review"
   }
 }
