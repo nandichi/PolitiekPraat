@@ -6,6 +6,20 @@ if (!isset($params['id'])) {
 
 $db = new Database();
 
+if (!function_exists('forum_escape')) {
+    function forum_escape(string $value): string
+    {
+        return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+    }
+}
+
+if (!function_exists('forum_escape_with_breaks')) {
+    function forum_escape_with_breaks(string $value): string
+    {
+        return nl2br(forum_escape($value));
+    }
+}
+
 // Haal topic op
 $db->query("SELECT forum_topics.*, users.username as author_name 
            FROM forum_topics 
@@ -76,10 +90,10 @@ require_once BASE_PATH . '/views/templates/header.php';
         </div>
 
         <div class="bg-white rounded-lg shadow-md p-8 mb-8">
-            <h1 class="text-3xl font-bold mb-4"><?php echo $topic->title; ?></h1>
+            <h1 class="text-3xl font-bold mb-4"><?php echo forum_escape((string) $topic->title); ?></h1>
             
             <div class="flex items-center text-gray-500 mb-6">
-                <span>Door <?php echo $topic->author_name; ?></span>
+                <span>Door <?php echo forum_escape((string) $topic->author_name); ?></span>
                 <span class="mx-2">•</span>
                 <span><?php echo date('d-m-Y H:i', strtotime($topic->created_at)); ?></span>
                 <span class="mx-2">•</span>
@@ -87,7 +101,7 @@ require_once BASE_PATH . '/views/templates/header.php';
             </div>
 
             <div class="prose max-w-none">
-                <?php echo nl2br($topic->content); ?>
+                <?php echo forum_escape_with_breaks((string) $topic->content); ?>
             </div>
         </div>
 
@@ -100,7 +114,7 @@ require_once BASE_PATH . '/views/templates/header.php';
                       class="mb-8">
                     <?php if ($reply_error): ?>
                         <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-                            <?php echo $reply_error; ?>
+                            <?php echo forum_escape($reply_error); ?>
                         </div>
                     <?php endif; ?>
 
@@ -133,7 +147,7 @@ require_once BASE_PATH . '/views/templates/header.php';
                         <div class="border-t pt-6">
                             <div class="flex justify-between items-start mb-4">
                                 <div>
-                                    <span class="font-bold"><?php echo $reply->author_name; ?></span>
+                                    <span class="font-bold"><?php echo forum_escape((string) $reply->author_name); ?></span>
                                     <span class="text-gray-500 text-sm ml-2">
                                         <?php echo date('d-m-Y H:i', strtotime($reply->created_at)); ?>
                                     </span>
@@ -152,7 +166,7 @@ require_once BASE_PATH . '/views/templates/header.php';
                                 <?php endif; ?>
                             </div>
                             <div class="prose max-w-none">
-                                <?php echo nl2br($reply->content); ?>
+                                <?php echo forum_escape_with_breaks((string) $reply->content); ?>
                             </div>
                         </div>
                     <?php endforeach; ?>
