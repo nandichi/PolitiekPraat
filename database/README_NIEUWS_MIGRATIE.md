@@ -20,10 +20,13 @@ CREATE TABLE IF NOT EXISTS news_articles (
     published_at TIMESTAMP NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE INDEX uq_news_articles_url (url(255)),
     INDEX idx_source (source),
     INDEX idx_bias (bias),
     INDEX idx_orientation (orientation),
-    INDEX idx_published_at (published_at)
+    INDEX idx_published_at (published_at),
+    INDEX idx_source_published_at (source, published_at),
+    INDEX idx_orientation_published_at (orientation, published_at)
 );
 ```
 
@@ -45,6 +48,7 @@ CREATE TABLE IF NOT EXISTS news_articles (
 ### Migratie Bestanden
 
 - `database/migrations/create_news_articles_table.sql` - SQL script voor tabel aanmaak
+- `database/migrations/add_news_articles_hot_query_indexes.sql` - idempotente index-migratie voor hot queries
 - `scripts/populate_news_database.php` - Script om initiële data in te laden
 
 ### Model en Controller
