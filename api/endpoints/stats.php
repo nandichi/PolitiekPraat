@@ -70,7 +70,7 @@ class StatsAPI {
             ]);
             
         } catch (Exception $e) {
-            sendApiError('Fout bij ophalen statistieken: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     
@@ -107,7 +107,7 @@ class StatsAPI {
             ]);
             
         } catch (Exception $e) {
-            sendApiError('Fout bij ophalen trending content: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     
@@ -168,7 +168,7 @@ class StatsAPI {
             ]);
             
         } catch (Exception $e) {
-            sendApiError('Fout bij ophalen recente activiteit: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
 }

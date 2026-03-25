@@ -81,7 +81,7 @@ class PartiesAPI {
             ]);
             
         } catch (Exception $e) {
-            sendApiError('Fout bij ophalen partijen: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     
@@ -109,7 +109,7 @@ class PartiesAPI {
             sendApiResponse(['party' => $party]);
             
         } catch (Exception $e) {
-            sendApiError('Fout bij ophalen partij: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     
@@ -136,7 +136,7 @@ class PartiesAPI {
             ]);
             
         } catch (Exception $e) {
-            sendApiError('Fout bij ophalen polling data: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     
@@ -163,7 +163,7 @@ class PartiesAPI {
             ]);
             
         } catch (Exception $e) {
-            sendApiError('Fout bij ophalen standpunten: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     
@@ -215,7 +215,7 @@ class PartiesAPI {
             }
             
         } catch (Exception $e) {
-            sendApiError('Fout bij aanmaken partij: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     
@@ -265,7 +265,7 @@ class PartiesAPI {
             }
             
         } catch (Exception $e) {
-            sendApiError('Fout bij bijwerken partij: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     
@@ -283,7 +283,7 @@ class PartiesAPI {
             }
             
         } catch (Exception $e) {
-            sendApiError('Fout bij verwijderen partij: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     

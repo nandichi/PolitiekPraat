@@ -80,7 +80,7 @@ class NewsAPI {
             ]);
             
         } catch (Exception $e) {
-            $this->sendError('Database fout: ' . $e->getMessage(), 500);
+            $this->sendError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     
@@ -119,7 +119,7 @@ class NewsAPI {
             ]);
             
         } catch (Exception $e) {
-            $this->sendError('Fout bij ophalen statistieken: ' . $e->getMessage(), 500);
+            $this->sendError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     
@@ -229,7 +229,7 @@ class NewsAPI {
             ]);
             
         } catch (Exception $e) {
-            $this->sendError('Fout bij ophalen recent nieuws: ' . $e->getMessage(), 500);
+            $this->sendError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     
@@ -326,10 +326,10 @@ class NewsAPI {
         exit();
     }
     
-    private function sendError($message, $statusCode = 400) {
+    private function sendError($message, $statusCode = 400, $debug = null) {
         http_response_code($statusCode);
         echo json_encode(
-            api_build_error_response($message, (int) $statusCode),
+            api_build_error_response($message, (int) $statusCode, $debug),
             JSON_UNESCAPED_UNICODE
         );
         exit();

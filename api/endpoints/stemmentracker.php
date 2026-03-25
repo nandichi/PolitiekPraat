@@ -124,7 +124,7 @@ class StemmentrackerAPI {
             ]);
             
         } catch (Exception $e) {
-            sendApiError('Fout bij ophalen moties: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     
@@ -155,7 +155,7 @@ class StemmentrackerAPI {
             ]);
             
         } catch (Exception $e) {
-            sendApiError('Fout bij ophalen motie: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     
@@ -174,7 +174,7 @@ class StemmentrackerAPI {
             sendApiResponse(['votes' => $votes]);
             
         } catch (Exception $e) {
-            sendApiError('Fout bij ophalen votes: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     
@@ -194,7 +194,7 @@ class StemmentrackerAPI {
             sendApiResponse(['votes' => $votes]);
             
         } catch (Exception $e) {
-            sendApiError('Fout bij ophalen party votes: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     
@@ -240,7 +240,7 @@ class StemmentrackerAPI {
             }
             
         } catch (Exception $e) {
-            sendApiError('Fout bij aanmaken motie: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     
@@ -282,7 +282,7 @@ class StemmentrackerAPI {
             }
             
         } catch (Exception $e) {
-            sendApiError('Fout bij bijwerken motie: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     
@@ -300,7 +300,7 @@ class StemmentrackerAPI {
             }
             
         } catch (Exception $e) {
-            sendApiError('Fout bij verwijderen motie: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     
@@ -332,7 +332,7 @@ class StemmentrackerAPI {
             }
             
         } catch (Exception $e) {
-            sendApiError('Fout bij toevoegen vote: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     

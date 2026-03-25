@@ -68,7 +68,7 @@ class PresidentenAPI {
             ]);
             
         } catch (Exception $e) {
-            sendApiError('Fout bij ophalen presidenten: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     
@@ -91,7 +91,7 @@ class PresidentenAPI {
             ]);
             
         } catch (Exception $e) {
-            sendApiError('Fout bij ophalen president: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     
@@ -108,7 +108,7 @@ class PresidentenAPI {
             }
             
         } catch (Exception $e) {
-            sendApiError('Fout bij aanmaken president: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     
@@ -214,7 +214,7 @@ class PresidentenAPI {
             }
             
         } catch (Exception $e) {
-            sendApiError('Fout bij bijwerken president: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     
@@ -234,7 +234,7 @@ class PresidentenAPI {
             }
             
         } catch (Exception $e) {
-            sendApiError('Fout bij verwijderen president: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     

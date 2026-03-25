@@ -59,7 +59,7 @@ class ThemasAPI {
             ]);
             
         } catch (Exception $e) {
-            sendApiError('Fout bij ophalen themas: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     
@@ -90,7 +90,7 @@ class ThemasAPI {
             ]);
             
         } catch (Exception $e) {
-            sendApiError('Fout bij ophalen thema: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     
@@ -122,7 +122,7 @@ class ThemasAPI {
             }
             
         } catch (Exception $e) {
-            sendApiError('Fout bij aanmaken thema: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     
@@ -163,7 +163,7 @@ class ThemasAPI {
             }
             
         } catch (Exception $e) {
-            sendApiError('Fout bij bijwerken thema: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     
@@ -181,7 +181,7 @@ class ThemasAPI {
             }
             
         } catch (Exception $e) {
-            sendApiError('Fout bij verwijderen thema: ' . $e->getMessage(), 500);
+            sendApiError('Interne serverfout', 500, ['exception' => $e->getMessage()]);
         }
     }
     
