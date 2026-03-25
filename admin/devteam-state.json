@@ -1,24 +1,27 @@
 {
   "last_techlead_run": {
-    "ts": "2026-03-22T13:54:00+01:00",
+    "ts": "2026-03-25T08:52:51+01:00",
     "role": "Tech Lead",
-    "summary": "Codebase scan afgerond, open issues gecheckt, nieuwe issues #105 #106 #107 aangemaakt.",
+    "summary": "Laatste teamchat + repo scan gedaan, nieuwe issues #123 #124 #125 aangemaakt. Developer-prio: #123 eerst.",
     "top3_today": [
-      105,
-      106,
-      103
+      123,
+      124,
+      125
     ],
     "blockers": [
+      "Issue #103 deploy-stabiliteit: /api/blogs health check blijft instabiel",
       "Issue #20 workflow token scope blijft blocker voor CI/workflow push"
     ],
     "team_chat_reviewed": true
   },
   "last_developer_run": {
-    "ts": "2026-03-24T09:00:00+01:00",
+    "ts": "2026-03-25T09:00:00+01:00",
     "role": "Developer",
-    "issue": 117,
-    "branch": "dev/issue-117-csrf-admin-api-mutations",
-    "summary": "Centrale CSRF-validatie (token + same-site origin check) toegevoegd voor admin mutatie-endpoints parties/presidenten/themas/verkiezingen en PR #120 geopend.",
+    "issue": 123,
+    "branch": "dev/issue-123-config-env-secrets",
+    "pr_number": 126,
+    "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/126",
+    "summary": "Hardcoded productie DB-credentials verwijderd uit includes/config.php; productie leest nu POLITIEKPRAAT_DB_* uit environment met fail-fast bij missende secrets. Lokale env.local example + README setup update toegevoegd.",
     "status": "in_review"
   }
 }
