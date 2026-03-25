@@ -85,6 +85,18 @@ function debug_log($message) {
     }
 }
 
+function api_log_exception(string $context, Throwable $exception): void {
+    error_log(sprintf(
+        '[API EXCEPTION] request_id=%s context=%s class=%s message=%s file=%s line=%d',
+        api_get_request_id(),
+        $context,
+        get_class($exception),
+        $exception->getMessage(),
+        $exception->getFile(),
+        $exception->getLine()
+    ));
+}
+
 // Error handler functie
 function sendApiError($message, $statusCode = 500, $debug = null) {
     api_emit_json_response(
@@ -142,10 +154,10 @@ try {
     try {
         $testDb = new Database();
         debug_log("Database verbinding succesvol");
-    } catch (Exception $e) {
-        sendApiError("Interne serverfout", 500, [
-            "context" => "database_connect",
-            "exception" => $e->getMessage()
+    } catch (Throwable $e) {
+        api_log_exception('database_connect', $e);
+        sendApiError('Interne serverfout', 500, [
+            'context' => 'database_connect'
         ]);
     }
     
@@ -175,12 +187,10 @@ try {
         debug_log("NewsModel geladen");
     }
     
-} catch (Exception $e) {
-    sendApiError("Interne serverfout", 500, [
-        "context" => "include_bootstrap",
-        "exception" => $e->getMessage(),
-        'file' => $e->getFile(),
-        'line' => $e->getLine()
+} catch (Throwable $e) {
+    api_log_exception('include_bootstrap', $e);
+    sendApiError('Interne serverfout', 500, [
+        'context' => 'include_bootstrap'
     ]);
 }
 
@@ -293,13 +303,10 @@ class APIRouter {
                     sendApiError('Endpoint niet gevonden: ' . $endpoint, 404);
             }
             
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
+            api_log_exception('router_dispatch', $e);
             sendApiError('Interne serverfout', 500, [
-                'context' => 'router_dispatch',
-                'exception' => $e->getMessage(),
-                'file' => $e->getFile(),
-                'line' => $e->getLine(),
-                'trace' => API_DEBUG ? $e->getTraceAsString() : null
+                'context' => 'router_dispatch'
             ]);
         }
     }
@@ -588,12 +595,9 @@ class APIRouter {
 try {
     $router = new APIRouter();
     $router->route();
-} catch (Exception $e) {
+} catch (Throwable $e) {
+    api_log_exception('api_index_catch', $e);
     sendApiError('Interne serverfout', 500, [
-        'context' => 'api_index_catch',
-        'exception' => $e->getMessage(),
-        'file' => $e->getFile(),
-        'line' => $e->getLine(),
-        'trace' => API_DEBUG ? $e->getTraceAsString() : null
+        'context' => 'api_index_catch'
     ]);
 } 
