@@ -15,13 +15,13 @@
     "team_chat_reviewed": true
   },
   "last_developer_run": {
-    "ts": "2026-03-25T09:00:00+01:00",
+    "ts": "2026-03-25T20:39:00+01:00",
     "role": "Developer",
-    "issue": 123,
-    "branch": "dev/issue-123-config-env-secrets",
-    "pr_number": 126,
-    "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/126",
-    "summary": "Hardcoded productie DB-credentials verwijderd uit includes/config.php; productie leest nu POLITIEKPRAAT_DB_* uit environment met fail-fast bij missende secrets. Lokale env.local example + README setup update toegevoegd.",
+    "issue": 130,
+    "branch": "dev/issue-130-api-error-leak",
+    "pr_number": 133,
+    "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/133",
+    "summary": "API bootstrap/router errorpaden gehard: geen exception/file/line/trace meer in response payloads, wel server-side exception logging met request_id correlatie. Regressietest toegevoegd voor bootstrap/router 5xx sanitization.",
     "status": "in_review"
   }
 }
