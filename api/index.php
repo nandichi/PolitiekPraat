@@ -393,7 +393,7 @@ class APIRouter {
                     'GET /api/presidenten/nederland' => 'Nederlandse ministers-presidenten'
                 ],
                 'contact' => [
-                    'POST /api/contact' => 'Contact formulier versturen'
+                    'POST /api/contact' => 'Contact formulier versturen (rate-limited, honeypot veld `website`, optionele `submitted_at` anti-bot timestamp)'
                 ],
                 'stats' => [
                     'GET /api/stats' => 'Website statistieken',
