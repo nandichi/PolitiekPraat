@@ -61,8 +61,17 @@ composer install
 
 3. Stel de database in:
 - Maak een nieuwe database
-- Kopieer `includes/config.example.php` naar `includes/config.php`
-- Vul je database gegevens in
+- Kopieer `includes/env.local.example.php` naar `includes/env.local.php`
+- Vul je lokale databasegegevens in via `putenv(...)` regels in dat bestand
+
+Voor productie (VPS) moeten credentials via environment variables gezet worden:
+- `POLITIEKPRAAT_DB_HOST` (optioneel, default `localhost`)
+- `POLITIEKPRAAT_DB_USER` (verplicht)
+- `POLITIEKPRAAT_DB_PASS` (verplicht)
+- `POLITIEKPRAAT_DB_NAME` (verplicht)
+- `POLITIEKPRAAT_URLROOT` (optioneel)
+
+Bij missende verplichte productievariabelen faalt de app bewust met een gecontroleerde fout zodat secrets niet terugvallen op hardcoded waarden.
 
 4. Zet de database klaar:
 ```bash
