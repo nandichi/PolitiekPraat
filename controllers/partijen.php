@@ -38,132 +38,6 @@ include_once BASE_PATH . '/views/templates/header.php';
     <script>window.__PP_PARTIES__ = <?php echo $parties_json; ?>;</script>
     <?php include BASE_PATH . '/views/partijen/partials/hero-section.php'; ?>
     
-    <!-- Enhanced Scripts for Political Dashboard -->
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-        
-        // Typing Animation
-        const typingElement = document.getElementById('typing-text');
-        const texts = [
-            'Waar democratie vorm krijgt...',
-            'Waar standpunten botsen...',
-            'Waar leiders inspireren...',
-            'Waar jouw stem telt...'
-        ];
-        
-        let textIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
-        let typingSpeed = 100;
-        
-        function typeText() {
-            const currentText = texts[textIndex];
-            
-            if (isDeleting) {
-                typingElement.textContent = currentText.substring(0, charIndex - 1);
-                charIndex--;
-                typingSpeed = 50;
-            } else {
-                typingElement.textContent = currentText.substring(0, charIndex + 1);
-                charIndex++;
-                typingSpeed = 100;
-            }
-            
-            if (!isDeleting && charIndex === currentText.length) {
-                typingSpeed = 2000;
-                isDeleting = true;
-            } else if (isDeleting && charIndex === 0) {
-                isDeleting = false;
-                textIndex = (textIndex + 1) % texts.length;
-                typingSpeed = 500;
-            }
-            
-            setTimeout(typeText, typingSpeed);
-        }
-        
-        typeText();
-        
-        // Leaders Carousel
-        const leaderCards = document.querySelectorAll('.leader-card');
-        const carouselDots = document.querySelectorAll('.carousel-dot');
-        let currentLeader = 0;
-        
-        function showLeader(index) {
-            leaderCards.forEach((card, i) => {
-                if (i === index) {
-                    card.classList.remove('hidden');
-                    card.classList.add('active');
-                } else {
-                    card.classList.add('hidden');
-                    card.classList.remove('active');
-                }
-            });
-            
-            carouselDots.forEach((dot, i) => {
-                if (i === index) {
-                    dot.classList.remove('bg-white/30');
-                    dot.classList.add('bg-white');
-                } else {
-                    dot.classList.add('bg-white/30');
-                    dot.classList.remove('bg-white');
-                }
-            });
-        }
-        
-        // Auto-rotate carousel
-        setInterval(() => {
-            currentLeader = (currentLeader + 1) % leaderCards.length;
-            showLeader(currentLeader);
-        }, 4000);
-        
-        // Manual carousel control
-        carouselDots.forEach((dot, index) => {
-            dot.addEventListener('click', () => {
-                currentLeader = index;
-                showLeader(currentLeader);
-            });
-        });
-        
-        // Seat Distribution Animation
-        const seatBars = document.querySelectorAll('#seat-distribution .h-1');
-        
-        // Animate progress bars on load
-        setTimeout(() => {
-            seatBars.forEach((bar, index) => {
-                bar.style.transform = 'scaleX(0)';
-                bar.style.transformOrigin = 'left';
-                setTimeout(() => {
-                    bar.style.transform = 'scaleX(1)';
-                }, index * 200);
-            });
-        }, 1000);
-        
-        // Subtle pulse animation for the bars
-        setInterval(() => {
-            seatBars.forEach((bar, index) => {
-                setTimeout(() => {
-                    bar.style.transform = 'scaleX(1.02)';
-                    setTimeout(() => {
-                        bar.style.transform = 'scaleX(1)';
-                    }, 200);
-                }, index * 100);
-            });
-        }, 8000); // Every 8 seconds
-    });
-    </script>
 
     <!-- AI Analyse Modal -->
     <div id="ai-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden opacity-0 transition-opacity duration-300">
@@ -1509,6 +1383,7 @@ window.PP_CONFIG = Object.freeze({
 });
 </script>
 <script src="<?php echo URLROOT; ?>/js/partijen-page.js" defer></script>
+<script src="<?php echo URLROOT; ?>/js/partijen-landing-effects.js" defer></script>
 
 <style>
 /* Smooth scrolling for the entire page */
