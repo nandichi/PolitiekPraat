@@ -14,16 +14,19 @@
       "Issue #129 deploy rollback door ontbrekende productie env vars: preflight check nog niet geimplementeerd"
     ],
     "team_chat_reviewed": true,
-    "prs_pending_review": [138, 139]
+    "prs_pending_review": [
+      138,
+      139
+    ]
   },
   "last_developer_run": {
-    "ts": "2026-03-25T21:08:00+01:00",
+    "ts": "2026-03-26T23:12:00+01:00",
     "role": "Developer",
-    "issue": 135,
-    "branch": "dev/issue-135-news-article-indexes",
-    "pr_number": 139,
-    "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/139",
-    "summary": "news_articles hot-query indexen + idempotente migratie toegevoegd. PR #139 wacht op Code Reviewer.",
+    "issue": 142,
+    "branch": "dev/issue-142-login-register-csrf",
+    "pr_number": 145,
+    "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/145",
+    "summary": "Login en registratie hebben nu CSRF-token validatie met 403 + sessie destroy bij mismatch/missing token; regressietest toegevoegd.",
     "status": "in_review"
   }
 }
