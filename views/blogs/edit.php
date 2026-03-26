@@ -26,6 +26,7 @@
             <!-- Hoofdformulier met verbeterde styling -->
             <form action="<?php echo URLROOT; ?>/blogs/edit/<?php echo $blog->id; ?>" method="POST" enctype="multipart/form-data" 
                   class="bg-white rounded-3xl shadow-xl overflow-hidden transform transition-all duration-500 hover:shadow-2xl relative">
+                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token, ENT_QUOTES, 'UTF-8'); ?>">
                 
                 <!-- Decoratieve header bar met gradient -->
                 <div class="bg-gradient-to-r from-primary via-primary/90 to-secondary h-2"></div>

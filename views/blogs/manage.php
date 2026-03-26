@@ -181,14 +181,16 @@
                                                         </svg>
                                                         Bewerken
                                                     </a>
-                                                    <a href="<?php echo URLROOT; ?>/blogs/delete/<?php echo $blog->id; ?>"
-                                                       onclick="return confirm('Weet je zeker dat je deze blog wilt verwijderen? Dit kan niet ongedaan worden gemaakt.')"
-                                                       class="group/btn inline-flex items-center px-3 py-2 border-2 border-red-300 rounded-xl text-red-600 bg-white hover:bg-red-600 hover:text-white hover:border-red-600 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2">
-                                                        <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                                                        </svg>
-                                                        Verwijderen
-                                                    </a>
+                                                    <form action="<?php echo URLROOT; ?>/blogs/delete/<?php echo $blog->id; ?>" method="POST" onsubmit="return confirm('Weet je zeker dat je deze blog wilt verwijderen? Dit kan niet ongedaan worden gemaakt.')">
+                                                        <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token, ENT_QUOTES, 'UTF-8'); ?>">
+                                                        <button type="submit"
+                                                                class="group/btn inline-flex items-center px-3 py-2 border-2 border-red-300 rounded-xl text-red-600 bg-white hover:bg-red-600 hover:text-white hover:border-red-600 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2">
+                                                            <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                                            </svg>
+                                                            Verwijderen
+                                                        </button>
+                                                    </form>
                                                 </div>
                                             </td>
                                         </tr>
@@ -265,14 +267,16 @@
                                                     </svg>
                                                     Bewerken
                                                 </a>
-                                                <a href="<?php echo URLROOT; ?>/blogs/delete/<?php echo $blog->id; ?>"
-                                                   onclick="return confirm('Weet je zeker dat je deze blog wilt verwijderen? Dit kan niet ongedaan worden gemaakt.')"
-                                                   class="inline-flex items-center px-3 py-1.5 border-2 border-red-300 rounded-xl text-xs text-red-600 bg-white hover:bg-red-600 hover:text-white transition-all duration-300">
-                                                    <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                                                    </svg>
-                                                    Verwijderen
-                                                </a>
+                                                <form action="<?php echo URLROOT; ?>/blogs/delete/<?php echo $blog->id; ?>" method="POST" onsubmit="return confirm('Weet je zeker dat je deze blog wilt verwijderen? Dit kan niet ongedaan worden gemaakt.')">
+                                                    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token, ENT_QUOTES, 'UTF-8'); ?>">
+                                                    <button type="submit"
+                                                            class="inline-flex items-center px-3 py-1.5 border-2 border-red-300 rounded-xl text-xs text-red-600 bg-white hover:bg-red-600 hover:text-white transition-all duration-300">
+                                                        <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                                        </svg>
+                                                        Verwijderen
+                                                    </button>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
