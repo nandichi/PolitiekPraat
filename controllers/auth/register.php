@@ -1,8 +1,22 @@
 <?php
+require_once BASE_PATH . '/includes/auth_csrf.php';
+
 $error = '';
 $success = '';
+$csrf_token = auth_ensure_csrf_token();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (!auth_require_csrf_token_from_post()) {
+        $_SESSION = [];
+        if (session_status() === PHP_SESSION_ACTIVE) {
+            session_destroy();
+        }
+
+        require_once BASE_PATH . '/views/templates/header.php';
+        echo '<main class="container mx-auto px-4 py-16"><div class="max-w-2xl mx-auto bg-red-100 border border-red-300 text-red-800 rounded-lg p-6"><h1 class="text-2xl font-bold mb-2">403 - Ongeldige sessieaanvraag</h1><p>De sessiecontrole is mislukt. Probeer opnieuw te registreren.</p></div></main>';
+        require_once BASE_PATH . '/views/templates/footer.php';
+        exit;
+    }
     $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_SPECIAL_CHARS);
     $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
     $password = $_POST['password'] ?? '';
@@ -80,6 +94,7 @@ require_once BASE_PATH . '/views/templates/header.php';
             </div>
         <?php else: ?>
             <form method="POST" action="<?php echo URLROOT; ?>/register">
+                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token, ENT_QUOTES, 'UTF-8'); ?>">
                 <div class="mb-4">
                     <label for="username" class="block text-gray-700 font-bold mb-2">Gebruikersnaam</label>
                     <input type="text" 
