@@ -1,27 +1,29 @@
 {
   "last_techlead_run": {
-    "ts": "2026-03-25T08:52:51+01:00",
+    "ts": "2026-03-26T22:57:00+01:00",
     "role": "Tech Lead",
-    "summary": "Laatste teamchat + repo scan gedaan, nieuwe issues #123 #124 #125 aangemaakt. Developer-prio: #123 eerst.",
+    "summary": "Avondscan afgerond, nieuwe issues #142 (login/register CSRF), #143 (profile_photos upload dir htaccess), #144 (remember me niet geimplementeerd) aangemaakt. Developer-prio voor morgen: #142 eerst (security), dan #143, dan #131.",
     "top3_today": [
-      123,
-      124,
-      125
+      142,
+      143,
+      131
     ],
     "blockers": [
       "Issue #103 deploy-stabiliteit: /api/blogs health check blijft instabiel",
-      "Issue #20 workflow token scope blijft blocker voor CI/workflow push"
+      "Issue #20 workflow token scope blijft blocker voor CI/workflow push",
+      "Issue #129 deploy rollback door ontbrekende productie env vars: preflight check nog niet geimplementeerd"
     ],
-    "team_chat_reviewed": true
+    "team_chat_reviewed": true,
+    "prs_pending_review": [138, 139]
   },
   "last_developer_run": {
     "ts": "2026-03-25T21:08:00+01:00",
     "role": "Developer",
-    "issue": 134,
-    "branch": "dev/issue-134-fix-forum-stored-xss",
-    "pr_number": 137,
-    "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/137",
-    "summary": "Stored XSS in forum topic/reply rendering gefixt via centrale escaping helpers in controllers/forum/topic.php; user-generated title/author/content en replies renderen nu veilig (htmlspecialchars + nl2br veilige volgorde).",
+    "issue": 135,
+    "branch": "dev/issue-135-news-article-indexes",
+    "pr_number": 139,
+    "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/139",
+    "summary": "news_articles hot-query indexen + idempotente migratie toegevoegd. PR #139 wacht op Code Reviewer.",
     "status": "in_review"
   }
 }
