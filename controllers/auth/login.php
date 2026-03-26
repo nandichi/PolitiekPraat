@@ -31,6 +31,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         // Controleer of gebruiker bestaat en wachtwoord klopt
         if ($user && password_verify($password, $user->password)) {
+            session_regenerate_id(true);
+
             // Start sessie en sla gebruikersgegevens op
             $_SESSION['user_id'] = $user->id;
             $_SESSION['username'] = $user->username;
