@@ -10,8 +10,11 @@ CREATE TABLE IF NOT EXISTS news_articles (
     published_at TIMESTAMP NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE INDEX uq_news_articles_url (url(255)),
     INDEX idx_source (source),
     INDEX idx_bias (bias),
     INDEX idx_orientation (orientation),
-    INDEX idx_published_at (published_at)
+    INDEX idx_published_at (published_at),
+    INDEX idx_source_published_at (source, published_at),
+    INDEX idx_orientation_published_at (orientation, published_at)
 ); 
