@@ -3,10 +3,12 @@ require_once __DIR__ . '/../../includes/config.php';
 require_once __DIR__ . '/../../includes/auth_check.php';
 require_once __DIR__ . '/../../includes/Database.php';
 require_once __DIR__ . '/../../includes/helpers.php';
+require_once __DIR__ . '/../../includes/auth_csrf.php';
 
 $user_id = $_SESSION['user_id'];
 $error = '';
 $success = '';
+$csrf_token = auth_ensure_csrf_token();
 
 // Maak database verbinding
 $db = new Database();
@@ -14,6 +16,10 @@ $pdo = $db->getConnection();
 
 // Als het formulier is verzonden
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!auth_require_csrf_token_from_post()) {
+        $error = 'Sessie verlopen of ongeldig formulierverzoek. Probeer het opnieuw.';
+    }
+
     $username = trim($_POST['username']);
     $email = trim($_POST['email']);
     $bio = isset($_POST['bio']) ? trim($_POST['bio']) : '';
@@ -79,7 +85,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $notify_site_likes = isset($_POST['notify_site_likes']) ? 1 : 0;
 
     // Validatie
-    if (empty($username) || empty($email)) {
+    if (!empty($error)) {
+        // Ongeldige CSRF-token: blokkeer profielmutatie.
+    } elseif (empty($username) || empty($email)) {
         $error = "Gebruikersnaam en e-mail zijn verplicht.";
     } elseif ($new_password !== $confirm_password) {
         $error = "Wachtwoorden komen niet overeen.";
