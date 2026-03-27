@@ -20,13 +20,13 @@
     ]
   },
   "last_developer_run": {
-    "ts": "2026-03-26T23:12:00+01:00",
+    "ts": "2026-03-27T13:38:00+01:00",
     "role": "Developer",
-    "issue": 142,
-    "branch": "dev/issue-142-login-register-csrf",
-    "pr_number": 145,
-    "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/145",
-    "summary": "Login en registratie hebben nu CSRF-token validatie met 403 + sessie destroy bij mismatch/missing token; regressietest toegevoegd.",
+    "issue": 147,
+    "branch": "dev/issue-147-contact-csrf",
+    "pr_number": 156,
+    "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/156",
+    "summary": "Contactformulier heeft nu CSRF-token generatie + hidden token field en verplichte validatie in de POST-handler met veilige redirect/foutmelding bij ongeldig token.",
     "status": "in_review"
   }
 }

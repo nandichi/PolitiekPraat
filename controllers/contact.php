@@ -9,6 +9,8 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+require_once BASE_PATH . '/includes/auth_csrf.php';
+
 $error = '';
 $success = '';
 $name = '';
@@ -39,7 +41,15 @@ if (isset($_SESSION['contact_error'])) {
     unset($_SESSION['form_data']);
 }
 
+$csrf_token = auth_ensure_csrf_token();
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (!auth_require_csrf_token_from_post()) {
+        $_SESSION['contact_error'] = 'Sessie verlopen of ongeldig formulierverzoek. Probeer het opnieuw.';
+        header('Location: ' . URLROOT . '/contact');
+        exit();
+    }
+
     $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_SPECIAL_CHARS);
     $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
     $subject = filter_input(INPUT_POST, 'subject', FILTER_SANITIZE_SPECIAL_CHARS);
@@ -563,6 +573,8 @@ require_once BASE_PATH . '/views/templates/header.php';
 
                         <!-- Contact Form -->
                         <form method="POST" action="<?php echo URLROOT; ?>/contact" class="space-y-8">
+                            <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token, ENT_QUOTES, 'UTF-8'); ?>">
+
                             <!-- Name and Email Row -->
                             <div class="grid md:grid-cols-2 gap-8">
                                 <div class="space-y-2">
