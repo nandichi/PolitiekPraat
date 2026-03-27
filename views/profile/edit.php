@@ -53,6 +53,7 @@
                 </div>
                 
                 <form method="POST" class="space-y-6" id="profile-form" enctype="multipart/form-data">
+                    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token, ENT_QUOTES, 'UTF-8'); ?>">
                     <!-- Tab: Account Gegevens -->
                     <div class="tab-content" id="content-account">
                         <div class="grid gap-6 md:grid-cols-2">
