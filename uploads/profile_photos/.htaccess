@@ -1,0 +1,35 @@
+# Beveiligingsregels voor profiel-foto uploads
+Options -Indexes
+Options -ExecCGI
+AddHandler cgi-script .php .pl .py .jsp .asp .sh .cgi
+
+# Alleen gangbare afbeeldingsextensies toestaan
+<FilesMatch "\.(jpe?g|png|gif|webp)$">
+    <IfModule mod_authz_core.c>
+        Require all granted
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order Allow,Deny
+        Allow from all
+    </IfModule>
+</FilesMatch>
+
+# Script-uitvoering blokkeren
+<FilesMatch "\.(php|phtml|php3|php4|php5|pl|py|jsp|asp|sh|cgi)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order Deny,Allow
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# Correcte MIME types voor afbeeldingen
+<IfModule mod_mime.c>
+    AddType image/jpeg .jpg
+    AddType image/jpeg .jpeg
+    AddType image/png .png
+    AddType image/gif .gif
+    AddType image/webp .webp
+</IfModule>
