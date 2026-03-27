@@ -1,4 +1,6 @@
 <?php
+require_once BASE_PATH . '/includes/auth_csrf.php';
+
 class BlogsController {
     private $blogModel;
     
@@ -59,8 +61,14 @@ class BlogsController {
             header('Location: ' . URLROOT . '/login');
             exit;
         }
+
+        $csrf_token = auth_ensure_csrf_token();
         
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (!auth_require_csrf_token_from_post()) {
+                exit;
+            }
+
             // Handle file uploads
             $image_path = '';
             $video_path = '';
@@ -213,6 +221,7 @@ class BlogsController {
         
         // Get blogs for the current user with pagination
         $blogs = $this->blogModel->getAllByUserId($_SESSION['user_id'], $page, $perPage);
+        $csrf_token = auth_ensure_csrf_token();
         
         // Pass pagination data to the view
         $paginationData = [
@@ -255,8 +264,13 @@ class BlogsController {
         // Haal categorieën op voor het formulier
         $categoryController = new CategoryController();
         $categories = $categoryController->getAll();
+        $csrf_token = auth_ensure_csrf_token();
         
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (!auth_require_csrf_token_from_post()) {
+                exit;
+            }
+
             // Handle file uploads
             $image_path = $blog->image_path; // Keep existing image by default
             $video_path = $blog->video_path; // Keep existing video by default
@@ -408,6 +422,15 @@ class BlogsController {
         // Check if user is logged in
         if (!isset($_SESSION['user_id'])) {
             header('Location: ' . URLROOT . '/login');
+            exit;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header('Location: ' . URLROOT . '/blogs/manage');
+            exit;
+        }
+
+        if (!auth_require_csrf_token_from_post()) {
             exit;
         }
         
