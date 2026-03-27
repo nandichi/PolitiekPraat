@@ -43,9 +43,9 @@ if (!defined('REMEMBER_ME_INCLUDED')) {
     }
 
     if (!function_exists('remember_set_cookie')) {
-        function remember_set_cookie(string $token_hash, int $expires_at): void {
-            setcookie(REMEMBER_ME_COOKIE_NAME, $token_hash, remember_cookie_options($expires_at));
-            $_COOKIE[REMEMBER_ME_COOKIE_NAME] = $token_hash;
+        function remember_set_cookie(string $token_raw, int $expires_at): void {
+            setcookie(REMEMBER_ME_COOKIE_NAME, $token_raw, remember_cookie_options($expires_at));
+            $_COOKIE[REMEMBER_ME_COOKIE_NAME] = $token_raw;
         }
     }
 
@@ -75,20 +75,26 @@ if (!defined('REMEMBER_ME_INCLUDED')) {
             $db->bind(':expires_at', $expires_at_sql);
             $db->execute();
 
-            remember_set_cookie($token_hash, $expires_at);
+            remember_set_cookie($token_raw, $expires_at);
         }
     }
 
     if (!function_exists('remember_invalidate_current_token')) {
         function remember_invalidate_current_token(): void {
-            $cookie_token_hash = $_COOKIE[REMEMBER_ME_COOKIE_NAME] ?? '';
+            $cookie_token_raw = $_COOKIE[REMEMBER_ME_COOKIE_NAME] ?? '';
 
-            if (!is_string($cookie_token_hash) || $cookie_token_hash === '') {
+            if (!is_string($cookie_token_raw) || $cookie_token_raw === '') {
+                remember_clear_cookie();
+                return;
+            }
+
+            if (!preg_match('/^[a-f0-9]{64}$/', $cookie_token_raw)) {
                 remember_clear_cookie();
                 return;
             }
 
             try {
+                $cookie_token_hash = hash('sha256', $cookie_token_raw);
                 $db = new Database();
                 $db->query('DELETE FROM user_remember_tokens WHERE token_hash = :token_hash');
                 $db->bind(':token_hash', $cookie_token_hash);
@@ -107,16 +113,18 @@ if (!defined('REMEMBER_ME_INCLUDED')) {
                 return;
             }
 
-            $cookie_token_hash = $_COOKIE[REMEMBER_ME_COOKIE_NAME] ?? '';
+            $cookie_token_raw = $_COOKIE[REMEMBER_ME_COOKIE_NAME] ?? '';
 
-            if (!is_string($cookie_token_hash) || $cookie_token_hash === '') {
+            if (!is_string($cookie_token_raw) || $cookie_token_raw === '') {
                 return;
             }
 
-            if (!preg_match('/^[a-f0-9]{64}$/', $cookie_token_hash)) {
+            if (!preg_match('/^[a-f0-9]{64}$/', $cookie_token_raw)) {
                 remember_clear_cookie();
                 return;
             }
+
+            $cookie_token_hash = hash('sha256', $cookie_token_raw);
 
             try {
                 $db = new Database();
@@ -146,7 +154,7 @@ if (!defined('REMEMBER_ME_INCLUDED')) {
                 $db->bind(':token_hash', $cookie_token_hash);
                 $db->execute();
 
-                remember_set_cookie($cookie_token_hash, $new_expires_at);
+                remember_set_cookie($cookie_token_raw, $new_expires_at);
             } catch (Throwable $e) {
                 error_log('[remember-me] Restore failed: ' . $e->getMessage());
             }
