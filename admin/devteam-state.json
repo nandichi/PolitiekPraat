@@ -1,32 +1,32 @@
 {
-  "last_techlead_run": {
-    "ts": "2026-03-26T22:57:00+01:00",
-    "role": "Tech Lead",
-    "summary": "Avondscan afgerond, nieuwe issues #142 (login/register CSRF), #143 (profile_photos upload dir htaccess), #144 (remember me niet geimplementeerd) aangemaakt. Developer-prio voor morgen: #142 eerst (security), dan #143, dan #131.",
-    "top3_today": [
-      142,
-      143,
-      131
-    ],
-    "blockers": [
-      "Issue #103 deploy-stabiliteit: /api/blogs health check blijft instabiel",
-      "Issue #20 workflow token scope blijft blocker voor CI/workflow push",
-      "Issue #129 deploy rollback door ontbrekende productie env vars: preflight check nog niet geimplementeerd"
-    ],
-    "team_chat_reviewed": true,
-    "prs_pending_review": [
-      138,
-      139
-    ]
-  },
-  "last_developer_run": {
-    "ts": "2026-03-27T13:38:00+01:00",
-    "role": "Developer",
-    "issue": 147,
-    "branch": "dev/issue-147-contact-csrf",
-    "pr_number": 156,
-    "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/156",
-    "summary": "Contactformulier heeft nu CSRF-token generatie + hidden token field en verplichte validatie in de POST-handler met veilige redirect/foutmelding bij ongeldig token.",
-    "status": "in_review"
-  }
+    "last_techlead_run":  {
+                              "ts":  "2026-03-31T08:12:00+02:00",
+                              "role":  "Tech Lead",
+                              "summary":  "Ochtendscan afgerond. Nieuwe issues #172 (.git exposure), #173 (reflected XSS auto-likes dashboard), #174 (CSRF op auto-likes mutaties) aangemaakt. Developer-prio: eerst #174, daarna #172, daarna #173.",
+                              "top3_today":  [
+                                                 174,
+                                                 172,
+                                                 173
+                                             ],
+                              "blockers":  [
+                                               "Issue #103 deploy-stabiliteit: /api/blogs health check blijft instabiel",
+                                               "Issue #20 workflow token scope blijft blocker voor CI/workflow push",
+                                               "Issue #129 deploy rollback door ontbrekende productie env vars: preflight check nog niet geimplementeerd"
+                                           ],
+                              "team_chat_reviewed":  true,
+                              "prs_pending_review":  [
+                                                         138,
+                                                         139
+                                                     ]
+                          },
+    "last_developer_run":  {
+                               "ts":  "2026-03-27T13:38:00+01:00",
+                               "role":  "Developer",
+                               "issue":  147,
+                               "branch":  "dev/issue-147-contact-csrf",
+                               "pr_number":  156,
+                               "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/156",
+                               "summary":  "Contactformulier heeft nu CSRF-token generatie + hidden token field en verplichte validatie in de POST-handler met veilige redirect/foutmelding bij ongeldig token.",
+                               "status":  "in_review"
+                           }
 }
