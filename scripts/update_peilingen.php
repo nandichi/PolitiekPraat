@@ -6,23 +6,23 @@ echo "=========================================\n";
 echo "   PolitiekPraat Peiling Update Script   \n";
 echo "=========================================\n\n";
 
-// Nieuwe peiling data gebaseerd op Ipsos I&O d.d. 25-10-2025
+// Nieuwe peiling data gebaseerd op Ipsos I&O d.d. 09-03-2026
 $new_polls = [
-    'pvv'      => 26,
-    'gl-pvda'  => 23,
-    'd66'      => 22,
-    'cda'      => 20,
-    'vvd'      => 16,
-    'ja21'     => 12,
-    'fvd'      => 5,
-    'pvdd'     => 4,
-    'bbb'      => 4,
+    'gl-pvda'  => 25,
+    'd66'      => 24,
+    'vvd'      => 21,
+    'pvv'      => 19,
+    'ja21'     => 14,
+    'cda'      => 15,
+    'fvd'      => 10,
     'sp'       => 4,
+    'volt'     => 4,
+    'pvdd'     => 3,
     'denk'     => 3,
-    'volt'     => 3,
     'sgp'      => 3,
     'cu'       => 3,
-    '50plus'   => 2,
+    'bbb'      => 1,
+    '50plus'   => 1,
     'nsc'      => 0
 ];
 
@@ -47,7 +47,7 @@ try {
             // Bereken het nieuwe percentage (totaal 150 zetels in de Tweede Kamer)
             $new_percentage = round(($new_seats / 150) * 100, 1);
 
-            // Bereken het verschil met de TK2023 uitslag (current_seats)
+            // Bereken het verschil met de TK2025 uitslag (current_seats)
             $change = $new_seats - $party->current_seats;
 
             // Creëer de nieuwe JSON data voor de 'polling' kolom
@@ -75,7 +75,7 @@ try {
     }
 
     echo "\n\n================= KLAAR =================\n";
-    echo "Update voltooid.\n";
+    echo "Update voltooid. Bron: Ipsos I&O zetelpeiling 9 maart 2026.\n";
     echo "- " . $updated_count . " partijen succesvol geüpdatet.\n";
     echo "- " . $not_found_count . " partijen niet gevonden en overgeslagen.\n";
     echo "=========================================\n";

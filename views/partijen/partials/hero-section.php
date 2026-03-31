@@ -162,7 +162,7 @@
                                 <!-- Zetel Verdeling -->
                                 <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-4 border border-white/10">
                                     <div class="flex items-center justify-between mb-4">
-                                        <h4 class="text-white font-bold text-sm">Grootste Partijen</h4>
+                                        <h4 class="text-white font-bold text-sm">Grootste Partijen (Peilingen)</h4>
                                         <div class="flex items-center space-x-2">
                                             <div class="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
                                             <span class="text-blue-400 text-xs font-medium">ACTUEEL</span>
@@ -170,68 +170,35 @@
                                     </div>
                                     
                                     <div class="space-y-3" id="seat-distribution">
-                                        <!-- PVV -->
+                                        <?php
+                                        // Sort by polling seats descending, take top 4
+                                        $sortedForHero = $parties;
+                                        uasort($sortedForHero, function($a, $b) {
+                                            return ($b['polling']['seats'] ?? 0) - ($a['polling']['seats'] ?? 0);
+                                        });
+                                        $top4 = array_slice($sortedForHero, 0, 4, true);
+                                        $maxHeroSeats = max(array_map(function($p) { return $p['polling']['seats'] ?? 0; }, $top4)) ?: 1;
+                                        foreach ($top4 as $heroKey => $heroParty):
+                                            $heroSeats = $heroParty['polling']['seats'] ?? 0;
+                                            $heroWidth = round(($heroSeats / $maxHeroSeats) * 100, 1);
+                                            $heroColor = getPartyColor($heroKey);
+                                        ?>
                                         <div class="flex items-center space-x-3">
-                                            <div class="w-2 h-2 rounded-full" style="background-color: #1e3a8a;"></div>
+                                            <div class="w-2 h-2 rounded-full" style="background-color: <?php echo $heroColor; ?>;"></div>
                                             <div class="flex-1">
                                                 <div class="flex justify-between items-center mb-1">
-                                                    <span class="text-white text-xs font-medium">PVV</span>
-                                                    <span class="text-blue-200 text-xs">37 zetels</span>
+                                                    <span class="text-white text-xs font-medium"><?php echo htmlspecialchars($heroKey); ?></span>
+                                                    <span class="text-blue-200 text-xs"><?php echo $heroSeats; ?> zetels</span>
                                                 </div>
                                                 <div class="w-full bg-white/10 rounded-full h-1">
                                                     <div class="h-1 rounded-full transition-all duration-1000" 
-                                                         style="width: 24.7%; background-color: #1e3a8a;"></div>
+                                                         style="width: <?php echo $heroWidth; ?>%; background-color: <?php echo $heroColor; ?>;"></div>
                                                 </div>
                                             </div>
                                         </div>
-                                        
-                                        <!-- VVD -->
-                                        <div class="flex items-center space-x-3">
-                                            <div class="w-2 h-2 rounded-full" style="background-color: #1e40af;"></div>
-                                            <div class="flex-1">
-                                                <div class="flex justify-between items-center mb-1">
-                                                    <span class="text-white text-xs font-medium">VVD</span>
-                                                    <span class="text-blue-200 text-xs">24 zetels</span>
-                                                </div>
-                                                <div class="w-full bg-white/10 rounded-full h-1">
-                                                    <div class="h-1 rounded-full transition-all duration-1000" 
-                                                         style="width: 16%; background-color: #1e40af;"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        <!-- GL-PvdA -->
-                                        <div class="flex items-center space-x-3">
-                                            <div class="w-2 h-2 rounded-full" style="background-color: #059669;"></div>
-                                            <div class="flex-1">
-                                                <div class="flex justify-between items-center mb-1">
-                                                    <span class="text-white text-xs font-medium">GL-PvdA</span>
-                                                    <span class="text-blue-200 text-xs">25 zetels</span>
-                                                </div>
-                                                <div class="w-full bg-white/10 rounded-full h-1">
-                                                    <div class="h-1 rounded-full transition-all duration-1000" 
-                                                         style="width: 16.7%; background-color: #059669;"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        <!-- NSC -->
-                                        <div class="flex items-center space-x-3">
-                                            <div class="w-2 h-2 rounded-full" style="background-color: #7c3aed;"></div>
-                                            <div class="flex-1">
-                                                <div class="flex justify-between items-center mb-1">
-                                                    <span class="text-white text-xs font-medium">NSC</span>
-                                                    <span class="text-blue-200 text-xs">20 zetels</span>
-                                                </div>
-                                                <div class="w-full bg-white/10 rounded-full h-1">
-                                                    <div class="h-1 rounded-full transition-all duration-1000" 
-                                                         style="width: 13.3%; background-color: #7c3aed;"></div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <?php endforeach; ?>
                                     </div>
                                 </div>
-                                
                                 <!-- Footer -->
                                 <div class="pt-6 border-t border-white/10">
                                     <div class="flex items-center justify-center space-x-3">
