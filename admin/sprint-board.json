@@ -1,1227 +1,1229 @@
 {
-  "current_sprint": {
-    "start_date": "2026-03-10",
-    "planned_tasks": [
-      {
-        "issue": 134,
-        "title": "security(forum): fix stored XSS in topic/reply rendering",
-        "priority": "P0",
-        "status": "done",
-        "role": "Developer"
-      },
-      {
-        "issue": 135,
-        "title": "performance(db): add missing indexes for news_articles hot queries",
-        "priority": "P1",
-        "status": "in_review",
-        "role": "Developer"
-      },
-      {
-        "issue": 103,
-        "title": "bug(deploy): /api/blogs JSON-fout tijdens DevOps deploy-run 2026-03-20",
-        "priority": "P1",
-        "status": "blocked",
-        "role": "Developer"
-      }
-    ],
-    "in_progress": [
-      {
-        "issue": 20,
-        "title": "PR merge-gate workflow (blocked door token scope)",
-        "branch": "dev/issue-20-ci-pr-gate",
-        "status": "blocked",
-        "updated_at": "2026-03-10T18:18:12+01:00",
-        "role": "Developer",
-        "blocker": "GitHub token mist workflow scope; push van .github/workflows geweigerd"
-      },
-      {
-        "issue": 100,
-        "title": "bug(blogs): featured image update faalt na blog-skill publicatie door veldmapping mismatch",
-        "branch": "tbd",
-        "status": "ready_for_dev",
-        "updated_at": "2026-03-20T16:05:00+01:00",
-        "role": "Tech Lead",
-        "blocker": "none"
-      },
-      {
-        "issue": 103,
-        "title": "bug(deploy): /api/blogs JSON-fout tijdens DevOps deploy-run 2026-03-20",
-        "branch": "tbd",
-        "status": "blocked",
-        "updated_at": "2026-03-25T07:52:26.999949+00:00",
-        "role": "DevOps",
-        "blocker": "/api/blogs health check blijft instabiel tijdens deploy"
-      }
-    ],
-    "in_review": [
-      {
-        "issue": 32,
-        "title": "[P2] Gemeenteraadsverkiezingen 2026: SEO landing + structured data",
-        "branch": "dev/issue-32-seo-stemwijzer-schema-slice",
-        "pr_number": 104,
-        "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/104",
-        "status": "in_review",
-        "updated_at": "2026-03-20T20:32:00+01:00",
-        "role": "Developer"
-      },
-      {
-        "issue": 26,
-        "title": "Gemeenteraadsverkiezingen 2026: data-architectuur + migraties",
-        "branch": "dev/issue-26-gemeente-datamodel-skelet",
-        "pr_number": 35,
-        "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/35",
-        "status": "in_review",
-        "updated_at": "2026-03-10T19:10:00+01:00",
-        "role": "Developer"
-      },
-      {
-        "issue": 94,
-        "title": "security(blogs): harden image upload in blog create flow met MIME/size-validatie",
-        "branch": "dev/issue-94-upload-hardening-mime-size",
-        "pr_number": 99,
-        "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/99",
-        "status": "in_review",
-        "updated_at": "2026-03-20T15:43:00+01:00",
-        "role": "Developer"
-      },
-      {
-        "issue": 114,
-        "title": "seo: verbeter laadtijd homepage en payload-grootte kernpagina's (slice: partijen inline JS externalized)",
-        "branch": "dev/issue-114-partijen-external-js",
-        "pr_number": 121,
-        "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/121",
-        "status": "in_review",
-        "updated_at": "2026-03-24T14:00:00+01:00",
-        "role": "Developer"
-      },
-      {
-        "issue": 136,
-        "title": "refactor(controllers): split monolithic partijen controller into modules (slice: externaliseer page CSS)",
-        "branch": "dev/issue-136-partijen-controller-split-slice1",
-        "pr_number": 138,
-        "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/138",
-        "status": "in_review",
-        "updated_at": "2026-03-25T21:09:00+01:00",
-        "role": "Developer"
-      },
-      {
-        "issue": 135,
-        "title": "performance(db): add missing indexes for news_articles hot queries",
-        "branch": "dev/issue-135-news-article-indexes",
-        "pr_number": 139,
-        "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/139",
-        "status": "in_review",
-        "updated_at": "2026-03-25T21:30:00+01:00",
-        "role": "Developer"
-      }
-    ],
-    "merged": [
-      {
-        "issue": 1,
-        "title": "Clearbit logo API vervangen door lokale partijlogo assets",
-        "branch": "dev/issue-1-replace-clearbit-logo-api",
-        "pr_number": 16,
-        "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/16",
-        "status": "merged",
-        "updated_at": "2026-03-10T17:02:16+01:00",
-        "role": "Developer",
-        "merged_at": "2026-03-10T17:02:16+01:00",
-        "merge_commit": "ad8b1963ea292d2dfa18aee2c39a55cb5c393b11"
-      },
-      {
-        "issue": 17,
-        "title": "Blanco /nieuws fix: currentPage variabele-collision",
-        "branch": "dev/issue-17-fix-nieuws-currentpage-collision",
-        "pr_number": 18,
-        "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/18",
-        "status": "merged",
-        "updated_at": "2026-03-10T17:11:36+01:00",
-        "role": "Code Reviewer",
-        "merged_at": "2026-03-10T17:11:36+01:00",
-        "merge_commit": "6947864312156f311c6d71fa058f7d623ffabdd0"
-      },
-      {
-        "issue": 19,
-        "title": "Rate limiting op publieke API-endpoints",
-        "branch": "dev/issue-19-api-rate-limiting",
-        "pr_number": 22,
-        "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/22",
-        "status": "merged",
-        "updated_at": "2026-03-10T18:18:12+01:00",
-        "role": "Code Reviewer",
-        "merged_at": "2026-03-10T18:18:12+01:00",
-        "merge_commit": "82cefb6658d854028099686b48618e2c11d49d5f"
-      },
-      {
-        "issue": 21,
-        "title": "Gitignore hygiënefix (.DS_Store + sitemap-regel)",
-        "branch": "dev/issue-21-gitignore-hygiene",
-        "pr_number": 23,
-        "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/23",
-        "status": "merged",
-        "updated_at": "2026-03-10T18:18:12+01:00",
-        "role": "Code Reviewer",
-        "merged_at": "2026-03-10T18:18:12+01:00",
-        "merge_commit": "a183bb4ce9da33a0ebbfd8e8a80261b402395ab7"
-      },
-      {
-        "issue": 30,
-        "title": "Gemeenteraadsverkiezingen 2026: API context gemeente/verkiezing",
-        "branch": "dev/issue-30-meta-context-ede-2026",
-        "pr_number": 34,
-        "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/34",
-        "status": "merged",
-        "updated_at": "2026-03-10T19:03:30+01:00",
-        "role": "Developer",
-        "merged_at": "2026-03-10T19:03:30+01:00",
-        "merge_commit": "6896493722c1de8328e5a6324197d056d257c064"
-      },
-      {
-        "issue": 27,
-        "title": "Gemeentelijke stemwijzer: scoring v2 + weging (MVP 25)",
-        "branch": "dev/issue-27-scoring-v2-weging",
-        "pr_number": 36,
-        "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/36",
-        "status": "merged",
-        "updated_at": "2026-03-10T19:40:00+01:00",
-        "role": "Developer",
-        "merged_at": "2026-03-10T18:37:51+01:00",
-        "merge_commit": "f998ecf"
-      },
-      {
-        "issue": 29,
-        "title": "Gemeentelijke stemwijzer: juridisch/ethisch transparantie + disclaimer",
-        "branch": "dev/issue-29-legal-ethics-disclaimer",
-        "pr_number": 37,
-        "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/37",
-        "status": "merged",
-        "updated_at": "2026-03-10T19:40:00+01:00",
-        "role": "Code Reviewer",
-        "merged_at": "2026-03-10T18:39:33+01:00",
-        "merge_commit": "a5fb122"
-      },
-      {
-        "issue": 40,
-        "title": "security(api): scherm debug/test endpoints af in productie",
-        "branch": "dev/issue-40-security-debug-test-gate",
-        "pr_number": 43,
-        "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/43",
-        "status": "merged",
-        "updated_at": "2026-03-11T11:01:22+01:00",
-        "role": "Code Reviewer",
-        "merged_at": "2026-03-11T11:01:22+01:00",
-        "merge_commit": "01906dec74f8448c625d3ee4fc9822447fe1dbb2"
-      },
-      {
-        "issue": 46,
-        "title": "security(ajax): schakel display_errors uit op publieke AI endpoints",
-        "branch": "dev/issue-46-ajax-error-bootstrap",
-        "pr_number": 49,
-        "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/49",
-        "status": "merged",
-        "updated_at": "2026-03-12T11:01:11+01:00",
-        "role": "Code Reviewer",
-        "merged_at": "2026-03-12T11:00:58+01:00",
-        "merge_commit": "f48ffd518d2146a6a751ac0d1c02e95fd8cd5e21"
-      },
-      {
-        "issue": 41,
-        "title": "refactor(api): centraliseer dubbele JWT verify-logica",
-        "branch": "dev/issue-41-jwt-verify-service",
-        "pr_number": 45,
-        "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/45",
-        "status": "merged",
-        "updated_at": "2026-03-12T11:01:11+01:00",
-        "role": "Code Reviewer",
-        "merged_at": "2026-03-12T11:01:07+01:00",
-        "merge_commit": "7f3b2d78be61c14069d1941510c11f579f83fe78"
-      },
-      {
-        "issue": 28,
-        "title": "feat(js): mobiel UX-flow en state-herstel voor stemwijzer",
-        "branch": "dev/issue-28-mobile-ux-progress-state",
-        "pr_number": 44,
-        "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/44",
-        "status": "merged",
-        "updated_at": "2026-03-12T11:01:11+01:00",
-        "role": "Code Reviewer",
-        "merged_at": "2026-03-12T11:01:11+01:00",
-        "merge_commit": "f261db1b70265e79622b5207256c4b55ce593db5"
-      },
-      {
-        "issue": 52,
-        "title": "security(uploads): harden bestanduploads met MIME-checks en veilige directory-permissies",
-        "branch": "dev/issue-52-upload-hardening-mime-perms",
-        "pr_number": 54,
-        "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/54",
-        "status": "merged",
-        "updated_at": "2026-03-13T12:26:35+01:00",
-        "role": "Code Reviewer",
-        "merged_at": "2026-03-13T12:26:06+01:00",
-        "merge_commit": "5075ad054cc9d5a994c5910bf3532abff8fbb56d"
-      },
-      {
-        "issue": 47,
-        "title": "security(controller): verwijder hardcoded display_errors uit partijen-detail",
-        "branch": "dev/issue-47-partijen-detail-error-bootstrap",
-        "pr_number": 51,
-        "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/51",
-        "status": "merged",
-        "updated_at": "2026-03-13T12:26:35+01:00",
-        "role": "Code Reviewer",
-        "merged_at": "2026-03-13T12:26:08+01:00",
-        "merge_commit": "7552451cfcc19b751f4db99dcc1bb6bc33d631b1"
-      },
-      {
-        "issue": 48,
-        "title": "refactor(controllers): splits grote partijen-controller in modules",
-        "branch": "dev/issue-48-partijen-ui-partials-fase1",
-        "pr_number": 50,
-        "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/50",
-        "status": "merged",
-        "updated_at": "2026-03-13T12:26:35+01:00",
-        "role": "Code Reviewer",
-        "merged_at": "2026-03-13T12:26:11+01:00",
-        "merge_commit": "03f4933f7e61abc2e870eb738988c5bbe83b6992"
-      },
-      {
-        "issue": 62,
-        "title": "security(auth): verplaats hardcoded JWT secret naar environment/config",
-        "branch": "dev/issue-62-jwt-secret-config",
-        "pr_number": 64,
-        "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/64",
-        "status": "merged",
-        "updated_at": "2026-03-16T11:01:20+01:00",
-        "role": "Code Reviewer",
-        "merged_at": "2026-03-16T11:01:20+01:00",
-        "merge_commit": "squash-merged"
-      },
-      {
-        "issue": 53,
-        "title": "performance(blogs): maak sitemap-regeneratie asynchroon buiten request-pad",
-        "branch": "dev/issue-53-async-sitemap-trigger",
-        "pr_number": 56,
-        "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/56",
-        "status": "merged",
-        "updated_at": "2026-03-16T11:01:20+01:00",
-        "role": "Code Reviewer",
-        "merged_at": "2026-03-16T11:01:20+01:00",
-        "merge_commit": "squash-merged"
-      },
-      {
-        "issue": 42,
-        "title": "performance(refactor): splits monolithische stemwijzer-controller op (voortgang UI-fix slice)",
-        "branch": "dev/issue-42-stemwijzer-progress-percent-fix",
-        "pr_number": 55,
-        "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/55",
-        "status": "merged",
-        "updated_at": "2026-03-16T11:01:20+01:00",
-        "role": "Code Reviewer",
-        "merged_at": "2026-03-16T11:01:20+01:00",
-        "merge_commit": "squash-merged"
-      },
-      {
-        "issue": 69,
-        "title": "security(admin): valideer en cast page/limit om SQL-injectie in stemwijzer-statistieken te voorkomen",
-        "branch": "dev/issue-69-admin-pagination-validation",
-        "pr_number": 71,
-        "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/71",
-        "status": "merged",
-        "updated_at": "2026-03-17T18:30:13+01:00",
-        "role": "Code Reviewer",
-        "merged_at": "2026-03-17T18:30:13+01:00",
-        "merge_commit": "squash-merged"
-      },
-      {
-        "issue": 61,
-        "title": "security(blogs): escape output in blog detail view to prevent stored XSS",
-        "branch": "dev/issue-61-blog-detail-xss-escaping",
-        "pr_number": 68,
-        "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/68",
-        "status": "merged",
-        "updated_at": "2026-03-17T18:30:13+01:00",
-        "role": "Code Reviewer",
-        "merged_at": "2026-03-17T18:30:13+01:00",
-        "merge_commit": "squash-merged"
-      },
-      {
-        "issue": 63,
-        "title": "refactor(views): splits monolithische blogs detail view in partials/components",
-        "branch": "dev/issue-63-blog-detail-partials",
-        "pr_number": 67,
-        "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/67",
-        "status": "merged",
-        "updated_at": "2026-03-17T18:30:13+01:00",
-        "role": "Code Reviewer",
-        "merged_at": "2026-03-17T18:30:13+01:00",
-        "merge_commit": "squash-merged"
-      },
-      {
-        "issue": 60,
-        "title": "security(opendata): forceer TLS-verificatie in OpenDataAPI cURL calls",
-        "branch": "dev/issue-60-opendata-tls-verification",
-        "pr_number": 77,
-        "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/77",
-        "status": "merged",
-        "updated_at": "2026-03-18T09:01:51+01:00",
-        "role": "Code Reviewer",
-        "merged_at": "2026-03-18T11:00:45+01:00",
-        "merge_commit": "c1b018089d9bf8ea173c4b6ee82b88865f8566ce"
-      },
-      {
-        "issue": 58,
-        "title": "security(news): zet TLS-verificatie aan voor RSS cURL requests",
-        "branch": "dev/issue-58-rss-tls-verification",
-        "pr_number": 73,
-        "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/73",
-        "status": "merged",
-        "updated_at": "2026-03-17T18:36:00+01:00",
-        "role": "Code Reviewer",
-        "merged_at": "2026-03-18T11:00:50+01:00",
-        "merge_commit": "ef61aaa66c99154269b51d13f478b389a3a7998b"
-      },
-      {
-        "issue": 66,
-        "title": "seo: HTML payload kernpagina's te groot (220-748KB)",
-        "branch": "dev/issue-66-blogs-pagination-payload",
-        "pr_number": 72,
-        "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/72",
-        "status": "merged",
-        "updated_at": "2026-03-17T18:38:00+01:00",
-        "role": "Code Reviewer",
-        "merged_at": "2026-03-18T11:00:55+01:00",
-        "merge_commit": "d5f66b997377e444bb2f7159c8f95f425b2e75c3"
-      },
-      {
-        "issue": 80,
-        "title": "security(api): voorkom lekken van exception-details in publieke error responses",
-        "branch": "dev/issue-80-api-error-sanitization",
-        "pr_number": 82,
-        "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/82",
-        "status": "merged",
-        "updated_at": "2026-03-19T11:02:17+01:00",
-        "role": "Code Reviewer",
-        "merged_at": "2026-03-19T11:01:32+01:00",
-        "merge_commit": "11e9d677e5554b3ed98ef839267b8581058c40d1"
-      },
-      {
-        "issue": 65,
-        "title": "seo: unieke paginatitels voor kernpagina's ontbreken",
-        "branch": "dev/issue-65-unique-page-titles",
-        "pr_number": 78,
-        "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/78",
-        "status": "merged",
-        "updated_at": "2026-03-19T11:02:17+01:00",
-        "role": "Code Reviewer",
-        "merged_at": "2026-03-19T11:01:35+01:00",
-        "merge_commit": "38754998502acac635882aff9345d26b6a3a280b"
-      },
-      {
-        "issue": 76,
-        "title": "bug(api): stabiliseer /api/blogs JSON contract om rollback door json:fout te voorkomen",
-        "branch": "dev/issue-76-blogs-json-contract-stabilization",
-        "pr_number": 84,
-        "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/84",
-        "status": "merged",
-        "updated_at": "2026-03-19T22:27:46+01:00",
-        "role": "Code Reviewer",
-        "merged_at": "2026-03-19T22:27:46+01:00",
-        "merge_commit": "4a8614bfebd97094baa63e99bc67df2de517ed04"
-      },
-      {
-        "issue": 81,
-        "title": "performance(forum): vervang gecorreleerde subqueries en voeg paginering toe",
-        "branch": "dev/issue-81-forum-query-pagination",
-        "pr_number": 83,
-        "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/83",
-        "status": "merged",
-        "updated_at": "2026-03-19T22:27:54+01:00",
-        "role": "Code Reviewer",
-        "merged_at": "2026-03-19T22:27:54+01:00",
-        "merge_commit": "f7a2a7dbb2e7c82f97efc70d74173428f841e2e4"
-      },
-      {
-        "issue": 75,
-        "title": "security(database): voorkom lekken van PDO-foutdetails naar gebruikersoutput",
-        "branch": "dev/issue-75-database-error-leak-guard",
-        "pr_number": 79,
-        "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/79",
-        "status": "merged",
-        "updated_at": "2026-03-19T22:28:01+01:00",
-        "role": "Code Reviewer",
-        "merged_at": "2026-03-19T22:28:01+01:00",
-        "merge_commit": "fcfe4d6a0bc1fedad7168ecdad75fd60be7e92d3"
-      },
-      {
-        "issue": 91,
-        "title": "security(web): scherm diagnostische test-scripts in /scripts en /admin af",
-        "branch": "dev/issue-91-block-test-diagnostic-scripts",
-        "pr_number": 97,
-        "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/97",
-        "status": "merged",
-        "updated_at": "2026-03-20T11:00:00+01:00",
-        "role": "Code Reviewer",
-        "merged_at": "2026-03-20T11:00:00+01:00",
-        "merge_commit": "squash-merged"
-      },
-      {
-        "issue": 117,
-        "title": "security(api): centraliseer CSRF-validatie op admin mutaties",
-        "branch": "dev/issue-117-csrf-admin-api-mutations",
-        "pr_number": 120,
-        "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/120",
-        "status": "merged",
-        "updated_at": "2026-03-24T11:00:54+01:00",
-        "role": "Code Reviewer",
-        "merged_at": "2026-03-24T11:00:54+01:00",
-        "merge_commit": "b03036ee7682b32e5b646238d042ab9fedccc6b4"
-      },
-      {
-        "issue": 111,
-        "title": "fix(api): fail-safe JSON encoding op /api/blogs",
-        "branch": "dev/issue-111-blogs-json-failsafe",
-        "pr_number": 116,
-        "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/116",
-        "status": "merged",
-        "updated_at": "2026-03-24T11:00:58+01:00",
-        "role": "Code Reviewer",
-        "merged_at": "2026-03-24T11:00:58+01:00",
-        "merge_commit": "320a5b04b6f166fb626a23f0ccc4872efa035534"
-      },
-      {
-        "issue": 114,
-        "title": "perf(js): dedupe partijen payload in controller",
-        "branch": "dev/issue-114-partijen-payload-dedupe",
-        "pr_number": 115,
-        "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/115",
-        "status": "merged",
-        "updated_at": "2026-03-24T11:01:02+01:00",
-        "role": "Code Reviewer",
-        "merged_at": "2026-03-24T11:01:02+01:00",
-        "merge_commit": "94c08e960d82843a29b9b78faa8bc91e0f933552"
-      },
-      {
-        "issue": 108,
-        "title": "fix(api): laad JWT secret uit gitignored env.local.php",
-        "branch": "dev/issue-108-jwt-env-fix",
-        "pr_number": 109,
-        "pr_url": "https://github.com/nandichi/PolitiekPraat/pull/109",
-        "status": "merged",
-        "updated_at": "2026-03-24T11:01:06+01:00",
-        "role": "Code Reviewer",
-        "merged_at": "2026-03-24T11:01:06+01:00",
-        "merge_commit": "9bcae83e79494ab9a21939502d7cb184a3abd0f7"
-      }
-    ],
-    "deployed": [
-      {
-        "issue": 17,
-        "pr_number": 18,
-        "status": "deployed",
-        "deployed_at": "2026-03-10T17:11:36+01:00",
-        "health_check": "ok",
-        "route_verified": "/nieuws",
-        "role": "DevOps"
-      },
-      {
-        "issue": "19+21",
-        "pr_number": "22+23",
-        "status": "deployed",
-        "deployed_at": "2026-03-10T18:18:12+01:00",
-        "health_check": "ok",
-        "route_verified": "all-critical-routes",
-        "role": "DevOps"
-      },
-      {
-        "issue": "46+41+28",
-        "pr_number": "49+45+44",
-        "status": "deployed",
-        "deployed_at": "2026-03-12T20:31:29+01:00",
-        "health_check": "ok",
-        "route_verified": "all-critical-routes",
-        "role": "DevOps"
-      }
-    ],
-    "updated_at": "2026-03-25T21:30:00+01:00"
-  },
-  "today": {
-    "date": "2026-03-26",
-    "deploys_today": 0,
-    "issues_created": 3,
-    "prs_created": 0,
-    "prs_reviewed": 0,
-    "prs_merged": 0
-  },
-  "last_deploy": {
-    "timestamp": "2026-03-25T20:31:23+01:00",
-    "commit_hash": "9bcae83",
-    "status": "rollback",
-    "rollback": true
-  },
-  "last_qa_check": {
-    "timestamp": "2026-03-25T20:31:23",
-    "all_routes_ok": true,
-    "failed_routes": [],
-    "avg_load_time_ms": 96,
-    "php_errors_found": 1
-  },
-  "history": [
-    {
-      "ts": "2026-03-25T21:01:00+01:00",
-      "role": "Tech Lead",
-      "type": "daily_standup",
-      "msg": "Avondscan afgerond; nieuwe issues #134/#135/#136 aangemaakt. Developer-prioriteit: #134 eerst (forum stored XSS), daarna #135. Blockers #103 en #20 blijven actief; #129 vraagt preflight env-check vóór deploy.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-25T20:37:46+01:00",
-      "role": "Tech Lead",
-      "type": "daily_standup",
-      "msg": "Avondscan afgerond; nieuwe issues #130/#131/#132 aangemaakt. Developer-prioriteit: #130 eerst (security regressie), daarna #131 en #132. Blockers #103 (/api/blogs) en #20 (workflow token scope) blijven actief.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-25T20:31:23+01:00",
-      "role": "DevOps/QA Tester",
-      "type": "avond_deploy_qa",
-      "msg": "Deployrun na merge #126 met backup_20260325_203029.sql; pull naar 89a608d gaf 500 op alle routes door ontbrekende productie env vars (DB vars + JWT secret), rollback/hard reset naar 9bcae83 uitgevoerd. Routes 12/12 weer OK, /api/blogs blijft json:fout (blocker #103). Incident gelogd in issue #129.",
-      "ok": false
-    },
-    {
-      "ts": "2026-03-24T20:31:10+01:00",
-      "role": "DevOps/QA Tester",
-      "type": "avond_deploy_qa",
-      "msg": "Deployrun met backup_20260324_203028.sql uitgevoerd na reviewer-sein; deploy naar main geprobeerd, health check faalde op /api/blogs (json:fout), rollback uitgevoerd. Routes 12/12 OK, homepage 0.332s, gem. 91ms, PHP error log leeg.",
-      "ok": false
-    },
-    {
-      "ts": "2026-03-24T14:00:00+01:00",
-      "role": "Developer",
-      "type": "pr_created",
-      "msg": "Middag-slice voor issue #114 opgeleverd: inline JS uit controllers/partijen.php geëxternaliseerd naar js/partijen-page.js. PR #121 geopend voor review.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-24T11:05:00+01:00",
-      "role": "Code Reviewer",
-      "type": "pr_review_merge",
-      "msg": "PRs #120, #116, #115 en #109 gereviewd op checklist en squash gemerged naar main. Formele approve niet mogelijk door self-approval blokkade op GitHub.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-24T08:20:00+01:00",
-      "role": "Tech Lead",
-      "type": "daily_standup",
-      "msg": "Dinsdagscan afgerond; nieuwe issues #117/#118/#119 aangemaakt. Developer-prioriteit: #117 eerst, daarna #118 en #119. Blocker #20 blijft open; PR #116 wacht op review/merge.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-23T18:17:00+01:00",
-      "role": "Developer",
-      "type": "pr_created",
-      "msg": "Issue #111 opgepakt en PR #116 geopend: /api/blogs JSON encoding fail-safe gemaakt met UTF-8 substitutie, encode-fout logging en consistente 500 fallback payload.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-23T17:00:00+01:00",
-      "role": "Developer",
-      "type": "pr_update",
-      "msg": "PR #109 opgeschoond naar minimale #108-scope (alleen JwtService env.local fallback + .gitignore). Force-push gedaan na reviewfeedback; klaar voor herreview.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-23T11:17:00+01:00",
-      "role": "Code Reviewer",
-      "type": "pr_review",
-      "msg": "PR #109 gereviewd en teruggestuurd voor revisie: JWT-fix is goed, maar PR bevat regressies buiten scope (image alias contract, admin authorisatie en auth routes). Concrete feedback geplaatst in PR-comment.",
-      "ok": false
-    },
-    {
-      "ts": "2026-03-23T07:47:00+01:00",
-      "role": "Tech Lead",
-      "type": "daily_standup",
-      "msg": "Maandagscan afgerond; nieuwe issues #110/#111/#112 aangemaakt. Developer-prioriteit vandaag: #110 eerst, daarna #111 en #103 voor deploystabiliteit. Blocker #20 (workflow token scope) staat nog bij DevOps.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-22T20:31:19+01:00",
-      "role": "DevOps/QA Tester",
-      "type": "avond_deploy_qa",
-      "msg": "Deployrun uitgevoerd op commit c65aa64 (already up-to-date na backup/cache-clear); health check faalde opnieuw op /api/blogs (json:fout), rollback uitgevoerd. Routes 12/12 OK, homepage 2.883s, gem. 303ms, PHP error log leeg.",
-      "ok": false
-    },
-    {
-      "ts": "2026-03-22T13:58:40+01:00",
-      "role": "DevOps/QA Tester",
-      "type": "avond_deploy_qa",
-      "msg": "Deployrun uitgevoerd op commit c65aa64 (already up-to-date na backup/cache-clear); health check faalde opnieuw op /api/blogs (json:fout), rollback uitgevoerd. Routes 12/12 OK, homepage 0.25s, gem. 82ms, PHP error log leeg.",
-      "ok": false
-    },
-    {
-      "ts": "2026-03-22T13:54:00+01:00",
-      "role": "Tech Lead",
-      "type": "daily_standup",
-      "msg": "Zondagscan afgerond; nieuwe issues #105/#106/#107 aangemaakt. Developer-prioriteit vandaag: #105 eerst, daarna #106 en #103 voor deploystabiliteit.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-20T20:32:00+01:00",
-      "role": "Developer",
-      "type": "pr_created",
-      "msg": "Issue #32 slice opgepakt: stemwijzer Ede 2026 SEO-metadata + canonical normalisatie + FAQ/Breadcrumb schema. PR #104 geopend.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-20T16:05:00+01:00",
-      "role": "Tech Lead",
-      "type": "triage",
-      "msg": "Issue #100 aangemaakt na root-cause triage: featured-image update na blog-skill publicatie faalt door image veldmapping mismatch tussen API en editor-save paden. Fixadvies + acceptatiecriteria uitgezet voor Forge.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-20T15:43:00+01:00",
-      "role": "Developer",
-      "type": "pr_created",
-      "msg": "Issue #94 opgepakt: blog image upload flow gehard met centrale helper, MIME+size-validatie en expliciete foutmeldingen. PR #99 geopend.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-20T11:00:00+01:00",
-      "role": "Code Reviewer",
-      "type": "pr_review_merge",
-      "msg": "PR #97 gereviewd op security/correctheid/checklist en squash gemerged. Formele approve niet mogelijk op eigen PR (GitHub self-approval blokkade).",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-20T09:02:00+01:00",
-      "role": "Developer",
-      "type": "pr_created",
-      "msg": "Issue #91 opgepakt: test/diagnose scripts afgeschermd via .htaccess + CLI-only guards. PR #97 geopend.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-20T08:10:00+01:00",
-      "role": "Tech Lead",
-      "type": "daily_standup",
-      "msg": "Vervolgscan afgerond; nieuwe issues #94/#95/#96 aangemaakt. Developer-volgorde aangepast naar #91 -> #94 -> #96. Blocker #20 (workflow token scope) blijft open bij DevOps.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-20T07:44:00+01:00",
-      "role": "Tech Lead",
-      "type": "daily_standup",
-      "msg": "Ochtendscan afgerond; nieuwe issues #91/#92/#93 aangemaakt. Developer pakt #91 eerst, daarna #88 en #92. Blocker #20 (workflow token scope) blijft open voor @DevOps.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-19T23:40:05+01:00",
-      "role": "Tech Lead",
-      "type": "daily_standup",
-      "msg": "Late stand-up: repo gesynct, open issues gecheckt en nieuwe issues #88/#89/#90 aangemaakt. Developer-volgorde morgen: #88 eerst, daarna #89 en #90. Blocker #20 (workflow token scope) blijft open voor @DevOps.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-19T22:28:20+01:00",
-      "role": "Code Reviewer",
-      "type": "pr_review_merge",
-      "msg": "Open PRs #84, #83 en #79 op checklist gereviewd (correctheid/security/performance/kwaliteit). Formele approve was niet mogelijk op eigen PRs; alle drie daarna succesvol squash gemerged.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-19T22:22:29+01:00",
-      "role": "Tech Lead",
-      "type": "daily_standup",
-      "msg": "Avondscan afgerond; nieuwe issues #85 (info.php exposure), #86 (presidenten tabelnaam bug) en #87 (partijen controller refactor) aangemaakt. Developer-volgorde: #76 eerst, daarna #85 en #86.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-19T20:31:43+01:00",
-      "role": "DevOps/QA Tester",
-      "type": "avond_deploy_qa",
-      "msg": "PRs #82/#78 gedeployed (commit 3875499), health check faalde op /api/blogs (json:fout), rollback uitgevoerd. Routes 12/12 OK, gem. 95ms, PHP error log leeg.",
-      "ok": false
-    },
-    {
-      "ts": "2026-03-19T17:00:00+01:00",
-      "role": "Developer",
-      "type": "pr_created",
-      "msg": "Issue #76 opgepakt: API response buffering + blogs-contract stabilisatie met contract test toegevoegd. PR #84 geopend.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-19T17:00:00+01:00",
-      "role": "Developer",
-      "type": "pr_review",
-      "msg": "Open middag-PR #83 gereviewd op checklist; geen blockers gevonden, reviewcomment geplaatst.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-19T14:02:42+01:00",
-      "role": "Developer",
-      "type": "pr_created",
-      "msg": "Issue #81 opgepakt: forum-overzicht query geoptimaliseerd met geaggregeerde JOIN, paginering toegevoegd en index-migratie toegevoegd. PR #83 geopend.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-19T11:02:17+01:00",
-      "role": "Code Reviewer",
-      "type": "pr_review_merge",
-      "msg": "PRs #82, #79 en #78 gereviewd op checklist. #82 en #78 inhoudelijk akkoord en squash gemerged; #79 gemarkeerd als needs_revision met concrete feedback over exception-flow en logging-sanitatie.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-19T09:03:47+01:00",
-      "role": "Developer",
-      "type": "pr_created",
-      "msg": "Issue #80 opgepakt: centrale veilige API-foutafhandeling met request-id logging en regressietest toegevoegd. PR #82 geopend.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-19T08:10:36+01:00",
-      "role": "Tech Lead",
-      "type": "daily_standup",
-      "msg": "Codebase-scan afgerond; nieuwe issues #80 (API exception-lek) en #81 (forum query/performance) aangemaakt. Developer-plan geprioriteerd op P0 #80 en #76, daarna #81.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-18T20:31:46+01:00",
-      "role": "DevOps/QA Tester",
-      "type": "avond_deploy_qa",
-      "msg": "PRs #77/#73/#72 gedeployed (commit d5f66b9), health check faalde op /api/blogs (json:fout), rollback uitgevoerd. Routes 12/12 OK, gem. 92ms, PHP error log leeg.",
-      "ok": false
-    },
-    {
-      "ts": "2026-03-18T17:02:00+01:00",
-      "role": "Developer",
-      "type": "avond_sprint",
-      "msg": "Issue #75 opgepakt: PDO-foutdetails verwijderd uit runtime output, interne logging toegevoegd en generieke RuntimeException ingevoerd. PR #79 geopend; open middag-PR #78 gereviewd via checklist (geen blockers).",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-18T14:03:39+01:00",
-      "role": "Developer",
-      "type": "pr_created",
-      "msg": "Issue #65 opgepakt: unieke fallback paginatitels toegevoegd voor kernroutes in header-template. PR #78 geopend.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-18T11:01:28+01:00",
-      "role": "Code Reviewer",
-      "type": "pr_review_merge",
-      "msg": "PRs #77, #73 en #72 gereviewd op checklist. Formele approve niet mogelijk op eigen PRs; alle drie squash gemerged.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-18T09:01:51+01:00",
-      "role": "Developer",
-      "type": "pr_created",
-      "msg": "Issue #60 opgepakt: TLS-verificatie afgedwongen in OpenDataAPI met retry/backoff en veilige cachevoorwaarden. PR #77 geopend.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-18T07:51:00+01:00",
-      "role": "Tech Lead",
-      "type": "daily_standup",
-      "msg": "Codebase-scan afgerond; nieuwe issues #74 (web_import hardening), #75 (PDO error leak) en #76 (/api/blogs JSON-contract) aangemaakt. Developer-plan geprioriteerd op P0 #60 en #74, daarna #75.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-17T20:46:38+01:00",
-      "role": "DevOps/QA Tester",
-      "type": "avond_deploy_qa",
-      "msg": "PRs #71/#68/#67 gedeployed (commit 1f692f5), API-check faalde op /api/blogs (json:fout), rollback uitgevoerd. Routes 12/12 OK, gem. 104ms, PHP error log leeg.",
-      "ok": false
-    },
-    {
-      "ts": "2026-03-17T18:36:00+01:00",
-      "role": "Developer",
-      "type": "pr_created",
-      "msg": "Issue #58 opgepakt: TLS peer/host verificatie afgedwongen in RSS cURL calls met fail-fast per bron. PR #73 geopend.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-17T18:36:00+01:00",
-      "role": "Developer",
-      "type": "pr_review",
-      "msg": "Open PRs #72 en #73 gereviewd op checklist; geen blockers in diff. Formele approve/merge wacht op aparte reviewer.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-17T18:38:00+01:00",
-      "role": "Developer",
-      "type": "pr_created",
-      "msg": "Issue #66 opgepakt: /blogs paginering + lichtere payload met verwijderde overbodige markdown scripts. PR #72 geopend.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-17T18:30:13+01:00",
-      "role": "Code Reviewer",
-      "type": "pr_review_merge",
-      "msg": "PRs #71, #68 en #67 gereviewd op checklist. Formele approve niet mogelijk op eigen PRs; daarna alle drie succesvol squash gemerged.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-17T18:26:50+01:00",
-      "role": "Developer",
-      "type": "pr_created",
-      "msg": "Issue #69 opgepakt: page/limit validatie + hard limits voor admin stemwijzer statistieken. PR #71 geopend.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-17T18:22:00+01:00",
-      "role": "Tech Lead",
-      "type": "daily_standup",
-      "msg": "Codebase-scan afgerond; nieuwe issues #69 (admin SQL-injectie via page/limit) en #70 (admin statistieken performance) aangemaakt. Developer-plan geprioriteerd op P0 security (#69/#60/#58).",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-16T20:31:27+01:00",
-      "role": "DevOps/QA Tester",
-      "type": "avond_deploy_qa",
-      "msg": "PR #64 gedeployed (commit 6789267), daarna rollback uitgevoerd door falende API JSON-checks (/api/blogs, /api/news). Routes 12/12 OK, gem. 98ms, PHP error log leeg.",
-      "ok": false
-    },
-    {
-      "ts": "2026-03-16T17:08:00+01:00",
-      "role": "Developer",
-      "type": "avond_sprint",
-      "msg": "Issue #61 opgepakt en opgelost met output escaping in blog detail view. PR #68 geopend; middag-PR #67 gereviewd op checklist (geen blockers).",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-16T14:02:12+01:00",
-      "role": "Developer",
-      "type": "pr_created",
-      "msg": "Issue #63 opgepakt: monolithische blog detail view opgesplitst in partials. PR #67 geopend.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-16T11:01:20+01:00",
-      "role": "Code Reviewer",
-      "type": "pr_review_merge",
-      "msg": "PRs #64, #56 en #55 op checklist gereviewd. Formele approve geblokkeerd (auteur-account), daarna alle drie succesvol squash gemerged.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-16T09:02:14+01:00",
-      "role": "Developer",
-      "type": "pr_created",
-      "msg": "Issue #62 opgepakt: JWT secret verplaatst naar environment met productie fail-fast. PR #64 geopend.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-16T07:31:00+01:00",
-      "role": "Tech Lead",
-      "type": "daily_standup",
-      "msg": "Codebase-scan afgerond; nieuwe issues #62 (JWT secret config) en #63 (blogs view refactor) aangemaakt. Developer-plan geprioriteerd op P0 security (#62/#60/#61).",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-15T20:30:45+01:00",
-      "role": "DevOps/QA Tester",
-      "type": "avond_deploy_qa",
-      "msg": "Geen merge naar main vandaag; deploy overgeslagen. QA groen: 12/12 routes OK, API OK, gem. 118ms, PHP error log leeg.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-15T12:46:00+01:00",
-      "role": "Tech Lead",
-      "type": "daily_standup",
-      "msg": "Codebase-scan afgerond; nieuwe issues #60 (OpenData TLS verify) en #61 (blog detail XSS escaping) aangemaakt. Developer-plan geprioriteerd op security.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-14T20:30:52+01:00",
-      "role": "DevOps/QA Tester",
-      "type": "avond_deploy_qa",
-      "msg": "Geen merge naar main vandaag; deploy overgeslagen. QA groen: 12/12 routes OK, API OK, gem. 102ms, PHP error log leeg.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-14T12:43:14+01:00",
-      "role": "Tech Lead",
-      "type": "daily_standup",
-      "msg": "Codebase-scan afgerond; nieuwe issues #58 (TLS RSS verify) en #59 (atomische scraper state) aangemaakt. Developer-plan voor vandaag geprioriteerd.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-13T20:30:58+01:00",
-      "role": "DevOps/QA Tester",
-      "type": "avond_deploy_qa",
-      "msg": "Deploy-check uitgevoerd: geen nieuwe wijzigingen op VPS (already up-to-date). QA groen: 12/12 routes OK, API OK, gem. 112ms, PHP error log leeg.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-13T17:00:00+01:00",
-      "role": "Developer",
-      "type": "pr_created",
-      "msg": "Issue #53 opgepakt: blocking sitemap-regeneratie vervangen door async queue worker. PR #56 geopend.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-13T17:00:00+01:00",
-      "role": "Developer",
-      "type": "pr_review",
-      "msg": "Open middag-PR #55 doorgelopen op review-checklist; geen blockers gevonden. Formele approve niet mogelijk vanaf auteur-account, wel reviewcomment geplaatst.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-13T14:02:54+01:00",
-      "role": "Developer",
-      "type": "pr_created",
-      "msg": "Issue #42 opgepakt: stemwijzer voortgangs-UI berekening gecorrigeerd (ring/balk/mijlpalen synchroon). PR #55 geopend.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-13T12:26:35+01:00",
-      "role": "Code Reviewer",
-      "type": "pr_review_merge",
-      "msg": "PRs #54, #51 en #50 gereviewd op checklist en gemerged naar main.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-13T12:24:50+01:00",
-      "role": "Developer",
-      "type": "pr_created",
-      "msg": "Issue #52 opgepakt: upload hardening met MIME-validatie + veilige directory-permissies. PR #54 geopend.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-13T12:18:00+01:00",
-      "role": "Tech Lead",
-      "type": "daily_standup",
-      "msg": "Codebase-scan afgerond; nieuwe issues #52 (upload hardening) en #53 (async sitemap) aangemaakt. Developer-plan voor 13:00/17:00 bijgewerkt.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-12T20:31:29+01:00",
-      "role": "DevOps/QA Tester",
-      "type": "avond_deploy_qa",
-      "msg": "PRs #49/#45/#44 gedeployed (commit f261db1); 12/12 routes + API checks OK, gem. 104ms, PHP error log leeg.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-12T17:02:11+01:00",
-      "role": "Developer",
-      "type": "avond_sprint",
-      "msg": "Issue #47 opgepakt: partijen-detail migreert nu naar centrale error_bootstrap. PR #51 geopend; open PR #50 gecontroleerd via review checklist (geen blockers, ready for merge na visuele smoke test).",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-12T14:02:50+01:00",
-      "role": "Developer",
-      "type": "pr_created",
-      "msg": "Issue #48 opgepakt: hero UI van partijen-controller uitgeplaatst naar view partial als fase-1 modulair refactorwerk. PR #50 geopend.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-12T11:01:11+01:00",
-      "role": "Code Reviewer",
-      "type": "pr_review_merge",
-      "msg": "PRs #49, #45 en #44 gereviewd op checklist en gemerged naar main.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-12T10:20:41+01:00",
-      "role": "Developer",
-      "type": "pr_created",
-      "msg": "Issue #46 opgepakt: publieke AJAX AI endpoints gemigreerd naar error_bootstrap met generieke foutafhandeling. PR #49 geopend.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-11T20:31:08+01:00",
-      "role": "DevOps",
-      "type": "deploy",
-      "msg": "PR #43 gedeployed naar productie (commit 01906de), backup + pull + cache clear + health check OK.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-11T20:31:08+01:00",
-      "role": "QA Tester",
-      "type": "health_check",
-      "msg": "12/12 routes OK, API checks OK, gemiddelde laadtijd 97ms, PHP error log leeg.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-11T17:03:01+01:00",
-      "role": "Developer",
-      "type": "pr_created",
-      "msg": "Issue #41 opgepakt: JWT verify-logica gecentraliseerd via gedeelde JwtService. PR #45 geopend.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-11T14:02:22+01:00",
-      "role": "Developer",
-      "type": "pr_created",
-      "msg": "Issue #28 opgepakt: mobiel UX-flow verbeterd met sticky actiebar + state-herstel na refresh. PR #44 geopend.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-11T11:01:22+01:00",
-      "role": "Code Reviewer",
-      "type": "pr_review_merge",
-      "msg": "PR #43 gecontroleerd op security/correctheid en gemerged: debug/test endpoints nu afgeschermd in productie.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-11T09:00:00+01:00",
-      "role": "Developer",
-      "type": "pr_created",
-      "msg": "Issue #40 opgepakt: debug/test endpoints afgeschermd in productie. PR #43 geopend.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-10T17:11:36+01:00",
-      "role": "DevOps",
-      "type": "deploy",
-      "msg": "PR #18 gedeployed met DB backup + health check OK.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-10T17:11:36+01:00",
-      "role": "QA Tester",
-      "type": "route_verify",
-      "msg": "/nieuws rendert weer content; geen nieuwe unsupported-operand exception na deploy. NOVA-URGENT gecommuniceerd in issue/PR comments.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-10T17:02:16+01:00",
-      "role": "Developer",
-      "type": "pr_review_merge",
-      "msg": "PR #16 gereviewd en gemerged; issue #1 gesloten.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-10T14:02:28+01:00",
-      "role": "Developer",
-      "type": "pr_created",
-      "msg": "Issue #1 opgepakt: Clearbit logos vervangen door lokale assets. PR #16 geopend.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-10T13:35:46+01:00",
-      "role": "Code Reviewer",
-      "type": "review",
-      "msg": "Geen open PRs gevonden",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-10T18:18:12+01:00",
-      "role": "Developer",
-      "type": "issues_created",
-      "msg": "Issues #19, #20, #21 aangemaakt met prioriteit + acceptatiecriteria.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-10T18:18:12+01:00",
-      "role": "Developer",
-      "type": "pr_review_merge",
-      "msg": "PR #22 (rate limiting) en PR #23 (.gitignore hygiene) gemerged.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-10T18:18:12+01:00",
-      "role": "DevOps",
-      "type": "deploy",
-      "msg": "Deploy uitgevoerd na DB backup; commit a183bb4 live; health checks + logs OK.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-10T18:18:12+01:00",
-      "role": "DevOps",
-      "type": "blocker",
-      "msg": "Issue #20 CI workflow geblokkeerd: OAuth token mist workflow scope voor push naar .github/workflows.",
-      "ok": false
-    },
-    {
-      "ts": "2026-03-10T19:03:30+01:00",
-      "role": "Tech Lead",
-      "type": "sprint_plan",
-      "msg": "Sprint 1 gestart voor Gemeentelijke Stemwijzer 2026 (Ede): backlog #25-#33 opgesplitst in veilige implementatieslices.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-10T19:03:30+01:00",
-      "role": "Developer",
-      "type": "pr_review_merge",
-      "msg": "PR #34 (issue #30) gemerged: nieuw action=meta endpoint met Ede/2026 scope-lock + weging/publicatie-flags.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-10T19:10:00+01:00",
-      "role": "Developer",
-      "type": "pr_created",
-      "msg": "Issue #26 opgepakt: gemeentelijke stemwijzer datamodel/migratie-skelet + context hook. PR #35 geopend.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-10T19:40:00+01:00",
-      "role": "Developer",
-      "type": "pr_review_merge",
-      "msg": "PR #36 gemerged voor issue #27: scoring v2 + weging live in main.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-10T19:40:00+01:00",
-      "role": "Code Reviewer",
-      "type": "pr_review_merge",
-      "msg": "PR #37 gemerged voor issue #29: juridisch/ethisch disclaimer + methodekader.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-10T20:16:37+01:00",
-      "role": "DevOps",
-      "type": "deploy",
-      "msg": "Avonddeploy uitgevoerd: backup + pull gecontroleerd, geen nieuwe wijzigingen op main (Already up-to-date).",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-10T20:16:37+01:00",
-      "role": "QA Tester",
-      "type": "health_check",
-      "msg": "12/12 kritieke routes en API checks OK; gemiddelde laadtijd 119ms; PHP error log leeg.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-25T21:09:00+01:00",
-      "role": "Developer",
-      "type": "pr_created",
-      "msg": "Middag-slice voor issue #136 opgeleverd: grote inline partijen-CSS geëxternaliseerd naar public/css/partijen-page-enhancements.css. PR #138 geopend voor review.",
-      "ok": true
-    },
-    {
-      "ts": "2026-03-25T21:30:00+01:00",
-      "role": "Developer",
-      "type": "pr_created",
-      "msg": "Issue #135 opgepakt: news_articles hot-query indexen + idempotente migratie toegevoegd. PR #139 geopend voor review.",
-      "ok": true
-    }
-  ],
-  "today_developer_plan": [
-    {
-      "issue": 142,
-      "slice": "CSRF-token toevoegen aan login- en registratieformulieren + validatie in POST-handler",
-      "priority": "P1",
-      "eta": "<2h",
-      "session": "09:00",
-      "status": "ready_for_dev"
-    },
-    {
-      "issue": 143,
-      "slice": ".htaccess toevoegen aan uploads/profile_photos/ (PHP execution blokkeren + directory listing uit)",
-      "priority": "P1",
-      "eta": "<1h",
-      "session": "13:00",
-      "status": "ready_for_dev"
-    },
-    {
-      "issue": 131,
-      "slice": "Brute-force rate limiting implementeren op /login en /register endpoints",
-      "priority": "P1",
-      "eta": "<2h",
-      "session": "17:00",
-      "status": "ready_for_dev"
-    }
-  ],
-  "updated_at": "2026-03-25T21:30:00+01:00"
+    "current_sprint":  {
+                           "start_date":  "2026-03-10",
+                           "planned_tasks":  [
+                                                 {
+                                                     "issue":  134,
+                                                     "title":  "security(forum): fix stored XSS in topic/reply rendering",
+                                                     "priority":  "P0",
+                                                     "status":  "done",
+                                                     "role":  "Developer"
+                                                 },
+                                                 {
+                                                     "issue":  135,
+                                                     "title":  "performance(db): add missing indexes for news_articles hot queries",
+                                                     "priority":  "P1",
+                                                     "status":  "in_review",
+                                                     "role":  "Developer"
+                                                 },
+                                                 {
+                                                     "issue":  103,
+                                                     "title":  "bug(deploy): /api/blogs JSON-fout tijdens DevOps deploy-run 2026-03-20",
+                                                     "priority":  "P1",
+                                                     "status":  "blocked",
+                                                     "role":  "Developer"
+                                                 }
+                                             ],
+                           "in_progress":  [
+                                               {
+                                                   "issue":  20,
+                                                   "title":  "PR merge-gate workflow (blocked door token scope)",
+                                                   "branch":  "dev/issue-20-ci-pr-gate",
+                                                   "status":  "blocked",
+                                                   "updated_at":  "2026-03-10T18:18:12+01:00",
+                                                   "role":  "Developer",
+                                                   "blocker":  "GitHub token mist workflow scope; push van .github/workflows geweigerd"
+                                               },
+                                               {
+                                                   "issue":  100,
+                                                   "title":  "bug(blogs): featured image update faalt na blog-skill publicatie door veldmapping mismatch",
+                                                   "branch":  "tbd",
+                                                   "status":  "ready_for_dev",
+                                                   "updated_at":  "2026-03-20T16:05:00+01:00",
+                                                   "role":  "Tech Lead",
+                                                   "blocker":  "none"
+                                               },
+                                               {
+                                                   "issue":  103,
+                                                   "title":  "bug(deploy): /api/blogs JSON-fout tijdens DevOps deploy-run 2026-03-20",
+                                                   "branch":  "tbd",
+                                                   "status":  "blocked",
+                                                   "updated_at":  "2026-03-25T07:52:26.999949+00:00",
+                                                   "role":  "DevOps",
+                                                   "blocker":  "/api/blogs health check blijft instabiel tijdens deploy"
+                                               }
+                                           ],
+                           "in_review":  [
+                                             {
+                                                 "issue":  32,
+                                                 "title":  "[P2] Gemeenteraadsverkiezingen 2026: SEO landing + structured data",
+                                                 "branch":  "dev/issue-32-seo-stemwijzer-schema-slice",
+                                                 "pr_number":  104,
+                                                 "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/104",
+                                                 "status":  "in_review",
+                                                 "updated_at":  "2026-03-20T20:32:00+01:00",
+                                                 "role":  "Developer"
+                                             },
+                                             {
+                                                 "issue":  26,
+                                                 "title":  "Gemeenteraadsverkiezingen 2026: data-architectuur + migraties",
+                                                 "branch":  "dev/issue-26-gemeente-datamodel-skelet",
+                                                 "pr_number":  35,
+                                                 "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/35",
+                                                 "status":  "in_review",
+                                                 "updated_at":  "2026-03-10T19:10:00+01:00",
+                                                 "role":  "Developer"
+                                             },
+                                             {
+                                                 "issue":  94,
+                                                 "title":  "security(blogs): harden image upload in blog create flow met MIME/size-validatie",
+                                                 "branch":  "dev/issue-94-upload-hardening-mime-size",
+                                                 "pr_number":  99,
+                                                 "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/99",
+                                                 "status":  "in_review",
+                                                 "updated_at":  "2026-03-20T15:43:00+01:00",
+                                                 "role":  "Developer"
+                                             },
+                                             {
+                                                 "issue":  114,
+                                                 "title":  "seo: verbeter laadtijd homepage en payload-grootte kernpagina\u0027s (slice: partijen inline JS externalized)",
+                                                 "branch":  "dev/issue-114-partijen-external-js",
+                                                 "pr_number":  121,
+                                                 "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/121",
+                                                 "status":  "in_review",
+                                                 "updated_at":  "2026-03-24T14:00:00+01:00",
+                                                 "role":  "Developer"
+                                             },
+                                             {
+                                                 "issue":  136,
+                                                 "title":  "refactor(controllers): split monolithic partijen controller into modules (slice: externaliseer page CSS)",
+                                                 "branch":  "dev/issue-136-partijen-controller-split-slice1",
+                                                 "pr_number":  138,
+                                                 "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/138",
+                                                 "status":  "in_review",
+                                                 "updated_at":  "2026-03-25T21:09:00+01:00",
+                                                 "role":  "Developer"
+                                             },
+                                             {
+                                                 "issue":  135,
+                                                 "title":  "performance(db): add missing indexes for news_articles hot queries",
+                                                 "branch":  "dev/issue-135-news-article-indexes",
+                                                 "pr_number":  139,
+                                                 "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/139",
+                                                 "status":  "in_review",
+                                                 "updated_at":  "2026-03-25T21:30:00+01:00",
+                                                 "role":  "Developer"
+                                             }
+                                         ],
+                           "merged":  [
+                                          {
+                                              "issue":  1,
+                                              "title":  "Clearbit logo API vervangen door lokale partijlogo assets",
+                                              "branch":  "dev/issue-1-replace-clearbit-logo-api",
+                                              "pr_number":  16,
+                                              "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/16",
+                                              "status":  "merged",
+                                              "updated_at":  "2026-03-10T17:02:16+01:00",
+                                              "role":  "Developer",
+                                              "merged_at":  "2026-03-10T17:02:16+01:00",
+                                              "merge_commit":  "ad8b1963ea292d2dfa18aee2c39a55cb5c393b11"
+                                          },
+                                          {
+                                              "issue":  17,
+                                              "title":  "Blanco /nieuws fix: currentPage variabele-collision",
+                                              "branch":  "dev/issue-17-fix-nieuws-currentpage-collision",
+                                              "pr_number":  18,
+                                              "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/18",
+                                              "status":  "merged",
+                                              "updated_at":  "2026-03-10T17:11:36+01:00",
+                                              "role":  "Code Reviewer",
+                                              "merged_at":  "2026-03-10T17:11:36+01:00",
+                                              "merge_commit":  "6947864312156f311c6d71fa058f7d623ffabdd0"
+                                          },
+                                          {
+                                              "issue":  19,
+                                              "title":  "Rate limiting op publieke API-endpoints",
+                                              "branch":  "dev/issue-19-api-rate-limiting",
+                                              "pr_number":  22,
+                                              "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/22",
+                                              "status":  "merged",
+                                              "updated_at":  "2026-03-10T18:18:12+01:00",
+                                              "role":  "Code Reviewer",
+                                              "merged_at":  "2026-03-10T18:18:12+01:00",
+                                              "merge_commit":  "82cefb6658d854028099686b48618e2c11d49d5f"
+                                          },
+                                          {
+                                              "issue":  21,
+                                              "title":  "Gitignore hygiÃ«nefix (.DS_Store + sitemap-regel)",
+                                              "branch":  "dev/issue-21-gitignore-hygiene",
+                                              "pr_number":  23,
+                                              "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/23",
+                                              "status":  "merged",
+                                              "updated_at":  "2026-03-10T18:18:12+01:00",
+                                              "role":  "Code Reviewer",
+                                              "merged_at":  "2026-03-10T18:18:12+01:00",
+                                              "merge_commit":  "a183bb4ce9da33a0ebbfd8e8a80261b402395ab7"
+                                          },
+                                          {
+                                              "issue":  30,
+                                              "title":  "Gemeenteraadsverkiezingen 2026: API context gemeente/verkiezing",
+                                              "branch":  "dev/issue-30-meta-context-ede-2026",
+                                              "pr_number":  34,
+                                              "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/34",
+                                              "status":  "merged",
+                                              "updated_at":  "2026-03-10T19:03:30+01:00",
+                                              "role":  "Developer",
+                                              "merged_at":  "2026-03-10T19:03:30+01:00",
+                                              "merge_commit":  "6896493722c1de8328e5a6324197d056d257c064"
+                                          },
+                                          {
+                                              "issue":  27,
+                                              "title":  "Gemeentelijke stemwijzer: scoring v2 + weging (MVP 25)",
+                                              "branch":  "dev/issue-27-scoring-v2-weging",
+                                              "pr_number":  36,
+                                              "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/36",
+                                              "status":  "merged",
+                                              "updated_at":  "2026-03-10T19:40:00+01:00",
+                                              "role":  "Developer",
+                                              "merged_at":  "2026-03-10T18:37:51+01:00",
+                                              "merge_commit":  "f998ecf"
+                                          },
+                                          {
+                                              "issue":  29,
+                                              "title":  "Gemeentelijke stemwijzer: juridisch/ethisch transparantie + disclaimer",
+                                              "branch":  "dev/issue-29-legal-ethics-disclaimer",
+                                              "pr_number":  37,
+                                              "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/37",
+                                              "status":  "merged",
+                                              "updated_at":  "2026-03-10T19:40:00+01:00",
+                                              "role":  "Code Reviewer",
+                                              "merged_at":  "2026-03-10T18:39:33+01:00",
+                                              "merge_commit":  "a5fb122"
+                                          },
+                                          {
+                                              "issue":  40,
+                                              "title":  "security(api): scherm debug/test endpoints af in productie",
+                                              "branch":  "dev/issue-40-security-debug-test-gate",
+                                              "pr_number":  43,
+                                              "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/43",
+                                              "status":  "merged",
+                                              "updated_at":  "2026-03-11T11:01:22+01:00",
+                                              "role":  "Code Reviewer",
+                                              "merged_at":  "2026-03-11T11:01:22+01:00",
+                                              "merge_commit":  "01906dec74f8448c625d3ee4fc9822447fe1dbb2"
+                                          },
+                                          {
+                                              "issue":  46,
+                                              "title":  "security(ajax): schakel display_errors uit op publieke AI endpoints",
+                                              "branch":  "dev/issue-46-ajax-error-bootstrap",
+                                              "pr_number":  49,
+                                              "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/49",
+                                              "status":  "merged",
+                                              "updated_at":  "2026-03-12T11:01:11+01:00",
+                                              "role":  "Code Reviewer",
+                                              "merged_at":  "2026-03-12T11:00:58+01:00",
+                                              "merge_commit":  "f48ffd518d2146a6a751ac0d1c02e95fd8cd5e21"
+                                          },
+                                          {
+                                              "issue":  41,
+                                              "title":  "refactor(api): centraliseer dubbele JWT verify-logica",
+                                              "branch":  "dev/issue-41-jwt-verify-service",
+                                              "pr_number":  45,
+                                              "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/45",
+                                              "status":  "merged",
+                                              "updated_at":  "2026-03-12T11:01:11+01:00",
+                                              "role":  "Code Reviewer",
+                                              "merged_at":  "2026-03-12T11:01:07+01:00",
+                                              "merge_commit":  "7f3b2d78be61c14069d1941510c11f579f83fe78"
+                                          },
+                                          {
+                                              "issue":  28,
+                                              "title":  "feat(js): mobiel UX-flow en state-herstel voor stemwijzer",
+                                              "branch":  "dev/issue-28-mobile-ux-progress-state",
+                                              "pr_number":  44,
+                                              "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/44",
+                                              "status":  "merged",
+                                              "updated_at":  "2026-03-12T11:01:11+01:00",
+                                              "role":  "Code Reviewer",
+                                              "merged_at":  "2026-03-12T11:01:11+01:00",
+                                              "merge_commit":  "f261db1b70265e79622b5207256c4b55ce593db5"
+                                          },
+                                          {
+                                              "issue":  52,
+                                              "title":  "security(uploads): harden bestanduploads met MIME-checks en veilige directory-permissies",
+                                              "branch":  "dev/issue-52-upload-hardening-mime-perms",
+                                              "pr_number":  54,
+                                              "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/54",
+                                              "status":  "merged",
+                                              "updated_at":  "2026-03-13T12:26:35+01:00",
+                                              "role":  "Code Reviewer",
+                                              "merged_at":  "2026-03-13T12:26:06+01:00",
+                                              "merge_commit":  "5075ad054cc9d5a994c5910bf3532abff8fbb56d"
+                                          },
+                                          {
+                                              "issue":  47,
+                                              "title":  "security(controller): verwijder hardcoded display_errors uit partijen-detail",
+                                              "branch":  "dev/issue-47-partijen-detail-error-bootstrap",
+                                              "pr_number":  51,
+                                              "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/51",
+                                              "status":  "merged",
+                                              "updated_at":  "2026-03-13T12:26:35+01:00",
+                                              "role":  "Code Reviewer",
+                                              "merged_at":  "2026-03-13T12:26:08+01:00",
+                                              "merge_commit":  "7552451cfcc19b751f4db99dcc1bb6bc33d631b1"
+                                          },
+                                          {
+                                              "issue":  48,
+                                              "title":  "refactor(controllers): splits grote partijen-controller in modules",
+                                              "branch":  "dev/issue-48-partijen-ui-partials-fase1",
+                                              "pr_number":  50,
+                                              "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/50",
+                                              "status":  "merged",
+                                              "updated_at":  "2026-03-13T12:26:35+01:00",
+                                              "role":  "Code Reviewer",
+                                              "merged_at":  "2026-03-13T12:26:11+01:00",
+                                              "merge_commit":  "03f4933f7e61abc2e870eb738988c5bbe83b6992"
+                                          },
+                                          {
+                                              "issue":  62,
+                                              "title":  "security(auth): verplaats hardcoded JWT secret naar environment/config",
+                                              "branch":  "dev/issue-62-jwt-secret-config",
+                                              "pr_number":  64,
+                                              "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/64",
+                                              "status":  "merged",
+                                              "updated_at":  "2026-03-16T11:01:20+01:00",
+                                              "role":  "Code Reviewer",
+                                              "merged_at":  "2026-03-16T11:01:20+01:00",
+                                              "merge_commit":  "squash-merged"
+                                          },
+                                          {
+                                              "issue":  53,
+                                              "title":  "performance(blogs): maak sitemap-regeneratie asynchroon buiten request-pad",
+                                              "branch":  "dev/issue-53-async-sitemap-trigger",
+                                              "pr_number":  56,
+                                              "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/56",
+                                              "status":  "merged",
+                                              "updated_at":  "2026-03-16T11:01:20+01:00",
+                                              "role":  "Code Reviewer",
+                                              "merged_at":  "2026-03-16T11:01:20+01:00",
+                                              "merge_commit":  "squash-merged"
+                                          },
+                                          {
+                                              "issue":  42,
+                                              "title":  "performance(refactor): splits monolithische stemwijzer-controller op (voortgang UI-fix slice)",
+                                              "branch":  "dev/issue-42-stemwijzer-progress-percent-fix",
+                                              "pr_number":  55,
+                                              "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/55",
+                                              "status":  "merged",
+                                              "updated_at":  "2026-03-16T11:01:20+01:00",
+                                              "role":  "Code Reviewer",
+                                              "merged_at":  "2026-03-16T11:01:20+01:00",
+                                              "merge_commit":  "squash-merged"
+                                          },
+                                          {
+                                              "issue":  69,
+                                              "title":  "security(admin): valideer en cast page/limit om SQL-injectie in stemwijzer-statistieken te voorkomen",
+                                              "branch":  "dev/issue-69-admin-pagination-validation",
+                                              "pr_number":  71,
+                                              "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/71",
+                                              "status":  "merged",
+                                              "updated_at":  "2026-03-17T18:30:13+01:00",
+                                              "role":  "Code Reviewer",
+                                              "merged_at":  "2026-03-17T18:30:13+01:00",
+                                              "merge_commit":  "squash-merged"
+                                          },
+                                          {
+                                              "issue":  61,
+                                              "title":  "security(blogs): escape output in blog detail view to prevent stored XSS",
+                                              "branch":  "dev/issue-61-blog-detail-xss-escaping",
+                                              "pr_number":  68,
+                                              "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/68",
+                                              "status":  "merged",
+                                              "updated_at":  "2026-03-17T18:30:13+01:00",
+                                              "role":  "Code Reviewer",
+                                              "merged_at":  "2026-03-17T18:30:13+01:00",
+                                              "merge_commit":  "squash-merged"
+                                          },
+                                          {
+                                              "issue":  63,
+                                              "title":  "refactor(views): splits monolithische blogs detail view in partials/components",
+                                              "branch":  "dev/issue-63-blog-detail-partials",
+                                              "pr_number":  67,
+                                              "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/67",
+                                              "status":  "merged",
+                                              "updated_at":  "2026-03-17T18:30:13+01:00",
+                                              "role":  "Code Reviewer",
+                                              "merged_at":  "2026-03-17T18:30:13+01:00",
+                                              "merge_commit":  "squash-merged"
+                                          },
+                                          {
+                                              "issue":  60,
+                                              "title":  "security(opendata): forceer TLS-verificatie in OpenDataAPI cURL calls",
+                                              "branch":  "dev/issue-60-opendata-tls-verification",
+                                              "pr_number":  77,
+                                              "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/77",
+                                              "status":  "merged",
+                                              "updated_at":  "2026-03-18T09:01:51+01:00",
+                                              "role":  "Code Reviewer",
+                                              "merged_at":  "2026-03-18T11:00:45+01:00",
+                                              "merge_commit":  "c1b018089d9bf8ea173c4b6ee82b88865f8566ce"
+                                          },
+                                          {
+                                              "issue":  58,
+                                              "title":  "security(news): zet TLS-verificatie aan voor RSS cURL requests",
+                                              "branch":  "dev/issue-58-rss-tls-verification",
+                                              "pr_number":  73,
+                                              "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/73",
+                                              "status":  "merged",
+                                              "updated_at":  "2026-03-17T18:36:00+01:00",
+                                              "role":  "Code Reviewer",
+                                              "merged_at":  "2026-03-18T11:00:50+01:00",
+                                              "merge_commit":  "ef61aaa66c99154269b51d13f478b389a3a7998b"
+                                          },
+                                          {
+                                              "issue":  66,
+                                              "title":  "seo: HTML payload kernpagina\u0027s te groot (220-748KB)",
+                                              "branch":  "dev/issue-66-blogs-pagination-payload",
+                                              "pr_number":  72,
+                                              "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/72",
+                                              "status":  "merged",
+                                              "updated_at":  "2026-03-17T18:38:00+01:00",
+                                              "role":  "Code Reviewer",
+                                              "merged_at":  "2026-03-18T11:00:55+01:00",
+                                              "merge_commit":  "d5f66b997377e444bb2f7159c8f95f425b2e75c3"
+                                          },
+                                          {
+                                              "issue":  80,
+                                              "title":  "security(api): voorkom lekken van exception-details in publieke error responses",
+                                              "branch":  "dev/issue-80-api-error-sanitization",
+                                              "pr_number":  82,
+                                              "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/82",
+                                              "status":  "merged",
+                                              "updated_at":  "2026-03-19T11:02:17+01:00",
+                                              "role":  "Code Reviewer",
+                                              "merged_at":  "2026-03-19T11:01:32+01:00",
+                                              "merge_commit":  "11e9d677e5554b3ed98ef839267b8581058c40d1"
+                                          },
+                                          {
+                                              "issue":  65,
+                                              "title":  "seo: unieke paginatitels voor kernpagina\u0027s ontbreken",
+                                              "branch":  "dev/issue-65-unique-page-titles",
+                                              "pr_number":  78,
+                                              "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/78",
+                                              "status":  "merged",
+                                              "updated_at":  "2026-03-19T11:02:17+01:00",
+                                              "role":  "Code Reviewer",
+                                              "merged_at":  "2026-03-19T11:01:35+01:00",
+                                              "merge_commit":  "38754998502acac635882aff9345d26b6a3a280b"
+                                          },
+                                          {
+                                              "issue":  76,
+                                              "title":  "bug(api): stabiliseer /api/blogs JSON contract om rollback door json:fout te voorkomen",
+                                              "branch":  "dev/issue-76-blogs-json-contract-stabilization",
+                                              "pr_number":  84,
+                                              "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/84",
+                                              "status":  "merged",
+                                              "updated_at":  "2026-03-19T22:27:46+01:00",
+                                              "role":  "Code Reviewer",
+                                              "merged_at":  "2026-03-19T22:27:46+01:00",
+                                              "merge_commit":  "4a8614bfebd97094baa63e99bc67df2de517ed04"
+                                          },
+                                          {
+                                              "issue":  81,
+                                              "title":  "performance(forum): vervang gecorreleerde subqueries en voeg paginering toe",
+                                              "branch":  "dev/issue-81-forum-query-pagination",
+                                              "pr_number":  83,
+                                              "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/83",
+                                              "status":  "merged",
+                                              "updated_at":  "2026-03-19T22:27:54+01:00",
+                                              "role":  "Code Reviewer",
+                                              "merged_at":  "2026-03-19T22:27:54+01:00",
+                                              "merge_commit":  "f7a2a7dbb2e7c82f97efc70d74173428f841e2e4"
+                                          },
+                                          {
+                                              "issue":  75,
+                                              "title":  "security(database): voorkom lekken van PDO-foutdetails naar gebruikersoutput",
+                                              "branch":  "dev/issue-75-database-error-leak-guard",
+                                              "pr_number":  79,
+                                              "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/79",
+                                              "status":  "merged",
+                                              "updated_at":  "2026-03-19T22:28:01+01:00",
+                                              "role":  "Code Reviewer",
+                                              "merged_at":  "2026-03-19T22:28:01+01:00",
+                                              "merge_commit":  "fcfe4d6a0bc1fedad7168ecdad75fd60be7e92d3"
+                                          },
+                                          {
+                                              "issue":  91,
+                                              "title":  "security(web): scherm diagnostische test-scripts in /scripts en /admin af",
+                                              "branch":  "dev/issue-91-block-test-diagnostic-scripts",
+                                              "pr_number":  97,
+                                              "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/97",
+                                              "status":  "merged",
+                                              "updated_at":  "2026-03-20T11:00:00+01:00",
+                                              "role":  "Code Reviewer",
+                                              "merged_at":  "2026-03-20T11:00:00+01:00",
+                                              "merge_commit":  "squash-merged"
+                                          },
+                                          {
+                                              "issue":  117,
+                                              "title":  "security(api): centraliseer CSRF-validatie op admin mutaties",
+                                              "branch":  "dev/issue-117-csrf-admin-api-mutations",
+                                              "pr_number":  120,
+                                              "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/120",
+                                              "status":  "merged",
+                                              "updated_at":  "2026-03-24T11:00:54+01:00",
+                                              "role":  "Code Reviewer",
+                                              "merged_at":  "2026-03-24T11:00:54+01:00",
+                                              "merge_commit":  "b03036ee7682b32e5b646238d042ab9fedccc6b4"
+                                          },
+                                          {
+                                              "issue":  111,
+                                              "title":  "fix(api): fail-safe JSON encoding op /api/blogs",
+                                              "branch":  "dev/issue-111-blogs-json-failsafe",
+                                              "pr_number":  116,
+                                              "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/116",
+                                              "status":  "merged",
+                                              "updated_at":  "2026-03-24T11:00:58+01:00",
+                                              "role":  "Code Reviewer",
+                                              "merged_at":  "2026-03-24T11:00:58+01:00",
+                                              "merge_commit":  "320a5b04b6f166fb626a23f0ccc4872efa035534"
+                                          },
+                                          {
+                                              "issue":  114,
+                                              "title":  "perf(js): dedupe partijen payload in controller",
+                                              "branch":  "dev/issue-114-partijen-payload-dedupe",
+                                              "pr_number":  115,
+                                              "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/115",
+                                              "status":  "merged",
+                                              "updated_at":  "2026-03-24T11:01:02+01:00",
+                                              "role":  "Code Reviewer",
+                                              "merged_at":  "2026-03-24T11:01:02+01:00",
+                                              "merge_commit":  "94c08e960d82843a29b9b78faa8bc91e0f933552"
+                                          },
+                                          {
+                                              "issue":  108,
+                                              "title":  "fix(api): laad JWT secret uit gitignored env.local.php",
+                                              "branch":  "dev/issue-108-jwt-env-fix",
+                                              "pr_number":  109,
+                                              "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/109",
+                                              "status":  "merged",
+                                              "updated_at":  "2026-03-24T11:01:06+01:00",
+                                              "role":  "Code Reviewer",
+                                              "merged_at":  "2026-03-24T11:01:06+01:00",
+                                              "merge_commit":  "9bcae83e79494ab9a21939502d7cb184a3abd0f7"
+                                          }
+                                      ],
+                           "deployed":  [
+                                            {
+                                                "issue":  17,
+                                                "pr_number":  18,
+                                                "status":  "deployed",
+                                                "deployed_at":  "2026-03-10T17:11:36+01:00",
+                                                "health_check":  "ok",
+                                                "route_verified":  "/nieuws",
+                                                "role":  "DevOps"
+                                            },
+                                            {
+                                                "issue":  "19+21",
+                                                "pr_number":  "22+23",
+                                                "status":  "deployed",
+                                                "deployed_at":  "2026-03-10T18:18:12+01:00",
+                                                "health_check":  "ok",
+                                                "route_verified":  "all-critical-routes",
+                                                "role":  "DevOps"
+                                            },
+                                            {
+                                                "issue":  "46+41+28",
+                                                "pr_number":  "49+45+44",
+                                                "status":  "deployed",
+                                                "deployed_at":  "2026-03-12T20:31:29+01:00",
+                                                "health_check":  "ok",
+                                                "route_verified":  "all-critical-routes",
+                                                "role":  "DevOps"
+                                            }
+                                        ],
+                           "updated_at":  "2026-03-25T21:30:00+01:00"
+                       },
+    "today":  {
+                  "date":  "2026-03-31",
+                  "deploys_today":  0,
+                  "issues_created":  3,
+                  "prs_created":  0,
+                  "prs_reviewed":  0,
+                  "prs_merged":  0
+              },
+    "last_deploy":  {
+                        "timestamp":  "2026-03-25T20:31:23+01:00",
+                        "commit_hash":  "9bcae83",
+                        "status":  "rollback",
+                        "rollback":  true
+                    },
+    "last_qa_check":  {
+                          "timestamp":  "2026-03-25T20:31:23",
+                          "all_routes_ok":  true,
+                          "failed_routes":  [
+
+                                            ],
+                          "avg_load_time_ms":  96,
+                          "php_errors_found":  1
+                      },
+    "history":  [
+                    {
+                        "ts":  "2026-03-25T21:01:00+01:00",
+                        "role":  "Tech Lead",
+                        "type":  "daily_standup",
+                        "msg":  "Avondscan afgerond; nieuwe issues #134/#135/#136 aangemaakt. Developer-prioriteit: #134 eerst (forum stored XSS), daarna #135. Blockers #103 en #20 blijven actief; #129 vraagt preflight env-check vÃ³Ã³r deploy.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-25T20:37:46+01:00",
+                        "role":  "Tech Lead",
+                        "type":  "daily_standup",
+                        "msg":  "Avondscan afgerond; nieuwe issues #130/#131/#132 aangemaakt. Developer-prioriteit: #130 eerst (security regressie), daarna #131 en #132. Blockers #103 (/api/blogs) en #20 (workflow token scope) blijven actief.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-25T20:31:23+01:00",
+                        "role":  "DevOps/QA Tester",
+                        "type":  "avond_deploy_qa",
+                        "msg":  "Deployrun na merge #126 met backup_20260325_203029.sql; pull naar 89a608d gaf 500 op alle routes door ontbrekende productie env vars (DB vars + JWT secret), rollback/hard reset naar 9bcae83 uitgevoerd. Routes 12/12 weer OK, /api/blogs blijft json:fout (blocker #103). Incident gelogd in issue #129.",
+                        "ok":  false
+                    },
+                    {
+                        "ts":  "2026-03-24T20:31:10+01:00",
+                        "role":  "DevOps/QA Tester",
+                        "type":  "avond_deploy_qa",
+                        "msg":  "Deployrun met backup_20260324_203028.sql uitgevoerd na reviewer-sein; deploy naar main geprobeerd, health check faalde op /api/blogs (json:fout), rollback uitgevoerd. Routes 12/12 OK, homepage 0.332s, gem. 91ms, PHP error log leeg.",
+                        "ok":  false
+                    },
+                    {
+                        "ts":  "2026-03-24T14:00:00+01:00",
+                        "role":  "Developer",
+                        "type":  "pr_created",
+                        "msg":  "Middag-slice voor issue #114 opgeleverd: inline JS uit controllers/partijen.php geÃ«xternaliseerd naar js/partijen-page.js. PR #121 geopend voor review.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-24T11:05:00+01:00",
+                        "role":  "Code Reviewer",
+                        "type":  "pr_review_merge",
+                        "msg":  "PRs #120, #116, #115 en #109 gereviewd op checklist en squash gemerged naar main. Formele approve niet mogelijk door self-approval blokkade op GitHub.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-24T08:20:00+01:00",
+                        "role":  "Tech Lead",
+                        "type":  "daily_standup",
+                        "msg":  "Dinsdagscan afgerond; nieuwe issues #117/#118/#119 aangemaakt. Developer-prioriteit: #117 eerst, daarna #118 en #119. Blocker #20 blijft open; PR #116 wacht op review/merge.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-23T18:17:00+01:00",
+                        "role":  "Developer",
+                        "type":  "pr_created",
+                        "msg":  "Issue #111 opgepakt en PR #116 geopend: /api/blogs JSON encoding fail-safe gemaakt met UTF-8 substitutie, encode-fout logging en consistente 500 fallback payload.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-23T17:00:00+01:00",
+                        "role":  "Developer",
+                        "type":  "pr_update",
+                        "msg":  "PR #109 opgeschoond naar minimale #108-scope (alleen JwtService env.local fallback + .gitignore). Force-push gedaan na reviewfeedback; klaar voor herreview.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-23T11:17:00+01:00",
+                        "role":  "Code Reviewer",
+                        "type":  "pr_review",
+                        "msg":  "PR #109 gereviewd en teruggestuurd voor revisie: JWT-fix is goed, maar PR bevat regressies buiten scope (image alias contract, admin authorisatie en auth routes). Concrete feedback geplaatst in PR-comment.",
+                        "ok":  false
+                    },
+                    {
+                        "ts":  "2026-03-23T07:47:00+01:00",
+                        "role":  "Tech Lead",
+                        "type":  "daily_standup",
+                        "msg":  "Maandagscan afgerond; nieuwe issues #110/#111/#112 aangemaakt. Developer-prioriteit vandaag: #110 eerst, daarna #111 en #103 voor deploystabiliteit. Blocker #20 (workflow token scope) staat nog bij DevOps.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-22T20:31:19+01:00",
+                        "role":  "DevOps/QA Tester",
+                        "type":  "avond_deploy_qa",
+                        "msg":  "Deployrun uitgevoerd op commit c65aa64 (already up-to-date na backup/cache-clear); health check faalde opnieuw op /api/blogs (json:fout), rollback uitgevoerd. Routes 12/12 OK, homepage 2.883s, gem. 303ms, PHP error log leeg.",
+                        "ok":  false
+                    },
+                    {
+                        "ts":  "2026-03-22T13:58:40+01:00",
+                        "role":  "DevOps/QA Tester",
+                        "type":  "avond_deploy_qa",
+                        "msg":  "Deployrun uitgevoerd op commit c65aa64 (already up-to-date na backup/cache-clear); health check faalde opnieuw op /api/blogs (json:fout), rollback uitgevoerd. Routes 12/12 OK, homepage 0.25s, gem. 82ms, PHP error log leeg.",
+                        "ok":  false
+                    },
+                    {
+                        "ts":  "2026-03-22T13:54:00+01:00",
+                        "role":  "Tech Lead",
+                        "type":  "daily_standup",
+                        "msg":  "Zondagscan afgerond; nieuwe issues #105/#106/#107 aangemaakt. Developer-prioriteit vandaag: #105 eerst, daarna #106 en #103 voor deploystabiliteit.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-20T20:32:00+01:00",
+                        "role":  "Developer",
+                        "type":  "pr_created",
+                        "msg":  "Issue #32 slice opgepakt: stemwijzer Ede 2026 SEO-metadata + canonical normalisatie + FAQ/Breadcrumb schema. PR #104 geopend.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-20T16:05:00+01:00",
+                        "role":  "Tech Lead",
+                        "type":  "triage",
+                        "msg":  "Issue #100 aangemaakt na root-cause triage: featured-image update na blog-skill publicatie faalt door image veldmapping mismatch tussen API en editor-save paden. Fixadvies + acceptatiecriteria uitgezet voor Forge.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-20T15:43:00+01:00",
+                        "role":  "Developer",
+                        "type":  "pr_created",
+                        "msg":  "Issue #94 opgepakt: blog image upload flow gehard met centrale helper, MIME+size-validatie en expliciete foutmeldingen. PR #99 geopend.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-20T11:00:00+01:00",
+                        "role":  "Code Reviewer",
+                        "type":  "pr_review_merge",
+                        "msg":  "PR #97 gereviewd op security/correctheid/checklist en squash gemerged. Formele approve niet mogelijk op eigen PR (GitHub self-approval blokkade).",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-20T09:02:00+01:00",
+                        "role":  "Developer",
+                        "type":  "pr_created",
+                        "msg":  "Issue #91 opgepakt: test/diagnose scripts afgeschermd via .htaccess + CLI-only guards. PR #97 geopend.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-20T08:10:00+01:00",
+                        "role":  "Tech Lead",
+                        "type":  "daily_standup",
+                        "msg":  "Vervolgscan afgerond; nieuwe issues #94/#95/#96 aangemaakt. Developer-volgorde aangepast naar #91 -\u003e #94 -\u003e #96. Blocker #20 (workflow token scope) blijft open bij DevOps.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-20T07:44:00+01:00",
+                        "role":  "Tech Lead",
+                        "type":  "daily_standup",
+                        "msg":  "Ochtendscan afgerond; nieuwe issues #91/#92/#93 aangemaakt. Developer pakt #91 eerst, daarna #88 en #92. Blocker #20 (workflow token scope) blijft open voor @DevOps.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-19T23:40:05+01:00",
+                        "role":  "Tech Lead",
+                        "type":  "daily_standup",
+                        "msg":  "Late stand-up: repo gesynct, open issues gecheckt en nieuwe issues #88/#89/#90 aangemaakt. Developer-volgorde morgen: #88 eerst, daarna #89 en #90. Blocker #20 (workflow token scope) blijft open voor @DevOps.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-19T22:28:20+01:00",
+                        "role":  "Code Reviewer",
+                        "type":  "pr_review_merge",
+                        "msg":  "Open PRs #84, #83 en #79 op checklist gereviewd (correctheid/security/performance/kwaliteit). Formele approve was niet mogelijk op eigen PRs; alle drie daarna succesvol squash gemerged.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-19T22:22:29+01:00",
+                        "role":  "Tech Lead",
+                        "type":  "daily_standup",
+                        "msg":  "Avondscan afgerond; nieuwe issues #85 (info.php exposure), #86 (presidenten tabelnaam bug) en #87 (partijen controller refactor) aangemaakt. Developer-volgorde: #76 eerst, daarna #85 en #86.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-19T20:31:43+01:00",
+                        "role":  "DevOps/QA Tester",
+                        "type":  "avond_deploy_qa",
+                        "msg":  "PRs #82/#78 gedeployed (commit 3875499), health check faalde op /api/blogs (json:fout), rollback uitgevoerd. Routes 12/12 OK, gem. 95ms, PHP error log leeg.",
+                        "ok":  false
+                    },
+                    {
+                        "ts":  "2026-03-19T17:00:00+01:00",
+                        "role":  "Developer",
+                        "type":  "pr_created",
+                        "msg":  "Issue #76 opgepakt: API response buffering + blogs-contract stabilisatie met contract test toegevoegd. PR #84 geopend.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-19T17:00:00+01:00",
+                        "role":  "Developer",
+                        "type":  "pr_review",
+                        "msg":  "Open middag-PR #83 gereviewd op checklist; geen blockers gevonden, reviewcomment geplaatst.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-19T14:02:42+01:00",
+                        "role":  "Developer",
+                        "type":  "pr_created",
+                        "msg":  "Issue #81 opgepakt: forum-overzicht query geoptimaliseerd met geaggregeerde JOIN, paginering toegevoegd en index-migratie toegevoegd. PR #83 geopend.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-19T11:02:17+01:00",
+                        "role":  "Code Reviewer",
+                        "type":  "pr_review_merge",
+                        "msg":  "PRs #82, #79 en #78 gereviewd op checklist. #82 en #78 inhoudelijk akkoord en squash gemerged; #79 gemarkeerd als needs_revision met concrete feedback over exception-flow en logging-sanitatie.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-19T09:03:47+01:00",
+                        "role":  "Developer",
+                        "type":  "pr_created",
+                        "msg":  "Issue #80 opgepakt: centrale veilige API-foutafhandeling met request-id logging en regressietest toegevoegd. PR #82 geopend.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-19T08:10:36+01:00",
+                        "role":  "Tech Lead",
+                        "type":  "daily_standup",
+                        "msg":  "Codebase-scan afgerond; nieuwe issues #80 (API exception-lek) en #81 (forum query/performance) aangemaakt. Developer-plan geprioriteerd op P0 #80 en #76, daarna #81.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-18T20:31:46+01:00",
+                        "role":  "DevOps/QA Tester",
+                        "type":  "avond_deploy_qa",
+                        "msg":  "PRs #77/#73/#72 gedeployed (commit d5f66b9), health check faalde op /api/blogs (json:fout), rollback uitgevoerd. Routes 12/12 OK, gem. 92ms, PHP error log leeg.",
+                        "ok":  false
+                    },
+                    {
+                        "ts":  "2026-03-18T17:02:00+01:00",
+                        "role":  "Developer",
+                        "type":  "avond_sprint",
+                        "msg":  "Issue #75 opgepakt: PDO-foutdetails verwijderd uit runtime output, interne logging toegevoegd en generieke RuntimeException ingevoerd. PR #79 geopend; open middag-PR #78 gereviewd via checklist (geen blockers).",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-18T14:03:39+01:00",
+                        "role":  "Developer",
+                        "type":  "pr_created",
+                        "msg":  "Issue #65 opgepakt: unieke fallback paginatitels toegevoegd voor kernroutes in header-template. PR #78 geopend.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-18T11:01:28+01:00",
+                        "role":  "Code Reviewer",
+                        "type":  "pr_review_merge",
+                        "msg":  "PRs #77, #73 en #72 gereviewd op checklist. Formele approve niet mogelijk op eigen PRs; alle drie squash gemerged.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-18T09:01:51+01:00",
+                        "role":  "Developer",
+                        "type":  "pr_created",
+                        "msg":  "Issue #60 opgepakt: TLS-verificatie afgedwongen in OpenDataAPI met retry/backoff en veilige cachevoorwaarden. PR #77 geopend.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-18T07:51:00+01:00",
+                        "role":  "Tech Lead",
+                        "type":  "daily_standup",
+                        "msg":  "Codebase-scan afgerond; nieuwe issues #74 (web_import hardening), #75 (PDO error leak) en #76 (/api/blogs JSON-contract) aangemaakt. Developer-plan geprioriteerd op P0 #60 en #74, daarna #75.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-17T20:46:38+01:00",
+                        "role":  "DevOps/QA Tester",
+                        "type":  "avond_deploy_qa",
+                        "msg":  "PRs #71/#68/#67 gedeployed (commit 1f692f5), API-check faalde op /api/blogs (json:fout), rollback uitgevoerd. Routes 12/12 OK, gem. 104ms, PHP error log leeg.",
+                        "ok":  false
+                    },
+                    {
+                        "ts":  "2026-03-17T18:36:00+01:00",
+                        "role":  "Developer",
+                        "type":  "pr_created",
+                        "msg":  "Issue #58 opgepakt: TLS peer/host verificatie afgedwongen in RSS cURL calls met fail-fast per bron. PR #73 geopend.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-17T18:36:00+01:00",
+                        "role":  "Developer",
+                        "type":  "pr_review",
+                        "msg":  "Open PRs #72 en #73 gereviewd op checklist; geen blockers in diff. Formele approve/merge wacht op aparte reviewer.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-17T18:38:00+01:00",
+                        "role":  "Developer",
+                        "type":  "pr_created",
+                        "msg":  "Issue #66 opgepakt: /blogs paginering + lichtere payload met verwijderde overbodige markdown scripts. PR #72 geopend.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-17T18:30:13+01:00",
+                        "role":  "Code Reviewer",
+                        "type":  "pr_review_merge",
+                        "msg":  "PRs #71, #68 en #67 gereviewd op checklist. Formele approve niet mogelijk op eigen PRs; daarna alle drie succesvol squash gemerged.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-17T18:26:50+01:00",
+                        "role":  "Developer",
+                        "type":  "pr_created",
+                        "msg":  "Issue #69 opgepakt: page/limit validatie + hard limits voor admin stemwijzer statistieken. PR #71 geopend.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-17T18:22:00+01:00",
+                        "role":  "Tech Lead",
+                        "type":  "daily_standup",
+                        "msg":  "Codebase-scan afgerond; nieuwe issues #69 (admin SQL-injectie via page/limit) en #70 (admin statistieken performance) aangemaakt. Developer-plan geprioriteerd op P0 security (#69/#60/#58).",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-16T20:31:27+01:00",
+                        "role":  "DevOps/QA Tester",
+                        "type":  "avond_deploy_qa",
+                        "msg":  "PR #64 gedeployed (commit 6789267), daarna rollback uitgevoerd door falende API JSON-checks (/api/blogs, /api/news). Routes 12/12 OK, gem. 98ms, PHP error log leeg.",
+                        "ok":  false
+                    },
+                    {
+                        "ts":  "2026-03-16T17:08:00+01:00",
+                        "role":  "Developer",
+                        "type":  "avond_sprint",
+                        "msg":  "Issue #61 opgepakt en opgelost met output escaping in blog detail view. PR #68 geopend; middag-PR #67 gereviewd op checklist (geen blockers).",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-16T14:02:12+01:00",
+                        "role":  "Developer",
+                        "type":  "pr_created",
+                        "msg":  "Issue #63 opgepakt: monolithische blog detail view opgesplitst in partials. PR #67 geopend.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-16T11:01:20+01:00",
+                        "role":  "Code Reviewer",
+                        "type":  "pr_review_merge",
+                        "msg":  "PRs #64, #56 en #55 op checklist gereviewd. Formele approve geblokkeerd (auteur-account), daarna alle drie succesvol squash gemerged.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-16T09:02:14+01:00",
+                        "role":  "Developer",
+                        "type":  "pr_created",
+                        "msg":  "Issue #62 opgepakt: JWT secret verplaatst naar environment met productie fail-fast. PR #64 geopend.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-16T07:31:00+01:00",
+                        "role":  "Tech Lead",
+                        "type":  "daily_standup",
+                        "msg":  "Codebase-scan afgerond; nieuwe issues #62 (JWT secret config) en #63 (blogs view refactor) aangemaakt. Developer-plan geprioriteerd op P0 security (#62/#60/#61).",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-15T20:30:45+01:00",
+                        "role":  "DevOps/QA Tester",
+                        "type":  "avond_deploy_qa",
+                        "msg":  "Geen merge naar main vandaag; deploy overgeslagen. QA groen: 12/12 routes OK, API OK, gem. 118ms, PHP error log leeg.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-15T12:46:00+01:00",
+                        "role":  "Tech Lead",
+                        "type":  "daily_standup",
+                        "msg":  "Codebase-scan afgerond; nieuwe issues #60 (OpenData TLS verify) en #61 (blog detail XSS escaping) aangemaakt. Developer-plan geprioriteerd op security.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-14T20:30:52+01:00",
+                        "role":  "DevOps/QA Tester",
+                        "type":  "avond_deploy_qa",
+                        "msg":  "Geen merge naar main vandaag; deploy overgeslagen. QA groen: 12/12 routes OK, API OK, gem. 102ms, PHP error log leeg.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-14T12:43:14+01:00",
+                        "role":  "Tech Lead",
+                        "type":  "daily_standup",
+                        "msg":  "Codebase-scan afgerond; nieuwe issues #58 (TLS RSS verify) en #59 (atomische scraper state) aangemaakt. Developer-plan voor vandaag geprioriteerd.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-13T20:30:58+01:00",
+                        "role":  "DevOps/QA Tester",
+                        "type":  "avond_deploy_qa",
+                        "msg":  "Deploy-check uitgevoerd: geen nieuwe wijzigingen op VPS (already up-to-date). QA groen: 12/12 routes OK, API OK, gem. 112ms, PHP error log leeg.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-13T17:00:00+01:00",
+                        "role":  "Developer",
+                        "type":  "pr_created",
+                        "msg":  "Issue #53 opgepakt: blocking sitemap-regeneratie vervangen door async queue worker. PR #56 geopend.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-13T17:00:00+01:00",
+                        "role":  "Developer",
+                        "type":  "pr_review",
+                        "msg":  "Open middag-PR #55 doorgelopen op review-checklist; geen blockers gevonden. Formele approve niet mogelijk vanaf auteur-account, wel reviewcomment geplaatst.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-13T14:02:54+01:00",
+                        "role":  "Developer",
+                        "type":  "pr_created",
+                        "msg":  "Issue #42 opgepakt: stemwijzer voortgangs-UI berekening gecorrigeerd (ring/balk/mijlpalen synchroon). PR #55 geopend.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-13T12:26:35+01:00",
+                        "role":  "Code Reviewer",
+                        "type":  "pr_review_merge",
+                        "msg":  "PRs #54, #51 en #50 gereviewd op checklist en gemerged naar main.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-13T12:24:50+01:00",
+                        "role":  "Developer",
+                        "type":  "pr_created",
+                        "msg":  "Issue #52 opgepakt: upload hardening met MIME-validatie + veilige directory-permissies. PR #54 geopend.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-13T12:18:00+01:00",
+                        "role":  "Tech Lead",
+                        "type":  "daily_standup",
+                        "msg":  "Codebase-scan afgerond; nieuwe issues #52 (upload hardening) en #53 (async sitemap) aangemaakt. Developer-plan voor 13:00/17:00 bijgewerkt.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-12T20:31:29+01:00",
+                        "role":  "DevOps/QA Tester",
+                        "type":  "avond_deploy_qa",
+                        "msg":  "PRs #49/#45/#44 gedeployed (commit f261db1); 12/12 routes + API checks OK, gem. 104ms, PHP error log leeg.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-12T17:02:11+01:00",
+                        "role":  "Developer",
+                        "type":  "avond_sprint",
+                        "msg":  "Issue #47 opgepakt: partijen-detail migreert nu naar centrale error_bootstrap. PR #51 geopend; open PR #50 gecontroleerd via review checklist (geen blockers, ready for merge na visuele smoke test).",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-12T14:02:50+01:00",
+                        "role":  "Developer",
+                        "type":  "pr_created",
+                        "msg":  "Issue #48 opgepakt: hero UI van partijen-controller uitgeplaatst naar view partial als fase-1 modulair refactorwerk. PR #50 geopend.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-12T11:01:11+01:00",
+                        "role":  "Code Reviewer",
+                        "type":  "pr_review_merge",
+                        "msg":  "PRs #49, #45 en #44 gereviewd op checklist en gemerged naar main.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-12T10:20:41+01:00",
+                        "role":  "Developer",
+                        "type":  "pr_created",
+                        "msg":  "Issue #46 opgepakt: publieke AJAX AI endpoints gemigreerd naar error_bootstrap met generieke foutafhandeling. PR #49 geopend.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-11T20:31:08+01:00",
+                        "role":  "DevOps",
+                        "type":  "deploy",
+                        "msg":  "PR #43 gedeployed naar productie (commit 01906de), backup + pull + cache clear + health check OK.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-11T20:31:08+01:00",
+                        "role":  "QA Tester",
+                        "type":  "health_check",
+                        "msg":  "12/12 routes OK, API checks OK, gemiddelde laadtijd 97ms, PHP error log leeg.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-11T17:03:01+01:00",
+                        "role":  "Developer",
+                        "type":  "pr_created",
+                        "msg":  "Issue #41 opgepakt: JWT verify-logica gecentraliseerd via gedeelde JwtService. PR #45 geopend.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-11T14:02:22+01:00",
+                        "role":  "Developer",
+                        "type":  "pr_created",
+                        "msg":  "Issue #28 opgepakt: mobiel UX-flow verbeterd met sticky actiebar + state-herstel na refresh. PR #44 geopend.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-11T11:01:22+01:00",
+                        "role":  "Code Reviewer",
+                        "type":  "pr_review_merge",
+                        "msg":  "PR #43 gecontroleerd op security/correctheid en gemerged: debug/test endpoints nu afgeschermd in productie.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-11T09:00:00+01:00",
+                        "role":  "Developer",
+                        "type":  "pr_created",
+                        "msg":  "Issue #40 opgepakt: debug/test endpoints afgeschermd in productie. PR #43 geopend.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-10T17:11:36+01:00",
+                        "role":  "DevOps",
+                        "type":  "deploy",
+                        "msg":  "PR #18 gedeployed met DB backup + health check OK.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-10T17:11:36+01:00",
+                        "role":  "QA Tester",
+                        "type":  "route_verify",
+                        "msg":  "/nieuws rendert weer content; geen nieuwe unsupported-operand exception na deploy. NOVA-URGENT gecommuniceerd in issue/PR comments.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-10T17:02:16+01:00",
+                        "role":  "Developer",
+                        "type":  "pr_review_merge",
+                        "msg":  "PR #16 gereviewd en gemerged; issue #1 gesloten.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-10T14:02:28+01:00",
+                        "role":  "Developer",
+                        "type":  "pr_created",
+                        "msg":  "Issue #1 opgepakt: Clearbit logos vervangen door lokale assets. PR #16 geopend.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-10T13:35:46+01:00",
+                        "role":  "Code Reviewer",
+                        "type":  "review",
+                        "msg":  "Geen open PRs gevonden",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-10T18:18:12+01:00",
+                        "role":  "Developer",
+                        "type":  "issues_created",
+                        "msg":  "Issues #19, #20, #21 aangemaakt met prioriteit + acceptatiecriteria.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-10T18:18:12+01:00",
+                        "role":  "Developer",
+                        "type":  "pr_review_merge",
+                        "msg":  "PR #22 (rate limiting) en PR #23 (.gitignore hygiene) gemerged.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-10T18:18:12+01:00",
+                        "role":  "DevOps",
+                        "type":  "deploy",
+                        "msg":  "Deploy uitgevoerd na DB backup; commit a183bb4 live; health checks + logs OK.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-10T18:18:12+01:00",
+                        "role":  "DevOps",
+                        "type":  "blocker",
+                        "msg":  "Issue #20 CI workflow geblokkeerd: OAuth token mist workflow scope voor push naar .github/workflows.",
+                        "ok":  false
+                    },
+                    {
+                        "ts":  "2026-03-10T19:03:30+01:00",
+                        "role":  "Tech Lead",
+                        "type":  "sprint_plan",
+                        "msg":  "Sprint 1 gestart voor Gemeentelijke Stemwijzer 2026 (Ede): backlog #25-#33 opgesplitst in veilige implementatieslices.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-10T19:03:30+01:00",
+                        "role":  "Developer",
+                        "type":  "pr_review_merge",
+                        "msg":  "PR #34 (issue #30) gemerged: nieuw action=meta endpoint met Ede/2026 scope-lock + weging/publicatie-flags.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-10T19:10:00+01:00",
+                        "role":  "Developer",
+                        "type":  "pr_created",
+                        "msg":  "Issue #26 opgepakt: gemeentelijke stemwijzer datamodel/migratie-skelet + context hook. PR #35 geopend.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-10T19:40:00+01:00",
+                        "role":  "Developer",
+                        "type":  "pr_review_merge",
+                        "msg":  "PR #36 gemerged voor issue #27: scoring v2 + weging live in main.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-10T19:40:00+01:00",
+                        "role":  "Code Reviewer",
+                        "type":  "pr_review_merge",
+                        "msg":  "PR #37 gemerged voor issue #29: juridisch/ethisch disclaimer + methodekader.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-10T20:16:37+01:00",
+                        "role":  "DevOps",
+                        "type":  "deploy",
+                        "msg":  "Avonddeploy uitgevoerd: backup + pull gecontroleerd, geen nieuwe wijzigingen op main (Already up-to-date).",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-10T20:16:37+01:00",
+                        "role":  "QA Tester",
+                        "type":  "health_check",
+                        "msg":  "12/12 kritieke routes en API checks OK; gemiddelde laadtijd 119ms; PHP error log leeg.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-25T21:09:00+01:00",
+                        "role":  "Developer",
+                        "type":  "pr_created",
+                        "msg":  "Middag-slice voor issue #136 opgeleverd: grote inline partijen-CSS geÃ«xternaliseerd naar public/css/partijen-page-enhancements.css. PR #138 geopend voor review.",
+                        "ok":  true
+                    },
+                    {
+                        "ts":  "2026-03-25T21:30:00+01:00",
+                        "role":  "Developer",
+                        "type":  "pr_created",
+                        "msg":  "Issue #135 opgepakt: news_articles hot-query indexen + idempotente migratie toegevoegd. PR #139 geopend voor review.",
+                        "ok":  true
+                    }
+                ],
+    "today_developer_plan":  [
+                                 {
+                                     "issue":  174,
+                                     "slice":  "CSRF-tokenvalidatie op auto-likes-beheer POST + ajax toggle migreren naar POST",
+                                     "priority":  "P0",
+                                     "eta":  "\u003c2h",
+                                     "session":  "09:00",
+                                     "status":  "ready_for_dev"
+                                 },
+                                 {
+                                     "issue":  172,
+                                     "slice":  "Webserver hardening: /.git/* blokkeren + verificatie op HEAD/config/objects",
+                                     "priority":  "P0",
+                                     "eta":  "\u003c1h",
+                                     "session":  "13:00",
+                                     "status":  "ready_for_dev"
+                                 },
+                                 {
+                                     "issue":  173,
+                                     "slice":  "Reflected XSS fix: REQUEST_URI escapen in auto-likes-beheer admin link",
+                                     "priority":  "P1",
+                                     "eta":  "\u003c1h",
+                                     "session":  "17:00",
+                                     "status":  "ready_for_dev"
+                                 }
+                             ],
+    "updated_at":  "2026-03-31T08:12:00+02:00"
 }
