@@ -20,13 +20,13 @@
                                                      ]
                           },
     "last_developer_run":  {
-                               "ts":  "2026-03-27T13:38:00+01:00",
+                               "ts":  "2026-03-31T09:02:00+02:00",
                                "role":  "Developer",
-                               "issue":  147,
-                               "branch":  "dev/issue-147-contact-csrf",
-                               "pr_number":  156,
-                               "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/156",
-                               "summary":  "Contactformulier heeft nu CSRF-token generatie + hidden token field en verplichte validatie in de POST-handler met veilige redirect/foutmelding bij ongeldig token.",
-                               "status":  "in_review"
+                               "issue":  174,
+                               "branch":  "dev/issue-174-csrf-auto-likes",
+                               "pr_number":  null,
+                               "pr_url":  null,
+                               "summary":  "CSRF generation + validation ingebouwd voor alle auto-likes mutaties, inclusief POST-only AJAX toggle en formulieren. Push/PR zit vast omdat git push naar origin wacht op credentials (interactieve prompt).",
+                               "status":  "blocked"
                            }
 }
