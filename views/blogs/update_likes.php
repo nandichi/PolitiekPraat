@@ -2,18 +2,29 @@
 // Set content type early for all responses
 header('Content-Type: application/json');
 
+require_once '../../includes/config.php';
+require_once '../../includes/Database.php';
+require_once '../../includes/auth_csrf.php';
+
 // Debug logging
 error_log("Like endpoint hit - Method: " . $_SERVER['REQUEST_METHOD']);
 error_log("Headers: " . print_r(getallheaders(), true));
-error_log("POST data: " . print_r($_POST, true));
 
 // Check if this is an AJAX request or regular POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Accept both AJAX and regular POST requests
-    require_once '../../includes/config.php';
-    require_once '../../includes/Database.php';
-    
+    if (!auth_require_csrf_token_from_post()) {
+        error_log('Like error: ongeldig CSRF-token');
+        echo json_encode([
+            'success' => false,
+            'error' => 'Ongeldige CSRF-token'
+        ]);
+        exit;
+    }
+
     try {
+        $sanitizedPost = $_POST;
+        unset($sanitizedPost['csrf_token']);
+        error_log("POST data: " . print_r($sanitizedPost, true));
         if (!isset($_POST['slug']) || !isset($_POST['action'])) {
             throw new Exception('Ontbrekende parameters - slug: ' . (isset($_POST['slug']) ? 'aanwezig' : 'ontbreekt') . ', action: ' . (isset($_POST['action']) ? 'aanwezig' : 'ontbreekt'));
         }
