@@ -20,13 +20,13 @@
                                                      ]
                           },
     "last_developer_run":  {
-                               "ts":  "2026-03-31T09:02:00+02:00",
+                               "ts":  "2026-04-02T20:15:00+02:00",
                                "role":  "Developer",
                                "issue":  174,
                                "branch":  "dev/issue-174-csrf-auto-likes",
-                               "pr_number":  null,
-                               "pr_url":  null,
-                               "summary":  "CSRF generation + validation ingebouwd voor alle auto-likes mutaties, inclusief POST-only AJAX toggle en formulieren. Push/PR zit vast omdat git push naar origin wacht op credentials (interactieve prompt).",
-                               "status":  "blocked"
+                               "pr_number":  176,
+                               "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/176",
+                               "summary":  "CSRF-token toegevoegd aan de bloglike flow, de server valideert het token en de debuglogs loggen geen token meer. Public JS code gesplitst en de strings uit het template worden via blogViewData gedeeld. PR #176 staat klaar voor review.",
+                               "status":  "in_review"
                            }
 }
