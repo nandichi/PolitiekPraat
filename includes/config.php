@@ -84,9 +84,6 @@ if (!defined('CONFIG_INCLUDED')) {
         session_start();
     }
 
-    require_once __DIR__ . '/auth_remember.php';
-    remember_restore_session_from_cookie();
-
     // Include session refresh mechanism (requires Database class)
     require_once __DIR__ . '/session_refresh.php';
 

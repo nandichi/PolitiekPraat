@@ -148,13 +148,7 @@ if (!defined('REMEMBER_ME_INCLUDED')) {
                 $_SESSION['is_admin'] = (bool) $token_row->is_admin;
                 $_SESSION['profile_photo'] = $token_row->profile_photo;
 
-                $new_expires_at = time() + REMEMBER_ME_TTL_SECONDS;
-                $db->query('UPDATE user_remember_tokens SET expires_at = :expires_at WHERE token_hash = :token_hash');
-                $db->bind(':expires_at', date('Y-m-d H:i:s', $new_expires_at));
-                $db->bind(':token_hash', $cookie_token_hash);
-                $db->execute();
-
-                remember_set_cookie($cookie_token_raw, $new_expires_at);
+                remember_create_token((int) $token_row->user_id);
             } catch (Throwable $e) {
                 error_log('[remember-me] Restore failed: ' . $e->getMessage());
             }

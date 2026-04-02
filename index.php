@@ -19,6 +19,8 @@ require_once 'includes/functions.php';
 // Then include other files that might use those functions
 require_once 'includes/config.php';
 require_once 'includes/Database.php';
+require_once 'includes/auth_remember.php';
+remember_restore_session_from_cookie();
 require_once 'includes/Router.php';
 require_once 'includes/BlogController.php';
 require_once 'includes/CategoryController.php';
