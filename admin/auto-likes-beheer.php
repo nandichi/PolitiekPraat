@@ -6,7 +6,9 @@
 require_once '../includes/config.php';
 require_once '../includes/Database.php';
 require_once '../includes/functions.php';
+require_once '../includes/auth_csrf.php';
 
+$csrf_token = auth_ensure_csrf_token();
 // Controleer of gebruiker is ingelogd en admin is
 if (!isAdmin()) {
     redirect('login.php');
@@ -82,119 +84,129 @@ $successMessage = null;
 $errorMessage = null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $action = $_POST['action'] ?? '';
-    
-    switch ($action) {
-        case 'save_global_settings':
-            $globalEnabled = isset($_POST['global_enabled']) ? '1' : '0';
-            $defaultMinLikes = max(1, (int)($_POST['default_min_likes'] ?? 1));
-            $defaultMaxLikes = max($defaultMinLikes, (int)($_POST['default_max_likes'] ?? 5));
-            $likeChanceMin = max(1, min(100, (int)($_POST['like_chance_min'] ?? 30)));
-            $likeChanceMax = max($likeChanceMin, min(100, (int)($_POST['like_chance_max'] ?? 70)));
-            
-            updateSetting($db, 'global_enabled', $globalEnabled);
-            updateSetting($db, 'default_min_likes', $defaultMinLikes);
-            updateSetting($db, 'default_max_likes', $defaultMaxLikes);
-            updateSetting($db, 'like_chance_min', $likeChanceMin);
-            updateSetting($db, 'like_chance_max', $likeChanceMax);
-            
-            $successMessage = "Globale instellingen opgeslagen";
-            break;
-            
-        case 'toggle_blog':
-            $blogId = (int)($_POST['blog_id'] ?? 0);
-            $enabled = isset($_POST['enabled']) ? 1 : 0;
-            
-            if ($blogId > 0) {
-                // Insert of update config
-                $db->query("INSERT INTO auto_likes_config (blog_id, enabled) VALUES (:blog_id, :enabled)
-                            ON DUPLICATE KEY UPDATE enabled = :enabled2");
-                $db->bind(':blog_id', $blogId);
-                $db->bind(':enabled', $enabled);
-                $db->bind(':enabled2', $enabled);
-                
-                if ($db->execute()) {
-                    $successMessage = "Blog configuratie bijgewerkt";
-                } else {
-                    $errorMessage = "Fout bij bijwerken configuratie";
-                }
-            }
-            break;
-            
-        case 'update_blog_config':
-            $blogId = (int)($_POST['blog_id'] ?? 0);
-            $enabled = isset($_POST['enabled']) ? 1 : 0;
-            $minLikes = max(1, (int)($_POST['min_likes'] ?? 1));
-            $maxLikes = max($minLikes, (int)($_POST['max_likes'] ?? 5));
-            
-            if ($blogId > 0) {
-                $db->query("INSERT INTO auto_likes_config (blog_id, enabled, min_likes_per_run, max_likes_per_run) 
-                            VALUES (:blog_id, :enabled, :min_likes, :max_likes)
-                            ON DUPLICATE KEY UPDATE enabled = :enabled2, min_likes_per_run = :min_likes2, max_likes_per_run = :max_likes2");
-                $db->bind(':blog_id', $blogId);
-                $db->bind(':enabled', $enabled);
-                $db->bind(':enabled2', $enabled);
-                $db->bind(':min_likes', $minLikes);
-                $db->bind(':min_likes2', $minLikes);
-                $db->bind(':max_likes', $maxLikes);
-                $db->bind(':max_likes2', $maxLikes);
-                
-                if ($db->execute()) {
-                    $successMessage = "Blog configuratie opgeslagen";
-                } else {
-                    $errorMessage = "Fout bij opslaan configuratie";
-                }
-            }
-            break;
-            
-        case 'bulk_enable':
-            $db->query("UPDATE auto_likes_config SET enabled = 1");
-            $db->execute();
-            
-            // Voeg ook blogs toe die nog geen config hebben
-            $db->query("INSERT IGNORE INTO auto_likes_config (blog_id, enabled) SELECT id, 1 FROM blogs");
-            $db->execute();
-            
-            $successMessage = "Alle blogs ingeschakeld voor auto likes";
-            break;
-            
-        case 'bulk_disable':
-            $db->query("UPDATE auto_likes_config SET enabled = 0");
-            $db->execute();
-            $successMessage = "Alle blogs uitgeschakeld voor auto likes";
-            break;
-            
-        case 'clear_logs':
-            $db->query("DELETE FROM auto_likes_log");
-            $db->execute();
-            $successMessage = "Alle logs gewist";
-            break;
-    }
-}
-
-// AJAX toggle request
-if (isset($_GET['ajax']) && $_GET['ajax'] === 'toggle') {
-    header('Content-Type: application/json');
-    
-    $blogId = (int)($_GET['blog_id'] ?? 0);
-    $enabled = (int)($_GET['enabled'] ?? 0);
-    
-    if ($blogId > 0) {
-        $db->query("INSERT INTO auto_likes_config (blog_id, enabled) VALUES (:blog_id, :enabled)
-                    ON DUPLICATE KEY UPDATE enabled = :enabled2");
-        $db->bind(':blog_id', $blogId);
-        $db->bind(':enabled', $enabled);
-        $db->bind(':enabled2', $enabled);
+    // AJAX toggle request
+    if (isset($_POST['ajax']) && $_POST['ajax'] === 'toggle') {
+        header('Content-Type: application/json; charset=utf-8');
         
-        if ($db->execute()) {
-            echo json_encode(['success' => true, 'message' => 'Status bijgewerkt']);
-        } else {
-            echo json_encode(['success' => false, 'message' => 'Fout bij bijwerken']);
+        if (!auth_require_csrf_token_from_post()) {
+            echo json_encode(['success' => false, 'message' => 'Ongeldige CSRF-token'], JSON_UNESCAPED_UNICODE);
+            exit;
         }
-    } else {
-        echo json_encode(['success' => false, 'message' => 'Ongeldig blog ID']);
+
+        $blogId = (int)($_POST['blog_id'] ?? 0);
+        $enabled = (int)($_POST['enabled'] ?? 0);
+
+        if ($blogId > 0) {
+            $enabledFlag = $enabled === 1 ? 1 : 0;
+            $db->query("INSERT INTO auto_likes_config (blog_id, enabled) VALUES (:blog_id, :enabled)
+                        ON DUPLICATE KEY UPDATE enabled = :enabled2");
+            $db->bind(':blog_id', $blogId);
+            $db->bind(':enabled', $enabledFlag);
+            $db->bind(':enabled2', $enabledFlag);
+            
+            if ($db->execute()) {
+                echo json_encode(['success' => true, 'message' => 'Status bijgewerkt'], JSON_UNESCAPED_UNICODE);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Fout bij bijwerken'], JSON_UNESCAPED_UNICODE);
+            }
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Ongeldig blog ID'], JSON_UNESCAPED_UNICODE);
+        }
+        exit;
     }
-    exit;
+
+    if (!auth_require_csrf_token_from_post()) {
+        $errorMessage = "Ongeldige of ontbrekende CSRF-token.";
+    } else {
+        $action = $_POST['action'] ?? '';
+        
+        switch ($action) {
+            case 'save_global_settings':
+                $globalEnabled = isset($_POST['global_enabled']) ? '1' : '0';
+                $defaultMinLikes = max(1, (int)($_POST['default_min_likes'] ?? 1));
+                $defaultMaxLikes = max($defaultMinLikes, (int)($_POST['default_max_likes'] ?? 5));
+                $likeChanceMin = max(1, min(100, (int)($_POST['like_chance_min'] ?? 30)));
+                $likeChanceMax = max($likeChanceMin, min(100, (int)($_POST['like_chance_max'] ?? 70)));
+                
+                updateSetting($db, 'global_enabled', $globalEnabled);
+                updateSetting($db, 'default_min_likes', $defaultMinLikes);
+                updateSetting($db, 'default_max_likes', $defaultMaxLikes);
+                updateSetting($db, 'like_chance_min', $likeChanceMin);
+                updateSetting($db, 'like_chance_max', $likeChanceMax);
+                
+                $successMessage = "Globale instellingen opgeslagen";
+                break;
+            
+            case 'toggle_blog':
+                $blogId = (int)($_POST['blog_id'] ?? 0);
+                $enabled = isset($_POST['enabled']) ? 1 : 0;
+                
+                if ($blogId > 0) {
+                    // Insert of update config
+                    $db->query("INSERT INTO auto_likes_config (blog_id, enabled) VALUES (:blog_id, :enabled)
+                                ON DUPLICATE KEY UPDATE enabled = :enabled2");
+                    $db->bind(':blog_id', $blogId);
+                    $db->bind(':enabled', $enabled);
+                    $db->bind(':enabled2', $enabled);
+                    
+                    if ($db->execute()) {
+                        $successMessage = "Blog configuratie bijgewerkt";
+                    } else {
+                        $errorMessage = "Fout bij bijwerken configuratie";
+                    }
+                }
+                break;
+            
+            case 'update_blog_config':
+                $blogId = (int)($_POST['blog_id'] ?? 0);
+                $enabled = isset($_POST['enabled']) ? 1 : 0;
+                $minLikes = max(1, (int)($_POST['min_likes'] ?? 1));
+                $maxLikes = max($minLikes, (int)($_POST['max_likes'] ?? 5));
+                
+                if ($blogId > 0) {
+                    $db->query("INSERT INTO auto_likes_config (blog_id, enabled, min_likes_per_run, max_likes_per_run) 
+                                VALUES (:blog_id, :enabled, :min_likes, :max_likes)
+                                ON DUPLICATE KEY UPDATE enabled = :enabled2, min_likes_per_run = :min_likes2, max_likes_per_run = :max_likes2");
+                    $db->bind(':blog_id', $blogId);
+                    $db->bind(':enabled', $enabled);
+                    $db->bind(':enabled2', $enabled);
+                    $db->bind(':min_likes', $minLikes);
+                    $db->bind(':min_likes2', $minLikes);
+                    $db->bind(':max_likes', $maxLikes);
+                    $db->bind(':max_likes2', $maxLikes);
+                    
+                    if ($db->execute()) {
+                        $successMessage = "Blog configuratie opgeslagen";
+                    } else {
+                        $errorMessage = "Fout bij opslaan configuratie";
+                    }
+                }
+                break;
+            
+            case 'bulk_enable':
+                $db->query("UPDATE auto_likes_config SET enabled = 1");
+                $db->execute();
+                
+                // Voeg ook blogs toe die nog geen config hebben
+                $db->query("INSERT IGNORE INTO auto_likes_config (blog_id, enabled) SELECT id, 1 FROM blogs");
+                $db->execute();
+                
+                $successMessage = "Alle blogs ingeschakeld voor auto likes";
+                break;
+            
+            case 'bulk_disable':
+                $db->query("UPDATE auto_likes_config SET enabled = 0");
+                $db->execute();
+                $successMessage = "Alle blogs uitgeschakeld voor auto likes";
+                break;
+            
+            case 'clear_logs':
+                $db->query("DELETE FROM auto_likes_log");
+                $db->execute();
+                $successMessage = "Alle logs gewist";
+                break;
+        }
+    }
 }
 
 // Haal globale instellingen op
@@ -448,6 +460,7 @@ require_once '../views/templates/header.php';
                 
                 <form method="POST" class="p-6 space-y-4">
                     <input type="hidden" name="action" value="save_global_settings">
+                    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token, ENT_QUOTES, 'UTF-8') ?>">
                     
                     <!-- Global Toggle -->
                     <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
@@ -512,6 +525,7 @@ require_once '../views/templates/header.php';
                 <div class="p-6 space-y-4">
                     <form method="POST">
                         <input type="hidden" name="action" value="bulk_enable">
+                        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token, ENT_QUOTES, 'UTF-8') ?>">
                         <button type="submit" 
                                 class="w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white font-semibold py-3 px-6 rounded-lg hover:from-green-600 hover:to-emerald-700 transition-all duration-300 mb-3">
                             <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -523,6 +537,7 @@ require_once '../views/templates/header.php';
                     
                     <form method="POST">
                         <input type="hidden" name="action" value="bulk_disable">
+                        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token, ENT_QUOTES, 'UTF-8') ?>">
                         <button type="submit" 
                                 class="w-full bg-gradient-to-r from-gray-500 to-gray-600 text-white font-semibold py-3 px-6 rounded-lg hover:from-gray-600 hover:to-gray-700 transition-all duration-300 mb-3">
                             <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -534,6 +549,7 @@ require_once '../views/templates/header.php';
                     
                     <form method="POST" onsubmit="return confirm('Weet je zeker dat je alle logs wilt wissen?')">
                         <input type="hidden" name="action" value="clear_logs">
+                        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token, ENT_QUOTES, 'UTF-8') ?>">
                         <button type="submit" 
                                 class="w-full bg-gradient-to-r from-red-500 to-rose-600 text-white font-semibold py-3 px-6 rounded-lg hover:from-red-600 hover:to-rose-700 transition-all duration-300">
                             <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -648,6 +664,7 @@ require_once '../views/templates/header.php';
         <form method="POST" class="p-6 space-y-4">
             <input type="hidden" name="action" value="update_blog_config">
             <input type="hidden" name="blog_id" id="modalBlogId">
+            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token, ENT_QUOTES, 'UTF-8') ?>">
             
             <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
                 <div>
@@ -690,6 +707,9 @@ require_once '../views/templates/header.php';
 </div>
 
 <script>
+const autoLikesCsrfToken = <?= json_encode($csrf_token, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>;
+const autoLikesAjaxEndpoint = window.location.pathname;
+
 function toggleBlog(blogId, enabled) {
     const row = document.querySelector(`[data-blog-id="${blogId}"]`);
     const toggle = row.querySelector('.toggle-switch');
@@ -698,7 +718,20 @@ function toggleBlog(blogId, enabled) {
     toggle.classList.toggle('active');
     row.classList.toggle('disabled');
     
-    fetch(`?ajax=toggle&blog_id=${blogId}&enabled=${enabled}`)
+    const payload = new URLSearchParams({
+        ajax: 'toggle',
+        blog_id: blogId,
+        enabled: enabled ? 1 : 0,
+        csrf_token: autoLikesCsrfToken
+    });
+
+    fetch(autoLikesAjaxEndpoint, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: payload
+    })
         .then(response => response.json())
         .then(data => {
             if (!data.success) {
