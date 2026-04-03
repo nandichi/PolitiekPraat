@@ -33,6 +33,113 @@ function stripMarkdown($text) {
     return $text;
 }
 
+function normalize_party_key($name) {
+    if (empty($name)) {
+        return '';
+    }
+
+    return strtolower(preg_replace('/[^a-z0-9]+/i', '', $name));
+}
+
+function build_party_acronym($name) {
+    if (empty($name)) {
+        return null;
+    }
+
+    $clean = str_replace(['-', '/', '&'], ' ', $name);
+    $words = preg_split('/\s+/', $clean, -1, PREG_SPLIT_NO_EMPTY);
+    $stopWords = ['de', 'van', 'voor', 'het', 'een', 'en', 'der', 'tot', 'te', 'op', 'aan', 'met', 'over', 'door'];
+    $letters = '';
+
+    foreach ($words as $word) {
+        $word = preg_replace('/[^a-zA-Z]/', '', $word);
+        if ($word === '') {
+            continue;
+        }
+
+        if (strlen($word) <= 2 && in_array(strtolower($word), $stopWords, true)) {
+            continue;
+        }
+
+        $letters .= strtoupper($word[0]);
+    }
+
+    return $letters !== '' ? $letters : null;
+}
+
+function load_party_logo_lookup() {
+    static $lookup;
+
+    if ($lookup !== null) {
+        return $lookup;
+    }
+
+    $lookup = [];
+    $cacheFile = dirname(__DIR__) . '/cache/politieke_partijen.json';
+
+    if (!file_exists($cacheFile)) {
+        return $lookup;
+    }
+
+    $payload = json_decode(file_get_contents($cacheFile), true);
+
+    if (empty($payload['data']) || !is_array($payload['data'])) {
+        return $lookup;
+    }
+
+    foreach ($payload['data'] as $entry) {
+        $logo = $entry['logo'] ?? null;
+        if (empty($logo)) {
+            continue;
+        }
+
+        $name = $entry['naam'] ?? '';
+        $primaryKey = normalize_party_key($name);
+
+        if ($primaryKey !== '') {
+            $lookup[$primaryKey] = $logo;
+        }
+
+        $acronym = build_party_acronym($name);
+        if ($acronym !== null) {
+            $lookup[strtolower($acronym)] = $logo;
+        }
+    }
+
+    return $lookup;
+}
+
+function get_party_logo_url($party_name) {
+    if (empty($party_name)) {
+        return null;
+    }
+
+    $lookup = load_party_logo_lookup();
+    if (empty($lookup)) {
+        return null;
+    }
+
+    $normalized = normalize_party_key($party_name);
+    if ($normalized !== '' && isset($lookup[$normalized])) {
+        return $lookup[$normalized];
+    }
+
+    if ($normalized !== '') {
+        foreach ($lookup as $key => $logo) {
+            if (strpos($key, $normalized) !== false || strpos($normalized, $key) !== false) {
+                return $logo;
+            }
+        }
+    }
+
+    $acronym = build_party_acronym($party_name);
+    if ($acronym !== null && isset($lookup[strtolower($acronym)])) {
+        return $lookup[strtolower($acronym)];
+    }
+
+    return null;
+}
+
 // Force canonical homepage URL: /home -> / (SEO duplicate content prevention)
 $requestPath = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?? '/';
 if (rtrim($requestPath, '/') === '/home') {
@@ -278,7 +385,18 @@ foreach ($nederlandse_verkiezingen as $verkiezing) {
             $verkiezing->grootste_partij_percentage = $partijUitslagen[0]->percentage ?? null;
         }
     }
+
+    $verkiezing->grootste_partij_logo = get_party_logo_url($verkiezing->grootste_partij ?? null);
 }
+
+$latest_election_year = date('Y');
+if (!empty($nederlandse_verkiezingen)) {
+    $years = array_map(function ($record) {
+        return (int) ($record->jaar ?? 0);
+    }, $nederlandse_verkiezingen);
+    $latest_election_year = max($years);
+}
+$next_election_year = (int) $latest_election_year + 2;
 
 // Haal de populairste blogs op voor de hero sectie
 $db->query("SELECT blogs.*, users.username as author_name, users.profile_photo as author_photo 
@@ -1573,6 +1691,12 @@ require_once 'views/templates/header.php';
                     </p>
                 </div>
             </div>
+            <div class="max-w-3xl mx-auto">
+                <p class="text-sm text-slate-300 leading-relaxed">
+                    Laatste geregistreerde Tweede Kamerverkiezingen: <?php echo $latest_election_year; ?>.
+                    Volgende stembusgang gepland voor <?php echo $next_election_year; ?> — houd onze analyses en stemhulpen in de gaten.
+                </p>
+            </div>
 
             <!-- Nederlandse verkiezingen timeline -->
             <?php if (!empty($nederlandse_verkiezingen)): ?>
@@ -1611,18 +1735,28 @@ require_once 'views/templates/header.php';
                         </div>
                         
                         <!-- Grootste partij info -->
-                        <div class="space-y-4 mb-6">
+                    <div class="space-y-4 mb-6">
+                        <div class="flex items-center gap-3">
+                            <?php if (!empty($verkiezing->grootste_partij_logo)): ?>
+                            <div class="w-12 h-12 bg-slate-900/60 rounded-2xl border border-white/10 p-2 flex items-center justify-center">
+                                <img src="<?php echo htmlspecialchars($verkiezing->grootste_partij_logo); ?>"
+                                     alt="Logo <?php echo htmlspecialchars($verkiezing->grootste_partij ?? 'partij'); ?>"
+                                     class="w-full h-full object-contain"
+                                     loading="lazy">
+                            </div>
+                            <?php endif; ?>
                             <h3 class="text-xl font-bold text-slate-100 line-clamp-2">
                                 <?php echo htmlspecialchars($verkiezing->grootste_partij ?? 'Onbekend'); ?>
                             </h3>
-                            
-                            <div class="flex items-center space-x-2">
-                                <div class="w-3 h-3 bg-orange-400 rounded-full"></div>
-                                <span class="text-slate-300 text-sm font-medium">
-                                    Grootste partij
-                                </span>
-                            </div>
                         </div>
+                        
+                        <div class="flex items-center space-x-2">
+                            <div class="w-3 h-3 bg-orange-400 rounded-full"></div>
+                            <span class="text-slate-300 text-sm font-medium">
+                                Grootste partij
+                            </span>
+                        </div>
+                    </div>
                         
                         <!-- Statistics -->
                         <div class="space-y-3">
