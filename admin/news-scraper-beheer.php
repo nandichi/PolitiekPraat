@@ -16,9 +16,18 @@ $db = new Database();
 $newsModel = new NewsModel($db);
 $scraper = new NewsScraper($newsModel);
 
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 // Verwerk formulier submissions
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['action'])) {
+    $providedCsrf = $_POST['csrf_token'] ?? '';
+    $sessionCsrf = $_SESSION['csrf_token'] ?? '';
+
+    if (!hash_equals($sessionCsrf, $providedCsrf)) {
+        $errorMessage = 'Ongeldige beveiligingstoken. Probeer opnieuw.';
+    } elseif (isset($_POST['action'])) {
         switch ($_POST['action']) {
             case 'manual_scrape':
                 // Handmatige scraping uitvoeren
@@ -340,6 +349,7 @@ require_once '../views/templates/header.php';
                 <div class="p-6 space-y-4">
                     <form method="POST" class="space-y-4">
                         <input type="hidden" name="action" value="manual_scrape">
+                        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
                         
                         <button type="submit" 
                                 class="w-full bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-semibold py-3 px-6 rounded-lg hover:from-emerald-600 hover:to-teal-700 transition-all duration-300 shadow-lg hover:shadow-xl">
@@ -352,6 +362,7 @@ require_once '../views/templates/header.php';
                     
                     <form method="POST" class="space-y-4">
                         <input type="hidden" name="action" value="cleanup_old">
+                        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
                         
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Cleanup Oude Artikelen</label>
@@ -375,6 +386,7 @@ require_once '../views/templates/header.php';
                     
                     <form method="POST" class="space-y-4">
                         <input type="hidden" name="action" value="test_sources">
+                        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
                         
                         <button type="submit" 
                                 class="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold py-3 px-6 rounded-lg hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl">
@@ -397,6 +409,7 @@ require_once '../views/templates/header.php';
                 <div class="p-6">
                     <form method="POST" class="space-y-4">
                         <input type="hidden" name="action" value="save_auto_settings">
+                        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
                         
                         <div class="flex items-center space-x-3">
                             <input type="checkbox" name="auto_enabled" id="auto_enabled" 
