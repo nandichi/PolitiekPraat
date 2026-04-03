@@ -20,13 +20,13 @@
                                                      ]
                           },
     "last_developer_run":  {
-                               "ts":  "2026-04-02T20:15:00+02:00",
+                               "ts":  "2026-04-03T12:22:00+02:00",
                                "role":  "Developer",
-                               "issue":  174,
-                               "branch":  "dev/issue-174-csrf-auto-likes",
-                               "pr_number":  176,
-                               "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/176",
-                               "summary":  "CSRF-token toegevoegd aan de bloglike flow, de server valideert het token en de debuglogs loggen geen token meer. Public JS code gesplitst en de strings uit het template worden via blogViewData gedeeld. PR #176 staat klaar voor review.",
+                               "issue":  180,
+                               "branch":  "dev/issue-180-security-news-scraper-csrf",
+                               "pr_number":  183,
+                               "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/183",
+                               "summary":  "CSRF-validation voor alle POST-acties in admin/news-scraper-beheer: tokens worden gegenereerd, gecontroleerd en in alle formulieren gerenderd, invalid tokens krijgen een foutmelding. php -l admin/news-scraper-beheer.php kon niet draaien omdat php niet beschikbaar is.",
                                "status":  "in_review"
                            }
 }
