@@ -24,9 +24,9 @@
                                "role":  "Developer",
                                "issue":  2,
                                "branch":  "dev/pol-2-devflow-guidelines",
-                               "pr_number":  null,
-                               "pr_url":  "",
-                               "summary":  "Documented deze dev-run volgens POL-2 instructies: skills/rol gelezen, hoogste prioriteit gecheckt, branch aangemaakt en statebestand aangepast.",
+                               "pr_number":  192,
+                               "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/192",
+                               "summary":  "Documented deze dev-run volgens POL-2 instructies: skills/rol gelezen, hoogste prioriteit gecheckt, branch aangemaakt en statebestand aangepast. PR #192 aangemaakt voor review.",
                                "status":  "in_review"
                            }
 }
