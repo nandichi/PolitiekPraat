@@ -20,13 +20,13 @@
                                                      ]
                           },
     "last_developer_run":  {
-                               "ts":  "2026-04-03T12:22:00+02:00",
+                               "ts":  "2026-04-03T22:55:00+02:00",
                                "role":  "Developer",
-                               "issue":  180,
-                               "branch":  "dev/issue-180-security-news-scraper-csrf",
-                               "pr_number":  183,
-                               "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/183",
-                               "summary":  "CSRF-validation voor alle POST-acties in admin/news-scraper-beheer: tokens worden gegenereerd, gecontroleerd en in alle formulieren gerenderd, invalid tokens krijgen een foutmelding. php -l admin/news-scraper-beheer.php kon niet draaien omdat php niet beschikbaar is.",
+                               "issue":  2,
+                               "branch":  "dev/pol-2-devflow-guidelines",
+                               "pr_number":  null,
+                               "pr_url":  "",
+                               "summary":  "Documented deze dev-run volgens POL-2 instructies: skills/rol gelezen, hoogste prioriteit gecheckt, branch aangemaakt en statebestand aangepast.",
                                "status":  "in_review"
                            }
 }
