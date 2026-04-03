@@ -2,9 +2,11 @@
     
     <!-- Page Context Indicator -->
     <?php echo renderPageContextIndicator(); ?>
-    
+    <?php
+    $current_year = (int) date('Y');
+    $display_year = max($current_year, 2026);
+    ?>
 
-    
     <footer class="relative">
         <!-- Decoratieve top border met gradient -->
         <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-secondary to-accent"></div>
@@ -250,7 +252,7 @@
         <div class="bg-gray-50 border-t border-gray-200">
             <div class="container mx-auto px-4 py-6">
                 <div class="flex flex-col md:flex-row justify-between items-center text-gray-500 text-sm">
-                    <p>&copy; <?php echo date('Y'); ?> PolitiekPraat. Alle rechten voorbehouden.</p>
+                    <p>&copy; <?php echo $display_year; ?> PolitiekPraat. Alle rechten voorbehouden.</p>
                     <div class="flex space-x-8 mt-4 md:mt-0">
                         <a href="<?php echo URLROOT; ?>/privacy-policy" class="hover:text-primary transition-colors duration-300">Privacy Policy</a>
                         <a href="<?php echo URLROOT; ?>/gebruiksvoorwaarden" class="hover:text-primary transition-colors duration-300">Gebruiksvoorwaarden</a>
