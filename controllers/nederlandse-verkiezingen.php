@@ -269,7 +269,21 @@ try {
         $verkiezingStmt->execute();
         $verkiezing = $verkiezingStmt->fetch(PDO::FETCH_OBJ);
         
-        if (!$verkiezing) {
+        if (!$verkiezing && $jaar === 2025) {
+            $fallbackObj = (object) $fallback_latest_verkiezing_2025;
+            $fallbackObj->partij_uitslagen_raw = $fallbackObj->partij_uitslagen;
+            $fallbackObj->coalitie_partijen_raw = $fallbackObj->coalitie_partijen;
+            $fallbackObj->oppositie_partijen_raw = $fallbackObj->oppositie_partijen;
+            $fallbackObj->belangrijkste_themas_raw = $fallbackObj->belangrijkste_themas ?? '[]';
+            $fallbackObj->nieuwe_partijen_raw = $fallbackObj->nieuwe_partijen ?? '[]';
+            $fallbackObj->verdwenen_partijen_raw = $fallbackObj->verdwenen_partijen ?? '[]';
+            $fallbackObj->kiesdrempel_gehaald_raw = $fallbackObj->kiesdrempel_gehaald ?? '[]';
+            $fallbackObj->kiesdrempel_gemist_raw = $fallbackObj->kiesdrempel_gemist ?? '[]';
+            $fallbackObj->lijsttrekkers_raw = $fallbackObj->lijsttrekkers ?? '[]';
+            $fallbackObj->tv_debatten_raw = $fallbackObj->tv_debatten ?? '[]';
+            $fallbackObj->bronnen_raw = $fallbackObj->bronnen ?? '[]';
+            $verkiezing = $fallbackObj;
+        } elseif (!$verkiezing) {
             header('Location: ' . URLROOT . '/nederlandse-verkiezingen');
             exit();
         }
@@ -372,7 +386,9 @@ try {
         }
     }
     if (!$hasLatestElection2025) {
-        array_unshift($verkiezingenData, (object) $fallback_latest_verkiezing_2025);
+        $fb = (object) $fallback_latest_verkiezing_2025;
+        $fb->periode = 'Digitale Era & Polarisatie (2001-heden)';
+        array_unshift($verkiezingenData, $fb);
     }
 
     // Groepeer verkiezingen per periode en parse JSON data
