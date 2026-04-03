@@ -67,13 +67,7 @@ function build_party_acronym($name) {
     return $letters !== '' ? $letters : null;
 }
 
-function load_party_logo_lookup() {
-    static $lookup;
-
-    if ($lookup !== null) {
-        return $lookup;
-    }
-
+function load_party_logo_lookup_from_cache() {
     $lookup = [];
     $cacheFile = dirname(__DIR__) . '/cache/politieke_partijen.json';
 
@@ -104,6 +98,55 @@ function load_party_logo_lookup() {
         if ($acronym !== null) {
             $lookup[strtolower($acronym)] = $logo;
         }
+    }
+
+    return $lookup;
+}
+
+function load_party_logo_lookup() {
+    static $lookup;
+
+    if ($lookup !== null) {
+        return $lookup;
+    }
+
+    $lookup = [];
+    try {
+        $partyModel = new PartyModel();
+        $dbParties = $partyModel->getAllParties();
+        foreach ($dbParties as $partyKey => $party) {
+            $logo = trim($party['logo'] ?? '');
+            if ($logo === '') {
+                continue;
+            }
+
+            $keysToNormalize = [];
+            if (!empty($partyKey)) {
+                $keysToNormalize[] = $partyKey;
+            }
+            if (!empty($party['name'])) {
+                $keysToNormalize[] = $party['name'];
+            }
+
+            $acronym = build_party_acronym($party['name'] ?? '');
+            if ($acronym !== null) {
+                $keysToNormalize[] = $acronym;
+            }
+
+            foreach ($keysToNormalize as $key) {
+                $normalized = normalize_party_key($key);
+                if ($normalized === '') {
+                    continue;
+                }
+                $lookup[$normalized] = $logo;
+            }
+        }
+    } catch (Exception $e) {
+        // Fallback to cached data when the database cannot be read
+    }
+
+    if (empty($lookup)) {
+        $lookup = load_party_logo_lookup_from_cache();
     }
 
     return $lookup;
