@@ -1,5 +1,6 @@
 <?php
 require_once BASE_PATH . '/includes/auth_csrf.php';
+require_once BASE_PATH . '/includes/auth_remember.php';
 
 $error = '';
 $csrf_token = auth_ensure_csrf_token();
@@ -38,6 +39,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['username'] = $user->username;
             $_SESSION['is_admin'] = $user->is_admin;
             $_SESSION['profile_photo'] = $user->profile_photo;
+
+            if (isset($_POST['remember'])) {
+                remember_create_token((int) $user->id);
+            } else {
+                remember_invalidate_current_token();
+            }
             
             // Redirect to dashboard
             header('Location: ' . URLROOT);
@@ -222,6 +229,7 @@ require_once BASE_PATH . '/views/templates/header.php';
                         <input type="checkbox" 
                                id="remember" 
                                name="remember" 
+                               value="1"
                                class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded">
                         <label for="remember" class="ml-2 block text-sm text-gray-700">
                             Onthoud mij op deze computer
