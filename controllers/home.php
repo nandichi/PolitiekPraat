@@ -67,13 +67,7 @@ function build_party_acronym($name) {
     return $letters !== '' ? $letters : null;
 }
 
-function load_party_logo_lookup() {
-    static $lookup;
-
-    if ($lookup !== null) {
-        return $lookup;
-    }
-
+function load_party_logo_lookup_from_cache() {
     $lookup = [];
     $cacheFile = dirname(__DIR__) . '/cache/politieke_partijen.json';
 
@@ -104,6 +98,56 @@ function load_party_logo_lookup() {
         if ($acronym !== null) {
             $lookup[strtolower($acronym)] = $logo;
         }
+    }
+
+    return $lookup;
+}
+
+function load_party_logo_lookup() {
+    static $lookup;
+
+    if ($lookup !== null) {
+        return $lookup;
+    }
+
+    $lookup = [];
+    try {
+        $partyModel = new PartyModel();
+        $dbParties = $partyModel->getAllParties();
+        foreach ($dbParties as $partyKey => $party) {
+            $logo = trim($party['logo'] ?? '');
+            if ($logo === '') {
+                continue;
+            }
+
+            $keysToNormalize = [];
+            if (!empty($partyKey)) {
+                $keysToNormalize[] = $partyKey;
+            }
+            if (!empty($party['name'])) {
+                $keysToNormalize[] = $party['name'];
+            }
+
+            $acronym = build_party_acronym($party['name'] ?? '');
+            if ($acronym !== null) {
+                $keysToNormalize[] = $acronym;
+            }
+
+            foreach ($keysToNormalize as $key) {
+                $normalized = normalize_party_key($key);
+                if ($normalized === '') {
+                    continue;
+                }
+
+                $lookup[$normalized] = $logo;
+            }
+        }
+    } catch (Exception $e) {
+        // Fallback naar cache wanneer database tijdelijk niet beschikbaar is
+    }
+
+    if (empty($lookup)) {
+        $lookup = load_party_logo_lookup_from_cache();
     }
 
     return $lookup;
@@ -374,6 +418,22 @@ $amerikaanse_verkiezingen = $db->resultSet();
 $db->query("SELECT * FROM nederlandse_verkiezingen ORDER BY jaar DESC LIMIT 4");
 $nederlandse_verkiezingen = $db->resultSet();
 
+$fallback_data = require BASE_PATH . '/includes/data/nederlandse_verkiezingen_2025.php';
+$fallback_latest_verkiezing_2025 = $fallback_data['fallback_latest_verkiezing_2025'] ?? null;
+if ($fallback_latest_verkiezing_2025) {
+    $has_latest = false;
+    foreach ($nederlandse_verkiezingen as $record) {
+        if (!empty($record->jaar) && (int) $record->jaar === (int) $fallback_latest_verkiezing_2025['jaar']) {
+            $has_latest = true;
+            break;
+        }
+    }
+
+    if (!$has_latest) {
+        array_unshift($nederlandse_verkiezingen, (object) $fallback_latest_verkiezing_2025);
+    }
+}
+
 // Parse Nederlandse verkiezingen data
 foreach ($nederlandse_verkiezingen as $verkiezing) {
     // Parse partij uitslagen voor grootste partij info
@@ -387,6 +447,10 @@ foreach ($nederlandse_verkiezingen as $verkiezing) {
     }
 
     $verkiezing->grootste_partij_logo = get_party_logo_url($verkiezing->grootste_partij ?? null);
+}
+
+if (count($nederlandse_verkiezingen) > 4) {
+    $nederlandse_verkiezingen = array_slice($nederlandse_verkiezingen, 0, 4);
 }
 
 $latest_election_year = date('Y');
@@ -1721,8 +1785,15 @@ require_once 'views/templates/header.php';
                         <!-- Jaar en grootste partij -->
                         <div class="flex items-center space-x-4 mb-6">
                             <!-- Jaar badge -->
-                            <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-orange-500 to-blue-600 rounded-full shadow-xl">
-                                <span class="text-white font-black text-lg"><?php echo substr($verkiezing->jaar, -2); ?></span>
+                            <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-orange-500 to-blue-600 rounded-full shadow-xl overflow-hidden p-2">
+                                <?php if (!empty($verkiezing->grootste_partij_logo)): ?>
+                                    <img src="<?php echo htmlspecialchars($verkiezing->grootste_partij_logo); ?>"
+                                         alt="Logo <?php echo htmlspecialchars($verkiezing->grootste_partij ?? 'partij'); ?>"
+                                         class="w-full h-full object-contain"
+                                         loading="lazy">
+                                <?php else: ?>
+                                    <span class="text-white font-black text-lg"><?php echo substr($verkiezing->jaar, -2); ?></span>
+                                <?php endif; ?>
                             </div>
                             
                             <!-- Verkiezing info -->
@@ -1735,16 +1806,8 @@ require_once 'views/templates/header.php';
                         </div>
                         
                         <!-- Grootste partij info -->
-                    <div class="space-y-4 mb-6">
-                        <div class="flex items-center gap-3">
-                            <?php if (!empty($verkiezing->grootste_partij_logo)): ?>
-                            <div class="w-12 h-12 bg-slate-900/60 rounded-2xl border border-white/10 p-2 flex items-center justify-center">
-                                <img src="<?php echo htmlspecialchars($verkiezing->grootste_partij_logo); ?>"
-                                     alt="Logo <?php echo htmlspecialchars($verkiezing->grootste_partij ?? 'partij'); ?>"
-                                     class="w-full h-full object-contain"
-                                     loading="lazy">
-                            </div>
-                            <?php endif; ?>
+                        <div class="space-y-4 mb-6">
+                        <div class="flex items-center">
                             <h3 class="text-xl font-bold text-slate-100 line-clamp-2">
                                 <?php echo htmlspecialchars($verkiezing->grootste_partij ?? 'Onbekend'); ?>
                             </h3>
