@@ -1,22 +1,20 @@
-{
+﻿{
     "last_techlead_run":  {
-                              "ts":  "2026-03-31T08:12:00+02:00",
+                              "ts":  "2026-04-06T13:03:00+02:00",
                               "role":  "Tech Lead",
-                              "summary":  "Ochtendscan afgerond. Nieuwe issues #172 (.git exposure), #173 (reflected XSS auto-likes dashboard), #174 (CSRF op auto-likes mutaties) aangemaakt. Developer-prio: eerst #174, daarna #172, daarna #173.",
+                              "summary":  "Middagscan afgerond. Nieuwe issues #203 (news-scraper XSS output escaping), #204 (home hero attribute escaping) en #205 (home performance dubbele party fetch/renderwerk) aangemaakt. Developer-prio: eerst #203, daarna #204, daarna #205. Open blocker blijft PR #195 (parse error + rebase/conflict) voor snelle fix.",
                               "top3_today":  [
-                                                 174,
-                                                 172,
-                                                 173
+                                                 203,
+                                                 204,
+                                                 205
                                              ],
                               "blockers":  [
-                                               "Issue #103 deploy-stabiliteit: /api/blogs health check blijft instabiel",
-                                               "Issue #20 workflow token scope blijft blocker voor CI/workflow push",
-                                               "Issue #129 deploy rollback door ontbrekende productie env vars: preflight check nog niet geimplementeerd"
+                                               "PR #195 niet mergebaar: parse error in includes/data/nederlandse_verkiezingen_2025.php",
+                                               "PR #195 merge-conflict met main, rebase nodig"
                                            ],
                               "team_chat_reviewed":  true,
                               "prs_pending_review":  [
-                                                         138,
-                                                         139
+                                                         195
                                                      ]
                           },
     "last_developer_run":  {

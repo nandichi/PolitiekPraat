@@ -1,4 +1,4 @@
-{
+﻿{
     "current_sprint":  {
                            "start_date":  "2026-03-10",
                            "planned_tasks":  [
@@ -154,7 +154,7 @@
                                           },
                                           {
                                               "issue":  21,
-                                              "title":  "Gitignore hygiÃ«nefix (.DS_Store + sitemap-regel)",
+                                              "title":  "Gitignore hygiÃƒÂ«nefix (.DS_Store + sitemap-regel)",
                                               "branch":  "dev/issue-21-gitignore-hygiene",
                                               "pr_number":  23,
                                               "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/23",
@@ -545,12 +545,13 @@
                            "updated_at":  "2026-03-25T21:30:00+01:00"
                        },
     "today":  {
-                  "date":  "2026-03-31",
+                  "date":  "2026-04-06",
                   "deploys_today":  0,
                   "issues_created":  3,
                   "prs_created":  0,
                   "prs_reviewed":  0,
-                  "prs_merged":  0
+                  "prs_merged":  0,
+                  "qa_check":  "Tech Lead scan voltooid; nieuwe issues #203/#204/#205 aangemaakt, wacht op Developer pickup"
               },
     "last_deploy":  {
                         "timestamp":  "2026-03-25T20:31:23+01:00",
@@ -572,7 +573,7 @@
                         "ts":  "2026-03-25T21:01:00+01:00",
                         "role":  "Tech Lead",
                         "type":  "daily_standup",
-                        "msg":  "Avondscan afgerond; nieuwe issues #134/#135/#136 aangemaakt. Developer-prioriteit: #134 eerst (forum stored XSS), daarna #135. Blockers #103 en #20 blijven actief; #129 vraagt preflight env-check vÃ³Ã³r deploy.",
+                        "msg":  "Avondscan afgerond; nieuwe issues #134/#135/#136 aangemaakt. Developer-prioriteit: #134 eerst (forum stored XSS), daarna #135. Blockers #103 en #20 blijven actief; #129 vraagt preflight env-check vÃƒÂ³ÃƒÂ³r deploy.",
                         "ok":  true
                     },
                     {
@@ -600,7 +601,7 @@
                         "ts":  "2026-03-24T14:00:00+01:00",
                         "role":  "Developer",
                         "type":  "pr_created",
-                        "msg":  "Middag-slice voor issue #114 opgeleverd: inline JS uit controllers/partijen.php geÃ«xternaliseerd naar js/partijen-page.js. PR #121 geopend voor review.",
+                        "msg":  "Middag-slice voor issue #114 opgeleverd: inline JS uit controllers/partijen.php geÃƒÂ«xternaliseerd naar js/partijen-page.js. PR #121 geopend voor review.",
                         "ok":  true
                     },
                     {
@@ -1188,7 +1189,7 @@
                         "ts":  "2026-03-25T21:09:00+01:00",
                         "role":  "Developer",
                         "type":  "pr_created",
-                        "msg":  "Middag-slice voor issue #136 opgeleverd: grote inline partijen-CSS geÃ«xternaliseerd naar public/css/partijen-page-enhancements.css. PR #138 geopend voor review.",
+                        "msg":  "Middag-slice voor issue #136 opgeleverd: grote inline partijen-CSS geÃƒÂ«xternaliseerd naar public/css/partijen-page-enhancements.css. PR #138 geopend voor review.",
                         "ok":  true
                     },
                     {
@@ -1201,29 +1202,29 @@
                 ],
     "today_developer_plan":  [
                                  {
-                                     "issue":  174,
-                                     "slice":  "CSRF-tokenvalidatie op auto-likes-beheer POST + ajax toggle migreren naar POST",
-                                     "priority":  "P0",
-                                     "eta":  "\u003c2h",
-                                     "session":  "09:00",
-                                     "status":  "ready_for_dev"
-                                 },
-                                 {
-                                     "issue":  172,
-                                     "slice":  "Webserver hardening: /.git/* blokkeren + verificatie op HEAD/config/objects",
+                                     "issue":  203,
+                                     "slice":  "Escape dynamische succes/foutmeldingen en feed-output in admin/news-scraper-beheer.php",
                                      "priority":  "P0",
                                      "eta":  "\u003c1h",
-                                     "session":  "13:00",
-                                     "status":  "ready_for_dev"
+                                     "session":  "eerstvolgende",
+                                     "status":  "planned"
                                  },
                                  {
-                                     "issue":  173,
-                                     "slice":  "Reflected XSS fix: REQUEST_URI escapen in auto-likes-beheer admin link",
+                                     "issue":  204,
+                                     "slice":  "Sanitize/valideer dynamische partijlogo- en naamoutput in controllers/home.php hero cards",
+                                     "priority":  "P0",
+                                     "eta":  "\u003c1h",
+                                     "session":  "daarna",
+                                     "status":  "planned"
+                                 },
+                                 {
+                                     "issue":  205,
+                                     "slice":  "Reduceer dubbele getAllParties calls en request-time random renderwerk op homepage",
                                      "priority":  "P1",
-                                     "eta":  "\u003c1h",
-                                     "session":  "17:00",
-                                     "status":  "ready_for_dev"
+                                     "eta":  "\u003c2h",
+                                     "session":  "laatste",
+                                     "status":  "planned"
                                  }
                              ],
-    "updated_at":  "2026-03-31T08:12:00+02:00"
+    "updated_at":  "2026-04-06T13:03:00+02:00"
 }
