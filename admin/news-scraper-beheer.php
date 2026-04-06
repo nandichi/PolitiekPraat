@@ -241,7 +241,7 @@ require_once '../views/templates/header.php';
                         </svg>
                     </div>
                     <div class="ml-3">
-                        <p class="text-sm font-medium text-green-800"><?= $successMessage ?></p>
+                        <p class="text-sm font-medium text-green-800"><?= sanitize($successMessage) ?></p>
                     </div>
                 </div>
             </div>
@@ -256,7 +256,7 @@ require_once '../views/templates/header.php';
                         </svg>
                     </div>
                     <div class="ml-3">
-                        <p class="text-sm font-medium text-red-800"><?= $errorMessage ?></p>
+                        <p class="text-sm font-medium text-red-800"><?= sanitize($errorMessage) ?></p>
                     </div>
                 </div>
             </div>
@@ -271,7 +271,7 @@ require_once '../views/templates/header.php';
                         </svg>
                     </div>
                     <div class="ml-3">
-                        <p class="text-sm font-medium text-blue-800"><?= $testMessage ?></p>
+                        <p class="text-sm font-medium text-blue-800"><?= sanitize($testMessage) ?></p>
                     </div>
                 </div>
             </div>
@@ -288,7 +288,7 @@ require_once '../views/templates/header.php';
                     </div>
                     <div>
                         <p class="text-gray-600 text-sm font-medium">Totaal Artikelen</p>
-                        <p class="text-3xl font-bold text-gray-800"><?= $stats['total_articles'] ?? 0 ?></p>
+                        <p class="text-3xl font-bold text-gray-800"><?= intval($stats['total_articles'] ?? 0) ?></p>
                     </div>
                 </div>
             </div>
@@ -302,7 +302,7 @@ require_once '../views/templates/header.php';
                     </div>
                     <div>
                         <p class="text-gray-600 text-sm font-medium">Progressief</p>
-                        <p class="text-3xl font-bold text-gray-800"><?= $stats['progressive_count'] ?? 0 ?></p>
+                        <p class="text-3xl font-bold text-gray-800"><?= intval($stats['progressive_count'] ?? 0) ?></p>
                     </div>
                 </div>
             </div>
@@ -316,7 +316,7 @@ require_once '../views/templates/header.php';
                     </div>
                     <div>
                         <p class="text-gray-600 text-sm font-medium">Conservatief</p>
-                        <p class="text-3xl font-bold text-gray-800"><?= $stats['conservative_count'] ?? 0 ?></p>
+                        <p class="text-3xl font-bold text-gray-800"><?= intval($stats['conservative_count'] ?? 0) ?></p>
                     </div>
                 </div>
             </div>
@@ -330,7 +330,7 @@ require_once '../views/templates/header.php';
                     </div>
                     <div>
                         <p class="text-gray-600 text-sm font-medium">Nieuwsbronnen</p>
-                        <p class="text-3xl font-bold text-gray-800"><?= $stats['source_count'] ?? 0 ?></p>
+                        <p class="text-3xl font-bold text-gray-800"><?= intval($stats['source_count'] ?? 0) ?></p>
                     </div>
                 </div>
             </div>
@@ -473,22 +473,33 @@ require_once '../views/templates/header.php';
             <div class="p-6">
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <?php foreach ($scrapingStats as $source => $sourceStats): ?>
+                        <?php
+                            $orientation_key = in_array($sourceStats['orientation'] ?? '', ['links', 'rechts'], true)
+                                ? $sourceStats['orientation']
+                                : 'links';
+                            $orientation_class = $orientation_key === 'links'
+                                ? 'bg-blue-100 text-blue-800'
+                                : 'bg-red-100 text-red-800';
+                            $orientation_label = $orientation_key === 'links' ? 'Links' : 'Rechts';
+                            $last_scraped = sanitize($sourceStats['last_scraped'] ?? '');
+                            $last_articles = intval($sourceStats['last_articles_found'] ?? 0);
+                            $rss_url = htmlspecialchars($sourceStats['rss_url'] ?? '', ENT_QUOTES, 'UTF-8');
+                        ?>
                         <div class="source-status p-4 border border-gray-200 rounded-xl hover:shadow-md transition-all">
                             <div class="flex items-center justify-between mb-2">
                                 <h3 class="font-semibold text-gray-800"><?= htmlspecialchars($source) ?></h3>
-                                <span class="px-2 py-1 rounded-full text-xs font-medium
-                                    <?= $sourceStats['orientation'] === 'links' ? 'bg-blue-100 text-blue-800' : 'bg-red-100 text-red-800' ?>">
-                                    <?= ucfirst($sourceStats['orientation']) ?>
+                                <span class="px-2 py-1 rounded-full text-xs font-medium <?= $orientation_class ?>">
+                                    <?= $orientation_label ?>
                                 </span>
                             </div>
                             <div class="text-sm text-gray-600 mb-2">
-                                <strong>Laatst gescraped:</strong> <?= $sourceStats['last_scraped'] ?>
+                                <strong>Laatst gescraped:</strong> <?= $last_scraped ?>
                             </div>
                             <div class="text-sm text-gray-600 mb-2">
-                                <strong>Laatste run:</strong> <?= $sourceStats['last_articles_found'] ?> artikelen
+                                <strong>Laatste run:</strong> <?= $last_articles ?> artikelen
                             </div>
                             <div class="flex items-center justify-between">
-                                <a href="<?= htmlspecialchars($sourceStats['rss_url']) ?>" 
+                                <a href="<?= $rss_url ?>" 
                                    target="_blank" 
                                    class="text-blue-600 hover:text-blue-800 text-sm">
                                     RSS Feed →
@@ -546,7 +557,7 @@ require_once '../views/templates/header.php';
                             Voeg deze regel toe aan je crontab voor automatische uitvoering:
                         </p>
                         <div class="bg-gray-800 text-green-400 p-3 rounded-lg font-mono text-sm overflow-x-auto">
-                            */<?= $autoSettings['interval_minutes'] ?? 30 ?> * * * * /usr/bin/php <?= realpath(__DIR__ . '/../scripts/auto_news_scraper.php') ?> >> <?= realpath(__DIR__ . '/../logs/auto_news_scraper.log') ?> 2>&1
+                            */<?= intval($autoSettings['interval_minutes'] ?? 30) ?> * * * * /usr/bin/php <?= sanitize(realpath(__DIR__ . '/../scripts/auto_news_scraper.php')) ?> >> <?= sanitize(realpath(__DIR__ . '/../logs/auto_news_scraper.log')) ?> 2>&1
                         </div>
                     </div>
                     
@@ -556,7 +567,7 @@ require_once '../views/templates/header.php';
                             Test het automatische script handmatig:
                         </p>
                         <div class="bg-gray-800 text-green-400 p-3 rounded-lg font-mono text-sm overflow-x-auto">
-                            /usr/bin/php <?= realpath(__DIR__ . '/../scripts/auto_news_scraper.php') ?>
+                            /usr/bin/php <?= sanitize(realpath(__DIR__ . '/../scripts/auto_news_scraper.php')) ?>
                         </div>
                     </div>
                     
@@ -566,7 +577,7 @@ require_once '../views/templates/header.php';
                             Gebruik het setup script voor automatische configuratie:
                         </p>
                         <div class="bg-gray-800 text-green-400 p-3 rounded-lg font-mono text-sm overflow-x-auto">
-                            bash <?= realpath(__DIR__ . '/../scripts/setup_news_cron.sh') ?>
+                            bash <?= sanitize(realpath(__DIR__ . '/../scripts/setup_news_cron.sh')) ?>
                         </div>
                     </div>
                 </div>
@@ -597,8 +608,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
-        // Zou hier een AJAX call kunnen maken om logs te refreshen
-        console.log('Auto-refresh logs (zou geïmplementeerd kunnen worden)');
+        // TODO: AJAX call voor log refresh toevoegen als de functionaliteit nodig is
     }, 30000); // 30 seconden
     
     // Smooth scroll voor lange logs

@@ -18,13 +18,13 @@
                                                      ]
                           },
     "last_developer_run":  {
-                               "ts":  "2026-04-03T12:22:00+02:00",
+                               "ts":  "2026-04-06T13:28:00+02:00",
                                "role":  "Developer",
-                               "issue":  180,
-                               "branch":  "dev/issue-180-security-news-scraper-csrf",
-                               "pr_number":  183,
-                               "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/183",
-                               "summary":  "CSRF-validation voor alle POST-acties in admin/news-scraper-beheer: tokens worden gegenereerd, gecontroleerd en in alle formulieren gerenderd, invalid tokens krijgen een foutmelding. php -l admin/news-scraper-beheer.php kon niet draaien omdat php niet beschikbaar is.",
+                               "issue":  203,
+                               "branch":  "dev/issue-203-xss-news-scraper",
+                               "pr_number":  206,
+                               "pr_url":  "https://github.com/nandichi/PolitiekPraat/pull/206",
+                               "summary":  "Alle dynamische UI-meldingen en bronvelden in admin/news-scraper-beheer zijn nu gesanitiseerd, orientation/last run waardes worden genormaliseerd en cron-instructies worden veilig naar de UI geprint; de JS log-refresh verliest de console.log. quality_gate gedraaid (php binary ontbreekt) en php -l kon niet draaien omdat php.exe ontbreekt.",
                                "status":  "in_review"
                            }
 }
