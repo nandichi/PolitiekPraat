@@ -15,7 +15,7 @@ $fallback_partij_uitslagen_2025 = [
     ['partij' => 'Partij voor de Dieren', 'zetels' => 3, 'stemmen' => 219371, 'percentage' => 2.08],
     ['partij' => '50PLUS', 'zetels' => 2, 'stemmen' => 151053, 'percentage' => 1.43],
     ['partij' => 'Volt', 'zetels' => 1, 'stemmen' => 116468, 'percentage' => 1.10],
-]
+];
 
 return [
     'fallback_partij_uitslagen_2025' => $fallback_partij_uitslagen_2025,
@@ -53,7 +53,7 @@ return [
     'formatie_duur_dagen' => 93,
     'verkiezings_aanleiding' => 'vervroegd',
     'belangrijke_gebeurtenissen' => 'Vervroegde verkiezingen na de val van kabinet-Schoof (3 juni 2025); Kiesraad stelde de uitslag op 7 november 2025 vast.',
-    'opvallende_feiten' => 'D66 en PVV delen de meeste zetels (26), waardoor D66 een minderheidskabinet met VVD en CDA (Kabinet-Jetten) vormde.',
+    'opvallende_feiten' => 'D66 en PVV eindigden gelijk (26 zetels) en D66 vormde via Kabinet-Jetten een minderheidscoalitie met VVD en CDA.',
     'nieuwe_partijen' => json_encode(['50PLUS'], JSON_UNESCAPED_UNICODE),
     'verdwenen_partijen' => json_encode(['Nieuw Sociaal Contract (NSC)'], JSON_UNESCAPED_UNICODE),
     'grootste_winnaar' => 'D66',
@@ -128,7 +128,6 @@ return [
         'https://www.kiesraad.nl/actueel/nieuws/2025/11/7/kiesraad-uitslag-tweede-kamerverkiezing-betrouwbaar',
         'https://nl.wikipedia.org/wiki/Kabinet-Jetten'
     ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
-    'opvallende_feiten' => 'D66 en PVV eindigden gelijk (26 zetels) en het Kabinet-Jetten draait op een minderheidscoalitie van D66, VVD en CDA.',
     'foto_url' => null
 ],
 ];
