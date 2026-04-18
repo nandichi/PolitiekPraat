@@ -536,7 +536,7 @@ include_once BASE_PATH . '/views/templates/header.php';
 
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <!-- Uniforme header sectie -->
-            <div class="text-center mb-24 relative" data-aos="fade-up" data-aos-once="true">
+            <div class="text-center mb-24 relative">
                 <!-- Achtergrond tekst -->
                 <div class="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
                     <span class="text-[120px] sm:text-[160px] lg:text-[200px] xl:text-[280px] font-black text-slate-100/30 select-none tracking-wider transform -rotate-2">PARTIJEN</span>
@@ -614,7 +614,7 @@ include_once BASE_PATH . '/views/templates/header.php';
             <!-- Partijen data -->
             <div class="grid grid-cols-1 xl:grid-cols-3 gap-16 items-start">
                 <!-- Linker kolom: Gecombineerde Zetelverdeling (spans 2 columns) -->
-                <div class="xl:col-span-2 relative" data-aos="fade-right">
+                <div class="xl:col-span-2 relative">
                     <div class="peiling-card group relative bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/20 overflow-hidden hover:shadow-3xl transition-all duration-500">
                         <!-- Animated background gradient -->
                         <div class="absolute inset-0 bg-gradient-to-br from-primary/5 via-white to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
@@ -731,7 +731,7 @@ include_once BASE_PATH . '/views/templates/header.php';
                 </div>
                 
                 <!-- Rechter kolom: Grootste Verschuivingen -->
-                <div class="relative" data-aos="fade-left">
+                <div class="relative">
                     <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
                         <div class="p-4 sm:p-6">
                             <div class="flex items-center justify-between mb-6">
