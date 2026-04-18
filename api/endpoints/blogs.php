@@ -67,20 +67,23 @@ class BlogsAPI {
             $offset = ($page - 1) * $limit;
             
             // Build query
-            $whereConditions = [];
+            $whereConditions = [
+                "blogs.status = 'published'",
+                "blogs.published_at <= NOW()",
+            ];
             $bindings = [];
-            
+
             if ($author_id) {
                 $whereConditions[] = "blogs.author_id = :author_id";
                 $bindings[':author_id'] = $author_id;
             }
-            
+
             if ($search) {
                 $whereConditions[] = "(blogs.title LIKE :search OR blogs.content LIKE :search)";
                 $bindings[':search'] = "%$search%";
             }
-            
-            $whereClause = !empty($whereConditions) ? 'WHERE ' . implode(' AND ', $whereConditions) : '';
+
+            $whereClause = 'WHERE ' . implode(' AND ', $whereConditions);
             
             // Get total count
             $countSql = "SELECT COUNT(*) as total FROM blogs 
@@ -140,12 +143,16 @@ class BlogsAPI {
                 $sql = "SELECT blogs.*, users.username as author_name, NULL as author_photo
                        FROM blogs 
                        JOIN users ON blogs.author_id = users.id 
-                       WHERE blogs.id = :identifier";
+                       WHERE blogs.id = :identifier
+                         AND blogs.status = 'published'
+                         AND blogs.published_at <= NOW()";
             } else {
                 $sql = "SELECT blogs.*, users.username as author_name, NULL as author_photo
                        FROM blogs 
                        JOIN users ON blogs.author_id = users.id 
-                       WHERE blogs.slug = :identifier";
+                       WHERE blogs.slug = :identifier
+                         AND blogs.status = 'published'
+                         AND blogs.published_at <= NOW()";
             }
             
             $this->db->query($sql);

@@ -505,13 +505,28 @@ class BlogsController {
     }
     
     public function view($slug) {
-        $blog = $this->blogModel->getBySlug($slug);
-        
+        // Auteurs en admins mogen ook drafts/scheduled previewen via ?preview=1
+        $allowUnpublished = false;
+        if (isset($_GET['preview']) && isset($_SESSION['user_id'])) {
+            $allowUnpublished = true;
+        }
+
+        $blog = $this->blogModel->getBySlug($slug, $allowUnpublished);
+
+        // Als de blog niet publiek is, alleen tonen aan auteur of admin
+        if ($blog && isset($blog->status) && $blog->status !== 'published') {
+            $isOwner = isset($_SESSION['user_id']) && (int) $blog->author_id === (int) $_SESSION['user_id'];
+            if (!$isOwner && !(function_exists('isAdmin') && isAdmin())) {
+                header('Location: ' . URLROOT . '/404');
+                exit;
+            }
+        }
+
         if (!$blog) {
             header('Location: ' . URLROOT . '/404');
             exit;
         }
-        
+
         require_once BASE_PATH . '/views/blogs/view.php';
     }
     

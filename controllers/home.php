@@ -406,6 +406,7 @@ usort($mogelijkeCoalities, function($a, $b) {
 $db->query("SELECT blogs.*, users.username as author_name, users.profile_photo as author_photo 
            FROM blogs 
            JOIN users ON blogs.author_id = users.id 
+           WHERE blogs.status = 'published' AND blogs.published_at <= NOW()
            ORDER BY published_at DESC 
            LIMIT 6");
 $latest_blogs = $db->resultSet();
@@ -466,6 +467,7 @@ $next_election_year = (int) $latest_election_year + 2;
 $db->query("SELECT blogs.*, users.username as author_name, users.profile_photo as author_photo 
            FROM blogs 
            JOIN users ON blogs.author_id = users.id 
+           WHERE blogs.status = 'published' AND blogs.published_at <= NOW()
            ORDER BY views DESC, published_at DESC 
            LIMIT 4");
 $featured_blogs = $db->resultSet();

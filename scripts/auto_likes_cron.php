@@ -105,6 +105,8 @@ try {
         FROM blogs b
         LEFT JOIN auto_likes_config alc ON b.id = alc.blog_id
         WHERE COALESCE(alc.enabled, 1) = 1
+          AND b.status = 'published'
+          AND b.published_at <= NOW()
         ORDER BY b.published_at DESC
     ");
     $db->bind(':default_min', $defaultMinLikes);

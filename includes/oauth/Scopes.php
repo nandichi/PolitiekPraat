@@ -19,9 +19,14 @@ final class Scopes
 
     public const BLOGS_READ        = 'blogs.read';
     public const BLOGS_WRITE       = 'blogs.write';
+    public const BLOGS_ADMIN       = 'blogs.admin';
     public const COMMENTS_WRITE    = 'comments.write';
     public const FORUM_WRITE       = 'forum.write';
     public const PARTIJMETER_WRITE = 'partijmeter.write';
+    public const MEDIA_WRITE       = 'media.write';
+    public const NEWSLETTER_WRITE  = 'newsletter.write';
+    public const POLLS_WRITE       = 'polls.write';
+    public const ANALYTICS_READ    = 'analytics.read';
     public const MCP_READ          = 'mcp.read';
     public const MCP_WRITE         = 'mcp.write';
 
@@ -51,7 +56,11 @@ final class Scopes
             ],
             self::BLOGS_WRITE => [
                 'label' => 'Blogs schrijven',
-                'description' => 'Namens jou blogs aanmaken en bewerken.',
+                'description' => 'Namens jou blogs aanmaken, bewerken en publiceren.',
+            ],
+            self::BLOGS_ADMIN => [
+                'label' => 'Blogs modereren',
+                'description' => 'Alle blogs van alle gebruikers beheren, publiceren, inplannen en verwijderen.',
             ],
             self::COMMENTS_WRITE => [
                 'label' => 'Reacties plaatsen',
@@ -64,6 +73,22 @@ final class Scopes
             self::PARTIJMETER_WRITE => [
                 'label' => 'PartijMeter resultaten opslaan',
                 'description' => 'Namens jou PartijMeter antwoorden en resultaten opslaan.',
+            ],
+            self::MEDIA_WRITE => [
+                'label' => 'Media uploaden',
+                'description' => 'Afbeeldingen en andere media uploaden naar de site (bv. blog-afbeeldingen).',
+            ],
+            self::NEWSLETTER_WRITE => [
+                'label' => 'Nieuwsbrief beheren',
+                'description' => 'Je eigen nieuwsbrief-aanmelding beheren (aan- of afmelden).',
+            ],
+            self::POLLS_WRITE => [
+                'label' => 'Polls beheren',
+                'description' => 'Blogpolls aanmaken en stemmen op polls.',
+            ],
+            self::ANALYTICS_READ => [
+                'label' => 'Analytics lezen',
+                'description' => 'Statistieken over blogs, forum en site-activiteit inzien.',
             ],
             self::MCP_READ => [
                 'label' => 'MCP: lezen',

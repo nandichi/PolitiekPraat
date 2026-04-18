@@ -50,6 +50,8 @@ class CategoryController {
                 JOIN users ON blogs.author_id = users.id 
                 LEFT JOIN blog_categories ON blogs.category_id = blog_categories.id
                 WHERE blogs.category_id = :category_id
+                  AND blogs.status = 'published'
+                  AND blogs.published_at <= NOW()
                 ORDER BY blogs.published_at DESC";
         
         if ($limit) {

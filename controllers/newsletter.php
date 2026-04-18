@@ -142,10 +142,12 @@ class Newsletter extends Controller {
         require_once __DIR__ . '/../includes/email_templates/new_blog_notification.php';
         
         // Laad de blog details
-        $this->db->query("SELECT blogs.*, users.username as author_name 
-                         FROM blogs 
-                         JOIN users ON blogs.author_id = users.id 
-                         WHERE blogs.id = :blog_id");
+        $this->db->query("SELECT blogs.*, users.username as author_name
+                         FROM blogs
+                         JOIN users ON blogs.author_id = users.id
+                         WHERE blogs.id = :blog_id
+                           AND blogs.status = 'published'
+                           AND blogs.published_at <= NOW()");
         $this->db->bind(':blog_id', $blogId);
         $blog = $this->db->single();
         

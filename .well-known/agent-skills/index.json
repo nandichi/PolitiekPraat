@@ -5,7 +5,7 @@
         "url": "https://politiekpraat.nl",
         "contact": "https://politiekpraat.nl/contact"
     },
-    "generatedAt": "2026-04-18T14:01:14+00:00",
+    "generatedAt": "2026-04-18T14:56:31+00:00",
     "skills": [
         {
             "name": "blogs-search",
@@ -15,6 +15,33 @@
             "version": "1.0.0",
             "language": "nl-NL",
             "digest": "sha256-tNYPdS5MvNR8q0FxHzZo7bPaaEPxC4wGEKWRg4ixGzg="
+        },
+        {
+            "name": "mcp-blog-authoring",
+            "type": "markdown",
+            "description": "Autonoom politieke blogs schrijven, bewerken en publiceren op PolitiekPraat via de MCP-server. Ondersteunt draft, scheduled en published statussen, categorieen, tags, SEO-metadata en featured image (URL-upload of AI-generatie).",
+            "url": "https://politiekpraat.nl/.well-known/agent-skills/mcp-blog-authoring/SKILL.md",
+            "version": "1.0.0",
+            "language": "nl-NL",
+            "digest": "sha256-rJDXVCVhMMq+Bxk/6l7EhPjNftb+aEAJiWVeEKjmopY="
+        },
+        {
+            "name": "mcp-community",
+            "type": "markdown",
+            "description": "Interactie met de PolitiekPraat community via MCP: reageren op blogs, forum-topics plaatsen/beantwoorden, stemmen op polls en nieuwsbrief beheren. Alle schrijf-acties gebeuren namens de ingelogde user.",
+            "url": "https://politiekpraat.nl/.well-known/agent-skills/mcp-community/SKILL.md",
+            "version": "1.0.0",
+            "language": "nl-NL",
+            "digest": "sha256-bEoNmkv0Uota9zNI23b3AiGbhdlV+fpAnyUN4PIIeCc="
+        },
+        {
+            "name": "nieuws-search",
+            "type": "markdown",
+            "description": "Recent Nederlands politiek nieuws doorzoeken uit de aggregator van PolitiekPraat. Ondersteunt filters op zoekterm, bron, bias en oriëntatie, plus een detail-view per artikel.",
+            "url": "https://politiekpraat.nl/.well-known/agent-skills/nieuws-search/SKILL.md",
+            "version": "1.0.0",
+            "language": "nl-NL",
+            "digest": "sha256-j/5BXUgWf8ZXqc090uyIBJEW4d4NooTQwB/R+exJZKU="
         },
         {
             "name": "partijen-lookup",
@@ -42,6 +69,15 @@
             "version": "1.0.0",
             "language": "nl-NL",
             "digest": "sha256-UiS/QRb1Q2kkCdwmkN6AW+thCLayMN4ep71NpYW9sGI="
+        },
+        {
+            "name": "stemmentracker-lookup",
+            "type": "markdown",
+            "description": "Tweede-Kamer moties en stemgedrag per partij opzoeken via de PolitiekPraat Stemmentracker. Filter op onderwerp, thema, indiener of periode en haal stemverhoudingen per partij op.",
+            "url": "https://politiekpraat.nl/.well-known/agent-skills/stemmentracker-lookup/SKILL.md",
+            "version": "1.0.0",
+            "language": "nl-NL",
+            "digest": "sha256-c5rxdHI5kTyY7V6nAHpMDBjGOofiWMfFPl3AQSmD5VU="
         },
         {
             "name": "stemwijzer-ede",

@@ -172,6 +172,89 @@ $r = http_get($base . '/.well-known/mcp/server-card.json');
 expect($r['status'] === 200, 'status 200');
 $json = json_decode($r['body'], true);
 expect(is_array($json) && isset($json['serverInfo'], $json['transport']), 'server card compleet');
+expect(is_array($json) && !empty($json['resources']), 'server card heeft resources');
+expect(is_array($json) && !empty($json['resourceTemplates']), 'server card heeft resourceTemplates');
+expect(is_array($json) && !empty($json['prompts']), 'server card heeft prompts');
+
+echo "\n[16] MCP resources/list\n";
+$r = http_post($base . '/mcp', json_encode(['jsonrpc' => '2.0', 'id' => 16, 'method' => 'resources/list']));
+expect($r['status'] === 200, 'status 200');
+$json = json_decode($r['body'], true);
+expect(is_array($json) && isset($json['result']['resources']) && is_array($json['result']['resources']),
+    'resources array aanwezig');
+
+echo "\n[17] MCP resources/templates/list\n";
+$r = http_post($base . '/mcp', json_encode(['jsonrpc' => '2.0', 'id' => 17, 'method' => 'resources/templates/list']));
+expect($r['status'] === 200, 'status 200');
+$json = json_decode($r['body'], true);
+expect(is_array($json) && isset($json['result']['resourceTemplates'])
+    && is_array($json['result']['resourceTemplates']),
+    'resourceTemplates array aanwezig');
+
+echo "\n[18] MCP prompts/list\n";
+$r = http_post($base . '/mcp', json_encode(['jsonrpc' => '2.0', 'id' => 18, 'method' => 'prompts/list']));
+expect($r['status'] === 200, 'status 200');
+$json = json_decode($r['body'], true);
+expect(is_array($json) && isset($json['result']['prompts']) && is_array($json['result']['prompts']),
+    'prompts array aanwezig');
+
+echo "\n[19] MCP tools/call list_blogs (publieke read-tool)\n";
+$r = http_post($base . '/mcp', json_encode([
+    'jsonrpc' => '2.0',
+    'id'      => 19,
+    'method'  => 'tools/call',
+    'params'  => ['name' => 'list_blogs', 'arguments' => ['limit' => 3]],
+]));
+expect($r['status'] === 200, 'status 200');
+$json = json_decode($r['body'], true);
+expect(is_array($json) && isset($json['result']['structuredContent']), 'structuredContent aanwezig');
+
+echo "\n[20] MCP tools/call list_partijen\n";
+$r = http_post($base . '/mcp', json_encode([
+    'jsonrpc' => '2.0',
+    'id'      => 20,
+    'method'  => 'tools/call',
+    'params'  => ['name' => 'list_partijen', 'arguments' => new stdClass()],
+]));
+expect($r['status'] === 200, 'status 200');
+$json = json_decode($r['body'], true);
+expect(is_array($json) && isset($json['result']['structuredContent']['partijen']),
+    'partijen array aanwezig');
+
+echo "\n[21] MCP tools/call list_nieuws\n";
+$r = http_post($base . '/mcp', json_encode([
+    'jsonrpc' => '2.0',
+    'id'      => 21,
+    'method'  => 'tools/call',
+    'params'  => ['name' => 'list_nieuws', 'arguments' => ['limit' => 3]],
+]));
+expect($r['status'] === 200, 'status 200');
+$json = json_decode($r['body'], true);
+expect(is_array($json) && isset($json['result']['structuredContent']), 'nieuws response structuredContent');
+
+echo "\n[22] MCP tools/call get_site_stats (publiek)\n";
+$r = http_post($base . '/mcp', json_encode([
+    'jsonrpc' => '2.0',
+    'id'      => 22,
+    'method'  => 'tools/call',
+    'params'  => ['name' => 'get_site_stats', 'arguments' => new stdClass()],
+]));
+expect($r['status'] === 200, 'status 200');
+$json = json_decode($r['body'], true);
+expect(is_array($json) && isset($json['result']['structuredContent']),
+    'site_stats response structuredContent');
+
+echo "\n[23] MCP write-tool zonder auth moet falen (create_blog_draft)\n";
+$r = http_post($base . '/mcp', json_encode([
+    'jsonrpc' => '2.0',
+    'id'      => 23,
+    'method'  => 'tools/call',
+    'params'  => ['name' => 'create_blog_draft', 'arguments' => ['title' => 'x', 'content' => 'y']],
+]));
+$json = json_decode($r['body'], true);
+expect(is_array($json) && isset($json['error']),
+    'error response zonder OAuth',
+    isset($json['error']['message']) ? (string) $json['error']['message'] : '');
 
 echo "\n---------- Resultaat ----------\n";
 echo "Passed: {$passed}\n";

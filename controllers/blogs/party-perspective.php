@@ -380,7 +380,9 @@ try {
     $db->query("SELECT blogs.*, users.username as author_name 
                 FROM blogs 
                 JOIN users ON blogs.author_id = users.id 
-                WHERE blogs.slug = :slug");
+                WHERE blogs.slug = :slug
+                  AND blogs.status = 'published'
+                  AND blogs.published_at <= NOW()");
     $db->bind(':slug', $slug);
     $blog = $db->single();
     

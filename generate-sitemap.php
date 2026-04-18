@@ -54,6 +54,7 @@ foreach ($static_pages as $page) {
 // Add blog posts with featured images
 $query = "SELECT b.slug, b.published_at, b.title, b.image_path as featured_image 
           FROM blogs b 
+          WHERE b.status = 'published' AND b.published_at <= NOW()
           ORDER BY b.published_at DESC";
 $blogs = $db->query($query)->resultSet();
 

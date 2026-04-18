@@ -39,10 +39,11 @@ class BlogController {
                        blog_categories.color as category_color, blog_categories.icon as category_icon
                 FROM blogs
                 JOIN users ON blogs.author_id = users.id
-                LEFT JOIN blog_categories ON blogs.category_id = blog_categories.id";
+                LEFT JOIN blog_categories ON blogs.category_id = blog_categories.id
+                WHERE blogs.status = 'published' AND blogs.published_at <= NOW()";
 
         if ($categoryId) {
-            $sql .= " WHERE blogs.category_id = :category_id";
+            $sql .= " AND blogs.category_id = :category_id";
         }
 
         $sql .= " ORDER BY published_at DESC";
@@ -67,10 +68,11 @@ class BlogController {
                        blog_categories.color as category_color, blog_categories.icon as category_icon
                 FROM blogs
                 JOIN users ON blogs.author_id = users.id
-                LEFT JOIN blog_categories ON blogs.category_id = blog_categories.id";
+                LEFT JOIN blog_categories ON blogs.category_id = blog_categories.id
+                WHERE blogs.status = 'published' AND blogs.published_at <= NOW()";
 
         if ($categoryId) {
-            $sql .= " WHERE blogs.category_id = :category_id";
+            $sql .= " AND blogs.category_id = :category_id";
         }
 
         $sql .= " ORDER BY published_at DESC LIMIT :offset, :per_page";
@@ -89,10 +91,11 @@ class BlogController {
     }
 
     public function getTotalBlogCount($categoryId = null) {
-        $sql = "SELECT COUNT(*) as total FROM blogs";
+        $sql = "SELECT COUNT(*) as total FROM blogs
+                WHERE status = 'published' AND published_at <= NOW()";
 
         if ($categoryId) {
-            $sql .= " WHERE category_id = :category_id";
+            $sql .= " AND category_id = :category_id";
         }
 
         $this->db->query($sql);
@@ -118,14 +121,18 @@ class BlogController {
         return $blogs;
     }
 
-    public function getBySlug($slug) {
-        $this->db->query("SELECT blogs.*, users.username as author_name, users.profile_photo as author_photo,
-                                 blog_categories.name as category_name, blog_categories.slug as category_slug, 
+    public function getBySlug($slug, $allowUnpublished = false) {
+        $sql = "SELECT blogs.*, users.username as author_name, users.profile_photo as author_photo,
+                                 blog_categories.name as category_name, blog_categories.slug as category_slug,
                                  blog_categories.color as category_color, blog_categories.icon as category_icon
-                         FROM blogs 
-                         JOIN users ON blogs.author_id = users.id 
+                         FROM blogs
+                         JOIN users ON blogs.author_id = users.id
                          LEFT JOIN blog_categories ON blogs.category_id = blog_categories.id
-                         WHERE blogs.slug = :slug");
+                         WHERE blogs.slug = :slug";
+        if (!$allowUnpublished) {
+            $sql .= " AND blogs.status = 'published' AND blogs.published_at <= NOW()";
+        }
+        $this->db->query($sql);
         $this->db->bind(':slug', $slug);
         $blog = $this->db->single();
         

@@ -19,6 +19,24 @@ if (!$blog) {
     exit;
 }
 
+// Alleen publieke (published) blogs zichtbaar voor bezoekers; auteur/admin mag eigen drafts zien
+if (isset($blog->status) && $blog->status !== 'published') {
+    $isOwner = isset($_SESSION['user_id']) && (int) $blog->author_id === (int) $_SESSION['user_id'];
+    $isAdminUser = function_exists('isAdmin') && isAdmin();
+    if (!$isOwner && !$isAdminUser) {
+        header('Location: ' . URLROOT . '/404');
+        exit;
+    }
+}
+if (isset($blog->published_at) && strtotime($blog->published_at) > time()) {
+    $isOwner = isset($_SESSION['user_id']) && (int) $blog->author_id === (int) $_SESSION['user_id'];
+    $isAdminUser = function_exists('isAdmin') && isAdmin();
+    if (!$isOwner && !$isAdminUser) {
+        header('Location: ' . URLROOT . '/404');
+        exit;
+    }
+}
+
 // Update views
 $db->query("UPDATE blogs SET views = views + 1 WHERE id = :id");
 $db->bind(':id', $blog->id);

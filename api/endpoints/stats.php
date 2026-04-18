@@ -34,11 +34,13 @@ class StatsAPI {
         try {
             $stats = [];
             
-            // Blog statistics
-            $this->db->query("SELECT COUNT(*) as total FROM blogs");
+            // Blog statistics (alleen gepubliceerde blogs meetellen)
+            $this->db->query("SELECT COUNT(*) as total FROM blogs
+                              WHERE status = 'published' AND published_at <= NOW()");
             $stats['blogs_total'] = $this->db->single()->total;
-            
-            $this->db->query("SELECT SUM(views) as total_views FROM blogs");
+
+            $this->db->query("SELECT SUM(views) as total_views FROM blogs
+                              WHERE status = 'published' AND published_at <= NOW()");
             $stats['blogs_total_views'] = $this->db->single()->total_views ?? 0;
             
             // User statistics
@@ -80,6 +82,8 @@ class StatsAPI {
             $this->db->query("SELECT id, title, slug, views, published_at 
                 FROM blogs 
                 WHERE published_at >= DATE_SUB(NOW(), INTERVAL 7 DAY)
+                  AND status = 'published'
+                  AND published_at <= NOW()
                 ORDER BY views DESC 
                 LIMIT 10");
             $trending_blogs = $this->db->resultSet();
@@ -120,6 +124,7 @@ class StatsAPI {
                     id, title, slug, published_at, 
                     'blog' as type
                 FROM blogs 
+                WHERE status = 'published' AND published_at <= NOW()
                 ORDER BY published_at DESC 
                 LIMIT :limit");
             $this->db->bind(':limit', $limit);

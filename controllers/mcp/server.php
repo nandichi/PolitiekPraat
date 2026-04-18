@@ -8,14 +8,20 @@
  *
  * Ondersteunde methods:
  *   - initialize
+ *   - ping
  *   - tools/list
  *   - tools/call
- *   - ping
+ *   - resources/list
+ *   - resources/templates/list
+ *   - resources/read
+ *   - prompts/list
+ *   - prompts/get
  *
  * Authenticatie:
- *   - Read-only tools zijn publiek (mcp.read is impliciet).
+ *   - Read-only tools en resources zijn publiek (mcp.read is impliciet).
  *   - Write-tools vereisen een OAuth access token met scope `mcp.write`
- *     en een user context.
+ *     en (meestal) een user context. Tools met `require_user=false` mogen
+ *     ook met client_credentials worden aangeroepen.
  */
 
 declare(strict_types=1);
@@ -39,8 +45,12 @@ require_once BASE_PATH . '/includes/api_bearer.php';
 require_once BASE_PATH . '/includes/mcp/McpException.php';
 require_once BASE_PATH . '/includes/mcp/SchemaValidator.php';
 require_once BASE_PATH . '/includes/mcp/Tools.php';
+require_once BASE_PATH . '/includes/mcp/Resources.php';
+require_once BASE_PATH . '/includes/mcp/Prompts.php';
 
 use PolitiekPraat\MCP\McpException;
+use PolitiekPraat\MCP\Prompts;
+use PolitiekPraat\MCP\Resources;
 use PolitiekPraat\MCP\SchemaValidator;
 use PolitiekPraat\MCP\Tools;
 use PolitiekPraat\OAuth\Scopes;
@@ -75,13 +85,12 @@ function mcp_auth_challenge(int $status, string $error, string $description, ?st
 }
 
 if (($_SERVER['REQUEST_METHOD'] ?? '') === 'GET') {
-    // Handige discovery response bij GET (niet strict MCP, maar hulpvaardig).
     mcp_send([
-        'name' => 'politiekpraat',
-        'version' => '1.0.0',
+        'name'      => 'politiekpraat',
+        'version'   => '1.1.0',
         'transport' => 'http',
-        'protocol' => 'mcp/2024-11-05',
-        'docs' => 'https://politiekpraat.nl/.well-known/mcp/server-card.json',
+        'protocol'  => 'mcp/2024-11-05',
+        'docs'      => 'https://politiekpraat.nl/.well-known/mcp/server-card.json',
     ]);
 }
 
@@ -105,20 +114,19 @@ $authScopes  = $authContext['scopes'] ?? [];
 
 switch ($method) {
     case 'initialize':
-        $clientInfo = $params['clientInfo'] ?? [];
         mcp_result($id, [
             'protocolVersion' => '2024-11-05',
             'serverInfo'      => [
                 'name'    => 'politiekpraat',
-                'version' => '1.0.0',
+                'version' => '1.1.0',
             ],
             'capabilities'    => [
                 'tools'     => ['listChanged' => false],
+                'resources' => ['subscribe' => false, 'listChanged' => false],
+                'prompts'   => ['listChanged' => false],
                 'logging'   => new stdClass(),
-                'resources' => new stdClass(),
-                'prompts'   => new stdClass(),
             ],
-            'instructions' => 'PolitiekPraat MCP-server. Read-only tools zijn publiek. Schrijf-tools vereisen OAuth access token met scope `mcp.write`.',
+            'instructions' => 'PolitiekPraat MCP-server. Read-only tools en resources zijn publiek. Schrijf-tools vereisen OAuth access token met scope `mcp.write` + relevante domain scopes (bv. `blogs.write`, `media.write`). Volg de prompt `write_political_blog` voor een autonome blog-workflow.',
         ]);
         break;
 
@@ -126,7 +134,7 @@ switch ($method) {
         mcp_result($id, new stdClass());
         break;
 
-    case 'tools/list':
+    case 'tools/list': {
         $catalog = Tools::catalog();
         $list = array_map(static function (array $t) {
             return [
@@ -137,24 +145,20 @@ switch ($method) {
         }, $catalog);
         mcp_result($id, ['tools' => $list]);
         break;
+    }
 
-    case 'tools/call':
+    case 'tools/call': {
         $name = $params['name'] ?? '';
         $args = is_array($params['arguments'] ?? null) ? $params['arguments'] : [];
 
-        $catalog = Tools::catalog();
-        $found = null;
-        foreach ($catalog as $t) {
-            if ($t['name'] === $name) {
-                $found = $t;
-                break;
-            }
-        }
+        $found = Tools::find((string) $name);
         if ($found === null) {
             mcp_error($id, -32601, 'Onbekende tool: ' . $name);
         }
 
         $needsAuth = !$found['public'];
+        $requireUser = $found['require_user'] ?? true;
+
         if ($needsAuth) {
             if ($authContext === null) {
                 mcp_auth_challenge(401, 'invalid_token', 'Access token vereist voor deze tool.', Scopes::MCP_WRITE);
@@ -164,7 +168,7 @@ switch ($method) {
                     mcp_auth_challenge(403, 'insufficient_scope', 'Scope ' . $scope . ' vereist.', $scope);
                 }
             }
-            if ($authContext['user_id'] === null) {
+            if ($requireUser && ($authContext['user_id'] ?? null) === null) {
                 mcp_error($id, -32002, 'Deze tool vereist een gebruikercontext (login).');
             }
         }
@@ -191,6 +195,53 @@ switch ($method) {
             mcp_error($id, -32000, 'Interne fout tijdens tool-aanroep.');
         }
         break;
+    }
+
+    case 'resources/list':
+        mcp_result($id, ['resources' => Resources::list()]);
+        break;
+
+    case 'resources/templates/list':
+        mcp_result($id, ['resourceTemplates' => Resources::templates()]);
+        break;
+
+    case 'resources/read': {
+        $uri = (string) ($params['uri'] ?? '');
+        if ($uri === '') {
+            mcp_error($id, -32602, 'uri_required');
+        }
+        try {
+            $contents = Resources::read($uri);
+            mcp_result($id, ['contents' => $contents]);
+        } catch (McpException $e) {
+            mcp_error($id, $e->getCode(), $e->getMessage(), $e->toJsonRpc()['data'] ?? null);
+        } catch (Throwable $e) {
+            error_log('[mcp] resource ' . $uri . ' error: ' . $e->getMessage());
+            mcp_error($id, -32000, 'Interne fout bij resources/read.');
+        }
+        break;
+    }
+
+    case 'prompts/list':
+        mcp_result($id, ['prompts' => Prompts::list()]);
+        break;
+
+    case 'prompts/get': {
+        $name = (string) ($params['name'] ?? '');
+        $args = is_array($params['arguments'] ?? null) ? $params['arguments'] : [];
+        if ($name === '') {
+            mcp_error($id, -32602, 'name_required');
+        }
+        try {
+            mcp_result($id, Prompts::get($name, $args));
+        } catch (McpException $e) {
+            mcp_error($id, $e->getCode(), $e->getMessage(), $e->toJsonRpc()['data'] ?? null);
+        } catch (Throwable $e) {
+            error_log('[mcp] prompt ' . $name . ' error: ' . $e->getMessage());
+            mcp_error($id, -32000, 'Interne fout bij prompts/get.');
+        }
+        break;
+    }
 
     case 'notifications/initialized':
     case 'notifications/cancelled':
