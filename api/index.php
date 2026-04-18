@@ -8,6 +8,7 @@ require_once __DIR__ . '/../includes/cors.php';
 require_once __DIR__ . '/../includes/rate_limiter.php';
 require_once __DIR__ . '/../includes/api_error_helpers.php';
 require_once __DIR__ . '/../includes/api_csrf.php';
+require_once __DIR__ . '/../includes/api_bearer.php';
 
 if (!defined('API_OUTPUT_BUFFER_STARTED')) {
     ob_start();
@@ -24,6 +25,24 @@ function api_emit_json_response(array $payload, int $statusCode = 200): void {
     api_clear_output_buffers();
     http_response_code($statusCode);
     header('Content-Type: application/json; charset=UTF-8');
+
+    if ($statusCode === 401 && !headers_sent()) {
+        $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+        $host = $_SERVER['HTTP_HOST'] ?? 'politiekpraat.nl';
+        $base = defined('URLROOT') ? (string) URLROOT : ($scheme . '://' . $host);
+        $resource = rtrim($base, '/') . '/.well-known/oauth-protected-resource';
+        $existing = '';
+        foreach (headers_list() as $h) {
+            if (stripos($h, 'WWW-Authenticate:') === 0) {
+                $existing = trim(substr($h, strlen('WWW-Authenticate:')));
+                break;
+            }
+        }
+        if ($existing === '') {
+            header('WWW-Authenticate: Bearer realm="politiekpraat", resource_metadata="' . $resource . '"');
+        }
+    }
+
     echo json_encode($payload, JSON_UNESCAPED_UNICODE);
     exit();
 }
@@ -298,7 +317,11 @@ class APIRouter {
                 case 'test':
                     $this->handleTest();
                     break;
-                    
+
+                case 'health':
+                    $this->handleHealth();
+                    break;
+
                 default:
                     sendApiError('Endpoint niet gevonden: ' . $endpoint, 404);
             }
@@ -412,6 +435,37 @@ class APIRouter {
         ]);
     }
     
+    private function handleHealth() {
+        $dbStatus = 'ok';
+        $dbError = null;
+
+        try {
+            $db = new Database();
+            $db->query('SELECT 1');
+            $db->execute();
+        } catch (Throwable $e) {
+            $dbStatus = 'error';
+            $dbError = 'database_unavailable';
+        }
+
+        $overall = $dbStatus === 'ok' ? 'ok' : 'degraded';
+        $httpStatus = $dbStatus === 'ok' ? 200 : 503;
+
+        $payload = [
+            'status' => $overall,
+            'timestamp' => date('c'),
+            'version' => defined('APPVERSION') ? APPVERSION : '1.0.0',
+            'checks' => [
+                'database' => [
+                    'status' => $dbStatus,
+                    'error' => $dbError,
+                ],
+            ],
+        ];
+
+        api_emit_json_response($payload, $httpStatus);
+    }
+
     private function handleTest() {
         if (!can_access_diagnostics()) {
             sendApiResponse([

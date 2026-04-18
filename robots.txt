@@ -5,8 +5,13 @@ Disallow: /includes/
 Disallow: /config/
 Disallow: /views/templates/
 
+# Content Signals (ai-train, search, ai-input)
+# https://contentsignals.org/
+# https://datatracker.ietf.org/doc/draft-romm-aipref-contentsignals/
+Content-Signal: search=yes, ai-train=no, ai-input=yes
+
 # Sitemap
 Sitemap: https://politiekpraat.nl/sitemap.xml
 
 # Crawl-delay
-Crawl-delay: 10 
+Crawl-delay: 10

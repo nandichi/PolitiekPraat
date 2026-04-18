@@ -1,0 +1,56 @@
+{
+    "$schema": "https://agentskills.io/schemas/index.v0.2.0.json",
+    "publisher": {
+        "name": "PolitiekPraat",
+        "url": "https://politiekpraat.nl",
+        "contact": "https://politiekpraat.nl/contact"
+    },
+    "generatedAt": "2026-04-18T14:01:14+00:00",
+    "skills": [
+        {
+            "name": "blogs-search",
+            "type": "markdown",
+            "description": "Zoek en lees politieke blogs van PolitiekPraat. Blogs dekken actuele Nederlandse politiek, analyses, opinie en debat. Resultaten kunnen worden gefilterd op trefwoord.",
+            "url": "https://politiekpraat.nl/.well-known/agent-skills/blogs-search/SKILL.md",
+            "version": "1.0.0",
+            "language": "nl-NL",
+            "digest": "sha256-tNYPdS5MvNR8q0FxHzZo7bPaaEPxC4wGEKWRg4ixGzg="
+        },
+        {
+            "name": "partijen-lookup",
+            "type": "markdown",
+            "description": "Zoek informatie over Nederlandse politieke partijen: standpunten, lijsttrekker, kleuren, afkortingen en verkiezingsprogramma.",
+            "url": "https://politiekpraat.nl/.well-known/agent-skills/partijen-lookup/SKILL.md",
+            "version": "1.0.0",
+            "language": "nl-NL",
+            "digest": "sha256-XQLJC0cCR5vG9eFBNE6CU3ixfYUiG18QOBetp6cHQAM="
+        },
+        {
+            "name": "partijmeter",
+            "type": "markdown",
+            "description": "Help een gebruiker door de PolitiekPraat PartijMeter: een gratis online test met ~30 stellingen over actuele Nederlandse thema's. Uitkomst is een percentage-match met alle landelijke politieke partijen. Geschikt voor stemadvies en partijvergelijking.",
+            "url": "https://politiekpraat.nl/.well-known/agent-skills/partijmeter/SKILL.md",
+            "version": "1.0.0",
+            "language": "nl-NL",
+            "digest": "sha256-LP0JxETOKLF0YlcY3Ky7G+mLgt2Bc6s/yT/0sJKS3yQ="
+        },
+        {
+            "name": "politiek-kompas",
+            "type": "markdown",
+            "description": "Toont het politieke kompas met standpunten van Nederlandse partijen op assen als progressief-conservatief en links-rechts. Handig om partijen visueel te vergelijken op meerdere thema's tegelijk.",
+            "url": "https://politiekpraat.nl/.well-known/agent-skills/politiek-kompas/SKILL.md",
+            "version": "1.0.0",
+            "language": "nl-NL",
+            "digest": "sha256-UiS/QRb1Q2kkCdwmkN6AW+thCLayMN4ep71NpYW9sGI="
+        },
+        {
+            "name": "stemwijzer-ede",
+            "type": "markdown",
+            "description": "Gemeentelijke Stemwijzer voor de gemeente Ede (gemeenteraadsverkiezingen 2026). 25 stellingen met weging. Geeft een lijst met partijen die het best aansluiten bij de antwoorden van de gebruiker voor de lokale politiek in Ede.",
+            "url": "https://politiekpraat.nl/.well-known/agent-skills/stemwijzer-ede/SKILL.md",
+            "version": "1.0.0",
+            "language": "nl-NL",
+            "digest": "sha256-EmIfxPuIGJ4KYuG6Itx8oDh5uomYPrKGcGo3g8WDCEI="
+        }
+    ]
+}

@@ -63,10 +63,41 @@ if (!function_exists('api_log_error_details')) {
     }
 }
 
+if (!function_exists('api_emit_bearer_challenge')) {
+    /**
+     * Emit de RFC 6750 + RFC 9728 `WWW-Authenticate: Bearer` header met
+     * `resource_metadata` link naar /.well-known/oauth-protected-resource.
+     * Wordt genegeerd als headers al verstuurd zijn of als er al een
+     * WWW-Authenticate-header staat (bv. door api_bearer_send_challenge()).
+     */
+    function api_emit_bearer_challenge(): void {
+        if (headers_sent()) {
+            return;
+        }
+
+        foreach (headers_list() as $h) {
+            if (stripos($h, 'WWW-Authenticate:') === 0) {
+                return;
+            }
+        }
+
+        $scheme   = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+        $host     = $_SERVER['HTTP_HOST'] ?? 'politiekpraat.nl';
+        $base     = defined('URLROOT') ? (string) URLROOT : ($scheme . '://' . $host);
+        $resource = rtrim($base, '/') . '/.well-known/oauth-protected-resource';
+
+        header('WWW-Authenticate: Bearer realm="politiekpraat", resource_metadata="' . $resource . '"');
+    }
+}
+
 if (!function_exists('api_build_error_response')) {
     function api_build_error_response($message, int $statusCode = 500, $debug = null): array {
         $publicMessage = api_public_error_message($message, $statusCode);
         api_log_error_details((string) $message, $statusCode, $debug);
+
+        if ($statusCode === 401) {
+            api_emit_bearer_challenge();
+        }
 
         $response = [
             'success' => false,

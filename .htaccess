@@ -28,6 +28,10 @@ RewriteRule ^ - [L]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^ - [L]
 
+# Extensionless .well-known endpoints: if a PHP file with same name exists, serve it.
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(\.well-known/.+)$ $1.php [L,QSA]
+
 # Handle all routes
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

@@ -24,6 +24,11 @@ require_once 'includes/Router.php';
 require_once 'includes/BlogController.php';
 require_once 'includes/CategoryController.php';
 require_once 'controllers/blogs.php';  // Add BlogsController
+require_once 'includes/agent_discovery.php';
+require_once 'includes/markdown_negotiator.php';
+
+agent_discovery_emit_link_headers();
+markdown_negotiator_start();
 
 // Debug informatie (tijdelijk)
 if (APP_DEBUG && isset($_GET['debug'])) {
@@ -138,6 +143,17 @@ $router->add('stemmentracker/detail/([0-9]+)', function($motie_id) {
     require_once 'controllers/stemmentracker.php';
 });
 $router->add('stemwijzer', 'controllers/stemwijzer.php');
+
+// OAuth 2.0 / OIDC authorization server endpoints
+$router->add('oauth/authorize', 'controllers/oauth/authorize.php');
+$router->add('oauth/token', 'controllers/oauth/token.php');
+$router->add('oauth/userinfo', 'controllers/oauth/userinfo.php');
+$router->add('oauth/register', 'controllers/oauth/register.php');
+$router->add('oauth/revoke', 'controllers/oauth/revoke.php');
+$router->add('oauth/introspect', 'controllers/oauth/introspect.php');
+
+// MCP server endpoint (JSON-RPC over HTTP)
+$router->add('mcp', 'controllers/mcp/server.php');
 
 // Privacy en compliance routes
 $router->add('privacy-policy', function() {

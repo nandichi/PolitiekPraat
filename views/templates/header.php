@@ -677,6 +677,9 @@ if ($currentPage === 'amerikaanse-verkiezingen') {
     <!-- Accessibility Scripts -->
     <script src="<?php echo URLROOT; ?>/public/js/accessibility.js" defer></script>
 
+    <!-- WebMCP: stelt site-acties beschikbaar aan AI-agents (https://webmachinelearning.github.io/webmcp/) -->
+    <script src="<?php echo URLROOT; ?>/public/js/webmcp.js" defer></script>
+
     <style>
         [x-cloak] { 
             display: none !important; 

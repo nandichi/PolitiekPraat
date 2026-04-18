@@ -1,0 +1,201 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "PolitiekPraat REST API",
+    "version": "1.0.0",
+    "description": "Publieke REST API van PolitiekPraat. Biedt toegang tot blogs, nieuws, partijen, thema's, forum, stemmentracker en PartijMeter. Auth via OAuth 2.0 bearer tokens (zie /.well-known/oauth-protected-resource) of legacy JWT tokens.",
+    "contact": {
+      "name": "PolitiekPraat",
+      "url": "https://politiekpraat.nl/contact"
+    },
+    "license": {
+      "name": "Proprietary",
+      "url": "https://politiekpraat.nl/gebruiksvoorwaarden"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://politiekpraat.nl/api",
+      "description": "Productie"
+    }
+  ],
+  "security": [
+    { "bearerAuth": [] },
+    {}
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "OAuth 2.0 access token (voorkeur) of legacy JWT. Zie https://politiekpraat.nl/.well-known/oauth-protected-resource voor details."
+      }
+    },
+    "schemas": {
+      "SuccessResponse": {
+        "type": "object",
+        "required": ["success", "data", "timestamp"],
+        "properties": {
+          "success": { "type": "boolean", "const": true },
+          "data": {},
+          "timestamp": { "type": "string", "format": "date-time" }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "required": ["success", "error", "timestamp"],
+        "properties": {
+          "success": { "type": "boolean", "const": false },
+          "error": { "type": "string" },
+          "timestamp": { "type": "string", "format": "date-time" }
+        }
+      },
+      "HealthResponse": {
+        "type": "object",
+        "required": ["status", "timestamp"],
+        "properties": {
+          "status": { "type": "string", "enum": ["ok", "degraded"] },
+          "timestamp": { "type": "string", "format": "date-time" },
+          "version": { "type": "string" },
+          "checks": { "type": "object" }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/health": {
+      "get": {
+        "summary": "Health check",
+        "operationId": "getHealth",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Service gezond",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HealthResponse" }
+              }
+            }
+          },
+          "503": {
+            "description": "Onderdelen onbeschikbaar",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HealthResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "summary": "Login met e-mail en wachtwoord",
+        "operationId": "authLogin",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email", "password"],
+                "properties": {
+                  "email": { "type": "string", "format": "email" },
+                  "password": { "type": "string", "minLength": 8 }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "JWT-token + gebruiker" },
+          "401": { "description": "Onjuiste inloggegevens" }
+        }
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "summary": "Nieuwe gebruiker registreren",
+        "operationId": "authRegister",
+        "security": [],
+        "responses": { "200": { "description": "Account aangemaakt" } }
+      }
+    },
+    "/auth/me": {
+      "get": {
+        "summary": "Huidige gebruiker",
+        "operationId": "authMe",
+        "responses": { "200": { "description": "Gebruikerprofiel" } }
+      }
+    },
+    "/blogs": {
+      "get": {
+        "summary": "Lijst blogs",
+        "operationId": "listBlogs",
+        "security": [],
+        "parameters": [
+          { "name": "search", "in": "query", "schema": { "type": "string" } },
+          { "name": "limit", "in": "query", "schema": { "type": "integer", "minimum": 1, "maximum": 100 } },
+          { "name": "offset", "in": "query", "schema": { "type": "integer", "minimum": 0 } }
+        ],
+        "responses": { "200": { "description": "Lijst met blogs" } }
+      },
+      "post": {
+        "summary": "Nieuwe blog aanmaken",
+        "operationId": "createBlog",
+        "responses": { "201": { "description": "Aangemaakt" } }
+      }
+    },
+    "/blogs/{id}": {
+      "parameters": [
+        { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+      ],
+      "get": {
+        "summary": "Blog detail",
+        "operationId": "getBlog",
+        "security": [],
+        "responses": { "200": { "description": "Blog" } }
+      },
+      "put": { "summary": "Blog bijwerken", "operationId": "updateBlog", "responses": { "200": { "description": "Bijgewerkt" } } },
+      "delete": { "summary": "Blog verwijderen", "operationId": "deleteBlog", "responses": { "204": { "description": "Verwijderd" } } }
+    },
+    "/news": {
+      "get": {
+        "summary": "Politiek nieuws",
+        "operationId": "listNews",
+        "security": [],
+        "responses": { "200": { "description": "Lijst met nieuwsartikelen" } }
+      }
+    },
+    "/parties": {
+      "get": {
+        "summary": "Lijst politieke partijen",
+        "operationId": "listParties",
+        "security": [],
+        "responses": { "200": { "description": "Partijen" } }
+      }
+    },
+    "/parties/{id}": {
+      "parameters": [ { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } } ],
+      "get": { "summary": "Partij detail", "operationId": "getParty", "security": [], "responses": { "200": { "description": "Partij" } } }
+    },
+    "/themas": {
+      "get": { "summary": "Thema's", "operationId": "listThemas", "security": [], "responses": { "200": { "description": "Thema-overzicht" } } }
+    },
+    "/stemmentracker": {
+      "get": { "summary": "Moties", "operationId": "listMoties", "security": [], "responses": { "200": { "description": "Moties" } } }
+    },
+    "/stemwijzer": {
+      "get": { "summary": "PartijMeter stellingen", "operationId": "getPartijmeter", "security": [], "responses": { "200": { "description": "Stellingen + partijposities" } } }
+    },
+    "/forum/topics": {
+      "get": { "summary": "Forum topics", "operationId": "listForumTopics", "security": [], "responses": { "200": { "description": "Topics" } } },
+      "post": { "summary": "Nieuw topic", "operationId": "createForumTopic", "responses": { "201": { "description": "Aangemaakt" } } }
+    },
+    "/comments": {
+      "post": { "summary": "Comment plaatsen", "operationId": "postComment", "responses": { "201": { "description": "Geplaatst" } } }
+    }
+  }
+}
