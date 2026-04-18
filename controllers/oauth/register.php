@@ -61,9 +61,20 @@ $redirects = $input['redirect_uris'] ?? [];
 if (!is_array($redirects) || empty($redirects)) {
     oauth_register_error('invalid_redirect_uri', 400, 'redirect_uris is verplicht.');
 }
+// Accept http(s) URLs plus private-use / custom URI schemes for native apps
+// (RFC 8252, bv. cursor://, com.example.app://, app.bundle.id:/callback).
+// Gevaarlijke schemes worden expliciet geweigerd.
+$forbiddenSchemes = ['javascript', 'data', 'vbscript', 'file', 'about'];
 foreach ($redirects as $uri) {
-    if (!is_string($uri) || !preg_match('#^https?://#i', $uri)) {
-        oauth_register_error('invalid_redirect_uri', 400, 'redirect_uris moeten http(s) URLs zijn.');
+    if (!is_string($uri) || $uri === '') {
+        oauth_register_error('invalid_redirect_uri', 400, 'redirect_uris moet een lijst met strings zijn.');
+    }
+    if (!preg_match('#^([a-z][a-z0-9+\-.]{0,31}):#i', $uri, $m)) {
+        oauth_register_error('invalid_redirect_uri', 400, 'redirect_uri heeft geen geldige scheme: ' . $uri);
+    }
+    $scheme = strtolower($m[1]);
+    if (in_array($scheme, $forbiddenSchemes, true)) {
+        oauth_register_error('invalid_redirect_uri', 400, 'redirect_uri scheme niet toegestaan: ' . $scheme);
     }
 }
 
