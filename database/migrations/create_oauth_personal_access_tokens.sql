@@ -11,7 +11,7 @@
 
 CREATE TABLE IF NOT EXISTS oauth_personal_access_tokens (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    user_id INT UNSIGNED NOT NULL,
+    user_id INT NOT NULL,
     name VARCHAR(120) NOT NULL,
     token_prefix VARCHAR(24) NOT NULL,
     token_hash CHAR(64) NOT NULL,
