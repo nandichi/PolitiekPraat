@@ -526,7 +526,7 @@ include_once BASE_PATH . '/views/templates/header.php';
             <div class="absolute bottom-32 left-1/3 w-72 h-72 bg-gradient-to-br from-primary-light/6 to-secondary-light/6 rounded-full blur-3xl animate-pulse-slow"></div>
             
             <!-- Geometric pattern overlay -->
-            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"40\" height=\"40\" viewBox=\"0 0 40 40\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg opacity=\"0.04\"%3E%3Cpath d=\"M20 0L20 40M0 20L40 20\" stroke=\"%23334155\" stroke-width=\"1\"%3E%3C/path%3E%3Ccircle cx=\"20\" cy=\"20\" r=\"2\" fill=\"%23334155\"%3E%3C/circle%3E%3C/g%3E%3C/svg%3E')] opacity-40"></div>
+            <div class="absolute inset-0 opacity-40" style="background-image: url(&quot;data:image/svg+xml;utf8,<svg width='40' height='40' viewBox='0 0 40 40' fill='none' xmlns='http://www.w3.org/2000/svg'><g opacity='0.04'><path d='M20 0L20 40M0 20L40 20' stroke='%23334155' stroke-width='1'/><circle cx='20' cy='20' r='2' fill='%23334155'/></g></svg>&quot;);"></div>
             
             <!-- Floating elements -->
             <div class="absolute top-40 right-1/4 w-4 h-4 bg-primary/20 rounded-full animate-bounce"></div>
