@@ -86,6 +86,22 @@ if (empty($scopes)) {
     $scopes = [Scopes::OPENID, Scopes::PROFILE];
 }
 
+// MCP-clients (Cursor, Claude Desktop, VS Code e.d. met custom URI-scheme
+// of loopback redirect) krijgen automatisch toegang tot alle MCP-safe
+// scopes, zodat het consent-scherm ze als checkbox kan aanbieden.
+// De daadwerkelijke scopes die in het access token landen worden bepaald
+// door wat de gebruiker goedkeurt in /oauth/authorize.
+$isMcpClient = false;
+foreach ($redirects as $uri) {
+    if (Scopes::isLikelyMcpRedirectUri((string) $uri)) {
+        $isMcpClient = true;
+        break;
+    }
+}
+if ($isMcpClient) {
+    $scopes = array_values(array_unique(array_merge($scopes, Scopes::mcpDefault())));
+}
+
 $authMethod = (string) ($input['token_endpoint_auth_method'] ?? 'client_secret_basic');
 $allowedAuth = ['client_secret_basic', 'client_secret_post', 'none'];
 if (!in_array($authMethod, $allowedAuth, true)) {

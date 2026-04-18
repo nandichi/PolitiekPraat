@@ -94,6 +94,18 @@ if (empty($granted)) {
     oauth_send_error_redirect($redirectUri, 'invalid_scope', $state, 'Gevraagde scope is niet toegestaan voor deze client.');
 }
 
+// MCP-clients (Cursor, Claude Desktop etc.) registreren vaak alleen met
+// openid/profile/email maar hebben in de praktijk extra scopes nodig
+// (bv. blogs.write). We bieden daarom álle client-scopes aan in de
+// consent-UI en forceren de consent-stap, zodat de user expliciet kan
+// aanvinken wat hij/zij toestaat.
+$isMcpClient = Scopes::isLikelyMcpRedirectUri($redirectUri);
+$offerableScopes = $allowedByClient;
+$forceConsent = false;
+if ($isMcpClient) {
+    $forceConsent = true;
+}
+
 if (!isLoggedIn()) {
     $_SESSION['oauth_after_login'] = $_SERVER['REQUEST_URI'] ?? '';
     header('Location: ' . URLROOT . '/login');
@@ -119,7 +131,7 @@ $existingScopes = [];
 if ($consentRow && empty($consentRow->revoked_at)) {
     $existingScopes = Scopes::normalize((string) ($consentRow->scope ?? ''));
 }
-$needsConsent = !empty(array_diff($granted, $existingScopes));
+$needsConsent = !empty(array_diff($granted, $existingScopes)) || $forceConsent;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!auth_require_csrf_token_from_post()) {
@@ -128,6 +140,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $decision = $_POST['decision'] ?? 'deny';
     if ($decision !== 'allow') {
         oauth_send_error_redirect($redirectUri, 'access_denied', $state, 'Gebruiker heeft de autorisatie geweigerd.');
+    }
+
+    // Voor MCP-clients kan de user extra scopes aanvinken die niet in
+    // de originele request stonden. We nemen alleen scopes over die de
+    // client ook daadwerkelijk mag gebruiken (allowedByClient) en die
+    // de user heeft aangevinkt.
+    $selectedScopes = $_POST['scopes'] ?? [];
+    if (!is_array($selectedScopes)) {
+        $selectedScopes = [];
+    }
+    $selectedScopes = array_values(array_intersect($selectedScopes, $allowedByClient));
+    if (!empty($selectedScopes)) {
+        // Combineer requested + user-selected + verplicht openid als die in requested zat
+        $granted = array_values(array_unique(array_merge($granted, $selectedScopes)));
+    }
+    if (empty($granted)) {
+        oauth_send_error_redirect($redirectUri, 'access_denied', $state, 'Geen scopes goedgekeurd.');
     }
 
     $db->query('INSERT INTO oauth_consents (user_id, client_id, scope) VALUES (:u, :c, :s)
@@ -177,5 +206,12 @@ if (!$needsConsent && $prompt !== 'consent') {
 
 $csrfToken = auth_ensure_csrf_token();
 $scopeDefs = Scopes::definitions();
+
+// Extra scopes die de client mag maar die niet expliciet in de request
+// stonden. Voor MCP-clients bieden we deze aan als optionele checkboxes.
+$optionalScopes = [];
+if ($isMcpClient) {
+    $optionalScopes = array_values(array_diff($allowedByClient, $granted));
+}
 
 require_once BASE_PATH . '/views/oauth/consent.php';

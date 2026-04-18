@@ -120,4 +120,54 @@ final class Scopes
     {
         return implode(' ', $scopes);
     }
+
+    /**
+     * Scopes die een MCP-client standaard mag aanvragen en in de
+     * consent-UI kan aanvinken. `blogs.admin` zit er bewust NIET in;
+     * die moet handmatig door een site-admin worden toegevoegd aan de
+     * client-registratie.
+     *
+     * @return string[]
+     */
+    public static function mcpDefault(): array
+    {
+        return [
+            self::OPENID,
+            self::PROFILE,
+            self::EMAIL,
+            self::OFFLINE_ACCESS,
+            self::BLOGS_READ,
+            self::BLOGS_WRITE,
+            self::COMMENTS_WRITE,
+            self::FORUM_WRITE,
+            self::PARTIJMETER_WRITE,
+            self::MEDIA_WRITE,
+            self::NEWSLETTER_WRITE,
+            self::POLLS_WRITE,
+            self::ANALYTICS_READ,
+            self::MCP_READ,
+            self::MCP_WRITE,
+        ];
+    }
+
+    /**
+     * Detecteert of een redirect_uri waarschijnlijk van een MCP-client
+     * komt (Cursor, Claude Desktop, VS Code e.d.) op basis van het
+     * URI-scheme. Loopback-adressen (http://127.0.0.1, http://localhost)
+     * worden ook als MCP-kandidaat beschouwd (RFC 8252).
+     */
+    public static function isLikelyMcpRedirectUri(string $uri): bool
+    {
+        if ($uri === '') {
+            return false;
+        }
+        if (preg_match('#^https?://(127\.0\.0\.1|localhost|\[::1\])(:\d+)?(/|$)#i', $uri)) {
+            return true;
+        }
+        if (!preg_match('#^([a-z][a-z0-9+\-.]{0,31})://#i', $uri, $m)) {
+            return false;
+        }
+        $scheme = strtolower($m[1]);
+        return !in_array($scheme, ['http', 'https'], true);
+    }
 }

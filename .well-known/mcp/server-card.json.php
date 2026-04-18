@@ -72,6 +72,14 @@ $card = [
         'scopes_supported'      => Scopes::supported(),
         'default_scopes'        => [Scopes::MCP_READ],
         'note'                  => 'Read-only tools en resources kunnen anoniem worden aangeroepen. Write-tools vereisen `mcp.write` plus de domain-scope (bv. `blogs.write`, `media.write`, `comments.write`, `forum.write`, `polls.write`, `newsletter.write`, `analytics.read`).',
+        'alternative_methods' => [
+            [
+                'type'        => 'personal_access_token',
+                'description' => 'Voor ontwikkel- en agent-scenarios kan een long-lived Personal Access Token (prefix `pp_live_`) worden gebruikt via de `Authorization: Bearer <token>` header. Tokens worden gegenereerd in /admin/personal-access-tokens met vooraf gekozen scopes.',
+                'header'      => 'Authorization: Bearer pp_live_...',
+                'management'  => $base . '/admin/personal-access-tokens.php',
+            ],
+        ],
     ],
     'tools'             => $tools,
     'resources'         => Resources::list(),

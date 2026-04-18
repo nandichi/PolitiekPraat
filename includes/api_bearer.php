@@ -110,6 +110,38 @@ if (!function_exists('api_bearer_verify_oauth')) {
 }
 
 /**
+ * Verifieer als Personal Access Token (pp_live_...).
+ */
+if (!function_exists('api_bearer_verify_pat')) {
+    function api_bearer_verify_pat(string $token): ?array
+    {
+        if (!str_starts_with($token, 'pp_live_')) {
+            return null;
+        }
+        try {
+            if (!class_exists('PolitiekPraat\\OAuth\\PersonalAccessTokens')) {
+                require_once __DIR__ . '/oauth/PersonalAccessTokens.php';
+            }
+            $pat = new \PolitiekPraat\OAuth\PersonalAccessTokens(new Database());
+            $ctx = $pat->verify($token);
+            if ($ctx === null) {
+                return null;
+            }
+            return [
+                'type'       => 'pat',
+                'user_id'    => $ctx['user_id'],
+                'client_id'  => 'pat:' . $ctx['token_id'],
+                'scopes'     => $ctx['scopes'],
+                'token_name' => $ctx['token_name'],
+            ];
+        } catch (Throwable $e) {
+            error_log('[api_bearer_verify_pat] ' . $e->getMessage());
+            return null;
+        }
+    }
+}
+
+/**
  * Legacy fallback: verifieer als intern-JWT via JwtService.
  */
 if (!function_exists('api_bearer_verify_legacy')) {
@@ -155,7 +187,10 @@ if (!function_exists('api_bearer_require')) {
             api_bearer_send_challenge(401, 'invalid_request', 'Authorization header met Bearer token vereist.', $requiredScope);
         }
 
-        $context = api_bearer_verify_oauth($token);
+        $context = api_bearer_verify_pat($token);
+        if ($context === null) {
+            $context = api_bearer_verify_oauth($token);
+        }
         if ($context === null) {
             $context = api_bearer_verify_legacy($token);
         }
@@ -163,7 +198,7 @@ if (!function_exists('api_bearer_require')) {
             api_bearer_send_challenge(401, 'invalid_token', 'Access token is ongeldig of verlopen.', $requiredScope);
         }
 
-        if ($requiredScope !== null && $requiredScope !== '' && $context['type'] === 'oauth') {
+        if ($requiredScope !== null && $requiredScope !== '' && in_array($context['type'], ['oauth', 'pat'], true)) {
             if (!in_array($requiredScope, (array) $context['scopes'], true)) {
                 api_bearer_send_challenge(403, 'insufficient_scope', 'Scope "' . $requiredScope . '" vereist.', $requiredScope);
             }
@@ -180,7 +215,10 @@ if (!function_exists('api_bearer_try')) {
         if ($token === null) {
             return null;
         }
-        $ctx = api_bearer_verify_oauth($token);
+        $ctx = api_bearer_verify_pat($token);
+        if ($ctx === null) {
+            $ctx = api_bearer_verify_oauth($token);
+        }
         return $ctx ?: api_bearer_verify_legacy($token);
     }
 }
