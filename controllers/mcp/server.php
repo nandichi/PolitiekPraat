@@ -79,7 +79,22 @@ function mcp_result($id, $result): void
 function mcp_auth_challenge(int $status, string $error, string $description, ?string $scopeNeeded = null): void
 {
     if (!headers_sent()) {
-        header('WWW-Authenticate: ' . api_bearer_challenge_header($error, $description, $scopeNeeded));
+        $scheme   = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+        $host     = $_SERVER['HTTP_HOST'] ?? 'politiekpraat.nl';
+        $base     = defined('URLROOT') ? (string) URLROOT : ($scheme . '://' . $host);
+        $resource = rtrim($base, '/') . '/.well-known/mcp/oauth-protected-resource';
+        $parts = [
+            'realm="politiekpraat"',
+            'resource_metadata="' . $resource . '"',
+            'error="' . $error . '"',
+        ];
+        if ($description !== '') {
+            $parts[] = 'error_description="' . addslashes($description) . '"';
+        }
+        if ($scopeNeeded !== null && $scopeNeeded !== '') {
+            $parts[] = 'scope="' . $scopeNeeded . '"';
+        }
+        header('WWW-Authenticate: Bearer ' . implode(', ', $parts));
     }
     mcp_error(null, $status === 401 ? -32001 : -32002, $description, ['error' => $error], $status);
 }

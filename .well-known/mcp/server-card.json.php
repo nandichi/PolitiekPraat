@@ -67,7 +67,7 @@ $card = [
     ],
     'authentication' => [
         'type'                  => 'oauth2',
-        'resource_metadata'     => $base . '/.well-known/oauth-protected-resource',
+        'resource_metadata'     => $base . '/.well-known/mcp/oauth-protected-resource',
         'authorization_servers' => [$base],
         'scopes_supported'      => Scopes::supported(),
         'default_scopes'        => [Scopes::MCP_READ],

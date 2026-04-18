@@ -92,15 +92,17 @@ class OAuthServer
         ];
     }
 
-    public function protectedResourceMetadata(): array
+    public function protectedResourceMetadata(string $resourcePath = '/api'): array
     {
         $iss = $this->issuer();
+        $resourcePath = '/' . ltrim($resourcePath, '/');
+        $docs = rtrim($resourcePath, '/') . '/';
         return [
-            'resource'                            => $iss . '/api',
+            'resource'                            => $iss . $resourcePath,
             'authorization_servers'               => [$iss],
             'scopes_supported'                    => Scopes::supported(),
             'bearer_methods_supported'            => ['header'],
-            'resource_documentation'              => $iss . '/api/',
+            'resource_documentation'              => $iss . $docs,
             'resource_policy_uri'                 => $iss . '/privacy-policy',
             'resource_tos_uri'                    => $iss . '/gebruiksvoorwaarden',
             'resource_signing_alg_values_supported' => ['RS256'],
