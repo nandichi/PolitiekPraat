@@ -3,12 +3,79 @@ require_once __DIR__ . '/../includes/Database.php';
 
 class PartyModel {
     private $db;
-    
+
+    private static $localLogoMap = [
+        'PVV'     => '/public/images/party-logos/pvv.png',
+        'VVD'     => '/public/images/party-logos/vvd.png',
+        'D66'     => '/public/images/party-logos/d66.png',
+        'CDA'     => '/public/images/party-logos/cda.png',
+        'SP'      => '/public/images/party-logos/sp.png',
+        'PvdD'    => '/public/images/party-logos/pvdd.png',
+        'JA21'    => '/public/images/party-logos/ja21.png',
+        'SGP'     => '/public/images/party-logos/sgp.png',
+        'FvD'     => '/public/images/party-logos/fvd.png',
+        'DENK'    => '/public/images/party-logos/denk.png',
+        'Volt'    => '/public/images/party-logos/volt.png',
+        'BBB'     => '/public/images/party-logos/bbb.png',
+        'NSC'     => '/public/images/party-logos/nsc.png',
+        'GL-PvdA' => '/public/images/party-logos/gl-pvda.png',
+        'CU'      => '/public/images/party-logos/christenunie.svg',
+    ];
+
+    private static $localLeaderPhotoMap = [
+        'PVV'     => '/partijleiders/geert.jpg',
+        'VVD'     => '/partijleiders/dilan.jpg',
+        'D66'     => '/partijleiders/rob.jpg',
+        'CDA'     => '/partijleiders/Henri.jpg',
+        'SP'      => '/partijleiders/jimmy.jpg',
+        'PvdD'    => '/partijleiders/esther.jpg',
+        'JA21'    => '/partijleiders/joost.jpg',
+        'SGP'     => '/partijleiders/Chris.jpg',
+        'FvD'     => '/partijleiders/thierry.jpg',
+        'DENK'    => '/partijleiders/baarle.jpg',
+        'Volt'    => '/partijleiders/dassen.jpg',
+        'BBB'     => '/partijleiders/plas.jpg',
+        'GL-PvdA' => '/partijleiders/frans.jpg',
+        'NSC'     => '/partijleiders/omtzicht.jpg',
+    ];
+
     public function __construct() {
         $database = new Database();
         $this->db = $database->getConnection();
     }
-    
+
+    /**
+     * Vervang externe of niet werkende afbeelding-URL's door lokale bestanden
+     * wanneer die beschikbaar zijn. Externe bronnen zoals upload.wikimedia.org
+     * en i.ibb.co/i.ibb.com leveren regelmatig HTTP 429/404 op door
+     * hotlink-restricties; lokale assets zijn betrouwbaarder.
+     */
+    private static function preferLocalAsset($currentUrl, $localPath) {
+        $localPath = (string) $localPath;
+        if ($localPath === '') {
+            return $currentUrl;
+        }
+
+        $absolutePath = dirname(__DIR__) . $localPath;
+        if (!file_exists($absolutePath)) {
+            return $currentUrl;
+        }
+
+        return $localPath;
+    }
+
+    private static function resolvePartyAssets($partyKey, array $party) {
+        if (isset(self::$localLogoMap[$partyKey])) {
+            $party['logo'] = self::preferLocalAsset($party['logo'] ?? '', self::$localLogoMap[$partyKey]);
+        }
+
+        if (isset(self::$localLeaderPhotoMap[$partyKey])) {
+            $party['leader_photo'] = self::preferLocalAsset($party['leader_photo'] ?? '', self::$localLeaderPhotoMap[$partyKey]);
+        }
+
+        return $party;
+    }
+
     /**
      * Haal alle actieve partijen op
      */
@@ -19,10 +86,10 @@ class PartyModel {
             ORDER BY current_seats DESC
         ");
         $stmt->execute();
-        
+
         $parties = [];
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $parties[$row['party_key']] = [
+            $party = [
                 'name' => $row['name'],
                 'leader' => $row['leader'],
                 'logo' => $row['logo'],
@@ -35,11 +102,13 @@ class PartyModel {
                 'perspectives' => json_decode($row['perspectives'], true),
                 'color' => $row['color']
             ];
+
+            $parties[$row['party_key']] = self::resolvePartyAssets($row['party_key'], $party);
         }
-        
+
         return $parties;
     }
-    
+
     /**
      * Haal één partij op
      */
@@ -49,13 +118,13 @@ class PartyModel {
             WHERE party_key = :party_key AND is_active = 1
         ");
         $stmt->execute(['party_key' => $partyKey]);
-        
+
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         if (!$row) {
             return null;
         }
-        
-        return [
+
+        $party = [
             'name' => $row['name'],
             'leader' => $row['leader'],
             'logo' => $row['logo'],
@@ -68,6 +137,8 @@ class PartyModel {
             'perspectives' => json_decode($row['perspectives'], true),
             'color' => $row['color']
         ];
+
+        return self::resolvePartyAssets($row['party_key'], $party);
     }
     
     /**

@@ -1997,7 +1997,7 @@ html {
     // Handle image errors
     document.querySelectorAll('img').forEach(img => {
         img.onerror = function() {
-            this.src = 'https://i.ibb.co/kXL6rQ8/placeholder-profile.jpg';
+            this.src = '/public/images/profiles/placeholder-profile.svg';
             this.onerror = null;
         };
     });

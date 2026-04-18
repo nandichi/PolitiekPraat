@@ -6,8 +6,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Handle image errors
     document.querySelectorAll('img').forEach(img => {
         img.onerror = function() {
-            // Replace with a fallback image if loading fails
-            this.src = 'https://i.ibb.co/kXL6rQ8/placeholder-profile.jpg';
+            // Replace with a local fallback image if loading fails
+            this.src = '/public/images/profiles/placeholder-profile.svg';
             this.onerror = null; // Prevent infinite loop
         };
     });
@@ -1004,7 +1004,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Handle image errors
     document.querySelectorAll('img').forEach(img => {
         img.onerror = function() {
-            this.src = 'https://i.ibb.co/kXL6rQ8/placeholder-profile.jpg';
+            this.src = '/public/images/profiles/placeholder-profile.svg';
             this.onerror = null;
         };
     });
