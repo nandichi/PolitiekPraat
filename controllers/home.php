@@ -153,9 +153,83 @@ function load_party_logo_lookup() {
     return $lookup;
 }
 
+function get_local_party_logo_map() {
+    static $map = null;
+    if ($map !== null) {
+        return $map;
+    }
+
+    $base = (defined('URLROOT') ? rtrim(URLROOT, '/') : '') . '/public/images/party-logos';
+
+    $files = [
+        'pvv'          => '/pvv.png',
+        'vvd'          => '/vvd.png',
+        'd66'          => '/d66.png',
+        'cda'          => '/cda.png',
+        'sp'           => '/sp.png',
+        'pvdd'         => '/pvdd.png',
+        'ja21'         => '/ja21.png',
+        'sgp'          => '/sgp.png',
+        'fvd'          => '/fvd.png',
+        'denk'         => '/denk.png',
+        'volt'         => '/volt.png',
+        'bbb'          => '/bbb.png',
+        'nsc'          => '/nsc.png',
+        'glpvda'       => '/gl-pvda.png',
+        'christenunie' => '/christenunie.svg',
+    ];
+
+    $alias = [
+        'partijvoordevrijheid'                     => 'pvv',
+        'volksparijvoorvrijheidendemocratie'       => 'vvd',
+        'volkspartijvoorvrijheidendemocratie'      => 'vvd',
+        'democraten66'                             => 'd66',
+        'christendemocratischappel'                => 'cda',
+        'christendemocratischappèl'                => 'cda',
+        'socialistischepartij'                     => 'sp',
+        'partijvoordedieren'                       => 'pvdd',
+        'forumvoordemocratie'                      => 'fvd',
+        'voltnederland'                            => 'volt',
+        'boerburgerbeweging'                       => 'bbb',
+        'nieuwsociaalcontract'                     => 'nsc',
+        'groenlinkspvda'                           => 'glpvda',
+        'glpvda'                                   => 'glpvda',
+        'groenlinks'                               => 'glpvda',
+        'pvda'                                     => 'glpvda',
+        'staatkundiggereformeerdepartij'           => 'sgp',
+    ];
+
+    $map = [];
+    foreach ($files as $key => $path) {
+        $map[$key] = $base . $path;
+    }
+    foreach ($alias as $fromKey => $toKey) {
+        if (isset($files[$toKey])) {
+            $map[$fromKey] = $base . $files[$toKey];
+        }
+    }
+
+    return $map;
+}
+
 function get_party_logo_url($party_name) {
     if (empty($party_name)) {
         return null;
+    }
+
+    $normalized = normalize_party_key($party_name);
+    $localMap = get_local_party_logo_map();
+
+    if ($normalized !== '' && isset($localMap[$normalized])) {
+        return $localMap[$normalized];
+    }
+
+    $acronym = build_party_acronym($party_name);
+    if ($acronym !== null) {
+        $acronymKey = strtolower($acronym);
+        if (isset($localMap[$acronymKey])) {
+            return $localMap[$acronymKey];
+        }
     }
 
     $lookup = load_party_logo_lookup();
@@ -163,7 +237,6 @@ function get_party_logo_url($party_name) {
         return null;
     }
 
-    $normalized = normalize_party_key($party_name);
     if ($normalized !== '' && isset($lookup[$normalized])) {
         return $lookup[$normalized];
     }
@@ -176,12 +249,25 @@ function get_party_logo_url($party_name) {
         }
     }
 
-    $acronym = build_party_acronym($party_name);
     if ($acronym !== null && isset($lookup[strtolower($acronym)])) {
         return $lookup[strtolower($acronym)];
     }
 
     return null;
+}
+
+function normalize_president_photo_url($url) {
+    if (empty($url)) {
+        return $url;
+    }
+
+    $modernTrumpPortrait = 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Official_Presidential_Portrait_of_President_Donald_J._Trump_%282025%29.jpg/960px-Official_Presidential_Portrait_of_President_Donald_J._Trump_%282025%29.jpg';
+
+    if (stripos($url, 'Donald_Trump_official_portrait.jpg') !== false) {
+        return $modernTrumpPortrait;
+    }
+
+    return $url;
 }
 
 // Force canonical homepage URL: /home -> / (SEO duplicate content prevention)
@@ -414,6 +500,15 @@ $latest_blogs = $db->resultSet();
 // Haal Amerikaanse verkiezingen data op (laatste 4 verkiezingen)
 $db->query("SELECT * FROM amerikaanse_verkiezingen ORDER BY jaar DESC LIMIT 4");
 $amerikaanse_verkiezingen = $db->resultSet();
+
+foreach ($amerikaanse_verkiezingen as $verkiezing) {
+    if (!empty($verkiezing->winnaar_foto_url)) {
+        $verkiezing->winnaar_foto_url = normalize_president_photo_url($verkiezing->winnaar_foto_url);
+    }
+    if (!empty($verkiezing->verliezer_foto_url)) {
+        $verkiezing->verliezer_foto_url = normalize_president_photo_url($verkiezing->verliezer_foto_url);
+    }
+}
 
 // Haal Nederlandse verkiezingen data op (laatste 4 verkiezingen)
 $db->query("SELECT * FROM nederlandse_verkiezingen ORDER BY jaar DESC LIMIT 4");
@@ -1786,17 +1881,20 @@ require_once 'views/templates/header.php';
                     <div class="p-8">
                         <!-- Jaar en grootste partij -->
                         <div class="flex items-center space-x-4 mb-6">
-                            <!-- Jaar badge -->
-                            <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-orange-500 to-blue-600 rounded-full shadow-xl overflow-hidden p-2">
-                                <?php if (!empty($verkiezing->grootste_partij_logo)): ?>
+                            <!-- Partij-logo badge -->
+                            <?php if (!empty($verkiezing->grootste_partij_logo)): ?>
+                                <div class="relative inline-flex items-center justify-center w-16 h-16 bg-white rounded-2xl shadow-lg ring-1 ring-slate-200/70 overflow-hidden p-2.5 transition-transform duration-500 group-hover:scale-105">
                                     <img src="<?php echo htmlspecialchars($verkiezing->grootste_partij_logo); ?>"
                                          alt="Logo <?php echo htmlspecialchars($verkiezing->grootste_partij ?? 'partij'); ?>"
                                          class="w-full h-full object-contain"
-                                         loading="lazy">
-                                <?php else: ?>
+                                         loading="lazy"
+                                         onerror="this.onerror=null;this.parentElement.innerHTML='<span class=\'text-slate-800 font-black text-lg\'><?php echo substr($verkiezing->jaar, -2); ?></span>';">
+                                </div>
+                            <?php else: ?>
+                                <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-orange-500 to-blue-600 rounded-2xl shadow-xl">
                                     <span class="text-white font-black text-lg"><?php echo substr($verkiezing->jaar, -2); ?></span>
-                                <?php endif; ?>
-                            </div>
+                                </div>
+                            <?php endif; ?>
                             
                             <!-- Verkiezing info -->
                             <div class="flex-1">
