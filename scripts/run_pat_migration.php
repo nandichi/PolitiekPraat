@@ -17,10 +17,18 @@ if ($sql === false) {
     exit(1);
 }
 
-// Voer statements één voor één uit
+// Verwijder regel-niveau comments (-- ...) voordat we op ; splitsen,
+// zodat een CREATE TABLE voorafgegaan door comment-regels niet per
+// ongeluk als comment-only statement wordt overgeslagen.
+$lines = array_filter(
+    array_map(static fn($l) => rtrim($l), explode("\n", $sql)),
+    static fn($l) => !preg_match('/^\s*--/', $l)
+);
+$cleaned = implode("\n", $lines);
+
 $statements = array_filter(
-    array_map('trim', explode(';', $sql)),
-    static fn($s) => $s !== '' && !str_starts_with($s, '--')
+    array_map('trim', explode(';', $cleaned)),
+    static fn($s) => $s !== ''
 );
 
 foreach ($statements as $stmt) {
