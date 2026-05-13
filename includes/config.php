@@ -53,14 +53,20 @@ if (!defined('CONFIG_INCLUDED')) {
         }
 
         define('DB_HOST', $db_host);
-        define('DB_PORT', (int) $resolve_env('POLITIEKPRAAT_DB_PORT', '3306'));
+        $db_port_env = $resolve_env('POLITIEKPRAAT_DB_PORT');
+        if ($db_port_env !== null && (int) $db_port_env > 0) {
+            define('DB_PORT', (int) $db_port_env);
+        }
         define('DB_USER', $db_user);
         define('DB_PASS', $db_pass);
         define('DB_NAME', $db_name);
         define('URLROOT', $resolve_env('POLITIEKPRAAT_URLROOT', 'https://politiekpraat.nl'));
     } else {
         define('DB_HOST', $resolve_env('POLITIEKPRAAT_DB_HOST', 'localhost'));
-        define('DB_PORT', (int) $resolve_env('POLITIEKPRAAT_DB_PORT', '3306'));
+        $db_port_env = $resolve_env('POLITIEKPRAAT_DB_PORT');
+        if ($db_port_env !== null && (int) $db_port_env > 0) {
+            define('DB_PORT', (int) $db_port_env);
+        }
         define('DB_USER', $resolve_env('POLITIEKPRAAT_DB_USER', 'root'));
         define('DB_PASS', $resolve_env('POLITIEKPRAAT_DB_PASS', ''));
         define('DB_NAME', $resolve_env('POLITIEKPRAAT_DB_NAME', 'naoufal_politiekpraat_db'));

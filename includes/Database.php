@@ -10,8 +10,16 @@ class Database {
     private $error;
 
     public function __construct() {
-        $this->port = defined('DB_PORT') ? (int) DB_PORT : 3306;
-        $dsn = 'mysql:host=' . $this->host . ';port=' . $this->port . ';dbname=' . $this->dbname;
+        // Laat port alleen meedoen in de DSN als die expliciet via env is gezet.
+        // Op shared hosting (zxcs.nl, cPanel) gebruikt MySQL een Unix socket op
+        // localhost; een geforceerde `;port=3306` dwingt PDO naar TCP en breekt
+        // dan de verbinding.
+        $this->port = (defined('DB_PORT') && DB_PORT > 0) ? (int) DB_PORT : null;
+        $dsn = 'mysql:host=' . $this->host;
+        if ($this->port !== null) {
+            $dsn .= ';port=' . $this->port;
+        }
+        $dsn .= ';dbname=' . $this->dbname;
         $options = array(
             PDO::ATTR_PERSISTENT => true,
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
