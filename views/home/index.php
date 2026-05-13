@@ -57,7 +57,7 @@ function pp_home_format_date($value): string {
 <?= pp_render_component('section/page-hero', [
     'eyebrow' => 'Welkom bij PolitiekPraat',
     'title'   => 'Heldere politiek, gewone taal.',
-    'lead'    => 'Onafhankelijke analyses, stemhulpen en open gesprek over Nederlandse politiek - van Den Haag tot je eigen gemeente.',
+    'lead'    => 'Onafhankelijke analyses, stemhulpen en open gesprekken over Nederlandse politiek van Den Haag tot je eigen gemeente.',
 ]) ?>
 
 <?php if ($heroBlog): ?>
