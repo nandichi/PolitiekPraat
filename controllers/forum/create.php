@@ -34,50 +34,54 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 require_once BASE_PATH . '/views/templates/header.php';
+$titleValue = isset($title) ? (string) $title : '';
+$contentValue = isset($content) ? (string) $content : '';
 ?>
 
-<main class="container mx-auto px-4 py-12">
-    <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-8">
-        <h1 class="text-3xl font-bold mb-6">Nieuwe Discussie</h1>
-        
-        <?php if ($error): ?>
-            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-                <?php echo $error; ?>
-            </div>
-        <?php endif; ?>
+<?= pp_render_component('section/page-hero', [
+    'eyebrow' => 'Forum',
+    'title'   => 'Start een nieuwe discussie',
+    'lead'    => 'Stel je vraag scherp, geef context en nodig anderen uit om mee te denken.',
+]) ?>
 
-        <form method="POST" action="<?php echo URLROOT; ?>/forum/create">
-            <div class="mb-4">
-                <label for="title" class="block text-gray-700 font-bold mb-2">Onderwerp</label>
-                <input type="text" 
-                       name="title" 
-                       id="title" 
-                       class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-primary"
-                       value="<?php echo isset($title) ? htmlspecialchars($title) : ''; ?>"
-                       required>
-            </div>
-
-            <div class="mb-6">
-                <label for="content" class="block text-gray-700 font-bold mb-2">Bericht</label>
-                <textarea name="content" 
-                          id="content" 
-                          rows="10"
-                          class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-primary"
-                          required><?php echo isset($content) ? htmlspecialchars($content) : ''; ?></textarea>
-            </div>
-
-            <div class="flex justify-between">
-                <a href="<?php echo URLROOT; ?>/forum" 
-                   class="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-opacity-90 transition">
-                    Annuleren
-                </a>
-                <button type="submit" 
-                        class="bg-primary text-white px-6 py-2 rounded-lg hover:bg-opacity-90 transition">
-                    Discussie Starten
-                </button>
-            </div>
-        </form>
+<section class="pp-container pp-container--narrow py-10 md:py-14">
+    <div class="mb-6">
+        <a href="<?= pp_e(URLROOT) ?>/forum" class="inline-flex items-center gap-2 text-sm text-[color:var(--color-ink-muted)] hover:text-[color:var(--color-hague)] transition-colors">
+            <?= pp_icon('arrow-left', 14) ?>
+            Terug naar forum
+        </a>
     </div>
-</main>
+
+    <?php if (!empty($error)): ?>
+        <div class="border-l-4 border-[color:var(--color-terracotta)] bg-[color:var(--color-terracotta-tint)] text-[color:var(--color-terracotta)] p-4 mb-6 rounded-r">
+            <div class="flex items-start gap-3">
+                <span class="flex-shrink-0 mt-0.5"><?= pp_icon('alert-circle', 18) ?></span>
+                <span class="text-sm leading-relaxed"><?= pp_e($error) ?></span>
+            </div>
+        </div>
+    <?php endif; ?>
+
+    <form method="POST" action="<?= pp_e(URLROOT) ?>/forum/create" class="keyline-card p-6 md:p-10 space-y-5">
+        <div class="field">
+            <label for="title" class="field__label">Onderwerp</label>
+            <input type="text" name="title" id="title" required class="input" placeholder="Een heldere, concrete titel" value="<?= pp_e($titleValue) ?>">
+            <div class="field__hint">Maak de titel kort, scherp en uitnodigend.</div>
+        </div>
+
+        <div class="field">
+            <label for="content" class="field__label">Bericht</label>
+            <textarea name="content" id="content" rows="10" required class="textarea" placeholder="Geef context, deel je gedachten en nodig uit tot reactie..."><?= pp_e($contentValue) ?></textarea>
+            <div class="field__hint">Geef context, onderbouw je standpunt en stel een duidelijke vraag.</div>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-[color:var(--color-keyline)]">
+            <a href="<?= pp_e(URLROOT) ?>/forum" class="btn btn--ghost">Annuleren</a>
+            <button type="submit" class="btn btn--primary btn--lg">
+                <?= pp_icon('send', 14) ?>
+                Discussie starten
+            </button>
+        </div>
+    </form>
+</section>
 
 <?php require_once BASE_PATH . '/views/templates/footer.php'; ?> 

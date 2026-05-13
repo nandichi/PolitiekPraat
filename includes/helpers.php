@@ -3,6 +3,52 @@
 if (!defined('HELPERS_INCLUDED')) {
     define('HELPERS_INCLUDED', true);
 
+if (!function_exists('getRelativeTime')) {
+    /**
+     * Geeft een relatieve datumstring ("3 uur geleden") of geformatteerde datum
+     * voor langere intervallen.
+     */
+    function getRelativeTime($date) {
+        if (empty($date)) {
+            return '';
+        }
+        $timestamp = is_int($date) ? $date : strtotime((string) $date);
+        if (!$timestamp) {
+            return '';
+        }
+        $difference = time() - $timestamp;
+
+        if ($difference < 0) {
+            $difference = 0;
+        }
+
+        if ($difference < 60) {
+            return 'zojuist';
+        }
+        if ($difference < 3600) {
+            $minutes = (int) floor($difference / 60);
+            return $minutes . ' ' . ($minutes === 1 ? 'minuut' : 'minuten') . ' geleden';
+        }
+        if ($difference < 86400) {
+            $hours = (int) floor($difference / 3600);
+            return $hours . ' uur geleden';
+        }
+        if ($difference < 604800) {
+            $days = (int) floor($difference / 86400);
+            return $days . ' ' . ($days === 1 ? 'dag' : 'dagen') . ' geleden';
+        }
+        if (class_exists('IntlDateFormatter')) {
+            $formatter = new IntlDateFormatter('nl_NL', IntlDateFormatter::MEDIUM, IntlDateFormatter::NONE, null, null, 'd MMM yyyy');
+            $formatted = $formatter->format($timestamp);
+            if ($formatted) {
+                return $formatted;
+            }
+        }
+        $months = [1=>'jan','feb','mrt','apr','mei','jun','jul','aug','sep','okt','nov','dec'];
+        return (int) date('j', $timestamp) . ' ' . $months[(int) date('n', $timestamp)] . ' ' . date('Y', $timestamp);
+    }
+}
+
 if (!function_exists('getProfilePhotoUrl')) {
     /**
      * Gets the profile photo URL or initial for a user

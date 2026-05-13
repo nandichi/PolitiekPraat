@@ -1,1183 +1,217 @@
-<?php require_once BASE_PATH . '/views/templates/header.php'; ?>
+<?php
+/**
+ * Editorial blog edit form (Wave 2).
+ *
+ * Verwacht: $blog, $categories, $csrf_token, $error_message (optioneel)
+ */
+require_once BASE_PATH . '/views/templates/header.php';
 
-<!-- Stijlvolle achtergrond met subtiel patroon -->
-<div class="fixed inset-0 z-0 opacity-10">
-    <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%239C92AC\" fill-opacity=\"0.15\"%3E%3Cpath d=\"M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-50"></div>
-</div>
+require_once BASE_PATH . '/includes/CategoryController.php';
+if (!isset($categories)) {
+    $categoryController = new CategoryController();
+    $categories = $categoryController->getAll();
+}
 
-<main class="min-h-screen py-8 md:py-16 relative z-10 bg-gradient-to-br from-gray-50 via-white to-gray-50">
-    <!-- Decoratieve achtergrond elementen -->
-    <div class="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-primary/10 to-transparent"></div>
-    <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-secondary/10 to-transparent"></div>
-    
-    <div class="container mx-auto px-4 sm:px-6">
-        <div class="max-w-5xl mx-auto">
-            <!-- Header met moderne styling -->
-            <div class="text-center mb-10" data-aos="fade-down">
-                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 relative inline-block tracking-tight">
-                    <span class="relative z-10">Blog Bewerken</span>
-                    <div class="absolute -bottom-3 left-0 w-full h-3 bg-primary/20 -rotate-1 transform origin-left scale-110"></div>
-                </h1>
-                <p class="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
-                    Pas je blog aan met de geavanceerde editor
-                </p>
+// Bestaande poll ophalen
+$db = new Database();
+$db->query("SELECT * FROM blog_polls WHERE blog_id = :blog_id LIMIT 1");
+$db->bind(':blog_id', $blog->id);
+$existingPoll = $db->single();
+?>
+
+<?= pp_render_component('section/page-hero', [
+    'eyebrow' => 'Bewerken',
+    'title'   => 'Blog aanpassen',
+    'lead'    => 'Werk je publicatie bij. Wijzigingen worden direct opgeslagen.',
+]) ?>
+
+<section class="pp-container pp-container--md mt-8 mb-24">
+    <?php if (!empty($error_message)): ?>
+        <div class="keyline-card p-4 mb-6" style="border-color: var(--color-terracotta);">
+            <div class="flex items-start gap-3">
+                <span style="color: var(--color-terracotta);"><?= pp_icon('alert-circle', 20) ?></span>
+                <div>
+                    <p class="font-display text-base text-[color:var(--color-ink)]">Er ging iets mis</p>
+                    <p class="text-sm text-[color:var(--color-ink-muted)]"><?= pp_e($error_message) ?></p>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
+
+    <form action="<?= pp_e(pp_url('/blogs/edit/' . $blog->id)) ?>" method="POST" enctype="multipart/form-data" class="space-y-8">
+        <input type="hidden" name="csrf_token" value="<?= pp_e($csrf_token) ?>">
+
+        <div class="keyline-card p-6 md:p-8">
+            <div class="text-xs uppercase tracking-[0.18em] text-[color:var(--color-ink-muted)] mb-6">
+                Basis
             </div>
 
-            <!-- Hoofdformulier met verbeterde styling -->
-            <form action="<?php echo URLROOT; ?>/blogs/edit/<?php echo $blog->id; ?>" method="POST" enctype="multipart/form-data" 
-                  class="bg-white rounded-3xl shadow-xl overflow-hidden transform transition-all duration-500 hover:shadow-2xl relative">
-                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token, ENT_QUOTES, 'UTF-8'); ?>">
-                
-                <!-- Decoratieve header bar met gradient -->
-                <div class="bg-gradient-to-r from-primary via-primary/90 to-secondary h-2"></div>
+            <div class="field mb-6">
+                <label class="field__label" for="title">Titel <span style="color: var(--color-terracotta);">*</span></label>
+                <input type="text" id="title" name="title" required
+                       class="input"
+                       value="<?= pp_e($blog->title) ?>">
+            </div>
 
-                <!-- Subtiele strepen patroon voor decoratie -->
-                <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-primary/5 to-secondary/5 opacity-70 rounded-bl-full"></div>
-                
-                <div class="p-6 sm:p-10 relative">
-                    <!-- Title Section -->
-                    <div class="mb-8" data-aos="fade-up" data-aos-delay="100">
-                        <label for="title" class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
-                            <svg class="w-5 h-5 text-primary mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                            </svg>
-                            Titel van je blog
-                        </label>
-                        <div class="relative group">
-                            <input type="text" 
-                                   name="title" 
-                                   id="title" 
-                                   class="w-full px-5 py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition-all duration-300 text-lg font-medium bg-gray-50/50"
-                                   required
-                                   value="<?php echo htmlspecialchars($blog->title); ?>">
-                            <div class="absolute inset-0 bg-primary/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
-                        </div>
-                    </div>
+            <div class="field mb-6">
+                <label class="field__label" for="category_id">Categorie</label>
+                <select name="category_id" id="category_id" class="select">
+                    <option value="">Geen categorie</option>
+                    <?php foreach ($categories as $category): ?>
+                        <option value="<?= (int) $category->id ?>"
+                            <?= (int) ($blog->category_id ?? 0) === (int) $category->id ? 'selected' : '' ?>>
+                            <?= pp_e($category->name) ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
 
-                    <!-- Category Selection Section -->
-                    <div class="mb-8" data-aos="fade-up" data-aos-delay="150">
-                        <label for="category_id" class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
-                            <svg class="w-5 h-5 text-primary mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
-                            </svg>
-                            Categorie selecteren
-                        </label>
-                        <div class="relative group">
-                            <select name="category_id" 
-                                    id="category_id" 
-                                    class="w-full px-5 py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition-all duration-300 text-lg bg-gray-50/50 appearance-none cursor-pointer">
-                                <option value="">Geen categorie (optioneel)</option>
-                                <?php 
-                                if (isset($categories) && !empty($categories)): 
-                                    foreach ($categories as $category): 
-                                ?>
-                                    <option value="<?php echo $category->id; ?>" 
-                                            <?php echo (isset($blog->category_id) && $blog->category_id == $category->id) ? 'selected' : ''; ?>
-                                            data-color="<?php echo $category->color; ?>">
-                                        <?php echo htmlspecialchars($category->name); ?>
-                                    </option>
-                                <?php 
-                                    endforeach; 
-                                endif; 
-                                ?>
-                            </select>
-                            <!-- Custom dropdown arrow -->
-                            <div class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
-                                <svg class="w-5 h-5 text-gray-400 group-hover:text-primary transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                                </svg>
-                            </div>
-                            <div class="absolute inset-0 bg-primary/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
-                        </div>
-                        <p class="text-sm text-gray-500 mt-2 flex items-center">
-                            <svg class="w-4 h-4 text-gray-400 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                            </svg>
-                            Kies de categorie die het beste bij je blog past. Dit helpt lezers je artikel te vinden.
-                        </p>
-                    </div>
+            <div class="field">
+                <label class="field__label" for="summary">Korte samenvatting</label>
+                <textarea name="summary" id="summary" rows="3" maxlength="300"
+                          class="textarea"
+                          placeholder="Optioneel."><?= pp_e($blog->summary ?? '') ?></textarea>
+            </div>
+        </div>
 
-                    <!-- Image Upload Section - verbeterd ontwerp -->
-                    <div class="mb-10" data-aos="fade-up" data-aos-delay="200">
-                        <label class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
-                            <svg class="w-5 h-5 text-primary mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4-4a2 2 0 012.8 0L16 17m-2-2l1.6-1.6a2 2 0 012.8 0L20 15m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                            </svg>
-                            Header afbeelding
-                        </label>
-                        
-                        <?php if(!empty($blog->image_path)): ?>
-                            <div class="mb-6">
-                                <div class="relative bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
-                                    <div class="flex items-center justify-between mb-3">
-                                        <div class="flex items-center space-x-2">
-                                            <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4-4a2 2 0 012.8 0L16 17m-2-2l1.6-1.6a2 2 0 012.8 0L20 15m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                            </svg>
-                                            <h3 class="font-medium text-gray-900">Huidige afbeelding</h3>
-                                        </div>
-                                    </div>
-                                    <div class="relative rounded-xl overflow-hidden bg-white shadow-md">
-                                        <div class="aspect-[16/9] overflow-hidden">
-                                            <img src="<?php echo getBlogImageUrl($blog->image_path); ?>" 
-                                                 alt="<?php echo htmlspecialchars($blog->title); ?>"
-                                                 class="w-full h-full object-cover transition-transform duration-700 hover:scale-105">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        <?php endif; ?>
-                        
-                        <div class="relative">
-                            <!-- Upload zone met verbeterd design -->
-                            <div class="group/upload relative overflow-hidden">
-                                <div class="relative flex flex-col items-center gap-6 p-8 bg-gradient-to-br from-white to-gray-50 rounded-2xl border-2 border-dashed border-gray-200 transition-all duration-500 ease-out hover:border-primary hover:from-primary/[0.02] hover:to-secondary/[0.02]">
-                                    <!-- Decoratieve elementen -->
-                                    <div class="absolute -left-4 -top-4 w-32 h-32 bg-primary/5 rounded-full mix-blend-multiply filter blur-xl opacity-0 group-hover/upload:opacity-70 transition-all duration-700 group-hover/upload:translate-x-4 group-hover/upload:translate-y-4"></div>
-                                    <div class="absolute -right-4 -bottom-4 w-32 h-32 bg-secondary/5 rounded-full mix-blend-multiply filter blur-xl opacity-0 group-hover/upload:opacity-70 transition-all duration-700 group-hover/upload:translate-x-4 group-hover/upload:translate-y-4"></div>
+        <div class="keyline-card p-6 md:p-8">
+            <div class="text-xs uppercase tracking-[0.18em] text-[color:var(--color-ink-muted)] mb-6">
+                Media
+            </div>
 
-                                    <!-- Upload icoon container met verbeterde animaties -->
-                                    <div class="relative z-10 group/icon">
-                                        <div class="p-5 bg-white rounded-2xl border border-gray-100 shadow-sm transition-all duration-500 group-hover/upload:bg-white group-hover/upload:shadow-lg group-hover/upload:scale-110">
-                                            <svg class="w-12 h-12 text-gray-400 transition-colors duration-300 group-hover/upload:text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                                <path class="transition-all duration-500" d="M4 16l4-4a2 2 0 012.8 0L16 17m-2-2l1.6-1.6a2 2 0 012.8 0L20 15m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                            </svg>
-                                        </div>
-                                    </div>
-
-                                    <!-- Upload tekst en knop met verbeterd ontwerp -->
-                                    <div class="relative z-10 text-center space-y-4">
-                                        <label for="image" class="group/button inline-flex items-center px-6 py-3 bg-white border-2 border-primary/30 text-primary font-medium rounded-xl cursor-pointer shadow-sm transition-all duration-300 hover:border-primary hover:bg-primary hover:text-white hover:shadow-md">
-                                            <svg class="w-5 h-5 mr-2 transition-transform duration-300 group-hover/button:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-                                            </svg>
-                                            <span>Nieuwe afbeelding kiezen</span>
-                                            <input id="image" name="image" type="file" class="sr-only" accept="image/*">
-                                        </label>
-                                        
-                                        <div class="flex flex-col items-center space-y-2">
-                                            <p class="text-sm text-gray-500">
-                                                Sleep je afbeelding hierheen of gebruik de knop hierboven
-                                            </p>
-                                            <span class="inline-flex items-center px-3 py-1 space-x-1 bg-gray-50 rounded-full text-xs text-gray-500">
-                                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                                </svg>
-                                                <span>PNG, JPG of GIF (max. 5MB)</span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Video URL Section -->
-                    <div class="mb-10" data-aos="fade-up" data-aos-delay="250">
-                        <label class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
-                            <svg class="w-5 h-5 text-primary mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
-                            </svg>
-                            Video toevoegen
-                        </label>
-                        
-                        <!-- Video URL kaart -->
-                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300">
-                            <div class="flex items-center mb-3">
-                                <svg class="w-5 h-5 text-primary mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/>
-                                </svg>
-                                <h3 class="font-medium text-gray-900">Video URL</h3>
-                            </div>
-                            
-                            <div class="relative group mb-2">
-                                <input type="url" 
-                                       name="video_url" 
-                                       id="video_url" 
-                                       class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition-all duration-300 bg-gray-50/50"
-                                       placeholder="https://www.youtube.com/watch?v=..."
-                                       value="<?php echo htmlspecialchars($blog->video_url ?? ''); ?>">
-                                <div class="absolute inset-0 bg-primary/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
-                            </div>
-                            <p class="text-sm text-gray-500">Plak een YouTube of Vimeo video URL</p>
-                        </div>
-                        
-                        <!-- Video Preview if URL exists -->
-                        <?php if(!empty($blog->video_url)): ?>
-                        <div id="currentVideoPreview" class="mt-4">
-                            <div class="relative bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
-                                <div class="flex items-center justify-between mb-3">
-                                    <div class="flex items-center space-x-2">
-                                        <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
-                                        </svg>
-                                        <h3 class="font-medium text-gray-900">Huidige video</h3>
-                                    </div>
-                                </div>
-                                
-                                <div class="relative rounded-xl overflow-hidden bg-black">
-                                    <div class="aspect-video">
-                                        <?php
-                                        $videoUrl = $blog->video_url;
-                                        $embedUrl = '';
-                                        
-                                        if (preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/', $videoUrl, $youtubeMatches)) {
-                                            $embedUrl = "https://www.youtube.com/embed/{$youtubeMatches[1]}";
-                                        } elseif (preg_match('/(?:vimeo\.com\/)([0-9]+)/', $videoUrl, $vimeoMatches)) {
-                                            $embedUrl = "https://player.vimeo.com/video/{$vimeoMatches[1]}";
-                                        }
-                                        
-                                        if (!empty($embedUrl)):
-                                        ?>
-                                            <iframe src="<?php echo $embedUrl; ?>" 
-                                                    class="w-full aspect-video" 
-                                                    frameborder="0" 
-                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                                    allowfullscreen></iframe>
-                                        <?php else: ?>
-                                            <div class="w-full h-full flex items-center justify-center bg-gray-100 text-gray-500">
-                                                <p>Video kan niet worden weergegeven</p>
-                                            </div>
-                                        <?php endif; ?>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <?php endif; ?>
-                    </div>
-
-                    <!-- Podcast Audio Upload Sectie -->
-                    <div class="mb-10" data-aos="fade-up" data-aos-delay="325">
-                        <label class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
-                            <svg class="w-5 h-5 text-primary mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
-                            </svg>
-                            Podcast Audio (optioneel)
-                        </label>
-                        
-                        <!-- Huidige audio weergave als die bestaat -->
-                        <?php if(!empty($blog->audio_path)): ?>
-                        <div id="currentAudioSection" class="mb-6">
-                            <div class="relative bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
-                                <div class="flex items-center justify-between mb-4">
-                                    <div class="flex items-center space-x-3">
-                                        <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
-                                            <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                            </svg>
-                            </div>
-                                        <div>
-                                            <h3 class="font-medium text-gray-900">Huidige podcast audio</h3>
-                                            <p class="text-xs text-gray-500">Upload een nieuw bestand om te vervangen</p>
-                                </div>
-                            </div>
-                                    <label class="flex items-center space-x-2">
-                                        <input type="checkbox" 
-                                               name="remove_audio" 
-                                               id="removeAudioCheckbox"
-                                               class="w-4 h-4 text-red-600 focus:ring-red-500 border-gray-300 rounded"
-                                               onchange="toggleRemoveAudio()">
-                                        <span class="text-xs text-red-600">Audio verwijderen</span>
-                                    </label>
-                        </div>
-
-                                <div id="currentAudioPlayer" class="bg-gradient-to-r from-primary/5 to-secondary/5 rounded-xl p-4">
-                                    <audio controls class="w-full" preload="metadata">
-                                        <source src="<?php echo URLROOT . '/' . $blog->audio_path; ?>" type="audio/mpeg">
-                                        Je browser ondersteunt geen audio weergave.
-                                    </audio>
-                                    </div>
-                                </div>
-                        </div>
-                        <?php endif; ?>
-                        
-                        <!-- Audio bestand upload -->
-                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300">
-                            <div class="flex items-center mb-4">
-                                <svg class="w-5 h-5 text-primary mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>
-                                </svg>
-                                <h3 class="font-medium text-gray-900"><?php echo !empty($blog->audio_path) ? 'Nieuwe audio uploaden' : 'Upload een podcast/audio bestand'; ?></h3>
-                                        </div>
-                            
-                            <div class="relative group/upload">
-                                <div class="relative flex flex-col items-center p-8 bg-gradient-to-br from-gray-50 to-primary/5 rounded-xl border-2 border-dashed border-gray-200 transition-all duration-300 hover:border-primary/50 hover:bg-gradient-to-br hover:from-gray-50 hover:to-primary/10">
-                                    <!-- Decoratieve elementen -->
-                                    <div class="absolute -left-4 -top-4 w-32 h-32 bg-primary/10 rounded-full mix-blend-multiply filter blur-xl opacity-0 group-hover/upload:opacity-60 transition-all duration-700"></div>
-                                    <div class="absolute -right-4 -bottom-4 w-32 h-32 bg-secondary/10 rounded-full mix-blend-multiply filter blur-xl opacity-0 group-hover/upload:opacity-60 transition-all duration-700"></div>
-
-                                    <!-- Audio icoon container -->
-                                    <div class="relative z-10">
-                                        <div class="p-5 bg-white rounded-2xl border border-gray-100 shadow-sm transition-all duration-500 group-hover/upload:shadow-lg group-hover/upload:scale-110">
-                                            <svg class="w-12 h-12 text-gray-400 transition-colors duration-300 group-hover/upload:text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
-                                            </svg>
-                                    </div>
-                                    </div>
-
-                                    <!-- Upload tekst en knop -->
-                                    <div class="relative z-10 text-center space-y-4 mt-6">
-                                        <label for="audio" class="group/button inline-flex items-center px-6 py-3 bg-white border-2 border-primary/30 text-primary font-medium rounded-xl cursor-pointer shadow-sm transition-all duration-300 hover:border-primary hover:bg-primary hover:text-white hover:shadow-md">
-                                            <svg class="w-5 h-5 mr-2 transition-transform duration-300 group-hover/button:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-                                                </svg>
-                                            <span>Audiobestand kiezen</span>
-                                            <input id="audio" name="audio" type="file" class="sr-only" accept=".mp3,.wav,.ogg,audio/mpeg,audio/wav,audio/ogg">
-                                        </label>
-                                        
-                                        <div class="flex flex-col items-center space-y-2">
-                                            <p class="text-sm text-gray-600">
-                                                Upload een podcast of voorgelezen versie van je blog
-                                            </p>
-                                            <span class="inline-flex items-center px-3 py-1.5 space-x-1 bg-gray-100 rounded-full text-xs text-gray-500">
-                                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                                </svg>
-                                                <span>MP3, WAV of OGG (max. 100MB)</span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                        
-                                <!-- Audio Preview voor nieuwe upload -->
-                                <div id="audioPreview" class="hidden mt-6">
-                                    <div class="relative bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
-                                <!-- Preview header -->
-                                        <div class="flex items-center justify-between mb-4">
-                                            <div class="flex items-center space-x-3">
-                                                <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
-                                                    <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
-                                        </svg>
-                                                </div>
-                                                <div>
-                                                    <h3 class="font-medium text-gray-900">Nieuwe audio preview</h3>
-                                                    <p class="text-xs text-gray-500" id="audioInfo">Bestand geladen</p>
-                                                </div>
-                                    </div>
-                                    <button type="button" 
-                                                    onclick="removeAudio()" 
-                                                    class="group inline-flex items-center px-3 py-1.5 space-x-1 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors duration-300">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                        </svg>
-                                                <span class="text-sm font-medium">Annuleren</span>
-                                    </button>
-                                </div>
-                                
-                                        <!-- Audio player container -->
-                                        <div class="bg-gradient-to-r from-primary/5 to-secondary/5 rounded-xl p-4">
-                                            <audio id="audioPlayer" controls class="w-full">
-                                                <source src="" type="audio/mpeg">
-                                                Je browser ondersteunt geen audio weergave.
-                                            </audio>
-                                            <!-- Audio duration -->
-                                            <div class="mt-3 flex items-center justify-end text-sm text-gray-600">
-                                                <span class="inline-flex items-center">
-                                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                                </svg>
-                                                    <span id="audioDuration">--:--</span>
-                                            </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Poll Sectie -->
-                    <div class="mb-10" data-aos="fade-up" data-aos-delay="350">
-                        <?php
-                        // Check if blog already has a poll
-                        $db = new Database();
-                        $db->query("SELECT * FROM blog_polls WHERE blog_id = :blog_id");
-                        $db->bind(':blog_id', $blog->id);
-                        $existingPoll = $db->single();
-                        ?>
-                        
-                        <label class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
-                            <svg class="w-5 h-5 text-primary mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                            </svg>
-                            Poll toevoegen aan blog
-                        </label>
-                        
-                        <!-- Poll Toggle Switch -->
-                        <div class="mb-6">
-                            <div class="flex items-center justify-between p-4 bg-gradient-to-r from-primary/5 to-secondary/5 rounded-xl border border-gray-100">
-                                <div class="flex items-center space-x-3">
-                                    <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                                    </svg>
-                                    <div>
-                                        <h3 class="font-medium text-gray-800">
-                                            <?= $existingPoll ? 'Poll bewerken' : 'Poll toevoegen' ?>
-                                        </h3>
-                                        <p class="text-sm text-gray-600">
-                                            <?= $existingPoll ? 'Pas de bestaande poll aan of verwijder deze' : 'Voeg een interactieve poll toe aan je blog' ?>
-                                        </p>
-                                    </div>
-                                </div>
-                                
-                                <div class="flex items-center space-x-3">
-                                    <?php if ($existingPoll): ?>
-                                        <span class="px-3 py-1 bg-green-100 text-green-800 text-xs font-medium rounded-full">
-                                            Poll actief
-                                        </span>
-                                    <?php endif; ?>
-                                    
-                                    <label class="relative inline-flex items-center cursor-pointer">
-                                        <input type="checkbox" 
-                                               id="enablePoll" 
-                                               class="sr-only peer" 
-                                               <?= $existingPoll ? 'checked' : '' ?>
-                                               onchange="togglePollSection()">
-                                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Poll Configuration Section -->
-                        <div id="pollSection" class="<?= $existingPoll ? '' : 'hidden' ?> space-y-6 bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
-                            <!-- Poll Question -->
-                            <div>
-                                <label for="pollQuestion" class="block text-sm font-medium text-gray-700 mb-2">
-                                    Wat is je stelling of vraag?
-                                </label>
-                                <div class="relative group">
-                                    <textarea name="poll_question" 
-                                              id="pollQuestion" 
-                                              rows="3"
-                                              class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition-all duration-300 bg-gray-50/50 resize-none"
-                                              placeholder="Bijv. Wat vind jij van de nieuwe belastingplannen?"><?= $existingPoll ? htmlspecialchars($existingPoll->question) : '' ?></textarea>
-                                    <div class="absolute inset-0 bg-primary/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
-                                </div>
-                            </div>
-
-                            <!-- Poll Options -->
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <label for="pollOptionA" class="block text-sm font-medium text-gray-700 mb-2">
-                                        <span class="inline-flex items-center">
-                                            <span class="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-xs font-bold mr-2">A</span>
-                                            Eerste antwoordoptie
-                                        </span>
-                                    </label>
-                                    <div class="relative group">
-                                        <input type="text" 
-                                               name="poll_option_a" 
-                                               id="pollOptionA" 
-                                               class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition-all duration-300 bg-gray-50/50"
-                                               placeholder="Bijv. Helemaal mee eens"
-                                               value="<?= $existingPoll ? htmlspecialchars($existingPoll->option_a) : '' ?>">
-                                        <div class="absolute inset-0 bg-primary/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <label for="pollOptionB" class="block text-sm font-medium text-gray-700 mb-2">
-                                        <span class="inline-flex items-center">
-                                            <span class="w-6 h-6 bg-secondary text-white rounded-full flex items-center justify-center text-xs font-bold mr-2">B</span>
-                                            Tweede antwoordoptie
-                                        </span>
-                                    </label>
-                                    <div class="relative group">
-                                        <input type="text" 
-                                               name="poll_option_b" 
-                                               id="pollOptionB" 
-                                               class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition-all duration-300 bg-gray-50/50"
-                                               placeholder="Bijv. Helemaal niet eens"
-                                               value="<?= $existingPoll ? htmlspecialchars($existingPoll->option_b) : '' ?>">
-                                        <div class="absolute inset-0 bg-primary/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <?php if ($existingPoll): ?>
-                            <!-- Current Poll Stats -->
-                            <div class="bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl p-4">
-                                <h4 class="font-medium text-gray-800 mb-3 flex items-center">
-                                    <svg class="w-5 h-5 text-primary mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                                    </svg>
-                                    Huidige resultaten
-                                </h4>
-                                <div class="space-y-3">
-                                    <div class="flex items-center justify-between">
-                                        <span class="text-sm font-medium text-gray-700"><?= htmlspecialchars($existingPoll->option_a) ?></span>
-                                        <span class="text-sm text-gray-600">
-                                            <?= $existingPoll->option_a_votes ?> stemmen
-                                            (<?= $existingPoll->total_votes > 0 ? round(($existingPoll->option_a_votes / $existingPoll->total_votes) * 100, 1) : 0 ?>%)
-                                        </span>
-                                    </div>
-                                    <div class="flex items-center justify-between">
-                                        <span class="text-sm font-medium text-gray-700"><?= htmlspecialchars($existingPoll->option_b) ?></span>
-                                        <span class="text-sm text-gray-600">
-                                            <?= $existingPoll->option_b_votes ?> stemmen
-                                            (<?= $existingPoll->total_votes > 0 ? round(($existingPoll->option_b_votes / $existingPoll->total_votes) * 100, 1) : 0 ?>%)
-                                        </span>
-                                    </div>
-                                    <div class="pt-2 border-t border-gray-200">
-                                        <span class="text-sm font-medium text-gray-800">
-                                            Totaal: <?= $existingPoll->total_votes ?> stemmen
-                                        </span>
-                                    </div>
-                                </div>
-                                
-                                <div class="mt-4 flex items-center justify-between">
-                                    <span class="text-xs text-gray-500">
-                                        Poll aangemaakt op <?= date('d-m-Y H:i', strtotime($existingPoll->created_at)) ?>
-                                    </span>
-                                    <label class="flex items-center space-x-2">
-                                        <input type="checkbox" 
-                                               name="delete_poll" 
-                                               id="deletePoll"
-                                               class="w-4 h-4 text-red-600 focus:ring-red-500 border-gray-300 rounded"
-                                               onchange="confirmPollDeletion()">
-                                        <span class="text-xs text-red-600">Poll verwijderen</span>
-                                    </label>
-                                </div>
-                            </div>
-                            <?php endif; ?>
-
-                            <!-- Poll Preview -->
-                            <div id="pollPreview" class="bg-gradient-to-br from-primary/5 via-white to-secondary/5 rounded-xl p-6 border border-gray-100">
-                                <h4 class="font-medium text-gray-800 mb-4 flex items-center">
-                                    <svg class="w-5 h-5 text-primary mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                                    </svg>
-                                    Live preview
-                                </h4>
-                                <div class="bg-white rounded-lg p-4 shadow-sm border">
-                                    <h5 id="previewQuestion" class="font-semibold text-gray-800 mb-4">
-                                        <?= $existingPoll ? htmlspecialchars($existingPoll->question) : 'Je poll vraag verschijnt hier...' ?>
-                                    </h5>
-                                    <div class="space-y-3">
-                                        <button type="button" class="w-full p-3 text-left bg-gradient-to-r from-primary/10 to-primary/5 hover:from-primary/20 hover:to-primary/10 rounded-lg border border-primary/20 transition-all">
-                                            <span id="previewOptionA" class="font-medium text-gray-800">
-                                                <?= $existingPoll ? htmlspecialchars($existingPoll->option_a) : 'Optie A verschijnt hier...' ?>
-                                            </span>
-                                        </button>
-                                        <button type="button" class="w-full p-3 text-left bg-gradient-to-r from-secondary/10 to-secondary/5 hover:from-secondary/20 hover:to-secondary/10 rounded-lg border border-secondary/20 transition-all">
-                                            <span id="previewOptionB" class="font-medium text-gray-800">
-                                                <?= $existingPoll ? htmlspecialchars($existingPoll->option_b) : 'Optie B verschijnt hier...' ?>
-                                            </span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Poll Tips -->
-                            <div class="bg-primary/5 rounded-xl p-4">
-                                <div class="flex items-start">
-                                    <svg class="w-5 h-5 text-primary mt-0.5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                    </svg>
-                                    <div>
-                                        <p class="text-sm text-gray-600">
-                                            <span class="font-medium text-gray-900">Tips voor goede polls:</span> 
-                                            Stel duidelijke, neutrale vragen. Zorg dat beide antwoordopties evenwichtig zijn. 
-                                            Lezers kunnen maar één keer stemmen per browser.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Content Editor Sectie - volledig herontworpen met markdown knoppen -->
-                    <div class="mt-10" data-aos="fade-up" data-aos-delay="300">
-                        <div class="mb-6">
-                            <h3 class="text-lg font-medium text-gray-900 mb-1 flex items-center">
-                                <svg class="w-5 h-5 text-primary mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                                </svg>
-                                Blog content
-                            </h3>
-                            <p class="text-sm text-gray-600">Bewerk je artikeltekst met ondersteuning voor opmaak</p>
-                        </div>
-
-                        <!-- Moderne Editor met Markdown Knoppen -->
-                        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-                            <!-- Markdown toolbar -->
-                            <div class="flex flex-wrap items-center gap-1 p-2 border-b border-gray-100 bg-gray-50/70">
-                                <div class="flex items-center divide-x divide-gray-200">
-                                    <!-- Koppen -->
-                                    <div class="pr-1">
-                                        <button type="button" onclick="insertMarkdown('heading')" class="p-1.5 text-gray-600 hover:text-primary hover:bg-gray-100 rounded transition-colors" title="Koptekst">
-                                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                    
-                                    <!-- Tekstopmaak -->
-                                    <div class="px-1 flex items-center gap-1">
-                                        <button type="button" onclick="insertMarkdown('bold')" class="p-1.5 text-gray-600 hover:text-primary hover:bg-gray-100 rounded transition-colors" title="Vetgedrukt">
-                                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11h4a4 4 0 100-8H8v8zm0 0v8h5a4 4 0 000-8H8z"/>
-                                            </svg>
-                                        </button>
-                                        <button type="button" onclick="insertMarkdown('italic')" class="p-1.5 text-gray-600 hover:text-primary hover:bg-gray-100 rounded transition-colors" title="Cursief">
-                                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.5 9l-3 9m0 0l-3-9m3 9v-9m0 0H9m6 0h3"/>
-                                            </svg>
-                                        </button>
-                                        <button type="button" onclick="insertMarkdown('quote')" class="p-1.5 text-gray-600 hover:text-primary hover:bg-gray-100 rounded transition-colors" title="Citaat">
-                                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                    
-                                    <!-- Lijsten -->
-                                    <div class="px-1 flex items-center gap-1">
-                                        <button type="button" onclick="insertMarkdown('bullet')" class="p-1.5 text-gray-600 hover:text-primary hover:bg-gray-100 rounded transition-colors" title="Opsomming">
-                                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"/>
-                                            </svg>
-                                        </button>
-                                        <button type="button" onclick="insertMarkdown('number')" class="p-1.5 text-gray-600 hover:text-primary hover:bg-gray-100 rounded transition-colors" title="Genummerde lijst">
-                                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"/>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                    
-                                    <!-- Links en media -->
-                                    <div class="pl-1 flex items-center gap-1">
-                                        <button type="button" onclick="insertMarkdown('link')" class="p-1.5 text-gray-600 hover:text-primary hover:bg-gray-100 rounded transition-colors" title="Link invoegen">
-                                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/>
-                                            </svg>
-                                        </button>
-                                        <button type="button" onclick="insertMarkdown('image')" class="p-1.5 text-gray-600 hover:text-primary hover:bg-gray-100 rounded transition-colors" title="Afbeelding invoegen">
-                                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4-4a2 2 0 012.8 0L16 17m-2-2l1.6-1.6a2 2 0 012.8 0L20 15m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                            </svg>
-                                        </button>
-                                        <button type="button" onclick="insertMarkdown('code')" class="p-1.5 text-gray-600 hover:text-primary hover:bg-gray-100 rounded transition-colors" title="Code blok">
-                                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Editor en Preview Tabs -->
-                            <div class="flex border-b border-gray-100">
-                                <button type="button" 
-                                        id="editorTabBtn" 
-                                        onclick="switchToEditor()" 
-                                        class="px-4 py-2 font-medium text-primary border-b-2 border-primary">
-                                    Bewerken
-                                </button>
-                                <button type="button" 
-                                        id="previewTabBtn" 
-                                        onclick="switchToPreview()" 
-                                        class="px-4 py-2 font-medium text-gray-500 hover:text-gray-700">
-                                    Preview
-                                </button>
-                            </div>
-                            
-                            <!-- Editor Container -->
-                            <div id="editorContainer" class="relative">
-                                <textarea name="content" 
-                                          id="content" 
-                                          class="w-full h-[500px] px-4 py-3 border-0 outline-none transition-all duration-300 font-mono resize-none focus:ring-0"
-                                          required><?php echo htmlspecialchars($blog->content); ?></textarea>
-                            </div>
-                            
-                            <!-- Preview Container -->
-                            <div id="previewContainer" class="hidden h-[500px] overflow-y-auto p-6">
-                                <div id="preview" class="prose prose-lg max-w-none">
-                                    <em class="text-gray-500">Begin met typen om de preview te zien...</em>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Handige tips -->
-                        <div class="mt-4 p-4 bg-primary/5 rounded-xl">
-                            <div class="flex items-start">
-                                <svg class="w-5 h-5 text-primary mt-0.5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                </svg>
-                                <div>
-                                    <p class="text-sm text-gray-600">
-                                        <span class="font-medium text-gray-900">Tip:</span> 
-                                        Gebruik de knoppen hierboven om markdown opmaak toe te voegen. Schakel naar de preview-tab om te zien hoe je artikel eruit zal zien.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Actie Knoppen met verbeterd design -->
-                    <div class="mt-10 flex flex-col sm:flex-row items-center justify-between gap-4" data-aos="fade-up" data-aos-delay="400">
-                        <a href="<?php echo URLROOT; ?>/blogs/manage" 
-                           class="w-full sm:w-auto inline-flex items-center justify-center px-5 py-3 border-2 border-gray-200 rounded-xl text-gray-600 bg-white hover:border-gray-300 hover:text-gray-900 transition-colors duration-300 text-sm font-medium">
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12"></path>
-                            </svg>
-                            Annuleren
-                        </a>
-                        <button type="submit" 
-                                class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition-all transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 text-sm">
-                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                            Wijzigingen Opslaan
-                        </button>
+            <?php if (!empty($blog->image_path)): ?>
+                <div class="mb-4">
+                    <p class="text-xs uppercase tracking-[0.18em] text-[color:var(--color-ink-muted)] mb-2">Huidige afbeelding</p>
+                    <div class="editorial-frame editorial-frame--16-9 max-w-md">
+                        <img src="<?= pp_e(getBlogImageUrl($blog->image_path)) ?>" alt="<?= pp_e($blog->title) ?>">
                     </div>
                 </div>
-            </form>
+            <?php endif; ?>
+
+            <div class="field mb-6">
+                <label class="field__label" for="image">
+                    <?= !empty($blog->image_path) ? 'Vervang afbeelding' : 'Hoofdafbeelding' ?>
+                </label>
+                <input type="file" id="image" name="image" accept="image/*" class="input">
+                <p class="field__hint">Optioneel. Een upload vervangt de bestaande afbeelding.</p>
+            </div>
+
+            <?php if (!empty($blog->video_path)): ?>
+                <div class="mb-4">
+                    <p class="text-xs uppercase tracking-[0.18em] text-[color:var(--color-ink-muted)] mb-2">Huidige video</p>
+                    <video controls class="w-full max-w-md rounded-md border border-[color:var(--color-keyline)]" preload="metadata">
+                        <source src="<?= pp_e(getBlogVideoUrl($blog->video_path)) ?>" type="video/mp4">
+                    </video>
+                </div>
+            <?php endif; ?>
+
+            <div class="field mb-6">
+                <label class="field__label" for="video">Video upload</label>
+                <input type="file" id="video" name="video" accept="video/*" class="input">
+                <p class="field__hint">Optioneel. Vervangt bestaande video.</p>
+            </div>
+
+            <div class="field mb-6">
+                <label class="field__label" for="video_url">Of: video-URL</label>
+                <input type="url" id="video_url" name="video_url" class="input"
+                       placeholder="https://www.youtube.com/embed/..."
+                       value="<?= pp_e($blog->video_url ?? '') ?>">
+            </div>
+
+            <?php if (!empty($blog->audio_path)): ?>
+                <div class="mb-4">
+                    <p class="text-xs uppercase tracking-[0.18em] text-[color:var(--color-ink-muted)] mb-2">Huidige audio</p>
+                    <audio controls class="w-full max-w-md">
+                        <source src="<?= pp_e(rtrim(URLROOT, '/') . '/' . $blog->audio_path) ?>" type="audio/mpeg">
+                    </audio>
+                    <label class="inline-flex items-center gap-2 mt-3 cursor-pointer">
+                        <input type="checkbox" name="remove_audio">
+                        <span class="text-sm text-[color:var(--color-ink-muted)]">Verwijder huidige audio</span>
+                    </label>
+                </div>
+            <?php endif; ?>
+
+            <div class="field">
+                <label class="field__label" for="audio"><?= !empty($blog->audio_path) ? 'Vervang audio' : 'Audio upload' ?></label>
+                <input type="file" id="audio" name="audio" accept=".mp3,.wav,.ogg,audio/mpeg,audio/wav,audio/ogg" class="input">
+            </div>
         </div>
-    </div>
-</main>
 
-<!-- Scripts -->
-<script src="https://cdn.jsdelivr.net/npm/marked@4.3.0/marked.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/dompurify@2.3.3/dist/purify.min.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const contentTextarea = document.getElementById('content');
-    const previewDiv = document.getElementById('preview');
-    const editorContainer = document.getElementById('editorContainer');
-    const previewContainer = document.getElementById('previewContainer');
-    const editorTabBtn = document.getElementById('editorTabBtn');
-    const previewTabBtn = document.getElementById('previewTabBtn');
+        <div class="keyline-card p-6 md:p-8">
+            <div class="flex items-center justify-between mb-6">
+                <div class="text-xs uppercase tracking-[0.18em] text-[color:var(--color-ink-muted)]">
+                    Peiling
+                </div>
+                <label class="inline-flex items-center gap-2 cursor-pointer">
+                    <input type="checkbox" id="enablePoll" name="enable_poll"
+                           <?= $existingPoll ? 'checked' : '' ?>
+                           onchange="document.getElementById('pollFields').hidden = !this.checked">
+                    <span class="text-sm text-[color:var(--color-ink)]">Peiling aan</span>
+                </label>
+            </div>
 
-    // Tabfunctionaliteit voor editor/preview
-    window.switchToEditor = function() {
-        editorContainer.classList.remove('hidden');
-        previewContainer.classList.add('hidden');
-        editorTabBtn.classList.add('text-primary', 'border-b-2', 'border-primary');
-        editorTabBtn.classList.remove('text-gray-500');
-        previewTabBtn.classList.remove('text-primary', 'border-b-2', 'border-primary');
-        previewTabBtn.classList.add('text-gray-500');
-    };
+            <div id="pollFields" <?= $existingPoll ? '' : 'hidden' ?>>
+                <div class="field mb-4">
+                    <label class="field__label" for="poll_question">Vraag</label>
+                    <input type="text" id="poll_question" name="poll_question" maxlength="200"
+                           class="input"
+                           value="<?= pp_e($existingPoll->question ?? '') ?>">
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div class="field">
+                        <label class="field__label" for="poll_option_a">Optie A</label>
+                        <input type="text" id="poll_option_a" name="poll_option_a" maxlength="100"
+                               class="input"
+                               value="<?= pp_e($existingPoll->option_a ?? '') ?>">
+                    </div>
+                    <div class="field">
+                        <label class="field__label" for="poll_option_b">Optie B</label>
+                        <input type="text" id="poll_option_b" name="poll_option_b" maxlength="100"
+                               class="input"
+                               value="<?= pp_e($existingPoll->option_b ?? '') ?>">
+                    </div>
+                </div>
 
-    window.switchToPreview = function() {
-        updatePreview(); // Zorg dat preview up-to-date is
-        editorContainer.classList.add('hidden');
-        previewContainer.classList.remove('hidden');
-        previewTabBtn.classList.add('text-primary', 'border-b-2', 'border-primary');
-        previewTabBtn.classList.remove('text-gray-500');
-        editorTabBtn.classList.remove('text-primary', 'border-b-2', 'border-primary');
-        editorTabBtn.classList.add('text-gray-500');
-    };
+                <?php if ($existingPoll): ?>
+                    <label class="inline-flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" name="delete_poll">
+                        <span class="text-sm" style="color: var(--color-terracotta);">Verwijder bestaande peiling</span>
+                    </label>
+                <?php endif; ?>
+            </div>
+        </div>
 
-    // Markdown invoegfunctionaliteit
-    window.insertMarkdown = function(type) {
-        // Huidige cursor positie opslaan
-        const start = contentTextarea.selectionStart;
-        const end = contentTextarea.selectionEnd;
-        const selectedText = contentTextarea.value.substring(start, end);
-        
-        let markdownText = '';
-        
-        switch(type) {
-            case 'heading':
-                markdownText = `## ${selectedText || 'Koptekst'}`;
-                break;
-            case 'bold':
-                markdownText = `**${selectedText || 'vetgedrukte tekst'}**`;
-                break;
-            case 'italic':
-                markdownText = `*${selectedText || 'cursieve tekst'}*`;
-                break;
-            case 'quote':
-                markdownText = `> ${selectedText || 'citaat tekst'}`;
-                break;
-            case 'bullet':
-                markdownText = `- ${selectedText || 'lijstitem'}`;
-                break;
-            case 'number':
-                markdownText = `1. ${selectedText || 'genummerd item'}`;
-                break;
-            case 'link':
-                markdownText = `[${selectedText || 'link tekst'}](url)`;
-                break;
-            case 'image':
-                markdownText = `![${selectedText || 'alt tekst'}](afbeelding-url)`;
-                break;
-            case 'code':
-                markdownText = `\`\`\`\n${selectedText || 'code hier'}\n\`\`\``;
-                break;
-            default:
-                return;
-        }
-        
-        // Nieuwe content samenstellen
-        const newContent = contentTextarea.value.substring(0, start) + markdownText + contentTextarea.value.substring(end);
-        contentTextarea.value = newContent;
-        
-        // Focus terugzetten en preview updaten
-        contentTextarea.focus();
-        contentTextarea.selectionStart = start;
-        contentTextarea.selectionEnd = start + markdownText.length;
-        
-        // Preview bijwerken
-        updatePreview();
-    };
+        <div class="keyline-card p-6 md:p-8">
+            <div class="text-xs uppercase tracking-[0.18em] text-[color:var(--color-ink-muted)] mb-6">
+                Inhoud
+            </div>
 
-    // Configure marked with custom renderer
-    const renderer = {
-        heading(text, level) {
-            const sizes = {
-                1: 'text-4xl font-bold mb-6',
-                2: 'text-3xl font-bold mb-4',
-                3: 'text-2xl font-bold mb-3'
-            };
-            return `<h${level} class="${sizes[level] || 'text-xl font-bold mb-2'}">${text}</h${level}>`;
-        },
-        paragraph(text) {
-            return `<p class="mb-6 text-gray-700 leading-relaxed">${text}</p>`;
-        },
-        list(body, ordered) {
-            const type = ordered ? 'ol' : 'ul';
-            const className = ordered ? 'list-decimal' : 'list-disc';
-            return `<${type} class="${className} ml-4 mb-6 space-y-2 text-gray-700">${body}</${type}>`;
-        },
-        listitem(text) {
-            return `<li class="ml-4">${text}</li>`;
-        },
-        link(href, title, text) {
-            return `<a href="${href}" class="text-primary hover:underline" target="_blank" rel="noopener noreferrer">${text}</a>`;
-        },
-        image(href, title, text) {
-            return `<img src="${href}" alt="${text}" title="${title || ''}" class="max-w-full rounded-lg my-6 shadow-lg">`;
-        },
-        strong(text) {
-            return `<strong class="font-bold text-gray-900">${text}</strong>`;
-        },
-        em(text) {
-            return `<em class="italic text-gray-800">${text}</em>`;
-        },
-        blockquote(text) {
-            return `<blockquote class="border-l-4 border-primary/30 pl-4 py-2 mb-6 text-gray-700 italic">${text}</blockquote>`;
-        },
-        code(text, language) {
-            return `<pre class="bg-gray-50 rounded-lg p-4 mb-6 overflow-x-auto"><code class="text-sm font-mono text-gray-800">${text}</code></pre>`;
-        },
-        hr() {
-            return '<hr class="my-8 border-t-2 border-gray-100">';
-        }
-    };
+            <div class="field">
+                <label class="field__label" for="content">Tekst <span style="color: var(--color-terracotta);">*</span></label>
+                <textarea name="content" id="content" rows="20" required
+                          class="textarea font-mono"
+                          style="font-size: 0.95rem; line-height: 1.7;"><?= pp_e($blog->content) ?></textarea>
+                <p class="field__hint">Markdown wordt automatisch omgezet naar HTML.</p>
+            </div>
+        </div>
 
-    // Configureer marked
-    marked.use({ 
-        renderer,
-        breaks: true,
-        gfm: true,
-        headerIds: false
-    });
+        <div class="flex items-center justify-between gap-4 flex-wrap">
+            <div class="flex items-center gap-3">
+                <a href="<?= pp_e(pp_url('/blogs/manage')) ?>" class="btn btn--ghost">
+                    <?= pp_icon('arrow-left', 16) ?>
+                    Annuleer
+                </a>
+                <a href="<?= pp_e(pp_url('/blogs/' . $blog->slug)) ?>" class="btn btn--ghost">
+                    <?= pp_icon('eye', 16) ?>
+                    Bekijk
+                </a>
+            </div>
+            <button type="submit" class="btn btn--primary btn--lg">
+                <?= pp_icon('save', 16) ?>
+                Wijzigingen opslaan
+            </button>
+        </div>
+    </form>
+</section>
 
-    // Update preview functie met debounce
-    let previewTimeout = null;
-    function updatePreview() {
-        const content = contentTextarea.value;
-        if (content.trim() === '') {
-            previewDiv.innerHTML = '<em class="text-gray-500">Begin met typen om de preview te zien...</em>';
-            return;
-        }
-
-        try {
-            // Parse markdown naar HTML
-            const html = marked.parse(content);
-            // Sanitize de HTML
-            const cleanHtml = DOMPurify.sanitize(html);
-            // Update de preview met fade effect
-            previewDiv.style.opacity = '0';
-            setTimeout(() => {
-                previewDiv.innerHTML = cleanHtml;
-                previewDiv.style.opacity = '1';
-            }, 150);
-        } catch (error) {
-            console.error('Markdown parsing error:', error);
-            previewDiv.innerHTML = '<em class="text-red-500">Er is een fout opgetreden bij het verwerken van de markdown.</em>';
-        }
-    }
-
-    // Event listener voor real-time preview met debounce
-    contentTextarea.addEventListener('input', function() {
-        clearTimeout(previewTimeout);
-        previewTimeout = setTimeout(updatePreview, 150);
-    });
-
-    // Initial preview
-    updatePreview();
-    
-    // Voeg animaties toe
-    const inputs = document.querySelectorAll('input, textarea');
-    inputs.forEach(input => {
-        input.addEventListener('focus', function() {
-            this.parentElement.classList.add('shadow-sm');
-        });
-        input.addEventListener('blur', function() {
-            this.parentElement.classList.remove('shadow-sm');
-        });
-    });
-
-    // Audio upload functionaliteit
-    const audioInput = document.getElementById('audio');
-    const audioPreview = document.getElementById('audioPreview');
-    const audioPlayer = document.getElementById('audioPlayer');
-    const audioInfoText = document.getElementById('audioInfo');
-    const audioDurationText = document.getElementById('audioDuration');
-
-    // Functie om bestandsgrootte te formatteren
-    function formatFileSize(bytes) {
-        if (bytes === 0) return '0 Bytes';
-        const k = 1024;
-        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-        const i = Math.floor(Math.log(bytes) / Math.log(k));
-        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-    }
-
-    // Functie om tijd te formatteren (seconden naar mm:ss)
-    function formatTime(seconds) {
-        const minutes = Math.floor(seconds / 60);
-        const secs = Math.floor(seconds % 60);
-        return `${minutes}:${secs.toString().padStart(2, '0')}`;
-    }
-
-    // Toggle remove audio checkbox
-    window.toggleRemoveAudio = function() {
-        const checkbox = document.getElementById('removeAudioCheckbox');
-        const currentAudioPlayer = document.getElementById('currentAudioPlayer');
-        
-        if (checkbox && currentAudioPlayer) {
-            if (checkbox.checked) {
-                currentAudioPlayer.style.opacity = '0.5';
-                currentAudioPlayer.style.pointerEvents = 'none';
-            } else {
-                currentAudioPlayer.style.opacity = '1';
-                currentAudioPlayer.style.pointerEvents = 'auto';
-            }
-        }
-    }
-
-    // Audio functionaliteit alleen uitvoeren als alle elementen bestaan
-    if (audioInput && audioPreview && audioPlayer && audioInfoText && audioDurationText) {
-        console.log('Audio upload elementen gevonden (edit), initialiseren...');
-        
-        // Audio upload en preview
-        function updateAudioPreview(file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                audioPreview.classList.remove('hidden');
-                audioPreview.style.opacity = '0';
-                audioPreview.style.transform = 'translateY(10px)';
-                
-                // Update audio player
-                audioPlayer.src = e.target.result;
-                
-                // Update bestandsinformatie
-                const fileInfo = `${file.name} (${formatFileSize(file.size)})`;
-                audioInfoText.textContent = fileInfo;
-                
-                // Audio metadata laden voor duur
-                audioPlayer.addEventListener('loadedmetadata', function() {
-                    if (!isNaN(audioPlayer.duration)) {
-                        audioDurationText.textContent = formatTime(audioPlayer.duration);
-                    }
-                });
-            
-                // Animeer het verschijnen
-                setTimeout(() => {
-                    audioPreview.style.opacity = '1';
-                    audioPreview.style.transform = 'translateY(0)';
-                }, 50);
-            }
-            reader.readAsDataURL(file);
-        }
-
-        // Audio verwijderen functie
-        window.removeAudio = function() {
-            audioInput.value = ''; // Reset input
-            audioPreview.classList.add('hidden'); // Verberg preview
-            
-            // Animatie voor het verwijderen
-            audioPreview.style.opacity = '0';
-            audioPreview.style.transform = 'translateY(-10px)';
-            
-            setTimeout(() => {
-                audioPreview.style.opacity = '';
-                audioPreview.style.transform = '';
-                audioPlayer.src = ''; // Reset audio player
-                audioDurationText.textContent = '--:--';
-            }, 300);
-        }
-
-        // Event listeners voor audio bestand upload
-        audioInput.addEventListener('change', function(e) {
-            console.log('Audio input change event triggered (edit)');
-            if (e.target.files && e.target.files[0]) {
-                const file = e.target.files[0];
-                console.log('Audio file selected:', file.name, 'Size:', file.size, 'Type:', file.type);
-                
-                // Check bestandsgrootte (max 100MB)
-                if (file.size > 100 * 1024 * 1024) {
-                    alert('Audio bestand mag niet groter zijn dan 100MB');
-                    this.value = '';
-                    return;
-                }
-                
-                // Check bestandstype
-                const allowedTypes = ['audio/mpeg', 'audio/wav', 'audio/ogg', 'audio/mp3'];
-                if (!allowedTypes.includes(file.type) && !file.name.toLowerCase().match(/\.(mp3|wav|ogg)$/)) {
-                    alert('Alleen MP3, WAV en OGG bestanden zijn toegestaan');
-                    this.value = '';
-                    return;
-                }
-                
-                console.log('Audio file validation passed (edit), updating preview...');
-                updateAudioPreview(file);
-                
-                // Uncheck remove audio checkbox als er een nieuw bestand wordt gekozen
-                const removeCheckbox = document.getElementById('removeAudioCheckbox');
-                if (removeCheckbox) {
-                    removeCheckbox.checked = false;
-                    toggleRemoveAudio();
-                }
-            }
-        });
-    } else {
-        console.warn('Audio upload elementen niet gevonden (edit):', {
-            audioInput: !!audioInput,
-            audioPreview: !!audioPreview,
-            audioPlayer: !!audioPlayer,
-            audioInfoText: !!audioInfoText,
-            audioDurationText: !!audioDurationText
-        });
-    }
-
-    // Poll functionaliteit
-    setupPollFunctionality();
-    
-    // Category selection enhancement
-    setupCategorySelection();
-});
-
-// Poll functionaliteit buiten DOMContentLoaded omdat het door onclick wordt aangeroepen
-function togglePollSection() {
-    const pollSection = document.getElementById('pollSection');
-    const enablePollCheckbox = document.getElementById('enablePoll');
-    
-    if (enablePollCheckbox.checked) {
-        pollSection.classList.remove('hidden');
-        pollSection.style.opacity = '0';
-        pollSection.style.transform = 'translateY(-10px)';
-        
-        setTimeout(() => {
-            pollSection.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-            pollSection.style.opacity = '1';
-            pollSection.style.transform = 'translateY(0)';
-        }, 10);
-    } else {
-        pollSection.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-        pollSection.style.opacity = '0';
-        pollSection.style.transform = 'translateY(-10px)';
-        
-        setTimeout(() => {
-            pollSection.classList.add('hidden');
-        }, 300);
-    }
-}
-
-function confirmPollDeletion() {
-    const deleteCheckbox = document.getElementById('deletePoll');
-    const pollInputs = document.querySelectorAll('#pollSection input[type="text"], #pollSection textarea');
-    
-    if (deleteCheckbox.checked) {
-        if (confirm('Weet je zeker dat je deze poll wilt verwijderen? Alle stemmen gaan verloren.')) {
-            // Disable poll inputs om verwarring te voorkomen
-            pollInputs.forEach(input => {
-                input.disabled = true;
-                input.style.opacity = '0.5';
-            });
-        } else {
-            deleteCheckbox.checked = false;
-        }
-    } else {
-        // Re-enable inputs
-        pollInputs.forEach(input => {
-            input.disabled = false;
-            input.style.opacity = '1';
-        });
-    }
-}
-
-function setupPollFunctionality() {
-    const pollQuestion = document.getElementById('pollQuestion');
-    const pollOptionA = document.getElementById('pollOptionA');
-    const pollOptionB = document.getElementById('pollOptionB');
-    const previewQuestion = document.getElementById('previewQuestion');
-    const previewOptionA = document.getElementById('previewOptionA');
-    const previewOptionB = document.getElementById('previewOptionB');
-
-    // Real-time preview updates
-    function updatePollPreview() {
-        const question = pollQuestion.value.trim();
-        const optionA = pollOptionA.value.trim();
-        const optionB = pollOptionB.value.trim();
-
-        previewQuestion.textContent = question || 'Je poll vraag verschijnt hier...';
-        previewOptionA.textContent = optionA || 'Optie A verschijnt hier...';
-        previewOptionB.textContent = optionB || 'Optie B verschijnt hier...';
-    }
-
-    // Event listeners voor live preview
-    if (pollQuestion) pollQuestion.addEventListener('input', updatePollPreview);
-    if (pollOptionA) pollOptionA.addEventListener('input', updatePollPreview);
-    if (pollOptionB) pollOptionB.addEventListener('input', updatePollPreview);
-}
-
-// Category selection functionality
-function setupCategorySelection() {
-    const categorySelect = document.getElementById('category_id');
-    
-    if (categorySelect) {
-        // Add visual feedback for category selection
-        categorySelect.addEventListener('change', function() {
-            const selectedOption = this.options[this.selectedIndex];
-            const categoryColor = selectedOption.getAttribute('data-color') || '#3B82F6';
-            
-            // Add subtle visual feedback
-            if (selectedOption.value) {
-                this.style.borderLeftColor = categoryColor;
-                this.style.borderLeftWidth = '4px';
-                
-                // Optional: Show a small colored indicator
-                let indicator = this.parentElement.querySelector('.category-indicator');
-                if (!indicator) {
-                    indicator = document.createElement('div');
-                    indicator.className = 'category-indicator absolute top-4 left-4 w-3 h-3 rounded-full transition-all duration-300';
-                    this.parentElement.appendChild(indicator);
-                }
-                indicator.style.backgroundColor = categoryColor;
-                indicator.style.opacity = '1';
-            } else {
-                this.style.borderLeftColor = '';
-                this.style.borderLeftWidth = '';
-                
-                const indicator = this.parentElement.querySelector('.category-indicator');
-                if (indicator) {
-                    indicator.style.opacity = '0';
-                }
-            }
-        });
-        
-        // Trigger initial state
-        categorySelect.dispatchEvent(new Event('change'));
-    }
-}
-</script>
-
-<?php require_once BASE_PATH . '/views/templates/footer.php'; ?> 
+<?php require_once BASE_PATH . '/views/templates/footer.php'; ?>

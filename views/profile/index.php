@@ -1,209 +1,163 @@
 <?php require_once __DIR__ . '/../templates/header.php'; ?>
 
-<div class="bg-gray-50 py-8">
-    <div class="container mx-auto px-4">
-        <?php if (!empty($success_message)): ?>
-            <div class="mb-6 bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded animate-fade-in" role="alert">
-                <?php echo htmlspecialchars($success_message); ?>
-            </div>
-        <?php endif; ?>
+<?php
+$created = new DateTime($user['created_at']);
+$now = new DateTime();
+$interval = $created->diff($now);
+$accountAge = $interval->y > 0 ? $interval->y . ' jaar' : ($interval->m > 0 ? $interval->m . ' maanden' : $interval->d . ' dagen');
 
-        <div class="max-w-4xl mx-auto">
-            <!-- Profile Header -->
-            <div class="bg-white rounded-2xl shadow-lg overflow-hidden mb-6">
-                <div class="bg-gradient-to-r from-primary to-secondary h-32 relative">
-                    <!-- Add decorative elements -->
-                    <div class="absolute top-0 right-0 w-32 h-32 opacity-10">
-                        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
-                            <path fill="#FFFFFF" d="M47.1,-51.2C59.5,-35.6,67.2,-17.8,66.2,-1C65.1,15.9,55.4,31.8,42.9,45.3C30.3,58.9,15.2,70,-1.4,71.7C-18,73.3,-36,65.4,-48.7,51.9C-61.5,38.5,-69,19.2,-70.3,-1.2C-71.5,-21.6,-66.5,-43.3,-53.4,-58.8C-40.3,-74.2,-20.2,-83.5,-0.9,-82.5C18.3,-81.5,36.6,-70.2,47.1,-51.2Z" transform="translate(100 100)" />
-                        </svg>
+$profilePhoto = getProfilePhotoUrl($user['profile_photo'], $user['username']);
+?>
+
+<?= pp_render_component('section/page-hero', [
+    'eyebrow' => 'Profiel',
+    'title'   => $user['username'],
+    'lead'    => 'Lid sinds ' . date('d F Y', strtotime($user['created_at'])) . '. Bekijk je activiteit, instellingen en gegevens.',
+]) ?>
+
+<section class="pp-container pp-container--wide py-10 md:py-14">
+    <?php if (!empty($success_message)): ?>
+        <div class="border-l-4 border-[color:var(--color-olive)] bg-[color:var(--color-olive-tint)] text-[color:var(--color-olive)] p-4 mb-8 rounded-r">
+            <div class="flex items-start gap-3">
+                <span class="flex-shrink-0 mt-0.5"><?= pp_icon('check-circle', 18) ?></span>
+                <span class="text-sm leading-relaxed"><?= pp_e($success_message) ?></span>
+            </div>
+        </div>
+    <?php endif; ?>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <aside class="lg:col-span-1 space-y-6">
+            <div class="keyline-card p-6 text-center">
+                <div class="w-24 h-24 mx-auto mb-4 rounded-md overflow-hidden border border-[color:var(--color-keyline)] bg-[color:var(--color-paper-2)] flex items-center justify-center text-3xl font-display text-[color:var(--color-hague)]">
+                    <?php if ($profilePhoto['type'] === 'img'): ?>
+                        <img src="<?= pp_e($profilePhoto['value']) ?>" alt="<?= pp_e($user['username']) ?>" class="w-full h-full object-cover">
+                    <?php else: ?>
+                        <?= $profilePhoto['value'] ?>
+                    <?php endif; ?>
+                </div>
+                <h2 class="font-display text-display-md text-[color:var(--color-ink)] mb-1 leading-tight"><?= pp_e($user['username']) ?></h2>
+                <p class="text-sm text-[color:var(--color-ink-muted)]">Lid sinds <?= pp_e(date('d F Y', strtotime($user['created_at']))) ?></p>
+                <div class="mt-5 pt-5 border-t border-[color:var(--color-keyline)]">
+                    <a href="/profile/edit" class="btn btn--primary w-full justify-center">
+                        <?= pp_icon('edit-3', 14) ?>
+                        Profiel bewerken
+                    </a>
+                </div>
+            </div>
+
+            <div class="keyline-card p-6">
+                <div class="eyebrow mb-3">Persoonlijk</div>
+                <dl class="space-y-3 text-sm">
+                    <div>
+                        <dt class="text-[color:var(--color-ink-faint)] text-xs uppercase tracking-wider mb-0.5">Gebruikersnaam</dt>
+                        <dd class="text-[color:var(--color-ink)] font-medium"><?= pp_e($user['username']) ?></dd>
                     </div>
-                    
-                    <div class="absolute -bottom-12 left-8">
-                        <div class="w-24 h-24 bg-white rounded-xl shadow-lg flex items-center justify-center text-3xl font-bold text-primary overflow-hidden">
-                            <?php
-                            $profilePhoto = getProfilePhotoUrl($user['profile_photo'], $user['username']);
-                            if ($profilePhoto['type'] === 'img'): 
-                            ?>
-                                <img src="<?php echo $profilePhoto['value']; ?>" 
-                                     alt="Profielfoto" class="w-full h-full object-cover">
-                            <?php else: ?>
-                                <?php echo $profilePhoto['value']; ?>
-                            <?php endif; ?>
+                    <div>
+                        <dt class="text-[color:var(--color-ink-faint)] text-xs uppercase tracking-wider mb-0.5">E-mailadres</dt>
+                        <dd class="text-[color:var(--color-ink)] font-medium break-all"><?= pp_e($user['email']) ?></dd>
+                    </div>
+                    <div>
+                        <dt class="text-[color:var(--color-ink-faint)] text-xs uppercase tracking-wider mb-0.5">Account-leeftijd</dt>
+                        <dd class="text-[color:var(--color-ink)] font-medium"><?= pp_e($accountAge) ?></dd>
+                    </div>
+                    <?php if (!empty($user['bio'])): ?>
+                        <div class="pt-3 border-t border-[color:var(--color-keyline)]">
+                            <dt class="text-[color:var(--color-ink-faint)] text-xs uppercase tracking-wider mb-1.5">Over mij</dt>
+                            <dd class="text-sm text-[color:var(--color-ink-muted)] leading-relaxed"><?= nl2br(pp_e($user['bio'])) ?></dd>
                         </div>
+                    <?php endif; ?>
+                </dl>
+            </div>
+
+            <div class="keyline-card p-6">
+                <div class="eyebrow mb-3">Privacy-instellingen</div>
+                <ul class="space-y-2 text-sm">
+                    <li class="flex items-center justify-between py-1">
+                        <span class="text-[color:var(--color-ink)]">Account-zichtbaarheid</span>
+                        <span class="badge badge--olive">Openbaar</span>
+                    </li>
+                    <li class="flex items-center justify-between py-1">
+                        <span class="text-[color:var(--color-ink)]">E-mail-notificaties</span>
+                        <span class="badge badge--moss">Aan</span>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <div class="lg:col-span-2 space-y-6">
+            <div class="keyline-card p-6 md:p-8">
+                <div class="eyebrow mb-3">Activiteit</div>
+                <h2 class="font-display text-display-lg text-[color:var(--color-ink)] mb-5 leading-tight">Account-statistieken</h2>
+                <div class="grid grid-cols-3 gap-4 mb-6">
+                    <div class="text-center py-4 border-r border-[color:var(--color-keyline)] last:border-r-0">
+                        <div class="font-display text-display-2xl text-[color:var(--color-ink)] font-mono text-tabular"><?= (int) ($stats['blogs'] ?? 0) ?></div>
+                        <div class="text-xs uppercase tracking-wider text-[color:var(--color-ink-faint)]">Blogs</div>
+                    </div>
+                    <div class="text-center py-4 border-r border-[color:var(--color-keyline)] last:border-r-0">
+                        <div class="font-display text-display-2xl text-[color:var(--color-ink)] font-mono text-tabular"><?= (int) ($stats['comments'] ?? 0) ?></div>
+                        <div class="text-xs uppercase tracking-wider text-[color:var(--color-ink-faint)]">Reacties</div>
+                    </div>
+                    <div class="text-center py-4">
+                        <div class="font-display text-display-2xl text-[color:var(--color-ink)] font-mono text-tabular"><?= (int) ($stats['likes_received'] ?? 0) ?></div>
+                        <div class="text-xs uppercase tracking-wider text-[color:var(--color-ink-faint)]">Likes</div>
                     </div>
                 </div>
-                <div class="pt-16 pb-8 px-8">
-                    <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+
+                <div class="border-t border-[color:var(--color-keyline)] pt-5">
+                    <div class="flex items-center justify-between mb-3">
                         <div>
-                            <h1 class="text-2xl font-bold text-gray-800 mb-2"><?php echo htmlspecialchars($user['username']); ?></h1>
-                            <p class="text-gray-600">Lid sinds <?php echo date('d F Y', strtotime($user['created_at'])); ?></p>
+                            <div class="eyebrow mb-1">Engagement-niveau</div>
+                            <div class="font-display text-lg text-[color:var(--color-ink)]"><?= pp_e($stats['engagement_level'] ?? 'Beginner') ?></div>
                         </div>
-                        <div class="mt-4 md:mt-0">
-                            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary/10 text-primary">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-                                </svg>
-                                Actief lid
-                            </span>
+                        <div class="text-right">
+                            <div class="text-xs text-[color:var(--color-ink-faint)] uppercase tracking-wider">Laatste activiteit</div>
+                            <div class="text-sm text-[color:var(--color-ink)]"><?= pp_e($stats['last_activity'] ?? '-') ?></div>
                         </div>
+                    </div>
+                    <div class="h-1.5 bg-[color:var(--color-paper-2)] rounded-full overflow-hidden">
+                        <div class="h-full bg-[color:var(--color-hague)] rounded-full transition-all" style="width: <?= pp_e($stats['engagement_percentage'] ?? '0%') ?>"></div>
+                    </div>
+                    <div class="flex justify-between text-xs text-[color:var(--color-ink-faint)] mt-2">
+                        <span>Beginner</span>
+                        <span>Regelmatig</span>
+                        <span>Actief</span>
+                        <span>Gevorderd</span>
+                        <span>Expert</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Profile Content -->
-            <div class="grid md:grid-cols-3 gap-6">
-                <!-- Kolom 1: Persoonlijke Informatie -->
-                <div>
-                    <div class="bg-white rounded-xl shadow-lg p-6 scale-hover mb-6">
-                        <div class="flex items-center mb-6">
-                            <svg class="w-6 h-6 text-primary mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                            </svg>
-                            <h2 class="text-xl font-semibold text-gray-800">Persoonlijke Informatie</h2>
-                        </div>
-                        
-                        <div class="space-y-4">
-                            <div class="flex flex-col">
-                                <span class="text-sm text-gray-500">Gebruikersnaam</span>
-                                <span class="text-gray-800 font-medium"><?php echo htmlspecialchars($user['username']); ?></span>
-                            </div>
-                            <div class="flex flex-col">
-                                <span class="text-sm text-gray-500">E-mailadres</span>
-                                <span class="text-gray-800 font-medium"><?php echo htmlspecialchars($user['email']); ?></span>
-                            </div>
-                            <div class="flex flex-col">
-                                <span class="text-sm text-gray-500">Account leeftijd</span>
-                                <span class="text-gray-800 font-medium">
-                                    <?php 
-                                        $created = new DateTime($user['created_at']);
-                                        $now = new DateTime();
-                                        $interval = $created->diff($now);
-                                        echo $interval->y > 0 ? $interval->y . ' jaar' : $interval->m . ' maanden';
-                                    ?>
-                                </span>
-                            </div>
-                            <?php if (!empty($user['bio'])): ?>
-                            <div class="flex flex-col mt-4 pt-4 border-t border-gray-100">
-                                <span class="text-sm text-gray-500 mb-1">Over mij</span>
-                                <p class="text-gray-700"><?php echo nl2br(htmlspecialchars($user['bio'])); ?></p>
-                            </div>
-                            <?php endif; ?>
-                        </div>
-                    </div>
-
-                    <!-- Privacy Instellingen -->
-                    <div class="bg-white rounded-xl shadow-lg p-6 scale-hover">
-                        <div class="flex items-center mb-6">
-                            <svg class="w-6 h-6 text-primary mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                      d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
-                            </svg>
-                            <h2 class="text-xl font-semibold text-gray-800">Privacy Instellingen</h2>
-                        </div>
-                        
-                        <div class="space-y-4">
-                            <div class="flex justify-between items-center">
-                                <span class="text-gray-800">Account zichtbaarheid</span>
-                                <span class="px-2 py-1 bg-green-100 text-green-800 rounded text-xs font-medium">Openbaar</span>
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <span class="text-gray-800">Email notificaties</span>
-                                <span class="px-2 py-1 bg-green-100 text-green-800 rounded text-xs font-medium">Aan</span>
-                            </div>
-                        </div>
-                    </div>
+            <div class="keyline-card p-6 md:p-8">
+                <div class="eyebrow mb-3">Snelle toegang</div>
+                <h2 class="font-display text-display-lg text-[color:var(--color-ink)] mb-5 leading-tight">Aan de slag</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <a href="/blogs/create" class="border border-[color:var(--color-keyline)] rounded-md p-5 hover:bg-[color:var(--color-paper-2)] transition-colors">
+                        <div class="text-[color:var(--color-hague)] mb-2"><?= pp_icon('pen-tool', 22) ?></div>
+                        <h3 class="font-display text-base text-[color:var(--color-ink)] mb-1">Schrijf een blog</h3>
+                        <p class="text-sm text-[color:var(--color-ink-muted)]">Deel je politieke analyse.</p>
+                    </a>
+                    <a href="/forum/create" class="border border-[color:var(--color-keyline)] rounded-md p-5 hover:bg-[color:var(--color-paper-2)] transition-colors">
+                        <div class="text-[color:var(--color-hague)] mb-2"><?= pp_icon('message-square', 22) ?></div>
+                        <h3 class="font-display text-base text-[color:var(--color-ink)] mb-1">Start een discussie</h3>
+                        <p class="text-sm text-[color:var(--color-ink-muted)]">Bespreek met de community.</p>
+                    </a>
+                    <a href="/partijmeter" class="border border-[color:var(--color-keyline)] rounded-md p-5 hover:bg-[color:var(--color-paper-2)] transition-colors">
+                        <div class="text-[color:var(--color-hague)] mb-2"><?= pp_icon('vote', 22) ?></div>
+                        <h3 class="font-display text-base text-[color:var(--color-ink)] mb-1">Doe de PartijMeter</h3>
+                        <p class="text-sm text-[color:var(--color-ink-muted)]">Vergelijk je standpunten.</p>
+                    </a>
                 </div>
-
-                <!-- Kolom 2: Account Statistieken & Activiteit -->
-                <div class="md:col-span-2 space-y-6">
-                    <!-- Account Statistieken - Uitgebreid -->
-                    <div class="bg-white rounded-xl shadow-lg p-6 scale-hover">
-                        <div class="flex items-center mb-6">
-                            <svg class="w-6 h-6 text-accent mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                      d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                            </svg>
-                            <h2 class="text-xl font-semibold text-gray-800">Account Statistieken</h2>
-                        </div>
-                        
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <div class="bg-gray-50 rounded-lg p-4 text-center">
-                                <span class="block text-2xl font-bold text-primary"><?php echo isset($stats['blogs']) ? $stats['blogs'] : 0; ?></span>
-                                <span class="text-sm text-gray-600">Blogs</span>
-                            </div>
-                            <div class="bg-gray-50 rounded-lg p-4 text-center">
-                                <span class="block text-2xl font-bold text-accent"><?php echo isset($stats['comments']) ? $stats['comments'] : 0; ?></span>
-                                <span class="text-sm text-gray-600">Reacties</span>
-                            </div>
-                            <div class="bg-gray-50 rounded-lg p-4 text-center">
-                                <span class="block text-2xl font-bold text-tertiary"><?php echo isset($stats['likes_received']) ? $stats['likes_received'] : 0; ?></span>
-                                <span class="text-sm text-gray-600">Likes ontvangen</span>
-                            </div>
-                        </div>
-
-                        <div class="mt-6">
-                            <h3 class="font-medium text-gray-700 mb-3">Activiteit Overzicht</h3>
-                            <div class="bg-gray-50 rounded-lg p-4">
-                                <div class="flex items-center justify-between">
-                                    <div class="flex items-center space-x-3">
-                                        <div class="w-14 h-14 rounded-full bg-gradient-to-r <?php echo $stats['engagement_color']; ?> flex items-center justify-center text-white shadow-md">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                                            </svg>
-                                        </div>
-                                        <div>
-                                            <span class="text-sm text-gray-500">Engagement niveau</span>
-                                            <h4 class="text-lg font-bold text-gray-800"><?php echo $stats['engagement_level']; ?></h4>
-                                        </div>
-                                    </div>
-                                    <div class="text-right">
-                                        <div class="text-sm text-gray-500">Laatste activiteit</div>
-                                        <div class="font-medium text-gray-800"><?php echo $stats['last_activity']; ?></div>
-                                    </div>
-                                </div>
-                                
-                                <div class="mt-4">
-                                    <div class="overflow-hidden h-2.5 mb-2 text-xs flex rounded-full bg-gray-200">
-                                        <div style="width:<?php echo $stats['engagement_percentage']; ?>" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center rounded-full bg-gradient-to-r <?php echo $stats['engagement_color']; ?>"></div>
-                                    </div>
-                                    <div class="flex justify-between text-xs text-gray-600">
-                                        <span>Beginner</span>
-                                        <span>Regelmatig</span>
-                                        <span>Actief</span>
-                                        <span>Gevorderd</span>
-                                        <span>Expert</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Acties -->
-            <div class="mt-6 flex justify-end">
-                <a href="/profile/edit" 
-                   class="inline-flex items-center px-6 py-3 bg-primary text-white rounded-xl font-semibold 
-                          shadow-lg hover:bg-primary/90 transition-all duration-300 scale-hover">
-                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                              d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                    </svg>
-                    Profiel Bewerken
-                </a>
             </div>
         </div>
     </div>
-</div>
+</section>
 
 <?php if (isAdmin()): ?>
-<div class="fixed bottom-4 right-4 opacity-70 hover:opacity-100 z-50">
-    <a href="?debug_photo=1" class="text-xs bg-gray-800 text-white py-1 px-2 rounded hover:bg-gray-700">
-        Debug Photo
-    </a>
-</div>
+    <div class="fixed bottom-4 right-4 z-50">
+        <a href="?debug_photo=1" class="text-xs bg-[color:var(--color-ink)] text-white py-1 px-2 rounded opacity-70 hover:opacity-100 transition-opacity">
+            Debug photo
+        </a>
+    </div>
 <?php endif; ?>
 
-<?php require_once __DIR__ . '/../templates/footer.php'; ?> 
+<?php require_once __DIR__ . '/../templates/footer.php'; ?>

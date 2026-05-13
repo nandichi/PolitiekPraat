@@ -4,6 +4,12 @@ if (!defined('HELPERS_INCLUDED')) {
     require_once __DIR__ . '/helpers.php';
 }
 
+// Bootstrap editorial component-library (pp_e/pp_attr/pp_class/pp_url/pp_icon)
+if (!defined('COMPONENT_BOOTSTRAP_INCLUDED')) {
+    define('COMPONENT_BOOTSTRAP_INCLUDED', true);
+    require_once __DIR__ . '/component_bootstrap.php';
+}
+
 // Prevent multiple inclusions
 if (!defined('FUNCTIONS_INCLUDED')) {
     define('FUNCTIONS_INCLUDED', true);

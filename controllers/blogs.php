@@ -38,6 +38,10 @@ class BlogsController {
         // Get blogs with optional category filtering
         $blogs = $this->blogModel->getPaginated($currentPage, $perPage, $categoryId);
 
+        // Categories voor filter-chips
+        $categoryController = new CategoryController();
+        $categories = $categoryController->getAll();
+
         $paginationData = [
             'currentPage' => $currentPage,
             'totalPages' => $totalPages,
