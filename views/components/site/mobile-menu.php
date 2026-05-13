@@ -23,7 +23,6 @@ $sections = [
         'label' => 'Politiek',
         'links' => [
             ['label' => 'Partijen',       'href' => '/partijen'],
-            ['label' => 'Stemmentracker', 'href' => '/stemmentracker'],
             ['label' => 'Thema\'s',       'href' => '/themas'],
         ],
     ],

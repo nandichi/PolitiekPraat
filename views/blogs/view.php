@@ -2,8 +2,7 @@
 /**
  * Editorial blog detail view (Wave 2).
  *
- * Behoudt back-end logica (comments POST, SEO meta) van legacy view en
- * vervangt de markup door een rustige editorial layout.
+ * Editorial blog detail (SEO meta, polls, likes). Geen reactiesectie.
  */
 require_once __DIR__ . '/../../models/PartyModel.php';
 
@@ -28,63 +27,6 @@ $data = [
     'article_author' => $blog->author_name,
     'article_published_time' => date('c', strtotime($blog->published_at)),
 ];
-
-// Comments ophalen
-$db = new Database();
-$db->query("SELECT comments.*,
-           COALESCE(users.username, comments.anonymous_name) as author_name,
-           CASE
-               WHEN comments.user_id IS NOT NULL THEN 'registered'
-               ELSE 'anonymous'
-           END as author_type,
-           comments.is_liked_by_author,
-           comments.likes_count
-           FROM comments
-           LEFT JOIN users ON comments.user_id = users.id
-           WHERE comments.blog_id = :blog_id
-           ORDER BY comments.created_at DESC");
-$db->bind(':blog_id', $blog->id);
-$comments = $db->resultSet();
-
-// Comment toevoegen
-$comment_error = '';
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['content'])) {
-    $content = filter_input(INPUT_POST, 'content', FILTER_SANITIZE_SPECIAL_CHARS);
-    $anonymous_name = isset($_POST['anonymous_name'])
-        ? filter_input(INPUT_POST, 'anonymous_name', FILTER_SANITIZE_SPECIAL_CHARS)
-        : '';
-
-    if (empty($content)) {
-        $comment_error = 'Vul een reactie in';
-    } elseif (!isset($_SESSION['user_id']) && empty($anonymous_name)) {
-        $comment_error = 'Vul je naam in';
-    } elseif (!isset($_SESSION['user_id']) && strlen($anonymous_name) > 100) {
-        $comment_error = 'Naam mag maximaal 100 karakters zijn';
-    } elseif (strlen($content) < 10) {
-        $comment_error = 'Reactie moet minimaal 10 karakters zijn';
-    } elseif (strlen($content) > 1000) {
-        $comment_error = 'Reactie mag maximaal 1000 karakters zijn';
-    } else {
-        if (isset($_SESSION['user_id'])) {
-            $db->query("INSERT INTO comments (blog_id, user_id, content) VALUES (:blog_id, :user_id, :content)");
-            $db->bind(':blog_id', $blog->id);
-            $db->bind(':user_id', $_SESSION['user_id']);
-            $db->bind(':content', $content);
-        } else {
-            $db->query("INSERT INTO comments (blog_id, anonymous_name, content) VALUES (:blog_id, :anonymous_name, :content)");
-            $db->bind(':blog_id', $blog->id);
-            $db->bind(':anonymous_name', $anonymous_name);
-            $db->bind(':content', $content);
-        }
-
-        if ($db->execute()) {
-            header('Location: ' . URLROOT . '/blogs/' . $blog->slug . '#comments');
-            exit;
-        } else {
-            $comment_error = 'Er is iets misgegaan bij het plaatsen van je reactie';
-        }
-    }
-}
 
 if (!function_exists('pp_blog_detail_date')) {
     function pp_blog_detail_date($value): string
@@ -163,10 +105,6 @@ require_once 'views/templates/header.php';
                         <?= (int) ($blog->likes ?? 0) ?>
                     </span>
                 </button>
-                <a href="#comments" class="btn btn--ghost btn--sm">
-                    <?= pp_icon('message-square', 16) ?>
-                    <span class="font-mono text-tabular text-sm"><?= count($comments) ?></span>
-                </a>
                 <button type="button"
                         class="btn btn--ghost btn--sm"
                         onclick="if (navigator.share) { navigator.share({ title: document.title, url: window.location.href }); } else { navigator.clipboard.writeText(window.location.href); this.querySelector('span').textContent = 'Gekopieerd'; }">
@@ -349,112 +287,6 @@ require_once 'views/templates/header.php';
         </section>
     <?php endif; ?>
 
-    <section id="comments" class="pp-container pp-container--md mt-20 mb-24">
-        <div class="section-rule mb-8">
-            <span class="section-rule__label">Reacties</span>
-        </div>
-
-        <div class="flex items-baseline justify-between mb-8">
-            <h2 class="font-display text-3xl md:text-4xl text-[color:var(--color-ink)]">
-                <?= count($comments) ?> <?= count($comments) === 1 ? 'reactie' : 'reacties' ?>
-            </h2>
-        </div>
-
-        <form method="POST" class="keyline-card p-6 md:p-8 mb-10">
-            <?php if (!empty($comment_error)): ?>
-                <div class="mb-4 p-3 rounded-md bg-[color:var(--color-terracotta)]/10 text-[color:var(--color-terracotta)] text-sm">
-                    <?= pp_e($comment_error) ?>
-                </div>
-            <?php endif; ?>
-
-            <?php if (!isset($_SESSION['user_id'])): ?>
-                <div class="field mb-4">
-                    <label class="field__label" for="anonymous_name">Naam</label>
-                    <input type="text" id="anonymous_name" name="anonymous_name"
-                           class="input" maxlength="100"
-                           value="<?= pp_e($_POST['anonymous_name'] ?? '') ?>"
-                           placeholder="Hoe wil je dat we je noemen?" required>
-                </div>
-            <?php endif; ?>
-
-            <div class="field mb-4">
-                <label class="field__label" for="content">Jouw reactie</label>
-                <textarea id="content" name="content" rows="4"
-                          class="textarea"
-                          maxlength="1000" minlength="10"
-                          placeholder="Deel je gedachten over dit artikel..."
-                          required><?= pp_e($_POST['content'] ?? '') ?></textarea>
-                <p class="field__hint">Minimaal 10, maximaal 1000 karakters.</p>
-            </div>
-
-            <div class="flex items-center justify-between">
-                <?php if (!isset($_SESSION['user_id'])): ?>
-                    <p class="text-sm text-[color:var(--color-ink-muted)]">
-                        <a href="<?= pp_e(pp_url('/login')) ?>" class="underline underline-offset-2">Log in</a>
-                        om als geregistreerd gebruiker te reageren.
-                    </p>
-                <?php else: ?>
-                    <p class="text-sm text-[color:var(--color-ink-muted)]">
-                        Je reageert als <strong class="text-[color:var(--color-ink)]"><?= pp_e($_SESSION['username'] ?? 'gebruiker') ?></strong>.
-                    </p>
-                <?php endif; ?>
-                <button type="submit" class="btn btn--primary">
-                    <?= pp_icon('send', 14) ?>
-                    Plaats reactie
-                </button>
-            </div>
-        </form>
-
-        <?php if (empty($comments)): ?>
-            <div class="keyline-card p-8 text-center text-[color:var(--color-ink-muted)]">
-                Nog geen reacties. Wees de eerste.
-            </div>
-        <?php else: ?>
-            <ol class="space-y-6">
-                <?php foreach ($comments as $comment): ?>
-                    <?php
-                    $commentPhoto = getProfilePhotoUrl(null, $comment->author_name);
-                    $commentTs = strtotime($comment->created_at);
-                    ?>
-                    <li class="keyline-card p-6">
-                        <div class="flex items-start gap-4">
-                            <div class="w-10 h-10 rounded-full flex items-center justify-center bg-[color:var(--color-paper-2)] text-[color:var(--color-hague)] font-display font-semibold text-sm border border-[color:var(--color-keyline)] flex-shrink-0">
-                                <?= pp_e($commentPhoto['value']) ?>
-                            </div>
-                            <div class="flex-1 min-w-0">
-                                <div class="flex items-baseline gap-3 flex-wrap mb-2">
-                                    <p class="font-display text-base text-[color:var(--color-ink)] leading-tight">
-                                        <?= pp_e($comment->author_name) ?>
-                                    </p>
-                                    <?php if ($comment->author_type === 'anonymous'): ?>
-                                        <span class="text-xs text-[color:var(--color-ink-muted)] uppercase tracking-wider">Gast</span>
-                                    <?php endif; ?>
-                                    <span class="text-xs text-[color:var(--color-ink-muted)]">
-                                        <?= pp_e(pp_blog_detail_date($comment->created_at)) ?>
-                                        &middot; <?= pp_e(date('H:i', $commentTs)) ?>
-                                    </span>
-                                    <?php if (!empty($comment->is_liked_by_author)): ?>
-                                        <span class="text-xs text-[color:var(--color-terracotta)] inline-flex items-center gap-1">
-                                            <?= pp_icon('heart', 12) ?>
-                                            Geliked door auteur
-                                        </span>
-                                    <?php endif; ?>
-                                </div>
-                                <p class="text-[color:var(--color-ink)] leading-relaxed whitespace-pre-wrap break-words">
-                                    <?= pp_e($comment->content) ?>
-                                </p>
-                                <?php if ((int) ($comment->likes_count ?? 0) > 0): ?>
-                                    <p class="text-xs text-[color:var(--color-ink-muted)] mt-3">
-                                        <?= (int) $comment->likes_count ?> <?= (int) $comment->likes_count === 1 ? 'like' : 'likes' ?>
-                                    </p>
-                                <?php endif; ?>
-                            </div>
-                        </div>
-                    </li>
-                <?php endforeach; ?>
-            </ol>
-        <?php endif; ?>
-    </section>
 </article>
 
 <?php require __DIR__ . '/partials/blog-scripts.php'; ?>
