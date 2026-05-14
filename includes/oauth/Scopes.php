@@ -21,7 +21,6 @@ final class Scopes
     public const BLOGS_WRITE       = 'blogs.write';
     public const BLOGS_ADMIN       = 'blogs.admin';
     public const COMMENTS_WRITE    = 'comments.write';
-    public const FORUM_WRITE       = 'forum.write';
     public const PARTIJMETER_WRITE = 'partijmeter.write';
     public const MEDIA_WRITE       = 'media.write';
     public const NEWSLETTER_WRITE  = 'newsletter.write';
@@ -66,10 +65,6 @@ final class Scopes
                 'label' => 'Reacties plaatsen',
                 'description' => 'Namens jou reacties plaatsen op blogs.',
             ],
-            self::FORUM_WRITE => [
-                'label' => 'Forum gebruiken',
-                'description' => 'Namens jou topics en replies plaatsen in het forum.',
-            ],
             self::PARTIJMETER_WRITE => [
                 'label' => 'PartijMeter resultaten opslaan',
                 'description' => 'Namens jou PartijMeter antwoorden en resultaten opslaan.',
@@ -88,7 +83,7 @@ final class Scopes
             ],
             self::ANALYTICS_READ => [
                 'label' => 'Analytics lezen',
-                'description' => 'Statistieken over blogs, forum en site-activiteit inzien.',
+                'description' => 'Statistieken over blogs en site-activiteit inzien.',
             ],
             self::MCP_READ => [
                 'label' => 'MCP: lezen',
@@ -139,7 +134,6 @@ final class Scopes
             self::BLOGS_READ,
             self::BLOGS_WRITE,
             self::COMMENTS_WRITE,
-            self::FORUM_WRITE,
             self::PARTIJMETER_WRITE,
             self::MEDIA_WRITE,
             self::NEWSLETTER_WRITE,

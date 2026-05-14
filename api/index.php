@@ -278,10 +278,6 @@ class APIRouter {
                     $this->handleLegacyEndpointsAlias($segments);
                     break;
                     
-                case 'forum':
-                    $this->handleForum($segments);
-                    break;
-                    
                 case 'comments':
                     $this->handleComments($segments);
                     break;
@@ -371,13 +367,6 @@ class APIRouter {
                     'POST /api/parties' => 'Partij aanmaken (admin)',
                     'PUT /api/parties/{id}' => 'Partij bijwerken (admin)',
                     'DELETE /api/parties/{id}' => 'Partij verwijderen (admin)'
-                ],
-                'forum' => [
-                    'GET /api/forum/topics' => 'Alle forum topics',
-                    'GET /api/forum/topics/{id}' => 'Specifiek topic',
-                    'POST /api/forum/topics' => 'Topic aanmaken',
-                    'POST /api/forum/topics/{id}/replies' => 'Reply toevoegen',
-                    'DELETE /api/forum/replies/{id}' => 'Reply verwijderen'
                 ],
                 'comments' => [
                     'GET /api/comments?blog_id={id}' => 'Comments ophalen',
@@ -566,12 +555,6 @@ class APIRouter {
         }
 
         sendApiError('Legacy endpoint niet gevonden: endpoints/' . $legacyEndpoint, 404);
-    }
-    
-    private function handleForum($segments) {
-        $this->requireEndpoint('forum');
-        $forumAPI = new ForumAPI();
-        $forumAPI->handle($this->method, $segments);
     }
     
     private function handleComments($segments) {

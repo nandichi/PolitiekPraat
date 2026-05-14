@@ -69,19 +69,6 @@ $profilePhoto = getProfilePhotoUrl($user['profile_photo'], $user['username']);
                 </dl>
             </div>
 
-            <div class="keyline-card p-6">
-                <div class="eyebrow mb-3">Privacy-instellingen</div>
-                <ul class="space-y-2 text-sm">
-                    <li class="flex items-center justify-between py-1">
-                        <span class="text-[color:var(--color-ink)]">Account-zichtbaarheid</span>
-                        <span class="badge badge--olive">Openbaar</span>
-                    </li>
-                    <li class="flex items-center justify-between py-1">
-                        <span class="text-[color:var(--color-ink)]">E-mail-notificaties</span>
-                        <span class="badge badge--moss">Aan</span>
-                    </li>
-                </ul>
-            </div>
         </aside>
 
         <div class="lg:col-span-2 space-y-6">
@@ -130,16 +117,11 @@ $profilePhoto = getProfilePhotoUrl($user['profile_photo'], $user['username']);
             <div class="keyline-card p-6 md:p-8">
                 <div class="eyebrow mb-3">Snelle toegang</div>
                 <h2 class="font-display text-display-lg text-[color:var(--color-ink)] mb-5 leading-tight">Aan de slag</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <a href="/blogs/create" class="border border-[color:var(--color-keyline)] rounded-md p-5 hover:bg-[color:var(--color-paper-2)] transition-colors">
                         <div class="text-[color:var(--color-hague)] mb-2"><?= pp_icon('pen-tool', 22) ?></div>
                         <h3 class="font-display text-base text-[color:var(--color-ink)] mb-1">Schrijf een blog</h3>
                         <p class="text-sm text-[color:var(--color-ink-muted)]">Deel je politieke analyse.</p>
-                    </a>
-                    <a href="/forum/create" class="border border-[color:var(--color-keyline)] rounded-md p-5 hover:bg-[color:var(--color-paper-2)] transition-colors">
-                        <div class="text-[color:var(--color-hague)] mb-2"><?= pp_icon('message-square', 22) ?></div>
-                        <h3 class="font-display text-base text-[color:var(--color-ink)] mb-1">Start een discussie</h3>
-                        <p class="text-sm text-[color:var(--color-ink-muted)]">Bespreek met de community.</p>
                     </a>
                     <a href="/partijmeter" class="border border-[color:var(--color-keyline)] rounded-md p-5 hover:bg-[color:var(--color-paper-2)] transition-colors">
                         <div class="text-[color:var(--color-hague)] mb-2"><?= pp_icon('vote', 22) ?></div>

@@ -380,7 +380,6 @@ function generateBreadcrumbs() {
         'over-mij' => ['icon' => 'user', 'label' => 'Over Ons', 'description' => 'Missie en visie'],
         'contact' => ['icon' => 'mail', 'label' => 'Contact', 'description' => 'Neem contact op'],
         'profile' => ['icon' => 'user-circle', 'label' => 'Profiel', 'description' => 'Jouw account'],
-        'forum' => ['icon' => 'message-circle', 'label' => 'Forum', 'description' => 'Politieke discussies'],
         'resultaten' => ['icon' => 'bar-chart', 'label' => 'Resultaten', 'description' => 'Jouw stemwijzer resultaten'],
         'create' => ['icon' => 'plus', 'label' => 'Nieuw', 'description' => 'Maak nieuwe content'],
         'edit' => ['icon' => 'edit-2', 'label' => 'Bewerken', 'description' => 'Pas content aan'],
@@ -628,8 +627,7 @@ function renderPageContextIndicator() {
         'nederlandse-verkiezingen' => ['label' => 'Nederlandse Verkiezingen', 'color' => 'orange', 'description' => '175 jaar democratie'],
         'over-mij' => ['label' => 'Over Ons', 'color' => 'primary', 'description' => 'Missie en visie'],
         'contact' => ['label' => 'Contact', 'color' => 'secondary', 'description' => 'Neem contact op'],
-        'profile' => ['label' => 'Profiel', 'color' => 'blue', 'description' => 'Jouw account'],
-        'forum' => ['label' => 'Forum', 'color' => 'green', 'description' => 'Politieke discussies']
+        'profile' => ['label' => 'Profiel', 'color' => 'blue', 'description' => 'Jouw account']
     ];
     
     $sectionInfo = $contextMap[$currentContext['section']] ?? null;

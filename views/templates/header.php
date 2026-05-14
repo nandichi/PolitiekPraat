@@ -10,7 +10,6 @@ $metaDescriptions = [
     'politiek-kompas' => 'Ontdek jouw politieke kompas door partijstandpunten te vergelijken op thema\'s als klimaat, zorg, economie en onderwijs. Maak een geïnformeerde stemkeuze.',
     'partijen' => 'Volledig overzicht van Nederlandse politieke partijen met hun standpunten, lijsttrekkers en verkiezingsprogramma\'s. Van VVD tot PvdA en alle anderen.',
     'themas' => 'Verdiep je in actuele politieke thema\'s als klimaatbeleid, gezondheidszorg en economie. Analyses, standpunten en expert discussies over Nederlandse politiek.',
-    'forum' => 'Discussieer mee in het politieke forum van PolitiekPraat. Deel je mening over actuele onderwerpen en ga respectvol in debat met andere gebruikers.',
     'contact' => 'Neem contact op met het PolitiekPraat team voor vragen, feedback of suggesties. Ons contactformulier zorgt voor snelle en persoonlijke ondersteuning.',
     'donatie' => 'Steun PolitiekPraat met een donatie. Help ons de website gratis, advertentievrij en onafhankelijk te houden. Elke bijdrage helpt ons verder ontwikkelen.',
     'over-mij' => 'Leer meer over PolitiekPraat en onze missie om Nederlandse politiek toegankelijk te maken. Ontdek wie we zijn en waarom we dit platform hebben opgericht.',
@@ -42,7 +41,6 @@ $metaDescriptions = [
     // Specifieke secties
     'blogs-create' => 'Schrijf en publiceer je eigen politieke blog op PolitiekPraat. Deel je expertise, mening en analyses over Nederlandse politiek met onze actieve community.',
     'blogs-manage' => 'Beheer je gepubliceerde blogs op PolitiekPraat. Bewerk, update of verwijder je politieke artikelen en bekijk uitgebreide statistieken over lezers en reacties.',
-    'forum-create' => 'Start een nieuwe discussie in het PolitiekPraat forum. Deel politieke onderwerpen die je bezighouden en nodig anderen uit voor een respectvol debat.',
     'resultaten' => 'Ontdek je PartijMeter resultaten en zie welke Nederlandse politieke partijen het beste aansluiten bij jouw persoonlijke standpunten en waarden.',
 
     // Amerikaanse verkiezingen
@@ -63,7 +61,6 @@ $metaKeywords = [
     'politiek-kompas' => 'politiek kompas, partijen vergelijken, politieke standpunten, stemadvies, Nederlandse partijen, verkiezingen, PolitiekPraat',
     'partijen' => 'politieke partijen Nederland, VVD, PvdA, VVD, CDA, D66, PVV, GroenLinks, partijoverzicht, lijsttrekkers, PolitiekPraat',
     'themas' => 'politieke thema\'s, klimaat, zorg, economie, onderwijs, immigratie, standpunten, analyses, Nederlandse politiek, PolitiekPraat',
-    'forum' => 'politiek forum, politieke discussie, debat, meningen, Nederlandse politiek, politieke standpunten, actuele discussies, PolitiekPraat',
     'contact' => 'contact, vragen, feedback, hulp, informatie, PolitiekPraat, bereikbaarheid, klantenservice',
     'donatie' => 'donatie, steun, PolitiekPraat, onafhankelijk, advertentievrij, buy me a coffee, bijdrage, koffie, serverkosten, ondersteuning',
     'over-mij' => 'over ons, missie, visie, team, PolitiekPraat, Nederlandse politiek, platform, democratie, transparantie',
@@ -95,7 +92,6 @@ $metaKeywords = [
     // Specifieke secties
     'blogs-create' => 'blog schrijven, artikel publiceren, politieke mening, PolitiekPraat, auteur, content',
     'blogs-manage' => 'blogs beheren, artikelen bewerken, schrijver, PolitiekPraat, content management',
-    'forum-create' => 'discussie starten, forum, onderwerp, politiek debat, PolitiekPraat, community',
     'resultaten' => 'partijmeter resultaten, politieke match, partijen, verkiezingen, stemadvies, PolitiekPraat',
 
     // Amerikaanse verkiezingen
@@ -141,13 +137,6 @@ if (empty($pathSegments[0])) {
             break;
         case 'thema':
             $currentPage = 'thema-detail';
-            break;
-        case 'forum':
-            if (isset($pathSegments[1]) && $pathSegments[1] === 'create') {
-                $currentPage = 'forum-create';
-            } else {
-                $currentPage = 'forum';
-            }
             break;
         case 'profile':
             if (isset($pathSegments[1]) && $pathSegments[1] === 'edit') {
@@ -238,7 +227,6 @@ $defaultPageTitles = [
     'politiek-kompas' => 'Politiek Kompas: vergelijk standpunten per thema - PolitiekPraat',
     'partijen' => 'Overzicht Nederlandse politieke partijen - PolitiekPraat',
     'themas' => 'Politieke thema\'s uitgelegd: klimaat, zorg, economie - PolitiekPraat',
-    'forum' => 'Politiek forum: discussies en debat - PolitiekPraat',
     'contact' => 'Contact met PolitiekPraat',
     'donatie' => 'Steun PolitiekPraat met een donatie',
     'over-mij' => 'Over PolitiekPraat: missie en platform',
@@ -610,3 +598,4 @@ $jsAppVer   = file_exists($jsAppPath) ? filemtime($jsAppPath) : time();
     <?php require __DIR__ . '/../components/site/mobile-menu.php'; ?>
 
     <main id="main-content">
+        <?php require __DIR__ . '/../components/site/flash-message.php'; ?>

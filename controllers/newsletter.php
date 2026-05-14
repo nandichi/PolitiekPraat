@@ -70,32 +70,36 @@ class Newsletter extends Controller {
     }
     
     public function unsubscribe() {
-        $email = filter_var($_GET['email'], FILTER_SANITIZE_EMAIL);
-        
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        $email = filter_var($_GET['email'] ?? '', FILTER_SANITIZE_EMAIL);
+
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
             try {
-                // Update de status in de database
                 $this->db->query("UPDATE newsletter_subscribers SET status = 'unsubscribed' WHERE email = :email");
                 $this->db->bind(':email', $email);
                 $this->db->execute();
-                
-                // Return success page
-                $this->redirectTo('/newsletter/unsubscribe-success');
+
+                $_SESSION['flash_message'] = [
+                    'type' => 'success',
+                    'text' => 'Je bent succesvol uitgeschreven van de PolitiekPraat-nieuwsbrief.',
+                ];
             } catch (Exception $e) {
-                // Return error page
-                $this->redirectTo('/newsletter/unsubscribe-error');
+                $_SESSION['flash_message'] = [
+                    'type' => 'error',
+                    'text' => 'Er ging iets mis bij het uitschrijven. Probeer het opnieuw of neem contact met ons op.',
+                ];
             }
         } else {
-            $this->redirectTo('/newsletter/unsubscribe-error');
+            $_SESSION['flash_message'] = [
+                'type' => 'error',
+                'text' => 'Het opgegeven e-mailadres is ongeldig of ontbreekt.',
+            ];
         }
-    }
-    
-    public function unsubscribeSuccess() {
-        require_once __DIR__ . '/../views/newsletter/unsubscribe-success.php';
-    }
-    
-    public function unsubscribeError() {
-        require_once __DIR__ . '/../views/newsletter/unsubscribe-error.php';
+
+        $this->redirectTo('/');
     }
     
     private function sendConfirmationEmail($email) {
@@ -232,12 +236,6 @@ if (!defined('CALLED_FROM_BLOG_CONTROLLER')) {
     switch ($action) {
         case 'unsubscribe':
             $controller->unsubscribe();
-            break;
-        case 'unsubscribe-success':
-            $controller->unsubscribeSuccess();
-            break;
-        case 'unsubscribe-error':
-            $controller->unsubscribeError();
             break;
         default:
             $controller->subscribe();

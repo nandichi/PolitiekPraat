@@ -1010,6 +1010,30 @@
         color: var(--color-canvas);
         border-color: var(--color-ink);
     }
+    .chip--olive {
+        background-color: var(--color-olive-tint);
+        border-color: var(--color-olive-tint);
+        color: var(--color-olive);
+    }
+    .chip--olive:hover {
+        border-color: var(--color-olive);
+    }
+    .chip--terracotta {
+        background-color: var(--color-terracotta-tint);
+        border-color: var(--color-terracotta-tint);
+        color: var(--color-terracotta);
+    }
+    .chip--terracotta:hover {
+        border-color: var(--color-terracotta);
+    }
+    .chip--hague {
+        background-color: var(--color-hague-tint);
+        border-color: var(--color-hague-tint);
+        color: var(--color-hague);
+    }
+    .chip--hague:hover {
+        border-color: var(--color-hague);
+    }
 
     /* === Badge (orientation/source label) === */
     .badge {

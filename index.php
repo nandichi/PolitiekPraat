@@ -87,8 +87,6 @@ $router->add('blogs/([^/]+)', function($slug) {
     $controller = new BlogsController();
     $controller->view($slug);
 });
-$router->add('forum', 'controllers/forum.php');
-$router->add('forum/create', 'controllers/forum/create.php');
 $router->add('contact', 'controllers/contact.php');
 $router->add('donatie', 'controllers/donatie.php');
 $router->add('login', 'controllers/auth/login.php');
@@ -105,8 +103,6 @@ $router->add('profile', 'controllers/profile/index.php');
 $router->add('profile/edit', 'controllers/profile/edit.php');
 $router->add('newsletter/subscribe', 'controllers/newsletter.php');
 $router->add('newsletter/unsubscribe', 'controllers/newsletter.php?action=unsubscribe');
-$router->add('newsletter/unsubscribe-success', 'controllers/newsletter.php?action=unsubscribe-success');
-$router->add('newsletter/unsubscribe-error', 'controllers/newsletter.php?action=unsubscribe-error');
 $router->add('partijmeter', 'controllers/partijmeter.php');
 $router->add('resultaten/([a-zA-Z0-9]+)', function($shareId) {
     $_GET['id'] = $shareId;

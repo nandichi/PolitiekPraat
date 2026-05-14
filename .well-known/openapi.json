@@ -3,7 +3,7 @@
   "info": {
     "title": "PolitiekPraat REST API",
     "version": "1.0.0",
-    "description": "Publieke REST API van PolitiekPraat. Biedt toegang tot blogs, nieuws, partijen, thema's, forum, stemmentracker en PartijMeter. Auth via OAuth 2.0 bearer tokens (zie /.well-known/oauth-protected-resource) of legacy JWT tokens.",
+    "description": "Publieke REST API van PolitiekPraat. Biedt toegang tot blogs, nieuws, partijen, thema's, stemmentracker en PartijMeter. Auth via OAuth 2.0 bearer tokens (zie /.well-known/oauth-protected-resource) of legacy JWT tokens.",
     "contact": {
       "name": "PolitiekPraat",
       "url": "https://politiekpraat.nl/contact"
@@ -189,10 +189,6 @@
     },
     "/stemwijzer": {
       "get": { "summary": "PartijMeter stellingen", "operationId": "getPartijmeter", "security": [], "responses": { "200": { "description": "Stellingen + partijposities" } } }
-    },
-    "/forum/topics": {
-      "get": { "summary": "Forum topics", "operationId": "listForumTopics", "security": [], "responses": { "200": { "description": "Topics" } } },
-      "post": { "summary": "Nieuw topic", "operationId": "createForumTopic", "responses": { "201": { "description": "Aangemaakt" } } }
     },
     "/comments": {
       "post": { "summary": "Comment plaatsen", "operationId": "postComment", "responses": { "201": { "description": "Geplaatst" } } }

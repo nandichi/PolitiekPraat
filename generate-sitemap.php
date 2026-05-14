@@ -29,7 +29,6 @@ $static_pages = [
     ['url' => '', 'changefreq' => 'daily', 'priority' => '1.0'],
     ['url' => 'home', 'changefreq' => 'daily', 'priority' => '1.0'],
     ['url' => 'blogs', 'changefreq' => 'weekly', 'priority' => '0.8'],
-    ['url' => 'forum', 'changefreq' => 'daily', 'priority' => '0.8'],
     ['url' => 'contact', 'changefreq' => 'monthly', 'priority' => '0.5'],
     ['url' => 'themas', 'changefreq' => 'weekly', 'priority' => '0.7'],
     ['url' => 'over-mij', 'changefreq' => 'monthly', 'priority' => '0.3'],
@@ -76,19 +75,6 @@ foreach ($blogs as $blog) {
     
     echo "  </url>\n";
 }
-
-// Add forum topics (commented out - table may not exist)
-// $query = "SELECT slug, updated_at FROM forum_topics WHERE status = 'active' ORDER BY updated_at DESC";
-// $topics = $db->query($query)->resultSet();
-
-// foreach ($topics as $topic) {
-//     echo "  <url>\n";
-//     echo "    <loc>" . $domain . "/forum/topic/" . htmlspecialchars($topic->slug) . "</loc>\n";
-//     echo "    <lastmod>" . date('c', strtotime($topic->updated_at)) . "</lastmod>\n";
-//     echo "    <changefreq>daily</changefreq>\n";
-//     echo "    <priority>0.6</priority>\n";
-//     echo "  </url>\n";
-// }
 
 // Add themas (belangrijkste politieke thema's)
 $thema_slugs = [

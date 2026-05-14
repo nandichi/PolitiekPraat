@@ -102,7 +102,6 @@ $sections = [
                                     <li>Contactformulieren</li>
                                     <li>E-mails naar ons</li>
                                     <li>Nieuwsbrief-inschrijvingen</li>
-                                    <li>Forum-reacties</li>
                                 </ul>
                             </div>
                             <div class="border-l-2 border-[color:var(--color-ochre)] pl-4">

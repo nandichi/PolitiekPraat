@@ -1,6 +1,6 @@
 <?php
 /**
- * MCP tools voor de community-features: comments, forum, polls, newsletter.
+ * MCP tools voor de community-features: comments, polls, newsletter.
  */
 
 declare(strict_types=1);
@@ -23,38 +23,6 @@ final class CommunityTools
     {
         return [
             // ---------- READ ----------
-            ToolBuilder::read(
-                'list_forum_topics',
-                'Lijst forum-topics met paginering.',
-                [
-                    'type' => 'object',
-                    'properties' => [
-                        'search' => ['type' => 'string'],
-                        'limit'  => ['type' => 'integer', 'minimum' => 1, 'maximum' => 100, 'default' => 20],
-                        'offset' => ['type' => 'integer', 'minimum' => 0, 'default' => 0],
-                        'order'  => ['type' => 'string', 'enum' => ['newest', 'active', 'popular'], 'default' => 'newest'],
-                    ],
-                    'additionalProperties' => false,
-                ],
-                [self::class, 'list_forum_topics']
-            ),
-
-            ToolBuilder::read(
-                'get_forum_topic',
-                'Detail van een forum-topic met replies.',
-                [
-                    'type' => 'object',
-                    'properties' => [
-                        'id'             => ['type' => 'integer', 'minimum' => 1],
-                        'include_replies'=> ['type' => 'boolean', 'default' => true],
-                        'reply_limit'    => ['type' => 'integer', 'minimum' => 1, 'maximum' => 200, 'default' => 50],
-                    ],
-                    'required' => ['id'],
-                    'additionalProperties' => false,
-                ],
-                [self::class, 'get_forum_topic']
-            ),
-
             ToolBuilder::read(
                 'list_comments_for_blog',
                 'Lijst comments op een specifieke blog.',
@@ -133,71 +101,6 @@ final class CommunityTools
                 [self::class, 'delete_comment']
             ),
 
-            // ---------- WRITE: forum ----------
-            ToolBuilder::write(
-                'post_forum_topic',
-                'Plaats een nieuw topic in het forum.',
-                [
-                    'type' => 'object',
-                    'properties' => [
-                        'title'   => ['type' => 'string', 'minLength' => 5, 'maxLength' => 255],
-                        'content' => ['type' => 'string', 'minLength' => 10, 'maxLength' => 20000],
-                    ],
-                    'required' => ['title', 'content'],
-                    'additionalProperties' => false,
-                ],
-                [Scopes::FORUM_WRITE],
-                [self::class, 'post_forum_topic']
-            ),
-
-            ToolBuilder::write(
-                'reply_to_forum_topic',
-                'Plaats een reply in een bestaand forum-topic.',
-                [
-                    'type' => 'object',
-                    'properties' => [
-                        'topic_id' => ['type' => 'integer', 'minimum' => 1],
-                        'content'  => ['type' => 'string', 'minLength' => 2, 'maxLength' => 20000],
-                    ],
-                    'required' => ['topic_id', 'content'],
-                    'additionalProperties' => false,
-                ],
-                [Scopes::FORUM_WRITE],
-                [self::class, 'reply_to_forum_topic']
-            ),
-
-            ToolBuilder::write(
-                'update_forum_topic',
-                'Bewerk een eigen forum-topic.',
-                [
-                    'type' => 'object',
-                    'properties' => [
-                        'id'      => ['type' => 'integer', 'minimum' => 1],
-                        'title'   => ['type' => 'string', 'minLength' => 5, 'maxLength' => 255],
-                        'content' => ['type' => 'string', 'minLength' => 10, 'maxLength' => 20000],
-                    ],
-                    'required' => ['id'],
-                    'additionalProperties' => false,
-                ],
-                [Scopes::FORUM_WRITE],
-                [self::class, 'update_forum_topic']
-            ),
-
-            ToolBuilder::write(
-                'delete_forum_reply',
-                'Verwijder een eigen forum-reply.',
-                [
-                    'type' => 'object',
-                    'properties' => [
-                        'id' => ['type' => 'integer', 'minimum' => 1],
-                    ],
-                    'required' => ['id'],
-                    'additionalProperties' => false,
-                ],
-                [Scopes::FORUM_WRITE],
-                [self::class, 'delete_forum_reply']
-            ),
-
             // ---------- WRITE: blog polls ----------
             ToolBuilder::write(
                 'create_blog_poll',
@@ -270,62 +173,6 @@ final class CommunityTools
     // ========================================================
     //                         HANDLERS
     // ========================================================
-
-    public static function list_forum_topics(array $args, ?array $ctx): array
-    {
-        $db = new Database();
-        $limit  = max(1, min(100, (int) ($args['limit'] ?? 20)));
-        $offset = max(0, (int) ($args['offset'] ?? 0));
-        $order  = (string) ($args['order'] ?? 'newest');
-
-        $where  = [];
-        $params = [];
-        if (!empty($args['search'])) {
-            $where[] = '(t.title LIKE :q OR t.content LIKE :q)';
-            $params[':q'] = '%' . $args['search'] . '%';
-        }
-        $orderBy = match ($order) {
-            'active'  => 't.last_activity DESC',
-            'popular' => 't.views DESC',
-            default   => 't.created_at DESC',
-        };
-
-        $sql = "SELECT t.id, t.title, LEFT(t.content, 300) AS excerpt, t.views, t.created_at, t.last_activity,
-                       u.username AS author_name, u.id AS author_id,
-                       (SELECT COUNT(*) FROM forum_replies r WHERE r.topic_id = t.id) AS reply_count
-                FROM forum_topics t
-                JOIN users u ON u.id = t.author_id";
-        if ($where) $sql .= ' WHERE ' . implode(' AND ', $where);
-        $sql .= " ORDER BY {$orderBy} LIMIT {$limit} OFFSET {$offset}";
-
-        $db->query($sql);
-        foreach ($params as $k => $v) $db->bind($k, $v);
-        $rows = $db->resultSet() ?: [];
-        return ['topics' => array_map(static fn($r) => (array) $r, $rows)];
-    }
-
-    public static function get_forum_topic(array $args, ?array $ctx): array
-    {
-        $db = new Database();
-        $db->query('SELECT t.*, u.username AS author_name
-                    FROM forum_topics t JOIN users u ON u.id = t.author_id
-                    WHERE t.id = :id LIMIT 1');
-        $db->bind(':id', (int) $args['id']);
-        $topic = $db->single();
-        if (!$topic) throw new McpException(-32001, 'topic_not_found');
-
-        $out = (array) $topic;
-        if ($args['include_replies'] ?? true) {
-            $rl = max(1, min(200, (int) ($args['reply_limit'] ?? 50)));
-            $db->query("SELECT r.id, r.content, r.created_at, u.username AS author_name, u.id AS author_id
-                        FROM forum_replies r JOIN users u ON u.id = r.user_id
-                        WHERE r.topic_id = :t ORDER BY r.created_at ASC LIMIT {$rl}");
-            $db->bind(':t', (int) $topic->id);
-            $rows = $db->resultSet() ?: [];
-            $out['replies'] = array_map(static fn($r) => (array) $r, $rows);
-        }
-        return $out;
-    }
 
     public static function list_comments_for_blog(array $args, ?array $ctx): array
     {
@@ -416,87 +263,6 @@ final class CommunityTools
         }
 
         $db->query('DELETE FROM comments WHERE id = :i');
-        $db->bind(':i', (int) $args['id']);
-        $db->execute();
-        return ['ok' => true, 'deleted' => (int) $args['id']];
-    }
-
-    public static function post_forum_topic(array $args, ?array $ctx): array
-    {
-        $userId = self::requireUser($ctx);
-        $db     = new Database();
-        $db->query('INSERT INTO forum_topics (title, content, author_id) VALUES (:t, :c, :a)');
-        $db->bind(':t', (string) $args['title']);
-        $db->bind(':c', (string) $args['content']);
-        $db->bind(':a', $userId);
-        $db->execute();
-        $id = (int) $db->lastInsertId();
-        return [
-            'ok'       => true,
-            'topic_id' => $id,
-            'url'      => (defined('URLROOT') ? rtrim(URLROOT, '/') : 'https://politiekpraat.nl') . '/forum/topic/' . $id,
-        ];
-    }
-
-    public static function reply_to_forum_topic(array $args, ?array $ctx): array
-    {
-        $userId = self::requireUser($ctx);
-        $db     = new Database();
-        $db->query('SELECT id FROM forum_topics WHERE id = :i LIMIT 1');
-        $db->bind(':i', (int) $args['topic_id']);
-        if (!$db->single()) throw new McpException(-32001, 'topic_not_found');
-
-        $db->query('INSERT INTO forum_replies (topic_id, user_id, content) VALUES (:t, :u, :c)');
-        $db->bind(':t', (int) $args['topic_id']);
-        $db->bind(':u', $userId);
-        $db->bind(':c', (string) $args['content']);
-        $db->execute();
-        $rid = (int) $db->lastInsertId();
-
-        $db->query('UPDATE forum_topics SET last_activity = NOW() WHERE id = :t');
-        $db->bind(':t', (int) $args['topic_id']);
-        $db->execute();
-
-        return ['ok' => true, 'reply_id' => $rid];
-    }
-
-    public static function update_forum_topic(array $args, ?array $ctx): array
-    {
-        $userId = self::requireUser($ctx);
-        $db     = new Database();
-        $db->query('SELECT author_id FROM forum_topics WHERE id = :i LIMIT 1');
-        $db->bind(':i', (int) $args['id']);
-        $t = $db->single();
-        if (!$t) throw new McpException(-32001, 'topic_not_found');
-        if ((int) $t->author_id !== $userId && !self::hasScope($ctx, Scopes::BLOGS_ADMIN)) {
-            throw new McpException(-32003, 'forbidden');
-        }
-
-        $updates = [];
-        $params  = [':i' => (int) $args['id']];
-        if (!empty($args['title']))   { $updates[] = 'title = :t';   $params[':t'] = (string) $args['title']; }
-        if (!empty($args['content'])) { $updates[] = 'content = :c'; $params[':c'] = (string) $args['content']; }
-        if (!$updates) return ['ok' => true, 'changed' => 0];
-
-        $db->query('UPDATE forum_topics SET ' . implode(', ', $updates) . ' WHERE id = :i');
-        foreach ($params as $k => $v) $db->bind($k, $v);
-        $db->execute();
-        return ['ok' => true, 'id' => (int) $args['id'], 'changed' => count($updates)];
-    }
-
-    public static function delete_forum_reply(array $args, ?array $ctx): array
-    {
-        $userId = self::requireUser($ctx);
-        $db     = new Database();
-        $db->query('SELECT user_id FROM forum_replies WHERE id = :i LIMIT 1');
-        $db->bind(':i', (int) $args['id']);
-        $r = $db->single();
-        if (!$r) throw new McpException(-32001, 'reply_not_found');
-        if ((int) $r->user_id !== $userId && !self::hasScope($ctx, Scopes::BLOGS_ADMIN)) {
-            throw new McpException(-32003, 'forbidden');
-        }
-
-        $db->query('DELETE FROM forum_replies WHERE id = :i');
         $db->bind(':i', (int) $args['id']);
         $db->execute();
         return ['ok' => true, 'deleted' => (int) $args['id']];

@@ -28,7 +28,7 @@
         {
             "name": "mcp-community",
             "type": "markdown",
-            "description": "Interactie met de PolitiekPraat community via MCP: reageren op blogs, forum-topics plaatsen/beantwoorden, stemmen op polls en nieuwsbrief beheren. Alle schrijf-acties gebeuren namens de ingelogde user.",
+            "description": "Interactie met de PolitiekPraat community via MCP: reageren op blogs, stemmen op polls en nieuwsbrief beheren. Alle schrijf-acties gebeuren namens de ingelogde user.",
             "url": "https://politiekpraat.nl/.well-known/agent-skills/mcp-community/SKILL.md",
             "version": "1.0.0",
             "language": "nl-NL",

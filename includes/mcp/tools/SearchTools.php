@@ -2,7 +2,7 @@
 /**
  * MCP tools voor globale zoek over PolitiekPraat-content.
  *
- * `search_all` doorzoekt blogs, forum-topics, nieuws, partijen en moties
+ * `search_all` doorzoekt blogs, nieuws, partijen en moties
  * tegelijk en geeft een uniforme resultatenlijst.
  */
 
@@ -18,7 +18,7 @@ use Throwable;
 
 final class SearchTools
 {
-    private const KNOWN_TYPES = ['blog', 'forum', 'nieuws', 'partij', 'motie'];
+    private const KNOWN_TYPES = ['blog', 'nieuws', 'partij', 'motie'];
 
     /** @return array<int, array<string, mixed>> */
     public static function catalog(): array
@@ -26,7 +26,7 @@ final class SearchTools
         return [
             ToolBuilder::read(
                 'search_all',
-                'Doorzoek blogs, forum, nieuws, partijen en moties tegelijk. Retourneert max `limit` resultaten per type, met url + snippet.',
+                'Doorzoek blogs, nieuws, partijen en moties tegelijk. Retourneert max `limit` resultaten per type, met url + snippet.',
                 [
                     'type' => 'object',
                     'properties' => [
@@ -72,24 +72,6 @@ final class SearchTools
                         'title'   => $r->title,
                         'snippet' => self::trimSnippet((string) ($r->summary ?? '')),
                         'url'     => $base . '/blog/' . $r->slug,
-                    ];
-                }
-            } catch (Throwable $e) { /* skip */ }
-        }
-
-        if (in_array('forum', $types, true)) {
-            try {
-                $db->query("SELECT id, title, content FROM forum_topics
-                            WHERE title LIKE :q OR content LIKE :q
-                            ORDER BY created_at DESC LIMIT {$limit}");
-                $db->bind(':q', $like);
-                foreach ($db->resultSet() ?: [] as $r) {
-                    $results[] = [
-                        'type'    => 'forum',
-                        'id'      => (int) $r->id,
-                        'title'   => $r->title,
-                        'snippet' => self::trimSnippet((string) $r->content),
-                        'url'     => $base . '/forum/topic/' . $r->id,
                     ];
                 }
             } catch (Throwable $e) { /* skip */ }

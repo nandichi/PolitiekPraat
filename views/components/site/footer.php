@@ -24,7 +24,6 @@ $navColumns = [
             ['label' => 'Thema\'s',        'href' => '/themas'],
             ['label' => 'Blogs',           'href' => '/blogs'],
             ['label' => 'Nieuws',          'href' => '/nieuws'],
-            ['label' => 'Forum',           'href' => '/forum'],
         ],
     ],
     [

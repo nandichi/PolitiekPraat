@@ -81,10 +81,10 @@ $sections = [
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                         <?php
                         $services = [
-                            ['icon' => 'message-square', 'title' => 'Politieke discussies',     'desc' => 'Een forum voor open debat over politieke onderwerpen.'],
                             ['icon' => 'book-open',      'title' => 'Nieuws en analyses',       'desc' => 'Actuele politieke artikelen, analyses en duiding.'],
                             ['icon' => 'list-checks',    'title' => 'Stemwijzer en tools',      'desc' => 'Interactieve hulpmiddelen om je politieke voorkeuren te bepalen.'],
                             ['icon' => 'users',          'title' => 'Community-features',       'desc' => 'Account-functionaliteit, reacties en interactie tussen gebruikers.'],
+                            ['icon' => 'pen-tool',       'title' => 'Blogs en columns',         'desc' => 'Politieke blogs en analyses geschreven door experts en gastbloggers.'],
                         ];
                         foreach ($services as $s): ?>
                             <div class="border border-[color:var(--color-keyline)] rounded-md p-5">

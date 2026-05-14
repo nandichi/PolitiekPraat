@@ -23,6 +23,7 @@ $sections = [
         'label' => 'Politiek',
         'links' => [
             ['label' => 'Partijen',       'href' => '/partijen'],
+            ['label' => 'Stemmentracker', 'href' => '/stemmentracker'],
             ['label' => 'Thema\'s',       'href' => '/themas'],
         ],
     ],
@@ -31,7 +32,6 @@ $sections = [
         'links' => [
             ['label' => 'Blogs',  'href' => '/blogs'],
             ['label' => 'Nieuws', 'href' => '/nieuws'],
-            ['label' => 'Forum',  'href' => '/forum'],
         ],
     ],
     [

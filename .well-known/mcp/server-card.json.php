@@ -51,7 +51,7 @@ $card = [
         'vendor'  => 'PolitiekPraat',
         'url'     => $base,
     ],
-    'description' => "Volledige MCP-server voor PolitiekPraat: lezen en schrijven van blogs, comments, forum-topics, polls en nieuwsbrief-aanmeldingen, plus uitgebreide read-only tools voor partijen, stemwijzer-stellingen, stemmentracker-moties, Nederlandse en Amerikaanse verkiezingen, en globale zoek + analytics. Read-only tools en resources zijn publiek; schrijf-tools vereisen OAuth2 met scope `mcp.write` plus domain-specifieke scopes (bv. `blogs.write`, `media.write`).",
+    'description' => "Volledige MCP-server voor PolitiekPraat: lezen en schrijven van blogs, comments, polls en nieuwsbrief-aanmeldingen, plus uitgebreide read-only tools voor partijen, stemwijzer-stellingen, stemmentracker-moties, Nederlandse en Amerikaanse verkiezingen, en globale zoek + analytics. Read-only tools en resources zijn publiek; schrijf-tools vereisen OAuth2 met scope `mcp.write` plus domain-specifieke scopes (bv. `blogs.write`, `media.write`).",
     'protocolVersion' => '2024-11-05',
     'transport'       => [
         'type'        => 'http',
@@ -71,7 +71,7 @@ $card = [
         'authorization_servers' => [$base],
         'scopes_supported'      => Scopes::supported(),
         'default_scopes'        => [Scopes::MCP_READ],
-        'note'                  => 'Read-only tools en resources kunnen anoniem worden aangeroepen. Write-tools vereisen `mcp.write` plus de domain-scope (bv. `blogs.write`, `media.write`, `comments.write`, `forum.write`, `polls.write`, `newsletter.write`, `analytics.read`).',
+        'note'                  => 'Read-only tools en resources kunnen anoniem worden aangeroepen. Write-tools vereisen `mcp.write` plus de domain-scope (bv. `blogs.write`, `media.write`, `comments.write`, `polls.write`, `newsletter.write`, `analytics.read`).',
         'alternative_methods' => [
             [
                 'type'        => 'personal_access_token',

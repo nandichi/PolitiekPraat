@@ -24,7 +24,7 @@ final class AnalyticsTools
         return [
             ToolBuilder::read(
                 'get_site_stats',
-                'Publieke site-statistieken: totaal aantal blogs, partijen, moties, stellingen, forum-topics en nieuws.',
+                'Publieke site-statistieken: totaal aantal blogs, partijen, moties, stellingen en nieuws.',
                 [
                     'type' => 'object',
                     'properties' => new \stdClass(),
@@ -49,7 +49,7 @@ final class AnalyticsTools
 
             ToolBuilder::write(
                 'get_recent_activity',
-                'Recente activity-feed: laatste comments, forum-replies, blogs en nieuwsartikelen. Vereist `analytics.read` scope.',
+                'Recente activity-feed: laatste comments, blogs en nieuwsartikelen. Vereist `analytics.read` scope.',
                 [
                     'type' => 'object',
                     'properties' => [
@@ -72,8 +72,6 @@ final class AnalyticsTools
             'blog_drafts'           => self::count($db, "SELECT COUNT(*) AS c FROM blogs WHERE status='draft'"),
             'blog_scheduled'        => self::count($db, "SELECT COUNT(*) AS c FROM blogs WHERE status='scheduled'"),
             'blog_categories'       => self::count($db, 'SELECT COUNT(*) AS c FROM blog_categories WHERE is_active = 1'),
-            'forum_topics'          => self::count($db, 'SELECT COUNT(*) AS c FROM forum_topics'),
-            'forum_replies'         => self::count($db, 'SELECT COUNT(*) AS c FROM forum_replies'),
             'comments'              => self::count($db, 'SELECT COUNT(*) AS c FROM comments'),
             'partijen'              => self::count($db, 'SELECT COUNT(*) AS c FROM political_parties WHERE is_active = 1'),
             'stemwijzer_questions'  => self::count($db, 'SELECT COUNT(*) AS c FROM stemwijzer_questions WHERE is_active = 1'),
@@ -136,17 +134,6 @@ final class AnalyticsTools
                     'event' => 'comment_posted', 'id' => (int) $r->id,
                     'snippet' => mb_substr(strip_tags((string) $r->content), 0, 140),
                     'blog_title' => $r->blog_title, 'blog_slug' => $r->blog_slug, 'at' => $r->created_at,
-                ];
-            }
-        } catch (Throwable $e) {}
-
-        try {
-            $db->query("SELECT id, title, created_at FROM forum_topics
-                        ORDER BY created_at DESC LIMIT {$limit}");
-            foreach ($db->resultSet() ?: [] as $r) {
-                $activities[] = [
-                    'event' => 'forum_topic_posted', 'id' => (int) $r->id,
-                    'title' => $r->title, 'at' => $r->created_at,
                 ];
             }
         } catch (Throwable $e) {}

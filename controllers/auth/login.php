@@ -115,7 +115,7 @@ require_once BASE_PATH . '/views/templates/header.php';
 
     <p class="text-xs text-[color:var(--color-ink-faint)] text-center mt-6 leading-relaxed">
         Door in te loggen ga je akkoord met onze
-        <a href="<?= pp_e(pp_url('/voorwaarden')) ?>" class="text-[color:var(--color-hague)] underline-offset-2 hover:underline">voorwaarden</a>
+        <a href="<?= pp_e(pp_url('/gebruiksvoorwaarden')) ?>" class="text-[color:var(--color-hague)] underline-offset-2 hover:underline">voorwaarden</a>
         en
         <a href="<?= pp_e(pp_url('/privacy-policy')) ?>" class="text-[color:var(--color-hague)] underline-offset-2 hover:underline">privacybeleid</a>.
     </p>

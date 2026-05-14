@@ -2,8 +2,8 @@
 name: mcp-community
 description: >
   Interactie met de PolitiekPraat community via MCP: reageren op blogs,
-  forum-topics plaatsen/beantwoorden, stemmen op polls en nieuwsbrief
-  beheren. Alle schrijf-acties gebeuren namens de ingelogde user.
+  stemmen op polls en nieuwsbrief beheren. Alle schrijf-acties gebeuren
+  namens de ingelogde user.
 version: 1.0.0
 language: nl-NL
 ---
@@ -12,7 +12,7 @@ language: nl-NL
 
 ## Wanneer gebruiken
 
-- Gebruiker wil via een agent reageren op een blog of forum-topic.
+- Gebruiker wil via een agent reageren op een blog.
 - Agent moet een poll aanmaken bij een nieuwe blog.
 - Gebruiker wil zich (af)melden voor de nieuwsbrief.
 
@@ -21,7 +21,6 @@ language: nl-NL
 OAuth 2.0 met `mcp.write` plus domain-scope:
 
 - `comments.write` voor comments
-- `forum.write` voor forum-topics en -replies
 - `polls.write` voor polls en stemmen
 - `newsletter.write` voor nieuwsbrief aan/afmelden
 
@@ -33,11 +32,6 @@ Alleen eigen content kan bewerkt/verwijderd worden, tenzij de user scope
 Comments:
 
 - `list_comments_for_blog`, `post_comment`, `update_comment`, `delete_comment`
-
-Forum:
-
-- `list_forum_topics`, `get_forum_topic`, `post_forum_topic`,
-  `reply_to_forum_topic`, `update_forum_topic`, `delete_forum_reply`
 
 Polls:
 

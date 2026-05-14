@@ -47,13 +47,6 @@ class StatsAPI {
             $this->db->query("SELECT COUNT(*) as total FROM users");
             $stats['users_total'] = $this->db->single()->total;
             
-            // Forum statistics
-            $this->db->query("SELECT COUNT(*) as total FROM forum_topics");
-            $stats['forum_topics_total'] = $this->db->single()->total;
-            
-            $this->db->query("SELECT COUNT(*) as total FROM forum_replies");
-            $stats['forum_replies_total'] = $this->db->single()->total;
-            
             // Comments statistics
             $this->db->query("SELECT COUNT(*) as total FROM comments");
             $stats['comments_total'] = $this->db->single()->total;
@@ -87,24 +80,10 @@ class StatsAPI {
                 ORDER BY views DESC 
                 LIMIT 10");
             $trending_blogs = $this->db->resultSet();
-            
-            // Most active forum topics (most replies in last 7 days)
-            $this->db->query("SELECT 
-                    forum_topics.id,
-                    forum_topics.title,
-                    forum_topics.views,
-                    forum_topics.created_at,
-                    (SELECT COUNT(*) FROM forum_replies WHERE topic_id = forum_topics.id) as reply_count
-                FROM forum_topics
-                WHERE forum_topics.created_at >= DATE_SUB(NOW(), INTERVAL 7 DAY)
-                ORDER BY reply_count DESC, forum_topics.views DESC
-                LIMIT 10");
-            $trending_topics = $this->db->resultSet();
-            
+
             sendApiResponse([
                 'trending' => [
-                    'blogs' => $trending_blogs,
-                    'forum_topics' => $trending_topics
+                    'blogs' => $trending_blogs
                 ],
                 'period' => 'Last 7 days',
                 'generated_at' => date('Y-m-d H:i:s')
@@ -129,17 +108,7 @@ class StatsAPI {
                 LIMIT :limit");
             $this->db->bind(':limit', $limit);
             $recent_blogs = $this->db->resultSet();
-            
-            // Recent forum topics
-            $this->db->query("SELECT 
-                    id, title, created_at,
-                    'forum_topic' as type
-                FROM forum_topics 
-                ORDER BY created_at DESC 
-                LIMIT :limit");
-            $this->db->bind(':limit', $limit);
-            $recent_topics = $this->db->resultSet();
-            
+
             // Recent comments
             $this->db->query("SELECT 
                     comments.id,
@@ -157,7 +126,7 @@ class StatsAPI {
             $recent_comments = $this->db->resultSet();
             
             // Combine and sort by date
-            $all_activity = array_merge($recent_blogs, $recent_topics, $recent_comments);
+            $all_activity = array_merge($recent_blogs, $recent_comments);
             usort($all_activity, function($a, $b) {
                 $dateA = isset($a->published_at) ? $a->published_at : $a->created_at;
                 $dateB = isset($b->published_at) ? $b->published_at : $b->created_at;

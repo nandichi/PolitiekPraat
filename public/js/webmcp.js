@@ -124,12 +124,6 @@
       }
     },
     {
-      name: 'openForum',
-      description: 'Open het PolitiekPraat forum met discussies over actuele politieke onderwerpen.',
-      inputSchema: { type: 'object', properties: {}, additionalProperties: false },
-      execute: function () { return navigateTo('/forum'); }
-    },
-    {
       name: 'searchBlogs',
       description: 'Zoek politieke blogs van PolitiekPraat op basis van een trefwoord. Retourneert titel, slug en samenvatting van gevonden artikelen.',
       inputSchema: {
