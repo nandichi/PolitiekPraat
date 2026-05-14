@@ -222,7 +222,7 @@ $defaultPageTitles = [
     'home' => 'PolitiekPraat - Politiek nieuws, blogs en stemhulp',
     'blogs' => 'Politieke blogs en opinie - PolitiekPraat',
     'nieuws' => 'Laatste politieke nieuws uit Nederland - PolitiekPraat',
-    'partijmeter' => 'PartijMeter 2025: Ontdek welke partij bij je past - PolitiekPraat',
+    'partijmeter' => 'PartijMeter 2026: Ontdek welke partij bij je past - PolitiekPraat',
     'stemwijzer' => 'Gemeentelijke Stemwijzer Ede 2026 - Vergelijk partijen op 25 stellingen',
     'politiek-kompas' => 'Politiek Kompas: vergelijk standpunten per thema - PolitiekPraat',
     'partijen' => 'Overzicht Nederlandse politieke partijen - PolitiekPraat',
@@ -426,15 +426,7 @@ $jsAppVer   = file_exists($jsAppPath) ? filemtime($jsAppPath) : time();
         "@context": "https://schema.org",
         "@type": "WebSite",
         "name": "<?php echo SITENAME; ?>",
-        "url": "<?php echo URLROOT; ?>",
-        "potentialAction": {
-            "@type": "SearchAction",
-            "target": {
-                "@type": "EntryPoint",
-                "urlTemplate": "<?php echo URLROOT; ?>/zoeken?q={search_term_string}"
-            },
-            "query-input": "required name=search_term_string"
-        }
+        "url": "<?php echo URLROOT; ?>"
     }
     </script>
 

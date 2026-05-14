@@ -102,7 +102,10 @@ $router->add('nieuws', 'controllers/nieuws.php');
 $router->add('profile', 'controllers/profile/index.php');
 $router->add('profile/edit', 'controllers/profile/edit.php');
 $router->add('newsletter/subscribe', 'controllers/newsletter.php');
-$router->add('newsletter/unsubscribe', 'controllers/newsletter.php?action=unsubscribe');
+$router->add('newsletter/unsubscribe', function() {
+    $_GET['action'] = 'unsubscribe';
+    require_once 'controllers/newsletter.php';
+});
 $router->add('partijmeter', 'controllers/partijmeter.php');
 $router->add('resultaten/([a-zA-Z0-9]+)', function($shareId) {
     $_GET['id'] = $shareId;

@@ -6,10 +6,6 @@ require_once '../../includes/config.php';
 require_once '../../includes/Database.php';
 require_once '../../includes/auth_csrf.php';
 
-// Debug logging
-error_log("Like endpoint hit - Method: " . $_SERVER['REQUEST_METHOD']);
-error_log("Headers: " . print_r(getallheaders(), true));
-
 // Check if this is an AJAX request or regular POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!auth_require_csrf_token_from_post()) {
@@ -22,17 +18,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     try {
-        $sanitizedPost = $_POST;
-        unset($sanitizedPost['csrf_token']);
-        error_log("POST data: " . print_r($sanitizedPost, true));
         if (!isset($_POST['slug']) || !isset($_POST['action'])) {
             throw new Exception('Ontbrekende parameters - slug: ' . (isset($_POST['slug']) ? 'aanwezig' : 'ontbreekt') . ', action: ' . (isset($_POST['action']) ? 'aanwezig' : 'ontbreekt'));
         }
         
         $slug = trim($_POST['slug']);
         $action = trim($_POST['action']); // 'like' or 'unlike'
-        
-        error_log("Processing like action: $action for slug: $slug");
         
         if (!in_array($action, ['like', 'unlike'])) {
             throw new Exception('Ongeldige actie: ' . $action);
@@ -49,8 +40,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             throw new Exception('Blog niet gevonden voor slug: ' . $slug);
         }
         
-        error_log("Current likes: " . $currentLikes->likes);
-        
         // Update likes based on action
         $newLikes = $currentLikes->likes;
         if ($action === 'like') {
@@ -58,8 +47,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             $newLikes = max(0, $newLikes - 1);
         }
-        
-        error_log("New likes: " . $newLikes);
         
         // Update in database
         $db->query("UPDATE blogs SET likes = :likes WHERE slug = :slug");
@@ -71,17 +58,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             throw new Exception('Database update mislukt');
         }
         
-        error_log("Like action successful");
-        
         echo json_encode([
             'success' => true,
             'likes' => $newLikes,
-            'action' => $action,
-            'debug' => [
-                'slug' => $slug,
-                'old_likes' => $currentLikes->likes,
-                'new_likes' => $newLikes
-            ]
         ]);
         
     } catch (Exception $e) {
@@ -89,11 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         http_response_code(400);
         echo json_encode([
             'success' => false,
-            'error' => $e->getMessage(),
-            'debug' => [
-                'slug' => isset($_POST['slug']) ? $_POST['slug'] : 'not set',
-                'action' => isset($_POST['action']) ? $_POST['action'] : 'not set'
-            ]
+            'error' => 'De like kon niet worden verwerkt'
         ]);
     }
     
@@ -102,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Not a POST request, might be direct access - show error
     echo json_encode([
         'success' => false,
-        'error' => 'Only POST requests allowed'
+        'error' => 'Alleen POST-verzoeken zijn toegestaan'
     ]);
     exit;
 }

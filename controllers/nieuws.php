@@ -90,13 +90,15 @@ if (empty($latest_news)) {
 // Haal statistieken op via NewsModel
 $stats = $newsModel->getNewsStats();
 
-// Log aantallen artikelen
-error_log("Aantal totale artikelen: " . $stats['total_articles']);
-error_log("Aantal progressieve artikelen: " . $stats['progressive_count']);
-error_log("Aantal conservatieve artikelen: " . $stats['conservative_count']);
-error_log("Huidige pagina: $newsCurrentPage van $totalPages");
-error_log("Aantal artikelen op huidige pagina: " . count($latest_news));
-error_log("TotalArticles voor paginering: " . $totalArticles);
+// Log aantallen artikelen alleen tijdens expliciete debug-sessies.
+if (APP_DEBUG && isset($_GET['debug'])) {
+    error_log("Aantal totale artikelen: " . $stats['total_articles']);
+    error_log("Aantal progressieve artikelen: " . $stats['progressive_count']);
+    error_log("Aantal conservatieve artikelen: " . $stats['conservative_count']);
+    error_log("Huidige pagina: $newsCurrentPage van $totalPages");
+    error_log("Aantal artikelen op huidige pagina: " . count($latest_news));
+    error_log("TotalArticles voor paginering: " . $totalArticles);
+}
 
 // Leeg de cache als er een parameter is meegegeven (behouden voor compatibiliteit)
 if (isset($_GET['clear_cache']) && $_GET['clear_cache'] === '1') {
