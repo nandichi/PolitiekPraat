@@ -5,7 +5,7 @@ require_once '../includes/functions.php';
 
 // Controleer of gebruiker is ingelogd en admin is
 if (!isAdmin()) {
-    redirect('login.php');
+    redirect('login');
 }
 
 // Database verbinding

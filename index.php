@@ -190,6 +190,13 @@ $request = rtrim($request, '/');
 $request = ltrim($request, '/');
 
 // Route dispatcher
+//
+// Onderscheid bewust tussen twee soorten fouten:
+//   1. Route bestaat niet (controller-bestand niet aanwezig of router gaf 404 terug)
+//      -> 404-pagina
+//   2. Controller throwt een Exception/Throwable (bijv. DB-verbinding faalt)
+//      -> 500-pagina met logging, zodat het echte probleem zichtbaar is in plaats
+//         van een misleidende "deze pagina bestaat niet" melding.
 try {
     $route = $router->dispatch($request);
     if (is_callable($route['controller'])) {
@@ -202,8 +209,25 @@ try {
             require_once BASE_PATH . "/controllers/404.php";
         }
     }
-} catch (Exception $e) {
-    require_once BASE_PATH . "/controllers/404.php";
+} catch (Throwable $e) {
+    error_log(sprintf(
+        '[Router] Uncaught %s: %s in %s:%d%s%s',
+        get_class($e),
+        $e->getMessage(),
+        $e->getFile(),
+        $e->getLine(),
+        PHP_EOL,
+        $e->getTraceAsString()
+    ));
+
+    if (!headers_sent()) {
+        while (ob_get_level() > 0) {
+            ob_end_clean();
+        }
+    }
+
+    $pp_router_exception = $e;
+    require_once BASE_PATH . "/controllers/500.php";
 }
 
 if (APP_DEBUG && isset($_GET['debug'])) {

@@ -2,7 +2,7 @@
 require_once '../includes/config.php';
 require_once '../includes/Database.php';
 require_once '../includes/functions.php';
-if (!isAdmin()) { redirect('login.php'); }
+if (!isAdmin()) { redirect('login'); }
 
 if (isset($_GET['api'])) {
     header('Content-Type: application/json');

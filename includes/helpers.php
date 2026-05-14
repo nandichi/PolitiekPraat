@@ -49,6 +49,43 @@ if (!function_exists('getRelativeTime')) {
     }
 }
 
+if (!function_exists('pp_dev_asset_fallback_url')) {
+    /**
+     * Geeft een productie-URL voor een asset terug wanneer we in development
+     * draaien tegen de productie-database. Lokaal ontbreken de upload-files,
+     * dus vallen we terug op de live host i.p.v. een gebroken localhost-link.
+     *
+     * Returnt null in productie of als de fallback expliciet is uitgezet.
+     *
+     * Configureerbaar via env:
+     *   POLITIEKPRAAT_DEV_ASSET_FALLBACK=https://politiekpraat.nl
+     *   POLITIEKPRAAT_DEV_ASSET_FALLBACK=off   (uitschakelen)
+     */
+    function pp_dev_asset_fallback_url(string $relativePath): ?string {
+        if (defined('APP_ENV') && APP_ENV === 'production') {
+            return null;
+        }
+
+        $base = getenv('POLITIEKPRAAT_DEV_ASSET_FALLBACK');
+        if (is_string($base)) {
+            $base = trim($base);
+            if (strcasecmp($base, 'off') === 0 || strcasecmp($base, 'false') === 0) {
+                return null;
+            }
+        }
+        if (!is_string($base) || $base === '') {
+            $base = 'https://politiekpraat.nl';
+        }
+
+        $relativePath = ltrim($relativePath, '/');
+        if ($relativePath === '' || strpos($relativePath, "\0") !== false || strpos($relativePath, '..') !== false) {
+            return null;
+        }
+
+        return rtrim($base, '/') . '/' . $relativePath;
+    }
+}
+
 if (!function_exists('getProfilePhotoUrl')) {
     /**
      * Gets the profile photo URL or initial for a user
@@ -85,8 +122,13 @@ if (!function_exists('getProfilePhotoUrl')) {
                     return ['type' => 'img', 'value' => URLROOT . '/public/' . $path];
                 }
             }
+
+            $devFallback = pp_dev_asset_fallback_url('public/' . ltrim($profilePhoto, '/'));
+            if ($devFallback !== null) {
+                return ['type' => 'img', 'value' => $devFallback];
+            }
         }
-        
+
         // Return initial if no photo found
         $initial = !empty($username) ? strtoupper(substr($username, 0, 1)) : '?';
         return ['type' => 'initial', 'value' => $initial];
@@ -233,6 +275,14 @@ if (!function_exists('getBlogImageUrl')) {
             if (file_exists(BASE_PATH . '/' . $candidatePath)) {
                 return URLROOT . '/' . ltrim($candidatePath, '/');
             }
+        }
+
+        // Dev fallback: lokaal staan upload-files vaak niet, maar het pad uit de
+        // productie-database is wel correct. In non-production halen we de
+        // afbeelding daarom direct van politiekpraat.nl.
+        $devFallback = pp_dev_asset_fallback_url($imagePath);
+        if ($devFallback !== null) {
+            return $devFallback;
         }
 
         // Backwards compatibility fallback for relative paths that look safe

@@ -14,7 +14,7 @@ require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/oauth/OAuthServer.php';
 
 if (!isAdmin()) {
-    redirect('login.php');
+    redirect('login');
 }
 
 use PolitiekPraat\OAuth\OAuthServer;

@@ -17,7 +17,7 @@ require_once __DIR__ . '/../includes/oauth/Scopes.php';
 require_once __DIR__ . '/../includes/oauth/PersonalAccessTokens.php';
 
 if (!isAdmin()) {
-    redirect('login.php');
+    redirect('login');
 }
 
 use PolitiekPraat\OAuth\PersonalAccessTokens;

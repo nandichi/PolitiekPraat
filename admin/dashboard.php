@@ -6,7 +6,7 @@ require_once '../includes/BlogController.php';
 
 // Controleer of gebruiker is ingelogd en admin is
 if (!isAdmin()) {
-    redirect('login.php');
+    redirect('login');
 }
 
 $blogController = new BlogController();

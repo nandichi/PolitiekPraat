@@ -6,7 +6,7 @@ require_once '../models/PartyModel.php';
 
 // Controleer of gebruiker is ingelogd en admin is
 if (!isAdmin()) {
-    redirect('login.php');
+    redirect('login');
 }
 
 $partyModel = new PartyModel();

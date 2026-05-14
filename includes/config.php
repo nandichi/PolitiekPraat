@@ -19,8 +19,14 @@ if (!defined('CONFIG_INCLUDED')) {
         require_once $local_env_file;
     }
 
-    $app_env = strtolower((string) (getenv('APP_ENV') ?: ($is_production ? 'production' : 'development')));
-    define('APP_ENV', $app_env);
+    // APP_ENV wordt al gedefinieerd door includes/error_bootstrap.php (dat
+    // eerder draait dan dit bestand en o.a. env.local.php inleest). We laten
+    // het hier dus niet opnieuw definiëren om een "already defined"-warning te
+    // vermijden, maar respecteren wel een evt. eerder gezette waarde.
+    if (!defined('APP_ENV')) {
+        $app_env = strtolower((string) (getenv('APP_ENV') ?: ($is_production ? 'production' : 'development')));
+        define('APP_ENV', $app_env);
+    }
 
     /**
      * Resolve config value from environment with optional default.

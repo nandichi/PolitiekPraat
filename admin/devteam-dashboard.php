@@ -4,7 +4,7 @@ require_once '../includes/Database.php';
 require_once '../includes/functions.php';
 
 if (!isAdmin()) {
-    redirect('login.php');
+    redirect('login');
 }
 
 function hex2rgba(string $hex, float $alpha): string {

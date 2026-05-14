@@ -6,8 +6,27 @@
  * Zet APP_ENV=development of APP_DEBUG=true om debug-output lokaal toe te staan.
  */
 
+// Laad lokale env-overrides voordat APP_ENV wordt bepaald. Zonder dit zou
+// hieronder altijd de productie-default vallen, ook in dev, waardoor dev-only
+// gedrag (zoals de dev-banner of asset-fallback) op localhost uitgeschakeld
+// blijft.
+$pp_local_env = __DIR__ . '/env.local.php';
+if (is_readable($pp_local_env)) {
+    require_once $pp_local_env;
+}
+
 if (!defined('APP_ENV')) {
-    $app_env = getenv('APP_ENV') ?: 'production';
+    $app_env = getenv('APP_ENV');
+    if (!is_string($app_env) || trim($app_env) === '') {
+        // Heuristisch: lokaal CLI of localhost requests = development. Live
+        // requests op politiekpraat.nl of het productie-pad = production.
+        $is_local_cli  = in_array(php_sapi_name(), ['cli', 'cli-server'], true)
+            && strpos(__DIR__, '/home/naoufal/domains/politiekpraat.nl') === false;
+        $http_host     = strtolower($_SERVER['HTTP_HOST'] ?? '');
+        $is_local_host = $http_host !== ''
+            && !in_array($http_host, ['politiekpraat.nl', 'www.politiekpraat.nl'], true);
+        $app_env = ($is_local_cli || $is_local_host) ? 'development' : 'production';
+    }
     define('APP_ENV', strtolower((string) $app_env));
 }
 

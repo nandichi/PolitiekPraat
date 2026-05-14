@@ -6,7 +6,7 @@ require_once '../includes/StemwijzerController.php';
 
 // Controleer of gebruiker is ingelogd en admin is
 if (!isAdmin()) {
-    redirect('login.php');
+    redirect('login');
 }
 
 $stemwijzerController = new StemwijzerController();

@@ -11,7 +11,7 @@ require_once '../includes/auth_csrf.php';
 $csrf_token = auth_ensure_csrf_token();
 // Controleer of gebruiker is ingelogd en admin is
 if (!isAdmin()) {
-    redirect('login.php');
+    redirect('login');
 }
 
 $db = new Database();

@@ -592,6 +592,7 @@ $jsAppVer   = file_exists($jsAppPath) ? filemtime($jsAppPath) : time();
 </head>
 <body>
     <?php require __DIR__ . '/../components/site/skip-link.php'; ?>
+    <?php require __DIR__ . '/../components/site/dev-environment-banner.php'; ?>
 
     <?php require __DIR__ . '/../components/site/breaking-news-bar.php'; ?>
     <?php require __DIR__ . '/../components/site/header.php'; ?>

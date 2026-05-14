@@ -7,7 +7,7 @@ require_once '../includes/mail_helper.php';
 
 // Controleer of gebruiker is ingelogd en admin is
 if (!isAdmin()) {
-    redirect('login.php');
+    redirect('login');
 }
 
 // Verwerk test email verzending

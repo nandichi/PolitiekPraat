@@ -8,7 +8,7 @@ require_once '../includes/Database.php';
 require_once '../includes/functions.php';
 
 if (!isAdmin()) {
-    redirect('login.php');
+    redirect('login');
 }
 
 $db = new Database();

@@ -8,7 +8,7 @@ require_once '../includes/NewsScraper.php';
 
 // Controleer of gebruiker is ingelogd en admin is
 if (!isAdmin()) {
-    redirect('login.php');
+    redirect('login');
 }
 
 // Database verbinding
