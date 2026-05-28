@@ -1,5 +1,7 @@
 <?php
 // PDO is in the global namespace so no import is needed
+require_once __DIR__ . '/CategoryController.php';
+
 class BlogController {
     private $db;
     private $parsedown;
