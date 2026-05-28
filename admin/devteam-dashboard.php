@@ -1,11 +1,6 @@
 <?php
 require_once __DIR__ . '/_bootstrap.php';
 
-$adminPageTitle = 'Devteam';
-$adminPageDescription = 'Devteam dashboard';
-$adminActiveNav = 'devteam';
-require_once __DIR__ . '/partials/admin-header.php';
-
 function hex2rgba(string $hex, float $alpha): string {
     $r = hexdec(substr($hex, 1, 2));
     $g = hexdec(substr($hex, 3, 2));

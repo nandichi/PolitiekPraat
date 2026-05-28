@@ -103,38 +103,8 @@ $db->query("SELECT * FROM stemmentracker_themas WHERE is_active = 1 ORDER BY nam
 $themas = $db->resultSet();
 ?>
 
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Motie Toevoegen - StemmenTracker | PolitiekPraat Admin</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-</head>
-<body class="bg-gray-100">
-    <div class="min-h-screen flex">
-        <!-- Sidebar -->
-        <div class="w-64 bg-blue-900 text-white p-6">
-            <h2 class="text-2xl font-bold mb-8">Admin Panel</h2>
-            <nav class="space-y-4">
-                <a href="dashboard.php" class="block py-2 px-4 rounded hover:bg-blue-800">Dashboard</a>
-                <div class="space-y-2">
-                    <h3 class="text-sm font-semibold text-blue-200 uppercase tracking-wider">StemmenTracker</h3>
-                    <a href="stemmentracker-motie-beheer.php" class="block py-2 px-4 rounded hover:bg-blue-800">Moties Beheer</a>
-                    <a href="stemmentracker-motie-toevoegen.php" class="block py-2 px-4 rounded bg-blue-800">Motie Toevoegen</a>
-                    <a href="stemmentracker-stemgedrag-beheer.php" class="block py-2 px-4 rounded hover:bg-blue-800">Stemgedrag Beheer</a>
-                </div>
-                <div class="space-y-2">
-                    <h3 class="text-sm font-semibold text-blue-200 uppercase tracking-wider">Stemwijzer</h3>
-                    <a href="stemwijzer-dashboard.php" class="block py-2 px-4 rounded hover:bg-blue-800">Stemwijzer Dashboard</a>
-                </div>
-            </nav>
-        </div>
-
-        <!-- Main content -->
-        <div class="flex-1 p-8">
-            <div class="max-w-4xl mx-auto">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<div class="max-w-4xl mx-auto">
                 <div class="flex justify-between items-center mb-8">
                     <h1 class="text-3xl font-bold text-gray-900">Nieuwe Motie Toevoegen</h1>
                     <a href="stemmentracker-motie-beheer.php" class="bg-gray-600 text-white px-6 py-2 rounded-lg hover:bg-gray-700 transition-colors">
@@ -285,7 +255,4 @@ $themas = $db->resultSet();
                     </form>
                 </div>
             </div>
-        </div>
-    </div>
-</body>
-</html>
+<?php require_once __DIR__ . '/partials/admin-footer.php'; ?>

@@ -1,11 +1,6 @@
 <?php
 require_once __DIR__ . '/_bootstrap.php';
 
-$adminPageTitle = 'Devteam agents';
-$adminPageDescription = 'Agent configuratie';
-$adminActiveNav = 'devteam-agents';
-require_once __DIR__ . '/partials/admin-header.php';
-
 if (isset($_GET['api'])) {
     header('Content-Type: application/json');
     header('Cache-Control: no-cache');

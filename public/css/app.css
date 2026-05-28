@@ -1879,6 +1879,190 @@
     .admin-content a.btn {
         display: inline-flex;
     }
+
+    /* ============================================================
+     * Admin editorial skin
+     * Vertaalt legacy admin-markup (gradient hero's, witte cards,
+     * Tailwind-blauw) naar het editorial design system. Scoped op
+     * .admin-content zodat de sidebar/topbar ongemoeid blijven.
+     * ============================================================ */
+
+    /* Page-wrappers binnen de shell neutraliseren naar canvas */
+    .admin-content > main,
+    .admin-content .min-h-screen {
+        background: transparent !important;
+        min-height: 0 !important;
+    }
+
+    /* Hero's: schone canvas-kop met keyline eronder i.p.v. blauwe balk */
+    .admin-content .gradient-bg,
+    .admin-content .hero-gradient {
+        background: transparent !important;
+        color: var(--color-ink) !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+    }
+    .admin-content .gradient-bg :where(h1, h2, h3, h4),
+    .admin-content .hero-gradient :where(h1, h2, h3, h4) {
+        color: var(--color-ink) !important;
+    }
+    .admin-content .gradient-bg :where(p, span, label, li):not([class*="bg-"]),
+    .admin-content .hero-gradient :where(p, span, label, li):not([class*="bg-"]) {
+        color: var(--color-ink-muted) !important;
+    }
+    .admin-content .gradient-text {
+        background: none !important;
+        -webkit-text-fill-color: currentColor !important;
+        color: var(--color-hague) !important;
+    }
+    /* Knoppen in de hero → editorial primary */
+    .admin-content .gradient-bg [class*="bg-white"],
+    .admin-content .hero-gradient [class*="bg-white"] {
+        background: var(--color-hague) !important;
+        color: #fff !important;
+        border-color: transparent !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+    }
+    .admin-content .gradient-bg [class*="bg-white"] *,
+    .admin-content .hero-gradient [class*="bg-white"] * {
+        color: #fff !important;
+    }
+
+    /* Kaarten → keyline card */
+    .admin-content .stat-card,
+    .admin-content .card-hover,
+    .admin-content .api-card,
+    .admin-content .test-card,
+    .admin-content .blog-card,
+    .admin-content .agent-card {
+        background: var(--color-canvas-raised) !important;
+        border: 1px solid var(--color-line) !important;
+        box-shadow: none !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        border-radius: var(--radius-md) !important;
+    }
+    .admin-content .card-hover:hover {
+        border-color: var(--color-line-strong) !important;
+        transform: none !important;
+    }
+
+    /* Witte vlakken → editorial paper */
+    .admin-content .bg-white,
+    .admin-content .bg-white\/95,
+    .admin-content .bg-white\/90,
+    .admin-content .bg-white\/80,
+    .admin-content .bg-white\/70 {
+        background-color: var(--color-canvas-raised) !important;
+    }
+
+    /* Schaduwen weg; editorial leunt op keylines */
+    .admin-content .shadow,
+    .admin-content .shadow-sm,
+    .admin-content .shadow-md,
+    .admin-content .shadow-lg,
+    .admin-content .shadow-xl,
+    .admin-content .shadow-2xl {
+        box-shadow: none !important;
+    }
+
+    /* Tekstkleuren → ink-schaal */
+    .admin-content .text-gray-900,
+    .admin-content .text-gray-800,
+    .admin-content .text-slate-900,
+    .admin-content .text-slate-800 {
+        color: var(--color-ink) !important;
+    }
+    .admin-content .text-gray-700,
+    .admin-content .text-gray-600,
+    .admin-content .text-gray-500,
+    .admin-content .text-slate-700,
+    .admin-content .text-slate-600,
+    .admin-content .text-slate-500 {
+        color: var(--color-ink-muted) !important;
+    }
+    .admin-content .text-gray-400,
+    .admin-content .text-slate-400 {
+        color: var(--color-ink-faint) !important;
+    }
+
+    /* Blauwe accenttekst → hague (buiten hero) */
+    .admin-content .text-blue-600,
+    .admin-content .text-blue-700,
+    .admin-content .text-blue-800,
+    .admin-content .text-indigo-600,
+    .admin-content .text-indigo-700 {
+        color: var(--color-hague) !important;
+    }
+
+    /* Solide blauw/indigo accenten → hague */
+    .admin-content .bg-blue-500,
+    .admin-content .bg-blue-600,
+    .admin-content .bg-blue-700,
+    .admin-content .bg-blue-800,
+    .admin-content .bg-blue-900,
+    .admin-content .bg-indigo-500,
+    .admin-content .bg-indigo-600,
+    .admin-content .bg-indigo-700,
+    .admin-content .hover\:bg-blue-600:hover,
+    .admin-content .hover\:bg-blue-700:hover,
+    .admin-content .hover\:bg-blue-800:hover,
+    .admin-content .hover\:bg-indigo-700:hover {
+        background-color: var(--color-hague) !important;
+        color: #fff !important;
+    }
+
+    /* Icon-boxes met accent-gradient → effen hague */
+    .admin-content [class*="from-blue-5"][class*="to-"],
+    .admin-content [class*="from-blue-6"][class*="to-"],
+    .admin-content [class*="from-indigo-"][class*="to-"],
+    .admin-content [class*="from-purple-"][class*="to-"],
+    .admin-content [class*="from-emerald-5"][class*="to-"],
+    .admin-content [class*="from-green-5"][class*="to-"],
+    .admin-content [class*="from-cyan-5"][class*="to-"] {
+        background-image: none !important;
+        background-color: var(--color-hague) !important;
+        color: #fff !important;
+    }
+
+    /* Legacy knop-classes → editorial */
+    .admin-content .btn-primary {
+        background-color: var(--color-hague) !important;
+        color: var(--color-canvas) !important;
+        border: 1px solid transparent !important;
+    }
+    .admin-content .btn-primary:hover {
+        background-color: var(--color-hague-soft) !important;
+    }
+    .admin-content .btn-secondary {
+        background-color: var(--color-canvas-raised) !important;
+        color: var(--color-ink) !important;
+        border: 1px solid var(--color-line-strong) !important;
+    }
+
+    /* Badges */
+    .admin-content .status-badge,
+    .admin-content .badge-party {
+        border-radius: 2px !important;
+        box-shadow: none !important;
+    }
+
+    /* Grijze borders → keyline */
+    .admin-content .border-gray-200,
+    .admin-content .border-gray-300,
+    .admin-content .border-slate-200,
+    .admin-content .border-slate-300 {
+        border-color: var(--color-line) !important;
+    }
+
+    /* Lichte sectie-tints neutraliseren */
+    .admin-content .bg-gray-50,
+    .admin-content .bg-gray-100,
+    .admin-content .bg-slate-50,
+    .admin-content .bg-slate-100 {
+        background-color: var(--color-canvas-sunken) !important;
+    }
 }
 
 /* -----------------------------------------------------------------------------
