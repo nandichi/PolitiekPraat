@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Story render test</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..900&family=Inter:wght@400;500;600;700&display=swap">
+<style>
+  body { margin:0; background:#2b2722; display:flex; gap:28px; padding:28px; font-family:Inter,sans-serif; flex-wrap:wrap; align-items:flex-start; }
+  canvas { width:340px; height:604px; display:block; box-shadow:0 14px 50px rgba(0,0,0,.5); border-radius:6px; }
+  h3 { color:#e8e2d3; font-family:Inter,sans-serif; font-size:13px; font-weight:600; margin:0 0 12px; letter-spacing:.04em; }
+</style>
+</head>
+<body>
+<script>window.blogViewData = { blogShareData: {} };</script>
+<script src="/public/js/blog-interactive.js"></script>
+<div><h3>MET FOTO</h3><div id="slot1"></div></div>
+<div><h3>LANGE TITEL</h3><div id="slot2"></div></div>
+<div><h3>ZONDER FOTO (FALLBACK)</h3><div id="slot3"></div></div>
+<script>
+(async () => {
+  if (document.fonts && document.fonts.ready) { try { await document.fonts.ready; } catch(e){} }
+  async function render(slot, data) {
+    const gen = new InstagramStoryGenerator(data);
+    const canvas = await gen.generateStory();
+    document.getElementById(slot).appendChild(canvas);
+  }
+  await render('slot1', {
+    title: 'Waarom de formatie opnieuw vastloopt in Den Haag',
+    author: 'Naoufal Andichi', date: '28 mei 2026', category: 'Analyse', readingTime: '6 min',
+    imageUrl: '/robjetten.jpg'
+  });
+  await render('slot2', {
+    title: 'Het stikstofdossier blijft het kabinet achtervolgen en niemand vindt een uitweg uit deze hardnekkige impasse',
+    author: 'Naoufal Andichi', date: '28 mei 2026', category: 'Opinie', readingTime: '9 min',
+    imageUrl: '/robjetten.jpg'
+  });
+  await render('slot3', {
+    title: 'Korte titel zonder foto',
+    author: 'Redactie', date: '28 mei 2026', category: 'Column', readingTime: '3 min',
+    imageUrl: null
+  });
+  document.body.dataset.rendered = '1';
+})();
+</script>
+</body>
+</html>

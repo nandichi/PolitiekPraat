@@ -289,6 +289,8 @@ require_once 'views/templates/header.php';
 
 </article>
 
+<?= pp_render_component('blog/story-modal') ?>
+
 <?php require __DIR__ . '/partials/blog-scripts.php'; ?>
 
 <?php require_once 'views/templates/footer.php'; ?>

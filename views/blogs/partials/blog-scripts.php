@@ -30,6 +30,7 @@ window.blogViewData = <?= json_encode([
         'title' => $blog->title,
         'author' => $blog->author_name,
         'date' => $formattedPublishedDate,
+        'category' => $blog->category_name ?? '',
         'imageUrl' => $blogImageUrl,
     ],
 ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?>;

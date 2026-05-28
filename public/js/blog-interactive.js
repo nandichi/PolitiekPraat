@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializePartyPerspective();
     initializeAudioFeatures();
     initializeShareBar();
+    initializeStoryModal();
     
     // Load liked blogs from localStorage
     likedBlogs = JSON.parse(localStorage.getItem('likedBlogs') || '{}');
@@ -1443,108 +1444,86 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ============================================
-// Instagram Story Generator Class
+// Instagram Story Generator (editorial "Stille Vertrouwen" stijl)
+// Two-tone split: blogfoto bovenin, warm papier met titel/branding onderin.
 // ============================================
 class InstagramStoryGenerator {
     constructor(options) {
-        this.title = options.title || 'Blog';
-        this.author = options.author || 'PolitiekPraat';
-        this.date = options.date || '';
-        this.readingTime = options.readingTime || '5 min';
+        this.title = (options.title || 'Blog').trim();
+        this.author = (options.author || '').trim();
+        this.date = (options.date || '').trim();
+        this.category = (options.category || '').trim();
+        this.readingTime = (options.readingTime || '').trim();
         this.blogUrl = options.blogUrl || window.location.href;
         this.imageUrl = options.imageUrl || null;
-        
-        // Instagram Story dimensions (9:16 aspect ratio)
+
+        // Instagram Story canvas (9:16)
         this.width = 1080;
         this.height = 1920;
-        
-        // PolitiekPraat colors
+        this.pad = 80;
+        this.photoHeight = 1040;
+        this.footerHeight = 168;
+
+        // Editorial palette (gelijk aan de site-tokens in app.css)
         this.colors = {
-            primaryDark: '#0f2a44',
-            primary: '#1a365d',
-            primaryLight: '#2d4a6b',
-            secondary: '#c41e3a',
-            secondaryLight: '#d63856',
-            accent: '#F59E0B'
+            paper: '#f7f4ed',
+            paperRaised: '#fbf8f1',
+            paperSunken: '#efebe2',
+            ink: '#1c1b1a',
+            inkMuted: '#5a554e',
+            inkFaint: '#8a8377',
+            line: '#ddd6c8',
+            lineStrong: '#c5bba6',
+            hague: '#2b4259',
+            hagueDark: '#1f3144',
+            terracotta: '#a23e2a',
+            terracottaSoft: '#c2664e',
+            paperOnDark: '#fff8f3'
         };
+
+        this.fontDisplay = '"Fraunces", "Source Serif Pro", Georgia, serif';
+        this.fontSans = '"Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif';
     }
-    
+
+    // Zorg dat de webfonts geladen zijn voordat we naar canvas tekenen,
+    // anders valt de tekst terug op een systeemfont.
+    async ensureFonts() {
+        if (!document.fonts || !document.fonts.load) return;
+        try {
+            await Promise.all([
+                document.fonts.load('600 80px "Fraunces"'),
+                document.fonts.load('600 42px "Fraunces"'),
+                document.fonts.load('700 24px "Inter"'),
+                document.fonts.load('600 30px "Inter"'),
+                document.fonts.load('400 26px "Inter"')
+            ]);
+            await document.fonts.ready;
+        } catch (e) {
+            // Negeer: we vallen netjes terug op systeemfonts.
+        }
+    }
+
     async generateStory() {
+        await this.ensureFonts();
+
         const canvas = document.createElement('canvas');
         canvas.width = this.width;
         canvas.height = this.height;
         const ctx = canvas.getContext('2d');
-        
-        // Draw background (with image if available)
-        await this.drawBackground(ctx);
-        
-        // Draw content
+
+        // Warm papier als basis
+        ctx.fillStyle = this.colors.paper;
+        ctx.fillRect(0, 0, this.width, this.height);
+
+        await this.drawPhoto(ctx);
+        this.drawTopBrand(ctx);
+        this.drawSeam(ctx);
         this.drawContent(ctx);
-        
-        // Draw branding
-        this.drawBranding(ctx);
-        
+        this.drawFooter(ctx);
+
         return canvas;
     }
-    
-    async drawBackground(ctx) {
-        // Try to load and draw the blog image first
-        if (this.imageUrl) {
-            try {
-                const img = await this.loadImage(this.imageUrl);
-                
-                // Calculate cover dimensions (fill entire canvas)
-                const imgRatio = img.width / img.height;
-                const canvasRatio = this.width / this.height;
-                
-                let drawWidth, drawHeight, drawX, drawY;
-                
-                if (imgRatio > canvasRatio) {
-                    // Image is wider - fit height, crop width
-                    drawHeight = this.height;
-                    drawWidth = img.width * (this.height / img.height);
-                    drawX = (this.width - drawWidth) / 2;
-                    drawY = 0;
-                } else {
-                    // Image is taller - fit width, crop height
-                    drawWidth = this.width;
-                    drawHeight = img.height * (this.width / img.width);
-                    drawX = 0;
-                    drawY = (this.height - drawHeight) / 2;
-                }
-                
-                // Draw the image
-                ctx.drawImage(img, drawX, drawY, drawWidth, drawHeight);
-                
-                // Add dark overlay gradient for text readability
-                const overlay = ctx.createLinearGradient(0, 0, 0, this.height);
-                overlay.addColorStop(0, 'rgba(15, 42, 68, 0.85)');
-                overlay.addColorStop(0.3, 'rgba(15, 42, 68, 0.7)');
-                overlay.addColorStop(0.5, 'rgba(15, 42, 68, 0.6)');
-                overlay.addColorStop(0.7, 'rgba(15, 42, 68, 0.7)');
-                overlay.addColorStop(1, 'rgba(15, 42, 68, 0.9)');
-                ctx.fillStyle = overlay;
-                ctx.fillRect(0, 0, this.width, this.height);
-                
-                // Add colored accent overlay
-                const accentOverlay = ctx.createLinearGradient(0, this.height * 0.6, 0, this.height);
-                accentOverlay.addColorStop(0, 'transparent');
-                accentOverlay.addColorStop(1, 'rgba(196, 30, 58, 0.3)');
-                ctx.fillStyle = accentOverlay;
-                ctx.fillRect(0, 0, this.width, this.height);
-                
-            } catch (e) {
-                console.log('Could not load blog image, using gradient background');
-                this.drawGradientBackground(ctx);
-            }
-        } else {
-            this.drawGradientBackground(ctx);
-        }
-        
-        // Add subtle decorative elements
-        this.drawDecorations(ctx);
-    }
-    
+
     loadImage(url) {
         return new Promise((resolve, reject) => {
             const img = new Image();
@@ -1554,229 +1533,281 @@ class InstagramStoryGenerator {
             img.src = url;
         });
     }
-    
-    drawGradientBackground(ctx) {
-        // Create diagonal gradient
-        const gradient = ctx.createLinearGradient(0, 0, this.width, this.height);
-        gradient.addColorStop(0, this.colors.primaryDark);
-        gradient.addColorStop(0.4, this.colors.primary);
-        gradient.addColorStop(0.7, this.colors.primaryLight);
-        gradient.addColorStop(1, this.colors.secondary);
-        
-        ctx.fillStyle = gradient;
-        ctx.fillRect(0, 0, this.width, this.height);
+
+    async drawPhoto(ctx) {
+        const area = { x: 0, y: 0, w: this.width, h: this.photoHeight };
+        let drew = false;
+
+        if (this.imageUrl) {
+            try {
+                const img = await this.loadImage(this.imageUrl);
+                ctx.save();
+                ctx.beginPath();
+                ctx.rect(area.x, area.y, area.w, area.h);
+                ctx.clip();
+                this.drawPhotoCover(ctx, img, area.x, area.y, area.w, area.h);
+                ctx.restore();
+                drew = true;
+            } catch (e) {
+                console.log('Story: blogafbeelding kon niet laden, fallback gebruikt');
+            }
+        }
+
+        if (!drew) {
+            this.drawPhotoFallback(ctx, area);
+        }
     }
-    
-    drawDecorations(ctx) {
-        // Top ambient glow
-        const topGlow = ctx.createRadialGradient(
-            this.width * 0.3, 150, 0,
-            this.width * 0.3, 150, 350
-        );
-        topGlow.addColorStop(0, 'rgba(196, 30, 58, 0.2)');
-        topGlow.addColorStop(1, 'transparent');
-        ctx.fillStyle = topGlow;
-        ctx.fillRect(0, 0, this.width, 500);
-        
-        // Bottom ambient glow
-        const bottomGlow = ctx.createRadialGradient(
-            this.width * 0.7, this.height - 200, 0,
-            this.width * 0.7, this.height - 200, 400
-        );
-        bottomGlow.addColorStop(0, 'rgba(26, 54, 93, 0.25)');
-        bottomGlow.addColorStop(1, 'transparent');
-        ctx.fillStyle = bottomGlow;
-        ctx.fillRect(0, this.height - 600, this.width, 600);
-        
-        // Decorative circles (subtle)
-        ctx.globalAlpha = 0.06;
-        ctx.strokeStyle = '#ffffff';
-        ctx.lineWidth = 2;
-        
-        ctx.beginPath();
-        ctx.arc(this.width - 80, 120, 150, 0, Math.PI * 2);
-        ctx.stroke();
-        
-        ctx.beginPath();
-        ctx.arc(80, this.height - 350, 100, 0, Math.PI * 2);
-        ctx.stroke();
-        
-        ctx.globalAlpha = 1;
+
+    drawPhotoCover(ctx, img, dx, dy, dw, dh) {
+        const imgRatio = img.width / img.height;
+        const boxRatio = dw / dh;
+        let sx, sy, sw, sh;
+
+        if (imgRatio > boxRatio) {
+            sh = img.height;
+            sw = sh * boxRatio;
+            sx = (img.width - sw) / 2;
+            sy = 0;
+        } else {
+            sw = img.width;
+            sh = sw / boxRatio;
+            sx = 0;
+            sy = (img.height - sh) / 2;
+        }
+
+        ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
     }
-    
-    drawContent(ctx) {
-        const centerX = this.width / 2;
-        const padding = 60;
-        const contentWidth = this.width - (padding * 2);
-        
-        // ===== TOP SECTION =====
-        // "POLITIEK ARTIKEL" badge
-        const badgeY = 180;
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
-        this.roundRect(ctx, centerX - 130, badgeY - 22, 260, 44, 22);
-        ctx.fill();
-        
-        ctx.font = 'bold 22px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-        ctx.fillStyle = '#ffffff';
-        ctx.textAlign = 'center';
-        ctx.fillText('POLITIEK ARTIKEL', centerX, badgeY + 7);
-        
-        // ===== TITLE SECTION =====
-        // Calculate title with proper sizing
-        const titleFontSize = this.calculateTitleFontSize(ctx, this.title, contentWidth);
-        const titleLines = this.wrapText(ctx, this.title, contentWidth - 40, titleFontSize);
-        const lineHeight = titleFontSize * 1.2;
-        const titleBlockHeight = (titleLines.length * lineHeight) + 60;
-        
-        // Position title card in upper-middle area
-        const titleCardY = 280;
-        
-        // Title background card
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.12)';
-        this.roundRect(ctx, padding, titleCardY, contentWidth, titleBlockHeight, 24);
-        ctx.fill();
-        
-        // Border accent
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
-        ctx.lineWidth = 2;
-        this.roundRect(ctx, padding, titleCardY, contentWidth, titleBlockHeight, 24);
-        ctx.stroke();
-        
-        // Draw title text
-        ctx.font = `bold ${titleFontSize}px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`;
-        ctx.fillStyle = '#ffffff';
-        ctx.textAlign = 'center';
-        
-        const titleStartY = titleCardY + 30 + titleFontSize;
-        titleLines.forEach((line, index) => {
-            ctx.fillText(line, centerX, titleStartY + (index * lineHeight));
-        });
-        
-        // ===== META INFO SECTION =====
-        const metaY = titleCardY + titleBlockHeight + 50;
-        
-        // Author
-        ctx.font = '600 32px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
-        ctx.fillText(`Door ${this.author}`, centerX, metaY);
-        
-        // Date and reading time
-        ctx.font = '400 26px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
-        ctx.fillText(`${this.date}  |  ${this.readingTime} leestijd`, centerX, metaY + 45);
-        
-        // Decorative separator with diamond
-        const sepY = metaY + 100;
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(centerX - 80, sepY);
-        ctx.lineTo(centerX + 80, sepY);
-        ctx.stroke();
-        
-        // Diamond accent
-        ctx.fillStyle = this.colors.secondaryLight;
+
+    drawPhotoFallback(ctx, area) {
+        const g = ctx.createLinearGradient(area.x, area.y, area.w, area.h);
+        g.addColorStop(0, this.colors.hague);
+        g.addColorStop(1, this.colors.hagueDark);
+        ctx.fillStyle = g;
+        ctx.fillRect(area.x, area.y, area.w, area.h);
+
         ctx.save();
-        ctx.translate(centerX, sepY);
-        ctx.rotate(Math.PI / 4);
-        ctx.fillRect(-7, -7, 14, 14);
+        ctx.globalAlpha = 0.10;
+        ctx.fillStyle = '#ffffff';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.font = `600 220px ${this.fontDisplay}`;
+        ctx.fillText('PP', this.width / 2, area.h / 2 + 30);
         ctx.restore();
     }
-    
-    calculateTitleFontSize(ctx, text, maxWidth) {
-        // Start with ideal size and reduce if needed
-        const sizes = [56, 52, 48, 44, 40, 36];
-        
-        for (const size of sizes) {
-            ctx.font = `bold ${size}px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`;
-            const lines = this.wrapText(ctx, text, maxWidth - 40, size);
-            
-            // Max 4 lines with reasonable total height
-            if (lines.length <= 4) {
-                return size;
-            }
-        }
-        
-        return 36; // Minimum size
-    }
-    
-    drawBranding(ctx) {
-        const centerX = this.width / 2;
-        const brandingY = this.height - 320;
-        const padding = 60;
-        const contentWidth = this.width - (padding * 2);
-        
-        // CTA background card
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.12)';
-        this.roundRect(ctx, padding + 20, brandingY - 30, contentWidth - 40, 170, 20);
-        ctx.fill();
-        
-        // "Lees het volledige artikel op" text
-        ctx.font = '400 28px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
-        ctx.textAlign = 'center';
-        ctx.fillText('Lees het volledige artikel op', centerX, brandingY + 20);
-        
-        // PolitiekPraat.nl - prominent
-        ctx.font = 'bold 48px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+
+    drawTopBrand(ctx) {
+        // Subtiele scrim bovenaan zodat de witte wordmark leesbaar blijft op de foto
+        const scrim = ctx.createLinearGradient(0, 0, 0, 260);
+        scrim.addColorStop(0, 'rgba(20, 19, 17, 0.55)');
+        scrim.addColorStop(1, 'rgba(20, 19, 17, 0)');
+        ctx.fillStyle = scrim;
+        ctx.fillRect(0, 0, this.width, 260);
+
+        const size = 64;
+        const x = this.pad;
+        const y = 64;
+        this.drawLogoBadge(ctx, x, y, size);
+
+        ctx.save();
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'middle';
         ctx.fillStyle = '#ffffff';
-        ctx.fillText('POLITIEKPRAAT.NL', centerX, brandingY + 85);
-        
-        // Swipe up indicator
-        const arrowY = this.height - 90;
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
-        ctx.lineWidth = 3;
-        ctx.lineCap = 'round';
-        
-        // Arrow up
+        ctx.font = `600 40px ${this.fontDisplay}`;
+        ctx.fillText('PolitiekPraat', x + size + 22, y + size / 2 + 3);
+        ctx.restore();
+    }
+
+    drawSeam(ctx) {
+        ctx.fillStyle = this.colors.lineStrong;
+        ctx.fillRect(0, this.photoHeight, this.width, 2);
+    }
+
+    drawContent(ctx) {
+        const x = this.pad;
+        const maxW = this.width - this.pad * 2;
+        const footerTop = this.height - this.footerHeight;
+        let y = this.photoHeight + 72;
+
+        // Terracotta kicker-streep
+        ctx.fillStyle = this.colors.terracotta;
+        ctx.fillRect(x, y, 52, 4);
+        y += 30;
+
+        // Categorie als kicker
+        if (this.category) {
+            ctx.save();
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'top';
+            ctx.fillStyle = this.colors.terracotta;
+            ctx.font = `700 24px ${this.fontSans}`;
+            if ('letterSpacing' in ctx) ctx.letterSpacing = '3px';
+            ctx.fillText(this.category.toUpperCase(), x, y);
+            ctx.restore();
+            y += 52;
+        } else {
+            y += 6;
+        }
+
+        // Titel (Fraunces), auto-passend op breedte en beschikbare hoogte
+        const maxTitleHeight = footerTop - y - 150;
+        const fitted = this.fitTitle(ctx, this.title, maxW, 5, maxTitleHeight);
+        ctx.save();
+        ctx.fillStyle = this.colors.ink;
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'top';
+        ctx.font = `600 ${fitted.size}px ${this.fontDisplay}`;
+        fitted.lines.forEach((line, i) => {
+            ctx.fillText(line, x, y + i * fitted.lineHeight);
+        });
+        ctx.restore();
+        y += fitted.lines.length * fitted.lineHeight + 46;
+
+        // Meta: auteur
+        ctx.save();
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'top';
+        ctx.fillStyle = this.colors.ink;
+        ctx.font = `600 30px ${this.fontSans}`;
+        ctx.fillText(this.author ? `Door ${this.author}` : 'PolitiekPraat', x, y);
+        ctx.restore();
+        y += 46;
+
+        // Meta: datum + leestijd
+        const metaParts = [];
+        if (this.date) metaParts.push(this.date);
+        if (this.readingTime) metaParts.push(`${this.readingTime} lezen`);
+        if (metaParts.length) {
+            ctx.save();
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'top';
+            ctx.fillStyle = this.colors.inkMuted;
+            ctx.font = `400 26px ${this.fontSans}`;
+            ctx.fillText(metaParts.join('   ·   '), x, y);
+            ctx.restore();
+        }
+    }
+
+    drawFooter(ctx) {
+        const top = this.height - this.footerHeight;
+
+        ctx.fillStyle = this.colors.paperSunken;
+        ctx.fillRect(0, top, this.width, this.footerHeight);
+        ctx.fillStyle = this.colors.line;
+        ctx.fillRect(0, top, this.width, 1);
+
+        const x = this.pad;
+        const cy = top + this.footerHeight / 2;
+
+        ctx.save();
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'alphabetic';
+        ctx.fillStyle = this.colors.inkFaint;
+        ctx.font = `600 20px ${this.fontSans}`;
+        if ('letterSpacing' in ctx) ctx.letterSpacing = '2px';
+        ctx.fillText('LEES HET VOLLEDIGE ARTIKEL OP', x, cy - 12);
+        ctx.restore();
+
+        ctx.save();
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'alphabetic';
+        ctx.fillStyle = this.colors.hague;
+        ctx.font = `600 42px ${this.fontDisplay}`;
+        ctx.fillText('politiekpraat.nl', x, cy + 34);
+        ctx.restore();
+
+        // Terracotta cirkelknop met pijl rechts
+        const r = 42;
+        const bx = this.width - this.pad - r;
+        const by = cy;
+        ctx.fillStyle = this.colors.terracotta;
         ctx.beginPath();
-        ctx.moveTo(centerX - 18, arrowY + 8);
-        ctx.lineTo(centerX, arrowY - 8);
-        ctx.lineTo(centerX + 18, arrowY + 8);
+        ctx.arc(bx, by, r, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.strokeStyle = this.colors.paperOnDark;
+        ctx.lineWidth = 4;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.beginPath();
+        ctx.moveTo(bx - 16, by);
+        ctx.lineTo(bx + 14, by);
+        ctx.moveTo(bx + 1, by - 13);
+        ctx.lineTo(bx + 15, by);
+        ctx.lineTo(bx + 1, by + 13);
         ctx.stroke();
-        
-        // "Veeg omhoog" text
-        ctx.font = '400 22px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.45)';
-        ctx.fillText('Veeg omhoog voor meer', centerX, arrowY + 45);
     }
-    
-    wrapText(ctx, text, maxWidth, fontSize) {
-        ctx.font = `bold ${fontSize}px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`;
-        const words = text.split(' ');
+
+    drawLogoBadge(ctx, x, y, size) {
+        const r = Math.round(size * 0.2);
+        ctx.fillStyle = this.colors.hague;
+        this.roundRect(ctx, x, y, size, size, r);
+        ctx.fill();
+
+        ctx.save();
+        ctx.fillStyle = '#ffffff';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.font = `700 ${Math.round(size * 0.46)}px ${this.fontSans}`;
+        ctx.fillText('PP', x + size / 2, y + size / 2 - size * 0.05);
+        ctx.restore();
+
+        ctx.fillStyle = this.colors.terracotta;
+        const lw = Math.round(size * 0.46);
+        const lh = Math.max(3, Math.round(size * 0.07));
+        ctx.fillRect(x + (size - lw) / 2, y + Math.round(size * 0.72), lw, lh);
+    }
+
+    fitTitle(ctx, text, maxWidth, maxLines, maxHeight) {
+        const sizes = [80, 74, 68, 62, 56, 50, 46];
+
+        for (const size of sizes) {
+            ctx.font = `600 ${size}px ${this.fontDisplay}`;
+            const lines = this.wrapText(ctx, text, maxWidth);
+            const lineHeight = Math.round(size * 1.12);
+            if (lines.length <= maxLines && lines.length * lineHeight <= maxHeight) {
+                return { size, lines, lineHeight };
+            }
+        }
+
+        const size = 46;
+        ctx.font = `600 ${size}px ${this.fontDisplay}`;
+        let lines = this.wrapText(ctx, text, maxWidth);
+        const lineHeight = Math.round(size * 1.12);
+        const maxByHeight = Math.max(1, Math.floor(maxHeight / lineHeight));
+        const limit = Math.min(maxLines, maxByHeight);
+
+        if (lines.length > limit) {
+            lines = lines.slice(0, limit);
+            let last = lines[limit - 1];
+            while (last.length && ctx.measureText(last + '…').width > maxWidth) {
+                last = last.slice(0, -1);
+            }
+            lines[limit - 1] = last.replace(/\s+$/, '') + '…';
+        }
+
+        return { size, lines, lineHeight };
+    }
+
+    // Verwacht dat ctx.font al gezet is op de juiste maat.
+    wrapText(ctx, text, maxWidth) {
+        const words = String(text).split(/\s+/).filter(Boolean);
         const lines = [];
-        let currentLine = '';
-        
+        let current = '';
+
         for (const word of words) {
-            const testLine = currentLine ? `${currentLine} ${word}` : word;
-            const metrics = ctx.measureText(testLine);
-            
-            if (metrics.width > maxWidth && currentLine) {
-                lines.push(currentLine);
-                currentLine = word;
+            const test = current ? `${current} ${word}` : word;
+            if (ctx.measureText(test).width > maxWidth && current) {
+                lines.push(current);
+                current = word;
             } else {
-                currentLine = testLine;
+                current = test;
             }
         }
-        
-        if (currentLine) {
-            lines.push(currentLine);
-        }
-        
-        // Limit to 4 lines max, truncate if needed
-        if (lines.length > 4) {
-            lines.length = 4;
-            const lastLine = lines[3];
-            // Truncate last line properly
-            while (ctx.measureText(lastLine + '...').width > maxWidth && lastLine.length > 0) {
-                lines[3] = lastLine.substring(0, lastLine.length - 1);
-            }
-            lines[3] = lines[3].trim() + '...';
-        }
-        
-        return lines;
+        if (current) lines.push(current);
+
+        return lines.length ? lines : [''];
     }
-    
+
     roundRect(ctx, x, y, width, height, radius) {
         ctx.beginPath();
         ctx.moveTo(x + radius, y);
@@ -1789,18 +1820,6 @@ class InstagramStoryGenerator {
         ctx.lineTo(x, y + radius);
         ctx.quadraticCurveTo(x, y, x + radius, y);
         ctx.closePath();
-    }
-    
-    async toBlob() {
-        const canvas = await this.generateStory();
-        return new Promise((resolve) => {
-            canvas.toBlob(resolve, 'image/png', 1.0);
-        });
-    }
-    
-    async toDataUrl() {
-        const canvas = await this.generateStory();
-        return canvas.toDataURL('image/png');
     }
 }
 
@@ -1874,115 +1893,171 @@ function trackShareEvent(channel) {
     }
 }
 
-// Instagram Story Share Functions
+// Instagram Story: preview-modal, download en delen
 // ============================================
-async function shareToInstagramStory() {
-    const shareButton = document.getElementById('instagramStoryBtn');
-    if (!shareButton) return;
-    
-    // Show loading state
-    shareButton.disabled = true;
-    shareButton.dataset.loading = '1';
-    const label = shareButton.querySelector('.blog-share-bar__text');
-    if (label) label.textContent = 'Genereren...';
-    
-    try {
-        // Get blog data from PHP
-        const blogData = {
-            title: blogShareData.title || shareTitle,
-            author: blogShareData.author || '',
-            date: blogShareData.date || '',
-            readingTime: document.getElementById('reading-minutes')?.textContent + ' min' || '5 min',
-            blogUrl: window.location.href,
-            imageUrl: blogShareData.imageUrl || null
-        };
-        
-        // Generate the story image
-        const generator = new InstagramStoryGenerator(blogData);
-        const blob = await generator.toBlob();
-        const file = new File([blob], 'politiekpraat-story.png', { type: 'image/png' });
-        
-        // Check if Web Share API with files is supported (mobile)
-        if (navigator.canShare && navigator.canShare({ files: [file] })) {
-            await navigator.share({
-                files: [file],
-                title: blogData.title,
-                text: `Lees "${blogData.title}" op PolitiekPraat.nl`,
-                url: blogData.blogUrl
-            });
-            showNotification('Story succesvol gedeeld!', 'success');
-        } else {
-            // Fallback: download the image
-            downloadStoryImage(blob, blogData.title);
-        }
-    } catch (error) {
-        if (error.name !== 'AbortError') {
-            console.error('Error sharing story:', error);
-            showNotification('Er ging iets mis bij het genereren van de story', 'error');
-        }
-    } finally {
-        // Restore button state
-        shareButton.disabled = false;
-        delete shareButton.dataset.loading;
-        if (label) label.textContent = 'Story';
-    }
-}
+let storyGeneratorBusy = false;
+let lastStoryBlob = null;
+let lastStoryFileName = 'politiekpraat-story.png';
 
-function downloadStoryImage(blob, title) {
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `politiekpraat-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-').substring(0, 50)}.png`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-    
-    showNotification('Story afbeelding gedownload! Upload deze naar je Instagram Story.', 'success');
-}
-
-// Preview function for testing
-async function previewInstagramStory() {
-    const blogData = {
+function buildStoryData() {
+    const minutes = document.getElementById('reading-minutes')?.textContent;
+    return {
         title: blogShareData.title || shareTitle,
         author: blogShareData.author || '',
         date: blogShareData.date || '',
-        readingTime: document.getElementById('reading-minutes')?.textContent + ' min' || '5 min',
+        category: blogShareData.category || '',
+        readingTime: minutes ? `${minutes} min` : '',
         blogUrl: window.location.href,
         imageUrl: blogShareData.imageUrl || null
     };
-    
-    const generator = new InstagramStoryGenerator(blogData);
-    const dataUrl = await generator.toDataUrl();
-    
-    // Open preview in new window
-    const previewWindow = window.open('', '_blank');
-    previewWindow.document.write(`
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <title>Story Preview - ${blogData.title}</title>
-            <style>
-                body { 
-                    margin: 0; 
-                    display: flex; 
-                    justify-content: center; 
-                    align-items: center; 
-                    min-height: 100vh; 
-                    background: #1a1a1a;
-                }
-                img { 
-                    max-height: 90vh; 
-                    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-                    border-radius: 20px;
-                }
-            </style>
-        </head>
-        <body>
-            <img src="${dataUrl}" alt="Instagram Story Preview">
-        </body>
-        </html>
-    `);
+}
+
+function makeStoryFileName(title) {
+    const slug = String(title || 'politiekpraat')
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '')
+        .substring(0, 50) || 'politiekpraat';
+    return `politiekpraat-story-${slug}.png`;
+}
+
+function canvasToBlob(canvas) {
+    return new Promise((resolve, reject) => {
+        try {
+            canvas.toBlob((blob) => {
+                if (blob) resolve(blob);
+                else reject(new Error('Canvas leverde geen afbeelding op'));
+            }, 'image/png', 1);
+        } catch (err) {
+            // Bv. SecurityError bij een externe (cross-origin) foto
+            reject(err);
+        }
+    });
+}
+
+async function shareToInstagramStory() {
+    openStoryModal();
+
+    if (storyGeneratorBusy) return;
+    storyGeneratorBusy = true;
+
+    const preview = document.getElementById('storyPreview');
+    const loading = document.getElementById('storyPreviewLoading');
+    const loadingText = loading?.querySelector('.pp-story-preview__loading-text');
+    const downloadBtn = document.getElementById('storyDownloadBtn');
+    const shareBtn = document.getElementById('storyShareBtn');
+
+    // Reset modal-state
+    if (loading) loading.hidden = false;
+    if (loadingText) loadingText.textContent = 'Story genereren...';
+    preview?.querySelectorAll('.pp-story-preview__media').forEach((node) => node.remove());
+    if (downloadBtn) downloadBtn.disabled = true;
+    if (shareBtn) { shareBtn.hidden = true; shareBtn.disabled = true; }
+    lastStoryBlob = null;
+
+    const blogData = buildStoryData();
+    lastStoryFileName = makeStoryFileName(blogData.title);
+
+    try {
+        let canvas = await new InstagramStoryGenerator(blogData).generateStory();
+
+        try {
+            lastStoryBlob = await canvasToBlob(canvas);
+        } catch (taintError) {
+            // Canvas geblokkeerd door een externe foto: regenereer zonder foto
+            console.log('Story: canvas geblokkeerd door externe foto, regenereren zonder foto');
+            canvas = await new InstagramStoryGenerator({ ...blogData, imageUrl: null }).generateStory();
+            lastStoryBlob = await canvasToBlob(canvas);
+        }
+
+        canvas.className = 'pp-story-preview__media';
+        if (loading) loading.hidden = true;
+        preview?.appendChild(canvas);
+
+        if (downloadBtn) downloadBtn.disabled = false;
+
+        const canShareFiles = !!(lastStoryBlob && navigator.canShare && navigator.canShare({
+            files: [new File([lastStoryBlob], lastStoryFileName, { type: 'image/png' })]
+        }));
+        if (shareBtn && canShareFiles) {
+            shareBtn.hidden = false;
+            shareBtn.disabled = false;
+        }
+    } catch (error) {
+        console.error('Story generatie fout:', error);
+        if (loadingText) loadingText.textContent = 'Genereren mislukt. Sluit en probeer opnieuw.';
+        showNotification('Er ging iets mis bij het genereren van de Story', 'error');
+    } finally {
+        storyGeneratorBusy = false;
+    }
+}
+
+function downloadCurrentStory() {
+    if (!lastStoryBlob) return;
+    const url = URL.createObjectURL(lastStoryBlob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = lastStoryFileName;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+    showNotification('Story-afbeelding gedownload. Upload hem als je Instagram Story.', 'success');
+    trackShareEvent('instagram_story');
+}
+
+async function shareCurrentStory() {
+    if (!lastStoryBlob) return;
+    const file = new File([lastStoryBlob], lastStoryFileName, { type: 'image/png' });
+
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        try {
+            await navigator.share({
+                files: [file],
+                title: blogShareData.title || shareTitle,
+                text: `Lees "${blogShareData.title || shareTitle}" op PolitiekPraat.nl`
+            });
+            trackShareEvent('instagram_story');
+        } catch (error) {
+            if (error.name !== 'AbortError') {
+                console.error('Story delen mislukt:', error);
+                downloadCurrentStory();
+            }
+        }
+    } else {
+        downloadCurrentStory();
+    }
+}
+
+function openStoryModal() {
+    const modal = document.getElementById('storyModal');
+    if (!modal) return;
+    modal.hidden = false;
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeStoryModal() {
+    const modal = document.getElementById('storyModal');
+    if (!modal) return;
+    modal.hidden = true;
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+}
+
+function initializeStoryModal() {
+    const modal = document.getElementById('storyModal');
+    if (!modal) return;
+
+    modal.querySelectorAll('[data-story-close]').forEach((el) => {
+        el.addEventListener('click', closeStoryModal);
+    });
+    document.getElementById('storyDownloadBtn')?.addEventListener('click', downloadCurrentStory);
+    document.getElementById('storyShareBtn')?.addEventListener('click', shareCurrentStory);
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && !modal.hidden) closeStoryModal();
+    });
 }
 
 console.log('Blog view script fully loaded and initialized');
