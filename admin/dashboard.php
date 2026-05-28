@@ -28,7 +28,7 @@ $blogs = $blogController->getAll();
                        class="bg-white/20 backdrop-blur-sm text-white px-4 md:px-6 py-2 md:py-3 rounded-xl hover:bg-white/30 transition-all duration-300 border border-white/30 text-center">
                         Stemwijzer Dashboard
                     </a>
-                    <a href="../views/blogs/create.php" 
+                    <a href="<?= pp_e(pp_url('/blogs/create')) ?>" 
                        class="bg-white text-indigo-600 px-4 md:px-6 py-2 md:py-3 rounded-xl hover:bg-blue-50 transition-all duration-300 font-semibold text-center">
                         Nieuwe Blog
                     </a>
@@ -110,7 +110,7 @@ $blogs = $blogController->getAll();
                         <p class="text-gray-600 text-sm">Alle blogs bekijken en beheren</p>
                     </div>
                     <div class="flex flex-col sm:flex-row gap-2">
-                        <a href="../views/blogs/create.php" 
+                        <a href="<?= pp_e(pp_url('/blogs/create')) ?>" 
                            class="bg-indigo-500 text-white px-4 py-2 rounded-lg hover:bg-indigo-600 transition-colors text-center text-sm">
                             Nieuwe Blog Toevoegen
                         </a>
@@ -137,7 +137,7 @@ $blogs = $blogController->getAll();
                         </svg>
                         <h3 class="text-lg font-semibold text-gray-800 mb-2">Geen blogs gevonden</h3>
                         <p class="text-gray-600 mb-4">Begin met het toevoegen van je eerste blog.</p>
-                        <a href="../views/blogs/create.php" 
+                        <a href="<?= pp_e(pp_url('/blogs/create')) ?>" 
                            class="bg-indigo-500 text-white px-6 py-3 rounded-lg hover:bg-indigo-600 transition-colors inline-block">
                             Eerste Blog Toevoegen
                         </a>
@@ -161,7 +161,7 @@ $blogs = $blogController->getAll();
                                     <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
                                         <td class="py-4 px-4">
                                             <div class="font-semibold text-gray-800 hover:text-indigo-600 transition-colors">
-                                                <a href="../views/blogs/view.php?id=<?= $blog->id ?>" class="hover:underline">
+                                                <a href="<?= pp_e(pp_url('/blogs/' . $blog->slug)) ?>" class="hover:underline">
                                                     <?= htmlspecialchars($blog->title) ?>
                                                 </a>
                                             </div>
@@ -184,11 +184,11 @@ $blogs = $blogController->getAll();
                                         </td>
                                         <td class="py-4 px-4">
                                             <div class="flex space-x-2">
-                                                <a href="../views/blogs/edit.php?id=<?= $blog->id ?>" 
+                                                <a href="<?= pp_e(pp_url('/blogs/edit/' . $blog->id)) ?>" 
                                                    class="text-indigo-600 hover:text-indigo-800 font-medium text-sm">
                                                     Bewerken
                                                 </a>
-                                                <a href="../views/blogs/view.php?id=<?= $blog->id ?>" 
+                                                <a href="<?= pp_e(pp_url('/blogs/' . $blog->slug)) ?>" 
                                                    class="text-green-600 hover:text-green-800 font-medium text-sm">
                                                     Bekijken
                                                 </a>
@@ -207,7 +207,7 @@ $blogs = $blogController->getAll();
                                 <div class="flex flex-col space-y-3">
                                     <div>
                                         <h3 class="font-semibold text-gray-800 mb-2 leading-tight">
-                                            <a href="../views/blogs/view.php?id=<?= $blog->id ?>" class="hover:text-indigo-600 transition-colors">
+                                            <a href="<?= pp_e(pp_url('/blogs/' . $blog->slug)) ?>" class="hover:text-indigo-600 transition-colors">
                                                 <?= htmlspecialchars($blog->title) ?>
                                             </a>
                                         </h3>
@@ -245,11 +245,11 @@ $blogs = $blogController->getAll();
                                         </div>
                                         
                                         <div class="flex space-x-2">
-                                            <a href="../views/blogs/edit.php?id=<?= $blog->id ?>" 
+                                            <a href="<?= pp_e(pp_url('/blogs/edit/' . $blog->id)) ?>" 
                                                class="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-lg text-xs font-medium hover:bg-indigo-200 transition-colors">
                                                 Bewerken
                                             </a>
-                                            <a href="../views/blogs/view.php?id=<?= $blog->id ?>" 
+                                            <a href="<?= pp_e(pp_url('/blogs/' . $blog->slug)) ?>" 
                                                class="bg-green-100 text-green-700 px-3 py-1 rounded-lg text-xs font-medium hover:bg-green-200 transition-colors">
                                                 Bekijken
                                             </a>
