@@ -17,7 +17,7 @@ $navLinks = [
 ];
 
 $isLoggedIn = isset($_SESSION['user_id']);
-$isAdmin = $isLoggedIn && !empty($_SESSION['is_admin']);
+$isAdmin = $isLoggedIn && isAdmin();
 $username = $_SESSION['username'] ?? '';
 ?>
 <header class="site-header" role="banner">

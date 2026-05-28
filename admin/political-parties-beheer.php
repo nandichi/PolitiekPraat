@@ -1,13 +1,12 @@
 <?php
-require_once '../includes/config.php';
-require_once '../includes/Database.php';
-require_once '../includes/functions.php';
+require_once __DIR__ . '/_bootstrap.php';
 require_once '../models/PartyModel.php';
 
-// Controleer of gebruiker is ingelogd en admin is
-if (!isAdmin()) {
-    redirect('login');
-}
+$adminPageTitle = 'Politieke partijen';
+$adminPageDescription = 'Partijdata beheren';
+$adminActiveNav = 'partijen';
+require_once __DIR__ . '/partials/admin-header.php';
+
 
 $partyModel = new PartyModel();
 $message = '';
@@ -122,228 +121,7 @@ if (isset($_GET['edit'])) {
     $editParty = $partyModel->getParty($editPartyKey);
 }
 
-require_once '../views/templates/header.php';
 ?>
-
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-
-* {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-}
-
-.hero-gradient {
-    background: linear-gradient(135deg, #0f2a44 0%, #1a365d 50%, #2d4a6b 100%);
-    position: relative;
-    overflow: hidden;
-}
-
-.hero-gradient::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(circle at 20% 50%, rgba(196, 30, 58, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(196, 30, 58, 0.1) 0%, transparent 50%);
-    pointer-events: none;
-}
-
-.gradient-text {
-    background: linear-gradient(135deg, #d63856 0%, #c41e3a 50%, #9e1829 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-.card-primary {
-    background: white;
-    border: 1px solid rgba(26, 54, 93, 0.08);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.card-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 24px -6px rgba(26, 54, 93, 0.12), 0 6px 12px -3px rgba(26, 54, 93, 0.08);
-    border-color: rgba(26, 54, 93, 0.15);
-}
-
-.party-card {
-    background: white;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.party-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: var(--party-color, #c41e3a);
-    transform: scaleX(0);
-    transition: transform 0.3s ease;
-}
-
-.party-card:hover::before {
-    transform: scaleX(1);
-}
-
-.party-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.15);
-}
-
-.btn-primary {
-    background: linear-gradient(135deg, #1a365d 0%, #2d4a6b 100%);
-    transition: all 0.3s ease;
-}
-
-.btn-primary:hover {
-    background: linear-gradient(135deg, #0f2a44 0%, #1a365d 100%);
-    transform: translateY(-1px);
-    box-shadow: 0 8px 16px -4px rgba(26, 54, 93, 0.3);
-}
-
-.btn-secondary {
-    background: linear-gradient(135deg, #c41e3a 0%, #9e1829 100%);
-    transition: all 0.3s ease;
-}
-
-.btn-secondary:hover {
-    background: linear-gradient(135deg, #9e1829 0%, #7d1320 100%);
-    transform: translateY(-1px);
-    box-shadow: 0 8px 16px -4px rgba(196, 30, 58, 0.4);
-}
-
-.stat-card {
-    background: white;
-    border-left: 4px solid;
-    transition: all 0.3s ease;
-}
-
-.stat-card:hover {
-    transform: translateX(4px);
-    box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.1);
-}
-
-.modal-backdrop {
-    backdrop-filter: blur(8px);
-    animation: fadeIn 0.2s ease;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-.modal-content {
-    animation: slideUp 0.3s ease;
-}
-
-@keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.tab-button {
-    position: relative;
-    transition: all 0.3s ease;
-}
-
-.tab-button::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, #c41e3a 0%, #d63856 100%);
-    transform: scaleX(0);
-    transition: transform 0.3s ease;
-}
-
-.tab-button.active::after {
-    transform: scaleX(1);
-}
-
-.preview-image {
-    max-width: 120px;
-    max-height: 120px;
-    object-fit: contain;
-    border: 2px solid #e5e7eb;
-    border-radius: 8px;
-    padding: 8px;
-    background: white;
-}
-
-.color-preset {
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    border: 2px solid transparent;
-}
-
-.color-preset:hover {
-    transform: scale(1.1);
-    border-color: #1a365d;
-}
-
-.search-input {
-    transition: all 0.3s ease;
-}
-
-.search-input:focus {
-    transform: translateY(-1px);
-    box-shadow: 0 8px 16px -4px rgba(26, 54, 93, 0.15);
-}
-
-/* Custom scrollbar */
-.custom-scrollbar::-webkit-scrollbar {
-    width: 8px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-track {
-    background: #f1f5f9;
-    border-radius: 4px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
-    border-radius: 4px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: #94a3b8;
-}
-
-.badge-party {
-    display: inline-flex;
-    align-items: center;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-}
-
-@media (max-width: 768px) {
-    .party-card:hover {
-        transform: none;
-    }
-}
-</style>
 
 <main class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/20 to-indigo-50/30">
     
@@ -1188,4 +966,5 @@ document.getElementById('editModal')?.addEventListener('click', function(e) {
 <?php endif; ?>
 </script>
 
-<?php require_once '../views/templates/footer.php'; ?>
+<?php require_once __DIR__ . '/partials/admin-footer.php';
+?>

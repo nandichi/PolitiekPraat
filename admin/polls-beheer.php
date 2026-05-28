@@ -1,14 +1,13 @@
 <?php
-require_once '../includes/config.php';
-require_once '../includes/Database.php';
-require_once '../includes/functions.php';
+require_once __DIR__ . '/_bootstrap.php';
 require_once '../vendor/erusev/parsedown/Parsedown.php';
 require_once '../includes/BlogController.php';
 
-// Controleer of gebruiker is ingelogd en admin is
-if (!isAdmin()) {
-    redirect('login');
-}
+$adminPageTitle = 'Polls';
+$adminPageDescription = 'Polls beheren';
+$adminActiveNav = 'polls';
+require_once __DIR__ . '/partials/admin-header.php';
+
 
 $db = new Database();
 $blogController = new BlogController();
@@ -77,49 +76,7 @@ try {
     $error = "Fout bij het ophalen van polls: " . $e->getMessage();
 }
 
-require_once '../views/templates/header.php';
 ?>
-
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-
-* {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-}
-
-.gradient-bg {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
-
-.card-hover {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.card-hover:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.1);
-}
-
-.stat-card {
-    background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.9) 100%);
-    backdrop-filter: blur(10px);
-}
-
-.poll-progress {
-    height: 8px;
-    background: #e5e7eb;
-    border-radius: 4px;
-    overflow: hidden;
-    position: relative;
-}
-
-.poll-progress-bar {
-    height: 100%;
-    background: linear-gradient(90deg, #667eea, #764ba2);
-    border-radius: 4px;
-    transition: width 0.3s ease;
-}
-</style>
 
 <main class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50">
     
@@ -374,4 +331,5 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-<?php require_once '../views/templates/footer.php'; ?> 
+<?php require_once __DIR__ . '/partials/admin-footer.php';
+?> 

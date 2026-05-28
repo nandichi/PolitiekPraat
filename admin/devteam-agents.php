@@ -1,8 +1,10 @@
 <?php
-require_once '../includes/config.php';
-require_once '../includes/Database.php';
-require_once '../includes/functions.php';
-if (!isAdmin()) { redirect('login'); }
+require_once __DIR__ . '/_bootstrap.php';
+
+$adminPageTitle = 'Devteam agents';
+$adminPageDescription = 'Agent configuratie';
+$adminActiveNav = 'devteam-agents';
+require_once __DIR__ . '/partials/admin-header.php';
 
 if (isset($_GET['api'])) {
     header('Content-Type: application/json');

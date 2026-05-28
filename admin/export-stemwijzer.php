@@ -1,12 +1,10 @@
 <?php
-require_once '../includes/config.php';
-require_once '../includes/Database.php';
-require_once '../includes/functions.php';
+require_once __DIR__ . '/_bootstrap.php';
 
-// Controleer of gebruiker is ingelogd en admin is
-if (!isAdmin()) {
-    redirect('login');
-}
+$adminPageTitle = 'Export stemwijzer';
+$adminPageDescription = 'Stemwijzer exporteren';
+$adminActiveNav = 'stemwijzer';
+require_once __DIR__ . '/partials/admin-header.php';
 
 try {
     $db = new Database();

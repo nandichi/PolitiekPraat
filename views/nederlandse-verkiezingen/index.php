@@ -99,9 +99,15 @@ if (!function_exists('pp_format_pct')) {
     <?php endforeach; ?>
 
     <?php if (empty($verkiezingenPerPeriode)): ?>
-        <div class="text-center py-16 text-[color:var(--color-ink-muted)]">
-            Geen verkiezingsdata beschikbaar.
-        </div>
+        <?= pp_render_component('ui/empty-state', [
+            'title' => 'Verkiezingsdata wordt geladen',
+            'message' => 'Het overzicht van Kamerverkiezingen per tijdvak is momenteel nog niet beschikbaar. Bekijk ondertussen de recente premiers of ga terug naar het overzicht.',
+            'icon' => 'calendar',
+            'cta_label' => 'Naar homepage',
+            'cta_href' => '/',
+            'secondary_label' => 'Amerikaanse verkiezingen',
+            'secondary_href' => '/amerikaanse-verkiezingen',
+        ]) ?>
     <?php endif; ?>
 </section>
 

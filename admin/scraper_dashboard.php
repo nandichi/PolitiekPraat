@@ -1,15 +1,13 @@
 <?php
-require_once '../includes/config.php';
-require_once '../includes/Database.php';
+require_once __DIR__ . '/_bootstrap.php';
 require_once '../models/NewsModel.php';
 require_once '../includes/NewsScraper.php';
 
-// Eenvoudige authenticatie check (dit zou robuuster moeten in productie)
-session_start();
-if (!isset($_SESSION['admin_logged_in'])) {
-    // Voor development - in productie moet dit beveiligd worden
-    $_SESSION['admin_logged_in'] = true;
-}
+$adminPageTitle = 'Scraper dashboard';
+$adminPageDescription = 'Live scraper status';
+$adminActiveNav = 'scraper';
+require_once __DIR__ . '/partials/admin-header.php';
+
 
 // Initialiseer componenten
 $db = new Database();
@@ -75,67 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $stats = $newsModel->getNewsStats();
 $scrapingStats = $scraper->getScrapingStats();
 
-require_once '../views/templates/header.php';
 ?>
-
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-
-* {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-}
-
-.gradient-bg {
-    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-}
-
-.card-hover {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.card-hover:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-}
-
-.stat-card {
-    background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.9) 100%);
-    backdrop-filter: blur(10px);
-}
-
-.scraper-pulse {
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
-}
-
-.loading-spinner {
-    border: 2px solid #f3f3f3;
-    border-top: 2px solid #10b981;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-.source-card {
-    transition: all 0.3s ease;
-}
-
-.source-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-</style>
 
 <main class="min-h-screen bg-gradient-to-br from-slate-50 via-emerald-50/30 to-teal-50">
     
@@ -459,4 +397,5 @@ setInterval(() => {
 }, 30000);
 </script>
 
-<?php require_once '../views/templates/footer.php'; ?> 
+<?php require_once __DIR__ . '/partials/admin-footer.php';
+?> 

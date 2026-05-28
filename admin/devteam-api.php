@@ -1,15 +1,8 @@
 <?php
 declare(strict_types=1);
-require_once '../includes/config.php';
-require_once '../includes/Database.php';
-require_once '../includes/functions.php';
 
-if (!isAdmin()) {
-    http_response_code(401);
-    header('Content-Type: application/json');
-    echo json_encode(['error' => 'unauthorized']);
-    exit;
-}
+define('ADMIN_GUARD_JSON', true);
+require_once __DIR__ . '/_bootstrap.php';
 
 header('Content-Type: application/json');
 header('Cache-Control: no-cache');

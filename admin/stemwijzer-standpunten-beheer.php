@@ -1,12 +1,10 @@
 <?php
-require_once '../includes/config.php';
-require_once '../includes/Database.php';
-require_once '../includes/functions.php';
+require_once __DIR__ . '/_bootstrap.php';
 
-// Controleer of gebruiker is ingelogd en admin is
-if (!isAdmin()) {
-    redirect('login');
-}
+$adminPageTitle = 'Standpunten';
+$adminPageDescription = 'Partijstandpunten beheren';
+$adminActiveNav = 'stemwijzer-standpunten';
+require_once __DIR__ . '/partials/admin-header.php';
 
 $db = new Database();
 $message = '';
@@ -98,64 +96,7 @@ try {
     // Error handling
 }
 
-require_once '../views/templates/header.php';
 ?>
-
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-
-* {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-}
-
-.gradient-bg {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
-
-.position-cell {
-    transition: all 0.2s ease;
-    cursor: pointer;
-}
-
-.position-cell:hover {
-    transform: scale(1.02);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.position-eens {
-    background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
-    border-color: #10b981;
-}
-
-.position-neutraal {
-    background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
-    border-color: #3b82f6;
-}
-
-.position-oneens {
-    background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
-    border-color: #ef4444;
-}
-
-.position-empty {
-    background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
-    border-color: #d1d5db;
-    border-style: dashed;
-}
-
-.sticky-header {
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-}
-
-.modal-overlay {
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(4px);
-}
-</style>
 
 <main class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50">
     
@@ -574,4 +515,5 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-<?php require_once '../views/templates/footer.php'; ?> 
+<?php require_once __DIR__ . '/partials/admin-footer.php';
+?> 

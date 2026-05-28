@@ -1,12 +1,10 @@
 <?php
-require_once '../includes/config.php';
-require_once '../includes/Database.php';
-require_once '../includes/functions.php';
+require_once __DIR__ . '/_bootstrap.php';
 
-// Controleer of gebruiker is ingelogd en admin is
-if (!isAdmin()) {
-    redirect('login');
-}
+$adminPageTitle = 'Stemwijzer vragen';
+$adminPageDescription = 'Beheer stellingen';
+$adminActiveNav = 'stemwijzer-vragen';
+require_once __DIR__ . '/partials/admin-header.php';
 
 $db = new Database();
 $message = '';
@@ -65,74 +63,7 @@ try {
     $messageType = 'error';
 }
 
-require_once '../views/templates/header.php';
 ?>
-
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-
-* {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-}
-
-.gradient-bg {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
-
-.question-card {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.question-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-}
-
-.toggle-switch {
-    position: relative;
-    display: inline-block;
-    width: 48px;
-    height: 24px;
-}
-
-.toggle-switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    transition: .4s;
-    border-radius: 24px;
-}
-
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 18px;
-    width: 18px;
-    left: 3px;
-    bottom: 3px;
-    background-color: white;
-    transition: .4s;
-    border-radius: 50%;
-}
-
-input:checked + .slider {
-    background-color: #10b981;
-}
-
-input:checked + .slider:before {
-    transform: translateX(24px);
-}
-</style>
 
 <main class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50">
     
@@ -331,4 +262,5 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-<?php require_once '../views/templates/footer.php'; ?> 
+<?php require_once __DIR__ . '/partials/admin-footer.php';
+?> 

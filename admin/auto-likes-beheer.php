@@ -1,4 +1,9 @@
 <?php
+$adminPageTitle = 'Auto likes';
+$adminPageDescription = 'Automatische like-configuratie';
+$adminActiveNav = 'auto-likes';
+require_once __DIR__ . '/partials/admin-header.php';
+
 /**
  * Auto Likes Beheer Dashboard
  * Beheer van automatische likes simulatie per blog
@@ -9,11 +14,6 @@ require_once '../includes/functions.php';
 require_once '../includes/auth_csrf.php';
 
 $csrf_token = auth_ensure_csrf_token();
-// Controleer of gebruiker is ingelogd en admin is
-if (!isAdmin()) {
-    redirect('login');
-}
-
 $db = new Database();
 
 // Controleer of de benodigde tabellen bestaan
@@ -21,7 +21,6 @@ $db->query("SHOW TABLES LIKE 'auto_likes_settings'");
 $tableExists = $db->single();
 
 if (!$tableExists) {
-    require_once '../views/templates/header.php';
     ?>
     <main class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50">
         <div class="container mx-auto px-4 py-12">
@@ -57,8 +56,8 @@ if (!$tableExists) {
         </div>
     </main>
     <?php
-    require_once '../views/templates/footer.php';
-    exit;
+    require_once __DIR__ . '/partials/admin-footer.php';
+exit;
 }
 
 // Helper functie om instelling op te halen
@@ -255,86 +254,7 @@ $db->query("
 ");
 $recentLogs = $db->resultSet() ?? [];
 
-require_once '../views/templates/header.php';
 ?>
-
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-
-* {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-}
-
-.gradient-bg {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
-
-.card-hover {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.card-hover:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-}
-
-.stat-card {
-    background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.9) 100%);
-    backdrop-filter: blur(10px);
-}
-
-.toggle-switch {
-    position: relative;
-    width: 48px;
-    height: 24px;
-    background-color: #e5e7eb;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.toggle-switch.active {
-    background-color: #10b981;
-}
-
-.toggle-switch::after {
-    content: '';
-    position: absolute;
-    top: 2px;
-    left: 2px;
-    width: 20px;
-    height: 20px;
-    background-color: white;
-    border-radius: 50%;
-    transition: transform 0.3s ease;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-}
-
-.toggle-switch.active::after {
-    transform: translateX(24px);
-}
-
-.blog-row {
-    transition: all 0.2s ease;
-}
-
-.blog-row:hover {
-    background-color: #f9fafb;
-}
-
-.blog-row.disabled {
-    opacity: 0.6;
-}
-
-.pulse-dot {
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
-}
-</style>
 
 <main class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50">
     
@@ -820,4 +740,5 @@ function runCronNow() {
 }
 </script>
 
-<?php require_once '../views/templates/footer.php'; ?>
+<?php require_once __DIR__ . '/partials/admin-footer.php';
+?>

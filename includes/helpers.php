@@ -135,14 +135,24 @@ if (!function_exists('getProfilePhotoUrl')) {
     }
 }
 
+if (!function_exists('pp_normalize_is_admin')) {
+    /**
+     * Normaliseer DB/PDO is_admin waarde naar boolean.
+     * PDO met EMULATE_PREPARES levert vaak string "1" / "0" op.
+     */
+    function pp_normalize_is_admin($value): bool {
+        return (int) $value === 1;
+    }
+}
+
 if (!function_exists('isAdmin')) {
     /**
-     * Check if current user is an admin
-     * 
-     * @return bool True if user is an admin, false otherwise
+     * Check if current user is an admin.
      */
-    function isAdmin() {
-        return isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == 1;
+    function isAdmin(): bool {
+        return isset($_SESSION['user_id'])
+            && isset($_SESSION['is_admin'])
+            && $_SESSION['is_admin'] === true;
     }
 }
 

@@ -9,8 +9,11 @@ require_once __DIR__ . '/../../models/PartyModel.php';
 $partyModel = new PartyModel();
 $dbParties = $partyModel->getAllParties();
 
-$pageTitle = htmlspecialchars($blog->title) . ' | PolitiekPraat';
-$pageDescription = htmlspecialchars(stripMarkdownForSocialMedia($blog->summary, 160));
+$blogUrl = rtrim(URLROOT, '/') . '/blogs/' . $blog->slug;
+$pageTitle = !empty($blog->seo_title) ? (string) $blog->seo_title : (string) $blog->title;
+$pageDescription = !empty($blog->seo_description)
+    ? (string) $blog->seo_description
+    : htmlspecialchars(stripMarkdownForSocialMedia($blog->summary, 160), ENT_QUOTES, 'UTF-8');
 
 if ($blog->image_path) {
     $pageImage = getBlogImageUrl($blog->image_path);
@@ -18,14 +21,32 @@ if ($blog->image_path) {
     $pageImage = rtrim(URLROOT, '/') . '/metadata-foto.png';
 }
 
+$publishedTs = strtotime((string) $blog->published_at) ?: time();
+$modifiedTs = strtotime((string) ($blog->updated_at ?? $blog->published_at)) ?: $publishedTs;
+
 $data = [
     'title' => $pageTitle,
+    'headline' => (string) $blog->title,
     'description' => $pageDescription,
+    'keywords' => $blog->meta_keywords ?? null,
+    'meta_robots' => !empty($blog->meta_robots) ? (string) $blog->meta_robots : null,
+    'canonical_url' => !empty($blog->canonical_url) ? (string) $blog->canonical_url : $blogUrl,
     'image' => $pageImage,
     'og_type' => 'article',
-    'og_url' => rtrim(URLROOT, '/') . '/blogs/' . $blog->slug,
+    'og_url' => $blogUrl,
+    'is_blog' => true,
+    'author' => $blog->author_name,
+    'created_at' => $blog->published_at,
+    'updated_at' => $blog->updated_at ?? $blog->published_at,
     'article_author' => $blog->author_name,
-    'article_published_time' => date('c', strtotime($blog->published_at)),
+    'article_published_time' => date('c', $publishedTs),
+    'article_modified_time' => date('c', $modifiedTs),
+    'article_section' => $blog->category_name ?? null,
+    'breadcrumbs' => [
+        ['name' => 'Home', 'url' => rtrim(URLROOT, '/') . '/'],
+        ['name' => 'Blogs', 'url' => rtrim(URLROOT, '/') . '/blogs'],
+        ['name' => (string) $blog->title, 'url' => $blogUrl],
+    ],
 ];
 
 if (!function_exists('pp_blog_detail_date')) {
@@ -105,13 +126,15 @@ require_once 'views/templates/header.php';
                         <?= (int) ($blog->likes ?? 0) ?>
                     </span>
                 </button>
-                <button type="button"
-                        class="btn btn--ghost btn--sm"
-                        onclick="if (navigator.share) { navigator.share({ title: document.title, url: window.location.href }); } else { navigator.clipboard.writeText(window.location.href); this.querySelector('span').textContent = 'Gekopieerd'; }">
-                    <?= pp_icon('share-2', 16) ?>
-                    <span>Deel</span>
-                </button>
             </div>
+        </div>
+
+        <div class="mt-8 pt-6 border-t border-[color:var(--color-keyline)]">
+            <?= pp_render_component('blog/share-bar', [
+                'blog' => $blog,
+                'shareUrl' => $blogUrl,
+                'layout' => 'inline',
+            ]) ?>
         </div>
     </header>
 
@@ -178,29 +201,6 @@ require_once 'views/templates/header.php';
                                     Auteur
                                 </p>
                             </div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <div class="text-xs uppercase tracking-[0.18em] text-[color:var(--color-ink-muted)] mb-3">
-                            Delen
-                        </div>
-                        <div class="flex gap-2">
-                            <a href="https://twitter.com/intent/tweet?text=<?= urlencode($blog->title) ?>&url=<?= urlencode(rtrim(URLROOT, '/') . '/blogs/' . $blog->slug) ?>"
-                               target="_blank" rel="noopener"
-                               class="btn btn--ghost btn--sm" aria-label="Deel op X">
-                                <?= pp_icon('twitter', 14) ?>
-                            </a>
-                            <a href="https://www.linkedin.com/sharing/share-offsite/?url=<?= urlencode(rtrim(URLROOT, '/') . '/blogs/' . $blog->slug) ?>"
-                               target="_blank" rel="noopener"
-                               class="btn btn--ghost btn--sm" aria-label="Deel op LinkedIn">
-                                <?= pp_icon('linkedin', 14) ?>
-                            </a>
-                            <a href="https://www.facebook.com/sharer/sharer.php?u=<?= urlencode(rtrim(URLROOT, '/') . '/blogs/' . $blog->slug) ?>"
-                               target="_blank" rel="noopener"
-                               class="btn btn--ghost btn--sm" aria-label="Deel op Facebook">
-                                <?= pp_icon('facebook', 14) ?>
-                            </a>
                         </div>
                     </div>
 

@@ -2,12 +2,13 @@
 // Include necessary files
 require_once 'includes/config.php';
 require_once 'includes/Database.php';
+require_once 'includes/helpers.php';
 
 // Set header for XML output
 header('Content-Type: application/xml; charset=utf-8');
 
 // Website domain
-$domain = 'https://politiekpraat.nl';
+$domain = rtrim(URLROOT, '/');
 
 // Current timestamp for lastmod for static pages
 $current_date = date('c');
@@ -66,8 +67,9 @@ foreach ($blogs as $blog) {
     
     // Add featured image if available
     if (!empty($blog->featured_image)) {
+        $imageUrl = getBlogImageUrl($blog->featured_image);
         echo "    <image:image>\n";
-        echo "      <image:loc>" . $domain . "/" . htmlspecialchars($blog->featured_image) . "</image:loc>\n";
+        echo "      <image:loc>" . htmlspecialchars($imageUrl) . "</image:loc>\n";
         echo "      <image:title>" . htmlspecialchars($blog->title) . "</image:title>\n";
         echo "      <image:caption>" . htmlspecialchars($blog->title) . "</image:caption>\n";
         echo "    </image:image>\n";

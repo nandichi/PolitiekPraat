@@ -6,7 +6,7 @@
  * Communicatie via vanilla JS (data-mobile-menu-trigger / data-mobile-menu).
  */
 $isLoggedIn = isset($_SESSION['user_id']);
-$isAdmin = $isLoggedIn && !empty($_SESSION['is_admin']);
+$isAdmin = $isLoggedIn && isAdmin();
 
 $sections = [
     [

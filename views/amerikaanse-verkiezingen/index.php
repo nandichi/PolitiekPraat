@@ -138,9 +138,15 @@ $gemOpkomst = pp_us_get($statistieken, 'gemiddelde_opkomst', null);
     <?php endforeach; ?>
 
     <?php if (empty($verkiezingenPerPeriode)): ?>
-        <div class="text-center py-16 text-[color:var(--color-ink-muted)]">
-            Geen verkiezingsdata beschikbaar.
-        </div>
+        <?= pp_render_component('ui/empty-state', [
+            'title' => 'Verkiezingsdata wordt geladen',
+            'message' => 'Het overzicht van presidentsverkiezingen per tijdvak is momenteel nog niet beschikbaar. Bekijk ondertussen de recente presidenten of vergelijk met Nederlandse verkiezingen.',
+            'icon' => 'calendar',
+            'cta_label' => 'Nederlandse verkiezingen',
+            'cta_href' => '/nederlandse-verkiezingen',
+            'secondary_label' => 'Naar homepage',
+            'secondary_href' => '/',
+        ]) ?>
     <?php endif; ?>
 </section>
 

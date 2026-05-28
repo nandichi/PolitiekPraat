@@ -28,7 +28,7 @@ class AuthController {
         if($row && password_verify($password, $row->password)) {
             $_SESSION['user_id'] = $row->id;
             $_SESSION['username'] = $row->username;
-            $_SESSION['is_admin'] = $row->is_admin;
+            $_SESSION['is_admin'] = pp_normalize_is_admin($row->is_admin);
             return true;
         }
         return false;

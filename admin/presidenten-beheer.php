@@ -1,12 +1,10 @@
 <?php
-require_once '../includes/config.php';
-require_once '../includes/Database.php';
-require_once '../includes/functions.php';
+require_once __DIR__ . '/_bootstrap.php';
 
-// Controleer of gebruiker is ingelogd en admin is
-if (!isAdmin()) {
-    redirect('login');
-}
+$adminPageTitle = 'Presidenten';
+$adminPageDescription = 'Presidenten beheren';
+$adminActiveNav = 'presidenten';
+require_once __DIR__ . '/partials/admin-header.php';
 
 // Database verbinding
 $db = new Database();
@@ -167,68 +165,7 @@ try {
     // Database errors negeren voor statistieken
 }
 
-require_once '../views/templates/header.php';
 ?>
-
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-
-* {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-}
-
-.gradient-bg {
-    background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 50%, #581c87 100%);
-    min-height: 100vh;
-}
-
-.card-hover {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.card-hover:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-}
-
-.log-output {
-    background: #1a1a1a;
-    color: #e5e5e5;
-    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-    font-size: 0.875rem;
-    line-height: 1.5;
-    max-height: 400px;
-    overflow-y: auto;
-}
-
-.status-badge {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.25rem 0.75rem;
-    border-radius: 9999px;
-    font-size: 0.875rem;
-    font-weight: 500;
-}
-
-.status-success { background-color: #dcfce7; color: #166534; }
-.status-warning { background-color: #fef3c7; color: #92400e; }
-.status-error { background-color: #fecaca; color: #991b1b; }
-.status-info { background-color: #dbeafe; color: #1e40af; }
-
-.loading-spinner {
-    border: 2px solid #f3f3f3;
-    border-top: 2px solid #3b82f6;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-</style>
 
 <main class="gradient-bg">
     <div class="container mx-auto px-4 py-8">
@@ -448,4 +385,5 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-<?php require_once '../views/templates/footer.php'; ?> 
+<?php require_once __DIR__ . '/partials/admin-footer.php';
+?> 

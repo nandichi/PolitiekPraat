@@ -107,6 +107,9 @@ $requestPath = parse_url($requestUri, PHP_URL_PATH);
 $pathSegments = explode('/', trim($requestPath, '/'));
 $normalizedPath = '/' . ltrim((string) $requestPath, '/');
 $canonicalUrl = URLROOT . ($normalizedPath === '//' ? '/' : $normalizedPath);
+if (isset($data['canonical_url']) && trim((string) $data['canonical_url']) !== '') {
+    $canonicalUrl = trim((string) $data['canonical_url']);
+}
 
 // Bepaal de huidige pagina op basis van URL structuur
 $currentPage = 'home'; // default
@@ -241,7 +244,13 @@ $defaultPageTitles = [
 
 // Controleer of we specifieke meta data hebben voor deze pagina (bijv. voor blogs)
 if (isset($data['title']) && trim((string) $data['title']) !== '') {
-    $metaTitle = trim((string) $data['title']) . ' - ' . SITENAME;
+    $rawTitle = trim((string) $data['title']);
+    $appendSuffix = $data['title_suffix'] ?? true;
+    if ($appendSuffix === false || stripos($rawTitle, (string) SITENAME) !== false) {
+        $metaTitle = $rawTitle;
+    } else {
+        $metaTitle = $rawTitle . ' - ' . SITENAME;
+    }
 } elseif (isset($defaultPageTitles[$currentPage])) {
     $metaTitle = $defaultPageTitles[$currentPage];
 } else {
@@ -315,7 +324,7 @@ $jsAppVer   = file_exists($jsAppPath) ? filemtime($jsAppPath) : time();
 
     <!-- Additional SEO meta tags -->
     <meta name="author" content="PolitiekPraat">
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="robots" content="<?php echo htmlspecialchars(!empty($data['meta_robots']) ? $data['meta_robots'] : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'); ?>">
     <meta name="language" content="Dutch">
     <meta name="revisit-after" content="7 days">
     <meta name="generator" content="PolitiekPraat CMS">
@@ -349,6 +358,14 @@ $jsAppVer   = file_exists($jsAppPath) ? filemtime($jsAppPath) : time();
 
     <?php if (isset($data['article_published_time'])): ?>
     <meta property="article:published_time" content="<?php echo htmlspecialchars($data['article_published_time']); ?>">
+    <?php endif; ?>
+
+    <?php if (isset($data['article_modified_time'])): ?>
+    <meta property="article:modified_time" content="<?php echo htmlspecialchars($data['article_modified_time']); ?>">
+    <?php endif; ?>
+
+    <?php if (!empty($data['article_section'])): ?>
+    <meta property="article:section" content="<?php echo htmlspecialchars($data['article_section']); ?>">
     <?php endif; ?>
 
     <!-- Twitter Card Meta Tags -->
@@ -519,7 +536,7 @@ $jsAppVer   = file_exists($jsAppPath) ? filemtime($jsAppPath) : time();
             "@type": "WebPage",
             "@id": "<?php echo $canonicalUrl; ?>"
         },
-        "headline": "<?php echo htmlspecialchars($data['title']); ?>",
+        "headline": "<?php echo htmlspecialchars($data['headline'] ?? $data['title']); ?>",
         "description": "<?php echo htmlspecialchars($data['description']); ?>",
         "image": "<?php echo htmlspecialchars($data['image']); ?>",
         "author": {
@@ -538,6 +555,24 @@ $jsAppVer   = file_exists($jsAppPath) ? filemtime($jsAppPath) : time();
         "dateModified": "<?php echo isset($data['updated_at']) ? date('c', strtotime($data['updated_at'])) : date('c'); ?>"
     }
     </script>
+    <?php if (!empty($data['breadcrumbs']) && is_array($data['breadcrumbs'])): ?>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            <?php foreach ($data['breadcrumbs'] as $i => $crumb): ?>
+            {
+                "@type": "ListItem",
+                "position": <?php echo (int) ($i + 1); ?>,
+                "name": "<?php echo htmlspecialchars($crumb['name']); ?>",
+                "item": "<?php echo htmlspecialchars($crumb['url']); ?>"
+            }<?php echo $i < count($data['breadcrumbs']) - 1 ? ',' : ''; ?>
+            <?php endforeach; ?>
+        ]
+    }
+    </script>
+    <?php endif; ?>
     <?php endif; ?>
 
     <?php if(isset($data['is_news']) && $data['is_news']): ?>

@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeBiasAnalysis();
     initializePartyPerspective();
     initializeAudioFeatures();
+    initializeShareBar();
     
     // Load liked blogs from localStorage
     likedBlogs = JSON.parse(localStorage.getItem('likedBlogs') || '{}');
@@ -1804,24 +1805,86 @@ class InstagramStoryGenerator {
 }
 
 // ============================================
+// Share bar (native, copy, GA tracking)
+function initializeShareBar() {
+    document.querySelectorAll('.blog-share-bar').forEach((bar) => {
+        const shareUrl = bar.dataset.shareUrl || window.location.href;
+        const shareTitle = bar.dataset.shareTitle || document.title;
+
+        bar.querySelectorAll('[data-share-action]').forEach((el) => {
+            el.addEventListener('click', async (event) => {
+                const action = el.dataset.shareAction;
+                if (!action) return;
+
+                if (action === 'native') {
+                    event.preventDefault();
+                    if (navigator.share) {
+                        try {
+                            await navigator.share({ title: shareTitle, url: shareUrl });
+                            trackShareEvent('native');
+                        } catch (error) {
+                            if (error.name !== 'AbortError') console.error(error);
+                        }
+                    } else {
+                        await copyShareLink(el, shareUrl);
+                    }
+                    return;
+                }
+
+                if (action === 'copy') {
+                    event.preventDefault();
+                    await copyShareLink(el, shareUrl);
+                } else {
+                    trackShareEvent(action);
+                }
+            });
+        });
+    });
+
+    const storyBtn = document.getElementById('instagramStoryBtn');
+    if (storyBtn) {
+        storyBtn.addEventListener('click', shareToInstagramStory);
+    }
+}
+
+async function copyShareLink(button, url) {
+    try {
+        await navigator.clipboard.writeText(url);
+        const label = button.querySelector('.blog-share-bar__text');
+        if (label) {
+            const original = label.textContent;
+            label.textContent = 'Gekopieerd';
+            setTimeout(() => { label.textContent = original; }, 2000);
+        }
+        showNotification('Link gekopieerd naar klembord', 'success');
+        trackShareEvent('copy');
+    } catch (error) {
+        console.error(error);
+        showNotification('Kopiëren mislukt', 'error');
+    }
+}
+
+function trackShareEvent(channel) {
+    if (typeof gtag === 'function') {
+        gtag('event', 'share', {
+            method: channel,
+            content_type: 'blog',
+            item_id: currentBlogSlug || undefined,
+        });
+    }
+}
+
 // Instagram Story Share Functions
 // ============================================
 async function shareToInstagramStory() {
     const shareButton = document.getElementById('instagramStoryBtn');
-    const originalContent = shareButton.innerHTML;
+    if (!shareButton) return;
     
     // Show loading state
     shareButton.disabled = true;
-    shareButton.innerHTML = `
-        <div class="absolute inset-0 bg-gradient-to-r from-pink-500 via-purple-500 to-orange-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-        <div class="relative flex items-center gap-3">
-            <svg class="w-6 h-6 animate-spin" fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-            </svg>
-            <span class="hidden sm:block text-sm font-semibold">Genereren...</span>
-        </div>
-    `;
+    shareButton.dataset.loading = '1';
+    const label = shareButton.querySelector('.blog-share-bar__text');
+    if (label) label.textContent = 'Genereren...';
     
     try {
         // Get blog data from PHP
@@ -1860,7 +1923,8 @@ async function shareToInstagramStory() {
     } finally {
         // Restore button state
         shareButton.disabled = false;
-        shareButton.innerHTML = originalContent;
+        delete shareButton.dataset.loading;
+        if (label) label.textContent = 'Story';
     }
 }
 

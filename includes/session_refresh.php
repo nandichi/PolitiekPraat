@@ -40,7 +40,7 @@ if (!defined('SESSION_REFRESH_INCLUDED')) {
             // Update session with fresh data
             $_SESSION['username'] = $freshUser->username;
             $_SESSION['profile_photo'] = $freshUser->profile_photo;
-            $_SESSION['is_admin'] = $freshUser->is_admin;
+            $_SESSION['is_admin'] = pp_normalize_is_admin($freshUser->is_admin);
             
             // Optional: Add bio to session if needed
             if (isset($freshUser->bio)) {

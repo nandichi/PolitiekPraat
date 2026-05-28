@@ -1,14 +1,14 @@
 <?php
+$adminPageTitle = 'Cron e-mail test';
+$adminPageDescription = 'E-mail cron test';
+$adminActiveNav = 'dashboard';
+require_once __DIR__ . '/partials/admin-header.php';
+
 // Test pagina voor cron job email functionaliteit
 require_once '../includes/config.php';
 require_once '../includes/Database.php';
 require_once '../includes/functions.php';
 require_once '../includes/mail_helper.php';
-
-// Controleer of gebruiker is ingelogd en admin is
-if (!isAdmin()) {
-    redirect('login');
-}
 
 // Verwerk test email verzending
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -74,34 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-require_once '../views/templates/header.php';
 ?>
-
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-
-* {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-}
-
-.gradient-bg {
-    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-}
-
-.card-hover {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.card-hover:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-}
-
-.test-card {
-    background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.9) 100%);
-    backdrop-filter: blur(10px);
-}
-</style>
 
 <main class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50">
     
@@ -315,4 +288,5 @@ require_once '../views/templates/header.php';
     </div>
 </main>
 
-<?php require_once '../views/templates/footer.php'; ?> 
+<?php require_once __DIR__ . '/partials/admin-footer.php';
+?> 

@@ -46,7 +46,7 @@ if (!function_exists('pp_thema_icon')) {
                 $title = $thema['title'] ?? '';
                 $desc = $thema['description'] ?? '';
                 ?>
-                <a href="<?= pp_e(pp_url('/themas/view/' . urlencode((string) $slug))) ?>"
+                <a href="<?= pp_e(pp_url('/thema/' . urlencode((string) $slug))) ?>"
                    class="keyline-card p-6 transition hover:border-[color:var(--color-line-strong)] flex flex-col">
                     <div class="text-[color:var(--color-hague)] mb-4">
                         <?= pp_icon(pp_thema_icon($themaIconMap, $slug), 26) ?>
@@ -78,7 +78,7 @@ if (!function_exists('pp_thema_icon')) {
             $desc = $thema['description'] ?? '';
             $stats = $thema['stats'] ?? [];
             ?>
-            <a href="<?= pp_e(pp_url('/themas/view/' . urlencode((string) $slug))) ?>"
+            <a href="<?= pp_e(pp_url('/thema/' . urlencode((string) $slug))) ?>"
                class="keyline-card p-5 transition hover:border-[color:var(--color-line-strong)] flex flex-col">
                 <div class="flex items-start gap-3 mb-3">
                     <span class="text-[color:var(--color-hague)] flex-shrink-0 mt-0.5"><?= pp_icon(pp_thema_icon($themaIconMap, $slug), 22) ?></span>

@@ -1,15 +1,15 @@
 <?php
+$adminPageTitle = 'Nieuws scraper';
+$adminPageDescription = 'Beheer nieuwsbronnen en scrapers';
+$adminActiveNav = 'news-scraper';
+require_once __DIR__ . '/partials/admin-header.php';
+
 // Configuratie voor het beheren van automatische news scraping
 require_once '../includes/config.php';
 require_once '../includes/Database.php';
 require_once '../includes/functions.php';
 require_once '../models/NewsModel.php';
 require_once '../includes/NewsScraper.php';
-
-// Controleer of gebruiker is ingelogd en admin is
-if (!isAdmin()) {
-    redirect('login');
-}
 
 // Database verbinding
 $db = new Database();
@@ -152,58 +152,7 @@ if (file_exists($logFile)) {
     $recentLogs = array_reverse($logs);
 }
 
-require_once '../views/templates/header.php';
 ?>
-
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-
-* {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-}
-
-.gradient-bg {
-    background: linear-gradient(135deg, #0f766e 0%, #059669 100%);
-}
-
-.card-hover {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.card-hover:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-}
-
-.stat-card {
-    background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.9) 100%);
-    backdrop-filter: blur(10px);
-}
-
-.scraper-pulse {
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
-}
-
-.log-entry {
-    font-family: 'Courier New', monospace;
-    font-size: 0.85rem;
-    line-height: 1.4;
-}
-
-.source-status {
-    transition: all 0.3s ease;
-}
-
-.source-status:hover {
-    transform: translateX(5px);
-}
-</style>
 
 <main class="min-h-screen bg-gradient-to-br from-slate-50 via-emerald-50/30 to-teal-50">
     
@@ -619,4 +568,5 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-<?php require_once '../views/templates/footer.php'; ?> 
+<?php require_once __DIR__ . '/partials/admin-footer.php';
+?> 

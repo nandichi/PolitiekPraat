@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * Admin UI voor OAuth 2.0 clients (registreren, bekijken, verwijderen).
  *
@@ -6,26 +8,14 @@
  * database/migrations/create_oauth_tables.sql.
  */
 
-declare(strict_types=1);
-
-require_once __DIR__ . '/../includes/config.php';
-require_once __DIR__ . '/../includes/Database.php';
-require_once __DIR__ . '/../includes/functions.php';
+require_once __DIR__ . '/_bootstrap.php';
 require_once __DIR__ . '/../includes/oauth/OAuthServer.php';
-
-if (!isAdmin()) {
-    redirect('login');
-}
 
 use PolitiekPraat\OAuth\OAuthServer;
 use PolitiekPraat\OAuth\Scopes;
 
 $server  = new OAuthServer(new Database());
 $clients = $server->clients();
-
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
 
 $oneTimeSecret = null;
 $oneTimeClientId = null;
@@ -64,7 +54,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $all = $clients->all();
 
-require_once __DIR__ . '/../views/templates/header.php';
+$adminPageTitle = 'OAuth clients';
+$adminPageDescription = 'OAuth applicaties';
+$adminActiveNav = 'oauth';
+require_once __DIR__ . '/partials/admin-header.php';
 ?>
 <main class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50 py-10">
     <div class="container mx-auto px-4 max-w-6xl">
@@ -166,5 +159,4 @@ require_once __DIR__ . '/../views/templates/header.php';
         </section>
     </div>
 </main>
-<?php
-require_once __DIR__ . '/../views/templates/footer.php';
+<?php require_once __DIR__ . '/partials/admin-footer.php';

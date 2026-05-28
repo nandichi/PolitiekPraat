@@ -110,11 +110,26 @@ if (!empty($statistieken['uitslagen'])) {
         'title' => count($moties) . ' moties gevonden',
     ]) ?>
 
-    <?php if (empty($moties)): ?>
-        <div class="text-center py-16 text-[color:var(--color-ink-muted)]">
-            <div class="flex justify-center mb-4 text-[color:var(--color-ink-faint)]"><?= pp_icon('inbox', 32) ?></div>
-            Geen moties gevonden. Pas de filters aan.
-        </div>
+    <?php if (empty($moties)):
+        $totalMoties = (int) ($statistieken['total_moties'] ?? 0);
+        $hasActiveFilters = !empty($filters['search']) || !empty($filters['thema']) || !empty($filters['onderwerp']) || !empty($filters['uitslag']) || !empty($filters['jaar']);
+        if ($totalMoties === 0): ?>
+        <?= pp_render_component('ui/empty-state', [
+            'title' => 'Nog geen moties in het archief',
+            'message' => 'We bouwen het stemmentracker-archief uit. Zodra moties zijn toegevoegd, verschijnen ze hier met stemgedrag per partij.',
+            'icon' => 'inbox',
+            'cta_label' => 'Terug naar homepage',
+            'cta_href' => '/',
+        ]) ?>
+        <?php else: ?>
+        <?= pp_render_component('ui/empty-state', [
+            'title' => 'Geen moties voor deze filters',
+            'message' => 'Er zijn wel moties in het archief, maar geen enkele voldoet aan je huidige zoekopdracht. Pas de filters aan of wis je selectie.',
+            'icon' => 'filter',
+            'cta_label' => 'Filters wissen',
+            'cta_href' => '/stemmentracker',
+        ]) ?>
+        <?php endif; ?>
     <?php else: ?>
         <div class="space-y-4">
             <?php foreach ($moties as $motie): ?>

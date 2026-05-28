@@ -1,4 +1,9 @@
 <?php
+$adminPageTitle = 'API sleutels';
+$adminPageDescription = 'API-sleutels beheren';
+$adminActiveNav = 'api-keys';
+require_once __DIR__ . '/partials/admin-header.php';
+
 /**
  * API Sleutels Beheer
  * Genereer en beheer API-sleutels voor het publiceren van blogs via de API
@@ -7,10 +12,6 @@ require_once '../includes/config.php';
 require_once '../includes/Database.php';
 require_once '../includes/functions.php';
 
-if (!isAdmin()) {
-    redirect('login');
-}
-
 $db = new Database();
 
 // Controleer of de api_keys tabel bestaat
@@ -18,7 +19,6 @@ $db->query("SHOW TABLES LIKE 'api_keys'");
 $tableExists = $db->single();
 
 if (!$tableExists) {
-    require_once '../views/templates/header.php';
     ?>
     <main class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50">
         <div class="container mx-auto px-4 py-12">
@@ -52,8 +52,8 @@ if (!$tableExists) {
         </div>
     </main>
     <?php
-    require_once '../views/templates/footer.php';
-    exit;
+    require_once __DIR__ . '/partials/admin-footer.php';
+exit;
 }
 
 $message = null;
@@ -130,20 +130,7 @@ if (empty($_SESSION['csrf_token'])) {
 $db->query("SELECT ak.*, u.username FROM api_keys ak JOIN users u ON ak.user_id = u.id ORDER BY ak.created_at DESC");
 $apiKeys = $db->resultSet();
 
-require_once '../views/templates/header.php';
 ?>
-
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-
-* { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
-
-.key-display {
-    font-family: 'Courier New', Courier, monospace;
-    word-break: break-all;
-    letter-spacing: 0.03em;
-}
-</style>
 
 <main class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50">
     <div class="container mx-auto px-4 py-10 max-w-5xl">
@@ -388,4 +375,5 @@ function copyApiKey() {
 }
 </script>
 
-<?php require_once '../views/templates/footer.php'; ?>
+<?php require_once __DIR__ . '/partials/admin-footer.php';
+?>

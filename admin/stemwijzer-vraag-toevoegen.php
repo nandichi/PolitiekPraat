@@ -1,12 +1,10 @@
 <?php
-require_once '../includes/config.php';
-require_once '../includes/Database.php';
-require_once '../includes/functions.php';
+require_once __DIR__ . '/_bootstrap.php';
 
-// Controleer of gebruiker is ingelogd en admin is
-if (!isAdmin()) {
-    redirect('login');
-}
+$adminPageTitle = 'Vraag toevoegen';
+$adminPageDescription = 'Nieuwe stemwijzer-stelling';
+$adminActiveNav = 'stemwijzer-vragen';
+require_once __DIR__ . '/partials/admin-header.php';
 
 $db = new Database();
 $message = '';
@@ -124,59 +122,7 @@ try {
     $parties = [];
 }
 
-require_once '../views/templates/header.php';
 ?>
-
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-
-* {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-}
-
-.gradient-bg {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
-
-.form-card {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-}
-
-.floating-label {
-    position: relative;
-}
-
-.floating-label input,
-.floating-label textarea {
-    transition: all 0.2s ease;
-}
-
-.floating-label label {
-    position: absolute;
-    left: 12px;
-    top: 12px;
-    color: #6b7280;
-    transition: all 0.2s ease;
-    pointer-events: none;
-    background: white;
-    padding: 0 4px;
-}
-
-.floating-label input:focus + label,
-.floating-label textarea:focus + label,
-.floating-label input:not(:placeholder-shown) + label,
-.floating-label textarea:not(:placeholder-shown) + label {
-    top: -8px;
-    left: 8px;
-    font-size: 0.75rem;
-    color: #4f46e5;
-}
-
-.character-counter {
-    transition: color 0.2s ease;
-}
-</style>
 
 <main class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50">
     
@@ -638,4 +584,5 @@ function clearAllPartyPositions() {
 }
 </script>
 
-<?php require_once '../views/templates/footer.php'; ?> 
+<?php require_once __DIR__ . '/partials/admin-footer.php';
+?> 

@@ -16,7 +16,10 @@ if (!defined('FUNCTIONS_INCLUDED')) {
 
     if (!function_exists('redirect')) {
         function redirect($page) {
-            header('location: ' . URLROOT . '/' . $page);
+            if (!headers_sent()) {
+                header('Location: ' . URLROOT . '/' . ltrim((string) $page, '/'));
+            }
+            exit;
         }
     }
 
@@ -26,12 +29,6 @@ if (!defined('FUNCTIONS_INCLUDED')) {
         }
     }
 
-    // Don't redeclare if it already exists in helpers.php
-    if (!function_exists('isAdmin')) {
-        function isAdmin() {
-            return isset($_SESSION['user_id']) && isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true;
-        }
-    }
 
     if (!function_exists('sanitize')) {
         function sanitize($dirty) {
