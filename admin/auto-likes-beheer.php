@@ -1,17 +1,15 @@
 <?php
-$adminPageTitle = 'Auto likes';
-$adminPageDescription = 'Automatische like-configuratie';
-$adminActiveNav = 'auto-likes';
-require_once __DIR__ . '/partials/admin-header.php';
-
 /**
  * Auto Likes Beheer Dashboard
  * Beheer van automatische likes simulatie per blog
  */
-require_once '../includes/config.php';
-require_once '../includes/Database.php';
-require_once '../includes/functions.php';
-require_once '../includes/auth_csrf.php';
+require_once __DIR__ . '/_bootstrap.php';
+require_once __DIR__ . '/../includes/auth_csrf.php';
+
+$adminPageTitle = 'Auto likes';
+$adminPageDescription = 'Automatische like-configuratie';
+$adminActiveNav = 'auto-likes';
+require_once __DIR__ . '/partials/admin-header.php';
 
 $csrf_token = auth_ensure_csrf_token();
 $db = new Database();

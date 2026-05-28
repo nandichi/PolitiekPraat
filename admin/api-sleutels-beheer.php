@@ -1,16 +1,14 @@
 <?php
-$adminPageTitle = 'API sleutels';
-$adminPageDescription = 'API-sleutels beheren';
-$adminActiveNav = 'api-keys';
-require_once __DIR__ . '/partials/admin-header.php';
-
 /**
  * API Sleutels Beheer
  * Genereer en beheer API-sleutels voor het publiceren van blogs via de API
  */
-require_once '../includes/config.php';
-require_once '../includes/Database.php';
-require_once '../includes/functions.php';
+require_once __DIR__ . '/_bootstrap.php';
+
+$adminPageTitle = 'API sleutels';
+$adminPageDescription = 'API-sleutels beheren';
+$adminActiveNav = 'api-keys';
+require_once __DIR__ . '/partials/admin-header.php';
 
 $db = new Database();
 

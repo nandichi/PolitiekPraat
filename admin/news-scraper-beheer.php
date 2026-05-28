@@ -1,15 +1,13 @@
 <?php
+// Configuratie voor het beheren van automatische news scraping
+require_once __DIR__ . '/_bootstrap.php';
+require_once __DIR__ . '/../models/NewsModel.php';
+require_once __DIR__ . '/../includes/NewsScraper.php';
+
 $adminPageTitle = 'Nieuws scraper';
 $adminPageDescription = 'Beheer nieuwsbronnen en scrapers';
 $adminActiveNav = 'news-scraper';
 require_once __DIR__ . '/partials/admin-header.php';
-
-// Configuratie voor het beheren van automatische news scraping
-require_once '../includes/config.php';
-require_once '../includes/Database.php';
-require_once '../includes/functions.php';
-require_once '../models/NewsModel.php';
-require_once '../includes/NewsScraper.php';
 
 // Database verbinding
 $db = new Database();

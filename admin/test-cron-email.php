@@ -1,14 +1,12 @@
 <?php
+// Test pagina voor cron job email functionaliteit
+require_once __DIR__ . '/_bootstrap.php';
+require_once __DIR__ . '/../includes/mail_helper.php';
+
 $adminPageTitle = 'Cron e-mail test';
 $adminPageDescription = 'E-mail cron test';
 $adminActiveNav = 'dashboard';
 require_once __DIR__ . '/partials/admin-header.php';
-
-// Test pagina voor cron job email functionaliteit
-require_once '../includes/config.php';
-require_once '../includes/Database.php';
-require_once '../includes/functions.php';
-require_once '../includes/mail_helper.php';
 
 // Verwerk test email verzending
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
