@@ -4,6 +4,7 @@ declare(strict_types=1);
 /**
  * Standaard bootstrap voor admin-pagina's: config, database, helpers + guard.
  */
+require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../includes/config.php';
 require_once __DIR__ . '/../includes/Database.php';
 require_once __DIR__ . '/../includes/functions.php';
