@@ -1524,14 +1524,48 @@ class InstagramStoryGenerator {
         return canvas;
     }
 
+    isCrossOrigin(url) {
+        try {
+            return new URL(url, window.location.href).origin !== window.location.origin;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    // Herschrijf een politiekpraat-URL naar de huidige origin (bv. www vs non-www
+    // of http vs https). Zo blijft de foto same-origin, 'tainted' de canvas niet
+    // en belandt de foto ook echt in de gedownloade/gedeelde afbeelding.
+    normalizeImageUrl(url) {
+        try {
+            const u = new URL(url, window.location.href);
+            const here = window.location;
+            if (u.origin === here.origin) return u.href;
+            const stripWww = (host) => host.replace(/^www\./i, '');
+            if (stripWww(u.hostname) === stripWww(here.hostname)) {
+                u.protocol = here.protocol;
+                u.host = here.host;
+                return u.href;
+            }
+            return u.href;
+        } catch (e) {
+            return url;
+        }
+    }
+
     loadImage(url) {
-        return new Promise((resolve, reject) => {
+        const finalUrl = this.normalizeImageUrl(url);
+        const attempt = (useCors) => new Promise((resolve, reject) => {
             const img = new Image();
-            img.crossOrigin = 'anonymous';
+            if (useCors) img.crossOrigin = 'anonymous';
             img.onload = () => resolve(img);
-            img.onerror = () => reject(new Error('Failed to load image'));
-            img.src = url;
+            img.onerror = () => reject(new Error('Story: afbeelding kon niet laden'));
+            img.src = finalUrl;
         });
+
+        // Same-origin: laad als gewone <img> (geen taint, toBlob blijft werken).
+        if (!this.isCrossOrigin(finalUrl)) return attempt(false);
+        // Cross-origin: probeer met CORS, val anders terug op een gewone load.
+        return attempt(true).catch(() => attempt(false));
     }
 
     async drawPhoto(ctx) {
@@ -1597,23 +1631,37 @@ class InstagramStoryGenerator {
 
     drawTopBrand(ctx) {
         // Subtiele scrim bovenaan zodat de witte wordmark leesbaar blijft op de foto
-        const scrim = ctx.createLinearGradient(0, 0, 0, 260);
-        scrim.addColorStop(0, 'rgba(20, 19, 17, 0.55)');
+        const scrim = ctx.createLinearGradient(0, 0, 0, 280);
+        scrim.addColorStop(0, 'rgba(20, 19, 17, 0.58)');
         scrim.addColorStop(1, 'rgba(20, 19, 17, 0)');
         ctx.fillStyle = scrim;
-        ctx.fillRect(0, 0, this.width, 260);
+        ctx.fillRect(0, 0, this.width, 280);
 
-        const size = 64;
+        const size = 60;
         const x = this.pad;
-        const y = 64;
+        const y = 62;
         this.drawLogoBadge(ctx, x, y, size);
+
+        // Dunne lichte rand zodat het navy badge ook op donkere foto's contrast houdt
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.28)';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(x - 1, y - 1, size + 2, size + 2);
 
         ctx.save();
         ctx.textAlign = 'left';
         ctx.textBaseline = 'middle';
         ctx.fillStyle = '#ffffff';
-        ctx.font = `600 40px ${this.fontDisplay}`;
-        ctx.fillText('PolitiekPraat', x + size + 22, y + size / 2 + 3);
+        ctx.font = `700 40px ${this.fontDisplay}`;
+        const wordX = x + size + 22;
+        const wordY = y + size / 2 + 2;
+        ctx.fillText('PolitiekPraat', wordX, wordY);
+
+        // Terracotta merk-dot, net als de header-wordmark
+        const wordWidth = ctx.measureText('PolitiekPraat').width;
+        ctx.fillStyle = this.colors.terracotta;
+        ctx.beginPath();
+        ctx.arc(wordX + wordWidth + 14, wordY - 9, 7, 0, Math.PI * 2);
+        ctx.fill();
         ctx.restore();
     }
 
@@ -1737,24 +1785,24 @@ class InstagramStoryGenerator {
         ctx.stroke();
     }
 
+    // Exacte favicon (images/favicon.svg): navy vierkant, twee witte P's, rode streep.
     drawLogoBadge(ctx, x, y, size) {
-        const r = Math.round(size * 0.2);
-        ctx.fillStyle = this.colors.hague;
-        this.roundRect(ctx, x, y, size, size, r);
-        ctx.fill();
-
+        const scale = size / 32;
         ctx.save();
-        ctx.fillStyle = '#ffffff';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.font = `700 ${Math.round(size * 0.46)}px ${this.fontSans}`;
-        ctx.fillText('PP', x + size / 2, y + size / 2 - size * 0.05);
-        ctx.restore();
+        ctx.translate(x, y);
+        ctx.scale(scale, scale);
 
-        ctx.fillStyle = this.colors.terracotta;
-        const lw = Math.round(size * 0.46);
-        const lh = Math.max(3, Math.round(size * 0.07));
-        ctx.fillRect(x + (size - lw) / 2, y + Math.round(size * 0.72), lw, lh);
+        ctx.fillStyle = '#1a365d';
+        ctx.fillRect(0, 0, 32, 32);
+
+        ctx.fillStyle = '#ffffff';
+        ctx.fill(new Path2D('M8 8h6c1.7 0 3 1.3 3 3s-1.3 3-3 3h-2v6h-4V8z'));
+        ctx.fill(new Path2D('M19 8h6c1.7 0 3 1.3 3 3s-1.3 3-3 3h-2v6h-4V8z'));
+
+        ctx.fillStyle = '#c41e3a';
+        ctx.fillRect(8, 24, 16, 2);
+
+        ctx.restore();
     }
 
     fitTitle(ctx, text, maxWidth, maxLines, maxHeight) {
