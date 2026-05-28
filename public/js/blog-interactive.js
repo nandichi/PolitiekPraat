@@ -1568,13 +1568,39 @@ class InstagramStoryGenerator {
         return attempt(true).catch(() => attempt(false));
     }
 
+    // Bouw een same-origin proxy-URL voor de huidige origin (niet urlRoot, want
+    // dat kan www/non-www verschillen en weer 'tainten'). De proxy serveert de
+    // externe foto vanaf onze eigen host, zodat de canvas hem kan inlezen.
+    proxyUrl(imageUrl) {
+        let path = '';
+        try {
+            path = new URL(urlRoot || '/', window.location.href).pathname.replace(/\/+$/, '');
+        } catch (e) {
+            path = '';
+        }
+        const proxy = new URL(path + '/controllers/blogs/story-image-proxy.php', window.location.origin);
+        proxy.searchParams.set('url', imageUrl);
+        return proxy.href;
+    }
+
+    // Bepaal de bron die de canvas zonder taint kan tekenen:
+    // - same-origin (geüploade foto): rechtstreeks (genormaliseerd)
+    // - externe link: via de same-origin image-proxy
+    resolveImageSource(url) {
+        const normalized = this.normalizeImageUrl(url);
+        if (this.isCrossOrigin(normalized)) {
+            return this.proxyUrl(url);
+        }
+        return normalized;
+    }
+
     async drawPhoto(ctx) {
         const area = { x: 0, y: 0, w: this.width, h: this.photoHeight };
         let drew = false;
 
         if (this.imageUrl) {
             try {
-                const img = await this.loadImage(this.imageUrl);
+                const img = await this.loadImage(this.resolveImageSource(this.imageUrl));
                 ctx.save();
                 ctx.beginPath();
                 ctx.rect(area.x, area.y, area.w, area.h);
@@ -1618,15 +1644,6 @@ class InstagramStoryGenerator {
         g.addColorStop(1, this.colors.hagueDark);
         ctx.fillStyle = g;
         ctx.fillRect(area.x, area.y, area.w, area.h);
-
-        ctx.save();
-        ctx.globalAlpha = 0.10;
-        ctx.fillStyle = '#ffffff';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.font = `600 220px ${this.fontDisplay}`;
-        ctx.fillText('PP', this.width / 2, area.h / 2 + 30);
-        ctx.restore();
     }
 
     drawTopBrand(ctx) {
@@ -1637,31 +1654,14 @@ class InstagramStoryGenerator {
         ctx.fillStyle = scrim;
         ctx.fillRect(0, 0, this.width, 280);
 
-        const size = 60;
-        const x = this.pad;
-        const y = 62;
-        this.drawLogoBadge(ctx, x, y, size);
-
-        // Dunne lichte rand zodat het navy badge ook op donkere foto's contrast houdt
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.28)';
-        ctx.lineWidth = 2;
-        ctx.strokeRect(x - 1, y - 1, size + 2, size + 2);
-
+        // Wordmark zoals in de site-header: alleen "PolitiekPraat" in wit,
+        // zonder PP-badge en zonder terracotta dot.
         ctx.save();
         ctx.textAlign = 'left';
         ctx.textBaseline = 'middle';
         ctx.fillStyle = '#ffffff';
-        ctx.font = `700 40px ${this.fontDisplay}`;
-        const wordX = x + size + 22;
-        const wordY = y + size / 2 + 2;
-        ctx.fillText('PolitiekPraat', wordX, wordY);
-
-        // Terracotta merk-dot, net als de header-wordmark
-        const wordWidth = ctx.measureText('PolitiekPraat').width;
-        ctx.fillStyle = this.colors.terracotta;
-        ctx.beginPath();
-        ctx.arc(wordX + wordWidth + 14, wordY - 9, 7, 0, Math.PI * 2);
-        ctx.fill();
+        ctx.font = `700 48px ${this.fontDisplay}`;
+        ctx.fillText('PolitiekPraat', this.pad, 92);
         ctx.restore();
     }
 
@@ -1783,26 +1783,6 @@ class InstagramStoryGenerator {
         ctx.lineTo(bx + 15, by);
         ctx.lineTo(bx + 1, by + 13);
         ctx.stroke();
-    }
-
-    // Exacte favicon (images/favicon.svg): navy vierkant, twee witte P's, rode streep.
-    drawLogoBadge(ctx, x, y, size) {
-        const scale = size / 32;
-        ctx.save();
-        ctx.translate(x, y);
-        ctx.scale(scale, scale);
-
-        ctx.fillStyle = '#1a365d';
-        ctx.fillRect(0, 0, 32, 32);
-
-        ctx.fillStyle = '#ffffff';
-        ctx.fill(new Path2D('M8 8h6c1.7 0 3 1.3 3 3s-1.3 3-3 3h-2v6h-4V8z'));
-        ctx.fill(new Path2D('M19 8h6c1.7 0 3 1.3 3 3s-1.3 3-3 3h-2v6h-4V8z'));
-
-        ctx.fillStyle = '#c41e3a';
-        ctx.fillRect(8, 24, 16, 2);
-
-        ctx.restore();
     }
 
     fitTitle(ctx, text, maxWidth, maxLines, maxHeight) {
