@@ -1199,15 +1199,6 @@
             "opsz" 144;
         white-space: nowrap;
     }
-    .site-header__brand-dot {
-        display: inline-block;
-        width: 0.5em;
-        height: 0.5em;
-        background-color: var(--color-terracotta);
-        border-radius: 999px;
-        margin-inline-start: 0.2em;
-        vertical-align: 0.18em;
-    }
     .site-nav {
         display: none;
         gap: 1.5rem;
@@ -1256,6 +1247,7 @@
         align-items: center;
         gap: 1rem;
         padding-block: 0.5rem;
+        min-width: 0;
     }
     .breaking-bar__label {
         font-size: var(--text-tag);
@@ -1265,12 +1257,62 @@
         color: var(--color-terracotta);
         flex-shrink: 0;
     }
-    .breaking-bar__content {
+    .breaking-bar__marquee {
         flex: 1;
+        min-width: 0;
         overflow: hidden;
+    }
+    .breaking-bar__track {
+        display: flex;
+        align-items: center;
+    }
+    .breaking-bar__content {
+        flex-shrink: 0;
         white-space: nowrap;
-        text-overflow: ellipsis;
         color: var(--color-ink);
+    }
+    .breaking-bar__content--clone {
+        display: none;
+    }
+    @media (max-width: 768px) {
+        .breaking-bar__marquee {
+            overflow: hidden;
+        }
+        .breaking-bar__track {
+            width: max-content;
+            animation: breaking-bar-scroll 18s linear infinite;
+        }
+        .breaking-bar__content {
+            padding-inline-end: 2rem;
+        }
+        .breaking-bar__content--clone {
+            display: inline;
+        }
+    }
+    @media (min-width: 769px) {
+        .breaking-bar__track {
+            overflow: hidden;
+        }
+        .breaking-bar__content {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+    @keyframes breaking-bar-scroll {
+        from {
+            transform: translateX(0);
+        }
+        to {
+            transform: translateX(-50%);
+        }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .breaking-bar__track {
+            animation: none;
+        }
+        .breaking-bar__content--clone {
+            display: none;
+        }
     }
 
     /* === Theme toggle === */

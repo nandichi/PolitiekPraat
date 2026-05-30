@@ -23,7 +23,7 @@ $username = $_SESSION['username'] ?? '';
 <header class="site-header" role="banner">
     <div class="pp-container site-header__inner">
         <a href="<?= pp_e(pp_url('/')) ?>" class="site-header__brand" aria-label="<?= pp_e(defined('SITENAME') ? SITENAME : 'PolitiekPraat') ?> - home">
-            <?= pp_e(defined('SITENAME') ? SITENAME : 'PolitiekPraat') ?><span class="site-header__brand-dot" aria-hidden="true"></span>
+            <?= pp_e(defined('SITENAME') ? SITENAME : 'PolitiekPraat') ?>
         </a>
 
         <nav class="site-nav" aria-label="Hoofdnavigatie">
