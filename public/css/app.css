@@ -1263,11 +1263,13 @@
         overflow: hidden;
     }
     .breaking-bar__track {
-        display: flex;
+        display: inline-flex;
+        flex-wrap: nowrap;
         align-items: center;
+        vertical-align: top;
     }
     .breaking-bar__content {
-        flex-shrink: 0;
+        flex: 0 0 auto;
         white-space: nowrap;
         color: var(--color-ink);
     }
@@ -1275,9 +1277,6 @@
         display: none;
     }
     @media (max-width: 768px) {
-        .breaking-bar__marquee {
-            overflow: hidden;
-        }
         .breaking-bar__track {
             width: max-content;
             animation: breaking-bar-scroll 18s linear infinite;
@@ -1286,16 +1285,19 @@
             padding-inline-end: 2rem;
         }
         .breaking-bar__content--clone {
-            display: inline;
+            display: block;
         }
     }
     @media (min-width: 769px) {
         .breaking-bar__track {
+            display: flex;
+            max-width: 100%;
             overflow: hidden;
         }
         .breaking-bar__content {
             overflow: hidden;
             text-overflow: ellipsis;
+            min-width: 0;
         }
     }
     @keyframes breaking-bar-scroll {
