@@ -47,7 +47,10 @@ $metaDescriptions = [
     'amerikaanse-verkiezingen' => 'Ontdek de complete geschiedenis van Amerikaanse presidentsverkiezingen van 1789 tot heden. Van George Washington tot Joe Biden - alle verkiezingen, statistieken en presidentiële races in detail.',
 
     // Nederlandse verkiezingen
-    'nederlandse-verkiezingen' => 'Verken 175 jaar Nederlandse democratie en parlementaire geschiedenis. Van Thorbeckiaanse grondwet tot moderne coalitiekabinetten - alle verkiezingen, ministers-presidenten en politieke ontwikkelingen.'
+    'nederlandse-verkiezingen' => 'Verken 175 jaar Nederlandse democratie en parlementaire geschiedenis. Van Thorbeckiaanse grondwet tot moderne coalitiekabinetten - alle verkiezingen, ministers-presidenten en politieke ontwikkelingen.',
+
+    // Midterms 2026
+    'midterms-2026' => 'Volg de Amerikaanse tussentijdse verkiezingen van 2026: live voorspellingen, interactieve kaarten van Senaat, Huis en gouverneursraces, voorverkiezingen, referenda en uitleg in het Nederlands.'
 ];
 
 // Define keywords for each page - Uitgebreide versie voor alle pagina's
@@ -98,7 +101,10 @@ $metaKeywords = [
     'amerikaanse-verkiezingen' => 'Amerikaanse verkiezingen, presidentsverkiezingen, verkiezingsgeschiedenis, George Washington, Joe Biden, kiesmannen, Democrats, Republicans, Electoral College, presidenten, verkiezingen geschiedenis',
 
     // Nederlandse verkiezingen
-    'nederlandse-verkiezingen' => 'Nederlandse verkiezingen, Tweede Kamer verkiezingen, Nederlandse democratie, ministers-presidenten, politieke geschiedenis, Thorbeckiaanse grondwet, coalitiekabinetten, parlementaire democratie, Nederlandse politiek, verkiezingsgeschiedenis'
+    'nederlandse-verkiezingen' => 'Nederlandse verkiezingen, Tweede Kamer verkiezingen, Nederlandse democratie, ministers-presidenten, politieke geschiedenis, Thorbeckiaanse grondwet, coalitiekabinetten, parlementaire democratie, Nederlandse politiek, verkiezingsgeschiedenis',
+
+    // Midterms 2026
+    'midterms-2026' => 'midterms 2026, Amerikaanse tussentijdse verkiezingen, Senaat 2026, Huis van Afgevaardigden, gouverneursraces, swing states, Polymarket odds, voorspellingen, Democraten, Republikeinen, congressional districts, verkiezingskaart'
 ];
 
 // Get current page from URL - Verbeterde detectie voor alle pagina types
@@ -236,6 +242,7 @@ $defaultPageTitles = [
     'resultaten' => 'Jouw PartijMeter resultaten - PolitiekPraat',
     'amerikaanse-verkiezingen' => 'Amerikaanse verkiezingen: geschiedenis en statistieken - PolitiekPraat',
     'nederlandse-verkiezingen' => 'Nederlandse verkiezingen: 175 jaar democratie - PolitiekPraat',
+    'midterms-2026' => 'Amerikaanse midterms 2026: odds, kaarten en uitleg - PolitiekPraat',
     'blog-detail' => 'Politieke blog lezen - PolitiekPraat',
     'partij-detail' => 'Partijprofiel en standpunten - PolitiekPraat',
     'thema-detail' => 'Thema-analyse en partijstandpunten - PolitiekPraat',
@@ -270,7 +277,9 @@ if (isset($data['description'])) {
 $metaKeyword = isset($data['keywords']) ? $data['keywords'] : $metaKeyword;
 
 // Specifieke meta images voor bepaalde pagina's
-if ($currentPage === 'amerikaanse-verkiezingen') {
+if ($currentPage === 'midterms-2026') {
+    $metaImage = 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/United_States_Capitol_west_front_edit2.jpg/1200px-United_States_Capitol_west_front_edit2.jpg';
+} elseif ($currentPage === 'amerikaanse-verkiezingen') {
     $metaImage = 'https://ichef.bbci.co.uk/images/ic/640x360/p0jzn3xt.jpg';
 } elseif ($currentPage === 'nederlandse-verkiezingen') {
     $metaImage = 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Den_Haag_Binnenhof_Hofvijver.jpg/640px-Den_Haag_Binnenhof_Hofvijver.jpg';
@@ -284,6 +293,8 @@ $cssAppPath = __DIR__ . '/../../public/css/app.build.css';
 $cssAppVer  = file_exists($cssAppPath) ? filemtime($cssAppPath) : time();
 $jsAppPath  = __DIR__ . '/../../public/js/pp-app.js';
 $jsAppVer   = file_exists($jsAppPath) ? filemtime($jsAppPath) : time();
+$jsMapPath  = __DIR__ . '/../../public/js/midterms-map.js';
+$jsMapVer   = file_exists($jsMapPath) ? filemtime($jsMapPath) : time();
 ?>
 <!DOCTYPE html>
 <html lang="nl">
@@ -607,6 +618,13 @@ $jsAppVer   = file_exists($jsAppPath) ? filemtime($jsAppPath) : time();
 
     <!-- Editorial app script (theme toggle + mobile drawer) -->
     <script src="<?php echo URLROOT; ?>/public/js/pp-app.js?v=<?php echo $jsAppVer; ?>" defer></script>
+
+    <?php if ($currentPage === 'midterms-2026'): ?>
+    <!-- Midterms 2026: D3 + TopoJSON voor de interactieve kaart -->
+    <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js" defer></script>
+    <script src="<?php echo URLROOT; ?>/public/js/midterms-map.js?v=<?php echo $jsMapVer; ?>" defer></script>
+    <?php endif; ?>
 
     <!-- Accessibility & legacy support (worden in Wave 5 opgeruimd) -->
     <link rel="stylesheet" href="<?php echo URLROOT; ?>/public/css/accessibility.css">

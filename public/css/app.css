@@ -2305,3 +2305,867 @@
         font-family: var(--font-mono);
     }
 }
+
+/* -----------------------------------------------------------------------------
+ * Midterms 2026: rating-tokens, kaart, legenda en tooltip
+ * Diverging schaal blauw (Democraten) -> zand (toss-up) -> rood (Republikeinen).
+ * --------------------------------------------------------------------------- */
+:root {
+    --mt-d-safe: #1e489b;
+    --mt-d-likely: #3b6fd0;
+    --mt-d-lean: #8fb4ec;
+    --mt-tossup: #c2b482;
+    --mt-r-lean: #e79a92;
+    --mt-r-likely: #d24b41;
+    --mt-r-safe: #a3231b;
+    --mt-empty: #d8d2c4;
+    --mt-ind: #6f7c4a;
+}
+
+[data-theme="dark"] {
+    --mt-d-safe: #4f7fd6;
+    --mt-d-likely: #3b6fd0;
+    --mt-d-lean: #2f4f7e;
+    --mt-tossup: #9c8f60;
+    --mt-r-lean: #8f463f;
+    --mt-r-likely: #d24b41;
+    --mt-r-safe: #e06a60;
+    --mt-empty: #3a382f;
+    --mt-ind: #8aa05f;
+}
+
+.mt-rating--safe_d   { --mt-color: var(--mt-d-safe); }
+.mt-rating--likely_d { --mt-color: var(--mt-d-likely); }
+.mt-rating--lean_d   { --mt-color: var(--mt-d-lean); }
+.mt-rating--tossup   { --mt-color: var(--mt-tossup); }
+.mt-rating--lean_r   { --mt-color: var(--mt-r-lean); }
+.mt-rating--likely_r { --mt-color: var(--mt-r-likely); }
+.mt-rating--safe_r   { --mt-color: var(--mt-r-safe); }
+
+/* Partij-tokens */
+.mt-party--dem     { --mt-color: var(--mt-d-likely); }
+.mt-party--gop     { --mt-color: var(--mt-r-likely); }
+.mt-party--ind     { --mt-color: var(--mt-ind); }
+.mt-party--neutral { --mt-color: var(--mt-empty); }
+
+/* Gekleurde stip/swatch op basis van --mt-color */
+.mt-rating-dot {
+    display: inline-block;
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 9999px;
+    background: var(--mt-color, var(--mt-empty));
+    vertical-align: middle;
+    margin-right: 0.4rem;
+}
+
+/* Legenda */
+.midterms-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    list-style: none;
+    padding: 0;
+    margin: 0.75rem 0 0;
+}
+.midterms-legend__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    color: var(--color-ink-muted);
+}
+.midterms-legend__swatch {
+    width: 0.85rem;
+    height: 0.85rem;
+    border-radius: 3px;
+    background: var(--mt-color, var(--mt-empty));
+    border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* Kaartcontainer */
+.midterms-map {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.midterms-map__canvas {
+    position: relative;
+    width: 100%;
+    min-height: 220px;
+    border: 1px solid var(--color-line);
+    border-radius: 6px;
+    background: var(--color-canvas-raised);
+    overflow: hidden;
+}
+.midterms-map__loading {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    color: var(--color-ink-faint);
+    font-size: 0.9rem;
+}
+.midterms-map__svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    touch-action: none;
+}
+.midterms-map__svg .mt-feat {
+    fill: var(--mt-color, var(--mt-empty));
+    stroke: var(--color-canvas-raised);
+    stroke-width: 0.5;
+    cursor: default;
+    transition: fill 0.15s ease, opacity 0.15s ease;
+    outline: none;
+}
+.midterms-map__svg .mt-feat[role="button"] {
+    cursor: pointer;
+}
+.midterms-map__svg .mt-feat:hover,
+.midterms-map__svg .mt-feat:focus {
+    opacity: 0.85;
+    stroke: var(--color-ink);
+    stroke-width: 1;
+}
+.midterms-map__svg .mt-feat.is-competitive {
+    stroke: var(--color-ink);
+    stroke-width: 0.8;
+    stroke-dasharray: 2 1.5;
+}
+.midterms-map__borders {
+    stroke: var(--color-ink);
+    stroke-width: 0.6;
+    stroke-linejoin: round;
+    pointer-events: none;
+    opacity: 0.55;
+}
+
+/* Tooltip */
+.midterms-map__tooltip {
+    position: absolute;
+    z-index: 20;
+    transform: translate(-50%, calc(-100% - 10px));
+    pointer-events: none;
+    background: var(--color-ink);
+    color: var(--color-canvas);
+    padding: 0.45rem 0.6rem;
+    border-radius: 5px;
+    font-size: 0.78rem;
+    line-height: 1.3;
+    max-width: 220px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+}
+.midterms-map__tooltip[hidden] {
+    display: none;
+}
+.mt-tip__title {
+    display: block;
+    font-weight: 600;
+}
+.mt-tip__rating {
+    display: inline-block;
+    margin-top: 0.2rem;
+    padding-left: 0.85rem;
+    position: relative;
+}
+.mt-tip__rating::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.35em;
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 9999px;
+    background: var(--mt-color, var(--mt-empty));
+}
+.mt-tip__meta {
+    display: block;
+    color: var(--color-line);
+    font-size: 0.72rem;
+}
+
+/* Tabel-fallback */
+.midterms-map__fallback {
+    font-size: 0.85rem;
+    color: var(--color-ink-muted);
+}
+.midterms-map__fallback summary {
+    cursor: pointer;
+    color: var(--color-hague);
+}
+.midterms-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0.5rem;
+}
+.midterms-table th,
+.midterms-table td {
+    text-align: left;
+    padding: 0.35rem 0.5rem;
+    border-bottom: 1px solid var(--color-line);
+}
+
+/* -----------------------------------------------------------------------------
+ * Midterms 2026: pagina-componenten
+ * --------------------------------------------------------------------------- */
+
+/* Sub-navigatie */
+.midterms-subnav {
+    border-bottom: 1px solid var(--color-line);
+    background: var(--color-canvas-raised);
+    position: sticky;
+    top: 0;
+    z-index: 30;
+}
+.midterms-subnav__list {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.25rem;
+    list-style: none;
+    margin: 0;
+    padding: 0.5rem 0;
+    overflow-x: auto;
+    scrollbar-width: thin;
+}
+.midterms-subnav__link {
+    display: inline-block;
+    white-space: nowrap;
+    padding: 0.4rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    color: var(--color-ink-muted);
+    text-decoration: none;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+.midterms-subnav__link:hover {
+    background: var(--color-canvas-sunken);
+    color: var(--color-ink);
+}
+.midterms-subnav__link.is-active {
+    background: var(--color-hague);
+    color: #fff;
+}
+
+/* Hero (hub) */
+.midterms-hero {
+    background: linear-gradient(180deg, var(--color-hague-tint) 0%, var(--color-canvas) 100%);
+    padding: 2.5rem 0;
+}
+.midterms-hero__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+@media (min-width: 900px) {
+    .midterms-hero__grid {
+        grid-template-columns: 1.4fr 1fr;
+        align-items: center;
+    }
+}
+.midterms-hero__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-hague);
+    font-weight: 600;
+}
+.midterms-hero__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.9rem, 4vw, 3rem);
+    line-height: 1.05;
+    margin: 0.5rem 0;
+    color: var(--color-ink);
+}
+.midterms-hero__lead {
+    font-size: 1.05rem;
+    color: var(--color-ink-muted);
+    max-width: 46ch;
+}
+.midterms-hero__cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1.25rem;
+}
+.midterms-hero__odds {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Countdown */
+.midterms-countdown {
+    display: flex;
+    gap: 0.75rem;
+    margin: 1.25rem 0 0.5rem;
+}
+.midterms-countdown__unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 3.4rem;
+    padding: 0.5rem 0.4rem;
+    background: var(--color-canvas-raised);
+    border: 1px solid var(--color-line);
+    border-radius: 6px;
+}
+.midterms-countdown__value {
+    font-family: var(--font-mono);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-hague);
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+}
+.midterms-countdown__label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-ink-faint);
+    margin-top: 0.25rem;
+}
+
+/* Main + blokken */
+.midterms-main {
+    padding: 2rem 0 3rem;
+}
+.midterms-block {
+    margin-bottom: 2.5rem;
+}
+.midterms-block__intro {
+    color: var(--color-ink-muted);
+    font-size: 0.95rem;
+    margin: 0.25rem 0 1rem;
+    max-width: 70ch;
+}
+.midterms-columns {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+@media (min-width: 800px) {
+    .midterms-columns {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+.midterms-empty {
+    color: var(--color-ink-faint);
+    font-style: italic;
+    padding: 1rem 0;
+}
+
+/* Feiten (uitleg) */
+.midterms-facts {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+@media (min-width: 700px) {
+    .midterms-facts {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+.midterms-facts__item {
+    text-align: center;
+    padding: 1rem;
+    background: var(--color-canvas-raised);
+    border: 1px solid var(--color-line);
+    border-radius: 8px;
+}
+.midterms-facts__num {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--color-hague);
+}
+.midterms-facts__label {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--color-ink-muted);
+    margin-top: 0.35rem;
+}
+
+/* Uitleg-blokken */
+.midterms-uitleg__block {
+    padding: 1.25rem 0;
+    border-top: 1px solid var(--color-line);
+}
+.midterms-uitleg__title {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    color: var(--color-ink);
+    margin-bottom: 0.4rem;
+}
+.midterms-uitleg__text {
+    color: var(--color-ink-muted);
+    max-width: 70ch;
+    line-height: 1.6;
+}
+.midterms-uitleg__cta {
+    margin-top: 1.5rem;
+}
+
+/* Race-grid en race-kaart */
+.midterms-race-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+}
+.midterms-race {
+    background: var(--color-canvas-raised);
+    border: 1px solid var(--color-line);
+    border-left: 4px solid var(--mt-color, var(--color-line-strong));
+    border-radius: 8px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.mt-rating-border--safe_d   { --mt-color: var(--mt-d-safe); }
+.mt-rating-border--likely_d { --mt-color: var(--mt-d-likely); }
+.mt-rating-border--lean_d   { --mt-color: var(--mt-d-lean); }
+.mt-rating-border--tossup   { --mt-color: var(--mt-tossup); }
+.mt-rating-border--lean_r   { --mt-color: var(--mt-r-lean); }
+.mt-rating-border--likely_r { --mt-color: var(--mt-r-likely); }
+.mt-rating-border--safe_r   { --mt-color: var(--mt-r-safe); }
+.midterms-race__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+.midterms-race__chamber {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-ink-faint);
+}
+.midterms-race__title {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    color: var(--color-ink);
+    margin: 0.1rem 0 0;
+}
+.midterms-race__rating {
+    flex-shrink: 0;
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 0.2rem 0.5rem;
+    border-radius: 999px;
+    color: #fff;
+    background: var(--mt-color, var(--mt-empty));
+}
+.midterms-race__candidates {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+}
+.midterms-race__cand {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    flex: 1;
+    min-width: 0;
+}
+.midterms-race__cand-party {
+    width: 1.3rem;
+    height: 1.3rem;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #fff;
+    background: var(--mt-color, var(--mt-empty));
+}
+.midterms-race__cand-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.midterms-race__vs {
+    color: var(--color-ink-faint);
+    font-size: 0.75rem;
+}
+.midterms-race__meta {
+    font-size: 0.82rem;
+    color: var(--color-ink-muted);
+}
+.midterms-race__summary {
+    font-size: 0.85rem;
+    color: var(--color-ink-muted);
+    line-height: 1.5;
+}
+.midterms-race__source {
+    font-size: 0.75rem;
+    color: var(--color-hague);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin-top: auto;
+}
+.midterms-race__source:hover {
+    text-decoration: underline;
+}
+
+/* Odds-balk */
+.midterms-odds-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+}
+.midterms-odds {
+    background: var(--color-canvas-raised);
+    border: 1px solid var(--color-line);
+    border-radius: 8px;
+    padding: 1rem;
+}
+.midterms-odds__title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-ink);
+    margin-bottom: 0.6rem;
+}
+.midterms-odds__bar {
+    display: flex;
+    height: 0.85rem;
+    border-radius: 999px;
+    overflow: hidden;
+    background: var(--color-canvas-sunken);
+}
+.midterms-odds__seg {
+    background: var(--mt-color, var(--mt-empty));
+    height: 100%;
+}
+.midterms-odds__legend {
+    list-style: none;
+    margin: 0.6rem 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+.midterms-odds__legend li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+}
+.midterms-odds__dot {
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 999px;
+    background: var(--mt-color, var(--mt-empty));
+    flex-shrink: 0;
+}
+.midterms-odds__label {
+    color: var(--color-ink);
+}
+.midterms-odds__pct {
+    margin-left: auto;
+    font-weight: 700;
+    color: var(--color-ink);
+    font-variant-numeric: tabular-nums;
+}
+.midterms-odds__source {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.75rem;
+    color: var(--color-hague);
+    text-decoration: none;
+    margin-top: 0.6rem;
+}
+.midterms-odds__source:hover {
+    text-decoration: underline;
+}
+.midterms-odds__stale {
+    display: inline-block;
+    margin-left: 0.5rem;
+    font-size: 0.68rem;
+    color: var(--color-ink-faint);
+    font-style: italic;
+}
+.midterms-odds__empty {
+    color: var(--color-ink-faint);
+    font-size: 0.85rem;
+}
+
+/* Nieuws */
+.midterms-news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+}
+.midterms-news-card {
+    background: var(--color-canvas-raised);
+    border: 1px solid var(--color-line);
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+.midterms-news-card__media {
+    display: block;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: var(--color-canvas-sunken);
+}
+.midterms-news-card__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.midterms-news-card__body {
+    padding: 0.9rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    flex: 1;
+}
+.midterms-news-card__meta {
+    font-size: 0.72rem;
+    color: var(--color-ink-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+.midterms-news-card__title {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    line-height: 1.3;
+    color: var(--color-ink);
+}
+.midterms-news-card__title a {
+    color: inherit;
+    text-decoration: none;
+}
+.midterms-news-card__title a:hover {
+    color: var(--color-hague);
+}
+.midterms-news-card__intro {
+    font-size: 0.85rem;
+    color: var(--color-ink-muted);
+    line-height: 1.5;
+}
+.midterms-news-card__link {
+    margin-top: auto;
+    font-size: 0.8rem;
+    color: var(--color-hague);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+.midterms-news-card__link:hover {
+    text-decoration: underline;
+}
+
+/* Nieuws-lijst (hub) */
+.midterms-news-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+.midterms-news-item {
+    border-bottom: 1px solid var(--color-line);
+}
+.midterms-news-item a {
+    display: block;
+    padding: 0.75rem 0;
+    text-decoration: none;
+    color: inherit;
+}
+.midterms-news-item a:hover .midterms-news-item__title {
+    color: var(--color-hague);
+}
+.midterms-news-item__title {
+    display: block;
+    font-weight: 600;
+    color: var(--color-ink);
+    line-height: 1.35;
+}
+.midterms-news-item__intro {
+    display: block;
+    font-size: 0.82rem;
+    color: var(--color-ink-muted);
+    margin-top: 0.2rem;
+}
+.midterms-news-item__source {
+    display: block;
+    font-size: 0.72rem;
+    color: var(--color-ink-faint);
+    margin-top: 0.25rem;
+}
+
+/* Tijdlijn */
+.midterms-timeline {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.midterms-timeline__item--full {
+    position: relative;
+    padding-left: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-left: 2px solid var(--color-line);
+}
+.midterms-timeline__item--full:last-child {
+    border-left-color: transparent;
+}
+.midterms-timeline__marker {
+    position: absolute;
+    left: -0.45rem;
+    top: 0.2rem;
+    width: 0.8rem;
+    height: 0.8rem;
+    border-radius: 999px;
+    background: var(--color-hague);
+    border: 2px solid var(--color-canvas);
+}
+.midterms-timeline__head {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+}
+.midterms-timeline__date {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--color-ink-faint);
+}
+.midterms-timeline__cat {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 0.1rem 0.45rem;
+    border-radius: 999px;
+    background: var(--color-canvas-sunken);
+    color: var(--color-ink-muted);
+}
+.midterms-timeline__cat--primary { background: var(--color-ochre-tint); color: #6b531a; }
+.midterms-timeline__cat--deadline { background: var(--color-terracotta-tint); color: var(--color-terracotta); }
+.midterms-timeline__title {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    color: var(--color-ink);
+    margin: 0.3rem 0;
+}
+.midterms-timeline__text {
+    color: var(--color-ink-muted);
+    font-size: 0.9rem;
+    line-height: 1.55;
+    max-width: 70ch;
+}
+.midterms-timeline__source {
+    font-size: 0.75rem;
+    color: var(--color-hague);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+/* Compacte tijdlijn (hub) */
+.midterms-timeline--compact .midterms-timeline__item {
+    display: flex;
+    flex-direction: column;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--color-line);
+}
+.midterms-timeline--compact .midterms-timeline__title {
+    font-size: 0.95rem;
+    margin: 0.15rem 0 0;
+}
+
+/* Referenda */
+.midterms-ref-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+}
+.midterms-ref-card {
+    background: var(--color-canvas-raised);
+    border: 1px solid var(--color-line);
+    border-radius: 8px;
+    padding: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.midterms-ref-card__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+}
+.midterms-ref-card__theme {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-weight: 600;
+    color: var(--color-hague);
+}
+.midterms-ref-card__state {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.78rem;
+    color: var(--color-ink-faint);
+}
+.midterms-ref-card__title {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    color: var(--color-ink);
+    line-height: 1.3;
+}
+.midterms-ref-card__text {
+    font-size: 0.85rem;
+    color: var(--color-ink-muted);
+    line-height: 1.5;
+}
+.midterms-ref-card__source {
+    font-size: 0.75rem;
+    color: var(--color-hague);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin-top: auto;
+}
+
+/* Disclaimer */
+.midterms-disclaimer {
+    display: flex;
+    gap: 0.6rem;
+    align-items: flex-start;
+    padding: 0.9rem 1rem;
+    background: var(--color-hague-tint);
+    border: 1px solid var(--color-line);
+    border-radius: 8px;
+    margin-top: 1.5rem;
+}
+.midterms-disclaimer__icon {
+    color: var(--color-hague);
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+}
+.midterms-disclaimer p {
+    font-size: 0.83rem;
+    color: var(--color-ink-muted);
+    margin: 0;
+    line-height: 1.5;
+}

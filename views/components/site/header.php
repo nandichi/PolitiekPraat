@@ -10,6 +10,7 @@ $section = $context['section'] ?? '';
 
 $navLinks = [
     ['label' => 'Verkiezingen',  'href' => '/partijmeter',           'match' => ['partijmeter','politiek-kompas','amerikaanse-verkiezingen','nederlandse-verkiezingen','resultaten','stemwijzer']],
+    ['label' => 'Midterms 2026', 'href' => '/midterms-2026',         'match' => ['midterms-2026']],
     ['label' => 'Partijen',      'href' => '/partijen',              'match' => ['partijen']],
     ['label' => 'Thema\'s',      'href' => '/themas',                'match' => ['themas','thema']],
     ['label' => 'Blogs',         'href' => '/blogs',                 'match' => ['blogs']],

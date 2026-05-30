@@ -126,6 +126,16 @@ $router->add('amerikaanse-verkiezingen/([0-9]+)', function($jaar) {
     $_GET['jaar'] = $jaar;
     require_once 'controllers/amerikaanse-verkiezingen.php';
 });
+// Midterms 2026 sectie
+$router->add('midterms-2026', 'controllers/midterms.php');
+$router->add('midterms-2026/data/([a-zA-Z-]+)', function($feed) {
+    $_GET['feed'] = $feed;
+    require_once 'controllers/midterms.php';
+});
+$router->add('midterms-2026/([a-zA-Z-]+)', function($sectie) {
+    $_GET['sectie'] = $sectie;
+    require_once 'controllers/midterms.php';
+});
 $router->add('nederlandse-verkiezingen', 'controllers/nederlandse-verkiezingen.php');
 $router->add('nederlandse-verkiezingen/ministers-presidenten', function() {
     $_GET['actie'] = 'ministers-presidenten';

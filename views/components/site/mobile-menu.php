@@ -12,6 +12,7 @@ $sections = [
     [
         'label' => 'Verkiezingen',
         'links' => [
+            ['label' => 'Midterms 2026 (VS)',      'href' => '/midterms-2026'],
             ['label' => 'Partijmeter',             'href' => '/partijmeter'],
             ['label' => 'Politiek Kompas',         'href' => '/politiek-kompas'],
             ['label' => 'Stemwijzer Ede 2026',     'href' => '/stemwijzer'],

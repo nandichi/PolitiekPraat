@@ -36,6 +36,7 @@ $adminNavGroups = [
     'Data' => [
         ['id' => 'partijen', 'label' => 'Politieke partijen', 'href' => 'political-parties-beheer.php'],
         ['id' => 'presidenten', 'label' => 'Presidenten', 'href' => 'presidenten-beheer.php'],
+        ['id' => 'midterms', 'label' => 'Midterms 2026', 'href' => 'midterms-beheer.php'],
         ['id' => 'polls', 'label' => 'Polls', 'href' => 'polls-beheer.php'],
     ],
     'Integraties' => [
