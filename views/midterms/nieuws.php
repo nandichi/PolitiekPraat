@@ -47,7 +47,7 @@
             <p class="midterms-empty">Er is op dit moment nog geen nieuws geladen. Het nieuws wordt automatisch ververst zodra de koppeling met de bronnen actief is.</p>
         <?php endif; ?>
 
-        <?php $text = 'Het nieuws wordt automatisch en meerdere keren per dag verzameld via de Brave-nieuwszoekmachine, gefilterd op de midterms van 2026. De korte samenvatting komt van de oorspronkelijke bron; klik door voor het volledige artikel.'; require __DIR__ . '/partials/disclaimer.php'; ?>
+        <?php $text = 'Het nieuws wordt automatisch en meerdere keren per dag verzameld via de Brave-nieuwszoekmachine, gefilterd op de midterms van 2026. Engelstalige koppen en samenvattingen worden automatisch naar het Nederlands vertaald; klik door voor het volledige artikel in de oorspronkelijke taal.'; require __DIR__ . '/partials/disclaimer.php'; ?>
     </div>
 </main>
 

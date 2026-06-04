@@ -163,10 +163,13 @@ class MidtermsController
     /**
      * Ververst odds en nieuws op de achtergrond als de cache te oud is.
      *
-     * Deze host heeft geen crontab-commando, maar exec() is wel beschikbaar.
-     * We gebruiken daarom een lock-bestand als "poor man's cron": bij een
-     * paginabezoek wordt een losgekoppeld PHP-proces gestart zodra het interval
-     * verstreken is. De refresh blokkeert de pagina nooit en faalt stil.
+     * Primair draaien er paneel-cronjobs (DirectAdmin) die de fetch-scripts elk
+     * uur (odds) en elke 3 uur (nieuws) draaien. Die scripts raken na afloop het
+     * lock-bestand aan (cache/mt_refresh_*.lock). Deze verkeer-gestuurde refresh
+     * is daarom alleen een vangnet: de intervallen liggen bewust ruimer dan de
+     * cron, zodat een paginabezoek alleen een fetch start als de cron is
+     * uitgevallen. Zo verversen we dubbel noch verbruiken we onnodig API-quota.
+     * De refresh blokkeert de pagina nooit en faalt stil.
      */
     private function maybeAutoRefresh(): void
     {
@@ -179,9 +182,11 @@ class MidtermsController
             if (!is_file($php)) {
                 $php = 'php';
             }
-            // Odds elk uur, nieuws elke 3 uur (zelfde ritme als de cron-opzet).
-            $this->autoRefreshTask('odds', 3600, $base, $php, $base . '/scripts/midterms_fetch_polymarket.php');
-            $this->autoRefreshTask('news', 10800, $base, $php, $base . '/scripts/midterms_fetch_news.php');
+            // Vangnet-intervallen ruimer dan de cron (odds 1u, nieuws 3u), zodat
+            // de cron normaal gesproken wint en verkeer alleen bijspringt als de
+            // cron uitvalt.
+            $this->autoRefreshTask('odds', 5400, $base, $php, $base . '/scripts/midterms_fetch_polymarket.php');
+            $this->autoRefreshTask('news', 14400, $base, $php, $base . '/scripts/midterms_fetch_news.php');
         } catch (Throwable $e) {
             error_log('Midterms auto-refresh fout: ' . $e->getMessage());
         }

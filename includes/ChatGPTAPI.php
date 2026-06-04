@@ -1239,6 +1239,80 @@ GEEF ALLEEN DE JSON TERUG, GEEN EXTRA TEKST.";
     }
 
     /**
+     * Vertaalt nieuwskoppen en intro's naar feitelijk Nederlands.
+     *
+     * Eén batch-call (gpt-4o-mini) vertaalt meerdere items tegelijk om kosten en
+     * latency te beperken. Bij twijfel of fouten worden de originele teksten in
+     * dezelfde volgorde teruggegeven, zodat de nieuws-pipeline nooit breekt.
+     *
+     * @param array<int,array{title:string,intro:string}> $items
+     * @return array<int,array{title:string,intro:string}> Zelfde volgorde als invoer.
+     */
+    public function translateNewsToDutch(array $items): array {
+        $items = array_values($items);
+        if (empty($items)) {
+            return $items;
+        }
+
+        $payload = [];
+        foreach ($items as $idx => $it) {
+            $payload[] = [
+                'id' => $idx,
+                'title' => (string) ($it['title'] ?? ''),
+                'intro' => (string) ($it['intro'] ?? ''),
+            ];
+        }
+        $json = json_encode($payload, JSON_UNESCAPED_UNICODE);
+
+        $prompt = "Je bent een nauwkeurige vertaler voor een Nederlandse nieuwssite over Amerikaanse politiek.
+
+Vertaal de 'title' en 'intro' van elk item naar natuurlijk, feitelijk Nederlands. Regels:
+- Vertaal letterlijk en feitelijk; voeg niets toe en verzin geen informatie.
+- Behoud eigennamen (personen, partijen, staten) en cijfers exact.
+- Als een tekst al Nederlands is, geef hem dan ongewijzigd terug.
+- Gebruik geen koppeltekens of streepjes als gedachtestreepje.
+
+Geef UITSLUITEND een geldige JSON-array terug met exact dezelfde 'id' per item:
+[{\"id\":0,\"title\":\"...\",\"intro\":\"...\"}]
+
+INVOER:
+{$json}";
+
+        $res = $this->makeDetailedAPICall($prompt, 3000);
+        if (empty($res['success']) || empty($res['content'])) {
+            return $items;
+        }
+        $decoded = json_decode($res['content'], true);
+        if (!is_array($decoded)) {
+            return $items;
+        }
+
+        $byId = [];
+        foreach ($decoded as $row) {
+            if (is_array($row) && isset($row['id'])) {
+                $byId[(int) $row['id']] = $row;
+            }
+        }
+
+        foreach ($items as $idx => &$it) {
+            if (!isset($byId[$idx])) {
+                continue;
+            }
+            $t = trim((string) ($byId[$idx]['title'] ?? ''));
+            $i = trim((string) ($byId[$idx]['intro'] ?? ''));
+            if ($t !== '') {
+                $it['title'] = $t;
+            }
+            if ($i !== '') {
+                $it['intro'] = $i;
+            }
+        }
+        unset($it);
+
+        return $items;
+    }
+
+    /**
      * Analyseer de voor- en nadelen van een politieke partij
      */
     public function analyzePartyProsAndCons($partyName, $partyData) {

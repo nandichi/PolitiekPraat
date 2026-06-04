@@ -265,4 +265,20 @@ foreach ($markets as $cfg) {
 }
 
 echo "=== Klaar: {$ok} gelukt, {$fail} mislukt" . ($DRY_RUN ? ' (dry-run)' : '') . " ===\n";
+if (!$DRY_RUN) {
+    mt_touch_refresh_lock('odds');
+}
 exit($fail > 0 && $ok === 0 ? 1 : 0);
+
+/**
+ * Raakt het gedeelde refresh-lock aan, zodat de verkeer-gestuurde fallback in
+ * de controller weet dat er recent (via cron of verkeer) is opgehaald.
+ */
+function mt_touch_refresh_lock(string $task): void
+{
+    $dir = __DIR__ . '/../cache';
+    if (!is_dir($dir)) {
+        @mkdir($dir, 0775, true);
+    }
+    @touch($dir . '/mt_refresh_' . $task . '.lock');
+}

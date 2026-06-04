@@ -131,6 +131,106 @@ function mt_news_published(array $item): ?string
     return null;
 }
 
+/**
+ * Heuristiek: is dit item vermoedelijk al Nederlandstalig?
+ * Nederlandse bron (.nl/.be) of minstens twee Nederlandse stopwoorden.
+ */
+function mt_news_is_dutch(string $source, string $title, string $desc): bool
+{
+    if (preg_match('/\.(nl|be)$/', mb_strtolower(trim($source)))) {
+        return true;
+    }
+    $h = ' ' . mb_strtolower($title . ' ' . $desc) . ' ';
+    $stop = [' de ', ' het ', ' een ', ' en ', ' van ', ' wordt ', ' niet ', ' zijn ', ' voor ', ' naar ', ' met ', ' worden ', ' volgens '];
+    $hits = 0;
+    foreach ($stop as $w) {
+        if (strpos($h, $w) !== false) {
+            $hits++;
+        }
+    }
+    return $hits >= 2;
+}
+
+/**
+ * Vertaalt niet-Nederlandse koppen/intro's naar het Nederlands via de bestaande
+ * OpenAI-integratie. De originele (Engelse) tekst blijft in 'description'.
+ * Best-effort: zonder OpenAI-sleutel of bij een fout blijven de originele
+ * teksten staan, zodat de pipeline nooit breekt.
+ *
+ * @param array<string,array> $collected
+ * @return array<string,array>
+ */
+function mt_translate_to_dutch(array $collected): array
+{
+    $batch = [];
+    $keys = [];
+    foreach ($collected as $hash => $row) {
+        $title = (string) ($row['title'] ?? '');
+        $desc = (string) ($row['description'] ?? '');
+        if (mt_news_is_dutch((string) ($row['source'] ?? ''), $title, $desc)) {
+            continue;
+        }
+        $keys[] = $hash;
+        $batch[] = ['title' => $title, 'intro' => $desc];
+    }
+    if (empty($batch)) {
+        echo "Vertaling: niets te vertalen (alles al Nederlands).\n";
+        return $collected;
+    }
+
+    $chatFile = __DIR__ . '/../includes/ChatGPTAPI.php';
+    if (!is_readable($chatFile)) {
+        echo "Vertaling overgeslagen: ChatGPTAPI.php niet gevonden.\n";
+        return $collected;
+    }
+    require_once $chatFile;
+
+    try {
+        $chat = new ChatGPTAPI();
+    } catch (Throwable $e) {
+        echo "Vertaling overgeslagen (geen OpenAI-sleutel): " . $e->getMessage() . "\n";
+        return $collected;
+    }
+
+    try {
+        $translated = $chat->translateNewsToDutch($batch);
+    } catch (Throwable $e) {
+        echo "Vertaalfout, originelen behouden: " . $e->getMessage() . "\n";
+        return $collected;
+    }
+
+    $count = 0;
+    foreach ($keys as $i => $hash) {
+        if (!isset($translated[$i], $collected[$hash])) {
+            continue;
+        }
+        $t = trim((string) ($translated[$i]['title'] ?? ''));
+        $intro = trim((string) ($translated[$i]['intro'] ?? ''));
+        if ($t !== '') {
+            $collected[$hash]['title'] = mb_substr($t, 0, 300);
+            $count++;
+        }
+        if ($intro !== '') {
+            $collected[$hash]['intro_nl'] = $intro;
+        }
+    }
+    echo "Vertaling: {$count} item(s) naar het Nederlands vertaald.\n";
+    return $collected;
+}
+
+/**
+ * Raakt het gedeelde refresh-lock aan, zodat de verkeer-gestuurde fallback in
+ * de controller weet dat er recent (via cron of verkeer) is opgehaald.
+ */
+function mt_touch_refresh_lock(string $task): void
+{
+    $dir = __DIR__ . '/../cache';
+    if (!is_dir($dir)) {
+        @mkdir($dir, 0775, true);
+    }
+    @touch($dir . '/mt_refresh_' . $task . '.lock');
+}
+
 // ---------------------------------------------------------------------------
 $collected = [];
 foreach ($queries as $q) {
@@ -177,7 +277,14 @@ uasort($collected, static function ($a, $b) {
     return strcmp((string) ($b['published_at'] ?? ''), (string) ($a['published_at'] ?? ''));
 });
 
+// Beperk tot de meest recente items (ruim genoeg voor nieuws- en hubweergave)
+// en houd de vertaalkosten beperkt.
+$collected = array_slice($collected, 0, 30, true);
+
 echo "Totaal uniek verzameld: " . count($collected) . "\n";
+
+// Vertaal Engelstalige koppen/intro's naar het Nederlands (best-effort).
+$collected = mt_translate_to_dutch($collected);
 
 if ($DRY_RUN) {
     $i = 0;
@@ -228,4 +335,5 @@ foreach ($collected as $row) {
 }
 
 echo "=== Klaar: {$inserted} opgeslagen/bijgewerkt ===\n";
+mt_touch_refresh_lock('news');
 exit(0);
