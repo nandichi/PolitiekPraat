@@ -19,16 +19,21 @@ echo "=== Midterms Polymarket fetch: " . date('Y-m-d H:i:s') . " ===\n";
 
 /**
  * Te volgen markten. market_key is intern; slug verwijst naar het Polymarket-event.
- * type: 'binary' (1 markt, meerdere uitkomsten) of 'grouped' (meerdere deelmarkten).
+ * type:
+ *   'binary'  - 1 markt met meerdere uitkomsten (pak hoogste volume),
+ *   'grouped' - meerdere deelmarkten, elk een Yes/No (bijv. zetelaantallen),
+ *   'party'   - deelmarkt per partij (Democratic/Republican Party), Yes-prijs per partij.
  */
 $markets = [
     [
-        'market_key' => 'senate_control', 'category' => 'control', 'type' => 'binary',
+        // Event met een deelmarkt per partij ("Democratic Party"/"Republican Party"),
+        // elk met een Yes/No-prijs. We nemen per partij de Yes-prijs -> party-type.
+        'market_key' => 'senate_control', 'category' => 'control', 'type' => 'party',
         'title_nl' => 'Wie controleert de Senaat na 2026?',
         'slug' => 'which-party-will-win-the-senate-in-2026',
     ],
     [
-        'market_key' => 'house_control', 'category' => 'control', 'type' => 'binary',
+        'market_key' => 'house_control', 'category' => 'control', 'type' => 'party',
         'title_nl' => 'Wie controleert het Huis na 2026?',
         'slug' => 'which-party-will-win-the-house-in-2026',
     ],
@@ -46,11 +51,6 @@ $markets = [
         'market_key' => 'rep_governors', 'category' => 'seats', 'type' => 'grouped',
         'title_nl' => 'Aantal Republikeinse gouverneurs na 2026',
         'slug' => 'how-many-republican-governors-after-the-2026-midterm-elections',
-    ],
-    [
-        'market_key' => 'house_turnout', 'category' => 'turnout', 'type' => 'binary',
-        'title_nl' => 'Opkomst Huis-stemmen 2026',
-        'slug' => '2026-midterms-house-turnout',
     ],
 ];
 
@@ -100,13 +100,23 @@ function mt_decode_field($value): array
  */
 function mt_translate_outcome(string $label): string
 {
-    $l = strtolower(trim($label));
+    $trim = trim($label);
+    if (preg_match('/^below\s+(.+)$/i', $trim, $m)) {
+        return 'Onder ' . $m[1];
+    }
+    if (preg_match('/^above\s+(.+)$/i', $trim, $m)) {
+        return 'Boven ' . $m[1];
+    }
+    $l = strtolower($trim);
     $map = [
         'republican' => 'Republikeinen',
         'republicans' => 'Republikeinen',
+        'republican party' => 'Republikeinen',
         'democratic' => 'Democraten',
         'democrat' => 'Democraten',
         'democrats' => 'Democraten',
+        'democratic party' => 'Democraten',
+        'other' => 'Andere partij',
         'yes' => 'Ja',
         'no' => 'Nee',
     ];
@@ -162,7 +172,7 @@ function mt_extract_outcomes(array $event, string $type): array
             }
             $outcomes[] = [
                 'label' => (string) $label,
-                'label_nl' => (string) $label,
+                'label_nl' => mt_translate_outcome((string) $label),
                 'price' => $price,
             ];
         }

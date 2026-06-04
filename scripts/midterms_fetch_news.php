@@ -50,6 +50,8 @@ function mt_brave_news(string $query, string $apiKey): array
             'ui_lang' => 'nl-NL',
             'count' => 20,
             'spellcheck' => 0,
+            // Alleen recent nieuws (afgelopen maand) zodat "laatste nieuws" ook echt recent is.
+            'freshness' => 'pm',
         ]);
 
     $ch = curl_init($url);
@@ -75,6 +77,40 @@ function mt_brave_news(string $query, string $apiKey): array
     }
     $data = json_decode((string) $body, true);
     return is_array($data) && isset($data['results']) ? $data['results'] : [];
+}
+
+/**
+ * Filtert ruis: houd alleen berichten die echt over de midterms 2026 gaan.
+ * Vermijdt losse Trump-/binnenlandnieuws dat toevallig bij een query opduikt.
+ */
+function mt_news_relevant(string $title, string $desc): bool
+{
+    $h = mb_strtolower($title . ' ' . $desc);
+    if (strpos($h, 'midterm') !== false) {
+        return true;
+    }
+    // Anders: moet 2026 noemen én een verkiezingsterm bevatten.
+    if (strpos($h, '2026') === false) {
+        return false;
+    }
+    // Filter financiële/crypto-ruis die toevallig "Senaat" en "2026" noemt.
+    foreach (['bitcoin', 'crypto', 'clarity act', 'beurskoers', 'aandelenkoers', 'koersdoel'] as $neg) {
+        if (strpos($h, $neg) !== false) {
+            return false;
+        }
+    }
+    $terms = [
+        'senaat', 'senate', 'huis van afgevaardigden', 'house of representatives',
+        'afgevaardigde', 'congres', 'congress', 'gouverneur', 'governor',
+        'verkiezing', 'election', 'voorverkiezing', 'primary', 'primaries',
+        'tussentijdse', 'zetel', 'kandidaat', 'candidate', 'ballot',
+    ];
+    foreach ($terms as $kw) {
+        if (strpos($h, $kw) !== false) {
+            return true;
+        }
+    }
+    return false;
 }
 
 /**
@@ -115,6 +151,9 @@ foreach ($queries as $q) {
             continue;
         }
         $desc = trim(strip_tags($item['description'] ?? ''));
+        if (!mt_news_relevant($title, $desc)) {
+            continue;
+        }
         $source = $item['meta_url']['hostname'] ?? ($item['profile']['name'] ?? '');
         $source = preg_replace('/^www\./', '', (string) $source);
         $image = $item['thumbnail']['src'] ?? null;
@@ -132,6 +171,11 @@ foreach ($queries as $q) {
     }
     usleep(1100000); // vriendelijk voor de Brave-rate-limit
 }
+
+// Sorteer op publicatiedatum, nieuwste eerst (null/onbekend achteraan).
+uasort($collected, static function ($a, $b) {
+    return strcmp((string) ($b['published_at'] ?? ''), (string) ($a['published_at'] ?? ''));
+});
 
 echo "Totaal uniek verzameld: " . count($collected) . "\n";
 

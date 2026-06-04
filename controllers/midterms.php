@@ -98,6 +98,9 @@ class MidtermsController
             exit;
         }
 
+        // Houd odds en nieuws vers via verkeer-gestuurde achtergrond-refresh.
+        $this->maybeAutoRefresh();
+
         $model = $this->model;
         $ratingMeta = MidtermsModel::ratingMeta();
         $daysLeft = $model->getDaysUntilElection();
@@ -155,6 +158,63 @@ class MidtermsController
         }
 
         require_once BASE_PATH . '/views/midterms/' . self::SECTIONS[$section] . '.php';
+    }
+
+    /**
+     * Ververst odds en nieuws op de achtergrond als de cache te oud is.
+     *
+     * Deze host heeft geen crontab-commando, maar exec() is wel beschikbaar.
+     * We gebruiken daarom een lock-bestand als "poor man's cron": bij een
+     * paginabezoek wordt een losgekoppeld PHP-proces gestart zodra het interval
+     * verstreken is. De refresh blokkeert de pagina nooit en faalt stil.
+     */
+    private function maybeAutoRefresh(): void
+    {
+        if ($this->db === null) {
+            return; // Geen DB -> geen live data om te verversen (bv. lokaal).
+        }
+        try {
+            $base = defined('BASE_PATH') ? BASE_PATH : (__DIR__ . '/..');
+            $php = getenv('POLITIEKPRAAT_PHP_BIN') ?: '/usr/local/bin/php';
+            if (!is_file($php)) {
+                $php = 'php';
+            }
+            // Odds elk uur, nieuws elke 3 uur (zelfde ritme als de cron-opzet).
+            $this->autoRefreshTask('odds', 3600, $base, $php, $base . '/scripts/midterms_fetch_polymarket.php');
+            $this->autoRefreshTask('news', 10800, $base, $php, $base . '/scripts/midterms_fetch_news.php');
+        } catch (Throwable $e) {
+            error_log('Midterms auto-refresh fout: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Start losgekoppeld een fetch-script als het lock-bestand ouder is dan het
+     * interval. Het lock wordt direct ge-touched om gelijktijdige starts te
+     * beperken; ook bij een mislukte fetch wachten we tot het volgende interval.
+     */
+    private function autoRefreshTask(string $task, int $interval, string $base, string $php, string $script): void
+    {
+        $cacheDir = $base . '/cache';
+        if (!is_dir($cacheDir)) {
+            @mkdir($cacheDir, 0775, true);
+        }
+        $lock = $cacheDir . '/mt_refresh_' . $task . '.lock';
+        $age = is_file($lock) ? (time() - (int) @filemtime($lock)) : PHP_INT_MAX;
+        if ($age < $interval) {
+            return;
+        }
+        @touch($lock); // claim het interval meteen
+        if (!is_file($script) || !function_exists('exec')) {
+            return;
+        }
+        $logsDir = $base . '/logs';
+        if (!is_dir($logsDir)) {
+            @mkdir($logsDir, 0775, true);
+        }
+        $log = $logsDir . '/midterms_' . $task . '.log';
+        $cmd = 'nohup ' . escapeshellarg($php) . ' ' . escapeshellarg($script)
+            . ' >> ' . escapeshellarg($log) . ' 2>&1 &';
+        @exec($cmd);
     }
 
     /**

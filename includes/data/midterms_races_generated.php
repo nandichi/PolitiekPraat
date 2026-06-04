@@ -1,8 +1,10 @@
 <?php
 /**
  * GEGENEREERD door scripts/midterms_generate_baseline.php
+ * Ratings/bronnen bijgewerkt door scripts/midterms_apply_ratings.php
+ * (consensus Cook Political Report / 270toWin / Ballotpedia, juni 2026).
  * Senaat (35) en Gouverneurs (36) voor 2026. Zittende namen uit
- * unitedstates/congress-legislators; ratings zijn een baseline.
+ * unitedstates/congress-legislators.
  */
 return array (
   'senate' => 
@@ -16,8 +18,8 @@ return array (
       'incumbent_name' => 'Dan Sullivan',
       'incumbent_party' => 'R',
       'is_open' => 0,
-      'rating' => 'likely_r',
-      'is_competitive' => 0,
+      'rating' => 'lean_r',
+      'is_competitive' => 1,
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
@@ -64,7 +66,7 @@ return array (
       'incumbent_name' => 'John W. Hickenlooper',
       'incumbent_party' => 'D',
       'is_open' => 0,
-      'rating' => 'likely_d',
+      'rating' => 'safe_d',
       'is_competitive' => 0,
       'candidate_d' => NULL,
       'candidate_r' => NULL,
@@ -112,8 +114,8 @@ return array (
       'incumbent_name' => 'Joni Ernst',
       'incumbent_party' => 'R',
       'is_open' => 0,
-      'rating' => 'likely_r',
-      'is_competitive' => 0,
+      'rating' => 'lean_r',
+      'is_competitive' => 1,
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
@@ -480,7 +482,7 @@ return array (
       'incumbent_name' => 'John Cornyn',
       'incumbent_party' => 'R',
       'is_open' => 0,
-      'rating' => 'likely_r',
+      'rating' => 'lean_r',
       'is_competitive' => 1,
       'candidate_d' => NULL,
       'candidate_r' => NULL,
@@ -496,7 +498,7 @@ return array (
       'incumbent_name' => 'Mark R. Warner',
       'incumbent_party' => 'D',
       'is_open' => 0,
-      'rating' => 'likely_d',
+      'rating' => 'safe_d',
       'is_competitive' => 0,
       'candidate_d' => NULL,
       'candidate_r' => NULL,
@@ -544,7 +546,7 @@ return array (
       'incumbent_name' => 'Jon Husted',
       'incumbent_party' => 'R',
       'is_open' => 0,
-      'rating' => 'lean_r',
+      'rating' => 'tossup',
       'is_competitive' => 1,
       'candidate_d' => NULL,
       'candidate_r' => NULL,
@@ -584,7 +586,7 @@ return array (
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-gubernatorial-election/',
+      'source_url' => 'https://www.270towin.com/2026-governor-election/',
     ),
     1 => 
     array (
@@ -600,7 +602,7 @@ return array (
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-gubernatorial-election/',
+      'source_url' => 'https://www.270towin.com/2026-governor-election/',
     ),
     2 => 
     array (
@@ -616,7 +618,7 @@ return array (
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => 'Arizona blijft een swing state; de gouverneursrace wordt op het scherp van de snede verwacht.',
-      'source_url' => 'https://www.270towin.com/2026-gubernatorial-election/',
+      'source_url' => 'https://www.270towin.com/2026-governor-election/',
     ),
     3 => 
     array (
@@ -632,7 +634,7 @@ return array (
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-gubernatorial-election/',
+      'source_url' => 'https://www.270towin.com/2026-governor-election/',
     ),
     4 => 
     array (
@@ -648,7 +650,7 @@ return array (
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-gubernatorial-election/',
+      'source_url' => 'https://www.270towin.com/2026-governor-election/',
     ),
     5 => 
     array (
@@ -659,12 +661,12 @@ return array (
       'incumbent_name' => 'open zetel',
       'incumbent_party' => 'D',
       'is_open' => 1,
-      'rating' => 'likely_d',
-      'is_competitive' => 0,
+      'rating' => 'lean_d',
+      'is_competitive' => 1,
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-gubernatorial-election/',
+      'source_url' => 'https://www.270towin.com/2026-governor-election/',
     ),
     6 => 
     array (
@@ -675,12 +677,12 @@ return array (
       'incumbent_name' => 'Ned Lamont',
       'incumbent_party' => 'D',
       'is_open' => 0,
-      'rating' => 'likely_d',
-      'is_competitive' => 0,
+      'rating' => 'lean_d',
+      'is_competitive' => 1,
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-gubernatorial-election/',
+      'source_url' => 'https://www.270towin.com/2026-governor-election/',
     ),
     7 => 
     array (
@@ -691,12 +693,12 @@ return array (
       'incumbent_name' => 'open zetel',
       'incumbent_party' => 'R',
       'is_open' => 1,
-      'rating' => 'likely_r',
+      'rating' => 'lean_r',
       'is_competitive' => 1,
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => 'Florida kiest een opvolger; de staat is Republikeins geworden maar de open race trekt aandacht.',
-      'source_url' => 'https://www.270towin.com/2026-gubernatorial-election/',
+      'source_url' => 'https://www.270towin.com/2026-governor-election/',
     ),
     8 => 
     array (
@@ -707,12 +709,12 @@ return array (
       'incumbent_name' => 'open zetel',
       'incumbent_party' => 'R',
       'is_open' => 1,
-      'rating' => 'tossup',
+      'rating' => 'lean_r',
       'is_competitive' => 1,
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => 'Door termijnlimieten ontstaat een open race in een staat die de afgelopen jaren razend dicht stemde.',
-      'source_url' => 'https://www.270towin.com/2026-gubernatorial-election/',
+      'source_url' => 'https://www.270towin.com/2026-governor-election/',
     ),
     9 => 
     array (
@@ -728,7 +730,7 @@ return array (
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-gubernatorial-election/',
+      'source_url' => 'https://www.270towin.com/2026-governor-election/',
     ),
     10 => 
     array (
@@ -744,7 +746,7 @@ return array (
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-gubernatorial-election/',
+      'source_url' => 'https://www.270towin.com/2026-governor-election/',
     ),
     11 => 
     array (
@@ -760,7 +762,7 @@ return array (
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-gubernatorial-election/',
+      'source_url' => 'https://www.270towin.com/2026-governor-election/',
     ),
     12 => 
     array (
@@ -776,7 +778,7 @@ return array (
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-gubernatorial-election/',
+      'source_url' => 'https://www.270towin.com/2026-governor-election/',
     ),
     13 => 
     array (
@@ -787,12 +789,12 @@ return array (
       'incumbent_name' => 'open zetel',
       'incumbent_party' => 'D',
       'is_open' => 1,
-      'rating' => 'tossup',
+      'rating' => 'lean_r',
       'is_competitive' => 1,
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => 'Kansas kiest een nieuwe gouverneur in een Republikeins-leunende staat; de race geldt als open.',
-      'source_url' => 'https://www.270towin.com/2026-gubernatorial-election/',
+      'source_url' => 'https://www.270towin.com/2026-governor-election/',
     ),
     14 => 
     array (
@@ -808,7 +810,7 @@ return array (
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => 'Maine kiest een opvolger; de race neigt licht Democratisch maar blijft competitief.',
-      'source_url' => 'https://www.270towin.com/2026-gubernatorial-election/',
+      'source_url' => 'https://www.270towin.com/2026-governor-election/',
     ),
     15 => 
     array (
@@ -824,7 +826,7 @@ return array (
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-gubernatorial-election/',
+      'source_url' => 'https://www.270towin.com/2026-governor-election/',
     ),
     16 => 
     array (
@@ -840,7 +842,7 @@ return array (
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-gubernatorial-election/',
+      'source_url' => 'https://www.270towin.com/2026-governor-election/',
     ),
     17 => 
     array (
@@ -856,7 +858,7 @@ return array (
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => 'Michigan is een open gouverneursrace en een belangrijke graadmeter voor het Midwesten.',
-      'source_url' => 'https://www.270towin.com/2026-gubernatorial-election/',
+      'source_url' => 'https://www.270towin.com/2026-governor-election/',
     ),
     18 => 
     array (
@@ -872,7 +874,7 @@ return array (
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-gubernatorial-election/',
+      'source_url' => 'https://www.270towin.com/2026-governor-election/',
     ),
     19 => 
     array (
@@ -888,7 +890,7 @@ return array (
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-gubernatorial-election/',
+      'source_url' => 'https://www.270towin.com/2026-governor-election/',
     ),
     20 => 
     array (
@@ -904,7 +906,7 @@ return array (
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => 'Nevada is een notoire swing state waar de gouverneursrace traditioneel nipt wordt beslist.',
-      'source_url' => 'https://www.270towin.com/2026-gubernatorial-election/',
+      'source_url' => 'https://www.270towin.com/2026-governor-election/',
     ),
     21 => 
     array (
@@ -920,7 +922,7 @@ return array (
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => 'New Hampshire neigt licht Republikeins maar staat bekend om wisselende uitslagen.',
-      'source_url' => 'https://www.270towin.com/2026-gubernatorial-election/',
+      'source_url' => 'https://www.270towin.com/2026-governor-election/',
     ),
     22 => 
     array (
@@ -931,12 +933,12 @@ return array (
       'incumbent_name' => 'open zetel',
       'incumbent_party' => 'D',
       'is_open' => 1,
-      'rating' => 'likely_d',
-      'is_competitive' => 0,
+      'rating' => 'lean_d',
+      'is_competitive' => 1,
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-gubernatorial-election/',
+      'source_url' => 'https://www.270towin.com/2026-governor-election/',
     ),
     23 => 
     array (
@@ -952,7 +954,7 @@ return array (
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-gubernatorial-election/',
+      'source_url' => 'https://www.270towin.com/2026-governor-election/',
     ),
     24 => 
     array (
@@ -963,12 +965,12 @@ return array (
       'incumbent_name' => 'open zetel',
       'incumbent_party' => 'R',
       'is_open' => 1,
-      'rating' => 'likely_r',
+      'rating' => 'lean_r',
       'is_competitive' => 1,
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => 'Ohio kiest een nieuwe gouverneur; de staat is de afgelopen jaren naar rechts opgeschoven.',
-      'source_url' => 'https://www.270towin.com/2026-gubernatorial-election/',
+      'source_url' => 'https://www.270towin.com/2026-governor-election/',
     ),
     25 => 
     array (
@@ -984,7 +986,7 @@ return array (
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-gubernatorial-election/',
+      'source_url' => 'https://www.270towin.com/2026-governor-election/',
     ),
     26 => 
     array (
@@ -995,12 +997,12 @@ return array (
       'incumbent_name' => 'Tina Kotek',
       'incumbent_party' => 'D',
       'is_open' => 0,
-      'rating' => 'likely_d',
-      'is_competitive' => 0,
+      'rating' => 'lean_d',
+      'is_competitive' => 1,
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-gubernatorial-election/',
+      'source_url' => 'https://www.270towin.com/2026-governor-election/',
     ),
     27 => 
     array (
@@ -1016,7 +1018,7 @@ return array (
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-gubernatorial-election/',
+      'source_url' => 'https://www.270towin.com/2026-governor-election/',
     ),
     28 => 
     array (
@@ -1032,7 +1034,7 @@ return array (
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-gubernatorial-election/',
+      'source_url' => 'https://www.270towin.com/2026-governor-election/',
     ),
     29 => 
     array (
@@ -1048,7 +1050,7 @@ return array (
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-gubernatorial-election/',
+      'source_url' => 'https://www.270towin.com/2026-governor-election/',
     ),
     30 => 
     array (
@@ -1064,7 +1066,7 @@ return array (
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-gubernatorial-election/',
+      'source_url' => 'https://www.270towin.com/2026-governor-election/',
     ),
     31 => 
     array (
@@ -1080,7 +1082,7 @@ return array (
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-gubernatorial-election/',
+      'source_url' => 'https://www.270towin.com/2026-governor-election/',
     ),
     32 => 
     array (
@@ -1096,7 +1098,7 @@ return array (
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-gubernatorial-election/',
+      'source_url' => 'https://www.270towin.com/2026-governor-election/',
     ),
     33 => 
     array (
@@ -1112,7 +1114,7 @@ return array (
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-gubernatorial-election/',
+      'source_url' => 'https://www.270towin.com/2026-governor-election/',
     ),
     34 => 
     array (
@@ -1123,12 +1125,12 @@ return array (
       'incumbent_name' => 'Tony Evers',
       'incumbent_party' => 'D',
       'is_open' => 0,
-      'rating' => 'lean_d',
+      'rating' => 'tossup',
       'is_competitive' => 1,
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => 'Wisconsin is een van de dichtst verdeelde staten van het land.',
-      'source_url' => 'https://www.270towin.com/2026-gubernatorial-election/',
+      'source_url' => 'https://www.270towin.com/2026-governor-election/',
     ),
     35 => 
     array (
@@ -1144,7 +1146,7 @@ return array (
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-gubernatorial-election/',
+      'source_url' => 'https://www.270towin.com/2026-governor-election/',
     ),
   ),
 );
