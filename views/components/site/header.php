@@ -9,12 +9,11 @@ $context = function_exists('getCurrentPageContext') ? getCurrentPageContext() : 
 $section = $context['section'] ?? '';
 
 $navLinks = [
-    ['label' => 'Verkiezingen',  'href' => '/partijmeter',           'match' => ['partijmeter','politiek-kompas','amerikaanse-verkiezingen','nederlandse-verkiezingen','resultaten','stemwijzer']],
-    ['label' => 'Midterms 2026', 'href' => '/midterms-2026',         'match' => ['midterms-2026']],
-    ['label' => 'Partijen',      'href' => '/partijen',              'match' => ['partijen']],
-    ['label' => 'Thema\'s',      'href' => '/themas',                'match' => ['themas','thema']],
-    ['label' => 'Blogs',         'href' => '/blogs',                 'match' => ['blogs']],
-    ['label' => 'Nieuws',        'href' => '/nieuws',                'match' => ['nieuws']],
+    ['label' => 'Verkiezingen',  'href' => '/partijmeter',   'match' => ['partijmeter','politiek-kompas','amerikaanse-verkiezingen','nederlandse-verkiezingen','resultaten','stemwijzer']],
+    ['label' => 'Midterms 2026', 'href' => '/midterms-2026', 'match' => ['midterms-2026'], 'variant' => 'usa', 'icon' => 'flag'],
+    ['label' => 'Partijen',      'href' => '/partijen',      'match' => ['partijen']],
+    ['label' => 'Blogs',         'href' => '/blogs',         'match' => ['blogs']],
+    ['label' => 'Nieuws',        'href' => '/nieuws',        'match' => ['nieuws']],
 ];
 
 $isLoggedIn = isset($_SESSION['user_id']);
@@ -29,11 +28,22 @@ $username = $_SESSION['username'] ?? '';
 
         <nav class="site-nav" aria-label="Hoofdnavigatie">
             <?php foreach ($navLinks as $link): ?>
-                <?php $isActive = in_array($section, $link['match'], true); ?>
+                <?php
+                $isActive = in_array($section, $link['match'], true);
+                $isUsa = ($link['variant'] ?? null) === 'usa';
+                $linkClass = 'site-nav__link' . ($isUsa ? ' site-nav__link--usa' : '');
+                ?>
                 <a href="<?= pp_e(pp_url($link['href'])) ?>"
-                   class="site-nav__link"
+                   class="<?= pp_e($linkClass) ?>"
                    <?= $isActive ? 'aria-current="page"' : '' ?>>
-                    <?= pp_e($link['label']) ?>
+                    <?php if ($isUsa): ?>
+                        <span class="site-nav__usa-inner">
+                            <?php if (!empty($link['icon'])): ?><span class="site-nav__link-icon" aria-hidden="true"><?= pp_icon($link['icon'], 14) ?></span><?php endif; ?>
+                            <?= pp_e($link['label']) ?>
+                        </span>
+                    <?php else: ?>
+                        <?= pp_e($link['label']) ?>
+                    <?php endif; ?>
                 </a>
             <?php endforeach; ?>
         </nav>

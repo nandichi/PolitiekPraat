@@ -24,6 +24,21 @@ if ($heroBlog && !empty($heroBlog->image_path)) {
     $heroImage = getBlogImageUrl($heroBlog->image_path);
 }
 
+// Resolve auteur-profielfoto naar een echte URL (anders valt de byline terug op initialen).
+// getProfilePhotoUrl() geeft de URL terug onder ['value'] met ['type'] = img|initial.
+$ppAuthorAvatar = static function ($photo, $name) {
+    if (empty($photo)) {
+        return null;
+    }
+    $resolved = getProfilePhotoUrl($photo, (string) $name);
+    return (($resolved['type'] ?? '') === 'img') ? ($resolved['value'] ?? null) : null;
+};
+
+// Nieuwste blogs zonder de hero-blog, zodat die niet direct onder de hero wordt herhaald.
+$latestForList = array_values(array_filter($latest_blogs ?? [], function ($b) use ($heroBlog) {
+    return !$heroBlog || ($b->id ?? null) !== ($heroBlog->id ?? null);
+}));
+
 // News items voor "Vandaag in 5"
 $topNews = array_slice($latest_news ?? [], 0, 5);
 
@@ -73,9 +88,71 @@ function pp_home_format_date($value): string {
         'reading_time' => pp_reading_time($heroBlog->content ?? null),
         'author'       => [
             'name'   => $heroBlog->author_name ?? 'Redactie',
-            'avatar' => !empty($heroBlog->author_photo) ? getProfilePhotoUrl($heroBlog->author_photo, $heroBlog->author_name ?? '')['url'] ?? null : null,
+            'avatar' => $ppAuthorAvatar($heroBlog->author_photo ?? null, $heroBlog->author_name ?? ''),
         ],
     ]) ?>
+</section>
+<?php endif; ?>
+
+<!-- Nieuwste blogs (blogs staan centraal: direct onder de hero) -->
+<?php if (!empty($latestForList)): ?>
+<section class="pp-container pp-container--xl mt-20">
+    <?= pp_render_component('section/section-header', [
+        'label' => 'Recent gepubliceerd',
+        'title' => 'Nieuwste blogs',
+        'cta_label' => 'Alle blogs',
+        'cta_href'  => '/blogs',
+    ]) ?>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <?php foreach (array_slice($latestForList, 0, 6) as $blog):
+            $img = !empty($blog->image_path) ? getBlogImageUrl($blog->image_path) : null;
+        ?>
+            <?= pp_render_component('article/article-card', [
+                'href'         => '/blogs/' . ($blog->slug ?? ''),
+                'title'        => $blog->title ?? '',
+                'excerpt'      => substr(strip_tags($blog->summary ?? ''), 0, 140),
+                'image'        => $img,
+                'category'     => $blog->category_name ?? null,
+                'date'         => pp_home_format_date($blog->published_at ?? null),
+                'reading_time' => pp_reading_time($blog->content ?? null),
+                'author'       => [
+                    'name'   => $blog->author_name ?? 'Redactie',
+                    'avatar' => $ppAuthorAvatar($blog->author_photo ?? null, $blog->author_name ?? ''),
+                ],
+            ]) ?>
+        <?php endforeach; ?>
+    </div>
+</section>
+<?php endif; ?>
+
+<!-- Uitgelichte blogs -->
+<?php if (!empty($featuredForGrid)): ?>
+<section class="pp-container pp-container--xl mt-20">
+    <?= pp_render_component('section/section-header', [
+        'label' => 'Uitgelicht',
+        'title' => 'Lees verder',
+        'cta_label' => 'Alle blogs',
+        'cta_href'  => '/blogs',
+    ]) ?>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <?php foreach ($featuredForGrid as $blog):
+            $img = !empty($blog->image_path) ? getBlogImageUrl($blog->image_path) : null;
+        ?>
+            <?= pp_render_component('article/article-card', [
+                'href'         => '/blogs/' . ($blog->slug ?? ''),
+                'title'        => $blog->title ?? '',
+                'excerpt'      => substr(strip_tags($blog->summary ?? ''), 0, 140),
+                'image'        => $img,
+                'category'     => $blog->category_name ?? null,
+                'date'         => pp_home_format_date($blog->published_at ?? null),
+                'reading_time' => pp_reading_time($blog->content ?? null),
+                'author'       => [
+                    'name'   => $blog->author_name ?? 'Redactie',
+                    'avatar' => $ppAuthorAvatar($blog->author_photo ?? null, $blog->author_name ?? ''),
+                ],
+            ]) ?>
+        <?php endforeach; ?>
+    </div>
 </section>
 <?php endif; ?>
 
@@ -144,12 +221,12 @@ function pp_home_format_date($value): string {
             'cta'   => 'Open kompas',
         ]) ?>
         <?= pp_render_component('tool/tool-card', [
-            'href'  => '/stemwijzer',
-            'title' => 'Stemwijzer Ede 2026',
-            'lead'  => 'Gemeentelijke stemwijzer met 25 stellingen en weging - speciaal voor de raadsverkiezingen.',
-            'icon'  => 'vote',
+            'href'  => '/midterms-2026',
+            'title' => 'Midterms 2026',
+            'lead'  => 'Volg de Amerikaanse tussentijdse verkiezingen: live odds, interactieve kaarten en uitleg in het Nederlands.',
+            'icon'  => 'flag',
             'tone'  => 'terracotta',
-            'cta'   => 'Start stemwijzer',
+            'cta'   => 'Bekijk midterms',
         ]) ?>
         <?= pp_render_component('tool/tool-card', [
             'href'  => '/stemmentracker',
@@ -161,63 +238,6 @@ function pp_home_format_date($value): string {
         ]) ?>
     </div>
 </section>
-
-<!-- Uitgelichte blogs -->
-<?php if (!empty($featuredForGrid)): ?>
-<section class="pp-container pp-container--xl mt-20">
-    <?= pp_render_component('section/section-header', [
-        'label' => 'Uitgelicht',
-        'title' => 'Lees verder',
-        'cta_label' => 'Alle blogs',
-        'cta_href'  => '/blogs',
-    ]) ?>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <?php foreach ($featuredForGrid as $blog):
-            $img = !empty($blog->image_path) ? getBlogImageUrl($blog->image_path) : null;
-        ?>
-            <?= pp_render_component('article/article-card', [
-                'href'         => '/blogs/' . ($blog->slug ?? ''),
-                'title'        => $blog->title ?? '',
-                'excerpt'      => substr(strip_tags($blog->summary ?? ''), 0, 140),
-                'image'        => $img,
-                'category'     => $blog->category_name ?? null,
-                'date'         => pp_home_format_date($blog->published_at ?? null),
-                'reading_time' => pp_reading_time($blog->content ?? null),
-                'author'       => [
-                    'name' => $blog->author_name ?? 'Redactie',
-                ],
-            ]) ?>
-        <?php endforeach; ?>
-    </div>
-</section>
-<?php endif; ?>
-
-<!-- Actuele thema's -->
-<?php if (!empty($actuele_themas)): ?>
-<section class="pp-container pp-container--xl mt-20">
-    <?= pp_render_component('section/section-header', [
-        'label' => 'Thema\'s',
-        'title' => 'Wat speelt er in Nederland?',
-        'cta_label' => 'Alle thema\'s',
-        'cta_href'  => '/themas',
-    ]) ?>
-    <div class="flex flex-wrap gap-3">
-        <?php
-        $toneCycle = ['hague', 'terracotta', 'ochre', 'olive', 'moss', 'rose'];
-        foreach (array_slice($actuele_themas, 0, 14) as $i => $thema):
-            $label = is_array($thema) ? ($thema['naam'] ?? $thema['titel'] ?? '') : (string) $thema;
-            if ($label === '') continue;
-            $slug = is_array($thema) ? ($thema['slug'] ?? strtolower(preg_replace('/[^a-z0-9]+/i', '-', $label))) : strtolower(preg_replace('/[^a-z0-9]+/i', '-', $label));
-        ?>
-            <?= pp_render_component('section/theme-chip', [
-                'href'  => '/thema/' . trim($slug, '-'),
-                'label' => $label,
-                'tone'  => $toneCycle[$i % count($toneCycle)],
-            ]) ?>
-        <?php endforeach; ?>
-    </div>
-</section>
-<?php endif; ?>
 
 <!-- Verkiezingen overzicht -->
 <section class="pp-container pp-container--xl mt-20">
@@ -266,34 +286,6 @@ function pp_home_format_date($value): string {
         </a>
     </div>
 </section>
-
-<!-- Laatste blogs (list-stijl) -->
-<?php if (!empty($latest_blogs)): ?>
-<section class="pp-container pp-container--xl mt-20">
-    <?= pp_render_component('section/section-header', [
-        'label' => 'Recent gepubliceerd',
-        'title' => 'Nieuwste blogs',
-        'cta_label' => 'Alle blogs',
-        'cta_href'  => '/blogs',
-    ]) ?>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10">
-        <?php foreach (array_slice($latest_blogs, 0, 6) as $blog):
-            $img = !empty($blog->image_path) ? getBlogImageUrl($blog->image_path) : null;
-        ?>
-            <?= pp_render_component('article/article-card', [
-                'variant'      => 'list',
-                'href'         => '/blogs/' . ($blog->slug ?? ''),
-                'title'        => $blog->title ?? '',
-                'excerpt'      => substr(strip_tags($blog->summary ?? ''), 0, 110),
-                'image'        => $img,
-                'category'     => $blog->category_name ?? null,
-                'date'         => pp_home_format_date($blog->published_at ?? null),
-                'reading_time' => pp_reading_time($blog->content ?? null),
-            ]) ?>
-        <?php endforeach; ?>
-    </div>
-</section>
-<?php endif; ?>
 
 <!-- Steun ons CTA -->
 <section class="pp-container pp-container--xl mt-20">

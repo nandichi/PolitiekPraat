@@ -12,7 +12,7 @@ $sections = [
     [
         'label' => 'Verkiezingen',
         'links' => [
-            ['label' => 'Midterms 2026 (VS)',      'href' => '/midterms-2026'],
+            ['label' => 'Midterms 2026 (VS)',      'href' => '/midterms-2026', 'variant' => 'usa', 'icon' => 'flag'],
             ['label' => 'Partijmeter',             'href' => '/partijmeter'],
             ['label' => 'Politiek Kompas',         'href' => '/politiek-kompas'],
             ['label' => 'Stemwijzer Ede 2026',     'href' => '/stemwijzer'],
@@ -25,7 +25,6 @@ $sections = [
         'links' => [
             ['label' => 'Partijen',       'href' => '/partijen'],
             ['label' => 'Stemmentracker', 'href' => '/stemmentracker'],
-            ['label' => 'Thema\'s',       'href' => '/themas'],
         ],
     ],
     [
@@ -70,7 +69,9 @@ $sections = [
             <?php foreach ($sections as $section): ?>
                 <h3 class="mobile-menu__section-label"><?= pp_e($section['label']) ?></h3>
                 <?php foreach ($section['links'] as $link): ?>
-                    <a href="<?= pp_e(pp_url($link['href'])) ?>" class="mobile-menu__link" style="font-size: 1.125rem;">
+                    <?php $isUsa = ($link['variant'] ?? null) === 'usa'; ?>
+                    <a href="<?= pp_e(pp_url($link['href'])) ?>" class="mobile-menu__link<?= $isUsa ? ' mobile-menu__link--usa' : '' ?>" style="font-size: 1.125rem;">
+                        <?php if ($isUsa && !empty($link['icon'])): ?><span class="mobile-menu__link-icon" aria-hidden="true"><?= pp_icon($link['icon'], 16) ?></span><?php endif; ?>
                         <?= pp_e($link['label']) ?>
                     </a>
                 <?php endforeach; ?>

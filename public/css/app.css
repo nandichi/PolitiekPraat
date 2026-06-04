@@ -1234,6 +1234,79 @@
         background-color: var(--color-terracotta);
     }
 
+    /* === Midterms 2026: Amerika-thema knop in de hoofdnavigatie === */
+    .site-nav__link--usa {
+        --usa-navy: #0a3161;
+        --usa-red: #b31942;
+        display: inline-flex;
+        align-items: center;
+        padding: 0.42rem 0.95rem;
+        border-radius: 999px;
+        color: #ffffff;
+        font-weight: 600;
+        white-space: nowrap;
+        position: relative;
+        overflow: hidden;
+        background-image: linear-gradient(118deg, var(--usa-navy) 0%, var(--usa-navy) 44%, var(--usa-red) 100%);
+        box-shadow:
+            0 1px 2px rgba(10, 49, 97, 0.4),
+            inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+        transition:
+            transform var(--duration-DEFAULT) var(--ease-out-quart),
+            box-shadow var(--duration-DEFAULT) var(--ease-out-quart);
+    }
+    .site-nav__link--usa::after {
+        display: none !important;
+    }
+    .site-nav__link--usa::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 36%;
+        background: linear-gradient(100deg, transparent 0%, rgba(255, 255, 255, 0.55) 50%, transparent 100%);
+        transform: translateX(-140%) skewX(-14deg);
+        animation: ppUsaSheen 4.5s ease-in-out infinite;
+        pointer-events: none;
+        z-index: 0;
+    }
+    .site-nav__usa-inner {
+        position: relative;
+        z-index: 1;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.42rem;
+    }
+    .site-nav__link--usa .site-nav__link-icon {
+        display: inline-flex;
+        color: #ffffff;
+        filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.55));
+    }
+    .site-nav__link--usa:hover,
+    .site-nav__link--usa:focus-visible,
+    .site-nav__link--usa[aria-current="page"] {
+        color: #ffffff;
+        transform: translateY(-1px);
+        box-shadow:
+            0 6px 18px rgba(179, 25, 66, 0.42),
+            inset 0 0 0 1px rgba(255, 255, 255, 0.22);
+    }
+    @keyframes ppUsaSheen {
+        0% {
+            transform: translateX(-140%) skewX(-14deg);
+        }
+        55%,
+        100% {
+            transform: translateX(330%) skewX(-14deg);
+        }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .site-nav__link--usa::before {
+            animation: none;
+        }
+    }
+
     /* === Breaking news bar === */
     .breaking-bar {
         background-color: var(--color-canvas-sunken);
@@ -1427,6 +1500,23 @@
     }
     .mobile-menu__link:last-child {
         border-bottom: 0;
+    }
+    .mobile-menu__link--usa {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        align-self: flex-start;
+        color: #ffffff;
+        padding: 0.5rem 0.95rem;
+        margin: 0.4rem 0;
+        border-radius: 999px;
+        border-bottom: 0;
+        background-image: linear-gradient(118deg, #0a3161 0%, #0a3161 44%, #b31942 100%);
+        box-shadow: 0 2px 8px rgba(179, 25, 66, 0.3);
+    }
+    .mobile-menu__link--usa .mobile-menu__link-icon {
+        display: inline-flex;
+        color: #ffffff;
     }
     .mobile-menu__section-label {
         font-family: var(--font-sans);
