@@ -177,10 +177,13 @@ class StemmenTrackerController {
     }
 
     private function getStemgedrag($motie_id) {
+        // NB: stemwijzer_parties heeft geen is_active-kolom. Een eerdere
+        // WHERE sp.is_active = 1 veroorzaakte hier een fatale SQL-fout (HTTP 500)
+        // op /stemmentracker/detail/{id}.
         $this->db->query("SELECT sv.*, sp.name as party_name, sp.short_name, sp.logo_url
                          FROM stemmentracker_votes sv
                          JOIN stemwijzer_parties sp ON sv.party_id = sp.id
-                         WHERE sv.motie_id = :motie_id AND sp.is_active = 1
+                         WHERE sv.motie_id = :motie_id
                          ORDER BY sp.name");
         $this->db->bind(':motie_id', $motie_id);
         return $this->db->resultSet();

@@ -1,5 +1,13 @@
 <?php
 http_response_code(404);
+
+// Foutpagina's mogen niet geindexeerd worden (voorkomt duplicate/soft-404 in SEO).
+$data = [
+    'title' => 'Pagina niet gevonden',
+    'description' => 'De pagina die je zoekt bestaat niet of is verplaatst. Ga terug naar de homepage van PolitiekPraat.',
+    'meta_robots' => 'noindex, follow',
+];
+
 require_once BASE_PATH . '/views/templates/header.php';
 ?>
 

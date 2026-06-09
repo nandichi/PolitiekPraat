@@ -35,99 +35,18 @@ class ThemasController {
     }
 
     public function index() {
-        // Alle thema's ophalen
-        $themas = [
-            [
-                'title' => 'Klimaatbeleid',
-                'icon' => '🌍',
-                'description' => 'Het Nederlandse klimaatbeleid staat voor grote uitdagingen in de transitie naar een duurzame toekomst.',
-                'slug' => 'klimaatbeleid',
-                'stats' => [
-                    'discussions' => rand(50, 150),
-                    'followers' => rand(500, 1500)
-                ]
-            ],
-            [
-                'title' => 'Woningmarkt',
-                'icon' => '🏠',
-                'description' => 'De Nederlandse woningmarkt staat onder druk met uitdagingen rond betaalbaarheid en beschikbaarheid.',
-                'slug' => 'woningmarkt',
-                'stats' => [
-                    'discussions' => rand(50, 150),
-                    'followers' => rand(500, 1500)
-                ]
-            ],
-            [
-                'title' => 'Economie',
-                'icon' => '💶',
-                'description' => 'De Nederlandse economie staat voor verschillende uitdagingen en kansen in een snel veranderende wereldeconomie.',
-                'slug' => 'economie',
-                'stats' => [
-                    'discussions' => rand(50, 150),
-                    'followers' => rand(500, 1500)
-                ]
-            ],
-            [
-                'title' => 'Zorg',
-                'icon' => '🏥',
-                'description' => 'De gezondheidszorg in Nederland staat voor uitdagingen op het gebied van toegankelijkheid en betaalbaarheid.',
-                'slug' => 'zorg',
-                'stats' => [
-                    'discussions' => rand(50, 150),
-                    'followers' => rand(500, 1500)
-                ]
-            ],
-            [
-                'title' => 'Onderwijs',
-                'icon' => '📚',
-                'description' => 'Het Nederlandse onderwijs staat voor uitdagingen op het gebied van kwaliteit en toegankelijkheid.',
-                'slug' => 'onderwijs',
-                'stats' => [
-                    'discussions' => rand(50, 150),
-                    'followers' => rand(500, 1500)
-                ]
-            ],
-            [
-                'title' => 'Arbeidsmarkt',
-                'icon' => '💼',
-                'description' => 'De Nederlandse arbeidsmarkt ondergaat belangrijke veranderingen met impact op werkgevers en werknemers.',
-                'slug' => 'arbeidsmarkt',
-                'stats' => [
-                    'discussions' => rand(50, 150),
-                    'followers' => rand(500, 1500)
-                ]
-            ],
-            [
-                'title' => 'Immigratie',
-                'icon' => '🌐',
-                'description' => 'Het immigratiebeleid en de integratie van nieuwkomers blijft een belangrijk thema in Nederland.',
-                'slug' => 'immigratie',
-                'stats' => [
-                    'discussions' => rand(50, 150),
-                    'followers' => rand(500, 1500)
-                ]
-            ],
-            [
-                'title' => 'Veiligheid',
-                'icon' => '🛡️',
-                'description' => 'Nationale veiligheid en criminaliteitsbestrijding zijn continue aandachtspunten.',
-                'slug' => 'veiligheid',
-                'stats' => [
-                    'discussions' => rand(50, 150),
-                    'followers' => rand(500, 1500)
-                ]
-            ],
-            [
-                'title' => 'Duurzaamheid',
-                'icon' => '♻️',
-                'description' => 'De transitie naar een duurzame samenleving brengt uitdagingen en kansen met zich mee.',
-                'slug' => 'duurzaamheid',
-                'stats' => [
-                    'discussions' => rand(50, 150),
-                    'followers' => rand(500, 1500)
-                ]
-            ]
-        ];
+        // Alle thema's ophalen uit de gedeelde databron (zelfde slugs als de
+        // sitemap en de detailpagina's, zodat er geen 404's ontstaan).
+        $themaData = require __DIR__ . '/../includes/data/themas.php';
+        $themas = [];
+        foreach ($themaData as $slug => $info) {
+            $themas[] = [
+                'title' => $info['title'],
+                'icon' => $info['icon'] ?? 'tag',
+                'description' => $info['description'] ?? '',
+                'slug' => $slug,
+            ];
+        }
 
         // Actuele thema's ophalen
         $actueleThemas = $this->openDataAPI->getActueleThemas();

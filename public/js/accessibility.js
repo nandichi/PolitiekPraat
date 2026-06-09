@@ -49,6 +49,41 @@ class AccessibilityManager {
     }
   }
 
+  // Skip Links: zorg dat in-page sprongen (bijv. "Direct naar inhoud") ook de
+  // keyboard-focus daadwerkelijk naar het doel verplaatsen. Sommige browsers
+  // verplaatsen alleen de scrollpositie maar niet de focus bij een hash-anchor.
+  setupSkipLinks() {
+    this.skipLinks = Array.from(
+      document.querySelectorAll('.skip-link[href^="#"]')
+    );
+
+    this.skipLinks.forEach((link) => {
+      link.addEventListener("click", (e) => {
+        const targetSelector = link.getAttribute("href");
+        if (!targetSelector || targetSelector.charAt(0) !== "#") {
+          return;
+        }
+
+        const target = document.querySelector(targetSelector);
+        if (!target) {
+          return;
+        }
+
+        e.preventDefault();
+
+        // Maak het doel tijdelijk focusbaar zonder het permanent in de
+        // taborde op te nemen.
+        if (!target.hasAttribute("tabindex")) {
+          target.setAttribute("tabindex", "-1");
+        }
+
+        target.focus({ preventScroll: true });
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+        this.announce("Verder naar de hoofdinhoud");
+      });
+    });
+  }
+
   // Focus Management
   setupFocusManagement() {
     // Focus visible indicator

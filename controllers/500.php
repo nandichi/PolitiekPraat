@@ -13,6 +13,13 @@ if (!headers_sent()) {
 $pp_show_debug = defined('APP_DEBUG') && APP_DEBUG === true;
 $pp_exception   = $pp_router_exception ?? null;
 
+// Foutpagina's mogen niet geindexeerd worden.
+$data = [
+    'title' => 'Er ging iets mis',
+    'description' => 'Er trad een tijdelijke serverfout op. Probeer het later opnieuw of ga terug naar de homepage van PolitiekPraat.',
+    'meta_robots' => 'noindex, follow',
+];
+
 require_once BASE_PATH . '/views/templates/header.php';
 ?>
 

@@ -103,15 +103,17 @@ class OpenDataAPI {
             }
         }
 
-        // Fallback als de API geen resultaten geeft
+        // Fallback als de API geen resultaten geeft. Slugs komen overeen met de
+        // canonieke thema's zodat de kaarten naar een bestaande pagina linken
+        // (geen emoji-iconen, maar lucide-iconnamen).
         if (empty($themas)) {
             return [
-                ['title' => 'Klimaatbeleid', 'icon' => '🌍', 'description' => 'Actuele ontwikkelingen in klimaatbeleid'],
-                ['title' => 'Woningmarkt', 'icon' => '🏠', 'description' => 'Laatste updates woningmarkt'],
-                ['title' => 'Economie', 'icon' => '💶', 'description' => 'Economische ontwikkelingen'],
-                ['title' => 'Zorg', 'icon' => '🏥', 'description' => 'Actuele zorgthema\'s'],
-                ['title' => 'Onderwijs', 'icon' => '📚', 'description' => 'Onderwijsontwikkelingen'],
-                ['title' => 'Arbeidsmarkt', 'icon' => '💼', 'description' => 'Arbeidsmarkt updates']
+                ['title' => 'Klimaat en energie', 'icon' => 'leaf', 'slug' => 'klimaat-en-energie', 'description' => 'Actuele ontwikkelingen rond klimaat en energie'],
+                ['title' => 'Wonen', 'icon' => 'home', 'slug' => 'wonen', 'description' => 'Laatste updates over de woningmarkt'],
+                ['title' => 'Economie en financiën', 'icon' => 'trending-up', 'slug' => 'economie-en-financien', 'description' => 'Economische ontwikkelingen en koopkracht'],
+                ['title' => 'Zorg en welzijn', 'icon' => 'heart-pulse', 'slug' => 'zorg-en-welzijn', 'description' => 'Actuele thema\'s in de zorg'],
+                ['title' => 'Onderwijs', 'icon' => 'graduation-cap', 'slug' => 'onderwijs', 'description' => 'Ontwikkelingen in het onderwijs'],
+                ['title' => 'Migratie en asiel', 'icon' => 'users', 'slug' => 'migratie-en-asiel', 'description' => 'Het debat over migratie en asiel']
             ];
         }
 

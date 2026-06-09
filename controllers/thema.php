@@ -9,6 +9,22 @@ class ThemaController {
     private $newsAPI;
     private $politicalParties;
 
+    /**
+     * Oude (legacy) slugs die historisch in gebruik waren, gekoppeld aan de
+     * huidige canonieke slugs uit de sitemap. Zo blijven oude links/bookmarks
+     * werken zonder dubbele content.
+     */
+    private $legacyAliases = [
+        'klimaatbeleid' => 'klimaat-en-energie',
+        'woningmarkt'   => 'wonen',
+        'economie'      => 'economie-en-financien',
+        'zorg'          => 'zorg-en-welzijn',
+        'arbeidsmarkt'  => 'economie-en-financien',
+        'immigratie'    => 'migratie-en-asiel',
+        'veiligheid'    => 'veiligheid-en-justitie',
+        'duurzaamheid'  => 'klimaat-en-energie',
+    ];
+
     public function __construct() {
         $this->db = new Database();
         $this->newsAPI = new NewsAPI();
@@ -16,137 +32,47 @@ class ThemaController {
     }
 
     public function view($thema_slug) {
+        $thema_slug = strtolower(trim((string) $thema_slug));
+
+        // Normaliseer legacy-slugs naar de canonieke slug.
+        if (isset($this->legacyAliases[$thema_slug])) {
+            $thema_slug = $this->legacyAliases[$thema_slug];
+        }
+
         // Haal thema informatie op
         $thema = $this->getThemaInfo($thema_slug);
-        
+
         if (!$thema) {
             header('Location: ' . URLROOT . '/404');
             exit();
         }
 
+        // Sleutel waarmee de partijstandpunten zijn opgeslagen (kan afwijken
+        // van de slug). Bij ontbreken vallen we terug op de slug zelf.
+        $standpuntenKey = $thema['standpunten_key'] ?? $thema_slug;
+
         // Haal standpunten op van politieke partijen
-        $linksePartijen = $this->politicalParties->getLinkseStandpunten($thema_slug);
-        $rechtsePartijen = $this->politicalParties->getRechtseStandpunten($thema_slug);
+        $linksePartijen = $this->politicalParties->getLinkseStandpunten($standpuntenKey);
+        $rechtsePartijen = $this->politicalParties->getRechtseStandpunten($standpuntenKey);
 
         // Haal nieuws op over dit thema
-        $themaNews = $this->newsAPI->getThemaNews($thema_slug);
+        $themaNews = $this->newsAPI->getThemaNews($thema['news_key'] ?? $thema_slug);
 
         require_once 'views/thema/view.php';
     }
 
-    private function getThemaInfo($slug) {
-        $themas = [
-            'klimaatbeleid' => [
-                'title' => 'Klimaatbeleid',
-                'icon' => '🌍',
-                'description' => 'Actuele ontwikkelingen in klimaatbeleid',
-                'long_description' => 'Het Nederlandse klimaatbeleid staat voor grote uitdagingen in de transitie naar een duurzame toekomst. Van energietransitie tot CO2-reductie, dit thema raakt aan vele aspecten van onze samenleving.',
-                'key_points' => [
-                    'CO2-reductie doelstellingen',
-                    'Energietransitie',
-                    'Duurzame energie',
-                    'Klimaatadaptatie'
-                ]
-            ],
-            'woningmarkt' => [
-                'title' => 'Woningmarkt',
-                'icon' => '🏠',
-                'description' => 'Laatste updates woningmarkt',
-                'long_description' => 'De Nederlandse woningmarkt staat onder druk met uitdagingen rond betaalbaarheid, beschikbaarheid en duurzaamheid van woningen.',
-                'key_points' => [
-                    'Woningtekort',
-                    'Betaalbaarheid',
-                    'Huurmarkt',
-                    'Verduurzaming woningen'
-                ]
-            ],
-            'economie' => [
-                'title' => 'Economie',
-                'icon' => '💶',
-                'description' => 'Economische ontwikkelingen',
-                'long_description' => 'De Nederlandse economie staat voor verschillende uitdagingen en kansen in een snel veranderende wereldeconomie.',
-                'key_points' => [
-                    'Economische groei',
-                    'Inflatie',
-                    'Arbeidsmarkt',
-                    'Internationale handel'
-                ]
-            ],
-            'zorg' => [
-                'title' => 'Zorg',
-                'icon' => '🏥',
-                'description' => 'Actuele zorgthema\'s',
-                'long_description' => 'De gezondheidszorg in Nederland staat voor uitdagingen op het gebied van toegankelijkheid, betaalbaarheid en kwaliteit.',
-                'key_points' => [
-                    'Zorgkosten',
-                    'Personeelstekorten',
-                    'Wachtlijsten',
-                    'Digitalisering zorg'
-                ]
-            ],
-            'onderwijs' => [
-                'title' => 'Onderwijs',
-                'icon' => '📚',
-                'description' => 'Onderwijsontwikkelingen',
-                'long_description' => 'Het Nederlandse onderwijs staat voor uitdagingen op het gebied van kwaliteit, toegankelijkheid en modernisering.',
-                'key_points' => [
-                    'Onderwijskwaliteit',
-                    'Lerarentekort',
-                    'Digitalisering',
-                    'Kansenongelijkheid'
-                ]
-            ],
-            'arbeidsmarkt' => [
-                'title' => 'Arbeidsmarkt',
-                'icon' => '💼',
-                'description' => 'Arbeidsmarkt updates',
-                'long_description' => 'De Nederlandse arbeidsmarkt ondergaat belangrijke veranderingen met impact op werkgevers en werknemers.',
-                'key_points' => [
-                    'Flexwerk',
-                    'Arbeidsparticipatie',
-                    'Scholing',
-                    'Arbeidsvoorwaarden'
-                ]
-            ],
-            'immigratie' => [
-                'title' => 'Immigratie',
-                'icon' => '🌐',
-                'description' => 'Immigratie en integratie',
-                'long_description' => 'Het Nederlandse immigratiebeleid en de integratie van nieuwkomers zijn belangrijke maatschappelijke thema\'s die veel discussie oproepen.',
-                'key_points' => [
-                    'Asielbeleid',
-                    'Arbeidsmigratie',
-                    'Integratie',
-                    'Sociale cohesie'
-                ]
-            ],
-            'veiligheid' => [
-                'title' => 'Veiligheid',
-                'icon' => '🛡️',
-                'description' => 'Nationale veiligheid',
-                'long_description' => 'De nationale veiligheid omvat verschillende aspecten, van criminaliteitsbestrijding tot cybersecurity en terrorismebestrijding.',
-                'key_points' => [
-                    'Criminaliteitsbestrijding',
-                    'Cyberveiligheid',
-                    'Terrorismebestrijding',
-                    'Politiecapaciteit'
-                ]
-            ],
-            'duurzaamheid' => [
-                'title' => 'Duurzaamheid',
-                'icon' => '♻️',
-                'description' => 'Duurzame ontwikkeling',
-                'long_description' => 'De transitie naar een duurzame samenleving vraagt om ingrijpende veranderingen in hoe we leven, werken en consumeren.',
-                'key_points' => [
-                    'Circulaire economie',
-                    'Biodiversiteit',
-                    'Duurzame landbouw',
-                    'Afvalreductie'
-                ]
-            ]
-        ];
+    /**
+     * Canonieke thema-definities uit de gedeelde databron. De sleutels komen
+     * exact overeen met de slugs in generate-sitemap.php en op de
+     * themas-overzichtspagina, zodat er geen 404's meer ontstaan.
+     */
+    public static function getThemas() {
+        return require __DIR__ . '/../includes/data/themas.php';
+    }
 
-        return isset($themas[$slug]) ? $themas[$slug] : null;
+    private function getThemaInfo($slug) {
+        $themas = self::getThemas();
+        return $themas[$slug] ?? null;
     }
 }
 
@@ -157,4 +83,4 @@ $themaController = new ThemaController();
 $slug = isset($_GET['slug']) ? $_GET['slug'] : '';
 
 // Roep de view methode aan
-$themaController->view($slug); 
+$themaController->view($slug);

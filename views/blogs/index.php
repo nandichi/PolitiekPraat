@@ -150,7 +150,7 @@ if ($pg && (int) ($pg['totalPages'] ?? 0) > 1):
 <section class="pp-container pp-container--xl mt-16">
     <nav class="pagination" aria-label="Blog paginering">
         <?php if ($current > 1): ?>
-            <a class="pagination__item" href="<?= pp_e(pp_url('/blogs?page=' . ($current - 1) . $catParam)) ?>">
+            <a class="pagination__item" href="<?= pp_e(pp_url('/blogs?page=' . ($current - 1) . $catParam)) ?>" aria-label="Vorige pagina">
                 <?= pp_icon('arrow-left', 14) ?>
                 <span class="ml-1 hidden sm:inline">Vorige</span>
             </a>
@@ -177,7 +177,7 @@ if ($pg && (int) ($pg['totalPages'] ?? 0) > 1):
         <?php endif; ?>
 
         <?php if ($current < $total): ?>
-            <a class="pagination__item" href="<?= pp_e(pp_url('/blogs?page=' . ($current + 1) . $catParam)) ?>">
+            <a class="pagination__item" href="<?= pp_e(pp_url('/blogs?page=' . ($current + 1) . $catParam)) ?>" aria-label="Volgende pagina">
                 <span class="mr-1 hidden sm:inline">Volgende</span>
                 <?= pp_icon('arrow-right', 14) ?>
             </a>

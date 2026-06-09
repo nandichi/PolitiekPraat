@@ -12,7 +12,10 @@ $themaIcons = [
     'Veiligheid'    => 'shield',
     'Duurzaamheid'  => 'recycle',
 ];
-$themaIcon = $themaIcons[$thema['title']] ?? 'landmark';
+// Gebruik bij voorkeur het lucide-icoon uit de thema-data; val anders terug op
+// de titelgebaseerde map en daarna op een algemeen icoon.
+$explicitIcon = (isset($thema['icon']) && is_string($thema['icon']) && preg_match('/^[a-z0-9-]+$/', $thema['icon'])) ? $thema['icon'] : null;
+$themaIcon = $explicitIcon ?? ($themaIcons[$thema['title']] ?? 'landmark');
 $themaTitle = $thema['title'] ?? '';
 $themaDescription = $thema['long_description'] ?? '';
 $keyPoints = $thema['key_points'] ?? [];

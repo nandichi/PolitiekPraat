@@ -95,7 +95,16 @@ $router->add('register', 'controllers/auth/register.php');
 $router->add('auth/register', 'controllers/auth/register.php');
 $router->add('logout', 'controllers/auth/logout.php');
 $router->add('auth/logout', 'controllers/auth/logout.php');
+$router->add('reset-password', 'controllers/auth/reset-password.php');
+$router->add('wachtwoord-vergeten', function() {
+    header('Location: ' . URLROOT . '/reset-password', true, 301);
+    exit;
+});
 $router->add('themas', 'controllers/themas.php');
+$router->add('thema', function() {
+    header('Location: ' . URLROOT . '/themas', true, 301);
+    exit;
+});
 $router->add('thema/([^/]+)', 'controllers/thema.php');
 $router->add('over-mij', 'controllers/over-mij.php');
 $router->add('nieuws', 'controllers/nieuws.php');
@@ -113,6 +122,13 @@ $router->add('resultaten/([a-zA-Z0-9]+)', function($shareId) {
 });
 $router->add('partijen', 'controllers/partijen.php');
 $router->add('partijen/([^/]+)', function($partySlug) {
+    // Canonicaliseer hoofdletters: /partijen/PVV -> 301 -> /partijen/pvv.
+    // Voorkomt dat zoekmachines dezelfde partijpagina als duplicaat tellen.
+    $lower = strtolower($partySlug);
+    if ($partySlug !== $lower) {
+        header('Location: ' . URLROOT . '/partijen/' . rawurlencode($lower), true, 301);
+        exit;
+    }
     $_GET['party'] = $partySlug;
     require_once 'controllers/partijen-detail.php';
 });
