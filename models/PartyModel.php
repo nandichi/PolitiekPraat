@@ -20,6 +20,7 @@ class PartyModel {
         'NSC'     => '/public/images/party-logos/nsc.png',
         'GL-PvdA' => '/public/images/party-logos/gl-pvda.png',
         'CU'      => '/public/images/party-logos/christenunie.svg',
+        '50PLUS'  => '/public/images/party-logos/50plus.svg',
     ];
 
     private static $localLeaderPhotoMap = [
@@ -31,11 +32,13 @@ class PartyModel {
         'PvdD'    => '/partijleiders/esther.jpg',
         'JA21'    => '/partijleiders/joost.jpg',
         'SGP'     => '/partijleiders/Chris.jpg',
-        'FvD'     => '/partijleiders/thierry.jpg',
+        'FvD'     => '/partijleiders/lidewij.jpg',
         'DENK'    => '/partijleiders/baarle.jpg',
         'Volt'    => '/partijleiders/dassen.jpg',
         'BBB'     => '/partijleiders/plas.jpg',
-        'GL-PvdA' => '/partijleiders/frans.jpg',
+        'GL-PvdA' => '/partijleiders/klaver.jpg',
+        'CU'      => '/partijleiders/bikker.jpg',
+        '50PLUS'  => '/partijleiders/struijs.jpg',
         'NSC'     => '/partijleiders/omtzicht.jpg',
     ];
 
@@ -90,6 +93,7 @@ class PartyModel {
         $parties = [];
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $party = [
+                'party_key' => $row['party_key'],
                 'name' => $row['name'],
                 'leader' => $row['leader'],
                 'logo' => $row['logo'],
@@ -125,6 +129,7 @@ class PartyModel {
         }
 
         $party = [
+            'party_key' => $row['party_key'],
             'name' => $row['name'],
             'leader' => $row['leader'],
             'logo' => $row['logo'],

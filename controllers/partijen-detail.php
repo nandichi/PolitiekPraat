@@ -44,10 +44,42 @@ if (!$party) {
     exit;
 }
 
+// MySQL matcht party_key hoofdletterongevoelig, dus een URL als /partijen/d66
+// levert wel de juiste rij op, maar laat $partyKey lowercase. De redactionele
+// profielen en kleuren gebruiken de canonieke schrijfwijze (D66, GL-PvdA,
+// 50PLUS, FvD). Normaliseer daarom naar de exacte sleutel uit de databron.
+if (!empty($party['party_key'])) {
+    $partyKey = $party['party_key'];
+}
+
 $partyColor = getPartyColor($partyKey);
 
-$pageTitle = ($party['name'] ?? $partyKey) . ' - ' . ($party['leader'] ?? '');
-$pageDescription = 'Profiel van ' . ($party['name'] ?? $partyKey) . ' op PolitiekPraat: lijsttrekker, zetels, standpunten en peilingen.';
-$data = ['title' => $pageTitle, 'description' => $pageDescription];
+// Redactioneel profiel (versiebeheerd) en standpunt per thema.
+$profileData = require BASE_PATH . '/includes/data/partijen_profiel.php';
+$profile = $profileData[$partyKey] ?? null;
+
+$partySlug = strtolower($partyKey);
+$themas = require BASE_PATH . '/includes/data/themas.php';
+$standpuntenAll = require BASE_PATH . '/includes/data/standpunten.php';
+
+$partyThemePositions = [];
+foreach ($themas as $themaSlug => $thema) {
+    $tekst = $standpuntenAll[$themaSlug][$partySlug] ?? null;
+    if (!$tekst) {
+        continue;
+    }
+    $partyThemePositions[] = [
+        'slug'     => $themaSlug,
+        'title'    => $thema['title'] ?? ucfirst(str_replace('-', ' ', $themaSlug)),
+        'icon'     => $thema['icon'] ?? 'circle',
+        'category' => $thema['category'] ?? '',
+        'tekst'    => $tekst,
+    ];
+}
+
+$pageTitle = ($party['name'] ?? $partyKey) . ' - standpunten, leider en zetels';
+$pageDescription = 'Uitgebreid profiel van ' . ($party['name'] ?? $partyKey)
+    . ' op PolitiekPraat: geschiedenis, stroming, lijsttrekker, zetelhistorie, kritiek en standpunt per thema.';
+$data = ['title' => $pageTitle . ' - PolitiekPraat', 'description' => $pageDescription];
 
 require_once BASE_PATH . '/views/partijen/detail.php';

@@ -24,6 +24,7 @@ $currentSeats = $current_seats ?? null;
 $pollingSeats = $polling_seats ?? null;
 $description = $description ?? null;
 $href = $href ?? null;
+$spectrum = $spectrum ?? null;
 ?>
 <article class="keyline-card" style="overflow: hidden; height: 100%; display: flex; flex-direction: column;">
     <div style="height: 4px; background: <?= pp_e($color) ?>;"></div>
@@ -46,6 +47,9 @@ $href = $href ?? null;
                     <h3 class="font-display text-lg leading-tight text-[color:var(--color-ink)]">
                         <?= pp_e($partyName) ?>
                     </h3>
+                <?php endif; ?>
+                <?php if ($spectrum): ?>
+                    <div class="text-xs text-[color:var(--color-ink-muted)] mt-1"><?= pp_e($spectrum) ?></div>
                 <?php endif; ?>
             </div>
         </div>

@@ -17,7 +17,8 @@ if (!function_exists('getPartyColor')) {
             'FvD' => '#811E1E',
             'DENK' => '#00b7b2',
             'Volt' => '#502379',
-            'CU' => '#00AEEF'
+            'CU' => '#00AEEF',
+            '50PLUS' => '#92278F'
         ];
 
         return isset($partyColors[$partyKey]) ? $partyColors[$partyKey] : '#A0A0A0';

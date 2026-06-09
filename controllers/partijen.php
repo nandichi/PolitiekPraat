@@ -18,6 +18,10 @@ require_once __DIR__ . '/../models/PartyModel.php';
 
 $partyModel = new PartyModel();
 $parties = $partyModel->getAllParties();
+
+// Redactionele profielen (stroming, etc.) voor verrijking van de kaarten.
+$partyProfiles = require BASE_PATH . '/includes/data/partijen_profiel.php';
+
 $parties_json = json_encode($parties, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 if ($parties_json === false) {
     $parties_json = '{}';

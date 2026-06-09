@@ -122,6 +122,7 @@ require_once BASE_PATH . '/views/templates/header.php';
                 'current_seats' => $party['current_seats'] ?? null,
                 'polling_seats' => $party['polling']['seats'] ?? null,
                 'description'   => $party['description'] ?? null,
+                'spectrum'      => $partyProfiles[$key]['stroming'] ?? null,
                 'href'          => pp_url('/partijen/' . urlencode($slug)),
             ]) ?>
         <?php endforeach; ?>
