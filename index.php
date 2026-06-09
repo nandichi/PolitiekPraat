@@ -116,6 +116,10 @@ $router->add('newsletter/unsubscribe', function() {
     require_once 'controllers/newsletter.php';
 });
 $router->add('partijmeter', 'controllers/partijmeter.php');
+$router->add('partijmeter/resultaat/([a-zA-Z0-9]+)', function($shareId) {
+    $_GET['id'] = $shareId;
+    require_once 'controllers/partijmeter-resultaat.php';
+});
 $router->add('resultaten/([a-zA-Z0-9]+)', function($shareId) {
     $_GET['id'] = $shareId;
     require_once 'controllers/resultaten.php';

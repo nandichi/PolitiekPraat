@@ -295,6 +295,10 @@ $jsAppPath  = __DIR__ . '/../../public/js/pp-app.js';
 $jsAppVer   = file_exists($jsAppPath) ? filemtime($jsAppPath) : time();
 $jsMapPath  = __DIR__ . '/../../public/js/midterms-map.js';
 $jsMapVer   = file_exists($jsMapPath) ? filemtime($jsMapPath) : time();
+$cssPmPath  = __DIR__ . '/../../public/css/partijmeter.css';
+$cssPmVer   = file_exists($cssPmPath) ? filemtime($cssPmPath) : time();
+$jsPmPath   = __DIR__ . '/../../public/js/partijmeter.js';
+$jsPmVer    = file_exists($jsPmPath) ? filemtime($jsPmPath) : time();
 ?>
 <!DOCTYPE html>
 <html lang="nl">
@@ -425,6 +429,11 @@ $jsMapVer   = file_exists($jsMapPath) ? filemtime($jsMapPath) : time();
     <!-- Main editorial stylesheet (Tailwind v4 build) -->
     <link rel="stylesheet" href="<?php echo URLROOT; ?>/public/css/app.build.css?v=<?php echo $cssAppVer; ?>">
 
+    <?php if ($currentPage === 'partijmeter'): ?>
+    <!-- PartijMeter 2026: pagina-specifieke stijl (animaties, kompas, matrix) -->
+    <link rel="stylesheet" href="<?php echo URLROOT; ?>/public/css/partijmeter.css?v=<?php echo $cssPmVer; ?>">
+    <?php endif; ?>
+
     <!-- Legacy assets - tijdelijk behouden tot Wave 5 cleanup
          (Font Awesome iconen worden nog in oude pagina-views gebruikt) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -538,6 +547,59 @@ $jsMapVer   = file_exists($jsMapPath) ? filemtime($jsMapPath) : time();
     </script>
     <?php endif; ?>
 
+    <?php if ($currentPage === 'partijmeter'): ?>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "PartijMeter 2026",
+        "url": "<?php echo URLROOT; ?>/partijmeter",
+        "applicationCategory": "EducationalApplication",
+        "operatingSystem": "Web",
+        "inLanguage": "nl-NL",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+        "description": "Gratis stemhulp die jouw standpunten vergelijkt met de partijen in de Tweede Kamer en je beste match toont.",
+        "publisher": { "@type": "Organization", "name": "PolitiekPraat", "url": "<?php echo URLROOT; ?>" }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "<?php echo URLROOT; ?>/" },
+            { "@type": "ListItem", "position": 2, "name": "PartijMeter 2026", "item": "<?php echo URLROOT; ?>/partijmeter" }
+        ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Wat is de PartijMeter?",
+                "acceptedAnswer": { "@type": "Answer", "text": "De PartijMeter is een gratis stemhulp die jouw antwoorden op actuele stellingen vergelijkt met de standpunten van de partijen in de Tweede Kamer." }
+            },
+            {
+                "@type": "Question",
+                "name": "Is de PartijMeter een stemadvies?",
+                "acceptedAnswer": { "@type": "Answer", "text": "Nee. De PartijMeter helpt je standpunten te vergelijken. De partijstandpunten zijn een redactionele momentopname op basis van verkiezingsprogramma's en stemgedrag." }
+            },
+            {
+                "@type": "Question",
+                "name": "Worden mijn antwoorden opgeslagen?",
+                "acceptedAnswer": { "@type": "Answer", "text": "Je antwoorden worden anoniem verwerkt. Alleen als je je resultaat deelt, slaan we het op achter een unieke deellink." }
+            }
+        ]
+    }
+    </script>
+    <?php endif; ?>
+
     <?php if(isset($data['is_blog']) && $data['is_blog']): ?>
     <script type="application/ld+json">
     {
@@ -631,6 +693,11 @@ $jsMapVer   = file_exists($jsMapPath) ? filemtime($jsMapPath) : time();
     <link rel="stylesheet" href="<?php echo URLROOT; ?>/public/css/coffee-button.css">
     <script src="<?php echo URLROOT; ?>/public/js/accessibility.js" defer></script>
     <script src="<?php echo URLROOT; ?>/public/js/webmcp.js" defer></script>
+
+    <?php if ($currentPage === 'partijmeter'): ?>
+    <!-- PartijMeter 2026: Alpine-component (moet vóór Alpine geladen worden) -->
+    <script src="<?php echo URLROOT; ?>/public/js/partijmeter.js?v=<?php echo $jsPmVer; ?>" defer></script>
+    <?php endif; ?>
 
     <!-- Alpine.js (nog gebruikt door legacy templates; te vervangen in Wave 2-5) -->
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>

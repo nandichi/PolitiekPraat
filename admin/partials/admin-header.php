@@ -22,7 +22,12 @@ $adminNavGroups = [
         ['id' => 'scraper', 'label' => 'Scraper dashboard', 'href' => 'scraper_dashboard.php'],
         ['id' => 'auto-likes', 'label' => 'Auto likes', 'href' => 'auto-likes-beheer.php'],
     ],
-    'Stemwijzer' => [
+    'PartijMeter' => [
+        ['id' => 'partijmeter', 'label' => 'Overzicht', 'href' => 'partijmeter-dashboard.php'],
+        ['id' => 'partijmeter-vragen', 'label' => 'Stellingen', 'href' => 'partijmeter-vragen-beheer.php'],
+        ['id' => 'partijmeter-standpunten', 'label' => 'Standpunten', 'href' => 'partijmeter-standpunten-beheer.php'],
+    ],
+    'Stemwijzer (Ede)' => [
         ['id' => 'stemwijzer', 'label' => 'Overzicht', 'href' => 'stemwijzer-dashboard.php'],
         ['id' => 'stemwijzer-vragen', 'label' => 'Vragen', 'href' => 'stemwijzer-vraag-beheer.php'],
         ['id' => 'stemwijzer-partijen', 'label' => 'Partijen', 'href' => 'stemwijzer-partij-beheer.php'],
