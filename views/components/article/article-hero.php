@@ -30,7 +30,8 @@ $author = $author ?? ($props['author'] ?? null);
 $reverse = $reverse ?? ($props['reverse'] ?? false);
 ?>
 <article class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center<?= $reverse ? ' md:[direction:rtl]' : '' ?>">
-    <a class="block group<?= $reverse ? ' md:[direction:ltr]' : '' ?>" href="<?= pp_e(pp_url($href)) ?>">
+    <a class="block group<?= $reverse ? ' md:[direction:ltr]' : '' ?>" href="<?= pp_e(pp_url($href)) ?>"
+       aria-label="<?= pp_e($title) ?>" tabindex="-1">
         <?php if ($image): ?>
             <div class="editorial-frame editorial-frame--4-3">
                 <img src="<?= pp_e($image) ?>"
