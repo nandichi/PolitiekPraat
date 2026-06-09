@@ -44,6 +44,8 @@ class ThemasController {
                 'title' => $info['title'],
                 'icon' => $info['icon'] ?? 'tag',
                 'description' => $info['description'] ?? '',
+                'tagline' => $info['tagline'] ?? '',
+                'category' => $info['category'] ?? 'Overig',
                 'slug' => $slug,
             ];
         }

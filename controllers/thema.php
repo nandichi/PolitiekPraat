@@ -51,9 +51,21 @@ class ThemaController {
         // van de slug). Bij ontbreken vallen we terug op de slug zelf.
         $standpuntenKey = $thema['standpunten_key'] ?? $thema_slug;
 
-        // Haal standpunten op van politieke partijen
+        // Haal standpunten op van alle partijen (gesorteerd op zetels).
+        $standpunten = $this->politicalParties->getStandpunten($standpuntenKey);
+
+        // Backwards-compatibele links/rechts-splitsing (voor oudere weergaves).
         $linksePartijen = $this->politicalParties->getLinkseStandpunten($standpuntenKey);
         $rechtsePartijen = $this->politicalParties->getRechtseStandpunten($standpuntenKey);
+
+        // Gerelateerde thema's (met titel + icoon) voor de "verder lezen"-sectie.
+        $alleThemas = self::getThemas();
+        $gerelateerdeThemas = [];
+        foreach (($thema['gerelateerd'] ?? []) as $relSlug) {
+            if (isset($alleThemas[$relSlug])) {
+                $gerelateerdeThemas[$relSlug] = $alleThemas[$relSlug];
+            }
+        }
 
         // Haal nieuws op over dit thema
         $themaNews = $this->newsAPI->getThemaNews($thema['news_key'] ?? $thema_slug);

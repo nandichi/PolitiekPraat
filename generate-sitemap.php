@@ -87,21 +87,9 @@ foreach ($blogs as $blog) {
     echo "  </url>\n";
 }
 
-// Add themas (belangrijkste politieke thema's)
-$thema_slugs = [
-    'klimaat-en-energie',
-    'economie-en-financien',
-    'onderwijs',
-    'zorg-en-welzijn',
-    'migratie-en-asiel',
-    'veiligheid-en-justitie',
-    'europa',
-    'defensie',
-    'landbouw-en-natuur',
-    'wonen',
-    'mobiliteit-en-verkeer',
-    'digitalisering'
-];
+// Add themas (canonieke slugs uit de gedeelde databron, zodat de sitemap
+// automatisch meeloopt met includes/data/themas.php).
+$thema_slugs = array_keys(require __DIR__ . '/includes/data/themas.php');
 
 foreach ($thema_slugs as $slug) {
     echo "  <url>\n";

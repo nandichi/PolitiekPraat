@@ -1,215 +1,181 @@
 <?php
 
+/**
+ * Politieke partijen in de Tweede Kamer en hun standpunten per thema.
+ *
+ * Zetelverdeling: Tweede Kamerverkiezingen 29 oktober 2025 (150 zetels).
+ * Coalitie: Kabinet-Jetten (D66, VVD, CDA), minderheidskabinet.
+ * Bron: includes/data/nederlandse_verkiezingen_2025.php (canonieke databron op de site).
+ *
+ * De standpunten per thema staan in includes/data/standpunten.php en worden
+ * gekoppeld via de partij-slug.
+ */
 class PoliticalParties {
+    /**
+     * Partijen in volgorde van zetelaantal (grootste eerst). De volgorde wordt
+     * gebruikt in de weergave van de standpunten.
+     */
     private $parties = [
-        'pvv' => [
-            'name' => 'PVV',
-            'color' => '#0a2896',
-            'website' => 'pvv.nl',
-            'seats' => 37,
-            'logo' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50" y="50" font-family="Arial Black" font-size="45" fill="#0a2896" text-anchor="middle" dominant-baseline="central">PVV</text></svg>'
+        'd66' => [
+            'name' => 'D66', 'slug' => 'd66', 'color' => '#00AE41', 'website' => 'd66.nl',
+            'seats' => 26, 'spectrum' => 'Sociaal-liberaal', 'blok' => 'links', 'coalitie' => true,
+            'logo_file' => '/public/images/party-logos/d66.png',
         ],
-        'gl-pvda' => [
-            'name' => 'GroenLinks-PvdA',
-            'color' => '#8cc63f',
-            'website' => 'groenlinks-pvda.nl',
-            'seats' => 25,
-            'logo' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50" y="40" font-family="Arial Black" font-size="25" fill="#8cc63f" text-anchor="middle">GL</text><text x="50" y="70" font-family="Arial Black" font-size="25" fill="#e31e24" text-anchor="middle">PvdA</text></svg>'
+        'pvv' => [
+            'name' => 'PVV', 'slug' => 'pvv', 'color' => '#0a2896', 'website' => 'pvv.nl',
+            'seats' => 26, 'spectrum' => 'Nationaal-conservatief', 'blok' => 'rechts', 'coalitie' => false,
+            'logo_file' => '/public/images/party-logos/pvv.png',
         ],
         'vvd' => [
-            'name' => 'VVD',
-            'color' => '#ff7404',
-            'website' => 'vvd.nl',
-            'seats' => 24,
-            'logo' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50" y="50" font-family="Arial Black" font-size="45" fill="#ff7404" text-anchor="middle" dominant-baseline="central">VVD</text></svg>'
+            'name' => 'VVD', 'slug' => 'vvd', 'color' => '#FF7404', 'website' => 'vvd.nl',
+            'seats' => 22, 'spectrum' => 'Liberaal', 'blok' => 'rechts', 'coalitie' => true,
+            'logo_file' => '/public/images/party-logos/vvd.png',
         ],
-        'nsc' => [
-            'name' => 'NSC',
-            'color' => '#123b6d',
-            'website' => 'nieuwsociaalcontract.nl',
-            'seats' => 20,
-            'logo' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50" y="50" font-family="Arial Black" font-size="45" fill="#123b6d" text-anchor="middle" dominant-baseline="central">NSC</text></svg>'
-        ],
-        'd66' => [
-            'name' => 'D66',
-            'color' => '#00b13c',
-            'website' => 'd66.nl',
-            'seats' => 9,
-            'logo' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50" y="50" font-family="Arial Black" font-size="45" fill="#00b13c" text-anchor="middle" dominant-baseline="central">D66</text></svg>'
-        ],
-        'bbb' => [
-            'name' => 'BBB',
-            'color' => '#6e9c3c',
-            'website' => 'boerburgerbeweging.nl',
-            'seats' => 7,
-            'logo' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50" y="50" font-family="Arial Black" font-size="45" fill="#6e9c3c" text-anchor="middle" dominant-baseline="central">BBB</text></svg>'
+        'gl-pvda' => [
+            'name' => 'GroenLinks-PvdA', 'slug' => 'gl-pvda', 'color' => '#DF1278', 'website' => 'groenlinks-pvda.nl',
+            'seats' => 20, 'spectrum' => 'Progressief-links', 'blok' => 'links', 'coalitie' => false,
+            'logo_file' => '/public/images/party-logos/gl-pvda.png',
         ],
         'cda' => [
-            'name' => 'CDA',
-            'color' => '#007749',
-            'website' => 'cda.nl',
-            'seats' => 5,
-            'logo' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50" y="50" font-family="Arial Black" font-size="45" fill="#007749" text-anchor="middle" dominant-baseline="central">CDA</text></svg>'
-        ],
-        'sp' => [
-            'name' => 'SP',
-            'color' => '#ee1f27',
-            'website' => 'sp.nl',
-            'seats' => 5,
-            'logo' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50" y="50" font-family="Arial Black" font-size="45" fill="#ee1f27" text-anchor="middle" dominant-baseline="central">SP</text></svg>'
-        ],
-        'cu' => [
-            'name' => 'ChristenUnie',
-            'color' => '#00a0dc',
-            'website' => 'christenunie.nl',
-            'seats' => 3,
-            'logo' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50" y="50" font-family="Arial Black" font-size="45" fill="#00a0dc" text-anchor="middle" dominant-baseline="central">CU</text></svg>'
-        ],
-        'denk' => [
-            'name' => 'DENK',
-            'color' => '#009f41',
-            'website' => 'bewegingdenk.nl',
-            'seats' => 3,
-            'logo' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50" y="50" font-family="Arial Black" font-size="45" fill="#009f41" text-anchor="middle" dominant-baseline="central">DENK</text></svg>'
-        ],
-        'fvd' => [
-            'name' => 'FVD',
-            'color' => '#841818',
-            'website' => 'fvd.nl',
-            'seats' => 3,
-            'logo' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50" y="50" font-family="Arial Black" font-size="45" fill="#841818" text-anchor="middle" dominant-baseline="central">FVD</text></svg>'
-        ],
-        'pvdd' => [
-            'name' => 'Partij voor de Dieren',
-            'color' => '#006c2e',
-            'website' => 'partijvoordedieren.nl',
-            'seats' => 3,
-            'logo' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50" y="50" font-family="Arial Black" font-size="30" fill="#006c2e" text-anchor="middle" dominant-baseline="central">PvdD</text></svg>'
-        ],
-        'sgp' => [
-            'name' => 'SGP',
-            'color' => '#254399',
-            'website' => 'sgp.nl',
-            'seats' => 3,
-            'logo' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50" y="50" font-family="Arial Black" font-size="45" fill="#254399" text-anchor="middle" dominant-baseline="central">SGP</text></svg>'
-        ],
-        'volt' => [
-            'name' => 'Volt',
-            'color' => '#502379',
-            'website' => 'voltnederland.org',
-            'seats' => 2,
-            'logo' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50" y="50" font-family="Arial Black" font-size="40" fill="#502379" text-anchor="middle" dominant-baseline="central">VOLT</text></svg>'
+            'name' => 'CDA', 'slug' => 'cda', 'color' => '#007749', 'website' => 'cda.nl',
+            'seats' => 18, 'spectrum' => 'Christendemocratisch', 'blok' => 'midden', 'coalitie' => true,
+            'logo_file' => '/public/images/party-logos/cda.png',
         ],
         'ja21' => [
-            'name' => 'JA21',
-            'color' => '#01557D',
-            'website' => 'ja21.nl',
-            'seats' => 1,
-            'logo' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50" y="50" font-family="Arial Black" font-size="35" fill="#01557D" text-anchor="middle" dominant-baseline="central">JA21</text></svg>'
-        ]
+            'name' => 'JA21', 'slug' => 'ja21', 'color' => '#01557D', 'website' => 'ja21.nl',
+            'seats' => 9, 'spectrum' => 'Conservatief-liberaal', 'blok' => 'rechts', 'coalitie' => false,
+            'logo_file' => '/public/images/party-logos/ja21.png',
+        ],
+        'fvd' => [
+            'name' => 'Forum voor Democratie', 'slug' => 'fvd', 'color' => '#841818', 'website' => 'fvd.nl',
+            'seats' => 7, 'spectrum' => 'Radicaal-rechts', 'blok' => 'rechts', 'coalitie' => false,
+            'logo_file' => '/public/images/party-logos/fvd.png',
+        ],
+        'bbb' => [
+            'name' => 'BBB', 'slug' => 'bbb', 'color' => '#769B00', 'website' => 'boerburgerbeweging.nl',
+            'seats' => 4, 'spectrum' => 'Agrarisch', 'blok' => 'rechts', 'coalitie' => false,
+            'logo_file' => '/public/images/party-logos/bbb.png',
+        ],
+        'denk' => [
+            'name' => 'DENK', 'slug' => 'denk', 'color' => '#22A6B3', 'website' => 'bewegingdenk.nl',
+            'seats' => 3, 'spectrum' => 'Links', 'blok' => 'links', 'coalitie' => false,
+            'logo_file' => '/public/images/party-logos/denk.png',
+        ],
+        'cu' => [
+            'name' => 'ChristenUnie', 'slug' => 'cu', 'color' => '#00a0dc', 'website' => 'christenunie.nl',
+            'seats' => 3, 'spectrum' => 'Christelijk-sociaal', 'blok' => 'midden', 'coalitie' => false,
+            'logo_file' => '/public/images/party-logos/christenunie.svg',
+        ],
+        'sp' => [
+            'name' => 'SP', 'slug' => 'sp', 'color' => '#ee1f27', 'website' => 'sp.nl',
+            'seats' => 3, 'spectrum' => 'Socialistisch', 'blok' => 'links', 'coalitie' => false,
+            'logo_file' => '/public/images/party-logos/sp.png',
+        ],
+        'sgp' => [
+            'name' => 'SGP', 'slug' => 'sgp', 'color' => '#E8650F', 'website' => 'sgp.nl',
+            'seats' => 3, 'spectrum' => 'Reformatorisch', 'blok' => 'rechts', 'coalitie' => false,
+            'logo_file' => '/public/images/party-logos/sgp.png',
+        ],
+        'pvdd' => [
+            'name' => 'Partij voor de Dieren', 'slug' => 'pvdd', 'color' => '#006c2e', 'website' => 'partijvoordedieren.nl',
+            'seats' => 3, 'spectrum' => 'Ecologisch-links', 'blok' => 'links', 'coalitie' => false,
+            'logo_file' => '/public/images/party-logos/pvdd.png',
+        ],
+        '50plus' => [
+            'name' => '50PLUS', 'slug' => '50plus', 'color' => '#92278F', 'website' => '50pluspartij.nl',
+            'seats' => 2, 'spectrum' => 'Ouderenpartij', 'blok' => 'midden', 'coalitie' => false,
+            'logo_file' => '/public/images/party-logos/50plus.svg',
+        ],
+        'volt' => [
+            'name' => 'Volt', 'slug' => 'volt', 'color' => '#502379', 'website' => 'voltnederland.org',
+            'seats' => 1, 'spectrum' => 'Pro-Europees', 'blok' => 'links', 'coalitie' => false,
+            'logo_file' => '/public/images/party-logos/volt.png',
+        ],
     ];
 
-    private $linksePartijen = [
-        'GroenLinks-PvdA' => [
-            'klimaatbeleid' => 'Voorstander van ambitieus klimaatbeleid met focus op duurzame energie en CO2-reductie. Pleit voor eerlijke verdeling van de kosten van de energietransitie.',
-            'woningmarkt' => 'Meer sociale huurwoningen, regulering van de vrije huursector en aanpak van woningspeculatie. Focus op betaalbaar wonen voor iedereen.',
-            'economie' => 'Sterkere rol voor de overheid in de economie, hogere belastingen voor grote bedrijven en vermogens, en investeren in publieke voorzieningen.',
-            'zorg' => 'Afschaffen marktwerking in de zorg, lagere eigen bijdragen en meer waardering voor zorgpersoneel. Focus op preventie en toegankelijkheid.',
-            'onderwijs' => 'Meer investeren in onderwijs, kleinere klassen, hogere salarissen voor leraren en afschaffen leenstelsel. Focus op kansengelijkheid.',
-            'arbeidsmarkt' => 'Hoger minimumloon, vaste contracten stimuleren, en betere bescherming voor flexwerkers. Focus op werknemersrechten.',
-            'immigratie' => 'Humaan asielbeleid, betere opvang en integratie van vluchtelingen. Focus op inclusieve samenleving en gelijke kansen.',
-            'veiligheid' => 'Preventie en aanpak van oorzaken van criminaliteit. Investeren in wijkagenten en sociale veiligheid.',
-            'duurzaamheid' => 'Ambitieuze doelen voor circulaire economie, natuurbehoud en duurzame landbouw. Focus op klimaatrechtvaardigheid.'
-        ],
-        'SP' => [
-            'klimaatbeleid' => 'Klimaatmaatregelen moeten eerlijk verdeeld worden, grote vervuilers moeten meer betalen. Focus op betaalbaarheid voor gewone mensen.',
-            'woningmarkt' => 'Massaal bouwen van betaalbare woningen, huurprijzen bevriezen en speculanten aanpakken. Wonen is een recht, geen verdienmodel.',
-            'economie' => 'Economie moet dienend zijn aan mensen, niet andersom. Herverdeling van welvaart en nationalisering van vitale sectoren.',
-            'zorg' => 'Nationaal Zorgfonds zonder eigen risico, zorg in publieke handen en betere arbeidsvoorwaarden in de zorg.',
-            'onderwijs' => 'Gratis onderwijs op alle niveaus, kleinere klassen en meer zeggenschap voor docenten en studenten.',
-            'arbeidsmarkt' => 'Vast werk moet de norm zijn, minimumloon naar 15 euro en aanpak van doorgeslagen flexibilisering.',
-            'immigratie' => 'Eerlijk asielbeleid met aandacht voor draagvlak in de samenleving. Focus op goede integratie en arbeidsparticipatie.',
-            'veiligheid' => 'Meer wijkagenten, aanpak van georganiseerde misdaad en versterking van lokale veiligheid.',
-            'duurzaamheid' => 'Duurzaamheid moet betaalbaar zijn voor iedereen. Grote vervuilers aanpakken en investeren in groene alternatieven.'
-        ],
-        'PvdD' => [
-            'klimaatbeleid' => 'Radicale systeemverandering nodig voor klimaat en biodiversiteit. Focus op plantaardige economie en natuurherstel.',
-            'woningmarkt' => 'Duurzaam en natuurinclusief bouwen, focus op renovatie en transformatie van bestaande gebouwen.',
-            'economie' => 'Transitie naar circulaire economie, krimp van vervuilende industrie en stimuleren van duurzame alternatieven.',
-            'zorg' => 'Preventieve gezondheidszorg, meer aandacht voor leefstijl en milieufactoren in gezondheid.',
-            'onderwijs' => 'Meer aandacht voor duurzaamheid en dierenwelzijn in onderwijs, kleinschalig onderwijs stimuleren.',
-            'arbeidsmarkt' => 'Korter werken met behoud van loon, basisinkomen onderzoeken en duurzame banen stimuleren.',
-            'immigratie' => 'Humaan vluchtelingenbeleid en aandacht voor klimaatvluchtelingen. Focus op mondiale rechtvaardigheid.',
-            'veiligheid' => 'Preventie van milieucriminaliteit en dierenmishandeling. Versterking van handhaving natuurwetgeving.',
-            'duurzaamheid' => 'Radicale omslag naar plantaardige economie, natuurherstel en dierenwelzijn centraal stellen.'
-        ]
-    ];
+    /** @var array|null Cache van de standpunten-databron. */
+    private $standpuntenData = null;
 
-    private $rechtsePartijen = [
-        'VVD' => [
-            'klimaatbeleid' => 'Klimaatdoelen halen door innovatie en kernenergie. Focus op haalbaarheid en betaalbaarheid, geen overhaaste maatregelen.',
-            'woningmarkt' => 'Sneller en meer bouwen door vermindering regeldruk. Stimuleren eigen woningbezit en ruimte voor commerciële verhuur.',
-            'economie' => 'Lage belastingen, minder regels voor ondernemers en gezonde overheidsfinanciën. Focus op economische groei.',
-            'zorg' => 'Efficiëntere zorg door marktwerking, eigen verantwoordelijkheid en innovatie. Kritisch op stijgende zorgkosten.',
-            'onderwijs' => 'Focus op kwaliteit en excellentie, meer maatwerk in onderwijs en aansluiting op arbeidsmarkt.',
-            'arbeidsmarkt' => 'Flexibiliteit op arbeidsmarkt behouden, lagere lasten op arbeid en stimuleren van ondernemerschap.',
-            'immigratie' => 'Streng maar rechtvaardig immigratiebeleid. Focus op arbeidsmigratie die bijdraagt aan de economie.',
-            'veiligheid' => 'Harde aanpak van criminaliteit, meer bevoegdheden voor politie en justitie, investeren in cybersecurity.',
-            'duurzaamheid' => 'Duurzaamheid door innovatie en ondernemerschap. Balans tussen economie en milieu.'
-        ],
-        'PVV' => [
-            'klimaatbeleid' => 'Kritisch op klimaatmaatregelen, geen verdere investeringen in energietransitie. Behoud van fossiele energie.',
-            'woningmarkt' => 'Voorrang voor Nederlanders bij woningtoewijzing, geen voorrang voor statushouders.',
-            'economie' => 'Lagere belastingen, minder geld naar EU en ontwikkelingshulp. Focus op koopkracht gewone Nederlanders.',
-            'zorg' => 'Lagere eigen bijdragen, meer handen aan het bed en behoud van kleinere ziekenhuizen.',
-            'onderwijs' => 'Behoud van speciaal onderwijs, focus op kernvakken en Nederlandse cultuur en geschiedenis.',
-            'arbeidsmarkt' => 'Bescherming Nederlandse werknemers, aanpak arbeidsmigratie en behoud pensioenstelsel.',
-            'immigratie' => 'Stop immigratie uit islamitische landen, streng asielbeleid en focus op remigratie.',
-            'veiligheid' => 'Zero tolerance beleid, hogere straffen en meer politie op straat.',
-            'duurzaamheid' => 'Kritisch op klimaatmaatregelen en windmolens. Behoud van traditionele industrie.'
-        ],
-        'BBB' => [
-            'klimaatbeleid' => 'Realistische klimaataanpak met oog voor belangen boeren en platteland. Kritisch op te snelle transitie.',
-            'woningmarkt' => 'Meer woningbouw in landelijk gebied, behoud van karakter platteland en leefbaarheid dorpen.',
-            'economie' => 'Bescherming van boeren en mkb, kritisch op doorgeslagen regelgeving en klimaatmaatregelen.',
-            'zorg' => 'Behoud van regionale ziekenhuizen, meer waardering voor zorgpersoneel en menselijke maat in de zorg.',
-            'onderwijs' => 'Behoud van scholen in krimpgebieden, meer praktijkgericht onderwijs en waardering vakmanschap.',
-            'arbeidsmarkt' => 'Minder regels voor ondernemers, bescherming familiebedrijven en ondersteuning regionale economie.',
-            'immigratie' => 'Beperking immigratie, focus op arbeidsmigratie die nodig is voor de arbeidsmarkt.',
-            'veiligheid' => 'Meer blauw op straat in landelijk gebied, aanpak ondermijning en drugscriminaliteit.',
-            'duurzaamheid' => 'Duurzaamheid met oog voor belangen boeren en platteland. Kritisch op rigoureuze natuurmaatregelen.'
-        ]
-    ];
+    /**
+     * Laadt de standpunten-databron (thema-slug => [partij-slug => tekst]).
+     */
+    private function loadStandpunten(): array {
+        if ($this->standpuntenData === null) {
+            $file = __DIR__ . '/data/standpunten.php';
+            $this->standpuntenData = is_file($file) ? (require $file) : [];
+        }
+        return $this->standpuntenData;
+    }
 
+    /**
+     * Alle partijen (gesorteerd op zetels, grootste eerst).
+     */
     public function getParties() {
         return $this->parties;
     }
 
+    /**
+     * Genereert eenvoudige tekstlogo's als data-URI (fallback voor plekken
+     * zonder afbeeldingsbestand).
+     */
     public function getPartyLogos() {
         $logos = [];
         foreach ($this->parties as $slug => $party) {
-            $logos[$slug] = 'data:image/svg+xml;base64,' . base64_encode($party['logo']);
+            $label = htmlspecialchars($party['name'], ENT_QUOTES);
+            $svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">'
+                 . '<text x="50" y="50" font-family="Arial" font-size="22" fill="' . $party['color'] . '" '
+                 . 'text-anchor="middle" dominant-baseline="central">' . $label . '</text></svg>';
+            $logos[$slug] = 'data:image/svg+xml;base64,' . base64_encode($svg);
         }
         return $logos;
     }
 
-    public function getLinkseStandpunten($thema) {
-        $standpunten = [];
-        foreach ($this->linksePartijen as $partij => $themas) {
-            if (isset($themas[$thema])) {
-                $standpunten[$partij] = $themas[$thema];
+    /**
+     * Standpunten van alle partijen voor een thema, gesorteerd op zetels.
+     * Geeft per partij de volledige metadata terug plus het standpunt.
+     *
+     * @return array<int,array<string,mixed>>
+     */
+    public function getStandpunten($themaKey) {
+        $data = $this->loadStandpunten();
+        $themaStandpunten = $data[$themaKey] ?? [];
+        if (empty($themaStandpunten)) {
+            return [];
+        }
+
+        $result = [];
+        foreach ($this->parties as $slug => $party) {
+            if (!isset($themaStandpunten[$slug])) {
+                continue;
+            }
+            $result[] = array_merge($party, [
+                'standpunt' => $themaStandpunten[$slug],
+            ]);
+        }
+        return $result;
+    }
+
+    /**
+     * Standpunten gefilterd op politiek blok (links/rechts/midden).
+     * Geeft [partijnaam => standpunt] terug (compatibel met oudere weergaves).
+     */
+    private function getStandpuntenByBlok($themaKey, $blok) {
+        $data = $this->loadStandpunten();
+        $themaStandpunten = $data[$themaKey] ?? [];
+        $result = [];
+        foreach ($this->parties as $slug => $party) {
+            if (isset($themaStandpunten[$slug]) && ($party['blok'] ?? '') === $blok) {
+                $result[$party['name']] = $themaStandpunten[$slug];
             }
         }
-        return $standpunten;
+        return $result;
+    }
+
+    public function getLinkseStandpunten($thema) {
+        return $this->getStandpuntenByBlok($thema, 'links');
     }
 
     public function getRechtseStandpunten($thema) {
-        $standpunten = [];
-        foreach ($this->rechtsePartijen as $partij => $themas) {
-            if (isset($themas[$thema])) {
-                $standpunten[$partij] = $themas[$thema];
-            }
-        }
-        return $standpunten;
+        return $this->getStandpuntenByBlok($thema, 'rechts');
     }
-} 
+}

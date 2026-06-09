@@ -18,6 +18,14 @@ $themaIconMap = [
     'wonen'                 => 'home',
     'mobiliteit-en-verkeer' => 'train-front',
     'digitalisering'        => 'cpu',
+    'bestaanszekerheid-en-koopkracht' => 'wallet',
+    'pensioenen'            => 'piggy-bank',
+    'sociale-zekerheid-en-werk' => 'briefcase',
+    'democratie-en-bestuur' => 'landmark',
+    'buitenland-en-ontwikkeling' => 'globe',
+    'cultuur-media-en-sport' => 'palette',
+    'integratie-en-samenleven' => 'users-round',
+    'jeugd-en-gezin'        => 'baby',
     // Legacy slugs (voor de zekerheid)
     'klimaatbeleid' => 'leaf',
     'woningmarkt'   => 'home',
@@ -59,7 +67,7 @@ if (!function_exists('pp_thema_href')) {
 <?= pp_render_component('section/page-hero', [
     'eyebrow' => 'Thema\'s',
     'title'   => 'Politieke onderwerpen, helder uitgelegd',
-    'lead'    => 'Verdiep je in de thema\'s die de Nederlandse politiek bepalen. Per thema vind je achtergrond, standpunten van partijen en lopende debatten.',
+    'lead'    => 'Verdiep je in de ' . count($themas) . ' thema\'s die de Nederlandse politiek bepalen. Per thema vind je een uitleg in makkelijke taal, de feiten, het debat en de standpunten van alle partijen in de Tweede Kamer.',
 ]) ?>
 
 <?php if (!empty($actueleThemas)): ?>
@@ -94,33 +102,76 @@ if (!function_exists('pp_thema_href')) {
     </section>
 <?php endif; ?>
 
+<?php
+// Groepeer de thema's per categorie, in een vaste, logische volgorde.
+$categoryOrder = [
+    'Economie en bestaanszekerheid',
+    'Zorg en samenleving',
+    'Klimaat en leefomgeving',
+    'Veiligheid en wereld',
+    'Democratie en digitaal',
+    'Samenleving',
+];
+$grouped = [];
+foreach ($themas as $t) {
+    $grouped[$t['category'] ?? 'Overig'][] = $t;
+}
+$orderedGroups = [];
+foreach ($categoryOrder as $cat) {
+    if (isset($grouped[$cat])) {
+        $orderedGroups[$cat] = $grouped[$cat];
+        unset($grouped[$cat]);
+    }
+}
+foreach ($grouped as $cat => $items) {
+    $orderedGroups[$cat] = $items;
+}
+?>
+
 <section class="pp-container pp-container--xl mb-24">
     <?= pp_render_component('section/section-header', [
         'label' => 'Alle thema\'s',
         'title' => 'Het complete overzicht',
-        'lead'  => 'De thema\'s die structureel terugkomen in Nederlandse verkiezingsprogramma\'s en coalitieonderhandelingen.',
+        'lead'  => 'De thema\'s die structureel terugkomen in Nederlandse verkiezingsprogramma\'s en coalitieonderhandelingen, geordend per onderwerp.',
     ]) ?>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <?php foreach ($themas as $thema): ?>
-            <?php
-            $slug = $thema['slug'] ?? '';
-            $title = $thema['title'] ?? '';
-            $desc = $thema['description'] ?? '';
-            $iconName = (isset($thema['icon']) && is_string($thema['icon']) && preg_match('/^[a-z0-9-]+$/', $thema['icon'])) ? $thema['icon'] : null;
-            ?>
-            <a href="<?= pp_e(pp_thema_href($themaValidSlugs, $slug)) ?>"
-               class="keyline-card p-5 transition hover:border-[color:var(--color-line-strong)] flex flex-col">
-                <div class="flex items-start gap-3 mb-3">
-                    <span class="text-[color:var(--color-hague)] flex-shrink-0 mt-0.5"><?= pp_icon(pp_thema_icon($themaIconMap, $slug, $iconName), 22) ?></span>
-                    <h3 class="font-display text-lg text-[color:var(--color-ink)] leading-tight"><?= pp_e($title) ?></h3>
+    <div class="space-y-14">
+        <?php foreach ($orderedGroups as $category => $items): ?>
+            <div>
+                <div class="flex items-center gap-3 mb-6">
+                    <h3 class="font-display text-display-md text-[color:var(--color-ink)] leading-tight"><?= pp_e($category) ?></h3>
+                    <span class="flex-1 h-px bg-[color:var(--color-keyline)]"></span>
+                    <span class="text-sm text-[color:var(--color-ink-faint)]"><?= count($items) ?></span>
                 </div>
-                <p class="text-sm text-[color:var(--color-ink-muted)] leading-relaxed flex-1"><?= pp_e($desc) ?></p>
-                <span class="inline-flex items-center gap-1.5 text-sm font-display text-[color:var(--color-hague)] mt-4">
-                    Lees verder
-                    <?= pp_icon('arrow-right', 13) ?>
-                </span>
-            </a>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <?php foreach ($items as $thema): ?>
+                        <?php
+                        $slug = $thema['slug'] ?? '';
+                        $title = $thema['title'] ?? '';
+                        $desc = $thema['description'] ?? '';
+                        $tagline = $thema['tagline'] ?? '';
+                        $iconName = (isset($thema['icon']) && is_string($thema['icon']) && preg_match('/^[a-z0-9-]+$/', $thema['icon'])) ? $thema['icon'] : null;
+                        ?>
+                        <a href="<?= pp_e(pp_thema_href($themaValidSlugs, $slug)) ?>"
+                           class="keyline-card p-5 transition hover:border-[color:var(--color-line-strong)] flex flex-col group">
+                            <div class="flex items-start gap-3 mb-3">
+                                <span class="flex-shrink-0 inline-flex items-center justify-center w-10 h-10 rounded-md bg-[color:var(--color-hague-tint)] text-[color:var(--color-hague)]"><?= pp_icon(pp_thema_icon($themaIconMap, $slug, $iconName), 20) ?></span>
+                                <div class="min-w-0">
+                                    <h4 class="font-display text-lg text-[color:var(--color-ink)] leading-tight group-hover:text-[color:var(--color-hague)] transition-colors"><?= pp_e($title) ?></h4>
+                                    <?php if ($tagline !== ''): ?>
+                                        <p class="text-xs text-[color:var(--color-hague)] mt-0.5 leading-snug"><?= pp_e($tagline) ?></p>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                            <p class="text-sm text-[color:var(--color-ink-muted)] leading-relaxed flex-1"><?= pp_e($desc) ?></p>
+                            <span class="inline-flex items-center gap-1.5 text-sm font-display text-[color:var(--color-hague)] mt-4">
+                                Lees verder
+                                <?= pp_icon('arrow-right', 13) ?>
+                            </span>
+                        </a>
+                    <?php endforeach; ?>
+                </div>
+            </div>
         <?php endforeach; ?>
     </div>
 </section>

@@ -2,132 +2,994 @@
 /**
  * Canonieke politieke thema's voor PolitiekPraat.
  *
- * Dit is de enige bron van waarheid voor de thema-slugs. De slugs komen exact
- * overeen met:
- *   - generate-sitemap.php (de URL's die in de sitemap staan)
- *   - controllers/themas.php (het overzicht op /themas)
- *   - controllers/thema.php (de detailpagina op /thema/{slug})
+ * Enige bron van waarheid voor de thema-slugs. De slugs komen exact overeen met:
+ *   - generate-sitemap.php (de URL's in de sitemap)
+ *   - controllers/themas.php (overzicht op /themas)
+ *   - controllers/thema.php (detailpagina op /thema/{slug})
+ *   - includes/data/standpunten.php (partijstandpunten per thema)
  *
- * Hierdoor kunnen er geen 404's meer ontstaan door een slug-mismatch.
- *
- * Velden:
- *   - title:            weergavenaam
- *   - icon:             lucide-icoonnaam (geen emoji)
- *   - description:      korte omschrijving (overzichtskaart)
- *   - long_description: uitgebreide omschrijving (detail hero)
- *   - key_points:       kernpunten van het thema
- *   - standpunten_key:  sleutel in PoliticalParties (of null als er nog geen
- *                       standpunten zijn vastgelegd)
- *   - news_key:         sleutel voor de nieuwsfeed-mapping
+ * Velden per thema:
+ *   - title            Weergavenaam
+ *   - icon             Lucide-icoonnaam (geen emoji)
+ *   - category         Categorie voor het overzicht
+ *   - tagline          Pakkende ondertitel
+ *   - hero             Pad naar herofoto (/public/images/themas/{slug}.jpg)
+ *   - hero_alt         Alt-tekst voor de herofoto
+ *   - description      Korte omschrijving (overzichtskaart)
+ *   - intro            Inleiding in makkelijke taal (hero-lead)
+ *   - in_het_kort      Array met 3 korte samenvattingspunten
+ *   - wat              Array met alinea's: "Wat is dit thema?"
+ *   - waarom           Array met alinea's: "Waarom is dit belangrijk?"
+ *   - cijfers          Array met ['cijfer','label','bron'] feiten (2025/2026)
+ *   - debat            Array met ['kop','tekst'] over het politieke debat
+ *   - begrippen        Array met ['term','uitleg'] (jargon uitgelegd)
+ *   - vragen           Array met ['vraag','antwoord'] (FAQ)
+ *   - key_points       Array met kernpunten
+ *   - standpunten_key  Sleutel in includes/data/standpunten.php (gelijk aan slug)
+ *   - news_key         Sleutel voor de nieuwsfeed-mapping
+ *   - gerelateerd      Array met slugs van gerelateerde thema's
  */
 
 return [
     'klimaat-en-energie' => [
         'title' => 'Klimaat en energie',
         'icon' => 'leaf',
+        'category' => 'Klimaat en leefomgeving',
+        'tagline' => 'Hoe houden we Nederland leefbaar en de energierekening betaalbaar?',
+        'hero' => '/public/images/themas/klimaat-en-energie.jpg',
+        'hero_alt' => 'Windmolens en zonnepanelen in een Nederlands landschap',
         'description' => 'Energietransitie, CO2-reductie en de betaalbaarheid van verduurzaming.',
-        'long_description' => 'Het klimaat- en energiebeleid bepaalt hoe Nederland de uitstoot terugdringt en tegelijk de energievoorziening betrouwbaar en betaalbaar houdt. Van kernenergie en wind op zee tot de warmtepomp bij mensen thuis: de keuzes raken iedereen.',
-        'key_points' => ['CO2-reductie en Klimaatwet', 'Energietransitie en netcongestie', 'Kernenergie en duurzame opwek', 'Betaalbaarheid voor huishoudens'],
-        'standpunten_key' => 'klimaatbeleid',
+        'intro' => 'Klimaatbeleid gaat over het terugdringen van de uitstoot van broeikasgassen, terwijl de energie betrouwbaar en betaalbaar blijft. Dat raakt iedereen: van de energierekening tot de warmtepomp in huis.',
+        'in_het_kort' => [
+            'Nederland wil de uitstoot in 2030 met 55 procent verlagen ten opzichte van 1990, en in 2050 helemaal klimaatneutraal zijn.',
+            'Volgens het Planbureau voor de Leefomgeving is de kans klein dat het doel voor 2030 wordt gehaald.',
+            'De grote vraag is hoe we de kosten eerlijk verdelen tussen burgers, bedrijven en overheid.',
+        ],
+        'wat' => [
+            'Door het verbranden van olie, gas en kolen komt CO2 vrij. Dat warmt de aarde op en zorgt voor meer extreem weer, zoals hitte, droogte en hevige regen. Klimaatbeleid probeert die uitstoot te verlagen.',
+            'Energiebeleid gaat over waar onze stroom en warmte vandaan komen: van wind op zee en zonnepanelen tot kernenergie en voorlopig nog aardgas. De overstap naar schone energie heet de energietransitie.',
+        ],
+        'waarom' => [
+            'De keuzes bepalen je energierekening, of je huis verduurzaamd moet worden en hoe snel Nederland van het gas af gaat.',
+            'Ook het stroomnet speelt een grote rol. Op veel plekken is het vol (netcongestie), waardoor nieuwe woningen en bedrijven soms jaren moeten wachten op een aansluiting.',
+        ],
+        'cijfers' => [
+            ['cijfer' => '55%', 'label' => 'doel voor CO2-reductie in 2030 (ten opzichte van 1990)', 'bron' => 'Klimaatwet'],
+            ['cijfer' => 'minder dan 5%', 'label' => 'kans dat Nederland dat doel haalt met huidig beleid', 'bron' => 'PBL, KEV 2025'],
+            ['cijfer' => '2050', 'label' => 'jaar waarin Nederland klimaatneutraal wil zijn', 'bron' => 'Klimaatwet'],
+            ['cijfer' => 'circa 8 mld', 'label' => 'euro die netbeheerders per jaar in het stroomnet steken', 'bron' => 'Rijksoverheid, 2026'],
+        ],
+        'debat' => [
+            ['kop' => 'Hoe snel en hoe streng?', 'tekst' => 'Sommige partijen willen sneller verduurzamen om het klimaat te beschermen. Andere partijen vinden dat het te duur en te streng gaat en willen meer tijd nemen.'],
+            ['kop' => 'Wie betaalt de rekening?', 'tekst' => 'Linkse partijen willen dat grote vervuilers en bedrijven meer betalen. Rechtse partijen zijn bang dat gewone huishoudens en de industrie te zwaar belast worden.'],
+            ['kop' => 'Kernenergie: ja of nee?', 'tekst' => 'Voorstanders zien kernenergie als een stabiele bron zonder CO2. Tegenstanders wijzen op de hoge kosten, het kernafval en de lange bouwtijd.'],
+        ],
+        'begrippen' => [
+            ['term' => 'CO2 en broeikasgassen', 'uitleg' => 'Gassen die vrijkomen bij verbranding en die de aarde opwarmen.'],
+            ['term' => 'Energietransitie', 'uitleg' => 'De overstap van fossiele brandstoffen (olie, gas, kolen) naar schone energie zoals wind, zon en kernenergie.'],
+            ['term' => 'Netcongestie', 'uitleg' => 'Het stroomnet zit vol, net als een file. Er kan niet altijd genoeg stroom worden vervoerd.'],
+            ['term' => 'Klimaatneutraal', 'uitleg' => 'Er komt niet meer broeikasgas bij dan er wordt opgenomen of gecompenseerd.'],
+        ],
+        'vragen' => [
+            ['vraag' => 'Waarom verandert mijn energierekening zo vaak?', 'antwoord' => 'De prijs hangt af van de wereldwijde gas- en stroomprijzen, belastingen en de kosten van het netbeheer. Een goed geisoleerd huis maakt je minder gevoelig voor die schommelingen.'],
+            ['vraag' => 'Moet ik verplicht van het gas af?', 'antwoord' => 'Er is geen landelijke verplichting van de ene op de andere dag. Wel stimuleert de overheid isoleren en (hybride) warmtepompen, en worden nieuwe wijken meestal zonder gas gebouwd.'],
+            ['vraag' => 'Haalt Nederland de klimaatdoelen?', 'antwoord' => 'Volgens het Planbureau voor de Leefomgeving is de kans daarop met het huidige beleid klein. Daarvoor is extra beleid nodig.'],
+        ],
+        'key_points' => ['CO2-reductie en de Klimaatwet', 'Energietransitie en netcongestie', 'Kernenergie en duurzame opwek', 'Betaalbaarheid voor huishoudens'],
+        'standpunten_key' => 'klimaat-en-energie',
         'news_key' => 'klimaat',
+        'gerelateerd' => ['landbouw-en-natuur', 'wonen', 'economie-en-financien'],
     ],
     'economie-en-financien' => [
-        'title' => 'Economie en financiën',
+        'title' => 'Economie en financien',
         'icon' => 'trending-up',
-        'description' => 'Koopkracht, belastingen, begroting en de arbeidsmarkt.',
-        'long_description' => 'Economie en financiën gaan over koopkracht, belastingen, de rijksbegroting en een gezonde arbeidsmarkt. Partijen verschillen sterk over de rol van de overheid, lastenverlichting en investeringen in publieke voorzieningen.',
-        'key_points' => ['Koopkracht en inflatie', 'Belastingstelsel en lasten', 'Arbeidsmarkt en vast werk', 'Overheidsfinanciën en begroting'],
-        'standpunten_key' => 'economie',
+        'category' => 'Economie en bestaanszekerheid',
+        'tagline' => 'Belastingen, begroting en de welvaart van Nederland.',
+        'hero' => '/public/images/themas/economie-en-financien.jpg',
+        'hero_alt' => 'De zakenwijk Zuidas in Amsterdam',
+        'description' => 'Belastingen, de rijksbegroting, economische groei en de arbeidsmarkt.',
+        'intro' => 'Economie en financien gaan over hoe Nederland zijn geld verdient en uitgeeft: belastingen, de begroting, economische groei en werk. Partijen verschillen sterk over de rol van de overheid.',
+        'in_het_kort' => [
+            'De overheid haalt geld op via belastingen en geeft dat uit aan zorg, onderwijs, wegen en uitkeringen.',
+            'Het kernverschil: meer overheid en hogere belastingen voor herverdeling, of lagere lasten en meer ruimte voor de markt.',
+            'De koopkracht stijgt in 2026 licht, maar veel mensen voelen de hoge prijzen nog steeds.',
+        ],
+        'wat' => [
+            'De rijksbegroting is het huishoudboekje van Nederland. Op Prinsjesdag (de derde dinsdag van september) presenteert het kabinet hoeveel geld er binnenkomt en waar het naartoe gaat.',
+            'Het Centraal Planbureau (CPB) rekent de plannen door. Belangrijke begrippen zijn koopkracht (wat je echt kunt kopen), inflatie (stijgende prijzen) en het begrotingstekort (als de overheid meer uitgeeft dan binnenkomt).',
+        ],
+        'waarom' => [
+            'Belastingen en toeslagen bepalen hoeveel je netto overhoudt. De begroting bepaalt hoeveel geld er is voor zorg, onderwijs en veiligheid.',
+            'Een gezonde economie zorgt voor banen en inkomsten, maar de welvaart is niet voor iedereen gelijk verdeeld.',
+        ],
+        'cijfers' => [
+            ['cijfer' => '+1,3%', 'label' => 'verwachte stijging van de koopkracht in 2026 (mediaan)', 'bron' => 'CPB, MEV 2026'],
+            ['cijfer' => '70.479', 'label' => 'euro per zetel: de kiesdeler bij de verkiezingen van 2025', 'bron' => 'Kiesraad'],
+            ['cijfer' => 'Prinsjesdag', 'label' => 'moment waarop de begroting wordt gepresenteerd', 'bron' => 'derde dinsdag van september'],
+        ],
+        'debat' => [
+            ['kop' => 'Grote of kleine overheid?', 'tekst' => 'Linkse partijen willen dat de overheid meer investeert en de welvaart eerlijker verdeelt. Rechtse partijen willen lagere belastingen en minder regels voor ondernemers.'],
+            ['kop' => 'Lasten op arbeid of vermogen?', 'tekst' => 'Er is discussie of we werk lichter moeten belasten en vermogen en winst zwaarder, of juist andersom om de economie te laten groeien.'],
+            ['kop' => 'Hoeveel schuld is verstandig?', 'tekst' => 'Sommigen willen lenen om te investeren in de toekomst. Anderen vinden dat de overheidsschuld laag moet blijven, zodat we toekomstige generaties niet opzadelen.'],
+        ],
+        'begrippen' => [
+            ['term' => 'Koopkracht', 'uitleg' => 'Hoeveel je daadwerkelijk kunt kopen met je inkomen, na aftrek van prijsstijgingen.'],
+            ['term' => 'Inflatie', 'uitleg' => 'De gemiddelde stijging van de prijzen. Bij hoge inflatie wordt je geld minder waard.'],
+            ['term' => 'Begrotingstekort', 'uitleg' => 'Als de overheid in een jaar meer uitgeeft dan ze binnenkrijgt.'],
+            ['term' => 'CPB', 'uitleg' => 'Het Centraal Planbureau, dat de gevolgen van politieke plannen voor de economie doorrekent.'],
+        ],
+        'vragen' => [
+            ['vraag' => 'Waar gaat mijn belastinggeld naartoe?', 'antwoord' => 'De grootste posten zijn zorg, sociale zekerheid (zoals AOW en uitkeringen) en onderwijs. Daarnaast gaat geld naar veiligheid, infrastructuur en defensie.'],
+            ['vraag' => 'Wat is het verschil tussen links en rechts in de economie?', 'antwoord' => 'Heel kort gezegd: links wil meer overheid en herverdeling, rechts wil lagere lasten en meer ruimte voor de markt. In de praktijk zit er veel tussenin.'],
+            ['vraag' => 'Stijgt mijn koopkracht in 2026?', 'antwoord' => 'Gemiddeld stijgt de koopkracht licht, vooral door lagere inflatie. Voor individuele huishoudens kan het beeld anders uitvallen.'],
+        ],
+        'key_points' => ['Koopkracht en inflatie', 'Belastingstelsel en lasten', 'Rijksbegroting en staatsschuld', 'Economische groei en banen'],
+        'standpunten_key' => 'economie-en-financien',
         'news_key' => 'economie',
-    ],
-    'onderwijs' => [
-        'title' => 'Onderwijs',
-        'icon' => 'graduation-cap',
-        'description' => 'Onderwijskwaliteit, kansengelijkheid en het lerarentekort.',
-        'long_description' => 'Het onderwijs staat voor grote opgaven: het lerarentekort, dalende prestaties op taal en rekenen en groeiende kansenongelijkheid. Het beleid bepaalt de kwaliteit en toegankelijkheid van onderwijs voor alle leerlingen en studenten.',
-        'key_points' => ['Lerarentekort', 'Onderwijskwaliteit', 'Kansengelijkheid', 'Studiefinanciering'],
-        'standpunten_key' => 'onderwijs',
-        'news_key' => 'default',
-    ],
-    'zorg-en-welzijn' => [
-        'title' => 'Zorg en welzijn',
-        'icon' => 'heart-pulse',
-        'description' => 'Toegankelijkheid, betaalbaarheid en personeel in de zorg.',
-        'long_description' => 'De zorg staat onder druk door personeelstekorten, wachtlijsten en stijgende kosten. Het debat gaat over het eigen risico, marktwerking en hoe we de zorg ook in de toekomst toegankelijk en betaalbaar houden.',
-        'key_points' => ['Eigen risico en zorgkosten', 'Personeelstekorten', 'Wachtlijsten', 'Ouderenzorg en preventie'],
-        'standpunten_key' => 'zorg',
-        'news_key' => 'gezondheid',
-    ],
-    'migratie-en-asiel' => [
-        'title' => 'Migratie en asiel',
-        'icon' => 'users',
-        'description' => 'Asielbeleid, arbeidsmigratie en integratie.',
-        'long_description' => 'Migratie en asiel behoren tot de meest besproken politieke thema\'s. Het gaat over de instroom van asielzoekers, arbeidsmigratie, opvang en integratie, en het draagvlak in de samenleving.',
-        'key_points' => ['Asielbeleid en instroom', 'Arbeidsmigratie', 'Opvang en huisvesting', 'Integratie en inburgering'],
-        'standpunten_key' => 'immigratie',
-        'news_key' => 'default',
-    ],
-    'veiligheid-en-justitie' => [
-        'title' => 'Veiligheid en justitie',
-        'icon' => 'shield',
-        'description' => 'Criminaliteitsbestrijding, politie, ondermijning en cyberveiligheid.',
-        'long_description' => 'Veiligheid en justitie gaan over de aanpak van criminaliteit, georganiseerde ondermijning en cyberdreigingen, en over de capaciteit van politie en justitie. Partijen verschillen over preventie versus harde aanpak.',
-        'key_points' => ['Georganiseerde criminaliteit', 'Politiecapaciteit', 'Cyberveiligheid', 'Preventie versus straffen'],
-        'standpunten_key' => 'veiligheid',
-        'news_key' => 'default',
-    ],
-    'europa' => [
-        'title' => 'Europa',
-        'icon' => 'globe',
-        'description' => 'De rol van Nederland in de Europese Unie.',
-        'long_description' => 'Het Europabeleid bepaalt hoe Nederland zich verhoudt tot de Europese Unie: van de interne markt en de euro tot uitbreiding, soevereiniteit en gezamenlijk buitenlandbeleid. De EU raakt vrijwel elk ander beleidsterrein.',
-        'key_points' => ['Interne markt en euro', 'Uitbreiding van de EU', 'Soevereiniteit en regelgeving', 'Gezamenlijk buitenlandbeleid'],
-        'standpunten_key' => null,
-        'news_key' => 'default',
-    ],
-    'defensie' => [
-        'title' => 'Defensie',
-        'icon' => 'shield-check',
-        'description' => 'Krijgsmacht, NAVO-norm en nationale veiligheid.',
-        'long_description' => 'Door de oorlog in Oekraïne en oplopende internationale spanningen staat defensie hoog op de agenda. Het gaat over de hoogte van het defensiebudget, de NAVO-norm van 2 procent en de slagkracht van de krijgsmacht.',
-        'key_points' => ['NAVO-norm van 2 procent', 'Versterking krijgsmacht', 'Steun aan Oekraïne', 'Europese samenwerking'],
-        'standpunten_key' => null,
-        'news_key' => 'default',
-    ],
-    'landbouw-en-natuur' => [
-        'title' => 'Landbouw en natuur',
-        'icon' => 'sprout',
-        'description' => 'Stikstof, boeren, natuurherstel en voedselproductie.',
-        'long_description' => 'Landbouw en natuur draaien om de balans tussen een sterke agrarische sector en het herstel van natuur en biodiversiteit. Het stikstofdossier en de toekomst van de boer staan centraal in het debat.',
-        'key_points' => ['Stikstofaanpak', 'Toekomst van de boer', 'Natuurherstel en biodiversiteit', 'Voedselzekerheid'],
-        'standpunten_key' => 'duurzaamheid',
-        'news_key' => 'default',
+        'gerelateerd' => ['bestaanszekerheid-en-koopkracht', 'sociale-zekerheid-en-werk', 'pensioenen'],
     ],
     'wonen' => [
         'title' => 'Wonen',
         'icon' => 'home',
+        'category' => 'Economie en bestaanszekerheid',
+        'tagline' => 'De wooncrisis: te weinig huizen, te hoge prijzen.',
+        'hero' => '/public/images/themas/wonen.jpg',
+        'hero_alt' => 'Nieuwbouwwoningen in aanbouw in Nederland',
         'description' => 'Woningtekort, betaalbaarheid en de huurmarkt.',
-        'long_description' => 'De wooncrisis is voor veel mensen voelbaar: er zijn te weinig betaalbare woningen en de prijzen blijven hoog. Het beleid gaat over bouwtempo, regulering van de huurmarkt en betaalbaar wonen voor starters en middeninkomens.',
+        'intro' => 'De wooncrisis is voor veel mensen voelbaar: er zijn te weinig betaalbare woningen en de prijzen zijn hoog. Het beleid gaat over sneller bouwen en wonen weer betaalbaar maken.',
+        'in_het_kort' => [
+            'Nederland heeft een tekort van honderdduizenden woningen, vooral voor starters en mensen met een middeninkomen.',
+            'De overheid wil tot 2030 ongeveer 100.000 woningen per jaar bouwen, maar dat tempo wordt nog niet gehaald.',
+            'Stikstof, een vol stroomnet en te weinig bouwvakkers vertragen de bouw.',
+        ],
+        'wat' => [
+            'Er worden al jaren te weinig huizen gebouwd, terwijl het aantal huishoudens groeit. Daardoor zijn er wachtlijsten voor sociale huur en zijn koopwoningen voor veel mensen onbetaalbaar geworden.',
+            'Het beleid draait om twee dingen: sneller en meer bouwen, en de bestaande woningen eerlijker verdelen via regels voor de huurmarkt en de verdeling van sociale huurwoningen.',
+        ],
+        'waarom' => [
+            'Een betaalbaar huis is een basisbehoefte. Het tekort raakt vooral jongeren, starters en mensen met een gewoon inkomen.',
+            'De woningnood hangt samen met veel andere onderwerpen: migratie, stikstof, de energietransitie en het stroomnet.',
+        ],
+        'cijfers' => [
+            ['cijfer' => 'circa 396.000', 'label' => 'woningen tekort (4,8 procent van de voorraad) in 2025', 'bron' => 'ABF Research, Primos 2025'],
+            ['cijfer' => '100.000', 'label' => 'woningen per jaar die het kabinet tot 2030 wil bouwen', 'bron' => 'Rijksoverheid'],
+            ['cijfer' => '71.000 tot 75.000', 'label' => 'verwachte nieuwbouw in 2026', 'bron' => 'BouwKennis, 2026'],
+        ],
+        'debat' => [
+            ['kop' => 'Markt of overheid?', 'tekst' => 'Rechtse partijen willen vooral sneller bouwen door minder regels. Linkse partijen willen meer sociale huur en strengere regels tegen hoge huren en speculatie.'],
+            ['kop' => 'Waar bouwen we?', 'tekst' => 'Er is discussie over bouwen in de natuur en het groen, in steden door verdichting, of juist meer in dorpen en op het platteland.'],
+            ['kop' => 'Wie krijgt voorrang?', 'tekst' => 'Een gevoelig punt is wie er voorrang krijgt op een sociale huurwoning, bijvoorbeeld statushouders, mensen uit de regio of mensen in een cruciaal beroep.'],
+        ],
+        'begrippen' => [
+            ['term' => 'Woningtekort', 'uitleg' => 'Het verschil tussen het aantal mensen dat een woning zoekt en het aantal beschikbare woningen.'],
+            ['term' => 'Sociale huur', 'uitleg' => 'Huurwoningen met een lagere huur, bedoeld voor mensen met een lager inkomen.'],
+            ['term' => 'Middenhuur', 'uitleg' => 'Huurwoningen voor middeninkomens: te duur voor sociale huur, te duur om te kopen.'],
+            ['term' => 'Plancapaciteit', 'uitleg' => 'Het aantal woningen waarvoor al bouwplannen bestaan, maar die nog niet gebouwd zijn.'],
+        ],
+        'vragen' => [
+            ['vraag' => 'Waarom worden er niet gewoon meer huizen gebouwd?', 'antwoord' => 'Dat wil bijna iedereen, maar het loopt vast op stikstofregels, een vol stroomnet, hoge bouwkosten, lange procedures en een tekort aan personeel.'],
+            ['vraag' => 'Komt er ooit weer een betaalbaar huis voor starters?', 'antwoord' => 'Daar draait veel beleid om. Het hangt af van het bouwtempo, de rente en de regels voor huur en koop. Verbetering gaat langzaam.'],
+            ['vraag' => 'Wat is de Spreidingswet en wat heeft dat met wonen te maken?', 'antwoord' => 'Die wet verdeelt de opvang van asielzoekers over gemeenten. Het raakt wonen omdat opvang en woningbouw beide ruimte en aandacht vragen.'],
+        ],
         'key_points' => ['Woningtekort en bouwtempo', 'Betaalbaarheid voor starters', 'Huurmarkt en regulering', 'Verduurzaming van woningen'],
-        'standpunten_key' => 'woningmarkt',
+        'standpunten_key' => 'wonen',
         'news_key' => 'default',
+        'gerelateerd' => ['migratie-en-asiel', 'klimaat-en-energie', 'bestaanszekerheid-en-koopkracht'],
+    ],
+    'zorg-en-welzijn' => [
+        'title' => 'Zorg en welzijn',
+        'icon' => 'heart-pulse',
+        'category' => 'Zorg en samenleving',
+        'tagline' => 'Goede zorg die voor iedereen betaalbaar en bereikbaar blijft.',
+        'hero' => '/public/images/themas/zorg-en-welzijn.jpg',
+        'hero_alt' => 'Een verpleegkundige in een Nederlands ziekenhuis',
+        'description' => 'Toegankelijkheid, betaalbaarheid en personeel in de zorg.',
+        'intro' => 'De zorg staat onder druk door personeelstekorten, wachtlijsten en stijgende kosten. Het debat gaat over het eigen risico, de marktwerking en hoe we de zorg betaalbaar houden.',
+        'in_het_kort' => [
+            'Iedereen in Nederland is verplicht verzekerd. Het eigen risico is in 2026 nog 385 euro.',
+            'In het coalitieakkoord is afgesproken dat het eigen risico vanaf 2027 omhoog gaat richting 460 euro.',
+            'De grote uitdaging is het tekort aan personeel terwijl de bevolking vergrijst.',
+        ],
+        'wat' => [
+            'Zorg betalen we samen. Iedereen betaalt premie voor de basisverzekering, plus een eigen risico voor het eerste deel van de kosten. De overheid bepaalt wat er in het basispakket zit.',
+            'Welzijn gaat breder dan medische zorg: het gaat ook over ouderenzorg, jeugdzorg, geestelijke gezondheidszorg en preventie, oftewel voorkomen dat mensen ziek worden.',
+        ],
+        'waarom' => [
+            'Iedereen krijgt vroeg of laat met de zorg te maken. De kosten en het eigen risico raken direct je portemonnee.',
+            'Door de vergrijzing hebben steeds meer mensen zorg nodig, terwijl er steeds minder handen zijn om die zorg te geven.',
+        ],
+        'cijfers' => [
+            ['cijfer' => '385 euro', 'label' => 'verplicht eigen risico in 2026', 'bron' => 'Rijksoverheid'],
+            ['cijfer' => 'circa 460 euro', 'label' => 'eigen risico vanaf 2027 volgens het coalitieakkoord', 'bron' => 'Coalitieakkoord 2026'],
+            ['cijfer' => '18 jaar', 'label' => 'leeftijd vanaf wanneer je eigen risico betaalt', 'bron' => 'Zorginstituut Nederland'],
+        ],
+        'debat' => [
+            ['kop' => 'Eigen risico omhoog of afschaffen?', 'tekst' => 'Linkse partijen willen het eigen risico verlagen of afschaffen, zodat zorg niet wordt uitgesteld. Andere partijen vinden dat het mensen bewust maakt van de kosten.'],
+            ['kop' => 'Marktwerking: goed of slecht?', 'tekst' => 'Sommige partijen willen de concurrentie tussen zorgverzekeraars terugdraaien. Andere vinden dat marktwerking de zorg juist efficienter maakt.'],
+            ['kop' => 'Hoe lossen we het personeelstekort op?', 'tekst' => 'Voorstellen lopen uiteen: hogere salarissen, minder administratie, meer technologie en inzetten op preventie zodat er minder zorg nodig is.'],
+        ],
+        'begrippen' => [
+            ['term' => 'Eigen risico', 'uitleg' => 'Het eerste deel van je zorgkosten dat je per jaar zelf betaalt voordat de verzekering vergoedt.'],
+            ['term' => 'Basispakket', 'uitleg' => 'De zorg die iedereen vergoed krijgt, vastgesteld door de overheid.'],
+            ['term' => 'Marktwerking', 'uitleg' => 'Het idee dat concurrentie tussen verzekeraars en aanbieders de zorg beter en goedkoper maakt.'],
+            ['term' => 'Preventie', 'uitleg' => 'Voorkomen dat mensen ziek worden, bijvoorbeeld via een gezonde leefstijl.'],
+        ],
+        'vragen' => [
+            ['vraag' => 'Waarom betaal ik eigen risico?', 'antwoord' => 'Het idee is dat mensen bewuster met zorg omgaan en dat het de premie iets lager houdt. Critici vinden dat het mensen afschrikt om naar de dokter te gaan.'],
+            ['vraag' => 'Gaat het eigen risico echt omhoog?', 'antwoord' => 'In het coalitieakkoord is afgesproken dat het vanaf 2027 stijgt. In 2026 is het nog 385 euro.'],
+            ['vraag' => 'Waarom zijn er zulke lange wachtlijsten?', 'antwoord' => 'Vooral door personeelstekorten en een groeiende zorgvraag door de vergrijzing. Er zijn meer patienten dan zorgverleners.'],
+        ],
+        'key_points' => ['Eigen risico en zorgkosten', 'Personeelstekorten', 'Wachtlijsten', 'Ouderenzorg en preventie'],
+        'standpunten_key' => 'zorg-en-welzijn',
+        'news_key' => 'gezondheid',
+        'gerelateerd' => ['pensioenen', 'bestaanszekerheid-en-koopkracht', 'economie-en-financien'],
+    ],
+    'onderwijs' => [
+        'title' => 'Onderwijs',
+        'icon' => 'graduation-cap',
+        'category' => 'Zorg en samenleving',
+        'tagline' => 'Goed onderwijs en gelijke kansen voor elk kind.',
+        'hero' => '/public/images/themas/onderwijs.jpg',
+        'hero_alt' => 'Leerlingen in een Nederlands klaslokaal',
+        'description' => 'Onderwijskwaliteit, kansengelijkheid en het lerarentekort.',
+        'intro' => 'Het onderwijs staat voor grote opgaven: het lerarentekort, dalende prestaties op taal en rekenen en groeiende kansenongelijkheid. Goed onderwijs bepaalt de toekomst van elk kind.',
+        'in_het_kort' => [
+            'Er is een groot lerarentekort: Nederland mist meer dan 12.000 leraren.',
+            'Kinderen presteren gemiddeld minder goed op lezen, rekenen en taal dan vroeger.',
+            'Waar je wieg staat, bepaalt nog te veel je kansen op school.',
+        ],
+        'wat' => [
+            'Het onderwijs loopt van de basisschool tot de universiteit. De overheid betaalt het grootste deel en stelt eisen aan de kwaliteit, maar scholen mogen veel zelf bepalen.',
+            'Twee problemen springen eruit: het tekort aan leraren (vooral in de grote steden en bij vakken als wiskunde) en de kansenongelijkheid, waarbij kinderen van hoogopgeleide ouders vaak verder komen.',
+        ],
+        'waarom' => [
+            'Onderwijs bepaalt of kinderen hun talenten kunnen ontwikkelen, ongeacht hun achtergrond.',
+            'Een tekort aan goede leraren raakt de kwaliteit van het onderwijs voor iedereen, en daarmee de toekomst van het hele land.',
+        ],
+        'cijfers' => [
+            ['cijfer' => 'meer dan 12.000', 'label' => 'leraren die Nederland tekortkomt', 'bron' => 'Trendrapportage Arbeidsmarkt Leraren 2025'],
+            ['cijfer' => '6,3%', 'label' => 'lerarentekort in het basisonderwijs (oktober 2025)', 'bron' => 'Ministerie van OCW'],
+            ['cijfer' => '78%', 'label' => 'van dat tekort is verborgen (lessen vervallen of onbevoegden voor de klas)', 'bron' => 'Ministerie van OCW'],
+        ],
+        'debat' => [
+            ['kop' => 'Hoe lossen we het lerarentekort op?', 'tekst' => 'Voorstellen: hogere salarissen, minder werkdruk en administratie, en makkelijker zij-instromen vanuit een ander beroep.'],
+            ['kop' => 'Gelijke kansen voor iedereen?', 'tekst' => 'Sommige partijen willen meer geld voor scholen in achterstandswijken en later selecteren. Andere benadrukken keuzevrijheid en het belang van excellente leerlingen.'],
+            ['kop' => 'Wat moeten kinderen leren?', 'tekst' => 'Er is discussie over meer aandacht voor basisvaardigheden zoals lezen en rekenen, tegenover bredere vorming zoals burgerschap en digitale vaardigheden.'],
+        ],
+        'begrippen' => [
+            ['term' => 'Lerarentekort', 'uitleg' => 'Er zijn te weinig (bevoegde) leraren voor alle klassen.'],
+            ['term' => 'Verborgen tekort', 'uitleg' => 'Het tekort dat niet zichtbaar is in vacatures, omdat lessen vervallen of onbevoegden voor de klas staan.'],
+            ['term' => 'Kansengelijkheid', 'uitleg' => 'Het idee dat ieder kind dezelfde kansen verdient, ongeacht de achtergrond van de ouders.'],
+            ['term' => 'Zij-instromer', 'uitleg' => 'Iemand die vanuit een ander beroep leraar wordt.'],
+        ],
+        'vragen' => [
+            ['vraag' => 'Waarom zijn er zo weinig leraren?', 'antwoord' => 'Door hoge werkdruk, salaris dat lang achterbleef en veel administratie. Ook gaan veel oudere leraren met pensioen.'],
+            ['vraag' => 'Wat is kansenongelijkheid precies?', 'antwoord' => 'Dat kinderen met dezelfde talenten verschillende kansen krijgen, bijvoorbeeld omdat hun ouders wel of niet kunnen helpen met huiswerk of bijles kunnen betalen.'],
+            ['vraag' => 'Is gratis studeren terug?', 'antwoord' => 'De basisbeurs voor studenten is terug, al verschilt het bedrag per situatie. Partijen verschillen over hoe royaal de studiefinanciering moet zijn.'],
+        ],
+        'key_points' => ['Lerarentekort', 'Onderwijskwaliteit en basisvaardigheden', 'Kansengelijkheid', 'Studiefinanciering'],
+        'standpunten_key' => 'onderwijs',
+        'news_key' => 'default',
+        'gerelateerd' => ['gelijke-rechten-en-emancipatie', 'sociale-zekerheid-en-werk', 'cultuur-media-en-sport'],
+    ],
+    'migratie-en-asiel' => [
+        'title' => 'Migratie en asiel',
+        'icon' => 'users',
+        'category' => 'Veiligheid en wereld',
+        'tagline' => 'Wie mag Nederland binnenkomen, en onder welke voorwaarden?',
+        'hero' => '/public/images/themas/migratie-en-asiel.jpg',
+        'hero_alt' => 'Aanmeldcentrum voor asielzoekers in Nederland',
+        'description' => 'Asielbeleid, arbeidsmigratie en integratie.',
+        'intro' => 'Migratie en asiel behoren tot de meest besproken politieke thema\'s. Het gaat over de instroom van asielzoekers, arbeidsmigratie, opvang en integratie, en over het draagvlak in de samenleving.',
+        'in_het_kort' => [
+            'Migratie bestaat uit verschillende groepen: asielzoekers, arbeidsmigranten, studenten en gezinsleden.',
+            'Voor 2026 wordt een asielinstroom van ongeveer 39.000 tot 67.100 mensen verwacht.',
+            'Het kabinet wil de instroom beperken en werkt aan het intrekken van de Spreidingswet.',
+        ],
+        'wat' => [
+            'Asiel betekent bescherming voor mensen die vluchten voor oorlog of vervolging. De IND beoordeelt of iemand recht heeft op een verblijfsvergunning. Het COA regelt de opvang.',
+            'Naast asiel is er arbeidsmigratie (mensen die hier komen werken, vaak uit de EU) en gezinsmigratie. Integratie en inburgering gaan over hoe nieuwkomers meedoen in de samenleving.',
+        ],
+        'waarom' => [
+            'Migratie raakt de woningmarkt, de zorg, het onderwijs en de arbeidsmarkt. Tegelijk gaat het over menselijkheid en internationale afspraken.',
+            'Het draagvlak in de samenleving is een gevoelig punt. Uit onderzoek blijkt dat veel mensen zich zorgen maken over de instroom en de opvang.',
+        ],
+        'cijfers' => [
+            ['cijfer' => '39.000 tot 67.100', 'label' => 'verwachte totale asielinstroom in 2026', 'bron' => 'Rijksoverheid, MPP 2025'],
+            ['cijfer' => 'circa 50.200', 'label' => 'asielaanvragen in het middenscenario voor 2026', 'bron' => 'Kernprognose 2026'],
+            ['cijfer' => '1 februari 2024', 'label' => 'datum waarop de Spreidingswet inging', 'bron' => 'Rijksoverheid'],
+        ],
+        'debat' => [
+            ['kop' => 'Streng of menselijk?', 'tekst' => 'Rechtse partijen willen de instroom fors beperken en sneller terugsturen. Linkse partijen benadrukken bescherming, een eerlijke procedure en goede opvang.'],
+            ['kop' => 'Wie regelt de opvang?', 'tekst' => 'De Spreidingswet verplicht gemeenten om opvangplekken te regelen. Sommige partijen willen die wet schrappen, andere willen hem juist houden.'],
+            ['kop' => 'Arbeidsmigratie: nodig of te veel?', 'tekst' => 'Bedrijven hebben arbeidsmigranten nodig, maar er is zorg over verdringing, uitbuiting en druk op huisvesting.'],
+        ],
+        'begrippen' => [
+            ['term' => 'Asielzoeker', 'uitleg' => 'Iemand die bescherming vraagt omdat hij of zij vlucht voor oorlog of vervolging.'],
+            ['term' => 'IND', 'uitleg' => 'De Immigratie- en Naturalisatiedienst, die asielaanvragen beoordeelt.'],
+            ['term' => 'COA', 'uitleg' => 'Het Centraal Orgaan opvang asielzoekers, dat de opvang regelt.'],
+            ['term' => 'Spreidingswet', 'uitleg' => 'Een wet die de opvang van asielzoekers eerlijk over gemeenten verdeelt.'],
+        ],
+        'vragen' => [
+            ['vraag' => 'Hoeveel mensen komen er naar Nederland?', 'antwoord' => 'Dat schommelt. Voor 2026 wordt een totale asielinstroom tussen ongeveer 39.000 en 67.100 mensen verwacht. Arbeidsmigratie is in aantallen vaak groter.'],
+            ['vraag' => 'Wat is het verschil tussen een asielzoeker en een arbeidsmigrant?', 'antwoord' => 'Een asielzoeker vraagt bescherming. Een arbeidsmigrant komt om te werken, vaak uit een ander EU-land.'],
+            ['vraag' => 'Verdwijnt de Spreidingswet?', 'antwoord' => 'Het kabinet werkt aan het intrekken ervan, maar zolang dat niet geregeld is, blijft de wet gelden.'],
+        ],
+        'key_points' => ['Asielbeleid en instroom', 'Arbeidsmigratie', 'Opvang en huisvesting', 'Integratie en inburgering'],
+        'standpunten_key' => 'migratie-en-asiel',
+        'news_key' => 'default',
+        'gerelateerd' => ['wonen', 'veiligheid-en-justitie', 'gelijke-rechten-en-emancipatie'],
+    ],
+    'veiligheid-en-justitie' => [
+        'title' => 'Veiligheid en justitie',
+        'icon' => 'shield',
+        'category' => 'Veiligheid en wereld',
+        'tagline' => 'Hard tegen criminaliteit, en de rechtsstaat beschermen.',
+        'hero' => '/public/images/themas/veiligheid-en-justitie.jpg',
+        'hero_alt' => 'Een politieauto in een Nederlandse straat',
+        'description' => 'Criminaliteitsbestrijding, politie, ondermijning en cyberveiligheid.',
+        'intro' => 'Veiligheid en justitie gaan over de aanpak van criminaliteit, drugscriminaliteit en cyberdreigingen, en over de capaciteit van politie en justitie. Partijen verschillen over preventie tegenover harde aanpak.',
+        'in_het_kort' => [
+            'Georganiseerde drugscriminaliteit ondermijnt de samenleving en wordt soms zelfs gewelddadig.',
+            'De politie heeft te maken met personeelstekorten en moet scherpe keuzes maken.',
+            'Het debat draait om de balans tussen hard straffen en oorzaken aanpakken.',
+        ],
+        'wat' => [
+            'Veiligheidsbeleid gaat over criminaliteit voorkomen en aanpakken: van inbraak en geweld tot drugshandel en cybercrime. Politie, Openbaar Ministerie en rechters spelen daarin een rol.',
+            'Een belangrijk begrip is ondermijning: criminelen die de bovenwereld binnendringen, bijvoorbeeld door bedreiging, corruptie of het witwassen van geld.',
+        ],
+        'waarom' => [
+            'Veiligheid raakt iedereen, van je gevoel op straat tot het vertrouwen in de overheid.',
+            'Als criminelen te veel macht krijgen, komt de rechtsstaat zelf in gevaar. Dat noemen experts het betonrot in de samenleving.',
+        ],
+        'cijfers' => [
+            ['cijfer' => '90%', 'label' => 'van de georganiseerde criminaliteit heeft met drugs te maken', 'bron' => 'Centrum voor Criminaliteitspreventie en Veiligheid'],
+            ['cijfer' => '2026', 'label' => 'jaar van het eerste Dreigingsbeeld Ondermijning Nederland', 'bron' => 'Ministerie van Justitie en Veiligheid'],
+            ['cijfer' => 'mainports', 'label' => 'havens en Schiphol krijgen extra aandacht tegen drugssmokkel', 'bron' => 'Politiebegroting 2026'],
+        ],
+        'debat' => [
+            ['kop' => 'Straffen of voorkomen?', 'tekst' => 'Rechtse partijen willen hogere straffen en meer bevoegdheden voor de politie. Linkse partijen willen vooral de oorzaken aanpakken, zoals armoede en gebrek aan perspectief voor jongeren.'],
+            ['kop' => 'Meer blauw op straat?', 'tekst' => 'Bijna iedereen wil meer agenten, maar de politie kampt met tekorten. De vraag is waar de schaarse capaciteit naartoe moet.'],
+            ['kop' => 'Privacy tegenover opsporing', 'tekst' => 'Om criminaliteit aan te pakken wil de overheid soms meer kunnen meekijken. Critici waarschuwen voor de privacy van gewone burgers.'],
+        ],
+        'begrippen' => [
+            ['term' => 'Ondermijning', 'uitleg' => 'Criminelen die de gewone samenleving binnendringen via bedreiging, corruptie en witwassen.'],
+            ['term' => 'Witwassen', 'uitleg' => 'Crimineel geld een legale herkomst geven, bijvoorbeeld via bedrijven of vastgoed.'],
+            ['term' => 'Cybercrime', 'uitleg' => 'Criminaliteit via internet, zoals oplichting, hacken en afpersing.'],
+            ['term' => 'Recidive', 'uitleg' => 'Als iemand na een straf opnieuw de fout in gaat.'],
+        ],
+        'vragen' => [
+            ['vraag' => 'Wordt Nederland onveiliger?', 'antwoord' => 'Het beeld is gemengd: sommige misdaad daalt, terwijl drugscriminaliteit, online criminaliteit en geweld juist zorgen baren.'],
+            ['vraag' => 'Wat is ondermijning?', 'antwoord' => 'Dat criminelen invloed krijgen in de gewone samenleving, bijvoorbeeld door ambtenaren om te kopen of bedrijven te misbruiken voor witwassen.'],
+            ['vraag' => 'Waarom duurt een rechtszaak zo lang?', 'antwoord' => 'Door grote drukte bij politie, OM en rechtbanken. Er zijn meer zaken dan er mensen zijn om ze te behandelen.'],
+        ],
+        'key_points' => ['Georganiseerde criminaliteit', 'Politiecapaciteit', 'Cyberveiligheid', 'Preventie tegenover straffen'],
+        'standpunten_key' => 'veiligheid-en-justitie',
+        'news_key' => 'default',
+        'gerelateerd' => ['migratie-en-asiel', 'digitalisering', 'democratie-en-bestuur'],
+    ],
+    'defensie' => [
+        'title' => 'Defensie',
+        'icon' => 'shield-check',
+        'category' => 'Veiligheid en wereld',
+        'tagline' => 'Een sterke krijgsmacht in een onveiligere wereld.',
+        'hero' => '/public/images/themas/defensie.jpg',
+        'hero_alt' => 'Nederlandse militairen tijdens een oefening',
+        'description' => 'Krijgsmacht, NAVO-norm en nationale veiligheid.',
+        'intro' => 'Door de oorlog in Oekraine en oplopende spanningen staat defensie hoog op de agenda. Het gaat over de hoogte van het budget, de NAVO-afspraken en de slagkracht van de krijgsmacht.',
+        'in_het_kort' => [
+            'Nederland geeft in 2026 ongeveer 2 procent van het bbp uit aan defensie en wil naar 3,5 procent in 2035.',
+            'In de NAVO is een nieuwe norm afgesproken van 5 procent: 3,5 procent voor het leger en 1,5 procent voor brede weerbaarheid.',
+            'De krijgsmacht wordt fors uitgebreid, maar kampt met tekorten aan personeel en materieel.',
+        ],
+        'wat' => [
+            'Defensie beschermt Nederland en zijn bondgenoten. Dat doen we niet alleen, maar samen in de NAVO, het militaire bondgenootschap van grotendeels westerse landen.',
+            'Na jaren van bezuinigen wordt er nu juist veel geinvesteerd, door de oorlog in Oekraine en de dreiging vanuit Rusland. Geld alleen is niet genoeg: er zijn ook mensen en materieel nodig.',
+        ],
+        'waarom' => [
+            'Veiligheid is de basis voor alles. Zonder een geloofwaardige verdediging staat een land kwetsbaar.',
+            'Defensie kost veel geld. Dat betekent keuzes: meer naar het leger betekent minder voor andere zaken, of hogere belastingen.',
+        ],
+        'cijfers' => [
+            ['cijfer' => 'circa 2%', 'label' => 'van het bbp gaat in 2026 naar defensie', 'bron' => 'Rijksoverheid, 2026'],
+            ['cijfer' => '3,5%', 'label' => 'streefdoel voor defensie-uitgaven in 2035', 'bron' => 'NAVO-top Den Haag'],
+            ['cijfer' => '5%', 'label' => 'totale NAVO-norm (3,5 procent leger plus 1,5 procent weerbaarheid)', 'bron' => 'NAVO'],
+        ],
+        'debat' => [
+            ['kop' => 'Hoeveel geld naar defensie?', 'tekst' => 'Bijna alle partijen willen investeren, maar verschillen over hoe snel en hoeveel, en wat er dan minder geld krijgt.'],
+            ['kop' => 'Steun aan Oekraine', 'tekst' => 'De meeste partijen steunen Oekraine met geld en wapens. Enkele partijen zijn daar kritisch op of tegen.'],
+            ['kop' => 'Dienstplicht terug?', 'tekst' => 'Vanwege personeelstekorten wordt er gesproken over een vorm van (vrijwillige) dienst of dienstplicht. Daarover lopen de meningen uiteen.'],
+        ],
+        'begrippen' => [
+            ['term' => 'NAVO', 'uitleg' => 'Een bondgenootschap waarin landen elkaar militair beschermen. Een aanval op een lid is een aanval op allen.'],
+            ['term' => 'NAVO-norm', 'uitleg' => 'De afspraak hoeveel procent van de economie landen aan defensie besteden.'],
+            ['term' => 'Bbp', 'uitleg' => 'Het bruto binnenlands product: de totale waarde van alles wat een land in een jaar verdient.'],
+            ['term' => 'Krijgsmacht', 'uitleg' => 'Het leger: landmacht, luchtmacht, marine en marechaussee samen.'],
+        ],
+        'vragen' => [
+            ['vraag' => 'Waarom geeft Nederland ineens zoveel uit aan defensie?', 'antwoord' => 'Vooral door de oorlog in Oekraine en de dreiging vanuit Rusland. Veel landen vinden dat ze hun leger jarenlang hebben verwaarloosd.'],
+            ['vraag' => 'Wat betekent de NAVO-norm?', 'antwoord' => 'Het is een afspraak over hoeveel landen aan defensie uitgeven. De nieuwe norm is 5 procent van de economie, waarvan 3,5 procent direct naar het leger gaat.'],
+            ['vraag' => 'Komt de dienstplicht terug?', 'antwoord' => 'Er wordt over gesproken vanwege personeelstekorten, maar een algemene verplichte dienstplicht is er op dit moment niet.'],
+        ],
+        'key_points' => ['NAVO-norm en defensiebudget', 'Versterking van de krijgsmacht', 'Steun aan Oekraine', 'Europese samenwerking'],
+        'standpunten_key' => 'defensie',
+        'news_key' => 'default',
+        'gerelateerd' => ['europa', 'buitenlandbeleid-en-ontwikkelingssamenwerking', 'veiligheid-en-justitie'],
+    ],
+    'europa' => [
+        'title' => 'Europa',
+        'icon' => 'globe',
+        'category' => 'Veiligheid en wereld',
+        'tagline' => 'Hoeveel samenwerking willen we in de Europese Unie?',
+        'hero' => '/public/images/themas/europa.jpg',
+        'hero_alt' => 'De Europese vlaggen bij een gebouw van de Europese Unie',
+        'description' => 'De rol van Nederland in de Europese Unie.',
+        'intro' => 'Het Europabeleid bepaalt hoe Nederland zich verhoudt tot de Europese Unie: van de interne markt en de euro tot uitbreiding en gezamenlijk beleid. De EU raakt bijna elk ander onderwerp.',
+        'in_het_kort' => [
+            'De EU is een samenwerking van 27 landen met een gezamenlijke markt en (voor de meeste) een gezamenlijke munt, de euro.',
+            'Veel regels die in Nederland gelden, komen oorspronkelijk uit Brussel.',
+            'Het debat gaat over meer of juist minder samenwerking, en over uitbreiding met nieuwe landen.',
+        ],
+        'wat' => [
+            'In de EU werken landen samen op het gebied van handel, regels, klimaat en veiligheid. Door de interne markt kunnen mensen, goederen en geld vrij over de grenzen bewegen.',
+            'Nederland is een handelsland en verdient veel aan Europa. Tegelijk is er discussie over hoeveel macht naar Brussel mag, hoeveel Nederland betaalt en wie er lid mag worden.',
+        ],
+        'waarom' => [
+            'Een groot deel van onze welvaart komt door de handel met andere EU-landen.',
+            'Veel grote problemen, zoals klimaat, migratie en veiligheid, houden niet op bij de grens. Daarvoor is samenwerking nodig, maar dat botst soms met nationale zeggenschap.',
+        ],
+        'cijfers' => [
+            ['cijfer' => '27', 'label' => 'lidstaten van de Europese Unie', 'bron' => 'Europese Unie'],
+            ['cijfer' => 'euro', 'label' => 'de gezamenlijke munt van de meeste EU-landen', 'bron' => 'Europese Centrale Bank'],
+            ['cijfer' => 'grootste', 'label' => 'de EU is de belangrijkste handelspartner van Nederland', 'bron' => 'CBS'],
+        ],
+        'debat' => [
+            ['kop' => 'Meer of minder Brussel?', 'tekst' => 'Pro-Europese partijen willen meer samenwerken bij klimaat, migratie en defensie. Eurokritische partijen willen meer zeggenschap terug naar Nederland.'],
+            ['kop' => 'Moet de EU uitbreiden?', 'tekst' => 'Er is discussie over toetreding van nieuwe landen, zoals Oekraine en landen op de Balkan. Dat heeft gevolgen voor geld en macht.'],
+            ['kop' => 'Wie betaalt en wie profiteert?', 'tekst' => 'Nederland is netto-betaler aan de EU. Sommigen vinden dat te veel, anderen wijzen op de voordelen van de gezamenlijke markt.'],
+        ],
+        'begrippen' => [
+            ['term' => 'Interne markt', 'uitleg' => 'Het gebied waarin mensen, goederen, diensten en geld vrij tussen EU-landen kunnen bewegen.'],
+            ['term' => 'Eurozone', 'uitleg' => 'De groep EU-landen die de euro als munt gebruikt.'],
+            ['term' => 'Soevereiniteit', 'uitleg' => 'De mate waarin een land zelf de baas is over zijn eigen wetten en beslissingen.'],
+            ['term' => 'Netto-betaler', 'uitleg' => 'Een land dat meer aan de EU betaalt dan het terugkrijgt.'],
+        ],
+        'vragen' => [
+            ['vraag' => 'Wat heb ik aan de Europese Unie?', 'antwoord' => 'Vooral handel, banen en gemak: vrij reizen, geen extra kosten in het buitenland en producten die overal aan dezelfde eisen voldoen.'],
+            ['vraag' => 'Bepaalt Brussel alles?', 'antwoord' => 'Nee, maar veel regels komen wel uit de EU. Over grote onderwerpen blijven de lidstaten samen beslissen.'],
+            ['vraag' => 'Kan Nederland uit de EU stappen?', 'antwoord' => 'Dat kan in theorie, zoals het Verenigd Koninkrijk deed (Brexit). De meeste partijen zijn daar tegen vanwege de economische gevolgen.'],
+        ],
+        'key_points' => ['Interne markt en de euro', 'Uitbreiding van de EU', 'Soevereiniteit en regelgeving', 'Gezamenlijk buitenlandbeleid'],
+        'standpunten_key' => 'europa',
+        'news_key' => 'default',
+        'gerelateerd' => ['buitenlandbeleid-en-ontwikkelingssamenwerking', 'defensie', 'economie-en-financien'],
+    ],
+    'landbouw-en-natuur' => [
+        'title' => 'Landbouw en natuur',
+        'icon' => 'sprout',
+        'category' => 'Klimaat en leefomgeving',
+        'tagline' => 'De balans tussen boeren, natuur en stikstof.',
+        'hero' => '/public/images/themas/landbouw-en-natuur.jpg',
+        'hero_alt' => 'Nederlandse weilanden met koeien bij een natuurgebied',
+        'description' => 'Stikstof, boeren, natuurherstel en voedselproductie.',
+        'intro' => 'Landbouw en natuur draaien om de balans tussen een sterke boerensector en het herstel van natuur. Het stikstofdossier en de toekomst van de boer staan centraal in het debat.',
+        'in_het_kort' => [
+            'Te veel stikstof is schadelijk voor de natuur. Tegelijk hebben we boeren nodig voor ons voedsel.',
+            'Het stikstofprobleem blokkeert al jaren de bouw van woningen, wegen en zelfs defensieprojecten.',
+            'Het kabinet trekt 20 miljard euro uit en komt met nieuwe doelen per sector.',
+        ],
+        'wat' => [
+            'Stikstof komt onder andere vrij bij vee, verkeer en industrie. Te veel stikstof in de natuur zorgt ervoor dat sommige planten en dieren verdwijnen. Daarom moet de uitstoot omlaag.',
+            'Dat raakt vooral boeren, omdat de veehouderij een grote bron is. De uitdaging is om de natuur te herstellen en tegelijk de boeren een eerlijk toekomstperspectief te geven.',
+        ],
+        'waarom' => [
+            'Zonder vergunningen voor stikstof kunnen er nauwelijks woningen, wegen of bedrijven bij komen. Het probleem zit dus veel groter dan alleen de landbouw.',
+            'Het gaat ook over ons voedsel, het landschap en de toekomst van duizenden boerenfamilies.',
+        ],
+        'cijfers' => [
+            ['cijfer' => '20 mld', 'label' => 'euro die het kabinet tot 2035 uittrekt voor stikstof en natuur', 'bron' => 'Rijksoverheid, 2026'],
+            ['cijfer' => '42 tot 46%', 'label' => 'beoogde reductie van de uitstoot in de landbouw in 2035', 'bron' => 'Kabinetsplannen 2026'],
+            ['cijfer' => 'niet gehaald', 'label' => 'de wettelijke stikstofdoelen worden met huidig beleid niet gehaald', 'bron' => 'RIVM, 2026'],
+        ],
+        'debat' => [
+            ['kop' => 'Krimpen of innoveren?', 'tekst' => 'Sommige partijen vinden dat de veestapel kleiner moet. Andere willen het oplossen met techniek en innovatie, zonder dat boeren moeten stoppen.'],
+            ['kop' => 'Gedwongen uitkoop?', 'tekst' => 'Er is discussie of boeren bij natuurgebieden vrijwillig of gedwongen uitgekocht mogen worden.'],
+            ['kop' => 'Wie draagt de lasten?', 'tekst' => 'Boeren voelen zich vaak het kind van de rekening. De vraag is hoe je natuur herstelt zonder een hele sector kapot te maken.'],
+        ],
+        'begrippen' => [
+            ['term' => 'Stikstof', 'uitleg' => 'Stoffen (zoals ammoniak) die onder meer vrijkomen bij vee en verkeer en die de natuur kunnen beschadigen.'],
+            ['term' => 'Natura 2000', 'uitleg' => 'Beschermde natuurgebieden in Europa die extra gevoelig zijn voor stikstof.'],
+            ['term' => 'Stikstofslot', 'uitleg' => 'Omdat de natuur niet verder mag verslechteren, liggen veel bouwprojecten stil.'],
+            ['term' => 'Extensivering', 'uitleg' => 'Minder intensief boeren, bijvoorbeeld met minder dieren per hectare.'],
+        ],
+        'vragen' => [
+            ['vraag' => 'Waarom is stikstof zo\'n groot probleem?', 'antwoord' => 'Te veel stikstof beschadigt de natuur. Omdat de natuur wettelijk beschermd is, mogen veel nieuwe projecten pas door als de uitstoot omlaaggaat. Daardoor staat veel stil.'],
+            ['vraag' => 'Moeten alle boeren stoppen?', 'antwoord' => 'Nee. Het beleid richt zich op minder uitstoot, vooral rond kwetsbare natuur. Sommige boeren stoppen of verhuizen vrijwillig, andere schakelen om of innoveren.'],
+            ['vraag' => 'Wat heeft stikstof met woningbouw te maken?', 'antwoord' => 'Voor bijna elk bouwproject is een stikstofvergunning nodig. Zolang het probleem niet is opgelost, kan er minder gebouwd worden.'],
+        ],
+        'key_points' => ['Stikstofaanpak', 'Toekomst van de boer', 'Natuurherstel en biodiversiteit', 'Voedselzekerheid'],
+        'standpunten_key' => 'landbouw-en-natuur',
+        'news_key' => 'default',
+        'gerelateerd' => ['klimaat-en-energie', 'wonen', 'dierenwelzijn'],
     ],
     'mobiliteit-en-verkeer' => [
         'title' => 'Mobiliteit en verkeer',
         'icon' => 'train-front',
+        'category' => 'Klimaat en leefomgeving',
+        'tagline' => 'Iedereen vlot en schoon van A naar B.',
+        'hero' => '/public/images/themas/mobiliteit-en-verkeer.jpg',
+        'hero_alt' => 'Een trein en snelweg in een Nederlands landschap',
         'description' => 'Openbaar vervoer, wegen, fiets en verduurzaming van transport.',
-        'long_description' => 'Mobiliteit en verkeer gaan over bereikbaarheid: van investeringen in het spoor en openbaar vervoer tot wegen, de fiets en de overstap naar elektrisch rijden. Bereikbaarheid en duurzaamheid moeten in balans.',
+        'intro' => 'Mobiliteit gaat over bereikbaarheid: van investeringen in het spoor en openbaar vervoer tot wegen, de fiets en de overstap naar elektrisch rijden. Bereikbaarheid en duurzaamheid moeten in balans.',
+        'in_het_kort' => [
+            'Het gaat over hoe je je verplaatst: met de auto, de trein, de bus of de fiets.',
+            'De grote vragen zijn: hoe houden we Nederland bereikbaar, betaalbaar en schoner?',
+            'Het openbaar vervoer staat onder druk door bezuinigingen en personeelstekorten.',
+        ],
+        'wat' => [
+            'Nederland is een druk land met veel verkeer. De overheid investeert in wegen, spoor, fietspaden en openbaar vervoer, en bepaalt de regels, zoals maximumsnelheden en de overstap naar elektrisch rijden.',
+            'Verduurzaming speelt een grote rol: schoner vervoer is goed voor het klimaat en de lucht, maar de keuzes (zoals rekeningrijden of duurdere benzine) raken automobilisten direct.',
+        ],
+        'waarom' => [
+            'Bijna iedereen reist dagelijks: naar werk, school of familie. Files, dure tickets en uitgedunde buslijnen raken mensen direct.',
+            'Vervoer is een grote bron van CO2. Schoner reizen is dus nodig voor het klimaat, maar moet wel betaalbaar blijven.',
+        ],
+        'cijfers' => [
+            ['cijfer' => '100 km/u', 'label' => 'maximumsnelheid overdag op veel snelwegen', 'bron' => 'Rijksoverheid'],
+            ['cijfer' => 'rekeningrijden', 'label' => 'een vorm van betalen per kilometer staat op de agenda', 'bron' => 'Rijksoverheid'],
+            ['cijfer' => 'fietsland', 'label' => 'Nederland heeft meer fietsen dan inwoners', 'bron' => 'CBS'],
+        ],
+        'debat' => [
+            ['kop' => 'Auto of openbaar vervoer?', 'tekst' => 'Sommige partijen willen meer investeren in trein, bus en fiets. Andere willen de automobilist ontzien en juist in wegen investeren.'],
+            ['kop' => 'Betalen per kilometer?', 'tekst' => 'Er zijn plannen om betalen per gereden kilometer in te voeren in plaats van vaste autobelastingen. Daarover lopen de meningen sterk uiteen.'],
+            ['kop' => 'Bereikbaarheid van de regio', 'tekst' => 'Buiten de Randstad verdwijnen buslijnen en treinen. De vraag is hoe je ook kleine plaatsen bereikbaar houdt.'],
+        ],
+        'begrippen' => [
+            ['term' => 'Openbaar vervoer (OV)', 'uitleg' => 'Vervoer dat voor iedereen toegankelijk is, zoals trein, bus, tram en metro.'],
+            ['term' => 'Rekeningrijden', 'uitleg' => 'Betalen voor het aantal kilometers dat je rijdt in plaats van vaste autobelastingen.'],
+            ['term' => 'Netcongestie', 'uitleg' => 'Een vol stroomnet kan ook het laden van elektrische auto\'s en bussen vertragen.'],
+            ['term' => 'Verkeersveiligheid', 'uitleg' => 'Beleid om het aantal verkeersdoden en gewonden te verlagen.'],
+        ],
+        'vragen' => [
+            ['vraag' => 'Worden treinkaartjes duurder?', 'antwoord' => 'De prijzen stijgen vaak mee met de inflatie. Partijen verschillen over of het OV goedkoper of zelfs deels gratis moet worden.'],
+            ['vraag' => 'Wat is rekeningrijden?', 'antwoord' => 'Een systeem waarbij je betaalt voor het aantal kilometers dat je rijdt, in plaats van vaste belastingen. Het doel is eerlijker en schoner rijden.'],
+            ['vraag' => 'Moet ik straks verplicht elektrisch rijden?', 'antwoord' => 'Er komt geen verbod op je huidige auto, maar nieuwe auto\'s worden in de EU steeds vaker elektrisch. De overheid stimuleert die overstap.'],
+        ],
         'key_points' => ['Openbaar vervoer en spoor', 'Wegen en bereikbaarheid', 'Elektrisch en schoon vervoer', 'Fiets en verkeersveiligheid'],
-        'standpunten_key' => null,
+        'standpunten_key' => 'mobiliteit-en-verkeer',
         'news_key' => 'default',
+        'gerelateerd' => ['klimaat-en-energie', 'wonen', 'economie-en-financien'],
     ],
     'digitalisering' => [
         'title' => 'Digitalisering',
         'icon' => 'cpu',
-        'description' => 'Privacy, AI, cyberveiligheid en de digitale overheid.',
-        'long_description' => 'Digitalisering raakt steeds meer aspecten van de samenleving: van kunstmatige intelligentie en online privacy tot een betrouwbare digitale overheid en weerbaarheid tegen cyberaanvallen.',
+        'category' => 'Democratie en digitaal',
+        'tagline' => 'Profiteren van technologie, met behoud van onze vrijheid.',
+        'hero' => '/public/images/themas/digitalisering.jpg',
+        'hero_alt' => 'Een datacenter met serverracks',
+        'description' => 'Privacy, kunstmatige intelligentie, cyberveiligheid en de digitale overheid.',
+        'intro' => 'Digitalisering raakt steeds meer van ons leven: van kunstmatige intelligentie en online privacy tot een betrouwbare digitale overheid en weerbaarheid tegen cyberaanvallen.',
+        'in_het_kort' => [
+            'Kunstmatige intelligentie (AI) verandert werk, onderwijs en de samenleving in hoog tempo.',
+            'Je persoonlijke gegevens zijn waardevol. Privacy en veiligheid online worden steeds belangrijker.',
+            'De overheid wil digitaal goed bereikbaar zijn, maar mensen mogen niet buitengesloten worden.',
+        ],
+        'wat' => [
+            'Digitalisering betekent dat steeds meer via computers en internet gaat: betalen, werken, leren en contact met de overheid. Dat is handig, maar maakt ons ook kwetsbaar voor uitval en aanvallen.',
+            'Twee thema\'s springen eruit. Kunstmatige intelligentie kan veel werk uit handen nemen, maar roept ook vragen op. En privacy gaat over wie er allemaal meekijkt met jouw gegevens.',
+        ],
+        'waarom' => [
+            'Technologie biedt enorme kansen voor de economie, de zorg en het onderwijs.',
+            'Tegelijk zijn er risico\'s: verlies van privacy, nepnieuws, cyberaanvallen en mensen die digitaal niet mee kunnen komen. De overheid moet daar regels voor maken.',
+        ],
+        'cijfers' => [
+            ['cijfer' => 'AVG', 'label' => 'de Europese privacywet die je gegevens beschermt', 'bron' => 'Europese Unie'],
+            ['cijfer' => 'AI-verordening', 'label' => 'de EU stelt als eerste ter wereld regels voor AI', 'bron' => 'Europese Unie'],
+            ['cijfer' => 'DigiD', 'label' => 'het inlogmiddel waarmee je zaken regelt met de overheid', 'bron' => 'Rijksoverheid'],
+        ],
+        'debat' => [
+            ['kop' => 'Wat doen we met AI?', 'tekst' => 'Partijen zoeken de balans tussen de kansen van AI en de risico\'s, zoals banen die verdwijnen, nepnieuws en oneerlijke beslissingen door computers.'],
+            ['kop' => 'Privacy tegenover veiligheid', 'tekst' => 'Om criminaliteit en fraude aan te pakken wil de overheid soms meer data verzamelen. Critici waarschuwen voor een controlemaatschappij.'],
+            ['kop' => 'Afhankelijk van techgiganten', 'tekst' => 'Veel software komt uit de VS of China. Er is discussie over digitale zelfstandigheid van Nederland en Europa.'],
+        ],
+        'begrippen' => [
+            ['term' => 'Kunstmatige intelligentie (AI)', 'uitleg' => 'Computers die zelf leren en taken doen die normaal mensen doen, zoals tekst schrijven of beelden herkennen.'],
+            ['term' => 'AVG', 'uitleg' => 'De Algemene Verordening Gegevensbescherming: de wet die regelt hoe bedrijven en overheden met je gegevens omgaan.'],
+            ['term' => 'Cyberveiligheid', 'uitleg' => 'Bescherming van computers, netwerken en gegevens tegen aanvallen.'],
+            ['term' => 'Digitale kloof', 'uitleg' => 'Het verschil tussen mensen die wel en niet goed mee kunnen komen met digitale techniek.'],
+        ],
+        'vragen' => [
+            ['vraag' => 'Is mijn privacy nog wel beschermd?', 'antwoord' => 'In Europa geldt de strenge privacywet AVG. Toch worden er veel gegevens verzameld, dus blijft het belangrijk om bewust te zijn van wat je deelt.'],
+            ['vraag' => 'Pakt AI mijn baan af?', 'antwoord' => 'AI verandert veel werk. Sommige taken verdwijnen, andere veranderen of komen erbij. Omscholing en goede regels zijn daarom belangrijk.'],
+            ['vraag' => 'Wat doet de overheid tegen hackers?', 'antwoord' => 'De overheid investeert in cyberveiligheid en samenwerking, omdat aanvallen op ziekenhuizen, bedrijven en de overheid zelf toenemen.'],
+        ],
         'key_points' => ['Privacy en gegevensbescherming', 'Kunstmatige intelligentie', 'Digitale overheid', 'Cyberweerbaarheid'],
-        'standpunten_key' => null,
+        'standpunten_key' => 'digitalisering',
         'news_key' => 'tech',
+        'gerelateerd' => ['veiligheid-en-justitie', 'democratie-en-bestuur', 'economie-en-financien'],
+    ],
+    'bestaanszekerheid-en-koopkracht' => [
+        'title' => 'Bestaanszekerheid en koopkracht',
+        'icon' => 'wallet',
+        'category' => 'Economie en bestaanszekerheid',
+        'tagline' => 'Kunnen rondkomen van je inkomen, elke maand weer.',
+        'hero' => '/public/images/themas/bestaanszekerheid-en-koopkracht.jpg',
+        'hero_alt' => 'Iemand doet boodschappen in een supermarkt',
+        'description' => 'Rondkomen, het minimumloon, toeslagen en armoede.',
+        'intro' => 'Bestaanszekerheid betekent dat je kunt rondkomen en niet bang hoeft te zijn voor onverwachte kosten. Het gaat over het minimumloon, toeslagen, de hoge prijzen en armoede.',
+        'in_het_kort' => [
+            'Veel mensen hebben moeite met rondkomen, ondanks dat ze werken.',
+            'In 2026 leeft naar verwachting ongeveer 2,6 procent van de mensen onder de armoedegrens.',
+            'Het debat gaat over het minimumloon, de toeslagen en het ingewikkelde belastingstelsel.',
+        ],
+        'wat' => [
+            'Bestaanszekerheid gaat over genoeg geld om de vaste lasten te betalen (huur, energie, zorg) en daarna nog rond te komen. Wie dat niet lukt, leeft in armoede.',
+            'De overheid helpt met het minimumloon, toeslagen (zoals huur- en zorgtoeslag) en uitkeringen. Maar dat stelsel is zo ingewikkeld geworden dat mensen erin verdwalen.',
+        ],
+        'waarom' => [
+            'Geldzorgen raken alles: je gezondheid, je kinderen, je kansen en je vertrouwen in de politiek.',
+            'Sinds de hoge inflatie van de afgelopen jaren staat bestaanszekerheid bovenaan de politieke agenda.',
+        ],
+        'cijfers' => [
+            ['cijfer' => 'circa 2,6%', 'label' => 'van de mensen leeft naar verwachting in 2026 onder de armoedegrens', 'bron' => 'CPB, MEV 2026'],
+            ['cijfer' => 'circa 2,6%', 'label' => 'van de kinderen groeit op in armoede', 'bron' => 'CPB, MEV 2026'],
+            ['cijfer' => '+1,3%', 'label' => 'verwachte stijging van de koopkracht in 2026', 'bron' => 'CPB, MEV 2026'],
+        ],
+        'debat' => [
+            ['kop' => 'Minimumloon omhoog?', 'tekst' => 'Linkse partijen willen het minimumloon flink verhogen. Rechtse partijen vrezen dat banen en bedrijven daardoor onder druk komen.'],
+            ['kop' => 'Toeslagen of simpeler stelsel?', 'tekst' => 'Bijna iedereen vindt het toeslagenstelsel te ingewikkeld. De vraag is hoe je het vereenvoudigt zonder dat mensen erop achteruitgaan.'],
+            ['kop' => 'Wie helpen we eerst?', 'tekst' => 'Er is discussie over of de hulp naar werkenden, gezinnen, ouderen of de allerarmsten moet gaan.'],
+        ],
+        'begrippen' => [
+            ['term' => 'Bestaanszekerheid', 'uitleg' => 'Genoeg en stabiel inkomen om van te leven en tegen een stootje te kunnen.'],
+            ['term' => 'Armoedegrens', 'uitleg' => 'Het inkomen waaronder je niet genoeg overhoudt voor de basisbehoeften.'],
+            ['term' => 'Toeslagen', 'uitleg' => 'Bijdragen van de overheid, zoals huurtoeslag en zorgtoeslag, voor mensen met een lager inkomen.'],
+            ['term' => 'Minimumloon', 'uitleg' => 'Het laagste loon dat een werkgever wettelijk mag betalen.'],
+        ],
+        'vragen' => [
+            ['vraag' => 'Hoeveel mensen zijn er arm in Nederland?', 'antwoord' => 'In 2026 leeft naar verwachting ongeveer 2,6 procent van de mensen onder de armoedegrens. Daarnaast zit een grote groep er net boven, met weinig buffer.'],
+            ['vraag' => 'Waarom is het toeslagenstelsel zo ingewikkeld?', 'antwoord' => 'Het is in de loop der jaren steeds verder uitgebreid. Daardoor maken mensen fouten of lopen ze geld mis, en kunnen er hoge terugvorderingen ontstaan.'],
+            ['vraag' => 'Stijgt mijn koopkracht?', 'antwoord' => 'Gemiddeld stijgt de koopkracht in 2026 licht, vooral door lagere inflatie. Niet iedereen merkt dat even sterk.'],
+        ],
+        'key_points' => ['Rondkomen en het minimumloon', 'Armoede en kinderarmoede', 'Toeslagen en het belastingstelsel', 'Koopkracht en vaste lasten'],
+        'standpunten_key' => 'bestaanszekerheid-en-koopkracht',
+        'news_key' => 'economie',
+        'gerelateerd' => ['economie-en-financien', 'sociale-zekerheid-en-werk', 'wonen'],
+    ],
+    'pensioenen' => [
+        'title' => 'Pensioenen',
+        'icon' => 'piggy-bank',
+        'category' => 'Economie en bestaanszekerheid',
+        'tagline' => 'Een goed inkomen voor later, voor jong en oud.',
+        'hero' => '/public/images/themas/pensioenen.jpg',
+        'hero_alt' => 'Een ouder echtpaar wandelt samen buiten',
+        'description' => 'De AOW, het nieuwe pensioenstelsel en de AOW-leeftijd.',
+        'intro' => 'Pensioenen gaan over je inkomen voor later. Nederland stapt over op een nieuw pensioenstelsel, en de AOW-leeftijd stijgt langzaam mee met hoe oud we worden.',
+        'in_het_kort' => [
+            'Je pensioen bestaat uit de AOW van de overheid en meestal een pensioen via je werk.',
+            'De AOW-leeftijd is in 2026 67 jaar en stijgt in 2028 naar 67 jaar en 3 maanden.',
+            'Nederland voert de grootste pensioenhervorming in decennia door: de Wet toekomst pensioenen.',
+        ],
+        'wat' => [
+            'Het Nederlandse pensioen rust op drie pijlers: de AOW (een basisinkomen van de overheid vanaf de AOW-leeftijd), het pensioen dat je opbouwt via je werkgever, en wat je zelf spaart.',
+            'Met de Wet toekomst pensioenen verandert het tweede deel: pensioenfondsen stappen over op een persoonlijker systeem, waarin je pensioen meer meebeweegt met de beleggingen.',
+        ],
+        'waarom' => [
+            'Het gaat om heel veel geld en om de zekerheid van miljoenen mensen, jong en oud.',
+            'De vergrijzing zorgt voor druk: er zijn steeds meer gepensioneerden en relatief minder werkenden om de AOW te betalen.',
+        ],
+        'cijfers' => [
+            ['cijfer' => '67 jaar', 'label' => 'de AOW-leeftijd in 2026', 'bron' => 'Algemene Ouderdomswet'],
+            ['cijfer' => '67 jaar en 3 mnd', 'label' => 'de AOW-leeftijd vanaf 2028', 'bron' => 'Rijksoverheid'],
+            ['cijfer' => '1 januari 2028', 'label' => 'uiterste datum voor de overstap naar het nieuwe pensioenstelsel', 'bron' => 'Wet toekomst pensioenen'],
+        ],
+        'debat' => [
+            ['kop' => 'Het nieuwe pensioenstelsel: goed idee?', 'tekst' => 'Voorstanders vinden het persoonlijker en eerlijker. Tegenstanders vrezen dat pensioenen onzekerder worden omdat ze meebewegen met de beurs.'],
+            ['kop' => 'Moet de AOW-leeftijd omlaag?', 'tekst' => 'Sommige partijen willen de AOW-leeftijd bevriezen of verlagen, vooral voor mensen met zware beroepen. Andere vinden meestijgen met de levensverwachting nodig.'],
+            ['kop' => 'Houdbaar voor jongeren?', 'tekst' => 'Jongere generaties vragen zich af of er straks nog genoeg pensioen voor hen is. Eerlijkheid tussen generaties is een belangrijk thema.'],
+        ],
+        'begrippen' => [
+            ['term' => 'AOW', 'uitleg' => 'De Algemene Ouderdomswet: een basispensioen van de overheid vanaf de AOW-leeftijd.'],
+            ['term' => 'AOW-leeftijd', 'uitleg' => 'De leeftijd waarop je AOW gaat krijgen. Die stijgt mee met de levensverwachting.'],
+            ['term' => 'Wet toekomst pensioenen', 'uitleg' => 'De wet die het pensioenstelsel hervormt naar een persoonlijker systeem.'],
+            ['term' => 'Invaren', 'uitleg' => 'Het overzetten van je oude pensioenrechten naar het nieuwe stelsel.'],
+        ],
+        'vragen' => [
+            ['vraag' => 'Wanneer krijg ik AOW?', 'antwoord' => 'In 2026 is de AOW-leeftijd 67 jaar. Vanaf 2028 wordt dat 67 jaar en 3 maanden. De leeftijd kan in de toekomst verder stijgen.'],
+            ['vraag' => 'Wordt mijn pensioen onzekerder?', 'antwoord' => 'In het nieuwe stelsel beweegt je pensioen meer mee met de beleggingen. In goede tijden kan het sneller stijgen, in slechte tijden ook dalen.'],
+            ['vraag' => 'Wat is invaren?', 'antwoord' => 'Dat je al opgebouwde pensioen wordt omgezet naar het nieuwe systeem. Fondsen moeten dat eerlijk doen en zo nodig compenseren.'],
+        ],
+        'key_points' => ['De AOW en de AOW-leeftijd', 'Het nieuwe pensioenstelsel', 'Zekerheid tegenover meebewegen', 'Eerlijkheid tussen generaties'],
+        'standpunten_key' => 'pensioenen',
+        'news_key' => 'economie',
+        'gerelateerd' => ['economie-en-financien', 'zorg-en-welzijn', 'sociale-zekerheid-en-werk'],
+    ],
+    'sociale-zekerheid-en-werk' => [
+        'title' => 'Sociale zekerheid en werk',
+        'icon' => 'briefcase',
+        'category' => 'Economie en bestaanszekerheid',
+        'tagline' => 'Een eerlijke arbeidsmarkt en een vangnet als het tegenzit.',
+        'hero' => '/public/images/themas/sociale-zekerheid-en-werk.jpg',
+        'hero_alt' => 'Mensen aan het werk in een Nederlands kantoor',
+        'description' => 'De arbeidsmarkt, vast werk, uitkeringen en de bijstand.',
+        'intro' => 'Dit thema gaat over werk en het sociale vangnet: vaste en flexibele contracten, het minimumloon en uitkeringen zoals de WW en de bijstand voor wie even niet kan werken.',
+        'in_het_kort' => [
+            'Veel mensen werken flexibel of als zzp\'er, met minder zekerheid dan een vast contract.',
+            'Als je je baan verliest of niet kunt werken, is er een vangnet, zoals WW of bijstand.',
+            'Het debat gaat over meer vast werk, een eerlijkere arbeidsmarkt en een menselijker vangnet.',
+        ],
+        'wat' => [
+            'De arbeidsmarkt gaat over werk: wie werkt waar, met welk contract en voor welk loon. Er zijn vaste banen, tijdelijke contracten, uitzendwerk en zelfstandigen (zzp\'ers).',
+            'Sociale zekerheid is het vangnet als werken (even) niet lukt: een WW-uitkering bij werkloosheid, de bijstand als laatste vangnet en regelingen bij ziekte of arbeidsongeschiktheid.',
+        ],
+        'waarom' => [
+            'Werk geeft inkomen, structuur en zekerheid. Maar door veel flexwerk weten mensen soms niet of ze volgende maand nog werk hebben.',
+            'Een goed vangnet zorgt dat mensen niet in de afgrond vallen als het tegenzit. Tegelijk moet het wel betaalbaar blijven.',
+        ],
+        'cijfers' => [
+            ['cijfer' => 'krapte', 'label' => 'op veel plekken zijn meer vacatures dan werkzoekenden', 'bron' => 'CBS'],
+            ['cijfer' => 'zzp', 'label' => 'meer dan een miljoen mensen werken als zelfstandige', 'bron' => 'CBS'],
+            ['cijfer' => 'vangnet', 'label' => 'WW en bijstand vangen mensen op die (even) geen werk hebben', 'bron' => 'Rijksoverheid'],
+        ],
+        'debat' => [
+            ['kop' => 'Meer vast werk?', 'tekst' => 'Veel partijen willen vaste contracten weer de norm maken en doorgeslagen flexwerk aanpakken. Anderen waarschuwen dat te strenge regels banen kunnen kosten.'],
+            ['kop' => 'Hoe streng is de bijstand?', 'tekst' => 'Er is discussie over de regels en sancties in de bijstand. Sommigen willen meer vertrouwen en minder regels, anderen meer controle.'],
+            ['kop' => 'De positie van zzp\'ers', 'tekst' => 'Zzp\'ers hebben vrijheid maar weinig bescherming. Het debat gaat over verplichte verzekeringen en het tegengaan van schijnzelfstandigheid.'],
+        ],
+        'begrippen' => [
+            ['term' => 'WW', 'uitleg' => 'De Werkloosheidswet: een tijdelijke uitkering als je je baan verliest.'],
+            ['term' => 'Bijstand', 'uitleg' => 'Het laatste vangnet: een uitkering voor wie geen ander inkomen heeft.'],
+            ['term' => 'Zzp\'er', 'uitleg' => 'Een zelfstandige zonder personeel die voor zichzelf werkt.'],
+            ['term' => 'Schijnzelfstandigheid', 'uitleg' => 'Iemand is op papier zelfstandig, maar werkt eigenlijk als gewone werknemer.'],
+        ],
+        'vragen' => [
+            ['vraag' => 'Waarom hebben zoveel mensen een flexcontract?', 'antwoord' => 'Voor werkgevers is flexwerk goedkoper en makkelijker. Voor werkenden betekent het vaak minder zekerheid over inkomen en toekomst.'],
+            ['vraag' => 'Wat is het verschil tussen WW en bijstand?', 'antwoord' => 'De WW krijg je tijdelijk als je je baan verliest en je hebt gewerkt. De bijstand is het laatste vangnet als je geen ander inkomen of vermogen meer hebt.'],
+            ['vraag' => 'Wat is er mis met zzp?', 'antwoord' => 'Zelfstandig werken mag, maar het wordt een probleem als mensen gedwongen als zzp\'er werken zonder bescherming, of om regels en belasting te ontwijken.'],
+        ],
+        'key_points' => ['Vast werk tegenover flexwerk', 'Het minimumloon', 'WW, bijstand en arbeidsongeschiktheid', 'De positie van zzp\'ers'],
+        'standpunten_key' => 'sociale-zekerheid-en-werk',
+        'news_key' => 'economie',
+        'gerelateerd' => ['economie-en-financien', 'bestaanszekerheid-en-koopkracht', 'pensioenen'],
+    ],
+    'democratie-en-bestuur' => [
+        'title' => 'Democratie en bestuur',
+        'icon' => 'landmark',
+        'category' => 'Democratie en digitaal',
+        'tagline' => 'Een betrouwbare overheid die naar mensen luistert.',
+        'hero' => '/public/images/themas/democratie-en-bestuur.jpg',
+        'hero_alt' => 'Het Binnenhof in Den Haag',
+        'description' => 'Vertrouwen in de politiek, de bestuurscultuur en hoe ons land bestuurd wordt.',
+        'intro' => 'Dit thema gaat over hoe Nederland bestuurd wordt en of mensen de politiek nog vertrouwen. Het vertrouwen in de landelijke politiek is laag, terwijl mensen positiever zijn over hun eigen gemeente.',
+        'in_het_kort' => [
+            'Het vertrouwen in de landelijke politiek is historisch laag.',
+            'In 2025 had maar 21 procent van de mensen vertrouwen in politici.',
+            'Het debat gaat over een betere bestuurscultuur, meer inspraak en een overheid die fouten durft toe te geven.',
+        ],
+        'wat' => [
+            'Democratie betekent dat het volk de baas is: je kiest om de paar jaar de Tweede Kamer, de gemeenteraad en de Provinciale Staten. Die gekozen mensen nemen vervolgens besluiten en controleren de regering.',
+            'Bestuur gaat over hoe goed dat werkt: luistert de overheid, neemt zij eerlijke besluiten, en geeft zij fouten toe? Door affaires zoals de toeslagenaffaire is daar veel discussie over.',
+        ],
+        'waarom' => [
+            'Een sterke democratie is geen vanzelfsprekendheid. Als mensen het vertrouwen verliezen, komt het hele systeem onder druk te staan.',
+            'Beslissingen van de overheid raken iedereen. Daarom is het belangrijk dat die beslissingen eerlijk tot stand komen en goed worden uitgelegd.',
+        ],
+        'cijfers' => [
+            ['cijfer' => '40%', 'label' => 'van de mensen had in 2025 vertrouwen in de politiek', 'bron' => 'CBS, 2026'],
+            ['cijfer' => '21%', 'label' => 'had vertrouwen in politici: het laagst sinds 2012', 'bron' => 'CBS, 2026'],
+            ['cijfer' => '64%', 'label' => 'geeft het eigen gemeentebestuur een voldoende', 'bron' => 'SCP, 2026'],
+        ],
+        'debat' => [
+            ['kop' => 'Een nieuwe bestuurscultuur', 'tekst' => 'Sinds de toeslagenaffaire klinkt de roep om opener bestuur, betere controle en een overheid die mensen niet als nummer behandelt.'],
+            ['kop' => 'Meer directe inspraak?', 'tekst' => 'Sommige partijen willen referenda, gekozen burgemeesters of een ander kiesstelsel. Anderen vrezen dat dit besluiten juist trager of grilliger maakt.'],
+            ['kop' => 'Bestuurbaarheid van het land', 'tekst' => 'Met veel partijen in de Kamer is het lastig stabiele kabinetten te vormen. Het debat gaat over hoe je het land bestuurbaar houdt.'],
+        ],
+        'begrippen' => [
+            ['term' => 'Tweede Kamer', 'uitleg' => 'De 150 gekozen volksvertegenwoordigers die wetten maken en de regering controleren.'],
+            ['term' => 'Kabinet', 'uitleg' => 'De regering: de ministers en staatssecretarissen die het land besturen.'],
+            ['term' => 'Coalitie', 'uitleg' => 'De samenwerkende partijen die samen een meerderheid hebben en een kabinet vormen.'],
+            ['term' => 'Referendum', 'uitleg' => 'Een volksstemming waarbij burgers direct over een onderwerp mogen stemmen.'],
+        ],
+        'vragen' => [
+            ['vraag' => 'Waarom is het vertrouwen in de politiek zo laag?', 'antwoord' => 'Affaires, gebroken beloften en het gevoel dat de overheid niet luistert spelen mee. In 2025 had maar 21 procent vertrouwen in politici.'],
+            ['vraag' => 'Waarom duurt het vormen van een kabinet zo lang?', 'antwoord' => 'Er zijn veel partijen, dus er zijn er meerdere nodig voor een meerderheid. Die moeten het over veel onderwerpen eens worden, en dat kost tijd.'],
+            ['vraag' => 'Heb ik zelf invloed?', 'antwoord' => 'Ja: door te stemmen, lid te worden van een partij, mee te praten in je gemeente of een petitie te steunen. Lokaal is je invloed vaak het grootst.'],
+        ],
+        'key_points' => ['Vertrouwen in de politiek', 'Bestuurscultuur en de toeslagenaffaire', 'Inspraak en het kiesstelsel', 'De rol van gemeenten en provincies'],
+        'standpunten_key' => 'democratie-en-bestuur',
+        'news_key' => 'default',
+        'gerelateerd' => ['veiligheid-en-justitie', 'digitalisering', 'europa'],
+    ],
+    'buitenland-en-ontwikkeling' => [
+        'title' => 'Buitenland en ontwikkeling',
+        'icon' => 'globe',
+        'category' => 'Veiligheid en wereld',
+        'tagline' => 'De rol van Nederland in een onrustige wereld.',
+        'hero' => '/public/images/themas/buitenland-en-ontwikkeling.jpg',
+        'hero_alt' => 'Een vergaderzaal met internationale vlaggen',
+        'description' => 'Buitenlands beleid, mensenrechten, handel en ontwikkelingssamenwerking.',
+        'intro' => 'Dit thema gaat over hoe Nederland zich tot de rest van de wereld verhoudt: van het steunen van Oekraine en handelsbelangen tot mensenrechten en hulp aan arme landen.',
+        'in_het_kort' => [
+            'De wereld is onrustig: oorlog in Oekraine, conflicten in het Midden-Oosten en spanning met grootmachten.',
+            'Nederland bezuinigt fors op ontwikkelingshulp: tot 2,4 miljard euro per jaar vanaf 2027.',
+            'Het debat gaat over de balans tussen eigen belang, veiligheid en internationale solidariteit.',
+        ],
+        'wat' => [
+            'Buitenlands beleid gaat over hoe Nederland omgaat met andere landen: samenwerken in de EU en de NAVO, handeldrijven, en opkomen voor mensenrechten en internationaal recht.',
+            'Ontwikkelingssamenwerking is hulp aan armere landen, bijvoorbeeld voor onderwijs, gezondheidszorg, voedsel en noodhulp bij rampen. Dat budget wordt de komende jaren flink kleiner.',
+        ],
+        'waarom' => [
+            'Wat er in de wereld gebeurt, raakt ook Nederland: denk aan energieprijzen, vluchtelingen, handel en onze veiligheid.',
+            'Als handels- en welvarend land heeft Nederland belang bij stabiliteit, en voor velen is het ook een morele plicht om de armste mensen te helpen.',
+        ],
+        'cijfers' => [
+            ['cijfer' => '2,4 miljard', 'label' => 'structurele bezuiniging op ontwikkelingshulp per jaar vanaf 2027', 'bron' => 'Algemene Rekenkamer, 2026'],
+            ['cijfer' => '0,44%', 'label' => 'van het inkomen gaat in 2029 naar hulp, was 0,62% in 2024', 'bron' => 'Kamerstukken, 2025'],
+            ['cijfer' => '0,7%', 'label' => 'de internationale norm voor ontwikkelingshulp die Nederland loslaat', 'bron' => 'OESO/VN'],
+        ],
+        'debat' => [
+            ['kop' => 'Hoeveel hulp geven we nog?', 'tekst' => 'Het kabinet bezuinigt fors op ontwikkelingshulp. Voorstanders vinden dat eigen problemen voorgaan, tegenstanders noemen het kortzichtig en hardvochtig.'],
+            ['kop' => 'Steun aan Oekraine', 'tekst' => 'Er is brede steun voor hulp aan Oekraine, maar discussie over hoeveel geld en wapens Nederland kan en moet blijven leveren.'],
+            ['kop' => 'Eigen belang of waarden?', 'tekst' => 'Moet Nederland vooral zijn handelsbelangen dienen, of juist stevig opkomen voor mensenrechten, ook als dat geld kost?'],
+        ],
+        'begrippen' => [
+            ['term' => 'Ontwikkelingssamenwerking', 'uitleg' => 'Hulp en samenwerking met armere landen, bijvoorbeeld voor onderwijs, zorg en noodhulp.'],
+            ['term' => 'Diplomatie', 'uitleg' => 'Het via gesprekken en onderhandelingen oplossen van problemen tussen landen.'],
+            ['term' => 'Mensenrechten', 'uitleg' => 'Rechten die iedereen heeft, zoals vrijheid van meningsuiting en bescherming tegen marteling.'],
+            ['term' => 'Sancties', 'uitleg' => 'Strafmaatregelen, zoals handelsbeperkingen, om een land onder druk te zetten.'],
+        ],
+        'vragen' => [
+            ['vraag' => 'Waarom geeft Nederland geld aan andere landen?', 'antwoord' => 'Om armoede en honger te bestrijden, rampen op te vangen en bij te dragen aan stabiliteit. Stabiele landen betekenen ook minder conflicten en migratie.'],
+            ['vraag' => 'Wordt er bezuinigd op die hulp?', 'antwoord' => 'Ja, fors. Vanaf 2027 gaat het om 2,4 miljard euro per jaar. Het percentage van ons inkomen dat naar hulp gaat, daalt naar 0,44 procent in 2029.'],
+            ['vraag' => 'Wat doet Nederland voor Oekraine?', 'antwoord' => 'Nederland steunt Oekraine met geld, wapens en humanitaire hulp, samen met andere Europese landen en de NAVO.'],
+        ],
+        'key_points' => ['Buitenlands beleid en diplomatie', 'Steun aan Oekraine', 'Mensenrechten en internationaal recht', 'Ontwikkelingshulp en bezuinigingen'],
+        'standpunten_key' => 'buitenland-en-ontwikkeling',
+        'news_key' => 'default',
+        'gerelateerd' => ['defensie', 'europa', 'migratie-en-asiel'],
+    ],
+    'cultuur-media-en-sport' => [
+        'title' => 'Cultuur, media en sport',
+        'icon' => 'palette',
+        'category' => 'Samenleving',
+        'tagline' => 'Ruimte voor kunst, een vrije pers en sport voor iedereen.',
+        'hero' => '/public/images/themas/cultuur-media-en-sport.jpg',
+        'hero_alt' => 'Een volle concertzaal met publiek',
+        'description' => 'Kunst en cultuur, de publieke omroep, persvrijheid en sport.',
+        'intro' => 'Dit thema gaat over kunst en cultuur, een vrije en betrouwbare pers, en sport en bewegen. Het draait om wat ons als samenleving verbindt en informeert.',
+        'in_het_kort' => [
+            'Cultuur, media en sport gaan over wat ons verbindt: van theater en muziek tot het journaal en de sportclub.',
+            'De publieke omroep wordt hervormd en moet vanaf 2027 ruim 150 miljoen euro per jaar bezuinigen.',
+            'Het debat gaat over geld voor kunst, een vrije pers en sport bereikbaar houden voor iedereen.',
+        ],
+        'wat' => [
+            'Cultuur is alles van musea, theater en muziek tot festivals en bibliotheken. De overheid ondersteunt een deel daarvan met subsidie, zodat het voor iedereen toegankelijk blijft.',
+            'Media gaat over nieuws en informatie. De publieke omroep (zoals NOS en de omroepen) wordt door de overheid betaald en moet onafhankelijk en betrouwbaar zijn. Sport gaat over topsport en over bewegen in de buurt.',
+        ],
+        'waarom' => [
+            'Een vrije pers is cruciaal voor de democratie: zonder goede, onafhankelijke informatie kun je geen goede keuzes maken.',
+            'Cultuur en sport verbinden mensen, zijn goed voor de gezondheid en geven het land kleur. De vraag is hoeveel de overheid daaraan moet bijdragen.',
+        ],
+        'cijfers' => [
+            ['cijfer' => 'circa 989 mln', 'label' => 'budget voor de landelijke publieke omroep in 2026', 'bron' => 'OCW, 2026'],
+            ['cijfer' => '156,7 mln', 'label' => 'structurele bezuiniging op de publieke omroep vanaf 2027', 'bron' => 'Rijksoverheid, 2026'],
+            ['cijfer' => '4 omroephuizen', 'label' => 'het bestel wordt vanaf 2029 hervormd en compacter', 'bron' => 'OCW, 2026'],
+        ],
+        'debat' => [
+            ['kop' => 'Bezuinigen op de omroep?', 'tekst' => 'Het kabinet bezuinigt fors op de publieke omroep en wil hem hervormen. Critici vrezen voor de onafhankelijke nieuwsvoorziening, voorstanders willen een efficiënter bestel.'],
+            ['kop' => 'Geld voor kunst en cultuur', 'tekst' => 'Sommige partijen zien cultuursubsidie als noodzakelijke investering, andere vinden dat cultuur meer zijn eigen broek moet ophouden.'],
+            ['kop' => 'Sport voor iedereen', 'tekst' => 'Het debat gaat over betaalbare sport in de buurt, ondersteuning van verenigingen en de aanpak van bewegingsarmoede.'],
+        ],
+        'begrippen' => [
+            ['term' => 'Publieke omroep', 'uitleg' => 'Door de overheid betaalde radio en televisie die onafhankelijk en voor iedereen toegankelijk moet zijn.'],
+            ['term' => 'Persvrijheid', 'uitleg' => 'Het recht van journalisten om vrij en zonder inmenging te berichten.'],
+            ['term' => 'Cultuursubsidie', 'uitleg' => 'Geld van de overheid voor kunst en cultuur, zodat het toegankelijk en betaalbaar blijft.'],
+            ['term' => 'Breedtesport', 'uitleg' => 'Sport voor iedereen in de buurt, tegenover topsport op het hoogste niveau.'],
+        ],
+        'vragen' => [
+            ['vraag' => 'Waarom betaalt de overheid de omroep?', 'antwoord' => 'Zodat er onafhankelijk nieuws en aanbod is dat niet afhankelijk is van reclame of een eigenaar. Dat is belangrijk voor een goed geinformeerde samenleving.'],
+            ['vraag' => 'Wordt er bezuinigd op de publieke omroep?', 'antwoord' => 'Ja. Vanaf 2027 moet er ruim 156 miljoen euro per jaar af, en het bestel wordt vanaf 2029 hervormd naar vier omroephuizen.'],
+            ['vraag' => 'Waarom subsidie voor kunst?', 'antwoord' => 'Veel kunst en cultuur kan niet bestaan van kaartverkoop alleen. Subsidie houdt het toegankelijk en betaalbaar voor een breed publiek.'],
+        ],
+        'key_points' => ['Kunst en cultuur', 'De publieke omroep en persvrijheid', 'Sport en bewegen', 'Wat ons verbindt'],
+        'standpunten_key' => 'cultuur-media-en-sport',
+        'news_key' => 'default',
+        'gerelateerd' => ['onderwijs', 'democratie-en-bestuur', 'zorg-en-welzijn'],
+    ],
+    'integratie-en-samenleven' => [
+        'title' => 'Integratie en samenleven',
+        'icon' => 'users-round',
+        'category' => 'Samenleving',
+        'tagline' => 'Samenleven met respect, ongeacht je achtergrond.',
+        'hero' => '/public/images/themas/integratie-en-samenleven.jpg',
+        'hero_alt' => 'Diverse groep mensen in een Nederlandse stad',
+        'description' => 'Inburgering, discriminatie, vrijheid van godsdienst en samenleven.',
+        'intro' => 'Dit thema gaat over hoe we in Nederland samenleven met mensen van verschillende achtergronden: over inburgering, gelijke kansen, het tegengaan van discriminatie en onze gedeelde waarden.',
+        'in_het_kort' => [
+            'Het gaat over hoe mensen met verschillende achtergronden samen een land vormen.',
+            'Belangrijke onderwerpen zijn inburgering, gelijke kansen en het tegengaan van discriminatie.',
+            'Het debat gaat over wat ons bindt: taal, waarden en wederzijds respect.',
+        ],
+        'wat' => [
+            'Integratie betekent dat mensen die naar Nederland komen meedoen: de taal leren, werk vinden en de spelregels van de samenleving kennen. Inburgering is daar een verplicht onderdeel van.',
+            'Samenleven gaat ook over gelijke behandeling. Discriminatie op de arbeidsmarkt, woningmarkt of door instanties is verboden, maar komt nog steeds voor.',
+        ],
+        'waarom' => [
+            'Nederland is een divers land. Of dat goed werkt, hangt af van of mensen zich thuis voelen en meedoen, en of iedereen eerlijke kansen krijgt.',
+            'Spanningen over identiteit, religie en achtergrond kunnen de samenleving verdelen. Goede integratie en het tegengaan van discriminatie helpen dat te voorkomen.',
+        ],
+        'cijfers' => [
+            ['cijfer' => 'inburgering', 'label' => 'nieuwkomers zijn verplicht de taal te leren en mee te doen', 'bron' => 'Wet inburgering'],
+            ['cijfer' => 'grondwet', 'label' => 'artikel 1 verbiedt discriminatie in Nederland', 'bron' => 'Grondwet'],
+            ['cijfer' => 'taal', 'label' => 'het Nederlands wordt gezien als sleutel tot meedoen', 'bron' => 'Rijksoverheid'],
+        ],
+        'debat' => [
+            ['kop' => 'Hoe streng is de inburgering?', 'tekst' => 'Partijen verschillen over hoe streng de eisen moeten zijn en hoeveel hulp nieuwkomers krijgen bij het leren van de taal en het vinden van werk.'],
+            ['kop' => 'Discriminatie aanpakken', 'tekst' => 'Er is discussie over hoe je discriminatie op de arbeids- en woningmarkt het beste tegengaat, bijvoorbeeld met controles of voorlichting.'],
+            ['kop' => 'Vrijheid en gedeelde waarden', 'tekst' => 'Hoe verhouden vrijheid van godsdienst en meningsuiting zich tot elkaar? En wat zijn de waarden die we allemaal delen?'],
+        ],
+        'begrippen' => [
+            ['term' => 'Inburgering', 'uitleg' => 'Het verplichte traject waarin nieuwkomers de taal leren en kennismaken met de samenleving.'],
+            ['term' => 'Integratie', 'uitleg' => 'Het proces waarbij mensen volwaardig meedoen in de samenleving.'],
+            ['term' => 'Discriminatie', 'uitleg' => 'Mensen ongelijk behandelen vanwege bijvoorbeeld afkomst, geloof of geslacht. Dat is verboden.'],
+            ['term' => 'Vrijheid van godsdienst', 'uitleg' => 'Het recht om je eigen geloof te hebben en te belijden, of juist niet.'],
+        ],
+        'vragen' => [
+            ['vraag' => 'Wat houdt inburgeren precies in?', 'antwoord' => 'Nieuwkomers leren Nederlands, doen kennis op over de samenleving en worden begeleid naar werk of opleiding. Het is wettelijk verplicht.'],
+            ['vraag' => 'Komt discriminatie nog veel voor?', 'antwoord' => 'Ja, onder meer bij sollicitaties en het zoeken van een woning. De overheid en organisaties proberen dit met regels en controles aan te pakken.'],
+            ['vraag' => 'Wat bedoelen we met gedeelde waarden?', 'antwoord' => 'Dingen die we in Nederland belangrijk vinden, zoals gelijkheid van mannen en vrouwen, vrijheid van meningsuiting en respect voor elkaar.'],
+        ],
+        'key_points' => ['Inburgering en taal', 'Gelijke kansen', 'Discriminatie tegengaan', 'Vrijheid en gedeelde waarden'],
+        'standpunten_key' => 'integratie-en-samenleven',
+        'news_key' => 'default',
+        'gerelateerd' => ['migratie-en-asiel', 'onderwijs', 'veiligheid-en-justitie'],
+    ],
+    'jeugd-en-gezin' => [
+        'title' => 'Jeugd en gezin',
+        'icon' => 'baby',
+        'category' => 'Samenleving',
+        'tagline' => 'Ieder kind een goede start en passende hulp.',
+        'hero' => '/public/images/themas/jeugd-en-gezin.jpg',
+        'hero_alt' => 'Kinderen spelen samen op een schoolplein',
+        'description' => 'Jeugdzorg, kinderopvang, gezinnen en opgroeien in Nederland.',
+        'intro' => 'Dit thema gaat over opgroeien in Nederland: van betaalbare kinderopvang en steun aan gezinnen tot de jeugdzorg voor kinderen die extra hulp nodig hebben.',
+        'in_het_kort' => [
+            'Het gaat over kinderen, jongeren en gezinnen: van kinderopvang tot jeugdzorg.',
+            'De jeugdzorg kampt met lange wachtlijsten en hoge kosten bij gemeenten.',
+            'Het debat gaat over betaalbare opvang en betere, tijdige hulp voor kwetsbare kinderen.',
+        ],
+        'wat' => [
+            'Jeugd en gezin gaat over alles wat met opgroeien te maken heeft: kinderopvang zodat ouders kunnen werken, ondersteuning van gezinnen, en jeugdzorg voor kinderen met problemen.',
+            'De jeugdzorg wordt geregeld door gemeenten. Daar gaat veel mis: lange wachtlijsten, te hoge kosten en kinderen die niet op tijd de juiste hulp krijgen.',
+        ],
+        'waarom' => [
+            'Een goede start bepaalt voor een groot deel de rest van je leven. Kinderen die op tijd hulp krijgen, hebben later meer kansen.',
+            'Voor ouders is betaalbare opvang vaak doorslaggevend om te kunnen werken. En kwetsbare kinderen mogen niet tussen wal en schip vallen.',
+        ],
+        'cijfers' => [
+            ['cijfer' => 'wachtlijsten', 'label' => 'veel kinderen wachten te lang op jeugdzorg', 'bron' => 'Rijksoverheid'],
+            ['cijfer' => 'gemeenten', 'label' => 'zij betalen de jeugdzorg en komen vaak geld tekort', 'bron' => 'VNG'],
+            ['cijfer' => 'kinderopvang', 'label' => 'er zijn plannen voor (bijna) gratis opvang voor werkende ouders', 'bron' => 'Rijksoverheid'],
+        ],
+        'debat' => [
+            ['kop' => 'Jeugdzorg op orde krijgen', 'tekst' => 'Iedereen wil kortere wachtlijsten en betere hulp, maar de meningen verschillen over hoe: meer geld, minder bureaucratie of een andere organisatie.'],
+            ['kop' => 'Betaalbare kinderopvang', 'tekst' => 'Er zijn plannen om opvang (bijna) gratis te maken voor werkende ouders. De vraag is hoe je dat betaalt en uitvoert.'],
+            ['kop' => 'Hulp dichtbij', 'tekst' => 'Moet hulp aan gezinnen vooral bij de gemeente liggen, of is meer landelijke sturing nodig om de kwaliteit te bewaken?'],
+        ],
+        'begrippen' => [
+            ['term' => 'Jeugdzorg', 'uitleg' => 'Hulp voor kinderen en jongeren met problemen, en voor hun gezinnen.'],
+            ['term' => 'Kinderopvang', 'uitleg' => 'Opvang voor jonge kinderen, zodat ouders kunnen werken of leren.'],
+            ['term' => 'Kinderopvangtoeslag', 'uitleg' => 'Een bijdrage van de overheid in de kosten van kinderopvang.'],
+            ['term' => 'Gemeentelijke taak', 'uitleg' => 'Sinds 2015 regelen gemeenten zelf de jeugdzorg en jeugdhulp.'],
+        ],
+        'vragen' => [
+            ['vraag' => 'Waarom zijn er wachtlijsten in de jeugdzorg?', 'antwoord' => 'Er is veel vraag, te weinig personeel en geld, en de organisatie is ingewikkeld. Daardoor wachten kinderen soms lang op de juiste hulp.'],
+            ['vraag' => 'Wordt kinderopvang goedkoper?', 'antwoord' => 'Er zijn plannen om opvang voor werkende ouders (bijna) gratis te maken. Wanneer en hoe precies, hangt af van de politieke keuzes en het budget.'],
+            ['vraag' => 'Wie is verantwoordelijk voor de jeugdzorg?', 'antwoord' => 'De gemeenten regelen de jeugdzorg. Het Rijk maakt de wetten en stelt geld beschikbaar, maar de uitvoering ligt lokaal.'],
+        ],
+        'key_points' => ['Kinderopvang', 'Jeugdzorg en wachtlijsten', 'Steun aan gezinnen', 'Een goede start voor ieder kind'],
+        'standpunten_key' => 'jeugd-en-gezin',
+        'news_key' => 'default',
+        'gerelateerd' => ['zorg-en-welzijn', 'onderwijs', 'bestaanszekerheid-en-koopkracht'],
     ],
 ];

@@ -326,6 +326,35 @@
         border-color: var(--color-line-strong);
     }
 
+    /* === Filter chips (gebruikt op de thema-detailpagina) === */
+    .pp-filter-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.375rem;
+        font-family: var(--font-sans);
+        font-size: 0.8125rem;
+        font-weight: 500;
+        color: var(--color-ink-muted);
+        background-color: var(--color-canvas-raised);
+        border: 1px solid var(--color-keyline);
+        border-radius: 999px;
+        padding: 0.4rem 0.9rem;
+        cursor: pointer;
+        transition:
+            color var(--duration-DEFAULT) var(--ease-out-quart),
+            background-color var(--duration-DEFAULT) var(--ease-out-quart),
+            border-color var(--duration-DEFAULT) var(--ease-out-quart);
+    }
+    .pp-filter-chip:hover {
+        border-color: var(--color-line-strong);
+        color: var(--color-ink);
+    }
+    .pp-filter-chip.is-active {
+        background-color: var(--color-hague);
+        border-color: var(--color-hague);
+        color: #fff;
+    }
+
     /* === Tag (category labels in pastel tints) === */
     .tag {
         display: inline-flex;
