@@ -42,12 +42,6 @@ $latestForList = array_values(array_filter($latest_blogs ?? [], function ($b) us
 // News items voor "Vandaag in 5"
 $topNews = array_slice($latest_news ?? [], 0, 5);
 
-// Featured blogs voor secundaire grid (skip de hero blog als dezelfde)
-$featuredForGrid = array_filter($featured_blogs ?? [], function ($b) use ($heroBlog) {
-    return !$heroBlog || ($b->id ?? null) !== ($heroBlog->id ?? null);
-});
-$featuredForGrid = array_slice(array_values($featuredForGrid), 0, 3);
-
 // Helpers
 function pp_home_news_time(?string $isoTime): string {
     if (empty($isoTime)) return '';
@@ -67,6 +61,32 @@ function pp_home_format_date($value): string {
     $months = [1=>'januari','februari','maart','april','mei','juni','juli','augustus','september','oktober','november','december'];
     return (int) date('j', $ts) . ' ' . $months[(int) date('n', $ts)] . ' ' . date('Y', $ts);
 }
+
+// Bepaalt de leidende uitkomst (hoogste kans) van een Polymarket-markt.
+$ppOddsLeader = static function ($odd): ?array {
+    if (!$odd) return null;
+    $outcomes = is_object($odd) ? ($odd->outcomes ?? []) : ($odd['outcomes'] ?? []);
+    if (!is_array($outcomes) || empty($outcomes)) return null;
+    $best = null;
+    foreach ($outcomes as $o) {
+        $price = is_array($o) ? ($o['price'] ?? null) : ($o->price ?? null);
+        $label = is_array($o) ? ($o['label_nl'] ?? ($o['label'] ?? null)) : ($o->label_nl ?? null);
+        if ($price === null) continue;
+        $price = (float) $price;
+        if ($best === null || $price > $best['price']) {
+            $best = ['label' => (string) $label, 'price' => $price];
+        }
+    }
+    return $best;
+};
+
+// Partijkleur (VS) op basis van het label.
+$ppUsaPartyTone = static function ($label): array {
+    $l = mb_strtolower((string) $label);
+    if (strpos($l, 'republik') !== false) return ['name' => 'Republikeinen', 'color' => '#b31942'];
+    if (strpos($l, 'democr') !== false)   return ['name' => 'Democraten',    'color' => '#3b6fd0'];
+    return ['name' => (string) $label, 'color' => '#9aa7b4'];
+};
 ?>
 
 <?= pp_render_component('section/page-hero', [
@@ -125,36 +145,105 @@ function pp_home_format_date($value): string {
 </section>
 <?php endif; ?>
 
-<!-- Uitgelichte blogs -->
-<?php if (!empty($featuredForGrid)): ?>
-<section class="pp-container pp-container--xl mt-20">
-    <?= pp_render_component('section/section-header', [
-        'label' => 'Uitgelicht',
-        'title' => 'Lees verder',
-        'cta_label' => 'Alle blogs',
-        'cta_href'  => '/blogs',
-    ]) ?>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <?php foreach ($featuredForGrid as $blog):
-            $img = !empty($blog->image_path) ? getBlogImageUrl($blog->image_path) : null;
-        ?>
-            <?= pp_render_component('article/article-card', [
-                'href'         => '/blogs/' . ($blog->slug ?? ''),
-                'title'        => $blog->title ?? '',
-                'excerpt'      => substr(strip_tags($blog->summary ?? ''), 0, 140),
-                'image'        => $img,
-                'category'     => $blog->category_name ?? null,
-                'date'         => pp_home_format_date($blog->published_at ?? null),
-                'reading_time' => pp_reading_time($blog->content ?? null),
-                'author'       => [
-                    'name'   => $blog->author_name ?? 'Redactie',
-                    'avatar' => $ppAuthorAvatar($blog->author_photo ?? null, $blog->author_name ?? ''),
-                ],
-            ]) ?>
-        <?php endforeach; ?>
+<!-- Midterms 2026 feature band -->
+<section class="pp-usa-band mt-20" aria-labelledby="pp-midterms-heading">
+    <span class="pp-usa-band__stripes" aria-hidden="true"></span>
+    <div class="pp-container pp-container--xl">
+        <div class="pp-usa-band__grid">
+            <div class="pp-usa-band__intro">
+                <span class="pp-usa-band__eyebrow">
+                    <span class="pp-usa-band__eyebrow-icon" aria-hidden="true"><?= pp_icon('flag', 14) ?></span>
+                    Verenigde Staten &middot; Tussentijdse verkiezingen
+                </span>
+                <h2 id="pp-midterms-heading" class="pp-usa-band__title">Midterms 2026</h2>
+                <p class="pp-usa-band__lead">
+                    Wie krijgt de macht in de Senaat en het Huis? Volg de races, live voorspellingen
+                    en interactieve kaarten van de Amerikaanse tussentijdse verkiezingen, in het Nederlands.
+                </p>
+
+                <?php if ($midtermsDaysLeft !== null && $midtermsDaysLeft >= 0): ?>
+                <div class="pp-usa-band__countdown">
+                    <span class="pp-usa-band__count-num"><?= (int) $midtermsDaysLeft ?></span>
+                    <span class="pp-usa-band__count-label">dagen tot Election Day<br><strong>3 november 2026</strong></span>
+                </div>
+                <?php endif; ?>
+
+                <div class="pp-usa-band__cta">
+                    <a href="<?= pp_e(pp_url('/midterms-2026')) ?>" class="pp-usa-btn">
+                        Bekijk de live kaarten
+                        <?= pp_icon('arrow-right', 16) ?>
+                    </a>
+                    <a href="<?= pp_e(pp_url('/midterms-2026/uitleg')) ?>" class="pp-usa-band__textlink">Hoe werken de midterms?</a>
+                </div>
+            </div>
+
+            <div class="pp-usa-band__data">
+                <?php
+                $ppChambers = [
+                    'senate_control' => 'Senaat',
+                    'house_control'  => 'Huis van Afgevaardigden',
+                ];
+                $ppHasOdds = false;
+                foreach ($ppChambers as $oddKey => $chamberLabel):
+                    $odd = $midtermsOdds[$oddKey] ?? null;
+                    $leader = $ppOddsLeader($odd);
+                    if (!$leader) continue;
+                    $ppHasOdds = true;
+                    $tone = $ppUsaPartyTone($leader['label']);
+                    $pct = (int) round($leader['price'] * 100);
+                ?>
+                    <div class="pp-odds-card">
+                        <div class="pp-odds-card__top">
+                            <span class="pp-odds-card__chamber"><?= pp_e($chamberLabel) ?></span>
+                            <span class="pp-odds-card__pct"><?= $pct ?>%</span>
+                        </div>
+                        <div class="pp-odds-card__bar">
+                            <span style="width: <?= $pct ?>%; background-color: <?= pp_e($tone['color']) ?>;"></span>
+                        </div>
+                        <div class="pp-odds-card__meta"><?= pp_e($tone['name']) ?> aan kop &middot; bron Polymarket</div>
+                    </div>
+                <?php endforeach; ?>
+
+                <?php if (!$ppHasOdds): ?>
+                    <div class="pp-odds-card">
+                        <div class="pp-odds-card__top">
+                            <span class="pp-odds-card__chamber">Senaat &amp; Huis</span>
+                        </div>
+                        <div class="pp-odds-card__meta">Live voorspellingen, kaarten en races op de midterms-pagina.</div>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (!empty($midtermsTopRaces)): ?>
+                <div class="pp-usa-band__races">
+                    <span class="pp-usa-band__races-label">Spannendste races</span>
+                    <div class="pp-usa-band__chips">
+                        <?php
+                        $ppOfficeLabels = ['senate' => 'Senaat', 'house' => 'Huis', 'governor' => 'Gouverneur'];
+                        foreach (array_slice($midtermsTopRaces, 0, 5) as $race):
+                            $ratingKey = is_object($race) ? ($race->rating ?? '') : ($race['rating'] ?? '');
+                            $stateName = is_object($race) ? ($race->state_name ?? '') : ($race['state_name'] ?? '');
+                            $chamber   = is_object($race) ? ($race->chamber ?? '') : ($race['chamber'] ?? '');
+                            $district  = is_object($race) ? ($race->district ?? '') : ($race['district'] ?? '');
+                            $ratingShort = $midtermsRatingMeta[$ratingKey]['short'] ?? '';
+                            if ($stateName === '') continue;
+                            $office = $ppOfficeLabels[$chamber] ?? '';
+                            if ($chamber === 'house' && (string) $district !== '') {
+                                $office = 'Huis ' . $district;
+                            }
+                        ?>
+                            <span class="pp-race-chip">
+                                <span class="pp-race-chip__state"><?= pp_e($stateName) ?></span>
+                                <?php if ($office !== ''): ?><span class="pp-race-chip__office"><?= pp_e($office) ?></span><?php endif; ?>
+                                <?php if ($ratingShort !== ''): ?><span class="pp-race-chip__rating"><?= pp_e($ratingShort) ?></span><?php endif; ?>
+                            </span>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+                <?php endif; ?>
+            </div>
+        </div>
     </div>
 </section>
-<?php endif; ?>
 
 <!-- Vandaag in vijf + featured -->
 <section class="pp-container pp-container--xl mt-20">
@@ -238,6 +327,48 @@ function pp_home_format_date($value): string {
         ]) ?>
     </div>
 </section>
+
+<!-- Thema's -->
+<?php if (!empty($home_themas)): ?>
+<section class="pp-container pp-container--xl mt-20">
+    <?= pp_render_component('section/section-header', [
+        'label' => "Thema's",
+        'title' => 'Politiek per onderwerp',
+        'cta_label' => "Alle thema's",
+        'cta_href'  => '/themas',
+    ]) ?>
+    <div class="pp-theme-grid">
+        <?php foreach ($home_themas as $themaSlug => $thema): ?>
+            <a href="<?= pp_e(pp_url('/thema/' . $themaSlug)) ?>" class="pp-theme-link">
+                <span class="pp-theme-link__icon" aria-hidden="true"><?= pp_icon($thema['icon'] ?? 'tag', 18) ?></span>
+                <span class="pp-theme-link__label"><?= pp_e($thema['title'] ?? $themaSlug) ?></span>
+            </a>
+        <?php endforeach; ?>
+    </div>
+</section>
+<?php endif; ?>
+
+<!-- Partijen -->
+<?php if (!empty($home_parties)): ?>
+<section class="pp-container pp-container--xl mt-20">
+    <?= pp_render_component('section/section-header', [
+        'label' => 'Partijen',
+        'title' => 'Alle partijen op een rij',
+        'cta_label' => 'Naar partijen',
+        'cta_href'  => '/partijen',
+    ]) ?>
+    <div class="pp-party-wall">
+        <?php foreach (array_slice($home_parties, 0, 18) as $party): ?>
+            <a href="<?= pp_e(pp_url('/partijen/' . $party['slug'])) ?>" class="pp-party-tile" title="<?= pp_e($party['name']) ?>">
+                <span class="pp-party-tile__logo">
+                    <img src="<?= pp_e($party['logo']) ?>" alt="Logo <?= pp_e($party['name']) ?>" loading="lazy" decoding="async">
+                </span>
+                <span class="pp-party-tile__name"><?= pp_e($party['name']) ?></span>
+            </a>
+        <?php endforeach; ?>
+    </div>
+</section>
+<?php endif; ?>
 
 <!-- Verkiezingen overzicht -->
 <section class="pp-container pp-container--xl mt-20">

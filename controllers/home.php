@@ -667,5 +667,62 @@ $agenda_items = $openDataAPI->getPolitiekeAgenda();
 $latestBlog = $blogController->getAll(1); // Haal alleen de nieuwste blog op
 $latestBlog = !empty($latestBlog) ? $latestBlog[0] : null;
 
+// Midterms 2026 data voor de homepage-band.
+// Gebruikt MidtermsModel rechtstreeks (los van de midterms-views); valt bij een
+// lege tabel of ontbrekende DB stil terug op de seed-data.
+$midtermsOdds = [];
+$midtermsTopRaces = [];
+$midtermsRatingMeta = [];
+$midtermsDaysLeft = null;
+$midtermsElectionDate = null;
+try {
+    require_once 'models/MidtermsModel.php';
+    $midtermsModel = new MidtermsModel($db);
+    $midtermsOdds = $midtermsModel->getOdds();
+    $midtermsTopRaces = $midtermsModel->getCompetitiveRaces(null, 5);
+    $midtermsRatingMeta = MidtermsModel::ratingMeta();
+    $midtermsDaysLeft = $midtermsModel->getDaysUntilElection();
+    $midtermsElectionDate = MidtermsModel::ELECTION_DATE;
+} catch (Throwable $e) {
+    error_log('home.php: midterms-data laden mislukt: ' . $e->getMessage());
+}
+
+// Canonieke thema's voor de thema-sectie op de homepage
+$home_themas = [];
+$home_themas_path = BASE_PATH . '/includes/data/themas.php';
+if (is_readable($home_themas_path)) {
+    $loaded_themas = require $home_themas_path;
+    if (is_array($loaded_themas)) {
+        $home_themas = $loaded_themas;
+    }
+}
+
+// Partijen (logo-wall) voor de homepage; gesorteerd op huidige zetels.
+// Slug komt overeen met de detail-resolver in controllers/partijen-detail.php.
+$home_parties = [];
+try {
+    $homePartyModel = new PartyModel();
+    $homeAllParties = $homePartyModel->getAllParties();
+    uasort($homeAllParties, static function ($a, $b) {
+        return ((int) ($b['current_seats'] ?? 0)) <=> ((int) ($a['current_seats'] ?? 0));
+    });
+    foreach ($homeAllParties as $partyKey => $party) {
+        $logo = get_party_logo_url($party['name'] ?? $partyKey);
+        if (empty($logo)) {
+            $logo = $party['logo'] ?? null;
+        }
+        if (empty($logo)) {
+            continue;
+        }
+        $home_parties[] = [
+            'name' => $party['name'] ?? $partyKey,
+            'slug' => strtolower(str_replace(['/', ' '], '-', (string) $partyKey)),
+            'logo' => $logo,
+            'seats' => (int) ($party['current_seats'] ?? 0),
+        ];
+    }
+} catch (Throwable $e) {
+    error_log('home.php: partijen laden mislukt: ' . $e->getMessage());
+}
 
 require_once 'views/home/index.php';

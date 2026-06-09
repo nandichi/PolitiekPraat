@@ -10,14 +10,11 @@ $isAdmin = $isLoggedIn && isAdmin();
 
 $sections = [
     [
-        'label' => 'Verkiezingen',
+        'label' => 'Stemhulpen',
         'links' => [
-            ['label' => 'Midterms 2026 (VS)',      'href' => '/midterms-2026', 'variant' => 'usa', 'icon' => 'flag'],
-            ['label' => 'Partijmeter',             'href' => '/partijmeter'],
-            ['label' => 'Politiek Kompas',         'href' => '/politiek-kompas'],
-            ['label' => 'Stemwijzer Ede 2026',     'href' => '/stemwijzer'],
-            ['label' => 'Amerikaanse verkiezingen','href' => '/amerikaanse-verkiezingen'],
-            ['label' => 'Nederlandse verkiezingen','href' => '/nederlandse-verkiezingen'],
+            ['label' => 'PartijMeter',         'href' => '/partijmeter'],
+            ['label' => 'Politiek Kompas',     'href' => '/politiek-kompas'],
+            ['label' => 'Stemwijzer Ede 2026', 'href' => '/stemwijzer'],
         ],
     ],
     [
@@ -25,6 +22,7 @@ $sections = [
         'links' => [
             ['label' => 'Partijen',       'href' => '/partijen'],
             ['label' => 'Stemmentracker', 'href' => '/stemmentracker'],
+            ['label' => "Thema's",        'href' => '/themas'],
         ],
     ],
     [
@@ -35,11 +33,27 @@ $sections = [
         ],
     ],
     [
+        'label' => 'Verkiezingen',
+        'links' => [
+            ['label' => 'Nederlandse verkiezingen', 'href' => '/nederlandse-verkiezingen'],
+            ['label' => 'Amerikaanse verkiezingen', 'href' => '/amerikaanse-verkiezingen'],
+        ],
+    ],
+    [
         'label' => 'Over',
         'links' => [
             ['label' => 'Over PolitiekPraat', 'href' => '/over-mij'],
             ['label' => 'Contact',            'href' => '/contact'],
             ['label' => 'Steun ons',          'href' => '/donatie'],
+        ],
+    ],
+    [
+        'label' => 'Juridisch',
+        'links' => [
+            ['label' => 'Privacy',          'href' => '/privacy-policy'],
+            ['label' => 'Cookies',          'href' => '/cookie-policy'],
+            ['label' => 'Toegankelijkheid', 'href' => '/toegankelijkheid'],
+            ['label' => 'Voorwaarden',      'href' => '/gebruiksvoorwaarden'],
         ],
     ],
 ];
@@ -65,6 +79,10 @@ $sections = [
 
         <nav class="mobile-menu__nav" aria-label="Hoofdmenu (mobiel)">
             <a href="<?= pp_e(pp_url('/')) ?>" class="mobile-menu__link">Home</a>
+            <a href="<?= pp_e(pp_url('/midterms-2026')) ?>" class="mobile-menu__link mobile-menu__link--usa" style="font-size: 1.125rem;">
+                <span class="mobile-menu__link-icon" aria-hidden="true"><?= pp_icon('flag', 16) ?></span>
+                Midterms 2026 (VS)
+            </a>
 
             <?php foreach ($sections as $section): ?>
                 <h3 class="mobile-menu__section-label"><?= pp_e($section['label']) ?></h3>

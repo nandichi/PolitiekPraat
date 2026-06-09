@@ -93,6 +93,86 @@
     }
 
     /* ----------------------------------------------------------------------
+     * Header dropdown-navigatie (desktop)
+     *
+     * Zichtbaarheid loopt primair via CSS (:hover / :focus-within), zodat de
+     * menu's ook zonder JS bruikbaar blijven. Deze JS regelt klik/touch,
+     * toetsenbord (pijl omlaag / Escape), aria-expanded en buiten-klik sluiten.
+     * -------------------------------------------------------------------- */
+    function initNavDropdowns() {
+        var items = document.querySelectorAll("[data-nav-dropdown]");
+        if (!items.length) return;
+
+        function closeItem(item) {
+            item.removeAttribute("data-open");
+            var t = item.querySelector("[data-nav-trigger]");
+            if (t) t.setAttribute("aria-expanded", "false");
+        }
+        function openItem(item) {
+            items.forEach(function (other) {
+                if (other !== item) closeItem(other);
+            });
+            item.setAttribute("data-open", "true");
+            var t = item.querySelector("[data-nav-trigger]");
+            if (t) t.setAttribute("aria-expanded", "true");
+        }
+
+        items.forEach(function (item) {
+            var trigger = item.querySelector("[data-nav-trigger]");
+            var panel = item.querySelector("[data-nav-panel]");
+            if (!trigger || !panel) return;
+
+            trigger.addEventListener("click", function (e) {
+                e.preventDefault();
+                if (item.hasAttribute("data-open")) {
+                    closeItem(item);
+                } else {
+                    openItem(item);
+                }
+            });
+
+            item.addEventListener("mouseenter", function () {
+                openItem(item);
+            });
+            item.addEventListener("mouseleave", function () {
+                closeItem(item);
+            });
+
+            trigger.addEventListener("keydown", function (e) {
+                if (e.key === "ArrowDown") {
+                    e.preventDefault();
+                    openItem(item);
+                    var first = panel.querySelector("a");
+                    if (first) first.focus();
+                } else if (e.key === "Escape") {
+                    closeItem(item);
+                }
+            });
+
+            panel.addEventListener("keydown", function (e) {
+                if (e.key === "Escape") {
+                    closeItem(item);
+                    trigger.focus();
+                }
+            });
+
+            item.addEventListener("focusout", function () {
+                setTimeout(function () {
+                    if (!item.contains(document.activeElement)) {
+                        closeItem(item);
+                    }
+                }, 0);
+            });
+        });
+
+        document.addEventListener("click", function (e) {
+            items.forEach(function (item) {
+                if (!item.contains(e.target)) closeItem(item);
+            });
+        });
+    }
+
+    /* ----------------------------------------------------------------------
      * Smooth anchor scroll voor sticky header
      * -------------------------------------------------------------------- */
     function initAnchorOffset() {
@@ -126,6 +206,7 @@
     ready(function () {
         initTheme();
         initMobileMenu();
+        initNavDropdowns();
         initAnchorOffset();
     });
 })();
