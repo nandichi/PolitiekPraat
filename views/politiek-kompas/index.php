@@ -22,6 +22,132 @@ $maxSeats = 1;
 foreach ($positions as $p) {
     $maxSeats = max($maxSeats, (int) ($p['current_seats'] ?? 0));
 }
+
+// ---------------------------------------------------------------------------
+// Plotgeometrie + automatische label-ontwarring (server-side).
+// Namen en stippen mogen elkaar nooit overlappen, ongeacht hoe dicht partijen
+// bij elkaar staan. We berekenen de stip-posities en duwen daarna de labels
+// met een lichte kracht-simulatie uit elkaar (en weg van de stippen).
+// ---------------------------------------------------------------------------
+$plotPoints = [];
+foreach ($positions as $key => $pos) {
+    $cx = pp_compass_pct((int) $pos['x']);
+    $cy = pp_compass_pct(-1 * (int) $pos['y']); // y omkeren: conservatief boven
+    $seats = (int) ($pos['current_seats'] ?? 0);
+    $r = 1.9 + 2.0 * sqrt($seats / max(1, $maxSeats)); // 1.9 .. ~3.9
+    $plotPoints[$key] = [
+        'cx'    => $cx,
+        'cy'    => $cy,
+        'r'     => $r,
+        'name'  => (string) $pos['name'],
+        'color' => $pos['color'] ?? '#1F3A5F',
+    ];
+}
+
+$ppLabelFs  = 2.55; // tekengrootte labels (SVG-eenheden)
+$ppGlyphW   = 1.50; // geschatte breedte per teken (Fraunces, ruim genomen)
+$ppLabelH   = 3.20; // hoogte van een label-box
+$ppLabelGap = 1.10; // ruimte tussen stip-rand en label
+
+// De vier hoek-labels ("links-conservatief" enz.) zijn vaste obstakels:
+// een partijnaam mag er nooit overheen lopen.
+$ppCornerObstacles = [
+    ['cx' => 3.0 + 14.5,  'cy' => 5.2,  'hw' => 14.5, 'hh' => 2.4], // links-conservatief
+    ['cx' => 97.0 - 15.0, 'cy' => 5.2,  'hw' => 15.0, 'hh' => 2.4], // rechts-conservatief
+    ['cx' => 3.0 + 13.6,  'cy' => 95.8, 'hw' => 13.6, 'hh' => 2.4], // links-progressief
+    ['cx' => 97.0 - 14.3, 'cy' => 95.8, 'hw' => 14.3, 'hh' => 2.4], // rechts-progressief
+];
+
+// Hoeveel overlap heeft een label-box (midden $bx,$by) met de hoek-labels?
+// Wordt gebruikt om per stip de beste kant (links/rechts) te kiezen.
+$ppCornerOverlap = function (float $bx, float $by, float $w, float $h) use ($ppCornerObstacles): float {
+    $sum = 0.0;
+    foreach ($ppCornerObstacles as $ob) {
+        $ovx = ($w / 2 + $ob['hw']) - abs($bx - $ob['cx']);
+        $ovy = ($h / 2 + $ob['hh']) - abs($by - $ob['cy']);
+        if ($ovx > 0 && $ovy > 0) {
+            $sum += $ovx * $ovy;
+        }
+    }
+    return $sum;
+};
+
+$plotLabels = [];
+foreach ($plotPoints as $key => $p) {
+    $w = max(3.2, mb_strlen($p['name']) * $ppGlyphW) + 1.2;
+    $offset = $p['r'] + $ppLabelGap + $w / 2;
+    $xRight = $p['cx'] + $offset;
+    $xLeft  = $p['cx'] - $offset;
+
+    // Standaard rechts van de stip; bij stippen tegen de rechterrand naar links.
+    $side = ($p['cx'] > 64) ? -1 : 1; // -1 = links, +1 = rechts
+    $chosenX = ($side === 1) ? $xRight : $xLeft;
+    $otherX  = ($side === 1) ? $xLeft : $xRight;
+
+    // Loopt de gekozen kant in een hoek-label en de andere kant niet? Omklappen.
+    $hitChosen = $ppCornerOverlap($chosenX, $p['cy'], $w, $ppLabelH);
+    $hitOther  = $ppCornerOverlap($otherX, $p['cy'], $w, $ppLabelH);
+    if ($hitChosen > 0 && $hitOther < $hitChosen) {
+        $side = -$side;
+    }
+
+    $ax = $p['cx'] + $side * $offset;
+    $plotLabels[$key] = [
+        'w'    => $w,
+        'h'    => $ppLabelH,
+        'side' => $side,
+        'ax'   => $ax,        // gewenste (anker) midden-x
+        'ay'   => $p['cy'],   // gewenste midden-y
+        'x'    => $ax,        // huidige midden-x
+        'y'    => $p['cy'],   // huidige midden-y
+    ];
+}
+
+// We houden de x-positie vast op het anker (links/rechts van de stip) en
+// ontwarren uitsluitend verticaal: er is volop verticale ruimte, dus labels
+// die op dezelfde hoogte botsen schuiven netjes boven/onder elkaar.
+for ($it = 0; $it < 320; $it++) {
+    foreach ($plotLabels as $ki => &$Li) {
+        $my = 0.0;
+
+        // Labels onderling: verticaal uit elkaar duwen wanneer de boxen overlappen.
+        foreach ($plotLabels as $kj => $Lj) {
+            if ($ki === $kj) {
+                continue;
+            }
+            $ovx = ($Li['w'] + $Lj['w']) / 2 + 0.4 - abs($Li['x'] - $Lj['x']);
+            $ovy = ($Li['h'] + $Lj['h']) / 2 + 0.4 - abs($Li['y'] - $Lj['y']);
+            if ($ovx > 0 && $ovy > 0) {
+                $my += (($Li['y'] >= $Lj['y']) ? 1 : -1) * ($ovy / 2 + 0.04);
+            }
+        }
+
+        // Labels mogen geen enkele stip bedekken.
+        foreach ($plotPoints as $pp2) {
+            $ovx = ($Li['w'] / 2 + $pp2['r'] + 0.3) - abs($Li['x'] - $pp2['cx']);
+            $ovy = ($Li['h'] / 2 + $pp2['r'] + 0.3) - abs($Li['y'] - $pp2['cy']);
+            if ($ovx > 0 && $ovy > 0) {
+                $my += (($Li['y'] >= $pp2['cy']) ? 1 : -1) * ($ovy / 2);
+            }
+        }
+
+        // Veiligheidsnet: nooit over een hoek-label heen.
+        foreach ($ppCornerObstacles as $ob) {
+            $ovx = ($Li['w'] / 2 + $ob['hw']) - abs($Li['x'] - $ob['cx']);
+            $ovy = ($Li['h'] / 2 + $ob['hh']) - abs($Li['y'] - $ob['cy']);
+            if ($ovx > 0 && $ovy > 0) {
+                $my += (($Li['y'] >= $ob['cy']) ? 1 : -1) * ($ovy / 2);
+            }
+        }
+
+        // Veerkracht terug naar de gewenste hoogte (dicht bij de eigen stip).
+        $my += ($Li['ay'] - $Li['y']) * 0.05;
+
+        $Li['y'] += max(-1.0, min(1.0, $my));
+        $Li['y'] = max($Li['h'] / 2 + 0.5, min(100 - $Li['h'] / 2 - 0.5, $Li['y']));
+    }
+    unset($Li);
+}
 ?>
 
 <?= pp_render_component('section/page-hero', [
@@ -97,32 +223,48 @@ foreach ($positions as $p) {
                         <text x="97" y="97.5" text-anchor="end">rechts-progressief</text>
                     </g>
 
-                    <!-- Partij-punten (geschaald op zetels) -->
-                    <?php foreach ($positions as $key => $pos): ?>
+                    <!-- Verbindingslijntjes van label naar stip (alleen waar het label verschoven is) -->
+                    <?php foreach ($plotPoints as $key => $p): ?>
                         <?php
-                        $cx = pp_compass_pct((int) $pos['x']);
-                        $cy = pp_compass_pct(-1 * (int) $pos['y']); // y omkeren: conservatief boven
-                        $color = $pos['color'] ?? '#1F3A5F';
-                        $seats = (int) ($pos['current_seats'] ?? 0);
-                        $r = 1.9 + 2.0 * sqrt($seats / max(1, $maxSeats)); // 1.9 .. ~3.9
-                        $labelDx = $r + 0.8;
+                        $L = $plotLabels[$key];
+                        $nearX = $L['x'] - $L['side'] * ($L['w'] / 2);
+                        $nearY = $L['y'];
+                        $dx = $nearX - $p['cx'];
+                        $dy = $nearY - $p['cy'];
+                        $dist = sqrt($dx * $dx + $dy * $dy);
+                        if ($dist > $p['r'] + 1.4):
+                            $sx = $p['cx'] + ($dx / $dist) * $p['r'];
+                            $sy = $p['cy'] + ($dy / $dist) * $p['r'];
                         ?>
+                            <line x1="<?= round($sx, 2) ?>" y1="<?= round($sy, 2) ?>"
+                                  x2="<?= round($nearX, 2) ?>" y2="<?= round($nearY, 2) ?>"
+                                  stroke="<?= pp_e($p['color']) ?>" stroke-width="0.3" opacity="0.45"/>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+
+                    <!-- Partij-stippen (geschaald op zetels) -->
+                    <?php foreach ($plotPoints as $key => $p): ?>
                         <g class="compass-point" data-party="<?= pp_e($key) ?>">
-                            <circle cx="<?= $cx ?>" cy="<?= $cy ?>" r="<?= round($r, 2) ?>"
-                                    fill="<?= pp_e($color) ?>"
+                            <circle cx="<?= round($p['cx'], 2) ?>" cy="<?= round($p['cy'], 2) ?>" r="<?= round($p['r'], 2) ?>"
+                                    fill="<?= pp_e($p['color']) ?>"
                                     stroke="var(--color-paper)" stroke-width="0.6"/>
-                            <text x="<?= $cx + $labelDx ?>" y="<?= $cy + 0.9 ?>"
-                                  text-anchor="start"
-                                  fill="var(--color-ink)"
-                                  font-size="2.5"
-                                  font-family="Fraunces, serif"
-                                  font-weight="600"
-                                  paint-order="stroke"
-                                  stroke="var(--color-paper)" stroke-width="0.7"
-                                  stroke-linejoin="round">
-                                <?= pp_e($pos['name']) ?>
-                            </text>
                         </g>
+                    <?php endforeach; ?>
+
+                    <!-- Partij-labels (automatisch ontward) -->
+                    <?php foreach ($plotLabels as $key => $L): ?>
+                        <text x="<?= round($L['x'], 2) ?>" y="<?= round($L['y'], 2) ?>"
+                              text-anchor="middle" dominant-baseline="central"
+                              fill="var(--color-ink)"
+                              font-size="<?= $ppLabelFs ?>"
+                              font-family="Fraunces, serif"
+                              font-weight="600"
+                              paint-order="stroke"
+                              stroke="var(--color-paper)" stroke-width="0.7"
+                              stroke-linejoin="round"
+                              pointer-events="none">
+                            <?= pp_e($plotPoints[$key]['name']) ?>
+                        </text>
                     <?php endforeach; ?>
                 </svg>
             </div>
