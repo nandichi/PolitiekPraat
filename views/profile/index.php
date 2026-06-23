@@ -75,7 +75,7 @@ $profilePhoto = getProfilePhotoUrl($user['profile_photo'], $user['username']);
             <div class="keyline-card p-6 md:p-8">
                 <div class="eyebrow mb-3">Activiteit</div>
                 <h2 class="font-display text-display-lg text-[color:var(--color-ink)] mb-5 leading-tight">Account-statistieken</h2>
-                <div class="grid grid-cols-3 gap-4 mb-6">
+                <div class="grid grid-cols-2 gap-4 mb-6">
                     <div class="text-center py-4 border-r border-[color:var(--color-keyline)] last:border-r-0">
                         <div class="font-display text-display-2xl text-[color:var(--color-ink)] font-mono text-tabular"><?= (int) ($stats['blogs'] ?? 0) ?></div>
                         <div class="text-xs uppercase tracking-wider text-[color:var(--color-ink-faint)]">Blogs</div>
@@ -83,10 +83,6 @@ $profilePhoto = getProfilePhotoUrl($user['profile_photo'], $user['username']);
                     <div class="text-center py-4 border-r border-[color:var(--color-keyline)] last:border-r-0">
                         <div class="font-display text-display-2xl text-[color:var(--color-ink)] font-mono text-tabular"><?= (int) ($stats['comments'] ?? 0) ?></div>
                         <div class="text-xs uppercase tracking-wider text-[color:var(--color-ink-faint)]">Reacties</div>
-                    </div>
-                    <div class="text-center py-4">
-                        <div class="font-display text-display-2xl text-[color:var(--color-ink)] font-mono text-tabular"><?= (int) ($stats['likes_received'] ?? 0) ?></div>
-                        <div class="text-xs uppercase tracking-wider text-[color:var(--color-ink-faint)]">Likes</div>
                     </div>
                 </div>
 

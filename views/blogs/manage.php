@@ -72,7 +72,6 @@ $totalPages = (int) ($paginationData['totalPages'] ?? 1);
                             <th scope="col" style="width: 50%;">Titel</th>
                             <th scope="col">Categorie</th>
                             <th scope="col">Gepubliceerd</th>
-                            <th scope="col" class="text-right">Likes</th>
                             <th scope="col" class="text-right">Acties</th>
                         </tr>
                     </thead>
@@ -120,12 +119,6 @@ $totalPages = (int) ($paginationData['totalPages'] ?? 1);
                                     <div class="text-xs text-[color:var(--color-ink-muted)] font-mono">
                                         <?= pp_e(date('H:i', strtotime($blog->published_at))) ?>
                                     </div>
-                                </td>
-                                <td class="text-right">
-                                    <span class="inline-flex items-center gap-1.5 text-sm text-[color:var(--color-ink)]">
-                                        <?= pp_icon('heart', 14) ?>
-                                        <span class="font-mono text-tabular"><?= (int) ($blog->likes ?? 0) ?></span>
-                                    </span>
                                 </td>
                                 <td class="text-right">
                                     <div class="inline-flex items-center gap-1">
@@ -189,10 +182,6 @@ $totalPages = (int) ($paginationData['totalPages'] ?? 1);
                                 <?php endif; ?>
                                 <span class="font-mono text-tabular">
                                     <?= pp_e(pp_admin_blog_date($blog->published_at)) ?>
-                                </span>
-                                <span class="inline-flex items-center gap-1">
-                                    <?= pp_icon('heart', 12) ?>
-                                    <span class="font-mono text-tabular"><?= (int) ($blog->likes ?? 0) ?></span>
                                 </span>
                             </div>
                             <div class="inline-flex items-center gap-1">

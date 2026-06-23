@@ -115,18 +115,6 @@ require_once 'views/templates/header.php';
                     </p>
                 </div>
             </div>
-
-            <div class="flex items-center gap-2">
-                <button id="heroLikeButton"
-                        class="btn btn--ghost btn--sm"
-                        data-slug="<?= pp_e($blog->slug) ?>"
-                        aria-label="Vind dit artikel waardevol">
-                    <?= pp_icon('heart', 16) ?>
-                    <span id="hero-like-count" class="font-mono text-tabular text-sm">
-                        <?= (int) ($blog->likes ?? 0) ?>
-                    </span>
-                </button>
-            </div>
         </div>
 
         <div class="mt-8 pt-6 border-t border-[color:var(--color-keyline)]">
