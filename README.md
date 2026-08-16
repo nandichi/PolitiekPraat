@@ -118,6 +118,36 @@ php scripts/tests/test-api.php
 
 - Publieke HTTP-toegang tot testscripts is geblokkeerd via `.htaccess`.
 
+## Contactformulierbeveiliging
+
+De publieke `/contact`-route gebruikt meerdere onafhankelijke anti-spamlagen:
+
+- CSRF en een sessiegebonden, eenmalige tijdchallenge;
+- een onzichtbare honeypot;
+- server-side type-, lengte-, header- en linkvalidatie;
+- limieten per IP en e-mailadres plus 24-uurs duplicaatdetectie;
+- optionele Cloudflare Turnstile met verplichte server-side Siteverify-controle.
+
+Voor de sterkste productiebeveiliging maak je in Cloudflare een Turnstile-widget
+voor `politiekpraat.nl` en stel je server-side deze variabelen in:
+
+```text
+POLITIEKPRAAT_TURNSTILE_SITE_KEY=<publieke-site-key>
+POLITIEKPRAAT_TURNSTILE_SECRET_KEY=<uitsluitend-server-side-secret>
+POLITIEKPRAAT_TURNSTILE_HOSTNAMES=politiekpraat.nl,www.politiekpraat.nl
+POLITIEKPRAAT_CONTACT_HASH_KEY=<minimaal-32-willekeurige-tekens>
+```
+
+Zet altijd beide sleutels tegelijk. Een halve configuratie blokkeert inzendingen
+veilig. De secret hoort nooit in HTML, JavaScript, git of logs. De historische
+`POST /api/contact`-route verstuurt geen mail meer en antwoordt met HTTP `410`.
+
+Gerichte regressietest:
+
+```bash
+php scripts/tests/test-contact-security.php
+```
+
 ## 🤝 Meehelpen
 
 Wil je meehelpen om de website beter te maken? Graag! Zo doe je dat:

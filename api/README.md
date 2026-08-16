@@ -446,6 +446,7 @@ Toegang tot bestaande stemwijzer API (zie `api/stemwijzer.php`).
 - `404` - Not Found
 - `405` - Method Not Allowed
 - `409` - Conflict (bijv. email al in gebruik)
+- `410` - Endpoint bewust verwijderd
 - `500` - Internal Server Error
 
 ## Rate Limiting
@@ -453,7 +454,7 @@ Toegang tot bestaande stemwijzer API (zie `api/stemwijzer.php`).
 Rate limiting is centraal actief op alle `/api/*` requests.
 
 - **Standaardlimiet**: `120` requests per `60` seconden per IP + endpoint + method
-- **Strengere limiet** (`auth`, `contact`, `comments`, `polls`): `30` requests per `60` seconden
+- **Strengere limiet** (`auth`, de verwijderde `contact`-route, `comments`, `polls`): `30` requests per `60` seconden
 - **Headers**: `X-RateLimit-Limit`, `X-RateLimit-Remaining`, `X-RateLimit-Reset`
 - **Bij overschrijding**: HTTP `429` met `Retry-After` header en JSON foutresponse
 
@@ -462,6 +463,10 @@ Configuratie via environment variables:
 - `POLITIEKPRAAT_API_RATE_LIMIT_WINDOW` (default: `60`)
 - `POLITIEKPRAAT_API_RATE_LIMIT_MAX` (default: `120`)
 - `POLITIEKPRAAT_API_RATE_LIMIT_STRICT_MAX` (default: `30`)
+
+`POST /api/contact` is bewust gesloten met HTTP `410`. Contactmail wordt alleen
+via het sessiegebonden webformulier op `/contact` verwerkt; zo bestaat er geen
+onbeschermde tweede mailingang.
 
 ## CORS
 

@@ -133,6 +133,13 @@ function sendApiResponse($data, $statusCode = 200) {
     ], (int) $statusCode);
 }
 
+// De historische contact-API mag nooit afhankelijk zijn van database- of
+// mailconfiguratie: sluit hem vroeg, vóór de applicatiebootstrap.
+$earlyApiPath = parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH) ?: '';
+if (preg_match('#^/api/contact(?:/|$)#', $earlyApiPath) === 1) {
+    sendApiError('Deze contactroute is niet meer beschikbaar. Gebruik het contactformulier.', 410);
+}
+
 // Get base path
 $basePath = dirname(__DIR__);
 debug_log("Base path: " . $basePath);
@@ -404,9 +411,6 @@ class APIRouter {
                     'GET /api/presidenten/usa' => 'Amerikaanse presidenten',
                     'GET /api/presidenten/nederland' => 'Nederlandse ministers-presidenten'
                 ],
-                'contact' => [
-                    'POST /api/contact' => 'Contact formulier versturen (rate-limited, honeypot veld `website`, optionele `submitted_at` anti-bot timestamp)'
-                ],
                 'stats' => [
                     'GET /api/stats' => 'Website statistieken',
                     'GET /api/stats/trending' => 'Trending content'
@@ -637,4 +641,4 @@ try {
     sendApiError('Interne serverfout', 500, [
         'context' => 'api_index_catch'
     ]);
-} 
+}

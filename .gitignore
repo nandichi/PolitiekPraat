@@ -17,6 +17,7 @@ composer.lock
 # Cache bestanden (server-generated)
 cache/*.json
 cache/*.html
+cache/rate_limit/*.json
 
 # Logs
 logs/*.log
@@ -33,6 +34,8 @@ public/uploads/profile_photos/*
 
 # Node modules
 node_modules/
+test-results/
+playwright-report/
 
 # Sitemap (server-generated)
 sitemap.xml

@@ -6,4 +6,8 @@ $file = __DIR__ . $path;
 if ($path !== '/' && file_exists($file) && !is_dir($file)) {
     return false;
 }
+if ($path === '/api' || str_starts_with($path, '/api/')) {
+    require __DIR__ . '/api/index.php';
+    return true;
+}
 require __DIR__ . '/index.php';

@@ -10,6 +10,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 require_once BASE_PATH . '/includes/auth_csrf.php';
+require_once BASE_PATH . '/includes/contact_security.php';
 
 $error = '';
 $success = '';
@@ -50,19 +51,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
 
-    $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_SPECIAL_CHARS);
-    $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-    $subject = filter_input(INPUT_POST, 'subject', FILTER_SANITIZE_SPECIAL_CHARS);
-    $message = filter_input(INPUT_POST, 'message', FILTER_SANITIZE_SPECIAL_CHARS);
-    
-    // Validatie
-    if (empty($name) || empty($email) || empty($subject) || empty($message)) {
-        $_SESSION['contact_error'] = 'Vul alle velden in';
-        $_SESSION['form_data'] = compact('name', 'email', 'subject', 'message');
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $_SESSION['contact_error'] = 'Ongeldig e-mailadres';
-        $_SESSION['form_data'] = compact('name', 'email', 'subject', 'message');
+    $validation = pp_contact_validate_submission($_POST);
+    if (($validation['ok'] ?? false) !== true) {
+        $_SESSION['contact_error'] = 'Het bericht kon niet veilig worden geverifieerd. Vernieuw de pagina en probeer het opnieuw.';
     } else {
+        $name = $validation['data']['name'];
+        $email = $validation['data']['email'];
+        $subject = $validation['data']['subject'];
+        $message = $validation['data']['message'];
+
         // E-mail versturen met PHPMailer
         $mail = new PHPMailer(true);
 
@@ -77,12 +74,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $mail->Port = $mail_config['smtp_port'];
             $mail->CharSet = 'UTF-8';
             
-            // Extra opties voor betere SSL/TLS compatibiliteit
+            // TLS-certificaten altijd valideren; nooit self-signed accepteren.
             $mail->SMTPOptions = [
                 'ssl' => [
-                    'verify_peer' => false,
-                    'verify_peer_name' => false,
-                    'allow_self_signed' => true
+                    'verify_peer' => true,
+                    'verify_peer_name' => true,
+                    'allow_self_signed' => false
                 ]
             ];
 
@@ -95,6 +92,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Content
             $mail->isHTML(true);
             $mail->Subject = "Contact Formulier: " . $subject;
+
+            $emailName = htmlspecialchars($name, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+            $emailAddress = htmlspecialchars($email, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+            $emailSubject = htmlspecialchars($subject, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+            $emailMessage = htmlspecialchars($message, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
             
             // HTML Email Template
             $emailTemplate = <<<HTML
@@ -370,22 +372,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="message-box">
                 <div class="field-group">
                     <div class="field-label">Naam</div>
-                    <div class="field-value">{$name}</div>
+                    <div class="field-value">{$emailName}</div>
                 </div>
                 
                 <div class="field-group">
                     <div class="field-label">E-mailadres</div>
-                    <div class="field-value">{$email}</div>
+                    <div class="field-value">{$emailAddress}</div>
                 </div>
                 
                 <div class="field-group">
                     <div class="field-label">Onderwerp</div>
-                    <div class="field-value">{$subject}</div>
+                    <div class="field-value">{$emailSubject}</div>
                 </div>
                 
                 <div class="field-group">
                     <div class="field-label">Bericht</div>
-                    <div class="field-value quote-box" style="white-space: pre-wrap;">{$message}</div>
+                    <div class="field-value quote-box" style="white-space: pre-wrap;">{$emailMessage}</div>
                 </div>
             </div>
             
@@ -442,7 +444,8 @@ HTML;
             header('Location: ' . URLROOT . '/contact');
             exit();
         } catch (Exception $e) {
-            $_SESSION['contact_error'] = "Er is een fout opgetreden bij het verzenden van je bericht. Probeer het later opnieuw. Foutmelding: {$mail->ErrorInfo}";
+            error_log('[CONTACT MAIL] ' . get_class($e) . ': ' . $e->getMessage());
+            $_SESSION['contact_error'] = 'Er is een fout opgetreden bij het verzenden van je bericht. Probeer het later opnieuw.';
             $_SESSION['form_data'] = compact('name', 'email', 'subject', 'message');
         }
     }
@@ -460,6 +463,8 @@ $emailValue = $email ?? '';
 $nameValue = $name ?? '';
 $subjectValue = $subject ?? '';
 $messageValue = $message ?? '';
+$contactChallenge = pp_contact_issue_challenge();
+$turnstileConfig = pp_contact_turnstile_config();
 ?>
 
 <?= pp_render_component('section/page-hero', [
@@ -490,17 +495,23 @@ $messageValue = $message ?? '';
     <div class="keyline-card p-6 md:p-10">
         <form method="POST" action="<?= pp_e(pp_url('/contact')) ?>" class="space-y-5">
             <input type="hidden" name="csrf_token" value="<?= pp_e($csrf_token) ?>">
+            <input type="hidden" name="contact_challenge" value="<?= pp_e($contactChallenge) ?>">
+
+            <div class="sr-only" aria-hidden="true">
+                <label for="website">Laat dit veld leeg</label>
+                <input type="text" id="website" name="website" value="" tabindex="-1" autocomplete="off">
+            </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div class="field">
                     <label for="name" class="field__label">Naam</label>
-                    <input type="text" id="name" name="name" required autocomplete="name"
+                    <input type="text" id="name" name="name" required autocomplete="name" minlength="2" maxlength="100"
                            class="input" placeholder="Je naam"
                            value="<?= pp_e($nameValue) ?>">
                 </div>
                 <div class="field">
                     <label for="email" class="field__label">E-mailadres</label>
-                    <input type="email" id="email" name="email" required autocomplete="email"
+                    <input type="email" id="email" name="email" required autocomplete="email" maxlength="254"
                            class="input" placeholder="jouw@email.nl"
                            value="<?= pp_e($emailValue) ?>">
                 </div>
@@ -508,17 +519,22 @@ $messageValue = $message ?? '';
 
             <div class="field">
                 <label for="subject" class="field__label">Onderwerp</label>
-                <input type="text" id="subject" name="subject" required
+                <input type="text" id="subject" name="subject" required minlength="3" maxlength="160"
                        class="input" placeholder="Waar gaat je bericht over?"
                        value="<?= pp_e($subjectValue) ?>">
             </div>
 
             <div class="field">
                 <label for="message" class="field__label">Bericht</label>
-                <textarea id="message" name="message" required rows="7"
+                <textarea id="message" name="message" required rows="7" minlength="10" maxlength="5000"
                           class="textarea" placeholder="Schrijf hier je bericht..."><?= pp_e($messageValue) ?></textarea>
                 <div class="field__hint">We waarderen heldere, constructieve berichten.</div>
             </div>
+
+            <?php if ($turnstileConfig['enabled']): ?>
+                <div class="cf-turnstile" data-sitekey="<?= pp_e($turnstileConfig['site_key']) ?>" data-action="contact" data-theme="auto"></div>
+                <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+            <?php endif; ?>
 
             <button type="submit" class="btn btn--primary btn--lg">
                 <?= pp_icon('send', 16) ?>
