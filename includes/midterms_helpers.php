@@ -112,3 +112,41 @@ if (!function_exists('mt_date_nl')) {
         return (int) date('j', $ts) . ' ' . $months[(int) date('n', $ts)] . ' ' . date('Y', $ts);
     }
 }
+
+if (!function_exists('mt_datetime_nl')) {
+    function mt_datetime_nl(?string $date): string
+    {
+        if (empty($date) || strtotime($date) === false) {
+            return '';
+        }
+        return mt_date_nl($date) . ' om ' . date('H:i', strtotime($date));
+    }
+}
+
+if (!function_exists('mt_freshness_label')) {
+    /** Korte, feitelijke cacheleeftijd voor live marktdata. */
+    function mt_freshness_label(?string $date): string
+    {
+        if (empty($date) || strtotime($date) === false) {
+            return 'peildatum onbekend';
+        }
+        $seconds = max(0, time() - strtotime($date));
+        if ($seconds < 90) {
+            return 'zojuist bijgewerkt';
+        }
+        if ($seconds < 3600) {
+            return floor($seconds / 60) . ' min geleden';
+        }
+        if ($seconds < 86400) {
+            return floor($seconds / 3600) . ' uur geleden';
+        }
+        return mt_date_nl($date);
+    }
+}
+
+if (!function_exists('mt_sum')) {
+    function mt_sum(array $values): int
+    {
+        return (int) array_sum(array_map('intval', $values));
+    }
+}

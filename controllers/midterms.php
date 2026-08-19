@@ -105,6 +105,8 @@ class MidtermsController
         $ratingMeta = MidtermsModel::ratingMeta();
         $daysLeft = $model->getDaysUntilElection();
         $electionDate = MidtermsModel::ELECTION_DATE;
+        $midtermsContext = $model->getContext();
+        $oddsUpdatedAt = $model->getOddsUpdatedAt();
 
         // Per-sectie data + SEO meta
         $data = $this->metaForSection($section);

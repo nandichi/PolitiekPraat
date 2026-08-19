@@ -56,7 +56,7 @@ $maxPolling = max(array_map(function ($p) {
 }, $parties)) ?: 1;
 
 $pageTitle = 'Nederlandse politieke partijen';
-$pageDescription = 'Een rustig overzicht van alle Nederlandse politieke partijen, hun lijsttrekkers, zetels en standpunten.';
+$pageDescription = 'Een rustig overzicht van alle Nederlandse politieke partijen, hun partijleiders, zetels en standpunten.';
 $data = ['title' => $pageTitle . ' - PolitiekPraat', 'description' => $pageDescription];
 
 require_once BASE_PATH . '/views/partijen/index.php';

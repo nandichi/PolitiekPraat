@@ -1,863 +1,645 @@
 /*
- * PolitiekPraat - Midterms 2026 (editorial herontwerp)
- * --------------------------------------------------------------------------
- * Zelfstandige, voorwaardelijk geladen stylesheet voor de /midterms-2026
- * sectie. Gebruikt de globale design-tokens uit app.build.css (--color-*,
- * --mt-*, --font-*) en wordt NA app.build.css geladen zodat deze regels de
- * oudere midterms-stijlen overschrijven.
- *
- * Filosofie: minder kaartjes, meer typografische hiërarchie, haarlijnen en
- * witruimte. Getemperde, professionele beweging (zie midterms-motion.js).
- * JS-hooks (data-midterms-map, data-cd-*, .mt-feat) blijven ongewijzigd.
- * ------------------------------------------------------------------------ */
+ * PolitiekPraat Midterms 2026
+ * Election Intelligence Desk, rebuilt August 2026.
+ * Dark, information-dense, editorial and intentionally distinct from the
+ * general site. All motion has a reduced-motion fallback.
+ */
 
-/* Lokale layout-tokens op :root (midterms.css wordt alleen op /midterms-2026
- * geladen, dus deze lekken niet naar andere pagina's). Botst niet met de
- * --mt-d-safe / --mt-r-safe kleur-tokens uit app.css. */
-:root {
-    --mt-accent: var(--color-hague);
-    --mt-accent-ink: #ffffff;
-    --mt-flag-navy: #0a3161;
-    --mt-flag-red: #b31942;
-    --mt-gutter: clamp(2.75rem, 6vw, 5rem);
-    --mt-radius: 10px;
-    --mt-radius-sm: 7px;
-    --mt-ring: 0 0 0 1px var(--color-line);
-    --mt-shadow-soft: 0 1px 2px rgba(28, 27, 26, 0.04), 0 8px 24px -16px rgba(28, 27, 26, 0.18);
+body.page-midterms-2026 {
+    --mt-bg: #07111f;
+    --mt-bg-2: #0a1728;
+    --mt-surface: rgba(15, 31, 50, .78);
+    --mt-surface-solid: #0f2033;
+    --mt-surface-2: #13283f;
+    --mt-line: rgba(155, 187, 219, .16);
+    --mt-line-strong: rgba(174, 204, 234, .3);
+    --mt-text: #f3f7fb;
+    --mt-muted: #9fb0c4;
+    --mt-faint: #71839a;
+    --mt-blue: #4c8dff;
+    --mt-blue-soft: #78aaff;
+    --mt-red: #f05b6a;
+    --mt-red-soft: #ff8590;
+    --mt-green: #38d89f;
+    --mt-amber: #f5bc62;
+    /* Compatibility tokens used by the existing SVG and accessible fallbacks. */
+    --mt-d-safe: #174b94;
+    --mt-d-likely: #3471c9;
+    --mt-d-lean: #69a0e9;
+    --mt-tossup: #7d8a9b;
+    --mt-r-lean: #e47c87;
+    --mt-r-likely: #cf4e5f;
+    --mt-r-safe: #982b3b;
+    --mt-empty: #1b2c3e;
+    --mt-ind: #d2a44f;
+    --mt-radius: 20px;
+    --mt-radius-sm: 12px;
+    --mt-shadow: 0 30px 80px rgba(0, 0, 0, .32);
+    background: var(--mt-bg);
 }
 
-/* Wrapper neemt de plek in van de oude .midterms-main padding */
-.midterms-main {
-    padding: 0 0 var(--mt-gutter);
+body.page-midterms-2026 #main-content {
+    overflow: clip;
+    background:
+        radial-gradient(circle at 8% 18%, rgba(44, 103, 181, .13), transparent 27rem),
+        radial-gradient(circle at 92% 42%, rgba(160, 39, 59, .1), transparent 30rem),
+        var(--mt-bg);
+    color: var(--mt-text);
 }
 
-/* =========================================================================
- * Motion-safe reveal primitieven
- * Inhoud is standaard VOLLEDIG zichtbaar (geen JS = geen verborgen content).
- * Een synchrone <head>-bootstrap zet [data-mt-motion="ready"] op <html> (mits
- * geen reduced-motion). Pas DAN krijgen de doelen hun begin-state, zodat er
- * geen flash optreedt. Framer Motion animeert ze vervolgens in beeld. Een
- * veiligheidstimer verwijdert het attribuut als de module niet laadt.
- * ====================================================================== */
-[data-mt-motion="ready"] :is(
-    .midterms-hero__intro,
-    .midterms-hero__odds,
-    .section-header,
-    .midterms-block__intro,
-    .midterms-facts,
-    .midterms-uitleg__block,
-    .midterms-odds,
-    .midterms-map,
-    .midterms-race,
-    .midterms-news-card,
-    .midterms-news-item,
-    .midterms-ref-card,
-    .midterms-timeline__item--full
-) {
-    opacity: 0;
-    transform: translateY(16px);
-    will-change: opacity, transform;
+body.page-midterms-2026 #main-content > .flash-message { position: relative; z-index: 20; }
+body.page-midterms-2026 .site-footer { margin-top: 0; }
+body.page-midterms-2026 :focus-visible { outline: 2px solid #8bb8ff; outline-offset: 3px; }
+
+.midterms-main { padding: 0 0 clamp(5rem, 8vw, 8.5rem); }
+.midterms-main > .pp-container { display: grid; gap: clamp(4.5rem, 8vw, 7.5rem); }
+
+.mt-panel-label,
+.mt-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: .55rem;
+    color: var(--mt-blue-soft);
+    font: 600 .68rem/1.2 var(--font-sans, Inter, sans-serif);
+    letter-spacing: .16em;
+    text-transform: uppercase;
 }
-/* Hero-titel/lead op de sub-pagina's (page-hero component). Bewust EEN klasse
- * diep (0,2,0) zodat .mt-inview (zelfde specificiteit, later gedefinieerd) deze
- * straks weer kan onthullen. midterms.css laadt alleen op /midterms-2026, dus
- * dit lekt niet naar andere pagina's. */
-[data-mt-motion="ready"] .page-hero__eyebrow,
-[data-mt-motion="ready"] .page-hero__title,
-[data-mt-motion="ready"] .page-hero__lead,
-[data-mt-motion="ready"] .page-hero__meta {
-    opacity: 0;
-    transform: translateY(16px);
-    will-change: opacity, transform;
+
+.mt-live-dot {
+    width: .46rem;
+    height: .46rem;
+    flex: 0 0 auto;
+    border-radius: 999px;
+    background: var(--mt-green);
+    box-shadow: 0 0 0 5px rgba(56, 216, 159, .12), 0 0 22px rgba(56, 216, 159, .55);
+    animation: mt-pulse 2.2s ease-in-out infinite;
 }
-/* Zodra Framer Motion klaar is, mogen inline-styles het overnemen */
-[data-mt-motion="ready"] .mt-inview {
-    opacity: 1;
-    transform: none;
+
+@keyframes mt-pulse {
+    0%, 100% { transform: scale(.86); opacity: .75; }
+    50% { transform: scale(1); opacity: 1; }
 }
-/* Kaart-island wordt door React zelf geanimeerd: niet dubbel verbergen */
-[data-mt-motion="ready"] .midterms-hero__odds.mt-react-managed {
-    opacity: 1;
-    transform: none;
+
+/* Hero */
+.mt-hero {
+    position: relative;
+    min-height: min(780px, 82vh);
+    display: grid;
+    place-items: stretch;
+    isolation: isolate;
+    overflow: hidden;
+    background: #050c16;
+}
+
+.mt-hero__media,
+.mt-hero__veil,
+.mt-hero__gridlines { position: absolute; inset: 0; }
+
+.mt-hero__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 52% 43%;
+    filter: saturate(.62) contrast(1.08) brightness(.7);
+    transform: scale(1.035);
+}
+
+.mt-hero__veil {
+    z-index: 1;
+    background:
+        linear-gradient(90deg, rgba(5, 13, 24, .98) 0%, rgba(5, 13, 24, .91) 37%, rgba(5, 13, 24, .42) 68%, rgba(5, 13, 24, .65) 100%),
+        linear-gradient(0deg, #07111f 0%, transparent 38%, rgba(3, 8, 15, .28) 100%);
+}
+
+.mt-hero__gridlines {
+    z-index: 2;
+    opacity: .15;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, .14) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, .14) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: linear-gradient(90deg, #000, transparent 78%);
+}
+
+.mt-hero__inner {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(330px, .72fr);
+    align-items: end;
+    gap: clamp(2.5rem, 7vw, 8rem);
+    padding-top: clamp(6rem, 12vh, 9rem);
+    padding-bottom: clamp(5.5rem, 9vh, 7.5rem);
+}
+
+.mt-kicker--light { color: rgba(222, 235, 249, .8); }
+
+.mt-hero__edition {
+    margin: 1.5rem 0 -.45rem;
+    font: 650 clamp(1.25rem, 2vw, 1.75rem)/1 var(--font-sans, Inter, sans-serif);
+    color: #fff;
+    letter-spacing: -.04em;
+}
+.mt-hero__edition span { color: var(--mt-red-soft); }
+
+.mt-hero__title {
+    max-width: 740px;
+    margin: 0;
+    color: #fff;
+    font: 520 clamp(3.8rem, 7.5vw, 7.75rem)/.88 var(--font-display, Fraunces, serif);
+    letter-spacing: -.065em;
+    text-wrap: balance;
+    text-shadow: 0 4px 40px rgba(0, 0, 0, .3);
+}
+
+.mt-hero__lead {
+    max-width: 690px;
+    margin: 1.75rem 0 0;
+    color: rgba(226, 235, 245, .8);
+    font: 400 clamp(1rem, 1.3vw, 1.18rem)/1.72 var(--font-sans, Inter, sans-serif);
+}
+
+.mt-hero__actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 2.1rem; }
+
+.mt-button {
+    min-height: 46px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .6rem;
+    padding: .8rem 1.05rem;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    font: 650 .82rem/1 var(--font-sans, Inter, sans-serif);
+    text-decoration: none;
+    transition: transform .25s cubic-bezier(.2, .8, .2, 1), border-color .25s, background .25s, box-shadow .25s;
+}
+.mt-button:hover { transform: translateY(-2px); text-decoration: none; }
+.mt-button--light { background: #f4f7fb; color: #07111f; box-shadow: 0 12px 30px rgba(0,0,0,.24); }
+.mt-button--light:hover { background: #fff; box-shadow: 0 16px 40px rgba(0,0,0,.32); }
+.mt-button--glass { color: #fff; border-color: rgba(255,255,255,.26); background: rgba(255,255,255,.07); backdrop-filter: blur(12px); }
+.mt-button--glass:hover { background: rgba(255,255,255,.13); border-color: rgba(255,255,255,.4); }
+.mt-button--dark { background: #081320; color: #fff; box-shadow: 0 12px 28px rgba(0,0,0,.16); }
+.mt-button--dark:hover { background: #12263d; }
+
+.mt-hero__desk {
+    align-self: end;
+    min-width: 0;
+    border: 1px solid rgba(195, 218, 240, .22);
+    border-radius: 18px;
+    padding: 1.2rem;
+    background: linear-gradient(145deg, rgba(12, 27, 44, .9), rgba(7, 17, 30, .76));
+    box-shadow: 0 26px 80px rgba(0, 0, 0, .4), inset 0 1px 0 rgba(255,255,255,.06);
+    backdrop-filter: blur(22px) saturate(1.2);
+}
+.mt-hero__desk-head,
+.mt-hero__desk-foot { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.mt-hero__desk-head { padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,.1); }
+.mt-hero__desk-head > div { display: grid; gap: .3rem; }
+.mt-hero__desk-head strong { color: #fff; font: 600 .92rem/1.3 var(--font-sans, Inter, sans-serif); }
+.mt-status-pill { display: inline-flex; align-items: center; gap: .4rem; padding: .4rem .55rem; border: 1px solid rgba(56,216,159,.25); border-radius: 999px; color: #8ef0ce; background: rgba(56,216,159,.08); font: 600 .65rem/1 var(--font-sans); }
+.mt-status-pill i { width: .35rem; height: .35rem; border-radius: 50%; background: var(--mt-green); }
+
+.midterms-countdown {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: .45rem;
+    margin: 1rem 0;
+}
+.midterms-countdown__unit { min-width: 0; padding: .85rem .45rem .72rem; text-align: center; border: 1px solid rgba(255,255,255,.08); border-radius: 10px; background: rgba(255,255,255,.035); }
+.midterms-countdown__value { display: block; color: #fff; font: 500 clamp(1.3rem, 2.3vw, 2rem)/1 var(--font-mono, monospace); font-variant-numeric: tabular-nums; letter-spacing: -.05em; }
+.midterms-countdown__label { display: block; margin-top: .35rem; color: rgba(206,220,235,.55); font: 600 .56rem/1 var(--font-sans); text-transform: uppercase; letter-spacing: .1em; }
+
+.mt-hero__market-grid { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid rgba(255,255,255,.1); border-radius: 12px; overflow: hidden; }
+.mt-hero__market { min-width: 0; display: grid; grid-template-columns: 1fr auto; gap: .28rem .75rem; padding: .9rem; background: rgba(4,12,22,.34); }
+.mt-hero__market + .mt-hero__market { border-left: 1px solid rgba(255,255,255,.1); }
+.mt-hero__market span { grid-column: 1/-1; color: rgba(204,219,234,.52); font: 600 .6rem/1 var(--font-sans); letter-spacing: .12em; text-transform: uppercase; }
+.mt-hero__market strong { min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; color: #fff; font: 600 .78rem/1.2 var(--font-sans); }
+.mt-hero__market b { color: #fff; font: 500 .8rem/1.2 var(--font-mono); }
+.mt-hero__desk-foot { padding-top: .85rem; color: rgba(198,215,232,.52); font: 500 .62rem/1.3 var(--font-sans); }
+.mt-hero__desk-foot span { display: inline-flex; align-items: center; gap: .35rem; }
+.mt-hero__credit { position: absolute; z-index: 4; right: 1.25rem; bottom: 1rem; color: rgba(255,255,255,.45); font: 500 .58rem/1 var(--font-sans); text-decoration: none; }
+.mt-hero__credit:hover { color: rgba(255,255,255,.85); }
+
+/* Subpage masthead */
+.mt-page-intro {
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--mt-line);
+    background:
+        linear-gradient(130deg, rgba(22, 63, 105, .32), transparent 46%),
+        radial-gradient(circle at 82% 10%, rgba(213, 57, 80, .12), transparent 22rem),
+        var(--mt-bg);
+}
+.mt-page-intro__inner { min-height: 430px; position: relative; display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 2rem; padding-top: clamp(6rem, 11vw, 9rem); padding-bottom: clamp(3.5rem, 6vw, 5rem); }
+.mt-page-intro__copy { max-width: 900px; position: relative; z-index: 2; }
+.mt-page-intro__title { max-width: 900px; margin: 1.15rem 0 1rem; color: #fff; font: 500 clamp(2.75rem, 5.8vw, 5.7rem)/.98 var(--font-display, Fraunces, serif); letter-spacing: -.055em; text-wrap: balance; }
+.mt-page-intro__lead { max-width: 820px; margin: 0; color: var(--mt-muted); font: 400 clamp(1rem, 1.35vw, 1.16rem)/1.7 var(--font-sans); }
+.mt-page-intro__meta { display: flex; flex-wrap: wrap; gap: .6rem 1rem; margin-top: 1.6rem; color: #a9bbcf; font: 540 .72rem/1.4 var(--font-sans); }
+.mt-page-intro__meta span { display: inline-flex; align-items: center; gap: .38rem; }
+.mt-page-intro__monogram { width: clamp(9rem, 16vw, 14rem); aspect-ratio: 1; display: grid; place-content: center; border: 1px solid rgba(255,255,255,.1); border-radius: 50%; color: rgba(255,255,255,.06); font: 700 clamp(4rem, 8vw, 7rem)/.75 var(--font-sans); letter-spacing: -.12em; transform: translate(8%, 18%); }
+.mt-page-intro__monogram small { justify-self: end; color: rgba(255,255,255,.12); font: 500 1rem/1 var(--font-mono); letter-spacing: .04em; }
+.mt-page-intro__glow { position: absolute; width: 32rem; height: 32rem; right: -12rem; top: -16rem; border-radius: 50%; background: rgba(55, 112, 184, .1); filter: blur(30px); }
+
+/* Sticky section navigation */
+.midterms-subnav { position: sticky; top: 0; z-index: 35; border-bottom: 1px solid var(--mt-line); background: rgba(7, 17, 31, .84); backdrop-filter: blur(18px) saturate(1.3); }
+.midterms-subnav .pp-container { overflow-x: auto; scrollbar-width: none; }
+.midterms-subnav .pp-container::-webkit-scrollbar { display: none; }
+.midterms-subnav__list { min-width: max-content; display: flex; gap: .25rem; margin: 0; padding: .62rem 0; list-style: none; }
+.midterms-subnav__link { position: relative; display: inline-flex; align-items: center; gap: .42rem; padding: .62rem .78rem; border-radius: 8px; color: #8193a9; font: 560 .72rem/1 var(--font-sans); text-decoration: none; transition: color .2s, background .2s, transform .2s; }
+.midterms-subnav__link:hover { color: #dce8f5; background: rgba(255,255,255,.05); text-decoration: none; }
+.midterms-subnav__link.is-active { color: #fff; background: rgba(76,141,255,.14); box-shadow: inset 0 0 0 1px rgba(76,141,255,.18); }
+.midterms-subnav__link.is-active::after { content: ''; position: absolute; left: 25%; right: 25%; bottom: -.64rem; height: 2px; background: var(--mt-blue); border-radius: 2px 2px 0 0; box-shadow: 0 0 14px rgba(76,141,255,.8); }
+
+/* Snapshot ticker */
+.mt-snapshot { border-bottom: 1px solid var(--mt-line); background: rgba(10, 23, 40, .88); }
+.mt-snapshot__grid { display: grid; grid-template-columns: repeat(5, 1fr); }
+.mt-snapshot__item { min-width: 0; display: grid; align-content: center; min-height: 128px; padding: 1.25rem 1.3rem; border-right: 1px solid var(--mt-line); }
+.mt-snapshot__item:first-child { border-left: 1px solid var(--mt-line); }
+.mt-snapshot__label { color: var(--mt-faint); font: 600 .61rem/1.2 var(--font-sans); letter-spacing: .12em; text-transform: uppercase; }
+.mt-snapshot__value { display: flex; align-items: baseline; gap: .35rem; margin: .42rem 0 .25rem; color: #fff; font: 510 2rem/1 var(--font-mono, monospace); font-variant-numeric: tabular-nums; letter-spacing: -.06em; }
+.mt-snapshot__value i { font-style: normal; }
+.mt-snapshot__value b { color: var(--mt-faint); font-weight: 400; }
+.mt-snapshot__detail { color: var(--mt-muted); font: 500 .67rem/1.35 var(--font-sans); white-space: normal; }
+.mt-blue,.mt-party-text--dem { color: var(--mt-blue-soft) !important; }
+.mt-red,.mt-party-text--gop { color: var(--mt-red-soft) !important; }
+.mt-party-text--ind { color: var(--mt-amber) !important; }
+
+/* Section layout */
+.mt-dashboard-section { min-width: 0; }
+.mt-dashboard-section:first-child { margin-top: clamp(4.5rem, 8vw, 7.5rem); }
+.mt-section-heading { display: grid; grid-template-columns: minmax(0, 1fr) minmax(260px, 430px); align-items: end; gap: 2rem; margin-bottom: 1.65rem; }
+.mt-section-heading h2 { margin: .45rem 0 0; color: #f5f8fc; font: 510 clamp(2rem, 4vw, 3.65rem)/1.02 var(--font-display, Fraunces, serif); letter-spacing: -.045em; text-wrap: balance; }
+.mt-section-heading > p { margin: 0; color: var(--mt-muted); font: 400 .91rem/1.65 var(--font-sans); }
+.mt-section-heading--compact { grid-template-columns: 1fr auto; align-items: center; margin-bottom: 1rem; }
+.mt-section-heading--compact h2 { font-size: clamp(1.7rem, 3vw, 2.45rem); }
+.mt-text-link { display: inline-flex; align-items: center; gap: .35rem; color: #a9c8ff; font: 600 .73rem/1.3 var(--font-sans); text-decoration: none; }
+.mt-text-link:hover { color: #fff; text-decoration: none; }
+
+/* Market cards */
+.midterms-odds-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.mt-market-row--single { grid-template-columns: minmax(0, 1fr); margin-top: 1rem; }
+.midterms-odds { min-width: 0; display: flex; flex-direction: column; padding: 1.25rem; border: 1px solid var(--mt-line); border-radius: var(--mt-radius-sm); background: linear-gradient(145deg, rgba(18, 39, 62, .8), rgba(10, 24, 40, .82)); box-shadow: inset 0 1px 0 rgba(255,255,255,.025); transition: border-color .25s, transform .25s, box-shadow .25s; }
+.midterms-odds:hover { transform: translateY(-2px); border-color: var(--mt-line-strong); box-shadow: 0 18px 50px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.04); }
+.midterms-odds__topline,.midterms-odds__headline,.midterms-odds__footer { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.midterms-odds__type { display: inline-flex; align-items: center; gap: .45rem; color: #8fa3b9; font: 600 .6rem/1 var(--font-sans); letter-spacing: .1em; text-transform: uppercase; }
+.midterms-odds__type .mt-live-dot { width: .34rem; height: .34rem; box-shadow: 0 0 10px rgba(56,216,159,.5); }
+.midterms-odds__time { color: var(--mt-faint); font: 500 .62rem/1 var(--font-mono); }
+.midterms-odds__headline { align-items: flex-end; margin: 1.15rem 0 1rem; }
+.midterms-odds__headline > div { min-width: 0; }
+.midterms-odds__title { margin: 0; color: #eef4fa; font: 600 clamp(.95rem, 1.5vw, 1.14rem)/1.4 var(--font-sans); }
+.midterms-odds__headline p { margin: .35rem 0 0; color: var(--mt-faint); font: 500 .66rem/1.3 var(--font-sans); }
+.midterms-odds__leader { color: #fff; font: 500 clamp(1.7rem, 3vw, 2.45rem)/1 var(--font-mono); font-variant-numeric: tabular-nums; letter-spacing: -.08em; }
+.midterms-odds__bar { height: .72rem; display: flex; gap: 2px; overflow: hidden; border-radius: 999px; background: rgba(255,255,255,.06); box-shadow: inset 0 1px 2px rgba(0,0,0,.3); }
+.midterms-odds__seg { display: block; width: var(--market-width); height: 100%; transform-origin: left; }
+.mt-party--dem { background: linear-gradient(90deg, #2f70dc, #5e9cff); }
+.mt-party--gop { background: linear-gradient(90deg, #cc3f51, #f06b78); }
+.mt-party--ind { background: #e5ae4e; }
+.mt-party--neutral { background: #53677d; }
+.midterms-odds__legend { display: grid; gap: .55rem; margin: 1rem 0 0; padding: 0; list-style: none; }
+.midterms-odds__legend li { display: flex; align-items: center; gap: .55rem; color: #b8c6d6; font: 530 .76rem/1.2 var(--font-sans); }
+.midterms-odds__dot { width: .5rem; height: .5rem; flex: 0 0 auto; border-radius: 50%; }
+.midterms-odds__label { min-width: 0; flex: 1; }
+.midterms-odds__pct { color: #f2f6fb; font-variant-numeric: tabular-nums; }
+.midterms-odds__footer { margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--mt-line); color: var(--mt-faint); font: 500 .61rem/1.3 var(--font-sans); }
+.midterms-odds__footer a { display: inline-flex; align-items: center; gap: .3rem; color: #9fc2ff; text-decoration: none; }
+.midterms-odds__footer a:hover { color: #fff; }
+.midterms-odds__stale { color: var(--mt-amber); }
+.midterms-odds__empty { color: var(--mt-muted); font-size: .82rem; }
+
+/* Rating distribution */
+.mt-rating-panel { margin-bottom: 1rem; padding: 1.15rem 1.25rem; border: 1px solid var(--mt-line); border-radius: var(--mt-radius-sm); background: rgba(12, 28, 46, .72); }
+.mt-rating-panel__head { display: flex; justify-content: space-between; align-items: end; gap: 1rem; }
+.mt-rating-panel__head h3 { margin: .3rem 0 0; color: #fff; font: 590 1rem/1.3 var(--font-sans); }
+.mt-rating-panel__head > strong { color: #d9e6f3; font: 500 .78rem/1 var(--font-mono); }
+.mt-rating-bar { height: 1.85rem; display: flex; gap: 2px; margin-top: 1rem; overflow: hidden; border-radius: 7px; background: rgba(255,255,255,.04); }
+.mt-rating-bar__segment { width: var(--segment); min-width: 2px; display: grid; place-items: center; transform-origin: left; color: rgba(255,255,255,.86); font: 600 .61rem/1 var(--font-mono); transition: filter .2s, flex .3s; }
+.mt-rating-bar__segment:hover { filter: brightness(1.2); }
+.mt-rating-panel__legend { display: flex; flex-wrap: wrap; gap: .55rem 1rem; margin-top: .9rem; }
+.mt-rating-panel__legend span { display: inline-flex; align-items: center; gap: .35rem; color: var(--mt-muted); font: 520 .65rem/1.2 var(--font-sans); }
+.mt-rating-panel__legend i { width: .45rem; height: .45rem; border-radius: 2px; }
+.mt-rating-panel__legend b { color: #e1eaf4; font: 500 .64rem/1 var(--font-mono); }
+.mt-rating-panel__note { margin: .85rem 0 0; color: var(--mt-faint); font: 500 .63rem/1.5 var(--font-sans); }
+
+.mt-rating--safe_d { background: #1e4f9d; }
+.mt-rating--likely_d { background: #3471c9; }
+.mt-rating--lean_d { background: #69a0e9; color: #07111f; }
+.mt-rating--tossup { background: #8a97a8; }
+.mt-rating--lean_r { background: #e47c87; color: #2d0710; }
+.mt-rating--likely_r { background: #cf4e5f; }
+.mt-rating--safe_r { background: #982b3b; }
+
+/* Map */
+.mt-map-shell { border: 1px solid var(--mt-line); border-radius: var(--mt-radius); overflow: hidden; background: rgba(9, 23, 39, .86); box-shadow: var(--mt-shadow); }
+.mt-map-shell--muted { box-shadow: none; }
+.midterms-map { position: relative; }
+.midterms-map__toolbar { display: flex; justify-content: space-between; gap: 1rem; padding: .85rem; border-bottom: 1px solid var(--mt-line); background: rgba(16, 35, 56, .72); }
+.midterms-map__filters,.midterms-map__zoom { display: flex; gap: .35rem; }
+.midterms-map__filters button,.midterms-map__zoom button { min-height: 33px; border: 1px solid transparent; border-radius: 7px; padding: .48rem .65rem; color: #8fa1b6; background: transparent; font: 600 .66rem/1 var(--font-sans); cursor: pointer; transition: color .2s, background .2s, border-color .2s, transform .2s; }
+.midterms-map__filters button:hover,.midterms-map__zoom button:hover { color: #fff; background: rgba(255,255,255,.06); }
+.midterms-map__filters button.is-active { color: #fff; border-color: rgba(76,141,255,.27); background: rgba(76,141,255,.15); }
+.midterms-map__zoom button { min-width: 33px; padding: .4rem; border-color: var(--mt-line); background: rgba(255,255,255,.025); font-size: .85rem; }
+.midterms-map__notice { display: flex; align-items: flex-start; gap: .55rem; padding: .72rem .9rem; border-bottom: 1px solid rgba(245,188,98,.15); color: #cfb98f; background: rgba(245,188,98,.06); font: 500 .68rem/1.5 var(--font-sans); }
+.midterms-map__notice svg { flex: 0 0 auto; margin-top: .1rem; color: var(--mt-amber); }
+.midterms-map__stage { position: relative; min-height: 460px; display: grid; grid-template-columns: minmax(0, 1fr) 235px; }
+.midterms-map__canvas { position: relative; min-width: 0; min-height: 460px; display: grid; place-items: center; padding: 1.15rem; overflow: hidden; background:
+    radial-gradient(circle at 48% 52%, rgba(42,92,148,.18), transparent 50%),
+    linear-gradient(rgba(255,255,255,.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.015) 1px, transparent 1px);
+    background-size: auto, 32px 32px, 32px 32px;
+}
+.midterms-map__canvas svg { width: 100%; max-height: 590px; display: block; }
+.midterms-map__loading { display: grid; place-items: center; gap: .8rem; color: var(--mt-faint); font: 560 .7rem/1 var(--font-sans); letter-spacing: .08em; text-transform: uppercase; }
+.midterms-map__loader { width: 1.6rem; height: 1.6rem; border: 2px solid rgba(255,255,255,.1); border-top-color: var(--mt-blue); border-radius: 50%; animation: mt-spin .8s linear infinite; }
+@keyframes mt-spin { to { transform: rotate(360deg); } }
+.mt-feat { vector-effect: non-scaling-stroke; stroke: rgba(6,15,27,.88); stroke-width: .65; cursor: pointer; transition: opacity .25s, filter .25s, stroke .25s; }
+.mt-feat:hover,.mt-feat:focus { filter: brightness(1.2) saturate(1.12); stroke: #d9e9fa; stroke-width: 1.2; outline: none; }
+.mt-feat.is-competitive { stroke: rgba(255,255,255,.86); stroke-width: 1.35; }
+.mt-feat.is-dimmed { opacity: .11; pointer-events: none; }
+.mt-feat.is-selected { filter: brightness(1.25); stroke: #fff; stroke-width: 2; }
+.midterms-map__svg .mt-feat--empty { --mt-color: var(--mt-empty); fill: var(--mt-empty); cursor: default; }
+.midterms-map__borders { stroke: rgba(231,240,249,.45); stroke-width: .52; pointer-events: none; vector-effect: non-scaling-stroke; }
+.midterms-map__tooltip { position: absolute; z-index: 8; min-width: 180px; max-width: 240px; padding: .75rem; border: 1px solid rgba(188,213,238,.24); border-radius: 9px; color: #fff; background: rgba(5,14,25,.95); box-shadow: 0 14px 38px rgba(0,0,0,.36); pointer-events: none; transform: translate(-50%, calc(-100% - 14px)); backdrop-filter: blur(12px); }
+.mt-tip__title,.mt-tip__rating,.mt-tip__meta { display: block; }
+.mt-tip__title { font: 650 .82rem/1.3 var(--font-sans); }
+.mt-tip__rating { margin-top: .35rem; color: #a9bfd7; font: 560 .67rem/1.3 var(--font-sans); }
+.mt-tip__meta { margin-top: .25rem; color: #7f91a6; font: 500 .61rem/1.3 var(--font-sans); }
+.midterms-map__inspector { padding: 1.2rem; border-left: 1px solid var(--mt-line); background: rgba(14,31,49,.76); }
+.midterms-map__inspector strong { display: block; margin: .55rem 0 .45rem; color: #fff; font: 600 1rem/1.35 var(--font-sans); }
+.midterms-map__inspector p { margin: 0; color: var(--mt-muted); font: 400 .72rem/1.55 var(--font-sans); }
+.midterms-map__inspector .mt-inspector-rating { display: inline-flex; margin-top: .8rem; padding: .35rem .45rem; border-radius: 6px; color: #fff; font: 650 .61rem/1 var(--font-sans); }
+.midterms-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: .55rem 1rem; margin: 0; padding: .8rem 1rem; border-top: 1px solid var(--mt-line); list-style: none; }
+.midterms-legend__item { display: inline-flex; align-items: center; gap: .35rem; color: var(--mt-muted); font: 520 .61rem/1 var(--font-sans); }
+.midterms-legend__swatch,.mt-rating-dot { width: .48rem; height: .48rem; display: inline-block; border-radius: 2px; }
+.midterms-map__fallback { border-top: 1px solid var(--mt-line); color: var(--mt-muted); }
+.midterms-map__fallback summary { padding: .8rem 1rem; cursor: pointer; font: 600 .68rem/1.3 var(--font-sans); }
+.midterms-table-wrap { max-height: 420px; overflow: auto; border-top: 1px solid var(--mt-line); }
+.midterms-table { width: 100%; border-collapse: collapse; color: #c9d5e2; font: 500 .7rem/1.35 var(--font-sans); }
+.midterms-table th,.midterms-table td { padding: .65rem .9rem; border-bottom: 1px solid var(--mt-line); text-align: left; }
+.midterms-table th { position: sticky; top: 0; background: var(--mt-surface-solid); color: var(--mt-faint); text-transform: uppercase; letter-spacing: .08em; }
+
+/* Race cards */
+.midterms-race-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .85rem; }
+.midterms-race-grid--explorer > div { min-width: 0; }
+.midterms-race { height: 100%; display: flex; flex-direction: column; padding: 1.05rem; border: 1px solid var(--mt-line); border-top: 2px solid var(--mt-rating-color, var(--mt-line-strong)); border-radius: var(--mt-radius-sm); background: linear-gradient(155deg, rgba(18,38,60,.82), rgba(10,24,39,.75)); transition: transform .25s cubic-bezier(.2,.8,.2,1), border-color .25s, box-shadow .25s; }
+.midterms-race:hover { transform: translateY(-4px); border-color: rgba(181,207,232,.3); box-shadow: 0 18px 50px rgba(0,0,0,.2); }
+.mt-rating-border--safe_d { --mt-rating-color:#1e4f9d; }.mt-rating-border--likely_d { --mt-rating-color:#3471c9; }.mt-rating-border--lean_d { --mt-rating-color:#69a0e9; }.mt-rating-border--tossup { --mt-rating-color:#a2aab5; }.mt-rating-border--lean_r { --mt-rating-color:#e47c87; }.mt-rating-border--likely_r { --mt-rating-color:#cf4e5f; }.mt-rating-border--safe_r { --mt-rating-color:#982b3b; }
+.midterms-race__topline,.midterms-race__head,.midterms-race__footer { display: flex; align-items: center; justify-content: space-between; gap: .75rem; }
+.midterms-race__chamber { color: var(--mt-faint); font: 650 .58rem/1 var(--font-sans); letter-spacing: .13em; text-transform: uppercase; }
+.midterms-race__rating { display: inline-flex; align-items: center; gap: .35rem; padding: .34rem .42rem; border-radius: 5px; color: #fff; font: 650 .58rem/1 var(--font-sans); }
+.midterms-race__rating i { width: .35rem; height: .35rem; border-radius: 50%; background: currentColor; }
+.midterms-race__head { align-items: flex-start; margin: 1.1rem 0 .85rem; }
+.midterms-race__statecode { display: block; color: var(--mt-blue-soft); font: 600 .6rem/1 var(--font-mono); letter-spacing: .1em; }
+.midterms-race__title { margin: .25rem 0 0; color: #f1f5fa; font: 570 1.25rem/1.16 var(--font-display); letter-spacing: -.025em; }
+.midterms-race__open { flex: 0 0 auto; padding: .3rem .4rem; border: 1px solid rgba(245,188,98,.2); border-radius: 5px; color: #e6c88d; background: rgba(245,188,98,.06); font: 600 .57rem/1 var(--font-sans); }
+.midterms-race__candidates { display: grid; gap: .42rem; margin-bottom: .85rem; }
+.midterms-race__cand,.midterms-race__incumbent { display: flex; align-items: center; gap: .55rem; min-width: 0; }
+.midterms-race__cand { padding: .52rem .58rem; border: 1px solid var(--mt-line); border-radius: 7px; background: rgba(255,255,255,.025); }
+.midterms-race__cand-party { width: 1.65rem; height: 1.65rem; display: grid; place-items: center; flex: 0 0 auto; border-radius: 50%; color: #fff; font: 700 .58rem/1 var(--font-sans); }
+.midterms-race__cand-name { overflow: hidden; color: #dce6f0; font: 580 .72rem/1.25 var(--font-sans); text-overflow: ellipsis; white-space: nowrap; }
+.midterms-race__incumbent { margin: 0 0 .8rem; color: var(--mt-muted); font: 500 .7rem/1.35 var(--font-sans); }
+.midterms-race__incumbent strong { color: #e4edf6; }
+.midterms-race__summary { margin: 0 0 1rem; color: var(--mt-muted); font: 400 .73rem/1.55 var(--font-sans); }
+.midterms-race__footer { margin-top: auto; padding-top: .8rem; border-top: 1px solid var(--mt-line); color: var(--mt-faint); font: 500 .58rem/1.2 var(--font-sans); }
+.midterms-race__footer a { display: inline-flex; align-items: center; gap: .25rem; color: #94b8f5; text-decoration: none; }
+
+.mt-filter-pills { display: flex; flex-wrap: wrap; gap: .4rem; justify-content: end; }
+.mt-filter-pills button { display: inline-flex; align-items: center; gap: .42rem; padding: .55rem .65rem; border: 1px solid var(--mt-line); border-radius: 8px; color: var(--mt-muted); background: transparent; font: 600 .65rem/1 var(--font-sans); cursor: pointer; }
+.mt-filter-pills button span { color: var(--mt-faint); font-family: var(--font-mono); }
+.mt-filter-pills button.is-active { color: #fff; border-color: rgba(76,141,255,.3); background: rgba(76,141,255,.14); }
+.mt-race-archive { border: 1px solid var(--mt-line); border-radius: var(--mt-radius-sm); background: rgba(12,28,45,.62); }
+.mt-race-archive summary { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem 1.15rem; cursor: pointer; color: #e4edf6; list-style: none; font: 600 .78rem/1.3 var(--font-sans); }
+.mt-race-archive summary::-webkit-details-marker { display:none; }
+.mt-race-archive summary small { display: block; margin-bottom: .2rem; color: var(--mt-faint); font: 600 .56rem/1 var(--font-sans); letter-spacing: .12em; text-transform: uppercase; }
+.mt-race-archive[open] summary svg { transform: rotate(180deg); }
+.mt-race-archive .midterms-race-grid { padding: 0 1rem 1rem; }
+.mt-method-note { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1rem; padding: 1rem 1.15rem; border: 1px solid rgba(76,141,255,.18); border-radius: var(--mt-radius-sm); color: var(--mt-muted); background: rgba(76,141,255,.055); }
+.mt-method-note > span { width: 2rem; height: 2rem; display: grid; place-items: center; border-radius: 50%; color: #9cc1ff; background: rgba(76,141,255,.14); }
+.mt-method-note strong { color: #e3edf7; font: 600 .76rem/1.3 var(--font-sans); }
+.mt-method-note p { margin: .22rem 0 0; font: 400 .7rem/1.5 var(--font-sans); }
+.mt-method-note > a { color: #9dc1ff; font: 600 .68rem/1.2 var(--font-sans); text-decoration: none; }
+
+/* House balance */
+.mt-chamber-balance { padding: 1.3rem; border: 1px solid var(--mt-line); border-radius: var(--mt-radius); background: linear-gradient(145deg, rgba(16,36,58,.82), rgba(8,22,37,.8)); }
+.mt-chamber-balance__numbers { display: grid; grid-template-columns: 1fr auto 1fr; align-items: end; gap: 1rem; }
+.mt-chamber-balance__numbers > div { display: grid; gap: .35rem; }
+.mt-chamber-balance__numbers > div:last-child { text-align: right; }
+.mt-chamber-balance__numbers span { color: var(--mt-muted); font: 600 .64rem/1 var(--font-sans); text-transform: uppercase; letter-spacing: .08em; }
+.mt-chamber-balance__numbers strong { font: 500 clamp(2rem,4vw,3.3rem)/1 var(--font-mono); letter-spacing: -.07em; }
+.mt-chamber-balance__majority { padding: .55rem .8rem; border: 1px solid var(--mt-line); border-radius: 8px; text-align: center !important; }
+.mt-chamber-balance__majority strong { color: #fff; font-size: 1rem; letter-spacing: -.03em; }
+.mt-chamber-balance__majority span { font-size: .52rem; }
+.mt-chamber-balance__track { position: relative; height: 1.2rem; display: flex; gap: 2px; margin: 1rem 0 .75rem; overflow: hidden; border-radius: 7px; background: rgba(255,255,255,.05); }
+.mt-chamber-balance__track > span { width: calc((var(--seats) / 435) * 100%); }
+.mt-chamber-balance__track > i { position: absolute; left: calc((var(--majority) / 435) * 100%); top: -3px; bottom: -3px; width: 2px; background: #fff; box-shadow: 0 0 10px rgba(255,255,255,.65); }
+.mt-chamber-balance__foot { display: flex; flex-wrap: wrap; gap: .7rem 1rem; color: var(--mt-faint); font: 500 .64rem/1.2 var(--font-sans); }
+.mt-chamber-balance__foot a { margin-left: auto; display: inline-flex; gap: .3rem; color: #9abdf5; text-decoration: none; }
+
+/* Editorial/news */
+.mt-editorial-grid { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(300px, .7fr); gap: 1rem; }
+.mt-editorial-panel { min-width: 0; padding: 1.15rem; border: 1px solid var(--mt-line); border-radius: var(--mt-radius); background: rgba(12,28,46,.68); }
+.mt-news-stack { display: grid; }
+.mt-news-row { min-width: 0; display: grid; grid-template-columns: 72px minmax(0,1fr) auto; align-items: center; gap: .85rem; padding: .75rem 0; border-top: 1px solid var(--mt-line); color: inherit; text-decoration: none; }
+.mt-news-row:hover { text-decoration: none; }
+.mt-news-row img,.mt-news-row__index { width: 72px; height: 50px; border-radius: 7px; object-fit: cover; background: #15283b; }
+.mt-news-row__index { display: grid; place-items: center; color: #577089; font: 500 1.2rem/1 var(--font-mono); }
+.mt-news-row__body { min-width: 0; display: grid; gap: .25rem; }
+.mt-news-row__body small { color: var(--mt-faint); font: 550 .58rem/1.2 var(--font-sans); text-transform: uppercase; letter-spacing: .06em; }
+.mt-news-row__body strong { display: -webkit-box; overflow: hidden; color: #dfe8f2; font: 570 .76rem/1.4 var(--font-sans); -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+.mt-news-row:hover strong { color: #fff; }
+.mt-news-row > svg { color: #6f849b; }
+
+.mt-news-feature { min-height: 430px; display: grid; grid-template-columns: 1.05fr .95fr; overflow: hidden; border: 1px solid var(--mt-line); border-radius: var(--mt-radius); color: inherit; background: rgba(14,31,50,.75); text-decoration: none; box-shadow: var(--mt-shadow); }
+.mt-news-feature:hover { text-decoration: none; }
+.mt-news-feature__media { position: relative; min-height: 340px; overflow: hidden; background: radial-gradient(circle at 40% 40%, #274968, #0c1d2f 65%); }
+.mt-news-feature__media img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.78) contrast(1.04); transition: transform .7s cubic-bezier(.2,.8,.2,1), filter .4s; }
+.mt-news-feature:hover img { transform: scale(1.035); filter: saturate(1) contrast(1.04); }
+.mt-news-feature__wash { position: absolute; inset: 0; background: linear-gradient(90deg, transparent 68%, rgba(14,31,50,.78)); }
+.mt-news-feature__body { display: flex; flex-direction: column; justify-content: center; padding: clamp(1.5rem, 4vw, 3.2rem); }
+.mt-news-feature__meta { margin: .9rem 0 .6rem; color: var(--mt-faint); font: 600 .64rem/1.3 var(--font-sans); text-transform: uppercase; letter-spacing: .07em; }
+.mt-news-feature h2 { margin: 0; color: #f4f7fb; font: 520 clamp(1.7rem,3vw,2.6rem)/1.08 var(--font-display); letter-spacing: -.04em; }
+.mt-news-feature p { display: -webkit-box; overflow: hidden; margin: 1rem 0; color: var(--mt-muted); font: 400 .82rem/1.65 var(--font-sans); -webkit-line-clamp: 4; -webkit-box-orient: vertical; }
+
+.midterms-news-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .9rem; }
+.midterms-news-card { min-width: 0; display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--mt-line); border-radius: var(--mt-radius-sm); background: rgba(14,31,50,.7); transition: transform .25s, border-color .25s, box-shadow .25s; }
+.midterms-news-card:hover { transform: translateY(-4px); border-color: var(--mt-line-strong); box-shadow: 0 18px 46px rgba(0,0,0,.2); }
+.midterms-news-card__media { aspect-ratio: 16/9; display: grid; place-items: center; overflow: hidden; color: #5d7389; background: radial-gradient(circle at 40% 40%, #1e3c59, #0d1f32 70%); }
+.midterms-news-card__media img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.72); transition: transform .5s, filter .3s; }
+.midterms-news-card:hover img { transform: scale(1.035); filter: saturate(.95); }
+.midterms-news-card__body { flex: 1; display: flex; flex-direction: column; padding: 1rem; }
+.midterms-news-card__meta { display: flex; justify-content: space-between; gap: .7rem; color: var(--mt-faint); font: 600 .58rem/1.2 var(--font-sans); text-transform: uppercase; letter-spacing: .05em; }
+.midterms-news-card__title { margin: .75rem 0 .55rem; font: 590 1rem/1.35 var(--font-sans); }
+.midterms-news-card__title a { display: -webkit-box; overflow: hidden; color: #e8eef5; text-decoration: none; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
+.midterms-news-card__intro { display: -webkit-box; overflow: hidden; margin: 0 0 .9rem; color: var(--mt-muted); font: 400 .72rem/1.55 var(--font-sans); -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
+.midterms-news-card__link { margin-top: auto; display: inline-flex; align-items: center; gap: .35rem; color: #9dbfff; font: 600 .66rem/1.2 var(--font-sans); text-decoration: none; }
+
+/* Timeline */
+.midterms-timeline { margin: 0; padding: 0; list-style: none; }
+.midterms-timeline--compact { display: grid; }
+.midterms-timeline--compact .midterms-timeline__item { display: grid; grid-template-columns: 92px 1fr; gap: .8rem; padding: .75rem 0; border-top: 1px solid var(--mt-line); }
+.midterms-timeline--compact time { color: var(--mt-faint); font: 500 .59rem/1.4 var(--font-mono); }
+.midterms-timeline--compact strong { color: #dfe8f2; font: 570 .74rem/1.4 var(--font-sans); }
+.mt-timeline-progress { padding: 1.15rem; border: 1px solid var(--mt-line); border-radius: var(--mt-radius-sm); background: rgba(14,31,50,.7); }
+.mt-timeline-progress > div { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.mt-timeline-progress strong { color: #fff; font: 500 .82rem/1 var(--font-mono); }
+.mt-timeline-progress__track { height: .48rem; display: block; overflow: hidden; margin: .9rem 0 .65rem; border-radius: 999px; background: rgba(255,255,255,.07); }
+.mt-timeline-progress__track i { width: var(--progress); height: 100%; display: block; border-radius: inherit; background: linear-gradient(90deg,var(--mt-blue),var(--mt-red)); }
+.mt-timeline-progress p { margin: 0; color: var(--mt-muted); font: 400 .7rem/1.5 var(--font-sans); }
+.midterms-timeline--full { margin-top: 2rem; }
+.midterms-timeline__item--full { display: grid; grid-template-columns: 24px 145px minmax(0,1fr); gap: 1.2rem; }
+.midterms-timeline__rail { position: relative; display: flex; justify-content: center; }
+.midterms-timeline__rail::after { content:''; position:absolute; top:1rem; bottom:-1rem; width:1px; background:var(--mt-line-strong); }
+.midterms-timeline__item--full:last-child .midterms-timeline__rail::after { display:none; }
+.midterms-timeline__rail span { position:relative; z-index:1; width:.75rem; height:.75rem; margin-top:.55rem; border:2px solid var(--mt-blue); border-radius:50%; background:var(--mt-bg); box-shadow:0 0 0 5px rgba(76,141,255,.08); }
+.midterms-timeline__item--full.is-past .midterms-timeline__rail span { background:var(--mt-blue); }
+.midterms-timeline__dateblock { padding-top:.3rem; }
+.midterms-timeline__dateblock time { display:block; color:#d5e1ed; font:500 .68rem/1.4 var(--font-mono); }
+.midterms-timeline__cat { display:inline-flex; margin-top:.45rem; padding:.3rem .4rem; border:1px solid var(--mt-line); border-radius:5px; color:var(--mt-faint); font:600 .55rem/1 var(--font-sans); text-transform:uppercase; letter-spacing:.07em; }
+.midterms-timeline__body { margin-bottom:1.2rem; padding:1.1rem; border:1px solid var(--mt-line); border-radius:var(--mt-radius-sm); background:rgba(13,30,49,.72); }
+.midterms-timeline__title { margin:0; color:#eef4f9; font:560 1.25rem/1.25 var(--font-display); letter-spacing:-.025em; }
+.midterms-timeline__text { margin:.7rem 0; color:var(--mt-muted); font:400 .76rem/1.6 var(--font-sans); }
+.midterms-timeline__source { display:inline-flex; align-items:center; gap:.3rem; color:#9bbdf7; font:600 .63rem/1 var(--font-sans); text-decoration:none; }
+
+/* Referenda */
+.midterms-ref-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.9rem; }
+.midterms-ref-card { position:relative; min-height:330px; display:flex; flex-direction:column; overflow:hidden; padding:1.3rem; border:1px solid var(--mt-line); border-radius:var(--mt-radius); background:linear-gradient(145deg,rgba(17,37,59,.82),rgba(9,23,38,.78)); }
+.midterms-ref-card::after { content:''; position:absolute; width:12rem; height:12rem; right:-6rem; bottom:-7rem; border:1px solid rgba(76,141,255,.1); border-radius:50%; box-shadow:0 0 0 2rem rgba(76,141,255,.025),0 0 0 4rem rgba(240,91,106,.02); }
+.midterms-ref-card__index { position:absolute; right:1rem; top:.8rem; color:rgba(255,255,255,.045); font:600 4.5rem/1 var(--font-mono); letter-spacing:-.08em; }
+.midterms-ref-card__head { position:relative; z-index:1; display:flex; gap:.5rem; align-items:center; }
+.midterms-ref-card__theme,.midterms-ref-card__state { display:inline-flex; padding:.35rem .42rem; border-radius:5px; font:650 .56rem/1 var(--font-sans); letter-spacing:.06em; text-transform:uppercase; }
+.midterms-ref-card__theme { color:#9ec1ff; background:rgba(76,141,255,.1); }
+.midterms-ref-card__state { color:var(--mt-faint); border:1px solid var(--mt-line); }
+.midterms-ref-card__title { position:relative; z-index:1; max-width:86%; margin:1.4rem 0 .8rem; color:#f1f5fa; font:520 clamp(1.45rem,3vw,2.05rem)/1.08 var(--font-display); letter-spacing:-.035em; }
+.midterms-ref-card__text { position:relative; z-index:1; margin:0 0 1rem; color:var(--mt-muted); font:400 .76rem/1.6 var(--font-sans); }
+.midterms-ref-card__source { position:relative; z-index:1; margin-top:auto; display:inline-flex; align-items:center; gap:.35rem; color:#a1c3ff; font:600 .68rem/1.2 var(--font-sans); text-decoration:none; }
+.midterms-ref-card .midterms-odds { position:relative; z-index:1; margin-top:auto; }
+
+/* Explainer */
+.mt-explainer-layout { display:grid; grid-template-columns:250px minmax(0,1fr); gap:clamp(2rem,6vw,5.5rem); align-items:start; margin-top:clamp(4.5rem,8vw,7rem); }
+.mt-explainer-nav { position:sticky; top:5rem; padding:1rem; border:1px solid var(--mt-line); border-radius:var(--mt-radius-sm); background:rgba(12,28,46,.72); }
+.mt-explainer-nav nav { display:grid; margin-top:.8rem; }
+.mt-explainer-nav a { display:grid; grid-template-columns:24px 1fr; gap:.5rem; padding:.58rem 0; border-top:1px solid var(--mt-line); color:var(--mt-muted); font:550 .67rem/1.35 var(--font-sans); text-decoration:none; }
+.mt-explainer-nav a:hover { color:#fff; }
+.mt-explainer-nav a span { color:#597087; font-family:var(--font-mono); }
+.mt-explainer-copy { min-width:0; }
+.midterms-uitleg__block { display:grid; grid-template-columns:76px minmax(0,1fr); gap:1.4rem; padding:0 0 3.5rem; scroll-margin-top:6rem; }
+.midterms-uitleg__number { color:#385571; font:500 2.35rem/1 var(--font-mono); letter-spacing:-.08em; }
+.midterms-uitleg__title { margin:0 0 .8rem; color:#f0f5fa; font:520 clamp(1.7rem,3.4vw,2.6rem)/1.05 var(--font-display); letter-spacing:-.04em; }
+.midterms-uitleg__text { margin:0; color:#b1c0cf; font:400 clamp(.92rem,1.2vw,1.03rem)/1.75 var(--font-sans); }
+.midterms-uitleg__block aside { display:flex; align-items:flex-start; gap:.5rem; margin-top:1rem; padding:.75rem .85rem; border-left:2px solid var(--mt-blue); color:#91a6ba; background:rgba(76,141,255,.055); font:500 .7rem/1.5 var(--font-sans); }
+.midterms-uitleg__block aside svg { flex:0 0 auto; margin-top:.12rem; color:#91b7f8; }
+.mt-explainer-cta { display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; gap:2rem; padding:clamp(1.5rem,4vw,2.8rem); border-radius:var(--mt-radius); color:#0a1726; background:linear-gradient(120deg,#e8eff8,#f5f7fa 55%,#dbe6f2); box-shadow:0 24px 60px rgba(0,0,0,.18); }
+.mt-explainer-cta .mt-panel-label { color:#315f9d; }
+.mt-explainer-cta h2 { max-width:800px; margin:.45rem 0 .6rem; color:#0a1726; font:520 clamp(1.8rem,3.8vw,3.2rem)/1 var(--font-display); letter-spacing:-.045em; }
+.mt-explainer-cta p { max-width:700px; margin:0; color:#53677b; font:400 .82rem/1.6 var(--font-sans); }
+.mt-explainer-cta--blue { color:#fff; background:linear-gradient(125deg,#1e5cae,#19457c 58%,#15365d); }
+.mt-explainer-cta--blue .mt-panel-label,.mt-explainer-cta--blue h2 { color:#fff; }
+.mt-explainer-cta--blue p { color:#c2d4e9; }
+
+/* Sources & disclaimer */
+.mt-sources { padding-top:.5rem; }
+.mt-sources__grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.7rem; }
+.mt-source-card { position:relative; min-width:0; display:grid; gap:.35rem; padding:1rem 2.2rem 1rem 1rem; border:1px solid var(--mt-line); border-radius:10px; color:inherit; background:rgba(13,30,49,.65); text-decoration:none; transition:transform .22s,border-color .22s,background .22s; }
+.mt-source-card:hover { transform:translateY(-2px); border-color:var(--mt-line-strong); background:rgba(18,39,62,.82); text-decoration:none; }
+.mt-source-card__short { color:#8db5f8; font:600 .58rem/1 var(--font-mono); text-transform:uppercase; letter-spacing:.08em; }
+.mt-source-card strong { overflow:hidden; color:#e4ecf5; font:600 .76rem/1.3 var(--font-sans); text-overflow:ellipsis; white-space:nowrap; }
+.mt-source-card > span:last-of-type { color:var(--mt-faint); font:500 .62rem/1.4 var(--font-sans); }
+.mt-source-card > svg { position:absolute; right:.85rem; top:.85rem; color:#60778f; }
+.midterms-disclaimer { display:flex; align-items:flex-start; gap:.7rem; padding:1rem 1.1rem; border:1px solid var(--mt-line); border-radius:10px; color:var(--mt-faint); background:rgba(255,255,255,.02); }
+.midterms-disclaimer__icon { flex:0 0 auto; color:#7fa8e9; }
+.midterms-disclaimer p { margin:0; font:500 .68rem/1.55 var(--font-sans); }
+.midterms-empty { margin:0; padding:1.1rem; border:1px dashed var(--mt-line-strong); border-radius:10px; color:var(--mt-muted); font:500 .75rem/1.5 var(--font-sans); }
+
+/* Motion: JS only sets the entering state when it is available. */
+.js-mt-motion [data-mt-reveal],
+.js-mt-motion [data-mt-hero-copy],
+.js-mt-motion [data-mt-hero-desk],
+.js-mt-motion [data-mt-market],
+.js-mt-motion [data-mt-race] {
+    opacity:0;
+    transform:translateY(22px);
+}
+.mt-is-visible { opacity:1 !important; transform:none !important; transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1); }
+
+/* Responsive */
+@media (max-width: 1100px) {
+    .mt-hero__inner { grid-template-columns:minmax(0,1fr) minmax(300px,.74fr); gap:2.5rem; }
+    .mt-snapshot__grid { grid-template-columns:repeat(3,1fr); }
+    .mt-snapshot__item:nth-child(3) { border-right:0; }
+    .mt-snapshot__item:nth-child(n+4) { border-top:1px solid var(--mt-line); }
+    .midterms-race-grid,.midterms-news-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .mt-sources__grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+
+@media (max-width: 820px) {
+    .mt-hero { min-height:auto; }
+    .mt-hero__veil { background:linear-gradient(0deg,#07111f 0%,rgba(5,13,24,.88) 55%,rgba(5,13,24,.74) 100%); }
+    .mt-hero__media img { object-position:62% 50%; }
+    .mt-hero__inner { grid-template-columns:1fr; align-items:end; padding-top:6rem; padding-bottom:4rem; }
+    .mt-hero__title { font-size:clamp(3.4rem,14vw,5.7rem); }
+    .mt-hero__desk { max-width:600px; }
+    .mt-hero__credit { display:none; }
+    .mt-page-intro__inner { min-height:390px; grid-template-columns:1fr; }
+    .mt-page-intro__monogram { position:absolute; right:-2rem; bottom:-2rem; opacity:.7; }
+    .mt-section-heading { grid-template-columns:1fr; align-items:start; gap:.85rem; }
+    .mt-section-heading > p { max-width:650px; }
+    .midterms-odds-row,.mt-editorial-grid,.mt-news-feature { grid-template-columns:1fr; }
+    .mt-news-feature__media { min-height:260px; }
+    .mt-news-feature__wash { background:linear-gradient(0deg,rgba(14,31,50,.85),transparent 45%); }
+    .midterms-map__stage { grid-template-columns:1fr; }
+    .midterms-map__inspector { border-left:0; border-top:1px solid var(--mt-line); }
+    .midterms-map__canvas { min-height:380px; }
+    .mt-explainer-layout { grid-template-columns:1fr; }
+    .mt-explainer-nav { position:relative; top:auto; }
+    .mt-explainer-nav nav { grid-template-columns:repeat(2,minmax(0,1fr)); column-gap:1rem; }
+    .mt-explainer-cta { grid-template-columns:1fr; }
+}
+
+@media (max-width: 620px) {
+    .midterms-main > .pp-container { gap:4.5rem; }
+    .mt-hero__inner { padding-top:4.5rem; }
+    .mt-hero__title { font-size:clamp(3rem,16vw,4.75rem); }
+    .mt-hero__lead { font-size:.92rem; line-height:1.6; }
+    .mt-hero__market-grid { grid-template-columns:1fr; }
+    .mt-hero__market + .mt-hero__market { border-left:0; border-top:1px solid rgba(255,255,255,.1); }
+    .mt-page-intro__inner { min-height:360px; padding-top:4.5rem; padding-bottom:3rem; }
+    .mt-page-intro__title { font-size:clamp(2.55rem,13vw,4rem); }
+    .mt-page-intro__lead { font-size:.9rem; }
+    .midterms-subnav__link { padding:.58rem .66rem; }
+    .midterms-subnav__link span { display:none; }
+    .mt-snapshot__grid { grid-template-columns:repeat(2,1fr); }
+    .mt-snapshot__item { min-height:110px; padding:1rem; border-top:1px solid var(--mt-line); }
+    .mt-snapshot__item:nth-child(odd) { border-left:1px solid var(--mt-line); }
+    .mt-snapshot__item:nth-child(even) { border-right:1px solid var(--mt-line); }
+    .mt-snapshot__value { font-size:1.65rem; }
+    .midterms-odds-row,.midterms-race-grid,.midterms-news-grid,.midterms-ref-grid,.mt-sources__grid { grid-template-columns:1fr; }
+    .mt-section-heading h2 { font-size:clamp(1.9rem,10vw,2.75rem); }
+    .midterms-map__toolbar { align-items:flex-start; flex-direction:column; }
+    .midterms-map__filters { width:100%; overflow-x:auto; }
+    .midterms-map__filters button { flex:0 0 auto; }
+    .midterms-map__zoom { display:none; }
+    .midterms-map__canvas { min-height:300px; padding:.5rem; }
+    .midterms-legend { justify-content:flex-start; }
+    .mt-chamber-balance__numbers { grid-template-columns:1fr 1fr; }
+    .mt-chamber-balance__majority { grid-column:1/-1; grid-row:2; }
+    .mt-chamber-balance__foot a { width:100%; margin-left:0; }
+    .mt-news-feature { min-height:0; }
+    .mt-news-feature__media { min-height:220px; }
+    .mt-news-feature__body { padding:1.25rem; }
+    .midterms-timeline__item--full { grid-template-columns:18px 1fr; gap:.75rem; }
+    .midterms-timeline__dateblock { grid-column:2; }
+    .midterms-timeline__body { grid-column:2; }
+    .midterms-uitleg__block { grid-template-columns:1fr; gap:.8rem; }
+    .midterms-uitleg__number { font-size:1.5rem; }
+    .mt-explainer-nav nav { grid-template-columns:1fr; }
+    .mt-method-note { grid-template-columns:auto 1fr; }
+    .mt-method-note > a { grid-column:2; }
+    .mt-filter-pills { justify-content:flex-start; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    [data-mt-motion="ready"] :is(
-        .midterms-hero__intro, .midterms-hero__odds, .section-header,
-        .midterms-block__intro, .midterms-facts, .midterms-uitleg__block,
-        .midterms-odds, .midterms-map, .midterms-race, .midterms-news-card,
-        .midterms-news-item, .midterms-ref-card, .midterms-timeline__item--full,
-        .midterms-page .page-hero__eyebrow, .midterms-page .page-hero__title,
-        .midterms-page .page-hero__lead, .midterms-page .page-hero__meta
-    ) {
-        opacity: 1 !important;
-        transform: none !important;
-    }
-}
-
-/* =========================================================================
- * Sub-navigatie (sticky, schuivende active-indicator)
- * ====================================================================== */
-.midterms-subnav {
-    position: sticky;
-    top: 0;
-    z-index: 30;
-    background: color-mix(in srgb, var(--color-canvas) 88%, transparent);
-    -webkit-backdrop-filter: saturate(180%) blur(10px);
-    backdrop-filter: saturate(180%) blur(10px);
-    border-bottom: 1px solid var(--color-line);
-}
-.midterms-subnav__list {
-    position: relative;
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 0.15rem;
-    list-style: none;
-    margin: 0;
-    padding: 0.45rem 0;
-    overflow-x: auto;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    scroll-snap-type: x proximity;
-}
-.midterms-subnav__list::-webkit-scrollbar { display: none; }
-.midterms-subnav__link {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    white-space: nowrap;
-    padding: 0.5rem 0.85rem;
-    border-radius: 999px;
-    font-family: var(--font-sans);
-    font-size: 0.84rem;
-    font-weight: 500;
-    letter-spacing: 0.005em;
-    color: var(--color-ink-muted);
-    text-decoration: none;
-    scroll-snap-align: center;
-    transition: color var(--duration-DEFAULT) var(--ease-out-quart),
-                background-color var(--duration-DEFAULT) var(--ease-out-quart);
-}
-.midterms-subnav__link:hover {
-    color: var(--color-ink);
-    background: var(--color-canvas-sunken);
-}
-.midterms-subnav__link.is-active {
-    color: var(--color-ink);
-    font-weight: 600;
-    background: transparent;
-}
-/* Active onderstreping (statische fallback; JS-indicator schuift hierover) */
-.midterms-subnav__link.is-active::after {
-    content: "";
-    position: absolute;
-    left: 0.85rem;
-    right: 0.85rem;
-    bottom: -0.46rem;
-    height: 2px;
-    border-radius: 2px;
-    background: linear-gradient(90deg, var(--mt-flag-navy), var(--mt-flag-red));
-}
-/* Schuivende indicator (door JS gepositioneerd); verbergt de ::after fallback */
-.midterms-subnav__indicator {
-    position: absolute;
-    bottom: -1px;
-    height: 2px;
-    border-radius: 2px;
-    background: linear-gradient(90deg, var(--mt-flag-navy), var(--mt-flag-red));
-    pointer-events: none;
-}
-.midterms-subnav.has-js-indicator .midterms-subnav__link.is-active::after {
-    display: none;
-}
-
-/* =========================================================================
- * Hero (overzicht/hub)
- * ====================================================================== */
-.midterms-hero {
-    position: relative;
-    background:
-        radial-gradient(120% 80% at 85% -10%, color-mix(in srgb, var(--color-hague-tint) 70%, transparent) 0%, transparent 60%),
-        linear-gradient(180deg, var(--color-canvas-raised) 0%, var(--color-canvas) 100%);
-    border-bottom: 1px solid var(--color-line);
-    padding: clamp(2.25rem, 5vw, 4rem) 0 clamp(2rem, 4vw, 3.25rem);
-    overflow: hidden;
-}
-.midterms-hero::before {
-    content: "";
-    position: absolute;
-    inset: 0 0 auto 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--mt-flag-navy) 0%, var(--mt-flag-navy) 42%, var(--mt-flag-red) 58%, var(--mt-flag-red) 100%);
-    opacity: 0.9;
-}
-.midterms-hero__grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: clamp(1.75rem, 4vw, 3rem);
-    align-items: start;
-}
-@media (min-width: 940px) {
-    .midterms-hero__grid {
-        grid-template-columns: 1.35fr 0.95fr;
-        align-items: center;
-    }
-}
-.midterms-hero__eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    font-weight: 500;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--color-hague);
-}
-.midterms-hero__eyebrow::after {
-    content: "";
-    width: 2.25rem;
-    height: 1px;
-    background: var(--color-line-strong);
-}
-.midterms-hero__title {
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: clamp(2.1rem, 1rem + 3.6vw, 3.6rem);
-    line-height: 1.02;
-    letter-spacing: -0.022em;
-    color: var(--color-ink);
-    margin: 0.85rem 0 0;
-    text-wrap: balance;
-}
-.midterms-hero__lead {
-    font-size: var(--text-lead);
-    line-height: 1.55;
-    color: var(--color-ink-muted);
-    max-width: 48ch;
-    margin: 1rem 0 0;
-}
-.midterms-hero__cta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.6rem;
-    margin-top: 1.6rem;
-}
-
-/* Countdown */
-.midterms-countdown {
-    display: inline-flex;
-    align-items: stretch;
-    gap: 0;
-    margin: 1.6rem 0 0;
-    border: 1px solid var(--color-line);
-    border-radius: var(--mt-radius-sm);
-    background: color-mix(in srgb, var(--color-canvas-raised) 80%, transparent);
-    overflow: hidden;
-}
-.midterms-countdown__unit {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-width: 4rem;
-    padding: 0.6rem 0.85rem;
-    position: relative;
-}
-.midterms-countdown__unit + .midterms-countdown__unit {
-    border-left: 1px solid var(--color-line);
-}
-.midterms-countdown__value {
-    font-family: var(--font-mono);
-    font-size: 1.7rem;
-    font-weight: 500;
-    line-height: 1;
-    color: var(--color-ink);
-    font-variant-numeric: tabular-nums;
-}
-.midterms-countdown__label {
-    font-size: 0.6rem;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--color-ink-faint);
-    margin-top: 0.4rem;
-}
-
-/* Hero control-panel (odds) - cardless, op desktop gescheiden met een haarlijn */
-.midterms-hero__odds {
-    display: flex;
-    flex-direction: column;
-}
-@media (min-width: 940px) {
-    .midterms-hero__odds {
-        border-left: 1px solid var(--color-line);
-        padding-left: clamp(1.75rem, 3vw, 2.75rem);
-    }
-}
-
-/* =========================================================================
- * Sectie-ritme
- * ====================================================================== */
-.midterms-block {
-    padding-top: var(--mt-gutter);
-}
-.midterms-block:first-child {
-    padding-top: clamp(2rem, 4vw, 3rem);
-}
-.midterms-block__intro {
-    color: var(--color-ink-muted);
-    font-size: 1rem;
-    line-height: 1.6;
-    margin: 0.5rem 0 1.5rem;
-    max-width: 64ch;
-}
-.midterms-columns {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--mt-gutter);
-}
-@media (min-width: 860px) {
-    .midterms-columns { grid-template-columns: 1.15fr 0.85fr; gap: clamp(2rem, 4vw, 3.5rem); }
-}
-.midterms-empty {
-    color: var(--color-ink-faint);
-    font-style: italic;
-    padding: 1.25rem 0;
-}
-
-/* =========================================================================
- * Odds-kaart + meerderheidsmeter
- * ====================================================================== */
-/* Cardless: geen box; titel, slanke balk en legenda staan vrij op het canvas. */
-.midterms-odds-row {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: clamp(1.75rem, 4vw, 3rem);
-}
-.midterms-odds {
-    position: relative;
-    background: none;
-    border: 0;
-    border-radius: 0;
-    padding: 0;
-}
-/* Gestapelde odds in de hero scheiden met een haarlijn i.p.v. twee boxen. */
-.midterms-hero__odds .midterms-odds + .midterms-odds {
-    margin-top: 1.5rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--color-line);
-}
-.midterms-odds__title {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--color-ink-faint);
-    margin: 0 0 0.9rem;
-}
-.midterms-odds__bar {
-    display: flex;
-    height: 0.5rem;
-    border-radius: 999px;
-    overflow: hidden;
-    background: var(--color-canvas-sunken);
-}
-.midterms-odds__seg {
-    background: var(--mt-color, var(--mt-empty));
-    height: 100%;
-    /* Breedte-animatie wordt door Framer Motion verzorgd (geen dubbele CSS-transitie). */
-}
-.midterms-odds__legend {
-    list-style: none;
-    margin: 1rem 0 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-}
-.midterms-odds__legend li {
-    display: flex;
-    align-items: baseline;
-    gap: 0.55rem;
-    font-size: 1rem;
-}
-.midterms-odds__dot {
-    width: 0.6rem;
-    height: 0.6rem;
-    border-radius: 999px;
-    background: var(--mt-color, var(--mt-empty));
-    flex-shrink: 0;
-    align-self: center;
-}
-.midterms-odds__label { color: var(--color-ink); font-weight: 500; }
-.midterms-odds__pct {
-    margin-left: auto;
-    font-family: var(--font-mono);
-    font-weight: 500;
-    font-size: 1.1rem;
-    color: var(--color-ink);
-    font-variant-numeric: tabular-nums;
-}
-.midterms-odds__source {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.3rem;
-    font-size: 0.74rem;
-    color: var(--color-ink-faint);
-    text-decoration: none;
-    margin-top: 0.9rem;
-}
-.midterms-odds__source:hover { color: var(--color-hague); }
-.midterms-odds__stale {
-    display: inline-block;
-    margin-left: 0.5rem;
-    font-size: 0.68rem;
-    color: var(--color-ink-faint);
-    font-style: italic;
-}
-.midterms-odds__empty { color: var(--color-ink-faint); font-size: 0.9rem; }
-
-/* =========================================================================
- * Race-kaarten
- * ====================================================================== */
-/* Cardless ledger-entries: geen box, haarlijn boven elke race, rating als stip. */
-.midterms-race-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 0 clamp(2rem, 4vw, 3.5rem);
-}
-.midterms-race {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-    padding: 1.3rem 0;
-    background: none;
-    border: 0;
-    border-radius: 0;
-    box-shadow: none;
-    border-top: 1px solid var(--color-line);
-}
-.midterms-race__top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.75rem;
-}
-.midterms-race__chamber {
-    font-family: var(--font-mono);
-    font-size: 0.64rem;
-    text-transform: uppercase;
-    letter-spacing: 0.13em;
-    color: var(--color-ink-faint);
-}
-.midterms-race__rating {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-size: 0.66rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--color-ink-muted);
-    white-space: nowrap;
-}
-.midterms-race__rating::before {
-    content: "";
-    width: 0.55rem;
-    height: 0.55rem;
-    border-radius: 999px;
-    background: var(--mt-color, var(--mt-empty));
-    flex-shrink: 0;
-}
-.midterms-race__title {
-    font-family: var(--font-display);
-    font-size: 1.35rem;
-    line-height: 1.15;
-    letter-spacing: -0.01em;
-    color: var(--color-ink);
-    margin: 0.15rem 0 0.1rem;
-    transition: color var(--duration-DEFAULT) var(--ease-out-quart);
-}
-.midterms-race:hover .midterms-race__title { color: var(--color-hague); }
-.midterms-race__candidates {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    font-size: 0.9rem;
-    padding: 0.1rem 0;
-}
-.midterms-race__cand { display: flex; align-items: center; gap: 0.45rem; flex: 1; min-width: 0; }
-.midterms-race__cand-party {
-    width: 1.35rem;
-    height: 1.35rem;
-    flex-shrink: 0;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 999px;
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    font-weight: 600;
-    color: #fff;
-    background: var(--mt-color, var(--mt-empty));
-}
-.midterms-race__cand-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--color-ink); }
-.midterms-race__vs { color: var(--color-ink-faint); font-size: 0.72rem; font-style: italic; }
-.midterms-race__meta { font-size: 0.82rem; color: var(--color-ink-muted); }
-.midterms-race__summary { font-size: 0.88rem; color: var(--color-ink-muted); line-height: 1.55; }
-.midterms-race__source {
-    font-size: 0.74rem;
-    color: var(--color-hague);
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.3rem;
-    margin-top: 0.15rem;
-}
-.midterms-race__source:hover { text-decoration: underline; }
-
-/* =========================================================================
- * Interactieve kaart (frame + legenda-schaal)
- * ====================================================================== */
-.midterms-map { position: relative; display: flex; flex-direction: column; gap: 0.85rem; }
-.midterms-map__canvas {
-    position: relative;
-    width: 100%;
-    min-height: 300px;
-    border: 1px solid var(--color-line);
-    border-radius: var(--mt-radius);
-    background:
-        radial-gradient(140% 120% at 50% 0%, var(--color-canvas-raised) 0%, var(--color-canvas) 100%);
-    box-shadow: var(--mt-shadow-soft);
-    overflow: hidden;
-    padding: clamp(0.5rem, 2vw, 1.25rem);
-}
-.midterms-map__loading {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    color: var(--color-ink-faint);
-    font-size: 0.9rem;
-}
-.midterms-map__loading svg { animation: mtSpin 1s linear infinite; }
-@keyframes mtSpin { to { transform: rotate(360deg); } }
-.midterms-map__svg { display: block; width: 100%; height: auto; touch-action: none; }
-.midterms-map__svg .mt-feat {
-    fill: var(--mt-color, var(--mt-empty));
-    stroke: var(--color-canvas-raised);
-    stroke-width: 0.5;
-    cursor: default;
-    transition: fill 0.15s ease, opacity 0.15s ease;
-    outline: none;
-}
-.midterms-map__svg .mt-feat[role="button"] { cursor: pointer; }
-.midterms-map__svg .mt-feat:hover,
-.midterms-map__svg .mt-feat:focus { opacity: 0.85; stroke: var(--color-ink); stroke-width: 1; }
-.midterms-map__svg .mt-feat.is-competitive { stroke: var(--color-ink); stroke-width: 0.8; stroke-dasharray: 2 1.5; }
-.midterms-map__borders { stroke: var(--color-ink); stroke-width: 0.6; stroke-linejoin: round; pointer-events: none; opacity: 0.5; }
-
-/* Tooltip */
-.midterms-map__tooltip {
-    position: absolute;
-    z-index: 20;
-    transform: translate(-50%, calc(-100% - 10px));
-    pointer-events: none;
-    background: var(--color-ink);
-    color: var(--color-canvas);
-    padding: 0.5rem 0.7rem;
-    border-radius: 7px;
-    font-size: 0.78rem;
-    line-height: 1.3;
-    max-width: 230px;
-    box-shadow: 0 10px 30px -8px rgba(0, 0, 0, 0.45);
-}
-.midterms-map__tooltip[hidden] { display: none; }
-.mt-tip__title { display: block; font-weight: 600; }
-.mt-tip__rating { display: inline-block; margin-top: 0.2rem; padding-left: 0.85rem; position: relative; }
-.mt-tip__rating::before {
-    content: ""; position: absolute; left: 0; top: 0.35em;
-    width: 0.6rem; height: 0.6rem; border-radius: 9999px;
-    background: var(--mt-color, var(--mt-empty));
-}
-.mt-tip__meta { display: block; color: var(--color-line); font-size: 0.72rem; }
-
-/* Legenda als diverging schaal */
-.midterms-legend {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem 0.9rem;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    align-items: center;
-}
-.midterms-legend__item { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.76rem; color: var(--color-ink-muted); }
-.midterms-legend__swatch {
-    width: 0.9rem; height: 0.9rem; border-radius: 3px;
-    background: var(--mt-color, var(--mt-empty));
-    border: 1px solid rgba(0, 0, 0, 0.08);
-}
-
-/* Tabel-fallback */
-.midterms-map__fallback { font-size: 0.85rem; color: var(--color-ink-muted); }
-.midterms-map__fallback summary { cursor: pointer; color: var(--color-hague); padding: 0.35rem 0; }
-.midterms-table { width: 100%; border-collapse: collapse; margin-top: 0.6rem; }
-.midterms-table th, .midterms-table td { text-align: left; padding: 0.4rem 0.55rem; border-bottom: 1px solid var(--color-line); font-size: 0.85rem; }
-.midterms-table th { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-ink-faint); }
-.mt-rating-dot { display: inline-block; width: 0.7rem; height: 0.7rem; border-radius: 9999px; background: var(--mt-color, var(--mt-empty)); vertical-align: middle; margin-right: 0.4rem; }
-
-/* =========================================================================
- * Feiten-tegels (uitleg) + uitleg-blokken
- * ====================================================================== */
-/* Cardless stat-rij: grote display-cijfers, dunne verticale haarlijnen, geen box. */
-.midterms-facts {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.75rem 1.5rem;
-    margin: clamp(1.75rem, 3.5vw, 3rem) 0;
-}
-@media (min-width: 720px) {
-    .midterms-facts { grid-template-columns: repeat(4, 1fr); gap: 0; }
-}
-.midterms-facts__item {
-    position: relative;
-    text-align: left;
-    padding: 0;
-    background: none;
-    border: 0;
-    border-radius: 0;
-}
-@media (min-width: 720px) {
-    .midterms-facts__item { padding-left: 1.85rem; }
-    .midterms-facts__item:first-child { padding-left: 0; }
-    .midterms-facts__item:not(:first-child)::before {
-        content: "";
-        position: absolute;
-        left: 0;
-        top: 0.15rem;
-        bottom: 0.35rem;
-        width: 1px;
-        background: var(--color-line);
-    }
-}
-.midterms-facts__num {
-    display: block;
-    font-family: var(--font-display);
-    font-size: clamp(2.4rem, 1.4rem + 2.6vw, 3.5rem);
-    font-weight: 600;
-    line-height: 0.92;
-    letter-spacing: -0.022em;
-    color: var(--color-ink);
-    font-variant-numeric: tabular-nums;
-}
-.midterms-facts__label {
-    display: block;
-    font-size: 0.8rem;
-    color: var(--color-ink-muted);
-    margin-top: 0.6rem;
-    line-height: 1.45;
-    max-width: 24ch;
-}
-
-.midterms-uitleg { border-top: 1px solid var(--color-line); margin-top: 0.5rem; }
-.midterms-uitleg__block { padding: clamp(1.25rem, 2.5vw, 1.85rem) 0; border-bottom: 1px solid var(--color-line); display: grid; gap: 0.45rem; }
-@media (min-width: 760px) { .midterms-uitleg__block { grid-template-columns: minmax(0, 16rem) 1fr; gap: 1.5rem; align-items: start; } }
-.midterms-uitleg__title { font-family: var(--font-display); font-size: 1.4rem; line-height: 1.2; color: var(--color-ink); margin: 0; }
-.midterms-uitleg__text { color: var(--color-ink-muted); max-width: 68ch; line-height: 1.7; font-size: 1.02rem; margin: 0; }
-.midterms-uitleg__cta { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 2rem; }
-
-/* =========================================================================
- * Nieuws
- * ====================================================================== */
-/* Cardless, beeld-geleide editorial grid: geen box, afgeronde foto als anker. */
-.midterms-news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: clamp(2rem, 4vw, 3rem) clamp(1.75rem, 3vw, 2.5rem); }
-.midterms-news-card {
-    display: flex;
-    flex-direction: column;
-    background: none;
-    border: 0;
-    border-radius: 0;
-    overflow: visible;
-}
-.midterms-news-card__media {
-    display: block;
-    aspect-ratio: 16 / 10;
-    overflow: hidden;
-    border-radius: var(--mt-radius-sm);
-    background: var(--color-canvas-sunken);
-    margin-bottom: 0.95rem;
-}
-.midterms-news-card__media img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--duration-slow) var(--ease-out-quart); }
-.midterms-news-card:hover .midterms-news-card__media img { transform: scale(1.04); }
-.midterms-news-card__body { padding: 0; display: flex; flex-direction: column; gap: 0.5rem; flex: 1; }
-.midterms-news-card__meta { display: flex; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.68rem; color: var(--color-ink-faint); text-transform: uppercase; letter-spacing: 0.06em; }
-.midterms-news-card__meta span + span::before { content: "·"; margin-right: 0.5rem; color: var(--color-line-strong); }
-.midterms-news-card__title { font-family: var(--font-display); font-size: 1.3rem; line-height: 1.25; letter-spacing: -0.01em; color: var(--color-ink); margin: 0; }
-.midterms-news-card__title a { color: inherit; text-decoration: none; transition: color var(--duration-DEFAULT) var(--ease-out-quart); }
-.midterms-news-card__title a:hover { color: var(--color-hague); }
-.midterms-news-card__intro { font-size: 0.9rem; color: var(--color-ink-muted); line-height: 1.55; }
-.midterms-news-card__link { margin-top: auto; padding-top: 0.55rem; font-size: 0.8rem; font-weight: 500; color: var(--color-hague); text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem; transition: gap var(--duration-DEFAULT) var(--ease-out-quart); }
-.midterms-news-card__link:hover { gap: 0.5rem; }
-
-/* Nieuws-lijst (hub) */
-.midterms-news-list { list-style: none; margin: 0; padding: 0; }
-.midterms-news-item { border-bottom: 1px solid var(--color-line); }
-.midterms-news-item:first-child { border-top: 1px solid var(--color-line); }
-.midterms-news-item a { display: block; padding: 0.95rem 0; text-decoration: none; color: inherit; transition: padding-left var(--duration-DEFAULT) var(--ease-out-quart); }
-.midterms-news-item a:hover { padding-left: 0.4rem; }
-.midterms-news-item a:hover .midterms-news-item__title { color: var(--color-hague); }
-.midterms-news-item__title { display: block; font-family: var(--font-display); font-size: 1.02rem; font-weight: 500; color: var(--color-ink); line-height: 1.35; }
-.midterms-news-item__intro { display: block; font-size: 0.85rem; color: var(--color-ink-muted); margin-top: 0.3rem; line-height: 1.5; }
-.midterms-news-item__source { display: block; font-family: var(--font-mono); font-size: 0.68rem; color: var(--color-ink-faint); margin-top: 0.4rem; text-transform: uppercase; letter-spacing: 0.04em; }
-
-/* =========================================================================
- * Tijdlijn
- * ====================================================================== */
-.midterms-timeline { list-style: none; margin: 0; padding: 0; }
-.midterms-timeline__item--full {
-    position: relative;
-    padding-left: 2rem;
-    padding-bottom: clamp(1.5rem, 3vw, 2.25rem);
-    border-left: 2px solid var(--color-line);
-}
-.midterms-timeline__item--full:last-child { border-left-color: transparent; padding-bottom: 0; }
-.midterms-timeline__marker {
-    position: absolute;
-    left: -0.5rem;
-    top: 0.15rem;
-    width: 0.9rem;
-    height: 0.9rem;
-    border-radius: 999px;
-    background: var(--color-canvas);
-    border: 2px solid var(--color-hague);
-    box-shadow: 0 0 0 4px var(--color-canvas);
-}
-.midterms-timeline__head { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
-.midterms-timeline__date { font-family: var(--font-mono); font-size: 0.76rem; color: var(--color-ink-faint); letter-spacing: 0.02em; }
-.midterms-timeline__cat {
-    font-family: var(--font-mono);
-    font-size: 0.62rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    padding: 0.18rem 0.5rem;
-    border-radius: 999px;
-    background: var(--color-canvas-sunken);
-    color: var(--color-ink-muted);
-}
-.midterms-timeline__cat--primary { background: var(--color-ochre-tint); color: #6b531a; }
-.midterms-timeline__cat--deadline { background: var(--color-terracotta-tint); color: var(--color-terracotta); }
-.midterms-timeline__cat--debate { background: var(--color-hague-tint); color: var(--color-hague); }
-.midterms-timeline__title { font-family: var(--font-display); font-size: 1.25rem; line-height: 1.25; color: var(--color-ink); margin: 0.45rem 0 0.3rem; }
-.midterms-timeline__text { color: var(--color-ink-muted); font-size: 0.95rem; line-height: 1.65; max-width: 68ch; }
-.midterms-timeline__source { font-size: 0.74rem; color: var(--color-hague); text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem; margin-top: 0.5rem; }
-.midterms-timeline__source:hover { text-decoration: underline; }
-/* Compacte tijdlijn (hub) */
-.midterms-timeline--compact .midterms-timeline__item { display: flex; flex-direction: column; padding: 0.8rem 0; border-bottom: 1px solid var(--color-line); }
-.midterms-timeline--compact .midterms-timeline__item:first-child { border-top: 1px solid var(--color-line); }
-.midterms-timeline--compact .midterms-timeline__date { font-family: var(--font-mono); font-size: 0.72rem; color: var(--color-ink-faint); }
-.midterms-timeline--compact .midterms-timeline__title { font-family: var(--font-display); font-size: 1rem; margin: 0.25rem 0 0; color: var(--color-ink); }
-
-/* =========================================================================
- * Referenda
- * ====================================================================== */
-/* Cardless ledger-entries, consistent met de races. */
-.midterms-ref-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 0 clamp(2rem, 4vw, 3.5rem); }
-.midterms-ref-card {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    padding: 1.3rem 0;
-    background: none;
-    border: 0;
-    border-radius: 0;
-    border-top: 1px solid var(--color-line);
-}
-.midterms-ref-card__head { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; }
-.midterms-ref-card__theme { font-family: var(--font-mono); font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 500; color: var(--color-hague); }
-.midterms-ref-card__state { display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.74rem; color: var(--color-ink-faint); }
-.midterms-ref-card__title { font-family: var(--font-display); font-size: 1.3rem; line-height: 1.2; letter-spacing: -0.01em; color: var(--color-ink); margin: 0.1rem 0; transition: color var(--duration-DEFAULT) var(--ease-out-quart); }
-.midterms-ref-card:hover .midterms-ref-card__title { color: var(--color-hague); }
-.midterms-ref-card__text { font-size: 0.9rem; color: var(--color-ink-muted); line-height: 1.6; }
-.midterms-ref-card__source { font-size: 0.78rem; color: var(--color-hague); text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem; margin-top: 0.2rem; }
-.midterms-ref-card__source:hover { text-decoration: underline; }
-
-/* =========================================================================
- * Disclaimer
- * ====================================================================== */
-/* Cardless voetnoot: dunne bovenlijn, geen box of achtergrond. */
-.midterms-disclaimer {
-    display: flex;
-    gap: 0.55rem;
-    align-items: flex-start;
-    padding: 1.1rem 0 0;
-    margin-top: var(--mt-gutter);
-    background: none;
-    border: 0;
-    border-radius: 0;
-    border-top: 1px solid var(--color-line);
-}
-.midterms-disclaimer__icon { color: var(--color-ink-faint); flex-shrink: 0; margin-top: 0.05rem; }
-.midterms-disclaimer p { font-size: 0.8rem; color: var(--color-ink-faint); margin: 0; line-height: 1.6; max-width: 82ch; }
-
-/* =========================================================================
- * Sectie-headers binnen midterms: editorial verfijning (scoped, niet site-breed)
- * ====================================================================== */
-.midterms-page .section-header {
-    align-items: baseline;
-    padding-bottom: 0.85rem;
-    border-bottom: 1px solid var(--color-line);
-    margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
-}
-.midterms-page .section-header__label {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    font-weight: 500;
-    letter-spacing: 0.14em;
-    color: var(--color-hague);
-    margin-bottom: 0.5rem;
-}
-.midterms-page .section-header__title {
-    font-size: clamp(1.6rem, 1rem + 2vw, 2.2rem);
-    letter-spacing: -0.02em;
-}
-.midterms-page .section-header__cta {
-    font-family: var(--font-sans);
-    font-size: 0.82rem;
-    color: var(--color-ink-muted);
-    display: inline-flex;
-    align-items: center;
-    gap: 0.3rem;
-    transition: color var(--duration-DEFAULT) var(--ease-out-quart),
-                gap var(--duration-DEFAULT) var(--ease-out-quart);
-}
-.midterms-page .section-header__cta:hover { color: var(--color-hague); gap: 0.5rem; }
-
-/* =========================================================================
- * Gedeelde page-hero binnen midterms (sub-pagina's) een US-accent geven
- * ====================================================================== */
-.midterms-page .page-hero {
-    position: relative;
-    border-bottom: 1px solid var(--color-line);
-    background: linear-gradient(180deg, var(--color-canvas-raised) 0%, var(--color-canvas) 100%);
-}
-.midterms-page .page-hero::before {
-    content: "";
-    position: absolute;
-    inset: 0 0 auto 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--mt-flag-navy) 0%, var(--mt-flag-navy) 42%, var(--mt-flag-red) 58%, var(--mt-flag-red) 100%);
-}
-.midterms-page .page-hero__eyebrow { color: var(--color-hague); }
-
-/* Knoppen binnen de hero net iets steviger */
-.midterms-hero .btn--primary,
-.midterms-uitleg__cta .btn--primary {
-    background: var(--color-hague);
-    border-color: var(--color-hague);
-    color: #fff;
+    .mt-live-dot,.midterms-map__loader { animation:none; }
+    .js-mt-motion [data-mt-reveal],.js-mt-motion [data-mt-hero-copy],.js-mt-motion [data-mt-hero-desk],.js-mt-motion [data-mt-market],.js-mt-motion [data-mt-race] { opacity:1; transform:none; }
+    .mt-is-visible,.midterms-race,.midterms-odds,.midterms-news-card,.mt-news-feature img,.mt-feat { transition:none !important; }
 }

@@ -2,7 +2,7 @@
 /**
  * GEGENEREERD door scripts/midterms_generate_baseline.php
  * Ratings/bronnen bijgewerkt door scripts/midterms_apply_ratings.php
- * (consensus Cook Political Report / 270toWin / Ballotpedia, juni 2026).
+ * (Cook Political Report, gecontroleerd 19 augustus 2026).
  * Senaat (35) en Gouverneurs (36) voor 2026. Zittende namen uit
  * unitedstates/congress-legislators.
  */
@@ -18,12 +18,12 @@ return array (
       'incumbent_name' => 'Dan Sullivan',
       'incumbent_party' => 'R',
       'is_open' => 0,
-      'rating' => 'lean_r',
+      'rating' => 'tossup',
       'is_competitive' => 1,
-      'candidate_d' => NULL,
-      'candidate_r' => NULL,
-      'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-senate-election/',
+      'candidate_d' => 'Mary Peltola',
+      'candidate_r' => 'Dan Sullivan',
+      'summary_nl' => 'Mary Peltola en zittend senator Dan Sullivan bereikten na de open primary de verkiezing in november.',
+      'source_url' => 'https://www.cookpolitical.com/ratings/senate-race-ratings',
     ),
     1 => 
     array (
@@ -39,7 +39,7 @@ return array (
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-senate-election/',
+      'source_url' => 'https://www.cookpolitical.com/ratings/senate-race-ratings',
     ),
     2 => 
     array (
@@ -55,7 +55,7 @@ return array (
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-senate-election/',
+      'source_url' => 'https://www.cookpolitical.com/ratings/senate-race-ratings',
     ),
     3 => 
     array (
@@ -71,7 +71,7 @@ return array (
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-senate-election/',
+      'source_url' => 'https://www.cookpolitical.com/ratings/senate-race-ratings',
     ),
     4 => 
     array (
@@ -87,7 +87,7 @@ return array (
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-senate-election/',
+      'source_url' => 'https://www.cookpolitical.com/ratings/senate-race-ratings',
     ),
     5 => 
     array (
@@ -100,10 +100,10 @@ return array (
       'is_open' => 0,
       'rating' => 'lean_d',
       'is_competitive' => 1,
-      'candidate_d' => NULL,
-      'candidate_r' => NULL,
-      'summary_nl' => 'Georgia is opnieuw een van de dichtst bevochten Senaatszetels; de uitslag kan de meerderheid bepalen.',
-      'source_url' => 'https://www.270towin.com/2026-senate-election/',
+      'candidate_d' => 'Jon Ossoff',
+      'candidate_r' => 'Mike Collins',
+      'summary_nl' => 'Zittend Democratisch senator Jon Ossoff neemt het op tegen Republikeins afgevaardigde Mike Collins.',
+      'source_url' => 'https://www.cookpolitical.com/ratings/senate-race-ratings',
     ),
     6 => 
     array (
@@ -113,13 +113,13 @@ return array (
       'district' => NULL,
       'incumbent_name' => 'Joni Ernst',
       'incumbent_party' => 'R',
-      'is_open' => 0,
+      'is_open' => 1,
       'rating' => 'lean_r',
       'is_competitive' => 1,
-      'candidate_d' => NULL,
-      'candidate_r' => NULL,
-      'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-senate-election/',
+      'candidate_d' => 'Josh Turek',
+      'candidate_r' => 'Ashley Hinson',
+      'summary_nl' => 'Na het vertrek van Joni Ernst strijden Josh Turek en Ashley Hinson om deze open zetel.',
+      'source_url' => 'https://www.cookpolitical.com/ratings/senate-race-ratings',
     ),
     7 => 
     array (
@@ -135,7 +135,7 @@ return array (
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-senate-election/',
+      'source_url' => 'https://www.cookpolitical.com/ratings/senate-race-ratings',
     ),
     8 => 
     array (
@@ -151,7 +151,7 @@ return array (
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-senate-election/',
+      'source_url' => 'https://www.cookpolitical.com/ratings/senate-race-ratings',
     ),
     9 => 
     array (
@@ -162,12 +162,12 @@ return array (
       'incumbent_name' => 'Roger Marshall',
       'incumbent_party' => 'R',
       'is_open' => 0,
-      'rating' => 'safe_r',
+      'rating' => 'likely_r',
       'is_competitive' => 0,
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-senate-election/',
+      'source_url' => 'https://www.cookpolitical.com/ratings/senate-race-ratings',
     ),
     10 => 
     array (
@@ -183,7 +183,7 @@ return array (
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-senate-election/',
+      'source_url' => 'https://www.cookpolitical.com/ratings/senate-race-ratings',
     ),
     11 => 
     array (
@@ -194,12 +194,12 @@ return array (
       'incumbent_name' => 'Bill Cassidy',
       'incumbent_party' => 'R',
       'is_open' => 0,
-      'rating' => 'likely_r',
+      'rating' => 'safe_r',
       'is_competitive' => 0,
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-senate-election/',
+      'source_url' => 'https://www.cookpolitical.com/ratings/senate-race-ratings',
     ),
     12 => 
     array (
@@ -215,7 +215,7 @@ return array (
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-senate-election/',
+      'source_url' => 'https://www.cookpolitical.com/ratings/senate-race-ratings',
     ),
     13 => 
     array (
@@ -228,10 +228,10 @@ return array (
       'is_open' => 0,
       'rating' => 'tossup',
       'is_competitive' => 1,
-      'candidate_d' => NULL,
-      'candidate_r' => NULL,
-      'summary_nl' => 'In Maine verdedigt een Republikein een zetel in een staat die op presidentsniveau Democratisch stemt.',
-      'source_url' => 'https://www.270towin.com/2026-senate-election/',
+      'candidate_d' => 'Troy Jackson',
+      'candidate_r' => 'Susan Collins',
+      'summary_nl' => 'Troy Jackson werd na de terugtrekking van de oorspronkelijke Democratische winnaar de tegenstander van Susan Collins.',
+      'source_url' => 'https://www.cookpolitical.com/ratings/senate-race-ratings',
     ),
     14 => 
     array (
@@ -244,10 +244,10 @@ return array (
       'is_open' => 1,
       'rating' => 'tossup',
       'is_competitive' => 1,
-      'candidate_d' => NULL,
-      'candidate_r' => NULL,
-      'summary_nl' => 'Michigan is een open zetel in een klassieke swing state en geldt als toss-up.',
-      'source_url' => 'https://www.270towin.com/2026-senate-election/',
+      'candidate_d' => 'Abdul El-Sayed',
+      'candidate_r' => 'Mike Rogers',
+      'summary_nl' => 'Abdul El-Sayed en Mike Rogers strijden om de open zetel van Gary Peters.',
+      'source_url' => 'https://www.cookpolitical.com/ratings/senate-race-ratings',
     ),
     15 => 
     array (
@@ -263,7 +263,7 @@ return array (
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-senate-election/',
+      'source_url' => 'https://www.cookpolitical.com/ratings/senate-race-ratings',
     ),
     16 => 
     array (
@@ -279,7 +279,7 @@ return array (
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-senate-election/',
+      'source_url' => 'https://www.cookpolitical.com/ratings/senate-race-ratings',
     ),
     17 => 
     array (
@@ -295,7 +295,7 @@ return array (
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-senate-election/',
+      'source_url' => 'https://www.cookpolitical.com/ratings/senate-race-ratings',
     ),
     18 => 
     array (
@@ -308,10 +308,10 @@ return array (
       'is_open' => 1,
       'rating' => 'lean_d',
       'is_competitive' => 1,
-      'candidate_d' => NULL,
-      'candidate_r' => NULL,
-      'summary_nl' => 'North Carolina kleurt al jaren net rood, maar Democraten zien hier een serieuze kans.',
-      'source_url' => 'https://www.270towin.com/2026-senate-election/',
+      'candidate_d' => 'Roy Cooper',
+      'candidate_r' => 'Michael Whatley',
+      'summary_nl' => 'Oud-gouverneur Roy Cooper en voormalig RNC-voorzitter Michael Whatley strijden om de open zetel.',
+      'source_url' => 'https://www.cookpolitical.com/ratings/senate-race-ratings',
     ),
     19 => 
     array (
@@ -322,12 +322,12 @@ return array (
       'incumbent_name' => 'Pete Ricketts',
       'incumbent_party' => 'R',
       'is_open' => 0,
-      'rating' => 'safe_r',
+      'rating' => 'likely_r',
       'is_competitive' => 0,
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-senate-election/',
+      'source_url' => 'https://www.cookpolitical.com/ratings/senate-race-ratings',
     ),
     20 => 
     array (
@@ -342,8 +342,8 @@ return array (
       'is_competitive' => 1,
       'candidate_d' => NULL,
       'candidate_r' => NULL,
-      'summary_nl' => 'New Hampshire is een open zetel die licht Democratisch neigt, maar competitief blijft.',
-      'source_url' => 'https://www.270towin.com/2026-senate-election/',
+      'summary_nl' => 'De zetel van Jeanne Shaheen is open; de Democratische en Republikeinse voorverkiezingen volgen op 8 september.',
+      'source_url' => 'https://www.cookpolitical.com/ratings/senate-race-ratings',
     ),
     21 => 
     array (
@@ -359,7 +359,7 @@ return array (
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-senate-election/',
+      'source_url' => 'https://www.cookpolitical.com/ratings/senate-race-ratings',
     ),
     22 => 
     array (
@@ -370,12 +370,12 @@ return array (
       'incumbent_name' => 'Ben Ray Luján',
       'incumbent_party' => 'D',
       'is_open' => 0,
-      'rating' => 'likely_d',
+      'rating' => 'safe_d',
       'is_competitive' => 0,
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-senate-election/',
+      'source_url' => 'https://www.cookpolitical.com/ratings/senate-race-ratings',
     ),
     23 => 
     array (
@@ -391,7 +391,7 @@ return array (
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-senate-election/',
+      'source_url' => 'https://www.cookpolitical.com/ratings/senate-race-ratings',
     ),
     24 => 
     array (
@@ -407,7 +407,7 @@ return array (
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-senate-election/',
+      'source_url' => 'https://www.cookpolitical.com/ratings/senate-race-ratings',
     ),
     25 => 
     array (
@@ -423,7 +423,7 @@ return array (
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-senate-election/',
+      'source_url' => 'https://www.cookpolitical.com/ratings/senate-race-ratings',
     ),
     26 => 
     array (
@@ -439,7 +439,7 @@ return array (
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-senate-election/',
+      'source_url' => 'https://www.cookpolitical.com/ratings/senate-race-ratings',
     ),
     27 => 
     array (
@@ -455,7 +455,7 @@ return array (
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-senate-election/',
+      'source_url' => 'https://www.cookpolitical.com/ratings/senate-race-ratings',
     ),
     28 => 
     array (
@@ -471,7 +471,7 @@ return array (
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-senate-election/',
+      'source_url' => 'https://www.cookpolitical.com/ratings/senate-race-ratings',
     ),
     29 => 
     array (
@@ -481,13 +481,13 @@ return array (
       'district' => NULL,
       'incumbent_name' => 'John Cornyn',
       'incumbent_party' => 'R',
-      'is_open' => 0,
+      'is_open' => 1,
       'rating' => 'lean_r',
       'is_competitive' => 1,
-      'candidate_d' => NULL,
-      'candidate_r' => NULL,
-      'summary_nl' => 'Texas is normaal stevig Republikeins; een verdeelde voorverkiezing kan de race spannender maken.',
-      'source_url' => 'https://www.270towin.com/2026-senate-election/',
+      'candidate_d' => 'James Talarico',
+      'candidate_r' => 'Ken Paxton',
+      'summary_nl' => 'James Talarico en Ken Paxton strijden om de zetel waarvoor de zittende senator niet terugkeert.',
+      'source_url' => 'https://www.cookpolitical.com/ratings/senate-race-ratings',
     ),
     30 => 
     array (
@@ -503,7 +503,7 @@ return array (
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-senate-election/',
+      'source_url' => 'https://www.cookpolitical.com/ratings/senate-race-ratings',
     ),
     31 => 
     array (
@@ -519,7 +519,7 @@ return array (
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-senate-election/',
+      'source_url' => 'https://www.cookpolitical.com/ratings/senate-race-ratings',
     ),
     32 => 
     array (
@@ -535,7 +535,7 @@ return array (
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => NULL,
-      'source_url' => 'https://www.270towin.com/2026-senate-election/',
+      'source_url' => 'https://www.cookpolitical.com/ratings/senate-race-ratings',
     ),
     33 => 
     array (
@@ -548,10 +548,10 @@ return array (
       'is_open' => 0,
       'rating' => 'tossup',
       'is_competitive' => 1,
-      'candidate_d' => NULL,
-      'candidate_r' => NULL,
-      'summary_nl' => 'Speciale verkiezing voor de zetel die vrijkwam toen J.D. Vance vicepresident werd.',
-      'source_url' => 'https://www.270towin.com/2026-senate-election/',
+      'candidate_d' => 'Sherrod Brown',
+      'candidate_r' => 'Jon Husted',
+      'summary_nl' => 'Voormalig senator Sherrod Brown probeert de speciale verkiezing te winnen van zittend senator Jon Husted.',
+      'source_url' => 'https://www.cookpolitical.com/ratings/senate-race-ratings',
     ),
     34 => 
     array (
@@ -562,12 +562,12 @@ return array (
       'incumbent_name' => 'Ashley Moody',
       'incumbent_party' => 'R',
       'is_open' => 0,
-      'rating' => 'likely_r',
+      'rating' => 'safe_r',
       'is_competitive' => 0,
       'candidate_d' => NULL,
       'candidate_r' => NULL,
       'summary_nl' => 'Speciale verkiezing voor de zetel die vrijkwam na het vertrek van Marco Rubio.',
-      'source_url' => 'https://www.270towin.com/2026-senate-election/',
+      'source_url' => 'https://www.cookpolitical.com/ratings/senate-race-ratings',
     ),
   ),
   'governor' => 

@@ -16,7 +16,7 @@ require_once BASE_PATH . '/views/templates/header.php';
 <?= pp_render_component('section/page-hero', [
     'eyebrow' => 'Partijen',
     'title'   => 'Wie zijn de spelers in Den Haag?',
-    'lead'    => 'Een rustig overzicht van alle Nederlandse politieke partijen. Bekijk lijsttrekkers, zetelaantallen en hun belangrijkste standpunten - zonder ruis.',
+    'lead'    => 'Een rustig overzicht van alle Nederlandse politieke partijen. Bekijk partijleiders, zetelaantallen en hun belangrijkste standpunten - zonder ruis.',
 ]) ?>
 
 <section class="pp-container pp-container--xl mt-12">
@@ -38,7 +38,7 @@ require_once BASE_PATH . '/views/templates/header.php';
         </div>
         <div class="keyline-card p-5">
             <div class="text-xs uppercase tracking-[0.18em] text-[color:var(--color-ink-muted)] mb-2">Verkiezingen</div>
-            <div class="font-display text-3xl text-[color:var(--color-ink)] font-mono text-tabular">2026</div>
+            <div class="font-display text-3xl text-[color:var(--color-ink)] font-mono text-tabular">2025</div>
             <div class="text-sm text-[color:var(--color-ink-muted)] mt-1">laatste TK-verkiezingen</div>
         </div>
     </div>

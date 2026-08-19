@@ -18,6 +18,9 @@ class MidtermsModel
     /** Datum van de verkiezingen (Election Day). */
     public const ELECTION_DATE = '2026-11-03';
 
+    /** Peildatum van de handmatig geverifieerde redactionele data. */
+    public const DATA_VERIFIED_AT = '2026-08-19 19:00:00';
+
     public function __construct($database = null)
     {
         $this->db = $database;
@@ -287,6 +290,39 @@ class MidtermsModel
         $election = new DateTimeImmutable(self::ELECTION_DATE);
         $diff = (int) $now->diff($election)->format('%r%a');
         return $diff;
+    }
+
+    /**
+     * Geverifieerde institutionele context, los van vluchtige marktdata.
+     * De pagina kan hierdoor steeds bron en peildatum tonen.
+     */
+    public function getContext(): array
+    {
+        $path = __DIR__ . '/../includes/data/midterms_2026_context.php';
+        if (!is_readable($path)) {
+            return [
+                'verified_at' => self::DATA_VERIFIED_AT,
+                'election_date' => self::ELECTION_DATE,
+                'sources' => [],
+            ];
+        }
+        $context = require $path;
+        return is_array($context) ? $context : [];
+    }
+
+    /**
+     * Laatste tijdstip waarop een live markt in de cache is bijgewerkt.
+     */
+    public function getOddsUpdatedAt(): ?string
+    {
+        $latest = null;
+        foreach ($this->getOdds() as $odd) {
+            $value = is_object($odd) ? ($odd->fetched_at ?? null) : ($odd['fetched_at'] ?? null);
+            if ($value !== null && ($latest === null || strtotime((string) $value) > strtotime((string) $latest))) {
+                $latest = (string) $value;
+            }
+        }
+        return $latest;
     }
 
     // ---------------------------------------------------------------------

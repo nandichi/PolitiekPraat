@@ -406,7 +406,7 @@ $ppUsaPartyTone = static function ($label): array {
                 <span class="text-tag uppercase tracking-wider text-[color:var(--color-ink-faint)] font-medium">Verenigde Staten</span>
             </div>
             <h3 class="font-display text-2xl text-[color:var(--color-ink)] mb-2 group-hover:text-[color:var(--color-hague)] transition-colors">
-                Van Washington tot Biden
+                Van Washington tot Trump
             </h3>
             <p class="text-[color:var(--color-ink-muted)] mb-4 leading-relaxed">
                 Een complete geschiedenis van Amerikaanse presidentsverkiezingen sinds 1789 - inclusief kiesmannen, populaire stem en kantelmomenten in de Amerikaanse politiek.

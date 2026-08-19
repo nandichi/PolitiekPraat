@@ -5,7 +5,7 @@ $metaDescriptions = [
     'home' => 'Ontdek het laatste politieke nieuws, expert blogs en stemhulp op PolitiekPraat. Jouw platform voor Nederlandse politiek, verkiezingen en democratisch debat.',
     'blogs' => 'Lees politieke blogs van experts en ervaren columnisten over actuele Nederlandse thema\'s. Deel je mening en ontdek nieuwe perspectieven op de politiek.',
     'nieuws' => 'Het laatste Nederlandse politieke nieuws uit betrouwbare bronnen. Blijf dagelijks geïnformeerd over regering, oppositie en belangrijke ontwikkelingen.',
-    'partijmeter' => 'Doe de gratis online PartijMeter test 2025 en ontdek binnen 5 minuten welke Nederlandse politieke partij het beste bij jouw standpunten past. Vergelijk 14 partijen op basis van 30 actuele thema\'s.',
+    'partijmeter' => 'Doe de gratis PartijMeter 2026 en ontdek welke Nederlandse politieke partijen het beste bij jouw standpunten passen. Vergelijk actuele partijen en thema\'s in enkele minuten.',
     'stemwijzer' => 'Gemeentelijke Stemwijzer Ede 2026 met 25 stellingen en weging. Krijg hulp bij het vergelijken van partijstandpunten voor de gemeenteraadsverkiezingen.',
     'politiek-kompas' => 'Ontdek jouw politieke kompas door partijstandpunten te vergelijken op thema\'s als klimaat, zorg, economie en onderwijs. Maak een geïnformeerde stemkeuze.',
     'partijen' => 'Volledig overzicht van Nederlandse politieke partijen met hun standpunten, lijsttrekkers en verkiezingsprogramma\'s. Van VVD tot PvdA en alle anderen.',
@@ -44,7 +44,7 @@ $metaDescriptions = [
     'resultaten' => 'Ontdek je PartijMeter resultaten en zie welke Nederlandse politieke partijen het beste aansluiten bij jouw persoonlijke standpunten en waarden.',
 
     // Amerikaanse verkiezingen
-    'amerikaanse-verkiezingen' => 'Ontdek de complete geschiedenis van Amerikaanse presidentsverkiezingen van 1789 tot heden. Van George Washington tot Joe Biden - alle verkiezingen, statistieken en presidentiële races in detail.',
+    'amerikaanse-verkiezingen' => 'Ontdek de geschiedenis van Amerikaanse presidentsverkiezingen van 1789 tot heden. Van George Washington tot de terugkeer van Donald Trump als 47e president.',
 
     // Nederlandse verkiezingen
     'nederlandse-verkiezingen' => 'Verken 175 jaar Nederlandse democratie en parlementaire geschiedenis. Van Thorbeckiaanse grondwet tot moderne coalitiekabinetten - alle verkiezingen, ministers-presidenten en politieke ontwikkelingen.',
@@ -59,7 +59,7 @@ $metaKeywords = [
     'home' => 'politiek, nieuws, blogs, Nederland, politieke partijen, democratie, verkiezingen, overheid, Nederlandse politiek, Haags nieuws, PolitiekPraat',
     'blogs' => 'politieke blogs, opinieartikelen, politieke analyses, Nederlandse politiek, politiek commentaar, verkiezingen, columnisten, PolitiekPraat',
     'nieuws' => 'politiek nieuws, Nederlands nieuws, Haags nieuws, regering, oppositie, kabinet, ministeries, Tweede Kamer, PolitiekPraat',
-    'partijmeter' => 'partijmeter, stemwijzer, stemwijzer 2025, partijmeter 2025, online politieke test nederland, politieke partijen vergelijken, verkiezingen 2025, stemhulp, kieskompas, gratis partijmeter, nederlandse partijmeter, partijkeuze, stemadvies, PolitiekPraat',
+    'partijmeter' => 'partijmeter, stemwijzer, stemwijzer 2026, partijmeter 2026, online politieke test nederland, politieke partijen vergelijken, verkiezingen 2026, stemhulp, kieskompas, gratis partijmeter, nederlandse partijmeter, partijkeuze, stemadvies, PolitiekPraat',
     'stemwijzer' => 'gemeentelijke stemwijzer ede 2026, gemeenteraadsverkiezingen ede, stemhulp ede, partijen vergelijken ede, 25 stellingen stemwijzer, weging stemwijzer',
     'politiek-kompas' => 'politiek kompas, partijen vergelijken, politieke standpunten, stemadvies, Nederlandse partijen, verkiezingen, PolitiekPraat',
     'partijen' => 'politieke partijen Nederland, VVD, PvdA, VVD, CDA, D66, PVV, GroenLinks, partijoverzicht, lijsttrekkers, PolitiekPraat',
@@ -98,7 +98,7 @@ $metaKeywords = [
     'resultaten' => 'partijmeter resultaten, politieke match, partijen, verkiezingen, stemadvies, PolitiekPraat',
 
     // Amerikaanse verkiezingen
-    'amerikaanse-verkiezingen' => 'Amerikaanse verkiezingen, presidentsverkiezingen, verkiezingsgeschiedenis, George Washington, Joe Biden, kiesmannen, Democrats, Republicans, Electoral College, presidenten, verkiezingen geschiedenis',
+    'amerikaanse-verkiezingen' => 'Amerikaanse verkiezingen, presidentsverkiezingen, verkiezingsgeschiedenis, George Washington, Donald Trump, kiesmannen, Democrats, Republicans, Electoral College, presidenten',
 
     // Nederlandse verkiezingen
     'nederlandse-verkiezingen' => 'Nederlandse verkiezingen, Tweede Kamer verkiezingen, Nederlandse democratie, ministers-presidenten, politieke geschiedenis, Thorbeckiaanse grondwet, coalitiekabinetten, parlementaire democratie, Nederlandse politiek, verkiezingsgeschiedenis',
@@ -278,7 +278,7 @@ $metaKeyword = isset($data['keywords']) ? $data['keywords'] : $metaKeyword;
 
 // Specifieke meta images voor bepaalde pagina's
 if ($currentPage === 'midterms-2026') {
-    $metaImage = 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/United_States_Capitol_west_front_edit2.jpg/1200px-United_States_Capitol_west_front_edit2.jpg';
+    $metaImage = URLROOT . '/public/images/midterms/capitol-east-front.jpg';
 } elseif ($currentPage === 'amerikaanse-verkiezingen') {
     $metaImage = 'https://ichef.bbci.co.uk/images/ic/640x360/p0jzn3xt.jpg';
 } elseif ($currentPage === 'nederlandse-verkiezingen') {
@@ -295,6 +295,10 @@ $jsAppPath  = __DIR__ . '/../../public/js/pp-app.js';
 $jsAppVer   = file_exists($jsAppPath) ? filemtime($jsAppPath) : time();
 $jsMapPath  = __DIR__ . '/../../public/js/midterms-map.js';
 $jsMapVer   = file_exists($jsMapPath) ? filemtime($jsMapPath) : time();
+$cssMidtermsPath = __DIR__ . '/../../public/css/midterms.css';
+$cssMidtermsVer = file_exists($cssMidtermsPath) ? filemtime($cssMidtermsPath) : time();
+$jsMidtermsMotionPath = __DIR__ . '/../../public/js/midterms-motion.js';
+$jsMidtermsMotionVer = file_exists($jsMidtermsMotionPath) ? filemtime($jsMidtermsMotionPath) : time();
 $cssPmPath  = __DIR__ . '/../../public/css/partijmeter.css';
 $cssPmVer   = file_exists($cssPmPath) ? filemtime($cssPmPath) : time();
 $jsPmPath   = __DIR__ . '/../../public/js/partijmeter.js';
@@ -428,6 +432,11 @@ $jsPmVer    = file_exists($jsPmPath) ? filemtime($jsPmPath) : time();
 
     <!-- Main editorial stylesheet (Tailwind v4 build) -->
     <link rel="stylesheet" href="<?php echo URLROOT; ?>/public/css/app.build.css?v=<?php echo $cssAppVer; ?>">
+
+    <?php if ($currentPage === 'midterms-2026'): ?>
+    <link rel="preload" href="<?php echo URLROOT; ?>/public/images/midterms/capitol-east-front.jpg" as="image">
+    <link rel="stylesheet" href="<?php echo URLROOT; ?>/public/css/midterms.css?v=<?php echo $cssMidtermsVer; ?>">
+    <?php endif; ?>
 
     <?php if ($currentPage === 'partijmeter'): ?>
     <!-- PartijMeter 2026: pagina-specifieke stijl (animaties, kompas, matrix) -->
@@ -686,6 +695,7 @@ $jsPmVer    = file_exists($jsPmPath) ? filemtime($jsPmPath) : time();
     <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js" defer></script>
     <script src="<?php echo URLROOT; ?>/public/js/midterms-map.js?v=<?php echo $jsMapVer; ?>" defer></script>
+    <script src="<?php echo URLROOT; ?>/public/js/midterms-motion.js?v=<?php echo $jsMidtermsMotionVer; ?>" defer></script>
     <?php endif; ?>
 
     <!-- Accessibility & legacy support (worden in Wave 5 opgeruimd) -->
@@ -702,7 +712,7 @@ $jsPmVer    = file_exists($jsPmPath) ? filemtime($jsPmPath) : time();
     <!-- Alpine.js (nog gebruikt door legacy templates; te vervangen in Wave 2-5) -->
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
-<body>
+<body class="page-<?= htmlspecialchars($currentPage, ENT_QUOTES, 'UTF-8') ?>">
     <?php require __DIR__ . '/../components/site/skip-link.php'; ?>
     <?php require __DIR__ . '/../components/site/dev-environment-banner.php'; ?>
 

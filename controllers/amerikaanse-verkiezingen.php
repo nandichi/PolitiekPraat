@@ -138,17 +138,17 @@ class AmerikaanseVerkiezingenController {
                 'verliezer' => 'Kamala Harris',
                 'verliezer_partij' => 'Democratic',
                 'verliezer_kiesmannen' => 226,
-                'winnaar_stemmen_populair' => 74223975,
-                'verliezer_stemmen_populair' => 70329765,
-                'winnaar_percentage_populair' => 50.0,
-                'verliezer_percentage_populair' => 47.4,
+                'winnaar_stemmen_populair' => 77303568,
+                'verliezer_stemmen_populair' => 75019230,
+                'winnaar_percentage_populair' => 49.8,
+                'verliezer_percentage_populair' => 48.3,
                 'opkomst_percentage' => 64.5,
                 'verkiezingsdata' => '2024-11-05',
                 'inhuldiging_data' => '2025-01-20',
                 'belangrijkste_themas' => ['Economie', 'Immigratie', 'Democratie', 'Abortus'],
                 'belangrijke_gebeurtenissen' => 'Trump\'s comeback na zijn verlies in 2020 en verschillende juridische zaken.',
                 'opvallende_feiten' => 'Trump wordt de eerste president sinds Grover Cleveland (1892) die niet-opeenvolgende termijnen dient.',
-                'beschrijving' => 'De verkiezing van 2024 was een rematch tussen Trump en Biden, maar Harris nam het over na Biden\'s terugtrekking.'
+                'beschrijving' => 'Donald Trump won nadat Joe Biden zijn campagne beëindigde en Kamala Harris de Democratische nominatie overnam.'
             ],
             (object)[
                 'jaar' => 2020,
@@ -291,19 +291,41 @@ class AmerikaanseVerkiezingenController {
                 'bijnaam' => 'Amtrak Joe',
                 'partij' => 'Democratic',
                 'periode_start' => '2021-01-20',
-                'periode_eind' => null,
+                'periode_eind' => '2025-01-20',
                 'geboren' => '1942-11-20',
                 'overleden' => null,
                 'geboorteplaats' => 'Scranton, Pennsylvania',
                 'vice_president' => 'Kamala Harris',
                 'foto_url' => 'https://upload.wikimedia.org/wikipedia/commons/6/68/Joe_Biden_presidential_portrait.jpg',
-                'biografie' => 'Joe Biden is de 46e en huidige president van de Verenigde Staten.',
-                'prestaties' => ['Oudste president ooit geïnaugureerd', '36 jaar Senator', 'Vice-president onder Obama'],
+                'biografie' => 'Joe Biden was van 2021 tot 2025 de 46e president van de Verenigde Staten.',
+                'prestaties' => ['Was bij aantreden de oudste president ooit', '36 jaar senator', 'Vicepresident onder Obama'],
                 'fun_facts' => ['Jongste senator ooit gekozen', 'Gebruikt trein dagelijks 36 jaar', 'Eerste katholieke president sinds JFK'],
                 'echtgenote' => 'Jill Tracy Jacobs Biden',
                 'familie_connecties' => 'Geen directe presidentiële familie',
                 'leeftijd_bij_aantreden' => 78,
-                'jaren_in_functie' => 3,
+                'jaren_in_functie' => 4,
+                'is_huidig' => false
+            ],
+            (object)[
+                'president_nummer' => 47,
+                'naam' => 'Donald Trump',
+                'volledige_naam' => 'Donald John Trump',
+                'bijnaam' => 'The Donald',
+                'partij' => 'Republican',
+                'periode_start' => '2025-01-20',
+                'periode_eind' => null,
+                'geboren' => '1946-06-14',
+                'overleden' => null,
+                'geboorteplaats' => 'Queens, New York',
+                'vice_president' => 'J.D. Vance',
+                'foto_url' => 'https://upload.wikimedia.org/wikipedia/commons/5/56/Donald_Trump_official_portrait.jpg',
+                'biografie' => 'Donald Trump is de 45e en 47e president en begon op 20 januari 2025 aan zijn tweede, niet-opeenvolgende termijn.',
+                'prestaties' => ['Eerste niet-opeenvolgende president sinds Grover Cleveland', 'Won in 2024 zowel het kiescollege als de meeste stemmen', 'Tweede termijn gestart in 2025'],
+                'fun_facts' => ['45e en 47e president', 'Eerste president zonder eerdere politieke of militaire functie', 'Afkomstig uit New York'],
+                'echtgenote' => 'Melania Knauss Trump',
+                'familie_connecties' => 'Geen directe presidentiële familie',
+                'leeftijd_bij_aantreden' => 78,
+                'jaren_in_functie' => 5,
                 'is_huidig' => true
             ]
         ];
@@ -355,7 +377,7 @@ class AmerikaanseVerkiezingenController {
     
     private function getFallbackPresidentenStatistieken() {
         return (object)[
-            'totaal_presidenten' => 46,
+            'totaal_presidenten' => 47,
             'gemiddelde_leeftijd' => 55.4,
             'jongste_leeftijd' => 42,
             'oudste_leeftijd' => 78,
@@ -391,8 +413,8 @@ class AmerikaanseVerkiezingenController {
                     elseif (in_array($president->president_nummer, [26, 32, 33])) {
                         $keyFigures['industriele_era'][] = $president;
                     }
-                    // Digitale Revolutie (1960-heden): Kennedy, Obama, Biden
-                    elseif (in_array($president->president_nummer, [35, 44, 46])) {
+                    // Digitale Revolutie (1960-heden): Kennedy, Obama, Biden, Trump
+                    elseif (in_array($president->president_nummer, [35, 44, 46, 47])) {
                         $keyFigures['digitale_revolutie'][] = $president;
                     }
                 }
@@ -461,6 +483,11 @@ class AmerikaanseVerkiezingenController {
                     'president_nummer' => 46,
                     'naam' => 'Joe Biden',
                     'foto_url' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Joe_Biden_presidential_portrait.jpg/256px-Joe_Biden_presidential_portrait.jpg'
+                ],
+                (object)[
+                    'president_nummer' => 47,
+                    'naam' => 'Donald Trump',
+                    'foto_url' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Donald_Trump_official_portrait.jpg/256px-Donald_Trump_official_portrait.jpg'
                 ]
             ]
         ];

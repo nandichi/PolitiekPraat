@@ -11,7 +11,7 @@
  * Partij-codes: D (Democraat), R (Republikein), I (onafhankelijk)
  *
  * NB: cijfers/odds worden live ververst via de Polymarket-cron; de waarden
- * hier zijn een momentopname (eind mei 2026) als terugval.
+ * hier zijn een momentopname (19 augustus 2026) als terugval.
  *
  * De Senaat- en Gouverneursraces en de Huis-baseline (alle 435) worden
  * gegenereerd door scripts/midterms_generate_baseline.php en hier ingeladen.
@@ -29,39 +29,40 @@ $mt_house_baseline = (static function (): array {
     return is_array($data) ? $data : [];
 })();
 
-// Geselecteerde competitieve Huis-districten (highlights bovenop de baseline).
+// Geselecteerde Huis-districten. Kandidaten en status zijn gecontroleerd na
+// de voorverkiezingen; de nationale ratingverdeling staat in de contextdata.
 $mt_house_competitive = [
     [
         'chamber' => 'house', 'state_code' => 'CA', 'state_name' => 'Californië', 'district' => '13',
-        'incumbent_name' => 'nog onbekend', 'incumbent_party' => 'D', 'is_open' => 0,
-        'rating' => 'tossup', 'is_competitive' => 1,
-        'candidate_d' => 'nog onbekend', 'candidate_r' => 'nog onbekend',
-        'summary_nl' => 'Een van de dichtst bevochten districten in de Central Valley van Californië.',
-        'source_url' => 'https://www.270towin.com/2026-house-election/',
+        'incumbent_name' => 'Adam Gray', 'incumbent_party' => 'D', 'is_open' => 0,
+        'rating' => 'lean_d', 'is_competitive' => 1,
+        'candidate_d' => 'Adam Gray', 'candidate_r' => 'Kevin Lincoln',
+        'summary_nl' => 'Adam Gray won dit district in 2024 met minder dan tweehonderd stemmen. De nieuwe kaart is gunstiger voor Democraten, maar de Central Valley blijft competitief.',
+        'source_url' => 'https://ballotpedia.org/California%27s_13th_Congressional_District_election,_2026',
     ],
     [
         'chamber' => 'house', 'state_code' => 'NY', 'state_name' => 'New York', 'district' => '17',
-        'incumbent_name' => 'nog onbekend', 'incumbent_party' => 'R', 'is_open' => 0,
+        'incumbent_name' => 'Mike Lawler', 'incumbent_party' => 'R', 'is_open' => 0,
         'rating' => 'tossup', 'is_competitive' => 1,
-        'candidate_d' => 'nog onbekend', 'candidate_r' => 'nog onbekend',
-        'summary_nl' => 'Een voorstedelijk district ten noorden van New York City dat heen en weer pendelt tussen beide partijen.',
-        'source_url' => 'https://www.270towin.com/2026-house-election/',
+        'candidate_d' => 'Cait Conley', 'candidate_r' => 'Mike Lawler',
+        'summary_nl' => 'Legerveteraan Cait Conley neemt het op tegen de Republikeinse zittende Mike Lawler in een gelijk verdeeld district in de Hudson Valley.',
+        'source_url' => 'https://ballotpedia.org/New_York%27s_17th_Congressional_District_election,_2026',
     ],
     [
         'chamber' => 'house', 'state_code' => 'NE', 'state_name' => 'Nebraska', 'district' => '2',
-        'incumbent_name' => 'Don Bacon', 'incumbent_party' => 'R', 'is_open' => 0,
+        'incumbent_name' => 'Don Bacon', 'incumbent_party' => 'R', 'is_open' => 1,
         'rating' => 'tossup', 'is_competitive' => 1,
-        'candidate_d' => 'nog onbekend', 'candidate_r' => 'nog onbekend',
-        'summary_nl' => 'Het district rond Omaha staat bekend als een van de weinige districten die regelmatig van kleur wisselt.',
-        'source_url' => 'https://www.270towin.com/2026-house-election/',
+        'candidate_d' => 'Denise Powell', 'candidate_r' => 'Brinker Harding',
+        'summary_nl' => 'Door het vertrek van Don Bacon is het district rond Omaha open. Het gebied stemt op presidentsniveau licht Democratischer dan het land als geheel.',
+        'source_url' => 'https://ballotpedia.org/Nebraska%27s_2nd_Congressional_District_election,_2026',
     ],
     [
         'chamber' => 'house', 'state_code' => 'ME', 'state_name' => 'Maine', 'district' => '2',
-        'incumbent_name' => 'Jared Golden', 'incumbent_party' => 'D', 'is_open' => 0,
-        'rating' => 'tossup', 'is_competitive' => 1,
-        'candidate_d' => 'nog onbekend', 'candidate_r' => 'nog onbekend',
-        'summary_nl' => 'Het noordelijke district van Maine is een klassiek split-ticket district.',
-        'source_url' => 'https://www.270towin.com/2026-house-election/',
+        'incumbent_name' => 'Jared Golden', 'incumbent_party' => 'D', 'is_open' => 1,
+        'rating' => 'likely_r', 'is_competitive' => 1,
+        'candidate_d' => 'Matt Dunlap', 'candidate_r' => 'Paul LePage',
+        'summary_nl' => 'Jared Golden stelt zich niet herkiesbaar. Voormalig staatssecretaris Matt Dunlap neemt het op tegen oud-gouverneur Paul LePage in een district dat nationaal naar rechts opschoof.',
+        'source_url' => 'https://ballotpedia.org/Maine%27s_2nd_Congressional_District_election,_2026',
     ],
 ];
 
@@ -90,45 +91,45 @@ return [
     'timeline' => [
         [
             'event_date' => '2025-01-20', 'category' => 'event',
-            'title_nl' => 'Aantreden Trump en Vance',
-            'description_nl' => 'President Trump en vicepresident Vance treden aan. Daarmee begint feitelijk de aanloop naar de tussentijdse verkiezingen van 2026, die vaak als tussentijds rapportcijfer voor de zittende president gelden.',
-            'source_url' => null,
+            'title_nl' => 'Start van Trumps tweede termijn',
+            'description_nl' => 'Donald Trump treedt aan als 47e president en JD Vance als vicepresident. De verkiezingen van 2026 worden het eerste landelijke oordeel halverwege deze tweede, niet-opeenvolgende termijn.',
+            'source_url' => 'https://www.whitehouse.gov/administration/donald-j-trump/',
         ],
         [
             'event_date' => '2025-01-20', 'category' => 'event',
-            'title_nl' => 'Open Senaatszetels in Ohio en Florida',
-            'description_nl' => 'Doordat J.D. Vance vicepresident werd en Marco Rubio een ministerspost kreeg, kwamen hun Senaatszetels vrij. Er werden tijdelijke opvolgers benoemd; in 2026 volgen speciale verkiezingen om de zetels definitief in te vullen.',
-            'source_url' => null,
-        ],
-        [
-            'event_date' => '2025-11-04', 'category' => 'event',
-            'title_nl' => 'Off-year verkiezingen 2025: Democraten winnen Virginia en New Jersey',
-            'description_nl' => 'Bij de verkiezingen van november 2025 wonnen de Democraten de gouverneursraces in Virginia (Abigail Spanberger) en New Jersey (Mikie Sherrill). Analisten lazen die uitslagen als een vroege graadmeter en een gunstig signaal voor de Democraten richting de midterms.',
-            'source_url' => null,
-        ],
-        [
-            'event_date' => '2026-02-15', 'category' => 'event',
-            'title_nl' => 'Herindeling van kiesdistricten valt grotendeels in Republikeins voordeel uit',
-            'description_nl' => 'In de aanloop naar 2026 hertekenden meerdere staten hun congresdistricten. Per saldo verbeterde die herindeling vooral de uitgangspositie van de Republikeinen voor het Huis van Afgevaardigden; volgens tellingen ging het om een handvol tot ruim tien zetels.',
-            'source_url' => null,
+            'title_nl' => 'Speciale Senaatsverkiezingen in Ohio en Florida nodig',
+            'description_nl' => 'Door het vertrek van JD Vance en Marco Rubio worden in 2026 naast de 33 reguliere Class II-races ook speciale Senaatsverkiezingen gehouden in Ohio en Florida.',
+            'source_url' => 'https://ballotpedia.org/United_States_Senate_elections,_2026',
         ],
         [
             'event_date' => '2026-03-03', 'category' => 'primary',
-            'title_nl' => 'Start van het voorverkiezingsseizoen',
-            'description_nl' => 'In het voorjaar van 2026 kozen de eerste staten hun kandidaten voor november. Daarmee begon het voorverkiezingsseizoen dat het deelnemersveld voor de midterms bepaalt.',
-            'source_url' => null,
+            'title_nl' => 'Eerste grote voorverkiezingsdag',
+            'description_nl' => 'Het voorverkiezingsseizoen begint in meerdere staten. Partijen kiezen hun kandidaten voor het Congres, gouverneurschappen en lokale functies.',
+            'source_url' => 'https://www.fec.gov/introduction-campaign-finance/election-results-and-voting-information/',
         ],
         [
             'event_date' => '2026-06-02', 'category' => 'primary',
-            'title_nl' => 'Grote voorverkiezingsdag in onder meer Californië en Iowa',
-            'description_nl' => 'Begin juni 2026 hielden meerdere staten, waaronder Californië en Iowa, hun voorverkiezingen. Zo kreeg het veld voor november verder vorm; in Iowa verschoof de Senaatsrace daardoor richting de Republikeinen.',
-            'source_url' => null,
+            'title_nl' => 'Voorverkiezingen in onder meer Californië en Iowa',
+            'description_nl' => 'Een grote groep staten bepaalt het kandidatenveld. In Californië plaatsen de twee kandidaten met de meeste stemmen zich voor november, ongeacht partij.',
+            'source_url' => 'https://www.fec.gov/introduction-campaign-finance/election-results-and-voting-information/',
+        ],
+        [
+            'event_date' => '2026-06-23', 'category' => 'primary',
+            'title_nl' => 'New York kiest kandidaten voor het Huis',
+            'description_nl' => 'De voorverkiezingen in New York leggen onder meer de tweestrijd vast in het competitieve 17e district: Cait Conley tegen zittend afgevaardigde Mike Lawler.',
+            'source_url' => 'https://ballotpedia.org/New_York%27s_17th_Congressional_District_election,_2026',
+        ],
+        [
+            'event_date' => '2026-08-18', 'category' => 'primary',
+            'title_nl' => 'Laatste grote primary night: Alaska, Florida en Wyoming',
+            'description_nl' => 'Alaska, Florida en Wyoming stemmen. Vooral de Senaatsrace in Alaska krijgt landelijke aandacht, terwijl Florida voor het eerst met nieuwe congresgrenzen stemt.',
+            'source_url' => 'https://abcnews.com/Politics/primaries-3-states-tuesday-narrow-field-key-senate/story?id=135721707',
         ],
         [
             'event_date' => '2026-11-03', 'category' => 'deadline',
             'title_nl' => 'Election Day',
-            'description_nl' => 'Op 3 november 2026 stemmen Amerikanen over het volledige Huis van Afgevaardigden, 35 Senaatszetels en 36 gouverneursposten, naast talloze referenda en lokale verkiezingen.',
-            'source_url' => null,
+            'description_nl' => 'Amerikanen kiezen alle 435 leden van het Huis, beslissen over 35 Senaatsraces en kiezen in 36 staten een gouverneur. De winnaars voor het Congres treden op 3 januari 2027 aan.',
+            'source_url' => 'https://www.fec.gov/introduction-campaign-finance/election-results-and-voting-information/',
         ],
     ],
 
@@ -137,45 +138,49 @@ return [
     // ----------------------------------------------------------------
     'referenda' => [
         [
-            'state_code' => 'CA', 'state_name' => 'Californië', 'measure_code' => null,
-            'title_nl' => 'Eenmalige vermogensbelasting voor miljardairs in Californië',
-            'theme' => 'belastingen',
-            'description_nl' => 'Californië stemt over een eenmalige vermogensbelasting voor miljardairs. Voorspellingsmarkten gaven de invoering eind mei een kleine kans.',
+            'state_code' => 'CA', 'state_name' => 'Californië', 'measure_code' => 'Proposition 1',
+            'title_nl' => 'Woning- en veteranenfonds van 11,25 miljard dollar',
+            'theme' => 'wonen',
+            'description_nl' => 'Proposition 1 vraagt toestemming voor staatsobligaties ter financiering van betaalbare woningen, woonprogramma’s en leningen voor veteranen.',
             'polymarket_slug' => null,
-            'yes_label_nl' => 'Belasting wordt ingevoerd',
-            'source_url' => 'https://polymarket.com/predictions/midterms',
+            'yes_label_nl' => 'Obligatielening wordt goedgekeurd',
+            'election_date' => '2026-11-03',
+            'source_url' => 'https://ballotpedia.org/California_Proposition_1,_Veteran_and_Housing_Assistance_Programs_Bond_Measure_(2026)',
         ],
         [
-            'state_code' => 'MI', 'state_name' => 'Michigan', 'measure_code' => null,
-            'title_nl' => 'Herschrijven van de grondwet van Michigan',
+            'state_code' => 'MI', 'state_name' => 'Michigan', 'measure_code' => 'CCQ',
+            'title_nl' => 'Moet Michigan een grondwettelijke conventie houden?',
             'theme' => 'staatsinrichting',
-            'description_nl' => 'Een voorstel om de grondwet van de staat Michigan te herzien.',
+            'description_nl' => 'Kiezers beantwoorden de periodieke grondwettelijke vraag of de staat een conventie moet bijeenroepen om de grondwet te herzien.',
             'polymarket_slug' => null,
-            'yes_label_nl' => 'Grondwet wordt herzien',
-            'source_url' => 'https://polymarket.com/predictions/midterms',
+            'yes_label_nl' => 'Conventie wordt gehouden',
+            'election_date' => '2026-11-03',
+            'source_url' => 'https://ballotpedia.org/Michigan_Constitutional_Convention_Question_(2026)',
         ],
         [
-            'state_code' => 'MO', 'state_name' => 'Missouri', 'measure_code' => null,
-            'title_nl' => 'Verbod op abortus en geslachtsbehandelingen voor minderjarigen in Missouri',
-            'theme' => 'abortus',
-            'description_nl' => 'Missouri stemt over een verbod gericht op abortus en medische geslachtsbehandelingen voor minderjarigen.',
+            'state_code' => 'MO', 'state_name' => 'Missouri', 'measure_code' => 'Amendment 3',
+            'title_nl' => 'Verbod op abortus en gendertransitieprocedures voor minderjarigen',
+            'theme' => 'zorg',
+            'description_nl' => 'Amendment 3 zou abortus in de meeste gevallen verbieden en medische gendertransitieprocedures voor mensen onder de achttien verbieden.',
             'polymarket_slug' => null,
-            'yes_label_nl' => 'Verbod wordt aangenomen',
-            'source_url' => 'https://polymarket.com/predictions/midterms',
+            'yes_label_nl' => 'Amendement wordt aangenomen',
+            'election_date' => '2026-11-03',
+            'source_url' => 'https://ballotpedia.org/Missouri_Amendment_3,_Prohibit_Abortion_and_Gender_Transition_Procedures_for_Minors_Amendment_(2026)',
         ],
         [
-            'state_code' => 'NV', 'state_name' => 'Nevada', 'measure_code' => null,
-            'title_nl' => 'Bescherming van abortusrechten in de grondwet van Nevada',
+            'state_code' => 'NV', 'state_name' => 'Nevada', 'measure_code' => 'Question 6',
+            'title_nl' => 'Grondwettelijk recht op abortus vóór levensvatbaarheid',
             'theme' => 'abortus',
-            'description_nl' => 'Nevada stemt over het vastleggen van abortusbescherming in de staatsgrondwet.',
+            'description_nl' => 'Question 6 zou vóór foetale levensvatbaarheid een recht op abortus vastleggen in de grondwet van Nevada.',
             'polymarket_slug' => null,
-            'yes_label_nl' => 'Bescherming wordt vastgelegd',
-            'source_url' => 'https://polymarket.com/predictions/midterms',
+            'yes_label_nl' => 'Recht wordt vastgelegd',
+            'election_date' => '2026-11-03',
+            'source_url' => 'https://ballotpedia.org/Nevada_Question_6,_Right_to_Abortion_Initiative_(2026)',
         ],
     ],
 
     // ----------------------------------------------------------------
-    // Odds (Polymarket momentopname eind mei 2026). Wordt live ververst.
+    // Odds (Polymarket momentopname 19 augustus 2026). Wordt live ververst.
     // outcomes: lijst van {label_nl, price (0..1)}
     // ----------------------------------------------------------------
     'odds' => [
@@ -183,25 +188,28 @@ return [
             'title_nl' => 'Wie controleert de Senaat na 2026?',
             'category' => 'control',
             'outcomes' => [
-                ['label_nl' => 'Republikeinen', 'price' => 0.535],
-                ['label_nl' => 'Democraten', 'price' => 0.465],
+                ['label_nl' => 'Democraten', 'price' => 0.505],
+                ['label_nl' => 'Republikeinen', 'price' => 0.495],
             ],
             'source_url' => 'https://polymarket.com/event/which-party-will-win-the-senate-in-2026',
+            'fetched_at' => '2026-08-19 19:00:00',
         ],
         'house_control' => [
             'title_nl' => 'Wie controleert het Huis na 2026?',
             'category' => 'control',
             'outcomes' => [
-                ['label_nl' => 'Democraten', 'price' => 0.81],
-                ['label_nl' => 'Republikeinen', 'price' => 0.19],
+                ['label_nl' => 'Democraten', 'price' => 0.875],
+                ['label_nl' => 'Republikeinen', 'price' => 0.125],
             ],
             'source_url' => 'https://polymarket.com/event/which-party-will-win-the-house-in-2026',
+            'fetched_at' => '2026-08-19 19:00:00',
         ],
         'rep_governors' => [
             'title_nl' => 'Hoeveel gouverneurs hebben de Republikeinen na 2026?',
             'category' => 'seats',
             'outcomes' => [],
             'source_url' => 'https://polymarket.com/event/how-many-republican-governors-after-the-2026-midterm-elections',
+            'fetched_at' => '2026-08-19 19:00:00',
         ],
     ],
 

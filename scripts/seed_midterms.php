@@ -13,6 +13,8 @@
  * de seed-momentopname.
  *
  * Gebruik (CLI):   php scripts/seed_midterms.php
+ * Volledige synchronisatie van redactionele tijdlijn en referenda:
+ *                   php scripts/seed_midterms.php --replace-curated
  * Of include vanuit de admin; de uitvoer wordt dan met output buffering
  * opgevangen. Daarom gebruiken we hier `return` in plaats van `exit`.
  */
@@ -80,6 +82,9 @@ if (!is_readable($seedPath)) {
     return;
 }
 $seed = require $seedPath;
+$replaceCurated = PHP_SAPI === 'cli'
+    && isset($argv)
+    && in_array('--replace-curated', $argv, true);
 if (!is_array($seed)) {
     echo "FOUT: seed-bestand gaf geen array terug.\n";
     return;
@@ -104,6 +109,17 @@ foreach (['midterms_races', 'midterms_timeline', 'midterms_referenda'] as $table
 }
 
 try {
+    $pdo->beginTransaction();
+
+    if ($replaceCurated) {
+        // Tijdlijn en referenda zijn een door de redactie beheerde, complete set.
+        // Bij een expliciete synchronisatie verwijderen we verouderde items die
+        // door een gewone upsert niet kunnen verdwijnen wanneer een titel wijzigt.
+        $pdo->exec('DELETE FROM `midterms_timeline`');
+        $pdo->exec('DELETE FROM `midterms_referenda`');
+        echo "Redactionele tijdlijn en referenda volledig gesynchroniseerd.\n";
+    }
+
     // ----------------------------------------------------------------
     // Races (Senaat + Gouverneurs + competitieve Huis-districten)
     // ----------------------------------------------------------------
@@ -190,8 +206,12 @@ try {
     }
     echo "Referenda: {$refIns} toegevoegd, {$refUpd} bijgewerkt.\n";
 
+    $pdo->commit();
     echo "\nSeed-import voltooid.\n";
 } catch (Throwable $e) {
+    if (isset($pdo) && $pdo->inTransaction()) {
+        $pdo->rollBack();
+    }
     echo "FOUT bij seed-import: " . $e->getMessage() . "\n";
     return;
 }
